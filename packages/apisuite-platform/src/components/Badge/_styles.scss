@@ -1,0 +1,44 @@
+.badge {
+  .badge-label {
+    min-width: 74px;
+    text-align: center;
+    color: $white-color;
+    border-radius: 4px;
+    font-size: 11.78px;
+    padding: 0 5px;
+
+    &.default {
+      background-color: $black-active;
+    }
+
+    &.green {
+      background-color: $gradient-0;
+    }
+
+    &.teal {
+      background-color: $teal-color;
+    }
+
+    &.orange {
+      background-color: $orange-color;
+    }
+
+    &.grey {
+      background-color: #CCC;
+    }
+
+    &.strike {
+      background-color: $primary-100;
+      color: $grey;
+      text-decoration: line-through;
+    }
+
+    &.inactive {
+      background-color: $black-inactive;
+    }
+
+    &.space {
+      margin-right: 8px;
+    }
+  }
+}

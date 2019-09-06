@@ -1,0 +1,125 @@
+
+.modal-split {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .modal-split-content {
+    display: flex;
+    background-color: $white-color;
+    width: 70%;
+    max-width: 850px;
+    max-height: 750px;
+    overflow-y: scroll;
+
+    &.mobile {
+      overflow-y: scroll;
+      max-height: 100%;
+
+      .modal-split-left {
+        height: 100%;
+      }
+    }
+
+    .modal-split-left {
+      display: flex;
+      flex: 3;
+      align-items: center;
+
+      .modal-split-left-content {
+        max-width: 500px;
+        padding: 30px 70px;
+        flex: 1;
+      }
+    }
+
+    .modal-split-right {
+      display: flex;
+      flex: 2;
+      text-align: center;
+      background-color: $primary-100;
+      border-radius: 0 6px 6px 0;
+      position: relative;
+
+      .modal-split-right-content {
+        display: flex;
+        justify-content: flex-end;
+        flex: 1;
+        align-items: center;
+        flex-direction: column;
+        min-width: 200px;
+        margin: 40px;
+
+        &.is-apps {
+          justify-content: center;
+        }
+
+        .modal-split-right-top {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          flex-direction: column;
+          width: 100%;
+          
+          p {
+            width: inherit;
+          }
+        }
+
+        .modal-split-right-bottom {
+          min-width: 100px;
+        }
+
+        &:not(.is-apps) {
+          .modal-split-right-top {
+            flex: 2;
+          }
+        
+          .modal-split-right-bottom {
+            flex: 1;
+          }
+        }
+      }
+
+      .modal-image-top {
+        margin: 20px;
+      }
+
+      .modal-image-bottom {
+        margin-top: 70px;
+      }
+    }
+
+    .close-icon {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+
+      &:hover {
+        cursor: pointer;
+      };
+    }
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .modal-split-content {
+    width: 100% !important;
+
+    .modal-split-left {
+      position: relative;
+      
+      .modal-split-left-content {
+        padding: 30px 50px !important;
+
+        .recaptcha-container {
+          padding-top: 20px;
+        }
+      }
+    }
+
+    .modal-split-right {
+      display: none !important;
+    }
+  }
+}

@@ -1,0 +1,21 @@
+
+.dynamic-fieldset-container {
+    margin: 25px auto 15px;
+    width: 100%;
+
+    .add-button {
+        width: 100%;
+        border-style: dashed;
+    }
+
+    .row {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .text-field {
+        width: 100%;
+    }
+}

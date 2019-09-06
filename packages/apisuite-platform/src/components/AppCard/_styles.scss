@@ -1,0 +1,96 @@
+.app-card {
+    display: flex;
+    flex-direction: column;
+    flex: 1 0 auto;
+    min-width: 200px;
+    min-height: 200px;
+    padding: 20px;
+    align-items: center;
+
+    .app-card-logo-wrapper {
+      display: flex;
+      flex: 3 0 auto;
+      align-items: flex-end;
+    }
+
+    .app-card-logo {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      background-color: #2DB7B9;
+      background-repeat: no-repeat;
+      background-position: inherit;
+      background-size: cover;
+      image-rendering: -webkit-optimize-contrast;
+      cursor: pointer;
+
+      & > span {
+        text-transform: uppercase;
+        color: $white-color;
+        font-size: 26px;
+      }
+    }
+
+    .app-card-details {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 20px;
+      width: 100%;
+
+      .app-card-badge {
+        width: 12px;
+        height: 12px;
+        border-radius: 6px;
+        background: #F5A623;
+        margin-right: 7px;
+        display: inline-block;
+
+        &.nonvalidated {
+          background: #F5A623;
+        }
+        &.nontrusted {
+          background: #2DB7BA;
+        }
+        &.trusted {
+          background: #15DE2E;
+        }
+      }
+
+      .app-card-name {
+        font-size: 18px;
+        color: $primary-color;
+        max-width: 135px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .app-card-description {
+        padding-top: 5px;
+        font-size: 12px;
+        color: #999;
+        max-width: 135px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .app-card-actions {
+        position: relative;
+        right: -20px;
+
+        .popper {
+          top: 25px!important;
+        }
+
+        .app-card-menu-item {
+          padding-top: 6px;
+          padding-bottom: 6px;
+        }
+      }
+    }
+  }

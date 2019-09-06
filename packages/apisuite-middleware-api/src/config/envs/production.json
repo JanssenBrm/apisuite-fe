@@ -1,0 +1,17 @@
+{
+	"plugins": [
+		"inert",
+		"vision",
+		"bell",
+		"hapi-auth-bearer-token",
+		"./plugins/internal/good",
+		"./plugins/internal/proxy",
+		"./plugins/health",
+		"./plugins/internal/authStrategies",
+		"./plugins/userRegistration",
+		"./plugins/user",
+		"./plugins/organization",
+		"./plugins/app",
+		"./plugins/oauth2"
+	]
+}

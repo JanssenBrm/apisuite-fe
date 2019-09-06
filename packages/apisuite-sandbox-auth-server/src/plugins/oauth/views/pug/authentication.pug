@@ -1,0 +1,13 @@
+doctype html
+html
+  head
+    title #{title}
+  body
+    form(action="/authenticate", method="POST")
+      div(class='form')
+        input(type='hidden', name='next', value=next)
+        #authentication
+    input#err(type='hidden', name='err', value=err)
+    input#brand(type='hidden', name='brand', value=brand)
+  script
+    include ../../../../../dist/js/authentication.js

@@ -1,0 +1,67 @@
+
+.recoveryCodes {
+  margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  min-height: 100%;
+
+  .container {
+    width: 340px;
+    border: 1px solid $light-color;
+    border-radius: 5px;
+  }
+
+  .header {
+    background-color: $soft-grey;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .logo {
+      padding: 8px;
+      width: inherit;
+      height: 50px;
+    }
+
+    .label {
+      color: $white-color;
+      padding-left: 10px;
+    }
+  }
+
+  .content {
+    padding: 25px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    .list {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 340px;
+
+      .item {
+        padding: 0 20px;
+        margin: 1px 0px;
+        display: flex;
+        justify-content: center;
+        width: 50%;
+      }
+    }
+  }
+
+  .helper-container {
+    width: 340px;
+    border-radius: 5px;
+    background-color: $light-yellow;
+    padding: 0 20px;
+    margin-top: 10px;
+
+    & > p {
+      line-height: 1.5;
+    }
+  }
+}

@@ -1,0 +1,122 @@
+
+.card {
+  position: relative;
+  width: 100%;
+  
+  .card-wrapper {
+    position: relative;
+    display: flex;
+    border-radius: 8px;
+    background-color: $light-color;
+    z-index: 10;
+    box-shadow: -1px -1px 1px 0px rgba(0,0,0,0.03);
+    border: 1px solid $light-color;
+    flex-wrap: wrap;
+
+    &.api-references-wrapper,
+    &.api-subscriptions-wrapper {
+      flex-direction: column;
+    }
+
+    &.apps-wrapper {
+      flex: 1 1 900px;
+      background-color: $soft-grey;
+      box-shadow: none;
+      border: none;
+    }
+
+    .card-content-item {
+      flex: 1;
+
+      &.landing-item,
+      &.api-detail-item {
+        background-color: $white-color;
+        &:not(:first-child) {
+          border-left: 2px solid $light-color;
+
+          @media (min-width: 320px) and (max-width: 480px) {
+            border-left: none;
+          }
+        }
+      }
+
+      &.dashboard-item,
+      &.apps-item {
+        border: 1px solid $light-color;
+        background-color: $white-color;
+        margin: -1px;
+        flex: 1 0 auto;
+
+        &:not(.apps-item):hover {
+          cursor: pointer;
+        }
+      }
+
+      &.apps-item {
+        flex: 0 0 223px;
+        margin-right: 1px;
+        margin-bottom: 1px;
+      }
+
+      &.api-references-item,
+      &.api-subscriptions-item {
+        background-color: $white-color;
+        padding: 35px 35px 30px 35px;
+        flex: 1 0 auto;
+        
+        &:not(:first-child) {
+          border-top: 1px solid $light-color;
+        }
+      }
+      
+      &.api-subscriptions-item {
+        padding: 15px 35px 15px 20px;
+        flex: 1 0 auto;
+      }
+    }
+  }
+  .card-shadow {
+    position: absolute;
+    left: 30px;
+    top: 100%;
+    margin-top: -4px;
+    transform: skew(45deg);
+    width: 99%;
+    height: 60px;
+    background: -moz-linear-gradient(top, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%);
+    background: -webkit-linear-gradient(top, rgba(0,0,0,0.03) 0%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to bottom, rgba(0,0,0,0.03) 0%,rgba(0,0,0,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=0 );
+  }
+  .card-shadow-side {
+    position: absolute;
+    right: -56px;
+    top: 30px;
+    transform: skewY(45deg);
+    height: 100%;
+    width: 60px;
+    background: -moz-linear-gradient(left, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%);
+    background: -webkit-linear-gradient(left, rgba(0,0,0,0.03) 0%,rgba(0,0,0,0) 100%);
+    background: linear-gradient(to right, rgba(0,0,0,0.03) 0%,rgba(0,0,0,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a6000000', endColorstr='#00000000',GradientType=1 );
+  }
+}
+
+@media (min-width: 320px) and (max-width: 480px) {
+  .card {
+    .card-wrapper {
+      flex-direction: column;
+
+      .landing-item {
+        border-left: none;
+      }
+    }
+
+    .card-shadow {
+      display: none;
+    }
+    .card-shadow-side {
+      display: none;
+    }
+  }
+}

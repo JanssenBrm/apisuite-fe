@@ -1,0 +1,109 @@
+@import 'styles/variables.scss';
+
+@font-face {
+  font-family: 'BNPPSans';
+  font-style: normal;
+  font-weight: 400;
+  src: local('BNPPSans'),
+    local('bnpp-sans'),
+    url('../../assets/fonts/bnpp-sans.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'BNPPSans-Light';
+  font-style: normal;
+  font-weight: 400;
+  src: local('BNPPSans-Light'),
+    local('bnpp-sans-light'),
+    url('../../assets/fonts/bnpp-sans-light.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'BNPPSans-Bold';
+  font-style: normal;
+  font-weight: 400;
+  src: local('BNPPSans-Bold'),
+    local('bnpp-sans-bold'),
+    url('../../assets/fonts/bnpp-sans-bold.ttf') format('truetype');
+}
+
+body {
+  font-family: "BNPPSans", "Roboto", "Helvetica Neue", sans-serif;
+}
+
+.navigation {
+
+  .left-container {
+    .app-title {
+      display: flex;
+      color: $primary-color;
+      padding-left: 20px;
+      margin-top: 4px;
+      font-size: 16px;
+      font-family: 'BNPPSans';
+    }
+  }
+
+  &.is-opaque {
+    .app-bar {
+      background-color: #fff!important;
+      
+      .app-bar-menu {
+        button {
+          color: $primary-color;
+          padding: 8px 15px;
+        }
+      }
+    }
+
+  }
+}
+
+.header-light-rays {
+  display: none;
+}
+.footer-container {
+  .footer-trademark {
+    background-color: $white-color;
+
+    .footer-trademark-container {
+      color: #999;
+      .footer-icons {
+        .footer-icon {
+          background-color: $primary-200;
+          color: $primary-500;
+        }
+        a:first-child {   // hack -> we need the svg
+          .footer-icon {
+            padding: 5px;
+          }
+        }
+      }
+    }
+  }
+
+  &.mini {
+    border-top: 1px solid #eee;
+    background: #fff;
+    color: #333;
+
+    .footer-trademark {
+      display: none;
+    }
+  }
+}
+
+table.privacy-table {
+  width: 100%;
+  td {
+    vertical-align: text-top;
+    padding: 5px;
+    background-color: #eee;
+  }
+
+  tr:last-child {
+    td {
+      color: #666;
+    }
+  }
+}

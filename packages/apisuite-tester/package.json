@@ -1,0 +1,34 @@
+{
+  "name": "openbank-reporter",
+  "version": "1.0.0",
+  "description": "A test engine with reporter",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "dev": "OPENBANK_TEST_REPORTER_PRODUCTION_WATCHER_ON=false OPENBANK_TEST_REPORTER_RC0_WATCHER_ON=false OPENBANK_TEST_REPORTER_DEVELOP_WATCHER_ON=true node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local": "source local.conf && node index.js"
+  },
+  "author": "Cloudoki",
+  "license": "ISC",
+  "dependencies": {
+    "async": "2.6.1",
+    "body-parser": "1.18.3",
+    "chai": "4.2.0",
+    "chai-http": "4.2.1",
+    "chance": "1.0.18",
+    "convict": "4.4.1",
+    "express": "4.16.4",
+    "googleapis": "27.0.0",
+    "joi": "14.3.1",
+    "mocha": "5.2.0",
+    "mochawesome": "3.1.1",
+    "request": "2.88.0",
+    "rimraf": "2.6.3",
+    "serve-index": "1.9.1",
+    "twilio": "3.26.1"
+  }
+}

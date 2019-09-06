@@ -1,0 +1,70 @@
+services:
+  - name: sandbox-api
+    url: http://_:3000
+  - name: openbank-container-manager
+    url: http://openbank_container_manager_dev:3000
+  - name: openbank-sandbox-auth-server
+    url: http://openbank_sandbox_auth_server:3000
+
+routes:
+  - name: r-sandbox-api-accounts
+    apply_to: sandbox-api
+    config:
+      paths: ["/accounts"]
+      strip_path: false
+  - name: r-sandbox-api-auth-psu
+    apply_to: sandbox-api
+    config:
+      paths: ["/auth/psu"]
+      strip_path: false
+  - name: r-sandbox-api-accreditation
+    apply_to: sandbox-api
+    config:
+      paths: ["/accreditation"]
+      strip_path: false
+  - name: r-openbank-container-manager
+    apply_to: openbank-container-manager
+    config:
+      paths: ["/manager/(?<action>.*)"]
+      strip_path: false
+      preserve_host: false
+  - name: r-openbank-sandbox-auth-server
+    apply_to: openbank-sandbox-auth-server
+    config:
+      paths: ["/"]
+      strip_path: false
+      preserve_host: false
+plugins:
+  - name: docker-manager
+    enabled: true
+    target: s[sandbox-api]
+    config:
+      container_manager_action_method: POST
+      container_manager_spinup_action: /start/1.4.0.47
+      container_manager_url: https://kong-api-gateway-dev:9443
+      https_ignore_ssl_verification: true
+      sandbox_container_health_check_path: /
+      sandbox_container_port: 3000
+      sandbox_container_protocol: http
+      sandbox_retry_timeout_in_seconds: 10
+      x_openbank_organization_header: X-Openbank-Organization
+      x_openbank_stet_version_header: X-Openbank-Stet-Version
+  - name: request-transformer-advanced
+    enabled: true
+    target: s[openbank-container-manager]
+    config:
+      replace.uri: /$(uri_captures.action)
+      
+consumers:
+  - username: guest-user
+    custom_id: anonymous-user # optional
+  - username: admin
+    custom_id: admin
+
+credentials:
+  - name: jwt
+    target: admin
+    config:
+      id: "bcbfb45d-e391-42bf-c2ed-94e32946753a"
+      key: "a36c3049b36249a3c9f8891cb127243c"
+      secret: ${ADMIN_JWT_SECRET} # you can replace secrets with ENV_VARs

@@ -1,0 +1,70 @@
+[
+    {
+        "id": 5,
+        "iban": "BE85084100944413",
+        "sortCodeAccountNumber": null,
+        "name": "Marie",
+        "accountBalance": {
+            "AccountId": "BE85084100944413",
+            "Amount": {
+                "Amount": 100,
+                "Currency": "EUR"
+            },
+            "DateTime": "2018-10-01T10:14:09+0000"
+        },
+        "accountFamily": "CUR",
+        "accountStatus": "FREE",
+        "customerId": "6861419451"
+    },
+    {
+        "id": 6,
+        "iban": "BE17057681685265",
+        "sortCodeAccountNumber": null,
+        "name": "Marie",
+        "accountBalance": {
+            "AccountId": "BE17057681685265",
+            "Amount": {
+                "Amount": 100,
+                "Currency": "EUR"
+            },
+            "DateTime": "2018-10-01T10:14:12+0000"
+        },
+        "accountFamily": "CUR",
+        "accountStatus": "FREE",
+        "customerId": "6861419451"
+    },
+    {
+        "id": 7,
+        "iban": "BE49738515766243",
+        "sortCodeAccountNumber": null,
+        "name": "Marie",
+        "accountBalance": {
+            "AccountId": "BE49738515766243",
+            "Amount": {
+                "Amount": 100,
+                "Currency": "EUR"
+            },
+            "DateTime": "2018-10-01T10:14:14+0000"
+        },
+        "accountFamily": "CUR",
+        "accountStatus": "FREE",
+        "customerId": "6861419451"
+    },
+    {
+        "id": 8,
+        "iban": "BE55514259982240",
+        "sortCodeAccountNumber": null,
+        "name": "Marie",
+        "accountBalance": {
+            "AccountId": "BE55514259982240",
+            "Amount": {
+                "Amount": 100,
+                "Currency": "EUR"
+            },
+            "DateTime": "2018-10-01T10:14:15+0000"
+        },
+        "accountFamily": "CUR",
+        "accountStatus": "FREE",
+        "customerId": "6861419451"
+    }
+]

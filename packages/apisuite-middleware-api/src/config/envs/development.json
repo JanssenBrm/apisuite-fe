@@ -1,0 +1,58 @@
+{
+	"appcenter": {
+		"url": "https://frontend.develop.openbankportal.be/",
+		"api": "https://api.develop.openbankportal.be",
+		"admin": "https://admin.develop.openbankportal.be",
+		"scenario": "https://scenario-manager.develop.openbankportal.be"
+	},
+	"sandboxAuthServer": {
+		"host": "https://auth.develop.openbankportal.be",
+		"clientId": "",
+		"clientSecret": ""
+	},
+	"server": {
+		"routes": {
+			"cors": {
+				"origin": [
+					"*"
+				],
+				"additionalHeaders": [
+					"Accept",
+					"Authorization",
+					"Content-Type",
+					"If-None-Match",
+					"Accept-language"
+				]
+			}
+		}
+	},
+	"swagger": {
+		"scheme": "http",
+		"host": "localhost:3000"
+	},
+	"proxy": {
+		"upstream": "services.innofactory.io"
+	},
+	"database": {
+		"options": {
+			"host": "localhost",
+			"port": 3306,
+			"database": "openbank",
+			"user": "root",
+			"password": "cloudoki"
+		}
+	},
+	"sendgrid": {
+		"apiKey": "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"
+	},
+	"sentiaSMTP": {
+		"host": "127.0.0.1",
+		"port": 25,
+		"useSentia": false
+	},
+	"twilio": {
+		"accountSid": "ACe4d592351ac0c1e0c0d17a3796810375",
+		"authToken": "90050675e6979facb2052046a2b19f11",
+		"number": "+32460240745"
+	}
+}

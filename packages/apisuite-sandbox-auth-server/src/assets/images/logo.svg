@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="40px" height="40px" viewBox="0 0 40 40" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 52.5 (67469) - http://www.bohemiancoding.com/sketch -->
+    <title>iPad</title>
+    <desc>Created with Sketch.</desc>
+    <g id="iPad" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M5,0 L35,0 C37.7614237,-5.07265313e-16 40,2.23857625 40,5 L40,35 C40,37.7614237 37.7614237,40 35,40 L5,40 C2.23857625,40 3.38176876e-16,37.7614237 0,35 L0,5 C-3.38176876e-16,2.23857625 2.23857625,5.07265313e-16 5,0 Z M12.6666667,17.3333333 L10,17.3333333 L10,26.6666667 L12.6666667,26.6666667 L12.6666667,17.3333333 Z M20.6666667,17.3333333 L18,17.3333333 L18,26.6666667 L20.6666667,26.6666667 L20.6666667,17.3333333 Z M32,29.3333333 L6.66666667,29.3333333 L6.66666667,32 L32,32 L32,29.3333333 Z M28.6666667,17.3333333 L26,17.3333333 L26,26.6666667 L28.6666667,26.6666667 L28.6666667,17.3333333 Z M19.3333333,5.33333333 L6.66666667,12 L6.66666667,14.6666667 L32,14.6666667 L32,12 L19.3333333,5.33333333 Z" id="Combined-Shape" fill="#00965e" fill-rule="nonzero"></path>
+        <polygon id="Mask" fill-opacity="0.5" fill="#00965e" fill-rule="nonzero" points="12.3866667 12 19.3333333 8.34666667 26.28 12"></polygon>
+    </g>
+</svg>

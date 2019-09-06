@@ -1,0 +1,439 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "email": "ze@appcenter.be",
+      "firstname": "Zé",
+      "lastname": "Zé",
+      "token": "abc.123.xxx",
+      "password": "zepass"
+    },
+    {
+      "id": 1,
+      "email": "john@doe.com",
+      "firstName": "john",
+      "lastName": "doe",
+      "created": "2018-05-03T11:20:42.000Z",
+      "updated": "2018-05-03T11:20:42.000Z",
+      "role": "user"
+    },
+    {
+      "company": "asda",
+      "email": "rui@cloudoki.com",
+      "firstname": "Rui",
+      "lastname": "Molefas",
+      "password": "thepass",
+      "id": 2
+    },
+    {
+      "id": 3
+    }
+  ],
+  "apps": [
+    {
+      "id": 2,
+      "name": "New App 2b",
+      "description": "The mega description",
+      "publicURLs": [],
+      "redirectURLs": [
+        "https://mega2",
+        "https://mega1"
+      ],
+      "created": "2018-05-21T17:33:06.000Z",
+      "updated": "2018-05-21T17:33:06.000Z",
+      "icon": "https://d30y9cdsu7xlg0.cloudfront.net/png/1127057-200.png",
+      "permissions": [
+        4
+      ]
+    },
+    {
+      "id": 3,
+      "name": "App 3",
+      "icon": "https://d30y9cdsu7xlg0.cloudfront.net/png/1127057-200.png",
+      "description": "The description",
+      "permissions": [
+        4
+      ]
+    }
+  ],
+  "permissions": [
+    {
+      "id": 0,
+      "permission": "AISP",
+      "scopes": [
+        "server",
+        "accounts"
+      ]
+    },
+    {
+      "id": 1,
+      "permission": "Profiles",
+      "scopes": [
+        "server",
+        "profiles",
+        "accounts"
+      ]
+    },
+    {
+      "id": 2,
+      "permission": "PISP, PSD2",
+      "scopes": [
+        "server",
+        "payments",
+        "payment-submissions",
+        "accounts"
+      ]
+    },
+    {
+      "id": 3,
+      "permission": "PISP, AISP, PSD2",
+      "scopes": [
+        "server",
+        "payments",
+        "payment-submissions",
+        "profiles",
+        "accounts"
+      ]
+    },
+    {
+      "id": 4,
+      "permission": "PAA",
+      "scopes": [
+        "payments",
+        "payment-submissions"
+      ]
+    }
+  ],
+  "forgot": {
+    "email": "asd"
+  },
+  "reset": {
+    "token": "12",
+    "password": "a"
+  },
+  "testData": {
+    "accounts": [
+      {
+        "id": 1,
+        "iban": "BE12121212121212",
+        "sortCodeAccountNumber": null,
+        "name": "MH",
+        "accountBalance": {
+          "AccountId": "BE12121212121212",
+          "Amount": {
+            "Amount": 5000,
+            "Currency": "EUR"
+          },
+          "DateTime": "2018-01-31T02:11:48+0000"
+        },
+        "psp": null,
+        "accountFamily": "COL",
+        "accountStatus": "FREE",
+        "customerId": "1212121212"
+      },
+      {
+        "id": 2,
+        "iban": "BE23232323232323",
+        "sortCodeAccountNumber": null,
+        "name": "MH",
+        "accountBalance": {
+          "AccountId": "BE23232323232323",
+          "Amount": {
+            "Amount": 1000,
+            "Currency": "EUR"
+          },
+          "DateTime": "2018-01-31T02:11:48+0000"
+        },
+        "psp": null,
+        "accountFamily": "CUR",
+        "accountStatus": "FREE",
+        "customerId": "1212121212"
+      },
+      {
+        "id": 3,
+        "iban": "BE34343434343434",
+        "sortCodeAccountNumber": null,
+        "name": "MH",
+        "accountBalance": {
+          "AccountId": "BE34343434343434",
+          "Amount": {
+            "Amount": 1000,
+            "Currency": "EUR"
+          },
+          "DateTime": "2018-01-31T02:11:48+0000"
+        },
+        "psp": null,
+        "accountFamily": "CUR",
+        "accountStatus": "FREE",
+        "customerId": "1212121212"
+      }
+    ],
+    "users": [
+      {
+        "customerId": "1212121212"
+      }
+    ],
+    "meta": {
+      "dataPackage": "1",
+      "creationDateTime": "2018-01-31T02:11:48+0000",
+      "sandboxVersion": "1.0.0"
+    }
+  },
+  "resetSandboxData": {
+    "accounts": [
+      {
+        "id": 1,
+        "iban": "BE98989898989898",
+        "sortCodeAccountNumber": null,
+        "name": "MH",
+        "accountBalance": {
+          "AccountId": "BE98989898989898",
+          "Amount": {
+            "Amount": 5000,
+            "Currency": "EUR"
+          },
+          "DateTime": "2018-01-31T02:11:48+0000"
+        },
+        "psp": null,
+        "accountFamily": "COL",
+        "accountStatus": "FREE",
+        "customerId": "2323232323"
+      },
+      {
+        "id": 2,
+        "iban": "BE87878787878787",
+        "sortCodeAccountNumber": null,
+        "name": "MH",
+        "accountBalance": {
+          "AccountId": "BE87878787878787",
+          "Amount": {
+            "Amount": 1000,
+            "Currency": "EUR"
+          },
+          "DateTime": "2018-01-31T02:11:48+0000"
+        },
+        "psp": null,
+        "accountFamily": "CUR",
+        "accountStatus": "FREE",
+        "customerId": "2323232323"
+      }
+    ],
+    "users": [
+      {
+        "customerId": "2323232323"
+      }
+    ],
+    "meta": {
+      "dataPackage": "2",
+      "creationDateTime": "2018-01-31T02:11:48+0000",
+      "sandboxVersion": "1.0.0"
+    }
+  },
+  "upgradeSandbox": {
+    "accounts": [
+      {
+        "id": 1,
+        "iban": "BE98989898989898",
+        "sortCodeAccountNumber": null,
+        "name": "MH",
+        "accountBalance": "5000 EUR",
+        "customerId": "2323232323"
+      },
+      {
+        "id": 2,
+        "iban": "BE87878787878787",
+        "sortCodeAccountNumber": null,
+        "name": "MH",
+        "accountBalance": "1000 EUR",
+        "customerId": "2323232323"
+      }
+    ],
+    "users": [
+      {
+        "customerId": "2323232323"
+      }
+    ],
+    "meta": {
+      "dataPackage": "2",
+      "creationDateTime": "2018-01-31T02:11:48+0000",
+      "sandboxVersion": "2.1.0"
+    }
+  },
+  "newToken": {
+    "clientId": "lazksch123ekjdskhd",
+    "clientSecret": "qskdjjdk23jdsqkljkjsd"
+  },
+  "newClientDetails": {
+    "clientId": "lazksch123ekjdskhd",
+    "clientSecret": "qskdjjdk23jdsqkljkjsd"
+  },
+  "activities": [
+    {
+      "id": 1,
+      "data": [
+        {
+          "key": "1",
+          "type": "Config",
+          "user": "Jane Doe",
+          "domain": "Payment API",
+          "activity": "Upgrade",
+          "datetime": "18/05/2018 - 14:32"
+        },
+        {
+          "key": "2",
+          "type": "Config",
+          "user": "Jane Doe",
+          "domain": "Payment API",
+          "activity": "Upgrade",
+          "datetime": "18/05/2018 - 14:32"
+        },
+        {
+          "key": "3",
+          "type": "Config",
+          "user": "Jane Doe",
+          "domain": "Payment API",
+          "activity": "Upgrade",
+          "datetime": "18/05/2018 - 14:32"
+        },
+        {
+          "key": "4",
+          "type": "Config",
+          "user": "Jane Doe",
+          "domain": "Payment API",
+          "activity": "Upgrade",
+          "datetime": "18/05/2018 - 14:32"
+        }
+      ]
+    }
+  ],
+  "products": {
+    "brands": [
+      {
+        "id": 1,
+        "name": "BNPPF",
+        "logo": "logo.svg"
+      },
+      {
+        "id": 2,
+        "name": "Fintro",
+        "logo": "fintro_logo.svg"
+      },
+      {
+        "id": 3,
+        "name": "Hello Bank",
+        "logo": "hellobank_logo.svg"
+      }
+    ],
+    "products": [
+      {
+        "id": 1,
+        "name": "PAYMENT_INITIATION_API",
+        "brand": 1,
+        "scopes": [
+          {
+            "id": 1,
+            "name": "AISP"
+          },
+          {
+            "id": 2,
+            "name": "PISP"
+          }
+        ],
+        "versions": [
+          "v1.4.0.47",
+          "v1.5.0.0"
+        ]
+      },
+      {
+        "id": 2,
+        "name": "ACCOUNT_INFORMATION_API",
+        "brand": 1,
+        "scopes": [
+          {
+            "id": 1,
+            "name": "AISP"
+          },
+          {
+            "id": 2,
+            "name": "PISP"
+          }
+        ],
+        "versions": [
+          "v1.4.0.47"
+        ]
+      },
+      {
+        "id": 3,
+        "name": "PAYMENT_INITIATION_API",
+        "brand": 2,
+        "scopes": [
+          {
+            "id": 1,
+            "name": "AISP"
+          },
+          {
+            "id": 2,
+            "name": "PISP"
+          }
+        ],
+        "versions": [
+          "v1.4.0.47"
+        ]
+      },
+      {
+        "id": 4,
+        "name": "ACCOUNT_INFORMATION_API",
+        "brand": 2,
+        "scopes": [
+          {
+            "id": 1,
+            "name": "AISP"
+          },
+          {
+            "id": 2,
+            "name": "PISP"
+          }
+        ],
+        "versions": [
+          "v1.4.0.47"
+        ]
+      },
+      {
+        "id": 5,
+        "name": "PAYMENT_INITIATION_API",
+        "brand": 3,
+        "scopes": [
+          {
+            "id": 1,
+            "name": "AISP"
+          },
+          {
+            "id": 2,
+            "name": "PISP"
+          }
+        ],
+        "versions": [
+          "v1.4.0.47"
+        ]
+      },
+      {
+        "id": 6,
+        "name": "ACCOUNT_INFORMATION_API",
+        "brand": 3,
+        "scopes": [
+          {
+            "id": 1,
+            "name": "AISP"
+          },
+          {
+            "id": 2,
+            "name": "PISP"
+          }
+        ],
+        "versions": [
+          "v1.4.0.47"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,927 @@
+[
+  {
+    "id": "navigation.registration",
+    "defaultMessage": "Register",
+    "message": ""
+  },
+  {
+    "id": "navigation.title",
+    "defaultMessage": "The bank for a changing world",
+    "message": ""
+  },
+  {
+    "id": "navigation.docs.overview.text1",
+    "defaultMessage": "Get familiar with the BNP Paribas APIs and explore their features.",
+    "message": ""
+  },
+  {
+    "id": "signup.title",
+    "defaultMessage": "Join BNP Paribas Fortis Openbank",
+    "message": ""
+  },
+  {
+    "id": "signup.success.profile.text",
+    "defaultMessage": "We have created an account for you. Welcome to the BNP Paribas Fortis Open Banking Portal.",
+    "message": ""
+  },
+  {
+    "id": "landing.header.1.title",
+    "defaultMessage": "Welcome to our Open Banking Portal",
+    "message": ""
+  },
+  {
+    "id": "landing.header.1.text",
+    "defaultMessage": "BNP Paribas Fortis welcomes you to its Open Banking Portal. A dedicated space where developers can find out all about the services we can provide via APIs. Browse our API catalogue to check out our API documentation and to find out more. Register for sandbox access to start testing our APIs.",
+    "message": ""
+  },
+  {
+    "id": "landing.header.2.title",
+    "defaultMessage": "Grow your business",
+    "message": ""
+  },
+  {
+    "id": "landing.header.2.text",
+    "defaultMessage": "BNP Paribas Fortis wants to help you grow your business. Join us for the next generation fintech and partner with BNP Paribas Fortis to boost your business. Partnering with BNP Paribas Fortis will enable you to create amazing experiences for our customers.",
+    "message": ""
+  },
+  {
+    "id": "landing.header.3.title",
+    "defaultMessage": "PSD2",
+    "message": ""
+  },
+  {
+    "id": "landing.header.3.text",
+    "defaultMessage": "The new Payment Services Directive 2 (PSD2) regulates the payment services and service providers throughout the EU. As a consequence of this European directive, BNP Paribas Fortis is providing a number of dedicated services to certified developers that want to connect to the bank. Read more on our PSD2 services in our dedicated PSD2 section.",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.1.title",
+    "defaultMessage": "Payment Initiation API",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.1.text",
+    "defaultMessage": "Give customers and users the option to initiate payments via our BNP Paribas Fortis Payment Initiation API.",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.2.title",
+    "defaultMessage": "Payment Initiation API",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.2.text",
+    "defaultMessage": "Give customers and users the option to initiate payments via our BNP Paribas Fortis Payment Initiation API.",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.3.title",
+    "defaultMessage": "Payment Initiation API",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.3.text",
+    "defaultMessage": "Give customers and users the option to initiate payments via our BNP Paribas Fortis Payment Initiation API.",
+    "message": ""
+  },
+  {
+    "id": "landing.subscribe.terms.1",
+    "defaultMessage": "I allow BNP Paris Fortis SA to send me regular updates on Open Banking. I can withdraw my consent at any time by sending an email to",
+    "message": ""
+  },
+  {
+    "id": "landing.subscribe.email",
+    "defaultMessage": "openbanking@bnpparibasfortis.com",
+    "message": ""
+  },
+  {
+    "id": "landing.pdf.text",
+    "defaultMessage": "Our handy fact sheet provides you with the most important facts about the BNP Paribas Fortis API Program.",
+    "message": ""
+  },
+  {
+    "id": "appsPage.explore.block1.content",
+    "defaultMessage": "Create account information consuming or payment initiation applications with our PSD2 compliant STET solution",
+    "message": ""
+  },
+  {
+    "id": "appsPage.explore.block2.content",
+    "defaultMessage": "Create account information consuming or payment initiation applications with our PSD2 compliant STET solution",
+    "message": ""
+  },
+  {
+    "id": "appsPage.explore.block3.content",
+    "defaultMessage": "Find out about the specifications of our APIs",
+    "message": ""
+  },
+  {
+    "id": "twofa.login.authorizationApp",
+    "defaultMessage": "Open your authentication app and retrieve the code for BNP Paribas Fortis Openbank Portal.",
+    "message": ""
+  },
+  {
+    "id": "recoverycodes.header",
+    "defaultMessage": "BNP PARIBAS FORTIS OPENBANK",
+    "message": ""
+  },
+  {
+    "id": "apiSubscriptions.modal.content.2",
+    "defaultMessage": "Here at BNP Paribas Fortis, we take the safety of your data very seriously. A team member is currently making sure you’re one of the good guys. Once your registration passes this manual check, we’ll send you an e-mail confirmation.",
+    "message": ""
+  },
+  {
+    "id": "footer.bank",
+    "defaultMessage": "BNP Paribas Fortis",
+    "message": ""
+  },
+  {
+    "id": "terms.termsAndConditions.text1",
+    "defaultMessage": "The registration, access and use to/of BNP Paribas Fortis Developer Portal website including the pertinent tools and applications, as made available by BNP Paribas Fortis from time to time in its discretion (the “Developer Portal”) is subject to the following Terms of Use (the “Terms of Use”). “The Bank” in the context of these Terms of Use means BNP Paribas Fortis NV/SA. BNP Paribas Fortis may at any time alter these Terms of Use without prior notice by publishing new or amended Terms of Use on the Developer Portal.",
+    "message": ""
+  },
+  {
+    "id": "terms.termsAndConditions.text2.1",
+    "defaultMessage": "The Developer Portal is a discretionary offer by BNP Paribas Fortis. You must register through the website for access. BNP Paribas Fortis reserves the right to approve registration demands and may reject your application in its discretion without the need to provide any reasons. You agree that you will disclose to BNP Paribas Fortis any actual or potential conflicts of interest with respect to your registration (e.g., if you are already working for, or are affiliated with, a BNP Paribas Fortis competitor or other financial institution).",
+    "message": ""
+  },
+  {
+    "id": "terms.termsAndConditions.text2.2",
+    "defaultMessage": "Any information that you provide in connection with your registration must be correct and complete, and you are responsible for maintaining such information up-to-date and accurate throughout the term of your registration. Upon successful registration, you may be provided with access credential, passwords and other account information (the “Credentials”). The Credentials are, and will remain, the property of BNP Paribas Fortis and you are granted a nontransferable license to use the Credentials for the sole purpose of participating in the Developer Portal. You must keep the Credentials confidential and may not sell, transfer, sublicense, or otherwise disclose your Credentials to any other person or for any other purpose. If you become aware or if you suspect that the confidentiality of your Credentials have been compromised, you are obliged to inform BNP Paribas Fortis without undue delay. You must not attempt to circumvent or modify any Credentials or other security mechanism used by BNP Paribas Fortis in connection with the Developer Portal.",
+    "message": ""
+  },
+  {
+    "id": "terms.termsAndConditions.text3.1",
+    "defaultMessage": "You are responsible for all activities that occur under usage of your Credentials, regardless whether undertaken by you or someone else. You are obliged to comply with all legal requirements and refrain from creating content that is unlawful or otherwise objectionable, or any content that may be construed as such. Any activity on the Developer Portal or in connection therewith must at all times be in compliance with BNP Paribas Fortis Code of Business Conduct and Ethics, which can be found here.",
+    "message": ""
+  },
+  {
+    "id": "terms.termsAndConditions.text3.2",
+    "defaultMessage": "You are prohibited from, and you will not engage, in any of the following activities: (a) reverse engineer, disassemble, reconstruct, or decompile any object code of the Developer Platform, any BNP Paribas Fortis test data, BNP Paribas Fortis API or any other data provided by BNP Paribas Fortis in connection with the Developer Portal (the “DB Content”); (b) attempt unauthorized access to, or use of, The Bank’s services or systems; (c) damage, disrupt, or otherwise negatively affect the operation of The Bank’s services or systems; (d) engage in any activity that prevents any other developer from using the DB Content; (e) use any robot, spider, site search or other application to retrieve or index DB Content, (f) collect information about other developers and (g) introduce any viruses or other malicious code.",
+    "message": ""
+  },
+  {
+    "id": "navigation.apiProducts",
+    "defaultMessage": "APIs",
+    "message": ""
+  },
+  {
+    "id": "landing.portal.steps.2.text.1",
+    "defaultMessage": "In the “Login” section, we provide the ability to subscribe for our Sandbox to start testing APIs.",
+    "message": ""
+  },
+  {
+    "id": "landing.portal.steps.2.text.2",
+    "defaultMessage": "In this section you can also apply to go live.",
+    "message": ""
+  },
+  {
+    "id": "landing.portal.steps.3.text.1",
+    "defaultMessage": "Once your app and API subscription are validated, you are ready to test.",
+    "message": ""
+  },
+  {
+    "id": "landing.portal.title",
+    "defaultMessage": "How it works",
+    "message": ""
+  },
+  {
+    "id": "landing.portal.text.1",
+    "defaultMessage": "Our APIs will give access to added value data that will allow you to build innovative digital experiences.",
+    "message": ""
+  },
+  {
+    "id": "landing.portal.text.2",
+    "defaultMessage": "Start your journey by registering.",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.title",
+    "defaultMessage": "Our APIs",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.text",
+    "defaultMessage": "Our API offering will initially include the gradual rollout of the much anticipated PSD2 APIs.",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.product.description.account-info-api",
+    "defaultMessage": "Give customers secure access to transaction data and balance data via our {brand} Account Information API.",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.product.description.payment-init-api",
+    "defaultMessage": "Give customers the option to initiate payments via our {brand} Payment Initiation API.",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.product.title.account_information_api",
+    "defaultMessage": "Account Information API",
+    "message": ""
+  },
+  {
+    "id": "landing.apis.product.title.payment_initiation_api",
+    "defaultMessage": "Payment Initiation API",
+    "message": ""
+  },
+  {
+    "id": "landing.subscribe.title",
+    "defaultMessage": "Keep up to date with our newsletter",
+    "message": ""
+  },
+  {
+    "id": "landing.subscribe.text",
+    "defaultMessage": "Subscribe to our newsletter and receive updates on our offering, updates on our APIs, events and more.",
+    "message": ""
+  },
+  {
+    "id": "landing.pdf.title",
+    "defaultMessage": "Our Open Banking program",
+    "message": ""
+  },
+  {
+    "id": "landing.pdf.text",
+    "defaultMessage": "Read all about the BNP Paribas Fortis Open Banking program",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.header.title",
+    "defaultMessage": "Payment Initiation – BNP Paribas Fortis Accounts",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.header.text",
+    "defaultMessage": "With our BNP Paribas Fortis Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.usage.title",
+    "defaultMessage": "Use this API for...",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.usage.1.subtitle",
+    "defaultMessage": "Easy payments",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.usage.1.text",
+    "defaultMessage": "We want to help you to create value-added services and applications. Therefore we give our customers the possibility to initiate payments from third party apps from certified providers if so desired.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.usage.2.subtitle",
+    "defaultMessage": "Seamless and safe experiences",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.usage.2.text",
+    "defaultMessage": "This API will allow you to build seamless journeys for our customers, who remain in full control. Our customers always decide which third party app can have access to execute a payment, in a secure way.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.features.title",
+    "defaultMessage": "API Features",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.features.1.subtitle",
+    "defaultMessage": "Identification",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.features.1.text",
+    "defaultMessage": "Our Payment Initiation API will provide for proper identification and signing by our customers before initiating a payment transfer.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.features.2.subtitle",
+    "defaultMessage": "Single Credit Transfer",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.features.2.text",
+    "defaultMessage": "Our Payment Initiation API will enable to initiate a Single Credit Transfer. Other payment types will follow.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.features.3.subtitle",
+    "defaultMessage": "Security",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-pisp.features.3.text",
+    "defaultMessage": "Our Payment Initiation API allows our customers to initiate a payment much in the same way and with the same security as via our bank applications.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.header.title",
+    "defaultMessage": "Account Information",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.header.text",
+    "defaultMessage": "Create Account Information consuming applications that offer great added value to your customers and users. The Banks’s Account Information Service will enable secure access to all European The Bank payments accounts.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.usage.title",
+    "defaultMessage": "Use this API for...",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.usage.1.subtitle",
+    "defaultMessage": "Analyse and understand",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.usage.1.text",
+    "defaultMessage": "By finding out useful information about a customer’s transactions, you get a clear picture of their spending and earning habits. This enables you to approve contracts and purchases quickly, or give customers useful financial breakdowns.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.usage.2.subtitle",
+    "defaultMessage": "Recommend and assist",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.usage.2.text",
+    "defaultMessage": "Analyse a customer’s spending and earning patterns to help them to make smarter purchasing decisions. You can also connect customers with providers relevant to their lifestyle and interests.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.features.title",
+    "defaultMessage": "API Features",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.features.1.subtitle",
+    "defaultMessage": "Personal Data",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.features.1.text",
+    "defaultMessage": "CustomerInsights checks personal information such as the customer’s phone number, email address, birthdate, and many more.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.features.2.subtitle",
+    "defaultMessage": "12 months of spending insights",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.features.2.text",
+    "defaultMessage": "Accounts gives you a holistic overview of customers account activities over the last 12 months.",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.features.3.subtitle",
+    "defaultMessage": "Current accounts and transactions",
+    "message": ""
+  },
+  {
+    "id": "landing.apiDetail-bnp-aisp.features.3.text",
+    "defaultMessage": "Access useful information such as IBAN, BIC and the current account balance of your customer quickly and easily. You can also gain insight into customers’ transaction data, including amounts, dates, counterparties and much more.",
+    "message": ""
+  },
+  {
+    "id": "terms.title",
+    "defaultMessage": "Terms of use of the BNP PARIBAS FORTIS Open Banking Portal",
+    "message": ""
+  },
+  {
+    "id": "terms.topic1.p1",
+    "defaultMessage": "The term \"Portal\" means this Open Banking Portal website as published from time to time at its own discretion by BNP Paribas Fortis SA/NV (see point 4. Editor, for more information), hereinafter the \"Bank\", and/or its related companies or companies in the group to which the Bank belongs, as well as all information, data, materials, tools, applications, API and (test) environments contained on the Portal (hereinafter “the Bank Content”).",
+    "message": ""
+  },
+  {
+    "id": "terms.topic2.p1",
+    "defaultMessage": "In order to accessing, visiting or using the Portal, you must register on developer.bnpparibasfortis.com.",
+    "message": ""
+  },
+  {
+    "id": "terms.topic4.address1.name",
+    "defaultMessage": "BNP Paribas Fortis SA/NV",
+    "message": ""
+  },
+  {
+    "id": "terms.topic4.p2",
+    "defaultMessage": "BNP Paribas Fortis SA/NV is a credit institution under Belgian law submitted to the prudential control of the Belgian National Bank and to the supervision on investor and consumer protection of the Financial Services and Markets Authority (FSMA). BNP Paribas Fortis SA/NV is recognised in capacity as insurance agent under enterprise number 0403.199.702 and acts as intermediary for AG Insurance sa.",
+    "message": ""
+  },
+  {
+    "id": "terms.topic5.p5",
+    "defaultMessage": "In case you notice any problems or incidents or have a question during your access, visit or use of the Portal, you may send an email to tpsupport@bnpparibasfortis.com. You may also access the dedicated support section on the Portal and fill in the dedicated web form.",
+    "message": ""
+  },
+  {
+    "id": "cookies.title",
+    "defaultMessage": "Cookie Policy",
+    "message": ""
+  },
+  {
+    "id": "cookies.introduction.title",
+    "defaultMessage": "Introduction",
+    "message": ""
+  },
+  {
+    "id": "cookies.introduction.p1",
+    "defaultMessage": "BNP Paribas Fortis uses cookies on the website(s) to improve your online experience. They make sure the website functions properly and collect statistical data. By using cookies, BNP Paribas Fortis is able to adapt the content and/or the publicities shown on the BNP Paribas Fortis websites to your personal needs and preferences. Among other functionalities, cookies facilitate the log-on process.",
+    "message": ""
+  },
+  {
+    "id": "cookies.introduction.p2",
+    "defaultMessage": "By not accepting cookies, you prevent BNP Paribas Fortis from optimising your experience on our website. Some parts of the websites will also not function ideally. By accepting cookies, you give consent for the use of cookies as specified in this cookie policy. Should you wish to, you can always change your cookie preferences.",
+    "message": ""
+  },
+  {
+    "id": "cookies.introduction.p3",
+    "defaultMessage": "All details regarding cookies used on BNP Paribas Fortis domains can be found in this cookie policy. This policy also explains how these cookies are used to improve your experience.  We wish you a pleasant reading and surfing experience.",
+    "message": ""
+  },
+  {
+    "id": "privacy.notice.title",
+    "defaultMessage": "Privacy Notice",
+    "message": ""
+  },
+  {
+    "id": "privacy.introduction.title",
+    "defaultMessage": "Introduction",
+    "message": ""
+  },
+  {
+    "id": "privacy.introduction.1",
+    "defaultMessage": "The protection of your personal data is important to the BNP Paribas Group.",
+    "message": ""
+  },
+  {
+    "id": "privacy.introduction.2",
+    "defaultMessage": "This Privacy Notice provides you with detailed information relating to the protection of your personal data by BNP Paribas Fortis SA/NV, with its head office at Montagne du Parc/Warandeberg 3, 1000 Brussels (“we”).",
+    "message": ""
+  },
+  {
+    "id": "privacy.introduction.3",
+    "defaultMessage": "We are responsible, as a controller, through our various brands (BNP Paribas Fortis, Hello Bank! and Fintro), for the processing of your personal data in relation to the accessing, visiting or using of the Portal. The purpose of this Privacy Notice is to inform you which of your personal data we use, the reasons why we use and share such data, how long we keep it and how you can exercise your rights.",
+    "message": ""
+  },
+  {
+    "id": "privacy.introduction.4",
+    "defaultMessage": "Further information may be provided where necessary in accordance with section 8 below.",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.title",
+    "defaultMessage": "1. Which personal data do we use about you?",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p1",
+    "defaultMessage": "We collect and use your personal data to the extent necessary for your access, visit or use of the Portal and to communicate with you and assist you in relation to your access, visit or use of the Portal.",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2",
+    "defaultMessage": "We collect various types of personal data about you, including:",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li1",
+    "defaultMessage": "When you register on the Portal:",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li1.1",
+    "defaultMessage": "Full name",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li1.2",
+    "defaultMessage": "Email address",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li1.3",
+    "defaultMessage": "Mobile phone number",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li1.4",
+    "defaultMessage": "Organisation name",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li1.5",
+    "defaultMessage": "VAT number",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li1.6",
+    "defaultMessage": "Organisation website",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li2",
+    "defaultMessage": "When you subscribe to our newsletter:",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li2.1",
+    "defaultMessage": "Email address",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li3",
+    "defaultMessage": "When you request assistance to solve a problem or an incident or when you contact us with a question:",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li3.1",
+    "defaultMessage": "Full name",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li3.2",
+    "defaultMessage": "Email address",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li3.3",
+    "defaultMessage": "Organisation (optional)",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li3.4",
+    "defaultMessage": "Type of inquiry",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p2.li3.5",
+    "defaultMessage": "Subject of inquiry",
+    "message": ""
+  },
+  {
+    "id": "privacy.personaldata.p3",
+    "defaultMessage": "Unless it is a legal obligation or it results from the activities performed on the Portal, we never process personal data related to your racial or ethnic origins, political opinions, religious or philosophical beliefs, trade union membership, genetic data or data concerning your sex life or orientation.",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.title",
+    "defaultMessage": "2. Why and on which basis do we use your personal data?",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.subtitle1",
+    "defaultMessage": "a. To comply with our legal and regulatory obligations",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p1",
+    "defaultMessage": "We use your personal data to reply to an official request from a duly authorised public or judicial authority.",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.subtitle2",
+    "defaultMessage": "b. To perform a contract with you or to take steps at your request before entering into a contract",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p2",
+    "defaultMessage": "We use your personal data to:",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p2.li1",
+    "defaultMessage": "administer your access, visit and use of the Portal, including creating your account;",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p2.li2",
+    "defaultMessage": "provide you with information regarding the functioning, update, change and new items of/on the Portal (including via the newsletter);",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p2.li3",
+    "defaultMessage": "assist you and answer your requests;",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p2.li4",
+    "defaultMessage": "contact you for additional information about your application.",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.subtitle3",
+    "defaultMessage": "c. To fulfil our legitimate interest",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p3",
+    "defaultMessage": "We use your personal data in order to deploy and develop our services on the Portal, to improve our risk management and to defend our legal rights, including:",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p3.li1",
+    "defaultMessage": "IT management, including infrastructure management (e.g. shared platforms), business continuity and IT security;",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.subtitle4",
+    "defaultMessage": "d. To process data from electronic communications",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p4.1",
+    "defaultMessage": "In addition to any recording of electronic communications that is either legally authorised or imposed or to which you have consented, we may record electronic communications with you, including the related traffic data, if we do so in the course of lawful business practice for the purpose of:",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p4.li1",
+    "defaultMessage": "ensuring the training and supervision of employees and improving the quality of the service; and/or",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p4.li2",
+    "defaultMessage": "providing evidence of communications that took place through these electronic communications including the content of these communications (including any advice being given by us when applicable).",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p4.2",
+    "defaultMessage": "We may retain such records as long as legally required or permitted including for the period of time during which a dispute may arise further to the electronic communication recorded between you and us.",
+    "message": ""
+  },
+  {
+    "id": "privacy.basis.p4.3",
+    "defaultMessage": "The above applies to phone conversations as well as all other electronic communications (such as e-mails, SMS, instant messaging services or other equivalent technologies) with our helpdesk.",
+    "message": ""
+  },
+  {
+    "id": "privacy.share.title",
+    "defaultMessage": "3. Who do we share your personal data with?",
+    "message": ""
+  },
+  {
+    "id": "privacy.share.p1",
+    "defaultMessage": "In order to fulfil the aforementioned purposes, we only disclose your personal data to:",
+    "message": ""
+  },
+  {
+    "id": "privacy.share.p1.li1",
+    "defaultMessage": "BNP Paribas Group entities (e.g. you can be assisted in an incident resolution by another entity of the Group);",
+    "message": ""
+  },
+  {
+    "id": "privacy.share.p1.li2",
+    "defaultMessage": "Service providers which perform services on our behalf;",
+    "message": ""
+  },
+  {
+    "id": "privacy.share.p1.li3",
+    "defaultMessage": "Financial or judicial authorities, state agencies or public bodies, upon request and to the extent permitted by law;",
+    "message": ""
+  },
+  {
+    "id": "privacy.share.p1.li4",
+    "defaultMessage": "Certain regulated professionals such as lawyers, notaries or auditors.",
+    "message": ""
+  },
+  {
+    "id": "privacy.transfer.title",
+    "defaultMessage": "4. Transfers of personal data outside the European Economic Area (“EEA”)",
+    "message": ""
+  },
+  {
+    "id": "privacy.transfer.p1",
+    "defaultMessage": "In case of international transfers originating from the EEA to a non-EEA country which the European Commission has recognised as providing an adequate level of data protection, your personal data will be transferred on this basis.",
+    "message": ""
+  },
+  {
+    "id": "privacy.transfer.p2",
+    "defaultMessage": "For transfers to non-EEA countries which level of protection has not been recognised by the European Commission as adequate, we will either rely on a derogation applicable to the specific situation or implement one of the following safeguards to ensure the protection of your personal data:",
+    "message": ""
+  },
+  {
+    "id": "privacy.transfer.p2.li1",
+    "defaultMessage": "Standard contractual clauses approved by the European Commission;",
+    "message": ""
+  },
+  {
+    "id": "privacy.transfer.p2.li2",
+    "defaultMessage": "Binding Corporate Rules.",
+    "message": ""
+  },
+  {
+    "id": "privacy.transfer.p3",
+    "defaultMessage": "To obtain a copy of these safeguards or details on where they are available, you can send us a written request as set out in Section 8.",
+    "message": ""
+  },
+  {
+    "id": "privacy.howlong.title",
+    "defaultMessage": "5. How long do we keep your personal data for?",
+    "message": ""
+  },
+  {
+    "id": "privacy.howlong.p1",
+    "defaultMessage": "We will retain your personal data for the longer of the period required in order to comply with applicable laws and regulations or another period with regard to our operational requirements, such as account maintenance, facilitating client relationship management, and responding to legal claims or regulatory requests. For instance, when applicable, the duration of the contractual relationship and 10 years after the end of the contractual relationship.",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.title",
+    "defaultMessage": "6. What are your rights and how can you exercise them?",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p1",
+    "defaultMessage": "In accordance with applicable regulations, you have the following rights:",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p1.li1",
+    "defaultMessage": "To access: you can obtain information relating to the processing of your personal data, and a copy of such personal data.",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p1.li2",
+    "defaultMessage": "To rectify: where you consider that your personal data are inaccurate or incomplete, you can require that such personal data be modified accordingly. Please note that you may also rectify yourself your data in your account/profile.",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p1.li3",
+    "defaultMessage": "To erase: you can require the deletion of your personal data.",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p1.li4",
+    "defaultMessage": "To restrict: you can request the restriction of the processing of your personal data.",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p1.li5",
+    "defaultMessage": "To object: you can object to the processing of your personal data, on grounds relating to your particular situation. You have the absolute right to object to the processing of your personal data for direct marketing purposes, which includes profiling related to such direct marketing.",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p1.li6",
+    "defaultMessage": "To withdraw your consent: where you have given your consent for the processing of your personal data, you have the right to withdraw your consent at any time.",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p1.li7",
+    "defaultMessage": "To data portability: where legally applicable, you have the right to have the personal data you have provided to us be returned to you or, where technically feasible, transferred to a third party.",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p2",
+    "defaultMessage": "You can exercise the rights listed above by (please also send a copy or a scanned copy of your identity card):",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p3.li1",
+    "defaultMessage": "letter to BNP Paribas Fortis SA – Data Protection and Privacy Office, 1MA4B, Montagne du Parc 3, 1000 Brussels; or",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p3.li2",
+    "defaultMessage": "e-mail to privacy@bnpparibasfortis.com.",
+    "message": ""
+  },
+  {
+    "id": "privacy.rights.p4",
+    "defaultMessage": "In accordance with the applicable regulations, you are entitled to lodge a claim with the competent supervisory authority.",
+    "message": ""
+  },
+  {
+    "id": "privacy.keepupchanges.title",
+    "defaultMessage": "7. How can you keep up with changes to this Privacy Notice?",
+    "message": ""
+  },
+  {
+    "id": "privacy.keepupchanges.p1",
+    "defaultMessage": "In a world of constant technological changes, we may need to regularly update this Privacy Notice.",
+    "message": ""
+  },
+  {
+    "id": "privacy.keepupchanges.p2",
+    "defaultMessage": "We invite you to review the latest version of this notice online and we will inform you of any material changes through the Portal or through our newsletter.",
+    "message": ""
+  },
+  {
+    "id": "privacy.contactus.title",
+    "defaultMessage": "8. How to contact us?",
+    "message": ""
+  },
+  {
+    "id": "privacy.contactus.p1",
+    "defaultMessage": "Should you have any questions relating to our use of your personal data or this Privacy Notice, please contact our data protection officer by email to privacy@bnpparibasfortis.com or by letter to BNP Paribas Fortis SA/NV Data Protection and Privacy Office – 1MA4B, Montagne du Parc/Warandeberg 3, 1000 Brussels, who will investigate your query.",
+    "message": ""
+  },
+  {
+    "id": "privacy.lastupdated.p1",
+    "defaultMessage": "Last updated: March 1st, 2019",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookie.title",
+    "defaultMessage": "What is a cookie?",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookie.p1",
+    "defaultMessage": "Cookies are small text files stored by your web browser when you use websites. You can control how websites use cookies by configuring your browser's privacy settings (please refer to your browser's help function to learn more about cookie controls).",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookie.p2",
+    "defaultMessage": "Note that if you disable cookies entirely, BNP Paribas Fortis websites may not function properly.",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookie.p3",
+    "defaultMessage": "BNP Paribas Fortis and the companies that help us run our business use cookies in several ways, such as:",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookie.p3.li1",
+    "defaultMessage": "Authenticating and identifying you on our websites so we can provide you the services you requested.",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookie.p3.li2",
+    "defaultMessage": "Keeping track of information you have provided to us — for example, remembering information you provided whenever you fill in a form.",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookie.p3.li3",
+    "defaultMessage": "Remembering your preferences or where you left off in your use of the BNP Paribas Fortis website.",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookie.p3.li4",
+    "defaultMessage": "Measuring your use of BNP Paribas Fortis websites so that we can improve them, tailor our websites to your likely interests.",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookie.p3.li5",
+    "defaultMessage": "Understanding your likely interests so we can provide you more relevant BNP Paribas ads and content on non-BNP Paribas Fortis websites and in non-BNP Paribas Fortis apps.",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookiesonportal.title",
+    "defaultMessage": "Cookies on this Portal",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookiesonportal.p1",
+    "defaultMessage": "We are using one functional cookie (not editable) on this Portal.",
+    "message": ""
+  },
+  {
+    "id": "cookies.cookiesonportal.p2",
+    "defaultMessage": "Functional cookies are necessary for the connection with the Portal to be correct and efficient, and to ensure a safe online environment. Functional cookies collect anonymous data about how the Portal is used and which pages are important. This is used to improve the general ease of use of the Portal.",
+    "message": ""
+  },
+  {
+    "id": "cookies.responsibility.title",
+    "defaultMessage": "Responsible for the cookies",
+    "message": ""
+  },
+  {
+    "id": "cookies.responsibility.p1",
+    "defaultMessage": "The Portal owner, and responsible for treatment of personal data obtained by the cookies, is:",
+    "message": ""
+  },
+  {
+    "id": "cookies.responsibility.address.name",
+    "defaultMessage": "BNP Paribas Fortis SA-NV",
+    "message": ""
+  },
+  {
+    "id": "cookies.responsibility.address.street",
+    "defaultMessage": "Montagne du Parc 3",
+    "message": ""
+  },
+  {
+    "id": "cookies.responsibility.address.zip",
+    "defaultMessage": "B-1000 Brussels",
+    "message": ""
+  },
+  {
+    "id": "cookies.responsibility.address.mail",
+    "defaultMessage": "privacy@bnpparibasfortis.com",
+    "message": ""
+  },
+  {
+    "id": "cookies.responsibility.p2",
+    "defaultMessage": "For more information on BNP Paribas Fortis SA-NV as the controller of personal data collected on the Portal, you will find more detailed information in our privacy notice.",
+    "message": ""
+  },
+  {
+    "id": "cookies.rights.title",
+    "defaultMessage": "Your rights as a visitor on our Portal",
+    "message": ""
+  },
+  {
+    "id": "cookies.rights.p1",
+    "defaultMessage": "As a visitor and subject of the data retained by these cookies, you have the right to file a complaint with the supervisory authority (www.dataprotectionauthority.be).",
+    "message": ""
+  }
+]

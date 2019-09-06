@@ -1,0 +1,24 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "browsers": ["last 3 versions", "> 1%", "IE >= 11"]
+      },
+      "useBuiltIns": "usage",
+      "loose": true,
+      "modules": false,
+      "forceAllTransforms": true
+    }],
+    "@babel/preset-react"
+  ],
+  "env": {
+    "test": {
+      "presets": [["@babel/env"], "@babel/preset-react"]
+    }
+  },
+  "plugins": [
+    "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-syntax-dynamic-import",
+    "react-hot-loader/babel"
+  ]
+}

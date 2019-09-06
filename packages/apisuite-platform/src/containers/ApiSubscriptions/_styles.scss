@@ -1,0 +1,176 @@
+
+.api-subscriptions-container {
+  padding: 80px;
+  background-color: $primary-100;
+  min-height: inherit;
+  @media only screen and (max-width: 600px) {
+    padding: 60px 20px;
+  }
+
+  .api-subscriptions-wrapper {
+    display: flex;
+    max-width: 900px;
+    margin: 0 auto;
+    flex-direction: column;
+
+    .api-subscriptions-title {
+      font-size: 26px;
+      font-weight: 400;
+    }
+
+    .api-subscriptions-list {
+      flex: 1 0 auto;
+      padding-right: 60px;
+
+      @media only screen and (max-width: 600px) {
+        padding: 0;
+      }
+
+      .card-content-item {
+        padding: 15px 0;
+      }
+
+      .api-subscription {
+        position: relative;
+
+        .header-container {
+          display: flex;
+          justify-content: space-between;
+          flex-grow: 1;
+          padding: 0;
+
+          h4 {
+            margin: 0;
+          }
+
+          .badges-wrapper {
+            display: flex;
+            padding: 10px 0 0 0;
+          }
+        }
+
+        .expansion-panel-root {
+          box-shadow: none;
+        }
+
+        .expansion-summary-content {
+          padding-left: 30px;
+          justify-content: space-between;
+        }
+
+        .expansion-summary-expanded {
+          margin: 0;
+        }
+
+        .expand-icon {
+          left: 0px;
+
+          &.expanded {
+            transform: translateY(-50%) rotate(90deg);
+          }
+        }
+
+        .api-subscription-detail {
+          display: flex;
+          flex-direction: column;
+
+          .detail-text {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+
+            .consumer-apps {
+              padding-left: 10px;
+              display: flex;
+
+              .app-circle {
+                width: 28px;
+                height: 28px;
+                border-radius: 50%;
+                overflow: hidden;
+                background-repeat: no-repeat;
+                background-position: inherit;
+                background-size: cover;
+                background-color: $main-color;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-right: 5px;
+
+                & > span {
+                  text-transform: uppercase;
+                  color: $white-color;
+                  font-size: 12px;
+                }
+              }
+            }
+          }
+
+          .api-subscription-btn {
+            width: 200px;
+          }
+
+          & > div {
+            padding-bottom: 15px;
+            display: inline-block;
+            opacity: .8;
+          }
+
+          .badge {
+            display: inline-block;
+            margin-left: 5px;
+
+            .badge-label {
+              width: auto;
+              padding: 0 10px;
+            }
+          }
+        }
+
+        .api-icons {
+          display: inline-block;
+          position: relative;
+          margin-top: 10px;
+          min-width: 24px;
+
+          .api-action {
+            display: inline-block;
+            cursor: pointer;
+
+            & > span {
+              padding-right: 30px;
+              color: $grey-dark;
+            }
+          }
+
+          .api-action-icon {
+            position: absolute;
+            top: 2px;
+            right: 0;
+          }
+
+          .api-icon-label {
+            padding-right: 10px;
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+  .loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+  }
+}
+
+.api-subscription-modal {
+  font-size: 16px;
+  padding-top: 50px;
+
+  .modal-btn {
+    width: 140px
+  }
+}

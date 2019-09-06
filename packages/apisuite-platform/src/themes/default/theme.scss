@@ -1,0 +1,30 @@
+@import 'styles/variables.scss';
+
+.navigation {
+  .app-bar {
+    background-color: transparent;
+
+    .left-container {
+      img {
+        width: 60px;
+        margin-right: 20px;
+      }
+      .app-title {
+        font-size: 28px;
+        color: #fff;
+      }
+    }
+  }
+
+  &.is-opaque {
+    .app-bar {
+      background-color: $primary-color;
+  
+      .left-container {
+        img {
+          width: 40px;
+        }
+      }
+    }
+  }
+}

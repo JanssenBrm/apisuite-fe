@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    title #{title}
+    meta(charset='utf-8')
+  body
+    input(type='hidden', name='next', value=next)
+    input#debtorName(type='hidden', name='debtorName', value=paymentRequest.debtor.name)
+    input#debtorAccount(type='hidden', name='debtorAccount', value=paymentRequest.debtorAccount)
+    input#paymentId(type='hidden', name='paymentId', value=id)
+    input#clientId(type='hidden', name='clientId', value=clientId)
+    input#amount(type='hidden', name='amount', value=paymentRequest.creditTransferTransaction[0].instructedAmount.amount)
+    input#currency(type='hidden', name='currency', value=paymentRequest.creditTransferTransaction[0].instructedAmount.currency)
+    input#creditorName(type='hidden', name='creditorName', value=paymentRequest.beneficiary.creditor.name)
+    input#creditorAccount(type='hidden', name='creditorAccount', value=paymentRequest.beneficiary.creditorAccount.iban)
+    input#executionDate(type='hidden', name='executionDate', value=paymentRequest.requestedExecutionDate)
+    input#brand(type='hidden', name='brand', value=brand)
+    form(name='consent', action='/payment-requests/' + id + '/account-selection?client_id=' + clientId , method='post')
+      div(class='form')
+        #payment
+  script
+    include ../../../../dist/js/payment.js

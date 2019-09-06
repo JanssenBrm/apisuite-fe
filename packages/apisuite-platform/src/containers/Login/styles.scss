@@ -1,0 +1,67 @@
+.login-container {
+  .login-form-wrapper {
+    width: 100%;
+    max-width: 500px;
+    display: block;
+
+    .login-input {
+      margin-top: 15px;
+    }
+
+    .login-link {
+      color: $main-500;
+      text-decoration: none;
+      cursor: pointer;
+
+      &#login-forgot-link {
+        padding-top: 5px;
+      }
+    }
+
+    .login-form-action {
+      flex: 1;
+    }
+
+    .login-bottom-link {
+      padding-top: 20px;
+    }
+
+    .login-form-actions {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .login-submit {
+      width: 120px;
+    }
+  }
+
+  .gh-login-wrapper {
+    .gh-login-divider {
+      border-bottom: 1px solid $primary-100;
+
+      > span {
+        position: relative;
+        top: 10px;
+        background: $white-color;
+        padding: 15px;
+      }
+    }
+
+    .gh-login-button-wrapper {
+      margin-top: 30px;
+
+      .gh-login-button {
+        background-color: #24292e;
+        border: none;
+        color: #ffffff;
+
+        &[disabled] {
+          color: rgba(0, 0, 0, 0.25);
+          background-color: #f5f5f5;
+          border-color: #d9d9d9;
+        }
+      }
+    }
+  }
+}

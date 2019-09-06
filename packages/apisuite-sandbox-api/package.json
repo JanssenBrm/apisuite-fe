@@ -1,0 +1,64 @@
+{
+  "name": "openbank-sandbox-api",
+  "version": "0.7.3",
+  "main": "src/index.js",
+  "repository": "git@github.com:Cloudoki/openbank-sandbox-api.git",
+  "author": "Cloudoki <hello@cloudoki.com> (http://cloudoki.com)",
+  "license": "",
+  "private": true,
+  "scripts": {
+    "start": "NODE_PATH=. node src/index.js",
+    "lint": "eslint src/ --ext .js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "doc": "jsdoc -d docs -r src/",
+    "debug": "DEBUG=knex:* NODE_PATH=. node src/index.js | pino-pretty",
+    "migrate": "knex migrate:latest",
+    "rollback": "knex migrate:rollback",
+    "release": "standard-version",
+    "local": "source local.conf && NODE_PATH=. node src/index.js | pino-pretty"
+  },
+  "dependencies": {
+    "bookshelf": "^0.13.3",
+    "bookshelf-modelbase": "^2.10.4",
+    "boom": "^7.2.0",
+    "chance": "1.0.18",
+    "convict": "^4.4.0",
+    "halacious": "git+https://github.com/alexb-uk/halacious.git#master",
+    "hapi": "^17.6.0",
+    "hapi-auth-bearer-token": "^6.1.0",
+    "hapi-swagger": "^9.1.2",
+    "iban": "0.0.12",
+    "inert": "^5.1.0",
+    "joi": "^14.0.0",
+    "knex": "^0.15.2",
+    "moment": "^2.24.0",
+    "pino": "^5.8.0",
+    "pino-pretty": "^2.2.2",
+    "sqlite3": "^4.0.2",
+    "standard-version": "5.0.2",
+    "uuid": "^3.3.2",
+    "vision": "^5.4.0",
+    "wreck": "^14.1.3"
+  },
+  "pre-commit": [
+    "lint"
+  ],
+  "devDependencies": {
+    "eslint": "^4.19.1",
+    "jsdoc": "^3.5.5",
+    "pre-commit": "^1.2.2"
+  },
+  "resolutions": {
+    "hapi-swagger/handlebars": "4.1.2",
+    "lab/handlebars": "4.1.2",
+    "sinon/just-extend": "4.0.0",
+    "jsdoc/marked": "0.7.0",
+    "lodash": "4.17.12",
+    "set-value": "3.0.1",
+    "mixin-deep": "2.0.1",
+    "hapi-swagger/json-schema-ref-parser/js-yaml": "3.13.1",
+    "eslint/js-yaml": "3.13.1",
+    "halacious/marked": "0.7.0",
+    "standard-version/conventional-changelog/conventional-changelog-core/conventional-changelog-writer/handlebars": "4.1.2"
+  }
+}

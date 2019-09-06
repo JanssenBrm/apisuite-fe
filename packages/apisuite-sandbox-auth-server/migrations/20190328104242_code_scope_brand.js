@@ -1,0 +1,12 @@
+
+exports.up = function (knex) {
+	return knex.schema.alterTable('oauth_authorization_code_scope', (table) => {
+		table.string('brand').notNullable().default('bnppf')
+	})
+}
+
+exports.down = function (knex) {
+	return knex.schema.alterTable('oauth_authorization_code_scope', (table) => {
+		table.dropColumn('brand')
+	})
+}

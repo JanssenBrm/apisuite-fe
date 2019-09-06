@@ -1,0 +1,37 @@
+{
+	"server": {
+		"routes": {
+			"cors": {
+				"origin": [
+					"*"
+				],
+				"additionalHeaders": [
+					"Accept",
+					"Authorization",
+					"Content-Type",
+					"If-None-Match",
+					"Accept-language"
+				]
+			}
+		}
+	},
+	"database": {
+		"options": {
+			"host": "127.0.0.1",
+			"port": 3306,
+			"database": "test",
+			"user": "test",
+			"password": "semaphoredb"
+		}
+	},
+	"proxy": {
+		"upstream": "127.0.0.1:3001"
+	},
+	"appcenter": {
+		"url": "127.0.0.1"
+	},
+	"logger": {
+		"name": "Tests",
+		"level": "fatal"
+}
+}

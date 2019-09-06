@@ -1,0 +1,30 @@
+[
+    {
+        "profileId": 1,
+        "name": "Albert Einstein",
+        "email": "albert.einstein@tex.be",
+        "customerId": "1234567890",
+        "password": "password"
+    },
+    {
+        "profileId": 2,
+        "name": "Marie Curie",
+        "email": "marie.curie@tex.be",
+        "customerId": "1111111111",
+        "password": "password"
+    },
+    {
+        "profileId": 3,
+        "name": "Thomas Edison",
+        "email": "thomas.edison@tex.be",
+        "customerId": "2222222222",
+        "password": "password"
+    },
+    {
+        "profileId": 4,
+        "name": "Marie",
+        "email": "mh@tex.be",
+        "customerId": "6861419451",
+        "password": "password"
+    }
+]

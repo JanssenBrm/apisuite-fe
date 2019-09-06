@@ -1,0 +1,11 @@
+.route-wrapper {
+  min-height: calc(100vh - 315px);
+  
+  &.default-spacing {
+    padding-top: 100px;
+  }
+
+  &.expanded {
+    padding-top: 160px;
+  }
+}
