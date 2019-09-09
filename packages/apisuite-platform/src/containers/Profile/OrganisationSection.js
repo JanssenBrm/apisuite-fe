@@ -33,7 +33,7 @@ class OrganisationSection extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.organisation !== this.props.organisation) {
       const { name, description, vat, website, policyUrl, logoUrl, id, certificates } = nextProps.organisation
       this.setState({ organisation: { name, description, vat, website, policyUrl, logoUrl, id, certificates } })

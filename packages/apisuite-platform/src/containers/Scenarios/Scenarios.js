@@ -41,7 +41,7 @@ class Scenarios extends Component {
     this.props.fetchApis()
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.scenario !== this.props.scenario) {
       this.setState({
         scenario:

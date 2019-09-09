@@ -7,7 +7,7 @@ import { Typography } from '@material-ui/core'
 import { FormattedMessage } from 'react-intl'
 
 class SuccessPage extends Component {
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { user, history } = this.props
     if (!user.codes) {
       history.push('/')

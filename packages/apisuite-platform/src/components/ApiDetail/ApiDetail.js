@@ -18,7 +18,7 @@ class ApiDetail extends Component {
     this.props.getApiProduct(productId)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { product } = nextProps
 
     if (this.props.product !== product) {

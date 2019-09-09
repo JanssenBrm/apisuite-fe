@@ -48,7 +48,7 @@ class Signup extends Component {
     qrcode: '',
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { signup } = nextProps
     if (this.props.signup !== nextProps.signup) {
       this.setState({ step: signup.step, error: signup.error, qrcode: signup.qrcode })

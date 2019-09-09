@@ -16,7 +16,7 @@ class SectionSubscribe extends Component {
     errors: [],
   }
 
-  componentWillUpdate () {
+  UNSAFE_componentWillUpdate () {
     const { newsletter: { success } } = this.props
     const { email } = this.state
     if (success && email !== '') {

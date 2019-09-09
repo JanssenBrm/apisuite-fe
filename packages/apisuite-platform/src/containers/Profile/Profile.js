@@ -56,14 +56,14 @@ class Profile extends Component {
     return defaultMethod
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { user } = this.props
     const method = this.syncTwoFaMethod(user)
 
     if (!_isEmpty(user)) this.setState({ user: { ...user, method } })
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { user, TwoFA } = nextProps
     if (user !== this.props.user) {
       const method = this.syncTwoFaMethod(user)

@@ -35,7 +35,7 @@ class CreateApp extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { app, subscriptions } = nextProps
     if (app && this.props.subscriptions !== subscriptions) {
       this.setState({ subscribed: subscriptions.products.filter(sub => app.productIds.includes(sub.id)) })

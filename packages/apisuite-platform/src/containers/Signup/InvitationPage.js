@@ -17,7 +17,7 @@ class InvitationPage extends Component {
     if (token) this.props.getInvitation(token)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.invitation !== this.props.invitation || nextProps.invitation.error) {
       this.setState({
         loading: false,

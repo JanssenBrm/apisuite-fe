@@ -143,13 +143,13 @@ class Navigation extends Component {
     this.setState({ selectedMenu: currentMenu || defaultMenu, selectedSubmenu: currentSubmenu })
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { pathname } = this.props.location
     const defaultMenu = appBarMenu[0]
     this.syncState(pathname, defaultMenu)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { pathname } = nextProps.location
     if (this.props.location.pathname !== pathname) {
       const defaultMenu = pathname === '/dashboard' ? appBarMenu[3] : appBarMenu[0]

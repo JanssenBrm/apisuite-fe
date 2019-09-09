@@ -194,7 +194,7 @@ class ActivityLog extends Component {
     this.props.fetchKpis()
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (this.props.logs !== nextProps.logs && nextProps.logs.records && nextProps.logs.records.length) {
       this.setState({ logs: { ...nextProps.logs, records: nextProps.logs.records.sort((a, b) => +moment(b.created) - +moment(a.created)) } })
     }

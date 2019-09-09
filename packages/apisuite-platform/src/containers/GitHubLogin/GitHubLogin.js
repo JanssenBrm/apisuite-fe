@@ -4,7 +4,7 @@ import { FormattedMessage } from 'react-intl'
 import qs from 'qs'
 
 class GitHubLogin extends Component {
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const query = qs.parse(this.props.location.search, { ignoreQueryPrefix: true })
     const { access_token } = query
 

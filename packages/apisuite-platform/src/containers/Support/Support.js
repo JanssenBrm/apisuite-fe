@@ -36,7 +36,7 @@ class Support extends Component {
     errors: [],
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const typeInquiryReceived = typesInquiry.filter(t => t.key === this.props.option)
     this.setState({
       form: {
@@ -46,7 +46,7 @@ class Support extends Component {
     })
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps !== this.props) {
       this.setState({
         form: { ...this.state.form },

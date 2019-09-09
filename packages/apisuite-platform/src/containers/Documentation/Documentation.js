@@ -102,7 +102,7 @@ class Documentation extends Component {
 
   navigate = route => () => this.props.history.push(route)
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { pathname } = this.props.location
     let topicIndex = null
     let childIndex = null
@@ -117,7 +117,7 @@ class Documentation extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { documentation, location } = nextProps
     const { topic, child } = documentation
     if (this.props.documentation.topic !== null && topic === null) {

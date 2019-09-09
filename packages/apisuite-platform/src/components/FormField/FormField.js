@@ -8,7 +8,7 @@ class FormField extends Component {
     errors: [],
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { rules, showerrors } = nextProps
     const { changed } = this.state
     const errors = rules && rules.filter(r => (showerrors === 'true' ? !r.rule : !r.rule && changed))

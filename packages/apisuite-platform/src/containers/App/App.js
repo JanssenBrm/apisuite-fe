@@ -51,7 +51,7 @@ class App extends Component {
     additionalContent: null,
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { auth, history } = this.props
     const isRecovery = ['/recovery'].includes(history.location.pathname)
 
@@ -65,7 +65,7 @@ class App extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { auth, support } = nextProps
     const { showLoginModal, showTwoFaModal } = auth.ui
     const isLoggedIn = Boolean(auth.user.id)

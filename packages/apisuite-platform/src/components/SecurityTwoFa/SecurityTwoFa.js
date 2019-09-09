@@ -12,7 +12,7 @@ class SecurityTwoFa extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if ((nextProps.method !== this.props.method) && nextProps.method === '1') {
       this.props.generateQRCode()
     }

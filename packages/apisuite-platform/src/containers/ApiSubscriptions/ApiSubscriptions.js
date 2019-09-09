@@ -45,7 +45,7 @@ class ApiSubscriptions extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { subscriptions } = nextProps
     if (this.props.subscriptions !== subscriptions) {
       this.setState({ subscriptions: subscriptions })

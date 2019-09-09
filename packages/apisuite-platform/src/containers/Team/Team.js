@@ -48,7 +48,7 @@ class Team extends React.Component {
     this.props.fetchInvitations()
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.team !== this.props.team) {
       this.setState({
         team: nextProps.team.users,

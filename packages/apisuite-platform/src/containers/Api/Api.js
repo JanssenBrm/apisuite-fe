@@ -15,7 +15,7 @@ class Api extends Component {
     this.props.getApiDocs(brand, productId, role, version)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { apidocs } = nextProps
 
     if (this.props.apidocs !== apidocs) {

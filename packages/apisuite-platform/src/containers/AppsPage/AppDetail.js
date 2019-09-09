@@ -38,7 +38,7 @@ class AppDetail extends Component {
     if (organizationId) this.props.getApp(organizationId, appId)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.app !== this.props.app) {
       if (nextProps.app.redirectURLs) {
         this.setState({ app: { ...nextProps.app, redirectURLs: nextProps.app.redirectURLs[0] } })

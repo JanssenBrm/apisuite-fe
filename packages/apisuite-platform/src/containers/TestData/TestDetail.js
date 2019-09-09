@@ -35,7 +35,7 @@ class TestDetail extends Component {
     if (organizationId) this.props.getTestUser(organizationId, psuId)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.testuser !== this.props.testuser) {
       const { name, email, username, password, avatarUrl, accounts, totalBalance } = nextProps.testuser
       const data = { name, email, username, password, avatarUrl, accounts, totalBalance }

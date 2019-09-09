@@ -13,12 +13,12 @@ export class RequireAuth extends Component {
     isAuthorized: false,
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { user, isAuthorizing, isLoggingIn } = this.props
     this.checkAuth(USER_ROLES.indexOf(user.role), isAuthorizing, isLoggingIn)
   }
 
-  componentWillReceiveProps (nextprops) {
+  UNSAFE_componentWillReceiveProps (nextprops) {
     const { user, isAuthorizing, isLoggingIn } = nextprops
     this.checkAuth(USER_ROLES.indexOf(user.role), isAuthorizing, isLoggingIn)
   }

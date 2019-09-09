@@ -46,7 +46,7 @@ class CreateTestUser extends React.Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { accounts } = nextProps
     if (accounts && this.props.accounts !== accounts) {
       this.setState({ accountTypes: accounts.form.accountTypes.map((t) => ({ id: t.id, name: t.type })) })
