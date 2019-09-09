@@ -17,8 +17,6 @@ export const basicb64 = btoa(`${process.env.DEV_PORTAL_CLIENT_ID}:${process.env.
  */
 export const RECAPTCHA_KEY = process.env.RECAPTCHA_KEY
 
-console.log(RECAPTCHA_KEY)
-
 /**
  * App Theme
  */

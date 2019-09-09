@@ -11,9 +11,15 @@ const hex = (x) => {
 export const pickHex = (color1, color2, percentage) => {
   let midColor = color2
 
-  const r = Math.ceil(parseInt(color1.substring(0, 2), 16) * percentage + parseInt(color2.substring(0, 2), 16) * (1 - percentage))
-  const g = Math.ceil(parseInt(color1.substring(2, 4), 16) * percentage + parseInt(color2.substring(2, 4), 16) * (1 - percentage))
-  const b = Math.ceil(parseInt(color1.substring(4, 6), 16) * percentage + parseInt(color2.substring(4, 6), 16) * (1 - percentage))
+  const r = Math.ceil(
+    parseInt(color1.substring(0, 2), 16) * percentage + parseInt(color2.substring(0, 2), 16) * (1 - percentage)
+  )
+  const g = Math.ceil(
+    parseInt(color1.substring(2, 4), 16) * percentage + parseInt(color2.substring(2, 4), 16) * (1 - percentage)
+  )
+  const b = Math.ceil(
+    parseInt(color1.substring(4, 6), 16) * percentage + parseInt(color2.substring(4, 6), 16) * (1 - percentage)
+  )
 
   if (r && g && b) {
     midColor = hex(r) + hex(g) + hex(b)
@@ -24,8 +30,8 @@ export const pickHex = (color1, color2, percentage) => {
 
 class Stepper extends Component {
   render () {
-    const { currentStep, steps, simple, labelColor } = this.props
-    const { tealColor, lightGreen, midGrey } = typeof themeVariables === 'object' ? themeVariables : this.props.colors
+    const { currentStep, steps, simple, labelColor, colors } = this.props
+    const { tealColor, lightGreen, midGrey } = typeof colors === 'object' ? colors : themeVariables
 
     return (
       <div className={classnames(
