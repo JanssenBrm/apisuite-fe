@@ -6,7 +6,7 @@ import { injectIntl } from 'react-intl'
 const mapStateToProps = ({ apidocs }) => ({ apidocs: apidocs.apidocs, ui: apidocs.ui })
 
 const mapDispatchToProps = (dispatch) => ({
-  getApiDocs: (brand, productId, role, version) => dispatch(getApiDocs(brand, productId, role, version))
+  getApiDocs: (brand, productId, role, version) => dispatch(getApiDocs(brand, productId, role, version)),
 })
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Api))

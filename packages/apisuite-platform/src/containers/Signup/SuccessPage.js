@@ -21,13 +21,13 @@ class SuccessPage extends Component {
   render () {
     const { intl, invitation } = this.props
     const isInvitation = invitation.invitationCode
-    const profileTitle = intl.formatMessage({id: 'signup.success.profile.created'})
-    const profileText = intl.formatMessage({id: 'signup.success.profile.text'})
-    const securityTitle = intl.formatMessage({id: 'signup.success.security.enabled'})
-    const securityText2 = intl.formatMessage({id: 'signup.success.security.text2'})
-    const securityText3 = intl.formatMessage({id: 'signup.success.security.text3'})
-    const emailTitle = intl.formatMessage({id: 'signup.success.email.sent'})
-    const emailText1 = intl.formatMessage({id: 'signup.success.email.text1'})
+    const profileTitle = intl.formatMessage({ id: 'signup.success.profile.created' })
+    const profileText = intl.formatMessage({ id: 'signup.success.profile.text' })
+    const securityTitle = intl.formatMessage({ id: 'signup.success.security.enabled' })
+    const securityText2 = intl.formatMessage({ id: 'signup.success.security.text2' })
+    const securityText3 = intl.formatMessage({ id: 'signup.success.security.text3' })
+    const emailTitle = intl.formatMessage({ id: 'signup.success.email.sent' })
+    const emailText1 = intl.formatMessage({ id: 'signup.success.email.text1' })
 
     return (
       <div className='signup-success'>
@@ -66,8 +66,7 @@ class SuccessPage extends Component {
               <Typography variant='display3' gutterBottom className='item-title confirmation'>{emailTitle}</Typography>
               <p>{emailText1}</p>
             </div>
-          </div>
-        }
+          </div>}
       </div>
     )
   }
@@ -79,7 +78,7 @@ SuccessPage.propTypes = {
   sendActivationEmail: func.isRequired,
   user: object.isRequired,
   history: object.isRequired,
-  invitation: object.isRequired
+  invitation: object.isRequired,
 }
 
 export default SuccessPage

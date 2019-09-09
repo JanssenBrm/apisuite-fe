@@ -67,14 +67,13 @@ const Topic = () => (
               "Risk": {
                 "PaymentContextCode": "PersonToPerson"
               }
-            }`
-            }
+            }`}
           </pre>
         </p>
 
         <li>Get Payment</li>
         <p>
-          It is possible to retrieve a single payment initiation that was requested by the third party itself, to check the status notably. A GET request to <pre>/payments/{`{id}`}</pre> with a valid <pre>{`{id}`}</pre> will return the whole payment initiation.
+          It is possible to retrieve a single payment initiation that was requested by the third party itself, to check the status notably. A GET request to <pre>/payments/{'{id}'}</pre> with a valid <pre>{'{id}'}</pre> will return the whole payment initiation.
         </p>
       </ol>
     </p>
@@ -177,7 +176,7 @@ const Topic = () => (
             Response:
             <br /><br />
 
-            {`{"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsib2F1dGgyLXJlc291cmNlIl0sInVzZXJfbmFtZSI6IjIwNTI1MDIyMDgiLCJzY29wZSI6WyJzZXJ2ZXIiLCJwYXltZW50cyIsInByb2ZpbGVzIiwiYWNjb3VudHMiLCJ0cmFuc2FjdGlvbnMiLCJwYXltZW50LXN1Ym1pc3Npb25zIl0sImV4cCI6MzY3NzM5OTMxOCwiYXV0aG9yaXRpZXMiOlsiVVNFUiIsIlJPTEVfQ0xJRU5UIl0sImp0aSI6ImU0NmVmOWEyLTIwZjAtNDkxNC1iNDhiLTZjZjJjMDAyNmVjMyIsImNsaWVudF9pZCI6ImZHcUYwQTlsSW9wa1hOUXoxcVp5In0.j8BmzwwLgU1DEKchZU-awafXzBdJvow1mbCmDKvDTgq6B9hxGiD7pYGtAZEt46nqYV3CD9QjXbsW63gk4KJ5DkrvQm6Z8nZOSdl-EquPaf8uTFGYRmTn26xPEmFsDaTcee3H9rn0d0_mq6fqTmgz1vR4OVUb9Ut09ayk2fnqyV8","token_type":"bearer","expires_in":2147483646,"scope":"server payments profiles accounts transactions payment-submissions","jti":"e46ef9a2-20f0-4914-b48b-6cf2c0026ec3"}`}
+            {'{"access_token":"eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOlsib2F1dGgyLXJlc291cmNlIl0sInVzZXJfbmFtZSI6IjIwNTI1MDIyMDgiLCJzY29wZSI6WyJzZXJ2ZXIiLCJwYXltZW50cyIsInByb2ZpbGVzIiwiYWNjb3VudHMiLCJ0cmFuc2FjdGlvbnMiLCJwYXltZW50LXN1Ym1pc3Npb25zIl0sImV4cCI6MzY3NzM5OTMxOCwiYXV0aG9yaXRpZXMiOlsiVVNFUiIsIlJPTEVfQ0xJRU5UIl0sImp0aSI6ImU0NmVmOWEyLTIwZjAtNDkxNC1iNDhiLTZjZjJjMDAyNmVjMyIsImNsaWVudF9pZCI6ImZHcUYwQTlsSW9wa1hOUXoxcVp5In0.j8BmzwwLgU1DEKchZU-awafXzBdJvow1mbCmDKvDTgq6B9hxGiD7pYGtAZEt46nqYV3CD9QjXbsW63gk4KJ5DkrvQm6Z8nZOSdl-EquPaf8uTFGYRmTn26xPEmFsDaTcee3H9rn0d0_mq6fqTmgz1vR4OVUb9Ut09ayk2fnqyV8","token_type":"bearer","expires_in":2147483646,"scope":"server payments profiles accounts transactions payment-submissions","jti":"e46ef9a2-20f0-4914-b48b-6cf2c0026ec3"}'}
           </pre>
 
           <p>
@@ -223,8 +222,7 @@ const Topic = () => (
               "Risk": {
                 "PaymentContextCode": "PersonToPerson"
               }
-            }`
-            }
+            }`}
           </pre>
           The payment will then eventually be processed.
         </p>

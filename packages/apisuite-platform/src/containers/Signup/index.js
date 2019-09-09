@@ -26,7 +26,7 @@ const mapDispatchToProps = (dispatch) => ({
   resetSignup: () => dispatch(resetSignup()),
   getInvitation: (invId) => dispatch(getInvitation(invId)),
   acceptInvitation: (invId) => dispatch(acceptInvitation(invId)),
-  postponeInvitation: (invId) => dispatch(postponeInvitation(invId))
+  postponeInvitation: (invId) => dispatch(postponeInvitation(invId)),
 })
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Signup))
@@ -35,7 +35,7 @@ const successMapStateToProps = ({ signup, team }) => ({ user: signup.user, invit
 
 const successMapDispatchToProps = (dispatch) => ({
   openLoginModal: () => dispatch(openLoginModal()),
-  sendActivationEmail: (email, userId) => dispatch(sendActivationEmail(email, userId))
+  sendActivationEmail: (email, userId) => dispatch(sendActivationEmail(email, userId)),
 })
 
 export const PersonalDetails = PersonalDetailsComponent

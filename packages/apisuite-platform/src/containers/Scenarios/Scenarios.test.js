@@ -16,47 +16,47 @@ import reducer, {
   fetchScenariosError,
   getScenario,
   getScenarioSuccess,
-  getScenarioError
+  getScenarioError,
 } from './ducks'
 import rootSaga from './sagas'
 import Select from '@material-ui/core/Select'
 
 const mockApis = [
   {
-    'api': 'test',
-    'versions': ['1.4.0.47', '2.2.1']
+    api: 'test',
+    versions: ['1.4.0.47', '2.2.1'],
   },
   {
-    'api': 'PSD2 ASPSP services for AISP, PISP and PIISP.',
-    'versions': ['1.4.0.47', '2.4']
-  }
+    api: 'PSD2 ASPSP services for AISP, PISP and PIISP.',
+    versions: ['1.4.0.47', '2.4'],
+  },
 ]
 
 const mockScenarios = [
   {
-    'id': 1,
-    'scenarioId': 'ba4917d8-9ebb-40c5-adf9-1cd91ed77793',
-    'title': 'accountsOk',
-    'scenario': 'Returns 200 OK and a list of accounts',
-    'code': 200,
-    'body': '{}',
-    'state': 'PUBLISHED',
-    'endpoints': [],
-    'createdAt': null,
-    'updatedAt': '2019-03-18T17:00:18.000Z'
+    id: 1,
+    scenarioId: 'ba4917d8-9ebb-40c5-adf9-1cd91ed77793',
+    title: 'accountsOk',
+    scenario: 'Returns 200 OK and a list of accounts',
+    code: 200,
+    body: '{}',
+    state: 'PUBLISHED',
+    endpoints: [],
+    createdAt: null,
+    updatedAt: '2019-03-18T17:00:18.000Z',
   },
   {
-    'id': 2,
-    'scenarioId': '9ba9d2de-f267-4f3e-ba06-6dbff6831f3e',
-    'title': 'accounts401',
-    'scenario': 'Returns 401 Unauthorized',
-    'code': 401,
-    'body': '{}',
-    'state': 'PUBLISHED',
-    'endpoints': [],
-    'createdAt': null,
-    'updatedAt': '2019-03-20T12:13:51.000Z'
-  }
+    id: 2,
+    scenarioId: '9ba9d2de-f267-4f3e-ba06-6dbff6831f3e',
+    title: 'accounts401',
+    scenario: 'Returns 401 Unauthorized',
+    code: 401,
+    body: '{}',
+    state: 'PUBLISHED',
+    endpoints: [],
+    createdAt: null,
+    updatedAt: '2019-03-20T12:13:51.000Z',
+  },
 ]
 const mockScenario = mockScenarios[0]
 const mockEndpoints = {
@@ -64,7 +64,7 @@ const mockEndpoints = {
     page: 1,
     pageCount: 1,
     pageSize: 20,
-    rowCount: 1
+    rowCount: 1,
   },
   records: [
     {
@@ -74,9 +74,9 @@ const mockEndpoints = {
       path: '/v1/accounts',
       parameters: '',
       security: '',
-      scenarios: [mockScenarios]
-    }
-  ]
+      scenarios: [mockScenarios],
+    },
+  ],
 }
 const errorMock = { message: 'error-load-mock' }
 
@@ -89,12 +89,12 @@ describe('<Scenarios />', () => {
     fetchApis: jest.fn(),
     getScenario: jest.fn(),
     ui: {
-      loading: false
+      loading: false,
     },
     endpoints: {},
     apis: [],
     scenario: {},
-    scenarios: []
+    scenarios: [],
   }
 
   const wrapper = mountWithIntl(<Scenarios {...props} />)
@@ -116,12 +116,12 @@ describe('<Scenarios />', () => {
   })
 
   it('should update ui state with new props', () => {
-    wrapper.setProps({ ui: {loading: true} })
+    wrapper.setProps({ ui: { loading: true } })
     expect(wrapper.state().ui.loading).toEqual(true)
   })
 
   it('should select an api and version', () => {
-    wrapper.find(Select).at(0).simulate('change', {target: { name: 'selectedApi', value: 'test' }})
+    wrapper.find(Select).at(0).simulate('change', { target: { name: 'selectedApi', value: 'test' } })
     expect(wrapper.state().selectedApi).toEqual(mockApis[0])
     expect(wrapper.state().selectedVersion).toEqual(mockApis[0].versions[0])
 
@@ -129,7 +129,7 @@ describe('<Scenarios />', () => {
   })
 
   it('should change api version', () => {
-    wrapper.find(Select).at(1).simulate('change', {target: { name: 'selectedVersion', value: '2.2.1' }})
+    wrapper.find(Select).at(1).simulate('change', { target: { name: 'selectedVersion', value: '2.2.1' } })
     expect(wrapper.state().selectedVersion).toEqual(mockApis[0].versions[1])
     expect(props.fetchEndpoints).toHaveBeenCalledWith(mockApis[0].api, mockApis[0].versions[1])
   })
@@ -159,9 +159,10 @@ describe('<Scenarios />', () => {
   it('should update scenario state with new props', () => {
     wrapper.setProps({ scenario: mockScenario })
     expect(wrapper.state().scenario).toEqual(
-      {...mockScenario,
+      {
+        ...mockScenario,
         body: JSON.stringify(JSON.parse(mockScenario.body), null, 3),
-        endpoints: mockScenario.endpoints
+        endpoints: mockScenario.endpoints,
       })
   })
 
@@ -177,8 +178,8 @@ describe('<Scenarios />', () => {
       endpoints: {},
       apis: [],
       ui: {
-        loading: false
-      }
+        loading: false,
+      },
     }
 
     it('should return the initial state', () => {
@@ -189,7 +190,7 @@ describe('<Scenarios />', () => {
       expect(reducer(initialState, fetchApis()))
         .toEqual({
           ...initialState,
-          ui: { loading: true }
+          ui: { loading: true },
         })
     })
 
@@ -198,20 +199,20 @@ describe('<Scenarios />', () => {
         .toEqual({
           ...initialState,
           ui: { loading: false },
-          apis: mockApis
+          apis: mockApis,
         })
     })
 
     it('should update state on FETCH_APIS_ERROR', () => {
       expect(reducer(initialState, fetchApisError(errorMock)))
-        .toEqual({...initialState, ui: { loading: false }, apis: []})
+        .toEqual({ ...initialState, ui: { loading: false }, apis: [] })
     })
 
     it('should update state on FETCH_ENDPOINTS', () => {
       expect(reducer(initialState, fetchEndpoints()))
         .toEqual({
           ...initialState,
-          ui: { loading: true }
+          ui: { loading: true },
         })
     })
 
@@ -220,20 +221,20 @@ describe('<Scenarios />', () => {
         .toEqual({
           ...initialState,
           ui: { loading: false },
-          endpoints: mockEndpoints
+          endpoints: mockEndpoints,
         })
     })
 
     it('should update state on FETCH_ENDPOINTS_ERROR', () => {
       expect(reducer(initialState, fetchEndpointsError(errorMock)))
-        .toEqual({...initialState, ui: { loading: false }, endpoints: {}})
+        .toEqual({ ...initialState, ui: { loading: false }, endpoints: {} })
     })
 
     it('should update state on FETCH_SCENARIOS', () => {
       expect(reducer(initialState, fetchScenarios()))
         .toEqual({
           ...initialState,
-          ui: { loading: true }
+          ui: { loading: true },
         })
     })
 
@@ -243,20 +244,20 @@ describe('<Scenarios />', () => {
         .toEqual({
           ...initialState,
           ui: { loading: false },
-          data: mockScenarios
+          data: mockScenarios,
         })
     })
 
     it('should update state on FETCH_SCENARIOS_ERROR', () => {
       expect(reducer(initialState, fetchScenariosError(errorMock)))
-        .toEqual({...initialState, ui: { loading: false }, data: {}})
+        .toEqual({ ...initialState, ui: { loading: false }, data: {} })
     })
 
     it('should update state on GET_SCENARIO', () => {
       expect(reducer(initialState, getScenario()))
         .toEqual({
           ...initialState,
-          ui: { loading: true }
+          ui: { loading: true },
         })
     })
 
@@ -265,13 +266,13 @@ describe('<Scenarios />', () => {
         .toEqual({
           ...initialState,
           ui: { loading: false },
-          scenario: mockScenario
+          scenario: mockScenario,
         })
     })
 
     it('should update state on GET_SCENARIO_ERROR', () => {
       expect(reducer(initialState, getScenarioError(errorMock)))
-        .toEqual({...initialState, ui: { loading: false }, scenario: {}})
+        .toEqual({ ...initialState, ui: { loading: false }, scenario: {} })
     })
   })
 

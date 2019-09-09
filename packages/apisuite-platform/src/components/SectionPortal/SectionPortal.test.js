@@ -7,7 +7,7 @@ import Card from 'components/Card'
 describe('<SectionPortal />', () => {
   const props = {
     navigate: jest.fn(),
-    isLoggedIn: false
+    isLoggedIn: false,
   }
   const wrapper = shallow(<SectionPortal {...props} />)
 

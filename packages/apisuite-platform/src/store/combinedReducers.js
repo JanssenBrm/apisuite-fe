@@ -6,7 +6,7 @@
  */
 
 import { combineReducers } from 'redux'
-import { routerReducer as routing } from 'react-router-redux'
+import { connectRouter } from 'connected-react-router'
 
 import auth from 'containers/Auth/ducks'
 import signup from 'containers/Signup/ducks'
@@ -28,8 +28,8 @@ import activity from 'containers/ActivityLog/ducks'
 import resources from 'containers/ExternalResources/ducks'
 import portalnotifications from 'containers/PortalNotification/ducks'
 
-export default combineReducers({
-  routing,
+export default (history) => combineReducers({
+  router: connectRouter(history),
   auth,
   signup,
   lang,
@@ -48,5 +48,5 @@ export default combineReducers({
   team,
   activity,
   resources,
-  portalnotifications
+  portalnotifications,
 })

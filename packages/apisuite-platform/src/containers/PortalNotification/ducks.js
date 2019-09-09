@@ -20,8 +20,8 @@ const initialState = {
   notification: {},
   showNotification: false,
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 
 /**
@@ -35,24 +35,24 @@ export default function reducer (state = initialState, action) {
       return update(state, {
         showNotification: { $set: false },
         ui: {
-          loading: { $set: true }
-        }
+          loading: { $set: true },
+        },
       })
     case FETCH_LATEST_NOTIFICATION_SUCCESS:
       return update(state, {
-        notification: {$set: action.data},
+        notification: { $set: action.data },
         showNotification: { $set: true },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_LATEST_NOTIFICATION_ERROR:
       return update(state, {
-        notification: {$set: {}},
+        notification: { $set: {} },
         showNotification: { $set: false },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     default:
       return state

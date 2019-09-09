@@ -15,7 +15,7 @@ describe('<SecurityTwoFa />', () => {
     sendSMSCode: jest.fn(),
     twoFaUpdate: jest.fn(),
     route: '/profile',
-    verified: false
+    verified: false,
   }
 
   const wrapper = mountWithIntl(<SecurityTwoFa {...props} />)
@@ -30,7 +30,7 @@ describe('<SecurityTwoFa />', () => {
 
   it('should call sendSMSCode on button click when `authorizationSms` option is selected', () => {
     wrapper.setProps({
-      method: '2'
+      method: '2',
     })
     const smsBtn = wrapper.find('#send-sms-button')
     smsBtn.first().simulate('click')

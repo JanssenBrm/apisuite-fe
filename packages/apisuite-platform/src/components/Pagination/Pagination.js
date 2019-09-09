@@ -33,14 +33,14 @@ class Pagination extends Component {
 }
 
 Pagination.defaultProps = {
-  initialPage: 1
+  initialPage: 1,
 }
 
 Pagination.propTypes = {
   items: array.isRequired,
   pager: object.isRequired,
   onChangePage: func.isRequired,
-  query: oneOfType([string])
+  query: oneOfType([string]),
 }
 
 export default Pagination

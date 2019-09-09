@@ -5,7 +5,7 @@ import { API_URL } from 'constants/endpoints'
 import {
   FETCH_RESOURCES,
   fetchResourcesSuccess,
-  fetchResourcesError
+  fetchResourcesError,
 } from './ducks'
 import qs from 'qs'
 
@@ -22,7 +22,7 @@ function * fetchResourcesWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {

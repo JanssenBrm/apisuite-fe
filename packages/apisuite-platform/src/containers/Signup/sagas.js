@@ -3,7 +3,7 @@
  */
 
 import request from 'util/request'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { takeLatest, call, put, select } from 'redux-saga/effects'
 import getDefaultHeaders from 'util/getDefaultHeaders'
 import { API_URL } from 'constants/endpoints'
@@ -25,7 +25,7 @@ import {
   GENERATE_QRCODE,
   sendSMSCodeSuccess,
   sendSMSCodeError,
-  SEND_SMS_CODE
+  SEND_SMS_CODE,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 import qs from 'qs'
@@ -44,7 +44,7 @@ function * sendActivationEmail (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -76,7 +76,7 @@ function * signupUser (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'POST',
-    body
+    body,
   })
 
   if (!response.err) {
@@ -108,7 +108,7 @@ function * signupOrganization (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -141,7 +141,7 @@ function * signupSecurity (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -172,7 +172,7 @@ function * generateQRCode (action) {
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer', token: state.signup.user.token })
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -202,7 +202,7 @@ function * sendSMSCode (action) {
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer', token: state.signup.user.token })
   const response = yield call(request, requestUrl, {
     method: 'POST',
-    headers
+    headers,
   })
 
   if (!response.err) {

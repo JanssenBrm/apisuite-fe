@@ -10,9 +10,9 @@ class Login extends Component {
     showErrors: false,
     form: {
       email: '',
-      password: ''
+      password: '',
     },
-    errors: []
+    errors: [],
   }
 
   navigate = route => e => this.props.history.push(route)
@@ -25,15 +25,15 @@ class Login extends Component {
       this.props.logUserIn({ email, password })
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
 
   handleChange = ({ target }, errors) => {
     this.setState({
-      form: {...this.state.form, [target.name]: target.value},
-      errors: parseErrors(target, errors, this.state.errors)
+      form: { ...this.state.form, [target.name]: target.value },
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -48,11 +48,11 @@ class Login extends Component {
     const { form, showErrors, errors } = this.state
     const { password, email } = form
 
-    const emailRequired = intl.formatMessage({id: 'login.email.required'})
-    const emailPlaceholder = intl.formatMessage({id: 'login.email.placeholder'})
-    const passwordRequired = intl.formatMessage({id: 'login.password.required'})
-    const passwordPlaceholder = intl.formatMessage({id: 'login.password.placeholder'})
-    const loginButton = intl.formatMessage({id: 'login.label'})
+    const emailRequired = intl.formatMessage({ id: 'login.email.required' })
+    const emailPlaceholder = intl.formatMessage({ id: 'login.email.placeholder' })
+    const passwordRequired = intl.formatMessage({ id: 'login.password.required' })
+    const passwordPlaceholder = intl.formatMessage({ id: 'login.password.placeholder' })
+    const loginButton = intl.formatMessage({ id: 'login.label' })
 
     return (
       <div className='page-content-wrapper login-container'>
@@ -68,9 +68,9 @@ class Login extends Component {
             onChange={this.handleChange}
             value={form.email}
             disabled={ui.loading}
-            InputLabelProps={{shrink: true}}
+            InputLabelProps={{ shrink: true }}
             rules={[
-              {rule: isValidEmail(form.email), message: emailRequired}
+              { rule: isValidEmail(form.email), message: emailRequired },
             ]}
             showerrors={`${showErrors}`}
           />
@@ -86,9 +86,9 @@ class Login extends Component {
             value={form.password}
             disabled={ui.loading}
             inputtype='password'
-            InputLabelProps={{shrink: true}}
+            InputLabelProps={{ shrink: true }}
             rules={[
-              {rule: form.password.length > 0, message: passwordRequired}
+              { rule: form.password.length > 0, message: passwordRequired },
             ]}
             showerrors={`${showErrors}`}
           />
@@ -159,7 +159,7 @@ Login.propTypes = {
   /**
    * Browser history session
    */
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
 }
 
 export default Login

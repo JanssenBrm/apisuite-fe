@@ -25,8 +25,8 @@ const initialState = {
   products: [],
   product: {},
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 
 /**
@@ -40,38 +40,38 @@ export default function reducer (state = initialState, action) {
     case GET_API_PRODUCT:
       return update(state, {
         ui: {
-          loading: {$set: true}
-        }
+          loading: { $set: true },
+        },
       })
     case FETCH_API_PRODUCTS_SUCCESS:
       return update(state, {
-        products: {$set: action.data.products},
-        brands: {$set: action.data.brands},
+        products: { $set: action.data.products },
+        brands: { $set: action.data.brands },
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_API_PRODUCTS_ERROR:
       return update(state, {
-        products: {$set: []},
-        brands: {$set: []},
+        products: { $set: [] },
+        brands: { $set: [] },
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     case GET_API_PRODUCT_SUCCESS:
       return update(state, {
-        product: {$set: action.data},
+        product: { $set: action.data },
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     case GET_API_PRODUCT_ERROR:
       return update(state, {
-        product: {$set: {}},
+        product: { $set: {} },
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     default:
       return state
@@ -82,7 +82,7 @@ export default function reducer (state = initialState, action) {
  * Fetch API Products action creator
  */
 export function fetchApiProducts () {
-  return {type: FETCH_API_PRODUCTS}
+  return { type: FETCH_API_PRODUCTS }
 }
 
 /**
@@ -90,21 +90,21 @@ export function fetchApiProducts () {
  * @param {Object} data - data received from the successful call
  */
 export function fetchApiProductsSuccess (data) {
-  return {type: FETCH_API_PRODUCTS_SUCCESS, data}
+  return { type: FETCH_API_PRODUCTS_SUCCESS, data }
 }
 
 /**
  * Fetch API Products error
  */
 export function fetchApiProductsError (error) {
-  return {type: FETCH_API_PRODUCTS_ERROR, error}
+  return { type: FETCH_API_PRODUCTS_ERROR, error }
 }
 
 /**
  * Get API Product action creator
  */
 export function getApiProduct (productId) {
-  return {type: GET_API_PRODUCT, productId}
+  return { type: GET_API_PRODUCT, productId }
 }
 
 /**
@@ -112,12 +112,12 @@ export function getApiProduct (productId) {
  * @param {Object} data - data received from the successful call
  */
 export function getApiProductSuccess (data) {
-  return {type: GET_API_PRODUCT_SUCCESS, data}
+  return { type: GET_API_PRODUCT_SUCCESS, data }
 }
 
 /**
  * Get API Product error
  */
 export function getApiProductError (error) {
-  return {type: GET_API_PRODUCT_ERROR, error}
+  return { type: GET_API_PRODUCT_ERROR, error }
 }

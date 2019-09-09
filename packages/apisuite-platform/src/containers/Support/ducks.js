@@ -21,9 +21,9 @@ const initialState = {
   open: false,
   option: null,
   captcha: {
-    value: null
+    value: null,
   },
-  form: null
+  form: null,
 }
 
 /**
@@ -36,45 +36,45 @@ export default function reducer (state = initialState, action) {
     case OPEN_SUPPORT_MODAL:
       return update(state, {
         open: { $set: true },
-        option: { $set: action.option }
+        option: { $set: action.option },
       })
     case RESET_SUPPORT_MODAL:
       return update(state, {
         open: { $set: false },
-        option: { $set: null }
+        option: { $set: null },
       })
     case SAVE_CAPTCHA:
       return update(state, {
         captcha: {
-          value: { $set: action.value }
-        }
+          value: { $set: action.value },
+        },
       })
     case RESET_CAPTCHA:
       return update(state, {
         captcha: {
-          value: { $set: null }
-        }
+          value: { $set: null },
+        },
       })
     case SEND_SUPPORT_FORM:
       return update(state, {
         captcha: {
-          value: { $set: null }
+          value: { $set: null },
         },
-        form: { $set: action.form }
+        form: { $set: action.form },
       })
     case SEND_SUPPORT_FORM_SUCCESS:
       return update(state, {
         captcha: {
-          value: { $set: null }
+          value: { $set: null },
         },
-        form: { $set: action.data }
+        form: { $set: action.data },
       })
     case SEND_SUPPORT_FORM_ERROR:
       return update(state, {
         captcha: {
-          value: { $set: null }
+          value: { $set: null },
         },
-        form: { $set: null }
+        form: { $set: null },
       })
     default:
       return state

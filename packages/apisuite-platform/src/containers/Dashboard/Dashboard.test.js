@@ -6,18 +6,18 @@ import FirstUse from './FirstUse'
 
 const mockApps = [
   {
-    'id': 1,
-    'name': 'My First App',
-    'description': 'Very cool app',
-    'icon': 'http://myicon',
-    'publicURL': 'public.com',
-    'redirectURLs': ['redirect.com']
-  }
+    id: 1,
+    name: 'My First App',
+    description: 'Very cool app',
+    icon: 'http://myicon',
+    publicURL: 'public.com',
+    redirectURLs: ['redirect.com'],
+  },
 ]
 
 const props = {
   history: {
-    push: jest.fn()
+    push: jest.fn(),
   },
   user: { fullName: 'Mh Mai', organizations: [{ id: 1, name: 'myOrg' }] },
   fullName: 'Mh Mai',
@@ -27,7 +27,7 @@ const props = {
   theme: {},
   fetchLatestNotification: jest.fn(),
   notification: {},
-  showNotification: false
+  showNotification: false,
 }
 
 describe('<Dashboard />', () => {
@@ -66,7 +66,7 @@ describe('<Overview />', () => {
 describe('<FirstUse />', () => {
   const props = {
     history: { push: jest.fn() },
-    apps: mockApps
+    apps: mockApps,
   }
   const wrapper = shallow(<FirstUse {...props} />)
 

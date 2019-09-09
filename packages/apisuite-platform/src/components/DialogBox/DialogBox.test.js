@@ -6,7 +6,7 @@ describe('<DialogBox />', () => {
   const props = {
     open: false,
     content: 'content',
-    actions: ['action1', 'action2']
+    actions: ['action1', 'action2'],
   }
   const actions = ['action1', 'action2']
   const wrapper = mount(<DialogBox {...props} />)

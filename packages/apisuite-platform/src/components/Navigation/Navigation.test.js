@@ -14,21 +14,21 @@ const mockMenu = [
       { name: 'overview', intlId: 'navigation.overview', route: '/' },
       { name: 'upcoming', intlId: 'navigation.upcoming', route: '/api/upcoming', disabled: true },
       { name: 'feedback', intlId: 'navigation.feedback', route: '/api/feedback', disabled: true },
-      { name: 'subscriptions', intlId: 'navigation.subscriptions', route: '/api/subscriptions' }
-    ]
+      { name: 'subscriptions', intlId: 'navigation.subscriptions', route: '/api/subscriptions' },
+    ],
   },
   {
     name: 'documentation',
     intlId: 'navigation.docs',
     submenu: [
       { name: 'overview', intlId: 'navigation.overview', route: '/api', disabled: true },
-      { name: 'apps', intlId: 'navigation.apps', route: '/api', protected: true }
-    ]
+      { name: 'apps', intlId: 'navigation.apps', route: '/api', protected: true },
+    ],
   },
   {
     name: 'support',
     intlId: 'navigation.support',
-    route: '/support'
+    route: '/support',
   },
   {
     name: 'dashboard',
@@ -39,8 +39,8 @@ const mockMenu = [
       { name: 'testData', intlId: 'navigation.testData', route: '/testdata', disabled: true },
       { name: 'analytics', intlId: 'navigation.analytics', route: '/analytics', disabled: true },
       { name: 'users', intlId: 'navigation.users', route: '/users', disabled: true },
-      { name: 'console', route: '/api/console', icon: consoleIcon, disabled: true }
-    ]
+      { name: 'console', route: '/api/console', icon: consoleIcon, disabled: true },
+    ],
   },
   {
     name: 'user',
@@ -50,9 +50,9 @@ const mockMenu = [
       { name: 'team', intlId: 'navigation.team', route: '/team' },
       { name: 'codes', intlId: 'navigation.codes', route: '/recovery-codes', hidden: true },
       { name: 'organisation', intlId: 'navigation.organisation', route: '/organisation' },
-      { name: 'logout', route: '/logout', icon: powerSettingsIcon, tooltip: 'Logout' }
-    ]
-  }
+      { name: 'logout', route: '/logout', icon: powerSettingsIcon, tooltip: 'Logout' },
+    ],
+  },
 ]
 
 const mockUserMenu = mockMenu[mockMenu.length - 1]
@@ -71,15 +71,15 @@ const props = {
       fullName: 'Clau',
       avatar: 'myAvatar',
       email: 'clau@cloudoki.com',
-      organizations: mockOrganizations
-    }
+      organizations: mockOrganizations,
+    },
   },
   openLoginModal: jest.fn(),
   checkExpanded: jest.fn(),
   openSupportModal: jest.fn(),
   changeTopic: jest.fn(),
   isUserActivated: true,
-  theme: themes.default
+  theme: themes.default,
 }
 
 describe('<Navigation />', () => {
@@ -94,7 +94,7 @@ describe('<Navigation />', () => {
     wrapper.setState({ isTop: false })
     const scrollSpy = jest.spyOn(wrapper.instance(), 'handleScroll')
     wrapper.find('.navigation').first().simulate('scroll', { deltaY: 50 })
-    wrapper.instance().handleScroll({type: 'scroll'})
+    wrapper.instance().handleScroll({ type: 'scroll' })
     expect(scrollSpy).toHaveBeenCalled()
 
     const isTop = global.window.scrollY < 50
@@ -120,7 +120,7 @@ describe('<Navigation />', () => {
   })
 
   it('should go back on navigation click', () => {
-    wrapper.setProps({ history: {...props.history, location: {pathname: '/api-detail/api'}} })
+    wrapper.setProps({ history: { ...props.history, location: { pathname: '/api-detail/api' } } })
     wrapper.find('.back-navigation').first().simulate('click')
     expect(props.history.push).toHaveBeenCalledWith('/')
   })

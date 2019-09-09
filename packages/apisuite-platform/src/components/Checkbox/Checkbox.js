@@ -9,11 +9,11 @@ const CustomCheckbox = ({ checked, onChange, label, labelProps, ...props }) => (
     <FormControlLabel
       {...labelProps}
       label={label}
-      classes={{root: `form-control-label ${props.multiselect && 'multiselect'}`}}
+      classes={{ root: `form-control-label ${props.multiselect && 'multiselect'}` }}
       control={
         <Checkbox
           {...props}
-          classes={{root: 'checkbox'}}
+          classes={{ root: 'checkbox' }}
           checked={checked}
           color='primary'
           icon={<CheckBoxOutlineBlankIcon color='primary' />}
@@ -40,7 +40,7 @@ CustomCheckbox.propTypes = {
   /**
    * Callback when checkbox changes state
    */
-  onChange: func.isRequired
+  onChange: func.isRequired,
 }
 
 export default CustomCheckbox

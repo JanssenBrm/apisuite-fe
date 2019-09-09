@@ -7,11 +7,11 @@ describe('<GitHubLogin />', () => {
   const props = {
     auth: {
       isAutorizing: false,
-      authToken: null
+      authToken: null,
     },
     location: { search: '?access_token=1234' },
     ghLogin: jest.fn(),
-    intl: {}
+    intl: {},
   }
   const wrapper = mountWithIntl(<GitHubLogin {...props} />)
 

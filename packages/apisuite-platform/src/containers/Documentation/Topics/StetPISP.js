@@ -66,12 +66,12 @@ const StetPISP = () => (
     <h4>Exchange Code cURL example</h4>
 
     <pre className='big'>
-      curl -X POST \ 
-  --data "grant_type=client_credentials" \ 
-  --data "redirect_uri=http://www.demo-app.com/callback" \ 
-  --data "client_id=aB541dfA" \ 
-  --data "client_secret=sup3rs3cr3t" \ 
-  --data "scope=pisp" \ 
+      curl -X POST \
+  --data "grant_type=client_credentials" \
+  --data "redirect_uri=http://www.demo-app.com/callback" \
+  --data "client_id=aB541dfA" \
+  --data "client_secret=sup3rs3cr3t" \
+  --data "scope=pisp" \
   https://sandbox.auth.bnpparibasfortis.com/token
     </pre>
 
@@ -89,7 +89,7 @@ const StetPISP = () => (
     </pre>
 
     <p>This is now the <pre>Bearer token</pre> or <pre>Access token</pre> that your App will use to issue request against the <pre>STET PISP Sandbox API</pre> endpoints that are to be used on behalf of a <pre>PSU</pre>.</p>
-  </div >
+  </div>
 )
 
 export default StetPISP

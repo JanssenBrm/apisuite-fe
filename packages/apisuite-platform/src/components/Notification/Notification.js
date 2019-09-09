@@ -8,8 +8,8 @@ import { withStyles } from '@material-ui/core/styles'
 const LightTooltip = withStyles(theme => ({
   tooltip: {
     backgroundColor: theme.palette.common.white,
-    color: 'rgba(0, 0, 0, 0.87)'
-  }
+    color: 'rgba(0, 0, 0, 0.87)',
+  },
 }))(Tooltip)
 
 const navigate = (url) => {
@@ -30,11 +30,12 @@ const Notification = ({ tag, message, url, handleClose }) => (
 
         <div className='message-wrapper'>
           <LightTooltip title={
-            <React.Fragment>
-              <div dangerouslySetInnerHTML={{__html: message}} />
-            </React.Fragment>
-          }>
-            <div className='message' dangerouslySetInnerHTML={{__html: message}} />
+            <>
+              <div dangerouslySetInnerHTML={{ __html: message }} />
+            </>
+          }
+          >
+            <div className='message' dangerouslySetInnerHTML={{ __html: message }} />
           </LightTooltip>
           {
             url && <div className='view-more' onClick={() => navigate(url)}>
@@ -57,7 +58,7 @@ Notification.defaultProps = {
   tag: '',
   message: '',
   url: '',
-  handleClose: () => {}
+  handleClose: () => {},
 }
 
 Notification.propTypes = {
@@ -67,7 +68,7 @@ Notification.propTypes = {
   tag: PropTypes.string,
   message: PropTypes.string,
   url: PropTypes.string,
-  handleClose: PropTypes.func
+  handleClose: PropTypes.func,
 }
 
 export default Notification

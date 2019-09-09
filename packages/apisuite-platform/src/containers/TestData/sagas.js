@@ -24,7 +24,7 @@ import {
   getTestUserAccountsError,
   GET_TESTUSER_TRANSACTIONS,
   getTestUserTransactionsSuccess,
-  getTestUserTransactionsError
+  getTestUserTransactionsError,
 } from './ducks'
 import qs from 'qs'
 import { showNotification } from 'containers/NotificationManager/ducks'
@@ -43,7 +43,7 @@ function * fetchTestDataWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -72,7 +72,7 @@ function * getTestUserWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -103,7 +103,7 @@ function * createTestUserWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -137,7 +137,7 @@ function * updateTestUserWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'PUT',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -168,7 +168,7 @@ function * getTestUserAccountsWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -197,7 +197,7 @@ function * getTestUserTransactionsWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {

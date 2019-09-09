@@ -48,7 +48,7 @@ class App extends Component {
     rightImg: '',
     step: 1,
     isExpanded: false,
-    additionalContent: null
+    additionalContent: null,
   }
 
   componentWillMount () {
@@ -109,13 +109,13 @@ class App extends Component {
   resetModal = () => {
     const { intl, history } = this.props
     this.setState({
-      title: intl.formatMessage({id: 'navigation.login'}),
+      title: intl.formatMessage({ id: 'navigation.login' }),
       component: <Login openForgotPassword={this.openForgotPasswordModal} history={history} />,
-      rightTitle: intl.formatMessage({id: 'login.welcome.title'}),
-      rightSubtitle: intl.formatMessage({id: 'login.welcome.subtitle'}),
+      rightTitle: intl.formatMessage({ id: 'login.welcome.title' }),
+      rightSubtitle: intl.formatMessage({ id: 'login.welcome.subtitle' }),
       rightImg: 'thumb',
       additionalContent: null,
-      step: 1
+      step: 1,
     })
   }
 
@@ -136,44 +136,44 @@ class App extends Component {
   openTwofaModal = () => {
     const { intl, sendSMSCode } = this.props
     this.setState({
-      title: intl.formatMessage({id: 'login.2fa.title'}),
+      title: intl.formatMessage({ id: 'login.2fa.title' }),
       component: <TwoFaLoginPage sendSMSCode={sendSMSCode} openRecovery={this.openRecoveryModal} />,
-      rightTitle: intl.formatMessage({id: 'login.welcome.title'}),
-      rightSubtitle: intl.formatMessage({id: 'login.welcome.subtitle'}),
-      step: 2
+      rightTitle: intl.formatMessage({ id: 'login.welcome.title' }),
+      rightSubtitle: intl.formatMessage({ id: 'login.welcome.subtitle' }),
+      step: 2,
     })
   }
 
   openRecoveryModal = () => {
     const { intl } = this.props
     this.setState({
-      title: intl.formatMessage({id: 'login.recovery.title'}),
+      title: intl.formatMessage({ id: 'login.recovery.title' }),
       component: <TwoFaRecoveryPage openSupport={this.openSupportModal} />,
-      rightTitle: intl.formatMessage({id: 'login.welcome.title'}),
-      rightSubtitle: intl.formatMessage({id: 'login.welcome.subtitle'}),
-      step: 2
+      rightTitle: intl.formatMessage({ id: 'login.welcome.title' }),
+      rightSubtitle: intl.formatMessage({ id: 'login.welcome.subtitle' }),
+      step: 2,
     })
   }
 
   openForgotPasswordModal = () => {
     const { intl } = this.props
     this.setState({
-      title: intl.formatMessage({id: 'login.forgotPassword.title'}),
+      title: intl.formatMessage({ id: 'login.forgotPassword.title' }),
       component: <ForgotPassword goBack={this.resetModal} />,
-      rightTitle: intl.formatMessage({id: 'login.welcome.title'}),
-      rightSubtitle: intl.formatMessage({id: 'login.welcome.subtitle'}),
-      step: 1
+      rightTitle: intl.formatMessage({ id: 'login.welcome.title' }),
+      rightSubtitle: intl.formatMessage({ id: 'login.welcome.subtitle' }),
+      step: 1,
     })
   }
 
   openResetPasswordModal = () => {
     const { intl, location } = this.props
     this.setState({
-      title: intl.formatMessage({id: 'resetPassword.resetPassPhrase.label'}),
+      title: intl.formatMessage({ id: 'resetPassword.resetPassPhrase.label' }),
       component: <ResetPassword location={location} resetModal={this.resetModal} />,
-      rightTitle: intl.formatMessage({id: 'login.welcome.title'}),
-      rightSubtitle: intl.formatMessage({id: 'login.welcome.subtitle'}),
-      step: 1
+      rightTitle: intl.formatMessage({ id: 'login.welcome.title' }),
+      rightSubtitle: intl.formatMessage({ id: 'login.welcome.subtitle' }),
+      step: 1,
     })
   }
 
@@ -186,16 +186,17 @@ class App extends Component {
         isLoggedIn={isLoggedIn}
         option={option}
         resetCaptcha={resetCaptcha}
-        history={history} />,
+        history={history}
+      />,
       rightImg: 'eye',
-      rightTitle: intl.formatMessage({id: 'support.title'}),
-      rightSubtitle: intl.formatMessage({id: 'support.description'}),
+      rightTitle: intl.formatMessage({ id: 'support.title' }),
+      rightSubtitle: intl.formatMessage({ id: 'support.description' }),
       additionalContent: !isLoggedIn && <ReCAPTCHA
         ref={recaptchaRef}
         sitekey={RECAPTCHA_KEY}
         onChange={this.onVerifyCaptcha}
       />,
-      step: -1
+      step: -1,
     })
     this.props.openSupportModal(option)
   }
@@ -208,7 +209,7 @@ class App extends Component {
 
   checkExpanded = (hasSubmenu) => {
     this.setState({
-      isExpanded: hasSubmenu
+      isExpanded: hasSubmenu,
     })
   }
 
@@ -234,7 +235,8 @@ class App extends Component {
     const isUserActivated = user.activated
 
     return (
-      <Navigation key='navigation'
+      <Navigation
+        key='navigation'
         {
         ...{
           isLoggedIn,
@@ -245,7 +247,7 @@ class App extends Component {
             this.openLoginModal(true)
             this.openSupportModal(option)
           },
-          checkExpanded: (hasSubmenu) => this.checkExpanded(hasSubmenu)
+          checkExpanded: (hasSubmenu) => this.checkExpanded(hasSubmenu),
         }}
       />
     )
@@ -266,8 +268,9 @@ class App extends Component {
         {this.renderNav()}
         <div className={classnames('route-wrapper', {
           'default-spacing': !hasTransparentBG,
-          'expanded': isExpanded && !hasTransparentBG
-        })}>
+          expanded: isExpanded && !hasTransparentBG,
+        })}
+        >
           {routes()}
         </div>
 
@@ -302,7 +305,7 @@ App.propTypes = {
   resetSupportModal: func.isRequired,
   saveCaptcha: func.isRequired,
   resetCaptcha: func.isRequired,
-  sendSMSCode: func.isRequired
+  sendSMSCode: func.isRequired,
 }
 
 export default injectIntl(App)

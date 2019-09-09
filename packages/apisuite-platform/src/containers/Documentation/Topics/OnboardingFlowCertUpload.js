@@ -13,7 +13,9 @@ const OnboardingFlowCertUpload = () => (
       allowed, and only one QWAC per third party. For the sandbox, this restriction doesn't apply and the certificate(s)
       can be either OV (Organisation validated) or EV (Extended validated). Note that you can find documentation about
       QWAC certificates here : <a
-      href='https://www.etsi.org/deliver/etsi_ts/119400_119499/119495/01.01.02_60/ts_119495v010102p.pdf'>https://www.etsi.org/deliver/etsi_ts/119400_119499/119495/01.01.02_60/ts_119495v010102p.pdf</a>
+        href='https://www.etsi.org/deliver/etsi_ts/119400_119499/119495/01.01.02_60/ts_119495v010102p.pdf'
+      >https://www.etsi.org/deliver/etsi_ts/119400_119499/119495/01.01.02_60/ts_119495v010102p.pdf
+      </a>
     </p>
     <p>
       All the STET endpoints will enforce TLS-Mutual Authentication. We will check for your certificate to be part of a

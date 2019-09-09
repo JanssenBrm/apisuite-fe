@@ -24,7 +24,7 @@ class LandingPage extends Component {
   }
 
   render () {
-    const {auth, products, brands} = this.props
+    const { auth, products, brands } = this.props
 
     // Display active APIs first
     const orderedProducts = products.sort((a, b) => b.version ? 1 : -1)
@@ -36,7 +36,8 @@ class LandingPage extends Component {
         <SectionApis
           brands={brands}
           products={orderedProducts} goToSignup={this.goToSignup}
-          goToApi={this.goToApi} />
+          goToApi={this.goToApi}
+        />
       </div>
     )
   }
@@ -48,7 +49,7 @@ LandingPage.propTypes = {
   theme: object.isRequired,
   fetchApiProducts: func.isRequired,
   products: array.isRequired,
-  brands: array.isRequired
+  brands: array.isRequired,
 }
 
 export default LandingPage

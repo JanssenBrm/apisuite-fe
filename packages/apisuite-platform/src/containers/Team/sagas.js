@@ -34,10 +34,10 @@ import {
   acceptInvitationError,
   POSTPONE_INVITATION,
   postponeInvitationSuccess,
-  postponeInvitationError
+  postponeInvitationError,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 
 /**
  * Fetch Team saga worker
@@ -47,11 +47,11 @@ function * fetchTeamWorker (action) {
   const state = yield select()
   const organizationId = state.auth.user.organizations[0].id
   const requestUrl = `${API_URL}/team/${organizationId}`
-  const headers = yield call(getDefaultHeaders, {state, type: 'bearer'})
+  const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -76,15 +76,15 @@ function * saveRoleWorker (action) {
   const state = yield select()
   const organizationId = state.auth.user.organizations[0].id
   const requestUrl = `${API_URL}/rbac/${organizationId}/user/${action.userId}`
-  const headers = yield call(getDefaultHeaders, {state, type: 'bearer'})
+  const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
   const body = JSON.stringify({
     oldRoleId: action.oldRoleId,
-    newRoleId: action.newRoleId
+    newRoleId: action.newRoleId,
   })
   const response = yield call(request, requestUrl, {
     method: 'PUT',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -112,11 +112,11 @@ function * removeUserWorker (action) {
   const state = yield select()
   const organizationId = state.auth.user.organizations[0].id
   const requestUrl = `${API_URL}/team/${organizationId}/user/${action.userId}`
-  const headers = yield call(getDefaultHeaders, {state, type: 'bearer'})
+  const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
 
   const response = yield call(request, requestUrl, {
     method: 'DELETE',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -149,7 +149,7 @@ function * fetchInvitationsWorker () {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -180,7 +180,7 @@ function * createInvitationWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -211,11 +211,11 @@ function * deleteInvitationWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'DELETE',
-    headers
+    headers,
   })
 
   if (!response.err) {
-    const data = {...response.data, invId: action.invId}
+    const data = { ...response.data, invId: action.invId }
     yield put(deleteInvitationSuccess(data))
     yield put(showNotification('success', 'team.invitation.delete.success'))
   } else {
@@ -243,7 +243,7 @@ function * getInvitationWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -274,7 +274,7 @@ function * acceptInvitationWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -306,7 +306,7 @@ function * postponeInvitationWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'POST',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -335,5 +335,5 @@ export default [
   deleteInvitationSaga,
   getInvitationSaga,
   acceptInvitationSaga,
-  postponeInvitationSaga
+  postponeInvitationSaga,
 ]

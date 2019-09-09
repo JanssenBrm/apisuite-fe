@@ -22,7 +22,7 @@ const DialogBox = ({ title, content, actions, open, onClose, ...rest }) => (
 
 DialogBox.defaultProps = {
   open: false,
-  onClose: () => {}
+  onClose: () => {},
 }
 
 DialogBox.propTypes = {
@@ -30,7 +30,7 @@ DialogBox.propTypes = {
   content: node,
   actions: array,
   open: bool.isRequired,
-  onClose: func
+  onClose: func,
 }
 
 export default DialogBox

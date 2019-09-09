@@ -19,7 +19,7 @@ import requireIfExists from 'util/requireIfExists'
 import _uniq from 'lodash/uniq'
 
 const availableStates = {
-  notValidated: 'NON_VALIDATED'
+  notValidated: 'NON_VALIDATED',
 }
 
 class ApiSubscriptions extends Component {
@@ -30,9 +30,9 @@ class ApiSubscriptions extends Component {
       brands: [],
       products: [],
       ui: {
-        loading: false
-      }
-    }
+        loading: false,
+      },
+    },
   }
 
   componentDidMount () {
@@ -46,33 +46,33 @@ class ApiSubscriptions extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    const {subscriptions} = nextProps
+    const { subscriptions } = nextProps
     if (this.props.subscriptions !== subscriptions) {
-      this.setState({subscriptions: subscriptions})
+      this.setState({ subscriptions: subscriptions })
     }
   }
 
   trySubscribe = product => event => {
-    const {auth} = this.props
-    const {organizations} = auth ? auth.user : null
-    const {state} = (organizations && organizations.length) ? organizations[0] : null
+    const { auth } = this.props
+    const { organizations } = auth ? auth.user : null
+    const { state } = (organizations && organizations.length) ? organizations[0] : null
 
     if (state && state !== availableStates.notValidated) {
       this.requestSandboxAccess(product.id)
     } else if (state && state === availableStates.notValidated) {
-      this.setState({modalOpen: true})
+      this.setState({ modalOpen: true })
     }
   }
 
   openModal = open => event => {
-    this.setState({modalOpen: open})
+    this.setState({ modalOpen: open })
   }
 
   navigate = route => event => this.props.history.push(route)
 
   handleExpand = menuIndex => e => {
-    const {expanded} = this.state
-    this.setState({expanded: expanded.includes(`e${menuIndex}`) ? expanded.filter(o => o !== `e${menuIndex}`) : [...expanded, `e${menuIndex}`]})
+    const { expanded } = this.state
+    this.setState({ expanded: expanded.includes(`e${menuIndex}`) ? expanded.filter(o => o !== `e${menuIndex}`) : [...expanded, `e${menuIndex}`] })
   }
 
   renderLoading = () =>
@@ -81,9 +81,9 @@ class ApiSubscriptions extends Component {
     </div>
 
   requestSandboxAccess = productId => {
-    const {auth} = this.props
+    const { auth } = this.props
     this.props.createApiSubscription(auth.user.organizations[0].id, [`${productId}`])
-    this.setState({modalOpen: false})
+    this.setState({ modalOpen: false })
   }
 
   parseSubscribedApps = () => {
@@ -99,7 +99,7 @@ class ApiSubscriptions extends Component {
           }
           subs = {
             ...subs,
-            [`${subscriptions.products[i].id}`]: _uniq(associatedApps)
+            [`${subscriptions.products[i].id}`]: _uniq(associatedApps),
           }
         }
       }
@@ -108,11 +108,11 @@ class ApiSubscriptions extends Component {
   }
 
   render () {
-    const {intl, theme, apps} = this.props
-    const {expanded, modalOpen, subscriptions} = this.state
-    const {ui} = subscriptions
-    const modalTitle = intl.formatMessage({id: 'apiSubscriptions.modal.title'})
-    const modalSubtitle = intl.formatMessage({id: 'apiSubscriptions.modal.subtitle'})
+    const { intl, theme, apps } = this.props
+    const { expanded, modalOpen, subscriptions } = this.state
+    const { ui } = subscriptions
+    const modalTitle = intl.formatMessage({ id: 'apiSubscriptions.modal.title' })
+    const modalSubtitle = intl.formatMessage({ id: 'apiSubscriptions.modal.subtitle' })
     subscriptions && subscriptions.products && subscriptions.products.sort((p1, p2) => p1.brand_id - p2.brand_id)
 
     const subscribedApps = this.parseSubscribedApps()
@@ -121,91 +121,100 @@ class ApiSubscriptions extends Component {
       <div className='api-subscriptions-container'>
         <div className='api-subscriptions-wrapper'>
           {!ui.loading && subscriptions && subscriptions.products && subscriptions.brands &&
-          <Fragment>
-            <Typography variant='display3' gutterBottom><FormattedMessage id='apiSubscriptions.title' /></Typography>
-            <div className='api-subscriptions-list'>
-              <Card scope='api-subscriptions' children={
-                subscriptions.products.filter(sub => sub.version).map((product, idx) => (
-                  <div className='api-subscription'>
-                    <ExpansionPanel
-                      className='expansion-panel' expanded={expanded.includes(`e${idx}`)}
-                      onChange={this.handleExpand(idx)} classes={{root: 'expansion-panel-root'}}>
-                      <ExpansionPanelSummary expandIcon={<ChevronRightIcon />} classes={{
-                        expandIcon: `expand-icon ${expanded.includes(`e${idx}`) ? 'expanded' : ''}`,
-                        content: 'expansion-summary-content',
-                        expanded: 'expansion-summary-expanded'
-                      }}>
-                        <div className='header-container'>
-                          <div>
-                            <img
-                              src={(theme.name === 'bnpp' && requireIfExists(subscriptions.brands.find(br => br.id === product.brand_id).logo)) || apiDefaultHeader} />
-                            <Typography variant='display1'>
-                              {product.longname}
-                            </Typography>
-                            <div className='badges-wrapper'>
-                              {product.isSubscribed && <Badge type='teal' text={product.version} />}
-                            </div>
-                          </div>
-                          <div className='api-icons'>
-                            <div className='api-action'>
-                              {expanded.includes(`e${idx}`) && <FormattedMessage id='apiSubscriptions.apiReference.label' />}
-                              <Tooltip
-                                isLoggedIn
-                                content={intl.formatMessage({id: 'apiSubscriptions.apiReference.label'})}>
-                                <img
-                                  className='api-action-icon' src={apiReferenceIcon}
-                                  testid='api-action-icon'
-                                  onClick={this.navigate('/api-references')} />
-                              </Tooltip>
-                            </div>
-                          </div>
-                        </div>
-                      </ExpansionPanelSummary>
-                      <ExpansionPanelDetails>
-                        <div className='api-subscription-detail'>
-                          <div className='detail-text'>
-                            <FormattedMessage
-                              id={`apiSubscriptions.content.${product.isSubscribed ? 'subscribed' : 'unsubscribed'}`}
-                              values={{
-                                status: (
-                                  product.isSubscribed &&
-                                  <FormattedMessage
-                                    id={subscribedApps[product.id] && subscribedApps[product.id].length > 0 ? 'apiSubscriptions.content.subscribed.hasapps' : 'apiSubscriptions.content.subscribed.noapps'}
-                                  />
-                                )
-                              }}
-                            />
-                            {product.isSubscribed &&
-                              <div className='consumer-apps'>
-                                {subscribedApps[product.id] && subscribedApps[product.id].map((appId, idx) => {
-                                  const currApp = apps.find(app => app.id === appId)
-                                  const splitName = currApp.name.split(' ')
-                                  const appInitials = splitName.length >= 2 ? `${splitName[0].charAt(0)}${splitName[1].charAt(0)}` : splitName[0].slice(0, 2)
-                                  return (
-                                    <div key={`app-${appId}-${idx}`} className='app-circle'><span>{appInitials}</span></div>
-                                  )
-                                })}
-                              </div>}
-                          </div>
-                          <Button
-                            id='api-subscription-btn'
-                            testid='api-subscription-btn'
-                            className='api-subscription-btn'
-                            variant='outlined'
-                            disabled={product.isSubscribed}
-                            onClick={this.trySubscribe(product)}
+            <>
+              <Typography variant='display3' gutterBottom><FormattedMessage id='apiSubscriptions.title' /></Typography>
+              <div className='api-subscriptions-list'>
+                <Card
+                  scope='api-subscriptions' children={
+                    subscriptions.products.filter(sub => sub.version).map((product, idx) => (
+                      <div className='api-subscription'>
+                        <ExpansionPanel
+                          className='expansion-panel' expanded={expanded.includes(`e${idx}`)}
+                          onChange={this.handleExpand(idx)} classes={{ root: 'expansion-panel-root' }}
+                        >
+                          <ExpansionPanelSummary
+                            expandIcon={<ChevronRightIcon />} classes={{
+                              expandIcon: `expand-icon ${expanded.includes(`e${idx}`) ? 'expanded' : ''}`,
+                              content: 'expansion-summary-content',
+                              expanded: 'expansion-summary-expanded',
+                            }}
                           >
-                            <FormattedMessage
-                              id={`apiSubscriptions.button.${product.isSubscribed ? 'subscribed' : 'unsubscribed'}`} />
-                          </Button>
-                        </div>
-                      </ExpansionPanelDetails>
-                    </ExpansionPanel>
-                  </div>
-                ))} />
-            </div>
-          </Fragment>
-          }
+                            <div className='header-container'>
+                              <div>
+                                <img
+                                  src={(theme.name === 'bnpp' && requireIfExists(subscriptions.brands.find(br => br.id === product.brand_id).logo)) || apiDefaultHeader}
+                                />
+                                <Typography variant='display1'>
+                                  {product.longname}
+                                </Typography>
+                                <div className='badges-wrapper'>
+                                  {product.isSubscribed && <Badge type='teal' text={product.version} />}
+                                </div>
+                              </div>
+                              <div className='api-icons'>
+                                <div className='api-action'>
+                                  {expanded.includes(`e${idx}`) && <FormattedMessage id='apiSubscriptions.apiReference.label' />}
+                                  <Tooltip
+                                    isLoggedIn
+                                    content={intl.formatMessage({ id: 'apiSubscriptions.apiReference.label' })}
+                                  >
+                                    <img
+                                      className='api-action-icon' src={apiReferenceIcon}
+                                      testid='api-action-icon'
+                                      onClick={this.navigate('/api-references')}
+                                    />
+                                  </Tooltip>
+                                </div>
+                              </div>
+                            </div>
+                          </ExpansionPanelSummary>
+                          <ExpansionPanelDetails>
+                            <div className='api-subscription-detail'>
+                              <div className='detail-text'>
+                                <FormattedMessage
+                                  id={`apiSubscriptions.content.${product.isSubscribed ? 'subscribed' : 'unsubscribed'}`}
+                                  values={{
+                                    status: (
+                                      product.isSubscribed &&
+                                        <FormattedMessage
+                                          id={subscribedApps[product.id] && subscribedApps[product.id].length > 0 ? 'apiSubscriptions.content.subscribed.hasapps' : 'apiSubscriptions.content.subscribed.noapps'}
+                                        />
+                                    ),
+                                  }}
+                                />
+                                {product.isSubscribed &&
+                                  <div className='consumer-apps'>
+                                    {subscribedApps[product.id] && subscribedApps[product.id].map((appId, idx) => {
+                                      const currApp = apps.find(app => app.id === appId)
+                                      const splitName = currApp.name.split(' ')
+                                      const appInitials = splitName.length >= 2 ? `${splitName[0].charAt(0)}${splitName[1].charAt(0)}` : splitName[0].slice(0, 2)
+                                      return (
+                                        <div key={`app-${appId}-${idx}`} className='app-circle'><span>{appInitials}</span></div>
+                                      )
+                                    })}
+                                  </div>}
+                              </div>
+                              <Button
+                                id='api-subscription-btn'
+                                testid='api-subscription-btn'
+                                className='api-subscription-btn'
+                                variant='outlined'
+                                disabled={product.isSubscribed}
+                                onClick={this.trySubscribe(product)}
+                              >
+                                <FormattedMessage
+                                  id={`apiSubscriptions.button.${product.isSubscribed ? 'subscribed' : 'unsubscribed'}`}
+                                />
+                              </Button>
+                            </div>
+                          </ExpansionPanelDetails>
+                        </ExpansionPanel>
+                      </div>
+                    ))
+                  }
+                />
+              </div>
+            </>}
         </div>
         {ui.loading && this.renderLoading()}
         <ModalSplit
@@ -247,7 +256,7 @@ ApiSubscriptions.propTypes = {
   subscriptions: object.isRequired,
   fetchApiSubscriptions: func.isRequired,
   createApiSubscription: func.isRequired,
-  fetchApps: func.isRequired
+  fetchApps: func.isRequired,
 }
 
 export default ApiSubscriptions

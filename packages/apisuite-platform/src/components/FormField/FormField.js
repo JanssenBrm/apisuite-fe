@@ -5,7 +5,7 @@ import SelectInput from 'components/SelectInput'
 
 class FormField extends Component {
   state = {
-    errors: []
+    errors: [],
   }
 
   componentWillReceiveProps (nextProps) {
@@ -19,18 +19,18 @@ class FormField extends Component {
         target: {
           name: nextProps.name,
           value: nextProps.value,
-          ...(nextProps.index && {index: nextProps.index})
-        }
+          ...(nextProps.index && { index: nextProps.index }),
+        },
       }, errors)
       this.setState({
         errors,
         messages,
-        changed: true
+        changed: true,
       })
     } else {
       this.setState({
         errors,
-        messages
+        messages,
       })
     }
   }
@@ -47,14 +47,15 @@ class FormField extends Component {
             helperText={messages}
             error={errors && errors.length > 0}
             labelprops={{
-              shrink: true
+              shrink: true,
             }}
-            {...this.props} />
+            {...this.props}
+          />
           : <TextField
             key='form-field'
             error={errors && errors.length > 0}
             helperText={messages}
-            classes={{root: 'root'}}
+            classes={{ root: 'root' }}
             InputProps={{
               disableUnderline: true,
               classes: {
@@ -64,23 +65,22 @@ class FormField extends Component {
                   ${startadornment && 'startadornement-container '}
                   ${disabled && 'disabled'}
                   ${backgroundcolor && `${backgroundcolor}-background`}`,
-                root: `${bigfont && 'bigfont'}`
+                root: `${bigfont && 'bigfont'}`,
               },
               startAdornment: startadornment,
               endAdornment: endadornment,
-              type: inputtype
+              type: inputtype,
             }}
             inputProps={{
               readOnly,
-              testid
+              testid,
             }}
             InputLabelProps={{
               shrink: true,
-              required: false
+              required: false,
             }}
             {...this.props}
-          />
-        }
+          />}
         {required && <span key='form-field-required' className='required-symbol'>*</span>}
       </div>
     )
@@ -88,7 +88,7 @@ class FormField extends Component {
 }
 
 FormField.defaultProps = {
-  onChange: () => {}
+  onChange: () => {},
 }
 
 FormField.propTypes = {
@@ -108,7 +108,7 @@ FormField.propTypes = {
   required: bool,
   inputtype: string,
   backgroundcolor: string,
-  testid: string
+  testid: string,
 }
 
 export default FormField

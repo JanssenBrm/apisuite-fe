@@ -5,20 +5,20 @@ import AppCard from 'components/AppCard'
 import IconButton from '@material-ui/core/IconButton'
 
 const mockApp = {
-  'id': 1,
-  'name': 'My First App',
-  'description': 'Very cool app',
-  'icon': 'http://myicon',
-  'permissions': [{ 'id': 1 }],
-  'publicURL': 'public.com',
-  'redirectURL': ['redirect.com'],
-  'created': '2018-04-19T12:00:00.000Z',
-  'updated': '2018-04-19T12:00:00.000Z'
+  id: 1,
+  name: 'My First App',
+  description: 'Very cool app',
+  icon: 'http://myicon',
+  permissions: [{ id: 1 }],
+  publicURL: 'public.com',
+  redirectURL: ['redirect.com'],
+  created: '2018-04-19T12:00:00.000Z',
+  updated: '2018-04-19T12:00:00.000Z',
 }
 
 const props = {
   app: mockApp,
-  history: { push: jest.fn() }
+  history: { push: jest.fn() },
 }
 
 describe('<AppCard />', () => {

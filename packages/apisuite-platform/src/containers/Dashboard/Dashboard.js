@@ -8,14 +8,14 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 class Dashboard extends Component {
   state = {
     notification: {},
-    showNotification: false
+    showNotification: false,
   }
 
   static getDerivedStateFromProps (props, state) {
     if (props.notification !== state.notification) {
       return {
         notification: props.notification,
-        showNotification: props.showNotification
+        showNotification: props.showNotification,
       }
     }
 
@@ -30,7 +30,7 @@ class Dashboard extends Component {
 
   handleCloseNotification = () => {
     this.setState({
-      showNotification: false
+      showNotification: false,
     })
   }
 
@@ -48,7 +48,7 @@ class Dashboard extends Component {
       <div className='dashboard'>
         {
           showNotification && this.notEmptyNotification(notification) &&
-          <Notification tag={tag} message={message} url={link} handleClose={this.handleCloseNotification} />
+            <Notification tag={tag} message={message} url={link} handleClose={this.handleCloseNotification} />
         }
         <div className='header-wrapper'>
           <div className='header-light-rays'>
@@ -63,8 +63,7 @@ class Dashboard extends Component {
         {ui && ui.loading &&
           <div className='loading'>
             <CircularProgress className='loading-circle' />
-          </div>
-        }
+          </div>}
       </div>
     )
   }
@@ -80,7 +79,7 @@ Dashboard.propTypes = {
   fetchLatestNotification: func.isRequired,
   notification: object.isRequired,
   showNotification: bool.isRequired,
-  ui: object
+  ui: object,
 }
 
 export default Dashboard

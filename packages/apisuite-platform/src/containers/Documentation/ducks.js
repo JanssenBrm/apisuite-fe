@@ -16,7 +16,7 @@ export const CHANGE_TOPIC = 'documentation/CHANGE_TOPIC'
  */
 const initialState = {
   topic: null,
-  child: null
+  child: null,
 }
 
 /**
@@ -29,7 +29,7 @@ export default function reducer (state = initialState, action) {
     case CHANGE_TOPIC:
       return update(state, {
         topic: { $set: action.topic },
-        child: { $set: action.child }
+        child: { $set: action.child },
       })
     default:
       return state

@@ -11,7 +11,7 @@ class TwoFaRecovery extends Component {
     showErrors: false,
     message: '',
     variant: 'info',
-    displayMessage: false
+    displayMessage: false,
   }
 
   handleSubmit = () => {
@@ -20,7 +20,7 @@ class TwoFaRecovery extends Component {
       this.props.verifyRecoveryCode(this.state.code)
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
@@ -28,7 +28,7 @@ class TwoFaRecovery extends Component {
   handleFieldChange = ({ target }, errors) => {
     this.setState({
       code: target.value,
-      errors: parseErrors(target, errors, this.state.errors)
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -36,8 +36,8 @@ class TwoFaRecovery extends Component {
     const { intl, auth, openSupport } = this.props
     const { ui } = auth
     const { code, showErrors, errors } = this.state
-    const codePlaceholder = intl.formatMessage({id: 'twofa.recovery.placeholder'})
-    const codeRequired = intl.formatMessage({id: 'twofa.recovery.required'})
+    const codePlaceholder = intl.formatMessage({ id: 'twofa.recovery.placeholder' })
+    const codeRequired = intl.formatMessage({ id: 'twofa.recovery.required' })
 
     return (
       <div className='page-content-wrapper two-fa-recovery'>
@@ -52,10 +52,10 @@ class TwoFaRecovery extends Component {
           value={code}
           fullWidth
           rules={[
-            {rule: isValidRecoveryCode(code), message: codeRequired}
+            { rule: isValidRecoveryCode(code), message: codeRequired },
           ]}
           showerrors={`${showErrors}`}
-          InputLabelProps={{shrink: true}}
+          InputLabelProps={{ shrink: true }}
         />
         <Button
           className='two-fa-submit'
@@ -64,7 +64,8 @@ class TwoFaRecovery extends Component {
           variant='contained'
           color='primary'
           onClick={this.handleSubmit}
-          disabled={!code || errors.length > 0 || ui.loading}>
+          disabled={!code || errors.length > 0 || ui.loading}
+        >
           <FormattedMessage id='twofa.code.verify' />
         </Button>
         <div className='two-fa-action'>
@@ -80,7 +81,7 @@ TwoFaRecovery.propTypes = {
   auth: object.isRequired,
   verifyRecoveryCode: func.isRequired,
   intl: object.isRequired,
-  openSupport: func.isRequired
+  openSupport: func.isRequired,
 }
 
 export default TwoFaRecovery

@@ -32,36 +32,36 @@ import reducer, {
   sendSMSCode,
   sendSMSCodeSuccess,
   sendSMSCodeError,
-  skipStep
+  skipStep,
 } from './ducks'
 import { translationMessages, formats } from 'util/i18n'
 import { IntlProvider } from 'react-intl'
 
-const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages['en'], formats })
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
 const { intl } = intlProvider.getChildContext()
 
 const initialState = {
   ui: {
-    loading: false
+    loading: false,
   },
   user: {},
   error: null,
   step: 1,
-  qrcode: ''
+  qrcode: '',
 }
 const errorMock = { message: 'error-stub' }
 
 const fakeUi = {
-  loading: false
+  loading: false,
 }
 
 const fakeUserResponse = {
-  'email': 'mh@appcenter.be',
-  'fullName': 'Marie Mai',
-  'password': 'password',
-  'role': 'user',
-  'id': 2,
-  'codes': ['zfo5F-vPldM', 'zfo5F-vPldM', 'zfo5F-vPldM', 'zfo5F-vPldM', 'zfo5F-vPldM', 'zfo5F-vPldM']
+  email: 'mh@appcenter.be',
+  fullName: 'Marie Mai',
+  password: 'password',
+  role: 'user',
+  id: 2,
+  codes: ['zfo5F-vPldM', 'zfo5F-vPldM', 'zfo5F-vPldM', 'zfo5F-vPldM', 'zfo5F-vPldM', 'zfo5F-vPldM'],
 }
 
 const fakeForm = {
@@ -75,42 +75,42 @@ const fakeForm = {
   vat: '',
   website: '',
   position: '',
-  password: 'M1 super password'
+  password: 'M1 super password',
 }
 
 const fakePersonalDetails = {
   email: 'email@example.be',
   fullName: 'MH Mai',
-  phoneNumber: '+351968887711'
+  phoneNumber: '+351968887711',
 }
 
 const fakeOrganizationDetails = {
   organisationName: 'MyOrganisation',
   vat: '121232',
   website: 'http://test.com',
-  position: 'Developer'
+  position: 'Developer',
 }
 
 const fakeSecurityDetails = {
   password: 'P4ssword',
   method: 'authorizationApp',
-  confirmationCode: '665754'
+  confirmationCode: '665754',
 }
 
 const fakeEmailPayload = {
   email: 'example@gmail.com',
-  userID: 1
+  userID: 1,
 }
 
 const mockState = {
   signup: {
     user: {
-      token: '123'
-    }
+      token: '123',
+    },
   },
   team: {
-    ticket: {}
-  }
+    ticket: {},
+  },
 }
 
 describe('<PersonalDetails />', () => {
@@ -122,9 +122,9 @@ describe('<PersonalDetails />', () => {
       fullName: '',
       phoneNumber: '',
       terms: false,
-      privacy: false
+      privacy: false,
     },
-    errors: []
+    errors: [],
   }
 
   const props = {
@@ -133,7 +133,7 @@ describe('<PersonalDetails />', () => {
     nextStep: jest.fn(),
     intl,
     goToTerms: jest.fn(),
-    goToPrivacy: jest.fn()
+    goToPrivacy: jest.fn(),
   }
 
   const wrapper = mountWithIntl(<PersonalDetails {...props} />)
@@ -177,9 +177,9 @@ describe('<OrganisationDetails />', () => {
       organisationName: '',
       vat: '',
       website: '',
-      position: ''
+      position: '',
     },
-    errors: []
+    errors: [],
   }
 
   const props = {
@@ -187,7 +187,7 @@ describe('<OrganisationDetails />', () => {
     previousStep: jest.fn(),
     nextStep: jest.fn(),
     skipStep: jest.fn(),
-    intl
+    intl,
   }
 
   const wrapper = shallowWithIntl(<OrganisationDetails {...props} />)
@@ -218,9 +218,9 @@ describe('<SecuritySetup />', () => {
     form: {
       password: '',
       method: '1',
-      confirmationCode: '123456'
+      confirmationCode: '123456',
     },
-    errors: []
+    errors: [],
   }
 
   const props = {
@@ -235,7 +235,7 @@ describe('<SecuritySetup />', () => {
     sendSMSCode: jest.fn(),
     sendSecurityDetails: jest.fn(),
     history: { location: { pathname: '/signup' } },
-    route: '/signup'
+    route: '/signup',
   }
 
   const wrapper = mountWithIntl(<SecuritySetup {...props} />)
@@ -278,14 +278,14 @@ describe('<SuccessPage />', () => {
         {
           id: 1,
           orgId: 208,
-          name: 'ADMIN'
-        }
-      ]
+          name: 'ADMIN',
+        },
+      ],
     },
     history: {
-      push: jest.fn()
+      push: jest.fn(),
     },
-    invitation: {}
+    invitation: {},
   }
   const wrapper = shallowWithIntl(<SuccessPage {...props} />)
 
@@ -311,9 +311,9 @@ describe('<ActivationPage />', () => {
     sendActivationEmail: jest.fn(),
     auth: {
       user: {
-        email: 'email-stub@gmail.com'
-      }
-    }
+        email: 'email-stub@gmail.com',
+      },
+    },
   }
   const wrapper = shallowWithIntl(<ActivationPage {...props} />)
 
@@ -327,7 +327,7 @@ describe('<InvitationPage />', () => {
   const props = {
     intl,
     history: {
-      push: jest.fn()
+      push: jest.fn(),
     },
     location: { search: '?ticket=1234', pathname: '/signup' },
     invitation: { isRegistered: true },
@@ -335,7 +335,7 @@ describe('<InvitationPage />', () => {
     acceptInvitation: jest.fn(),
     postponeInvitation: jest.fn(),
     skipStep: jest.fn(),
-    error: null
+    error: null,
   }
   const wrapper = shallowWithIntl(<InvitationPage {...props} />)
 
@@ -363,18 +363,18 @@ describe('<Signup />', () => {
     signup: {
       step: 1,
       TwoFA: {
-        qrcode: 'qrcode'
-      }
+        qrcode: 'qrcode',
+      },
     },
     ui: fakeUi,
     intl,
     history: {
       push: jest.fn(),
-      location: {}
+      location: {},
     },
     location: { search: '', pathname: '/signup' },
     auth: {
-      user: {}
+      user: {},
     },
     invitation: {},
     openLoginModal: jest.fn(),
@@ -390,19 +390,19 @@ describe('<Signup />', () => {
     resetSignup: jest.fn(),
     getInvitation: jest.fn(),
     acceptInvitation: jest.fn(),
-    postponeInvitation: jest.fn()
+    postponeInvitation: jest.fn(),
   }
 
   const wrapper = mountWithIntl(<Signup {...props} />)
 
   it('should not call signup if password is empty', () => {
-    wrapper.setProps({signup: {step: 3}})
+    wrapper.setProps({ signup: { step: 3 } })
     wrapper.find('.signup-submit').last().simulate('click')
     expect(props.signupUser).not.toHaveBeenCalled()
   })
 
   it('should call signupUser if mandatory form fields are valid', () => {
-    wrapper.setProps({signup: { step: 1 }})
+    wrapper.setProps({ signup: { step: 1 } })
     expect(wrapper.find(PersonalDetails)).toHaveLength(1)
     wrapper.instance().handleSubmit(fakePersonalDetails)
     expect(props.signupUser).toHaveBeenCalled()
@@ -414,26 +414,26 @@ describe('<Signup />', () => {
   // })
 
   it('should call signupOrganization if mandatory form fields are valid', () => {
-    wrapper.setProps({signup: { step: 2 }})
+    wrapper.setProps({ signup: { step: 2 } })
     expect(wrapper.find(OrganisationDetails)).toHaveLength(1)
     wrapper.instance().handleSubmit(fakeOrganizationDetails)
     expect(props.signupOrganization).toHaveBeenCalled()
   })
 
   it('should call signupSecurity if mandatory form fields are valid', () => {
-    wrapper.setProps({signup: { step: 3 }})
+    wrapper.setProps({ signup: { step: 3 } })
     expect(wrapper.find(SecuritySetup)).toHaveLength(1)
     wrapper.instance().handleSubmit(fakeSecurityDetails)
     expect(props.signupSecurity).toHaveBeenCalled()
   })
 
   it('should display loading UI on step 4', () => {
-    wrapper.setProps({signup: { step: 4 }})
+    wrapper.setProps({ signup: { step: 4 } })
     expect(wrapper.find('.signup-loading')).toHaveLength(1)
   })
 
   it('should display ActivationPage if user is not activated', () => {
-    wrapper.setProps({auth: { user: { id: '1', activated: false } }})
+    wrapper.setProps({ auth: { user: { id: '1', activated: false } } })
     expect(wrapper.find(ActivationPage)).toHaveLength(1)
   })
 })
@@ -444,82 +444,93 @@ describe('Signup reducer', () => {
   })
 
   it('should update state on SIGNUP_USER', () => {
-    expect(reducer(initialState, signupUser(fakePersonalDetails))).toEqual({...initialState,
-      ui: { loading: true }
+    expect(reducer(initialState, signupUser(fakePersonalDetails))).toEqual({
+      ...initialState,
+      ui: { loading: true },
     })
   })
 
   it('should update state on SIGNUP_USER_SUCCESS', () => {
     const fakeResponse = {
       token: 'T25vAL7AD57cCt2!GSNm51Pbr9Qnb%u4mNkYvB$aHFSZnbbZ',
-      expiresAt: '2018-09-10T15:34:20.099Z'
+      expiresAt: '2018-09-10T15:34:20.099Z',
     }
-    expect(reducer(initialState, signupUserSuccess(fakeResponse))).toEqual({...initialState,
+    expect(reducer(initialState, signupUserSuccess(fakeResponse))).toEqual({
+      ...initialState,
       ui: { loading: false },
       step: initialState.step + 1,
-      user: fakeResponse
+      user: fakeResponse,
     })
   })
 
   it('should update state on SIGNUP_USER_ERROR', () => {
-    expect(reducer(initialState, signupUserError(errorMock))).toEqual({...initialState,
+    expect(reducer(initialState, signupUserError(errorMock))).toEqual({
+      ...initialState,
       ui: { loading: false },
-      error: errorMock
+      error: errorMock,
     })
   })
 
   it('should update state on SIGNUP_ORGANIZATION', () => {
-    expect(reducer(initialState, signupOrganization(fakeOrganizationDetails))).toEqual({...initialState,
-      ui: { loading: true }
+    expect(reducer(initialState, signupOrganization(fakeOrganizationDetails))).toEqual({
+      ...initialState,
+      ui: { loading: true },
     })
   })
 
   it('should update state on SIGNUP_ORGANIZATION_SUCCESS', () => {
-    expect(reducer(initialState, signupOrganizationSuccess())).toEqual({...initialState,
+    expect(reducer(initialState, signupOrganizationSuccess())).toEqual({
+      ...initialState,
       ui: { loading: false },
-      step: initialState.step + 1
+      step: initialState.step + 1,
     })
   })
 
   it('should update state on SIGNUP_ORGANIZATION_ERROR', () => {
-    expect(reducer(initialState, signupOrganizationError(errorMock))).toEqual({...initialState,
+    expect(reducer(initialState, signupOrganizationError(errorMock))).toEqual({
+      ...initialState,
       ui: { loading: false },
-      error: errorMock
+      error: errorMock,
     })
   })
 
   it('should update state on SIGNUP_SECURITY', () => {
-    expect(reducer(initialState, signupSecurity(fakeSecurityDetails))).toEqual({...initialState,
-      ui: { loading: true }
+    expect(reducer(initialState, signupSecurity(fakeSecurityDetails))).toEqual({
+      ...initialState,
+      ui: { loading: true },
     })
   })
 
   it('should update state on SIGNUP_SECURITY_SUCCESS', () => {
-    expect(reducer(initialState, signupSecuritySuccess(fakeUserResponse))).toEqual({...initialState,
+    expect(reducer(initialState, signupSecuritySuccess(fakeUserResponse))).toEqual({
+      ...initialState,
       ui: { loading: false },
       step: initialState.step + 1,
-      user: fakeUserResponse
+      user: fakeUserResponse,
     })
   })
 
   it('should update state on SIGNUP_SECURITY_ERROR', () => {
-    expect(reducer(initialState, signupSecurityError(errorMock))).toEqual({...initialState,
+    expect(reducer(initialState, signupSecurityError(errorMock))).toEqual({
+      ...initialState,
       ui: { loading: false },
-      error: errorMock
+      error: errorMock,
     })
   })
 
   it('should update state on GENERATE_QRCODE_SUCCESS', () => {
     const fakeQRCode = 'qrcode'
 
-    expect(reducer(initialState, generateQRCodeSuccess(fakeQRCode))).toEqual({...initialState,
-      qrcode: fakeQRCode
+    expect(reducer(initialState, generateQRCodeSuccess(fakeQRCode))).toEqual({
+      ...initialState,
+      qrcode: fakeQRCode,
     })
   })
 
   it('should update state on SKIP_STEP', () => {
-    expect(reducer(initialState, skipStep())).toEqual({...initialState,
-      step: initialState.step + 1
+    expect(reducer(initialState, skipStep())).toEqual({
+      ...initialState,
+      step: initialState.step + 1,
     })
   })
 })

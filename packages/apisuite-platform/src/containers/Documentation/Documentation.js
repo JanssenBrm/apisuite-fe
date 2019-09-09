@@ -39,23 +39,23 @@ const topics = [
       { key: 'get0', title: 'Creating an Account', component: CreatingAnAccount },
       { key: 'get1', title: 'Creating an Application', component: CreatingAnApp },
       { key: 'get2', title: 'Client ID / Secret', component: ClientIDSecret },
-      { key: 'get3', title: 'Navigating through the API References', component: APIReferences }
-    ]
+      { key: 'get3', title: 'Navigating through the API References', component: APIReferences },
+    ],
   },
   {
     title: 'Authentication Flows',
     key: 'g1',
     children: [
-      { key: 'auth0', title: 'Two-Factor Authentication', component: TwoFA }
-    ]
+      { key: 'auth0', title: 'Two-Factor Authentication', component: TwoFA },
+    ],
   },
   {
     title: 'Sandbox',
     key: 'g2',
     children: [
       { key: 'sand0', title: 'Requesting Sandbox Access', component: SandboxAccess },
-      { key: 'sand1', title: 'Accessing Sandbox Endpoints', component: StetAccessEndpoint }
-    ]
+      { key: 'sand1', title: 'Accessing Sandbox Endpoints', component: StetAccessEndpoint },
+    ],
   },
   {
     title: 'Onboarding Flow',
@@ -70,11 +70,11 @@ const topics = [
       {
         key: 'onboard6',
         title: 'Using the Certificate and Testing the Sandbox',
-        component: OnboardingFlowUsingTesting
+        component: OnboardingFlowUsingTesting,
       },
       { key: 'onboard7', title: 'Adding more Certificates', component: OnboardingFlowAddingCert },
-      { key: 'onboard8', title: 'Revoke/Delete Certificate', component: OnboardingFlowRevoke }
-    ]
+      { key: 'onboard8', title: 'Revoke/Delete Certificate', component: OnboardingFlowRevoke },
+    ],
   },
   {
     title: 'Authorization Flows',
@@ -82,22 +82,22 @@ const topics = [
     children: [
       { key: 'stet0', title: 'AISP - Authorizing an App', component: StetAISP },
       { key: 'stet1', title: 'PISP - Authorizing an App', component: StetPISP },
-      { key: 'stet2', title: 'PISP - Confirming a Payment', component: StetConfirmingPISP }
-    ]
+      { key: 'stet2', title: 'PISP - Confirming a Payment', component: StetConfirmingPISP },
+    ],
   },
   {
     title: 'Production Endpoints',
     key: 'g3',
     children: [
       { key: 'stet0', title: 'Accessing Production Endpoints', component: ProductionEndpoints },
-      { key: 'stet1', title: 'Message Signature for API', component: SignatureAuthenticationScheme }
-    ]
-  }
+      { key: 'stet1', title: 'Message Signature for API', component: SignatureAuthenticationScheme },
+    ],
+  },
 ]
 
 class Documentation extends Component {
   state = {
-    open: []
+    open: [],
   }
 
   navigate = route => () => this.props.history.push(route)
@@ -111,7 +111,7 @@ class Documentation extends Component {
       topicIndex = 0
       childIndex = 0
       this.props.changeTopic(topicIndex, childIndex)
-      this.setState({ open: [ ...this.state.open, `g${topicIndex}` ] })
+      this.setState({ open: [...this.state.open, `g${topicIndex}`] })
     } else {
       this.props.changeTopic(topicIndex, childIndex)
     }
@@ -128,13 +128,13 @@ class Documentation extends Component {
       const topicIndex = 0
       const childIndex = 0
       this.props.changeTopic(topicIndex, childIndex)
-      this.setState({ open: [ ...this.state.open, `g${topicIndex}` ] })
+      this.setState({ open: [...this.state.open, `g${topicIndex}`] })
     }
   }
 
   handleOpen = menuIndex => () => {
     const { open } = this.state
-    this.setState({ open: open.includes(`g${menuIndex}`) ? open.filter(o => o !== `g${menuIndex}`) : [ ...open, `g${menuIndex}` ] })
+    this.setState({ open: open.includes(`g${menuIndex}`) ? open.filter(o => o !== `g${menuIndex}`) : [...open, `g${menuIndex}`] })
   }
 
   handleClick = (topic, child, route) => () => {
@@ -149,7 +149,7 @@ class Documentation extends Component {
     const { open } = this.state
     const { topic, child } = this.props.documentation
     const OverviewComponent = () => <Overview theme={theme} onLinkClick={this.handleClick} />
-    const TopicContent = topic !== null ? topics[ topic ].children[ child ].component : OverviewComponent
+    const TopicContent = topic !== null ? topics[topic].children[child].component : OverviewComponent
 
     return (
       <div className='docs-container'>
@@ -164,7 +164,8 @@ class Documentation extends Component {
                 id={item.key}
                 testid='docs-topic-btn'
                 button
-                onClick={this.handleOpen(topicIndex)}>
+                onClick={this.handleOpen(topicIndex)}
+              >
                 <ListItemText primary={item.title} />
                 {open.includes(`g${topicIndex}`) ? <ExpandLess /> : <ExpandMore />}
               </ListItem>,
@@ -172,7 +173,8 @@ class Documentation extends Component {
                 key={`collapse-${topicIndex}`}
                 in={open.includes(`g${topicIndex}`)}
                 timeout='auto'
-                unmountOnExit>
+                unmountOnExit
+              >
                 <List component='div' disablePadding>
                   {item.children.map((article, childIndex) => (
                     <ListItem
@@ -183,14 +185,15 @@ class Documentation extends Component {
                       testid='docs-subtopic-btn'
                       className={classnames(
                         'docs-nested-menu',
-                        { 'selected': topic === topicIndex && child === childIndex }
+                        { selected: topic === topicIndex && child === childIndex }
                       )}
-                      onClick={this.handleClick(topicIndex, childIndex)}>
+                      onClick={this.handleClick(topicIndex, childIndex)}
+                    >
                       <ListItemText primary={article.title} />
                     </ListItem>
                   ))}
                 </List>
-              </Collapse>
+              </Collapse>,
             ])}
           </List>
 
@@ -212,7 +215,7 @@ Documentation.propTypes = {
   location: object.isRequired,
   documentation: object.isRequired,
   changeTopic: func.isRequired,
-  theme: object.isRequired
+  theme: object.isRequired,
 
 }
 

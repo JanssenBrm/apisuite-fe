@@ -14,7 +14,7 @@ const StetAISP = () => (
     <p>To receive an authorization code you will have to act as a PSU and authorize the app to act on behalf of this PSU.</p>
     <p>You can input the following url in a browser:</p>
 
-    <pre>{`https://sandbox.auth.bnpparibasfortis.com/authorize?response_type=code&client_id=<YOUR_APP_CLIENT_ID>&redirect_uri=<YOUR_APP_REDIRECT_URI>&scope=aisp&state=fhksdjfhgskj`}</pre>
+    <pre>{'https://sandbox.auth.bnpparibasfortis.com/authorize?response_type=code&client_id=<YOUR_APP_CLIENT_ID>&redirect_uri=<YOUR_APP_REDIRECT_URI>&scope=aisp&state=fhksdjfhgskj'}</pre>
 
     <p>Replace the query parameters with your own values, especially the <pre>client_id</pre> and the <pre>redirect_uri</pre> which must match the ones from your app (you can find them in your app overview by clicking on the app details of a specific app).</p>
     <p>If the <pre>PSU</pre> is not authenticated, you will be redirected to the <pre>Login</pre> screen.</p>

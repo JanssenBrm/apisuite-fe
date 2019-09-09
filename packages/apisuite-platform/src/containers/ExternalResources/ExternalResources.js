@@ -19,10 +19,10 @@ class ExternalResources extends Component {
 
   render () {
     const { intl, resources } = this.props
-    const resourcesHeader = intl.formatMessage({id: 'docs.external.resources.header'})
-    const linksHeader = intl.formatMessage({id: 'docs.external.link.header'})
-    const kpiTitle = intl.formatMessage({id: 'docs.external.kpi.title'})
-    const kpiSubtitle = intl.formatMessage({id: 'docs.external.kpi.subtitle'})
+    const resourcesHeader = intl.formatMessage({ id: 'docs.external.resources.header' })
+    const linksHeader = intl.formatMessage({ id: 'docs.external.link.header' })
+    const kpiTitle = intl.formatMessage({ id: 'docs.external.kpi.title' })
+    const kpiSubtitle = intl.formatMessage({ id: 'docs.external.kpi.subtitle' })
 
     return (
       <div className='external-container'>
@@ -86,8 +86,7 @@ class ExternalResources extends Component {
             items={resources.external_resources}
             pager={resources.pagination}
             onChangePage={this.handleChangePage}
-          />
-        }
+          />}
       </div>
     )
   }
@@ -96,7 +95,7 @@ class ExternalResources extends Component {
 ExternalResources.propTypes = {
   intl: object.isRequired,
   resources: object.isRequired,
-  fetchResources: func.isRequired
+  fetchResources: func.isRequired,
 }
 
 export default ExternalResources

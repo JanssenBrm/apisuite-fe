@@ -18,7 +18,7 @@ import {
   fetchScenariosError,
   GET_SCENARIO,
   getScenarioSuccess,
-  getScenarioError
+  getScenarioError,
 } from './ducks'
 import qs from 'qs'
 
@@ -33,7 +33,7 @@ function * fetchApis (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -56,7 +56,7 @@ function * fetchEndpoints (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -79,7 +79,7 @@ function * fetchScenarios (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -101,7 +101,7 @@ function * getScenario (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {

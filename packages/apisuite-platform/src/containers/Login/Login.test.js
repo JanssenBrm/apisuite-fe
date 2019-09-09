@@ -6,13 +6,13 @@ import { translationMessages, formats } from 'util/i18n'
 import { IntlProvider } from 'react-intl'
 import { API_URL } from 'constants/endpoints'
 
-const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages['en'], formats })
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
 const { intl } = intlProvider.getChildContext()
 
 const fakeUi = {
   success: false,
   error: false,
-  message: null
+  message: null,
 }
 
 describe('<Login />', () => {
@@ -22,7 +22,7 @@ describe('<Login />', () => {
     openForgotPassword: jest.fn(),
     ui: fakeUi,
     intl,
-    history: { push: jest.fn() }
+    history: { push: jest.fn() },
   }
   const wrapper = mountWithIntl(<Login {...props} />)
 
@@ -35,7 +35,7 @@ describe('<Login />', () => {
   })
 
   it('should call onButtonClick with email and password values', () => {
-    wrapper.setState({form: {email, password}})
+    wrapper.setState({ form: { email, password } })
     wrapper.find('.login-submit').first().simulate('click')
     expect(props.logUserIn).toHaveBeenCalledWith({ email, password })
   })

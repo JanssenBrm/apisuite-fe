@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button'
 import themes from 'themes'
 
 const props = {
-  theme: themes.default
+  theme: themes.default,
 }
 
 describe('<HeaderSection />', () => {

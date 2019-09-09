@@ -9,10 +9,10 @@ describe('<MultiSelect />', () => {
     onClick: jest.fn(),
     options: [
       { id: 1, name: 'Option 1' },
-      { id: 2, name: 'Option 2' }
+      { id: 2, name: 'Option 2' },
     ],
     expanded: true,
-    selected: [1]
+    selected: [1],
   }
   const wrapper = shallow(<MultiSelect {...props} />)
 

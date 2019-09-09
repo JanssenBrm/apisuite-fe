@@ -10,12 +10,12 @@ const Badge = ({ text, type }) => (
 )
 
 Badge.defaultProps = {
-  type: 'default'
+  type: 'default',
 }
 
 Badge.propTypes = {
   text: oneOfType([object, string]).isRequired,
-  type: string
+  type: string,
 }
 
 export default Badge

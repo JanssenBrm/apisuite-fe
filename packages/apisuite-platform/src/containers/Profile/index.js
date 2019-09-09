@@ -9,7 +9,7 @@ import { injectIntl } from 'react-intl'
 const mapStateToProps = ({ auth, recovery }) => ({
   user: auth.user,
   TwoFA: auth.TwoFA,
-  codes: recovery.codes
+  codes: recovery.codes,
 })
 const mapDispatchToProps = (dispatch) => ({
   updateUser: (userData) => dispatch(updateUser(userData)),
@@ -20,7 +20,7 @@ const mapDispatchToProps = (dispatch) => ({
   twoFaUpdate: (twoFAData) => dispatch(twoFaUpdate(twoFAData)),
   twoFaVerify: (pass) => dispatch(twoFaVerify(pass)),
   logout: () => dispatch(logout()),
-  getCodes: (pass) => dispatch(getCodes(pass))
+  getCodes: (pass) => dispatch(getCodes(pass)),
 })
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Profile))
@@ -28,7 +28,7 @@ export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Profile))
 const organisationSectionMapDispatchToProps = (dispatch) => ({
   fetchOrganizations: () => dispatch(fetchOrganizations()),
   updateOrganization: (id, data) => dispatch(updateOrganization(id, data)),
-  getOnboardingToken: () => dispatch(getOnboardingToken())
+  getOnboardingToken: () => dispatch(getOnboardingToken()),
 })
 
 export const OrganisationSection = injectIntl(connect(({ organizations }) => ({ organisation: organizations.data[0], onboardingToken: organizations.onboardingToken }), organisationSectionMapDispatchToProps)(OrganisationSectionComponent))

@@ -6,7 +6,7 @@ import qs from 'qs'
 import request from 'util/request'
 import getDefaultHeaders from 'util/getDefaultHeaders'
 import { takeLatest, call, put, select } from 'redux-saga/effects'
-import { replace } from 'react-router-redux'
+import { replace } from 'connected-react-router'
 import { API_URL } from 'constants/endpoints'
 import {
   LOGIN_USER,
@@ -61,7 +61,7 @@ import {
   meGenerateQRCodeError,
   SEND_SMS_CODE,
   meSendSMSCodeSuccess,
-  meSendSMSCodeError
+  meSendSMSCodeError,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 
@@ -84,15 +84,15 @@ function * loginWorker (action) {
   const headers = getDefaultHeaders({ type: 'basic' })
 
   const body = qs.stringify({
-    'grant_type': 'password',
+    grant_type: 'password',
     username: email,
-    password
+    password,
   })
 
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -120,12 +120,12 @@ function * login2FAWorker (action) {
   const requestUrl = `${API_URL}/oauth2/tfa`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
-  const body = JSON.stringify({pass: action.pass})
+  const body = JSON.stringify({ pass: action.pass })
 
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -149,7 +149,7 @@ export function * login2FASaga () {
  * @param {Object} action
  */
 function * ghLoginWorker (action) {
-  const actionToken = action['access_token']
+  const actionToken = action.access_token
 
   if (!actionToken || !actionToken.length) {
     yield put(ghLoginError('Invalid token'))
@@ -177,7 +177,7 @@ function * logoutWorker () {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -232,7 +232,7 @@ function * forgotPasswordWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -263,7 +263,7 @@ function * resetPasswordWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -297,7 +297,7 @@ function * twoFaUpdateWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'PUT',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -325,12 +325,12 @@ function * twoFaVerifyWorker (action) {
   const requestUrl = `${API_URL}/oauth2/tfa/validate`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
-  const body = JSON.stringify({pass: action.pass})
+  const body = JSON.stringify({ pass: action.pass })
 
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -363,7 +363,7 @@ function * updateUser (action) {
   const response = yield call(request, requestUrl, {
     method: 'PUT',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -397,7 +397,7 @@ function * updatePassword (action) {
   const response = yield call(request, requestUrl, {
     method: 'PUT',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -427,12 +427,12 @@ function * updatePasswordRBAC (action) {
   const organizationId = state.auth.user.organizations[0].id
   const requestUrl = `${API_URL}/team/${organizationId}/user/${action.userId}/password`
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
-  const body = JSON.stringify({password: action.password})
+  const body = JSON.stringify({ password: action.password })
 
   const response = yield call(request, requestUrl, {
     method: 'PUT',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -464,7 +464,7 @@ function * removeAccount (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'DELETE',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -494,7 +494,7 @@ function * meGenerateQRCode (action) {
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -522,7 +522,7 @@ function * meSendSMSCode (action) {
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -549,12 +549,12 @@ function * verifyRecoveryCodeWorker (action) {
   const requestUrl = `${API_URL}/users/me/recovery_codes/verify`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
-  const body = JSON.stringify({code: action.code})
+  const body = JSON.stringify({ code: action.code })
 
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -588,5 +588,5 @@ export default [
   updatePasswordRBACSaga,
   verifyRecoveryCodeSaga,
   meSendSMSCodeSaga,
-  meGenerateQRCodeSaga
+  meGenerateQRCodeSaga,
 ]

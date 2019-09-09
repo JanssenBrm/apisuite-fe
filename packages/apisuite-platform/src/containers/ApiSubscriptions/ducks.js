@@ -23,8 +23,8 @@ const initialState = {
   brands: [],
   products: [],
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 
 /**
@@ -38,38 +38,38 @@ export default function reducer (state = initialState, action) {
     case CREATE_API_SUBSCRIPTION:
       return update(state, {
         ui: {
-          loading: { $set: true }
-        }
+          loading: { $set: true },
+        },
       })
     case FETCH_API_SUBSCRIPTIONS_SUCCESS:
       return update(state, {
-        products: {$set: action.data.products},
-        brands: {$set: action.data.brands},
+        products: { $set: action.data.products },
+        brands: { $set: action.data.brands },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_API_SUBSCRIPTIONS_ERROR:
       return update(state, {
-        products: {$set: []},
-        brands: {$set: []},
+        products: { $set: [] },
+        brands: { $set: [] },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case CREATE_API_SUBSCRIPTION_SUCCESS:
       return update(state, {
-        products: {$set: action.data.products},
-        brands: {$set: action.data.brands},
+        products: { $set: action.data.products },
+        brands: { $set: action.data.brands },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case CREATE_API_SUBSCRIPTION_ERROR:
       return update(state, {
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     default:
       return state

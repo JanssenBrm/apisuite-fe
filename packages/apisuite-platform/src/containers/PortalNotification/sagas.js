@@ -9,7 +9,7 @@ import { API_URL } from 'constants/endpoints'
 import {
   FETCH_LATEST_NOTIFICATION,
   fetchLatestNotificationSuccess,
-  fetchLatestNotificationError
+  fetchLatestNotificationError,
 } from './ducks'
 
 /**
@@ -23,7 +23,7 @@ function * fetchLatestNotificationWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {

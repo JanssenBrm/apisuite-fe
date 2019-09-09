@@ -18,7 +18,8 @@ const SignatureAuthenticationScheme = () => (
           Here, the JOSE header must also contain the claims, which are the statements about the entity (for example,
           the
           user) and additional data.
-          The claims supported by BNP Paribas Fortis can be found below:</p><br />
+          The claims supported by BNP Paribas Fortis can be found below:
+        </p><br />
         <table>
           <thead>
             <tr>
@@ -31,35 +32,46 @@ const SignatureAuthenticationScheme = () => (
             <tr>
               <td><code>alg</code></td>
               <td className='large-td'><code>Forced by protocol
-                Algorithm used to encrypt</code></td>
+                Algorithm used to encrypt
+              </code>
+              </td>
               <td><code>PS256 <br />
-                Prefered – if not possible RS256 is tolerate</code></td>
+                Prefered – if not possible RS256 is tolerate
+              </code>
+              </td>
             </tr>
             <tr>
               <td><code>typ</code></td>
               <td><code>Forced by protocol
-                Type of JWS Header – hardcoded based on choice made by BNPPF</code></td>
+                Type of JWS Header – hardcoded based on choice made by BNPPF
+              </code>
+              </td>
               <td><code>JOSE <br /></code></td>
             </tr>
             <tr>
               <td><code>crit</code></td>
               <td><code>Recommended by protocol
                 Critical criteria (claims) that must be consider while computing the signature
-                BNPPF impose a set of claims to be present</code></td>
+                BNPPF impose a set of claims to be present
+              </code>
+              </td>
               <td><code>"x5u, url, aud, txn, iat, exp, digest "</code></td>
             </tr>
             <tr>
               <td><code>x5u</code></td>
               <td><code>Requested by BNPPF
                 Publically accessible uri of the public part (PEM) of the certificate used to sign the message
-              </code></td>
+              </code>
+              </td>
               <td><code>Valid URI to PEM file exposed by TP</code></td>
             </tr>
             <tr>
               <td><code>url</code></td>
               <td><code>Requested by BNPPF
                 Allow the support of signature for message without body
-                Corresponds to requested path and method</code></td>
+                Corresponds to requested path and method
+              </code>
+              </td>
               <td><code>VERB (in lowercase) + SPACE + requested path without domain and protocol eg: /foo
               </code>
               </td>
@@ -67,7 +79,9 @@ const SignatureAuthenticationScheme = () => (
             <tr>
               <td><code>aud</code></td>
               <td><code>Requested by BNPPF
-                Audience. Targeted endpoint.</code></td>
+                Audience. Targeted endpoint.
+              </code>
+              </td>
               <td><code>Target Host <br />
                 When contacting BNPPF :<br />
                 <table>
@@ -104,75 +118,93 @@ const SignatureAuthenticationScheme = () => (
             <tr>
               <td><code>txn</code></td>
               <td><code>Requested by BNPPF
-                Unique Identifier of the transaction</code></td>
+                Unique Identifier of the transaction
+              </code>
+              </td>
               <td><code>use the same value as the X-Request-Id http header</code></td>
             </tr>
             <tr>
               <td><code>iat</code></td>
               <td><code>Requested by BNPPF <br />
                 timestamp of generation of the signature – <br />
-                format <a className='color-word-blue' target='_blank' href={``}>NumericDate</a></code></td>
+                format <a className='color-word-blue' target='_blank' href=''>NumericDate</a>
+              </code>
+              </td>
               <td><code>@Now translated in <p className='color-word-red'>NumericDate</p>
-              </code></td>
+              </code>
+              </td>
             </tr>
             <tr>
               <td><code>exp</code></td>
               <td><code>Requested by BNPPF <br />
                 timestamp of generation of the signature + few seconds :
                 up to when the signature is considered by TP as usable – <br />
-                format <a className='color-word-blue' target='_blank' href={``}>NumericDate</a>
-              </code></td>
+                format <a className='color-word-blue' target='_blank' href=''>NumericDate</a>
+              </code>
+              </td>
               <td><code>@Now + set of seconds translated in <br />
-                <p className='color-word-red'>NumericDate Max 30 seconds</p></code></td>
+                <p className='color-word-red'>NumericDate Max 30 seconds</p>
+              </code>
+              </td>
             </tr>
           </tbody>
         </table>
         <br />
         <p>Example value of the JOSE header (the values highlighted in yellow need to be changed by the third
-          party):</p>
+          party):
+        </p>
         <div className='bordered'><code>
-          {`{ "alg":"PS256", "typ":"JOSE", "crit":"x5u, url, aud, txn, iat, exp, digest ", "x5u":"https://tpp.domain.com/certificates/signature.pem", "url":"get /foo", "aud" : "api.bnpparibasfortis.be", "txn" : "c09059f6-af3b-4ef0-ad32-82c0eacb82d8",  "iat":1449282920, "exp": 1449286520 }`}
-        </code></div>
+          {'{ "alg":"PS256", "typ":"JOSE", "crit":"x5u, url, aud, txn, iat, exp, digest ", "x5u":"https://tpp.domain.com/certificates/signature.pem", "url":"get /foo", "aud" : "api.bnpparibasfortis.be", "txn" : "c09059f6-af3b-4ef0-ad32-82c0eacb82d8",  "iat":1449282920, "exp": 1449286520 }'}
+        </code>
+        </div>
         <p><strong>
           Important remark : Preferred algorithm is PS256 --otherwise RS256-- only those 2 are acceptable by BNP Paribas
           Fortis
-        </strong></p>
+        </strong>
+        </p>
       </div>
       <h4>2. Build payload</h4>
       <p className='margin-container'> You will also need the payload to construct the signature. For API calls this
         will be the body of the http
-        request.</p>
+        request.
+      </p>
       <h4> 3. Compute signature input</h4>
       <div className='margin-container'>
         <p> Before creating the signature you need to encode both the JOSE header and the
           payload into Base 64.
-          Concatenate both results in ASCII separated by a dot to compute the signature input.</p>
+          Concatenate both results in ASCII separated by a dot to compute the signature input.
+        </p>
         <div className='bordered'><code>
           signatureInput = ASCII (Base64UrlEncode(header) + '.' + Base64UrlEncode(payload))
-        </code></div>
+        </code>
+        </div>
       </div>
       <h4>4. Generate signature based on signature input</h4>
       <div className='margin-container'>
         <p> Create the signature by applying the wanted algorithm based on TP signature key on the signature input
           (result
-          of step 3). </p>
+          of step 3).
+        </p>
         <div className='bordered'><code>signature = Sign(algorithm, signatureInput, tpSecret)</code></div>
         <p>The result must also be encoded in Base64. </p>
       </div>
       <h4>5. Create JWS compact detached serialization</h4>
       <div className='margin-container'>
         <p> The output is three Base64-URL strings separated by dots that can
-          be easily passed in HTML and HTTP environments (see example below):</p>
+          be easily passed in HTML and HTTP environments (see example below):
+        </p>
         <div className='bordered'><code>
           WS = Base64UrlEncode(UTF8(header)||'.'||'.'|| Base64UrlEncode(signature))
-        </code></div>
+        </code>
+        </div>
       </div>
       <h4>6. Place JWS signature in http message</h4>
       <div className='margin-container'>
         <p> Finally, the signature has to be added to the http request; it will be placed in a new http header:</p>
         <div className='bordered'><code>
-          x-jws-signature: {`<JWS signature value generated in previous step>`}
-        </code></div>
+          x-jws-signature: {'<JWS signature value generated in previous step>'}
+        </code>
+        </div>
         <br />
       </div>
     </div>
@@ -183,10 +215,12 @@ const SignatureAuthenticationScheme = () => (
         <p>The digest consists in the SHA-256 hash of the request body. It must be placed
           in
           a http header called
-          "Digest"</p>
+          "Digest"
+        </p>
         <div className='bordered'><code>
           Digest: "SHA-256="+ SHA256(Body)
-        </code></div>
+        </code>
+        </div>
       </div>
       <h4>2. Signature parameters</h4>
       <div className='margin-container'>
@@ -214,15 +248,21 @@ const SignatureAuthenticationScheme = () => (
               <td><code>keyId</code></td>
               <td className='large-td'><code>Forced by protocol<br />
                 But BNPPF requires that it contains a publically accessible uri of the public certificate (PEM) of the
-                certificate used to sign the message</code></td>
+                certificate used to sign the message
+              </code>
+              </td>
               <td><code>Eg: https://tpp.domain.com/certificates/signature.pem </code></td>
             </tr>
             <tr>
               <td><code>algorithm</code></td>
               <td><code>Forced by protocol
-                Algorithm used to encrypt</code></td>
+                Algorithm used to encrypt
+              </code>
+              </td>
               <td><code>PS256<br />
-                Prefered – if not possible RS256 is tolerate</code></td>
+                Prefered – if not possible RS256 is tolerate
+              </code>
+              </td>
             </tr>
             <tr>
               <td><code>headers</code></td>
@@ -232,7 +272,9 @@ const SignatureAuthenticationScheme = () => (
                 BNPPF fixes the list based on the elements wanted to ensure the integrity of the message
                 <p className='color-word-red'>Order of value in this field is important as it defines the way the
                   signature
-                  input will be build</p></code>
+                  input will be build
+                </p>
+              </code>
               </td>
               <td><code>algorithm, headers, (request-target), aud, txn , (created), (expires), digest</code></td>
             </tr>
@@ -240,9 +282,12 @@ const SignatureAuthenticationScheme = () => (
               <td><code>request-target</code></td>
               <td><code>Recommended and allow support of message without body as far as “headers” is also enforced<br />
                 Corresponds to requested path and method
-              </code></td>
+              </code>
+              </td>
               <td><code>owercased :method, an ASCII space, and the :path pseudo-headers eg: get
-                /foo/Bar/123?code=QSDQSD12</code></td>
+                /foo/Bar/123?code=QSDQSD12
+              </code>
+              </td>
             </tr>
             <tr>
               <td><code>aud</code></td>
@@ -272,37 +317,49 @@ const SignatureAuthenticationScheme = () => (
             <tr>
               <td><code>txn</code></td>
               <td><code>Requested by BNPPF <br />
-                Unique identifier of the transaction for TP.</code></td>
+                Unique identifier of the transaction for TP.
+              </code>
+              </td>
               <td><code>use the same value as the [“X-Request-ID”] http header</code></td>
             </tr>
             <tr>
               <td><code>created</code></td>
               <td><code>Requested by BNPPF <br />
                 timestamp of generation of the signature – <br />
-                format <a className='color-word-blue' target='_blank' href={``}>NumericDate</a></code></td>
+                format <a className='color-word-blue' target='_blank' href=''>NumericDate</a>
+              </code>
+              </td>
               <td><code>@Now translated in NumericDate
-              </code></td>
+              </code>
+              </td>
             </tr>
             <tr>
               <td><code>expires</code></td>
               <td><code>Requested by BNPPF <br />
                 timestamp of generation of the signature + few seconds : up to when the signature is considered by TP as
                 usable – <br />
-                format <a className='color-word-blue' target='_blank' href={``}>NumericDate</a>
-              </code></td>
+                format <a className='color-word-blue' target='_blank' href=''>NumericDate</a>
+              </code>
+              </td>
               <td><code>@Now + set of seconds translated in <br />
-                NumericDate <p className='color-word-red'>Max 30 seconds</p></code></td>
+                NumericDate <p className='color-word-red'>Max 30 seconds</p>
+              </code>
+              </td>
             </tr>
             <tr>
               <td><code>digest</code></td>
               <td><code>Requested by BNPPF
-                Make the link between signature and body</code></td>
+                Make the link between signature and body
+              </code>
+              </td>
               <td><code>Digest computed at [A]</code></td>
             </tr>
             <tr>
               <td><code>signature</code></td>
               <td><code>Forced by protocol <br />
-                Contains [F]</code></td>
+                Contains [F]
+              </code>
+              </td>
               <td />
             </tr>
           </tbody>
@@ -310,7 +367,8 @@ const SignatureAuthenticationScheme = () => (
         <p><strong> Note : </strong>strong>if there are PSU-* headers in the request (http headers that represent the
           end
           user connected to third party and forwarded
-          by third party to the ASPSP), they need to be added to "headers"' signature parameters</p>
+          by third party to the ASPSP), they need to be added to "headers"' signature parameters
+        </p>
       </div>
       <h4>3. Integrity string : </h4>
       <div className='margin-container'>
@@ -323,9 +381,11 @@ const SignatureAuthenticationScheme = () => (
         </p>
         <div className='bordered'><code>
           headers: algorithm, headers, (request-target), aud, txn, (created), (expires), digest
-        </code></div>
+        </code>
+        </div>
         <p>The required values for the signature must be concatenated in an input string. Here is to way to compute
-          it:</p>
+          it:
+        </p>
         <div className='bordered'><code>
           BASE64 (
           //Create concatenated string :
@@ -335,7 +395,8 @@ const SignatureAuthenticationScheme = () => (
           + TRIM(header value) + ASCII SPACE ) + ‘\n’ )
           )
           * (if multi value for an http header, separate concatenated value with “,”)
-        </code></div>
+        </code>
+        </div>
         <p>Example of integrity string:</p>
         <div className='bordered'><code>
           algorithm: PS256 \n
@@ -346,7 +407,8 @@ const SignatureAuthenticationScheme = () => (
           (created): 1449282920 \n
           (expires): 1449286520 \n
           digest: SHA-256=X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE=
-        </code></div>
+        </code>
+        </div>
       </div>
       <h4>4. Compute Signature: </h4>
       <div className='margin-container'>
@@ -358,7 +420,8 @@ const SignatureAuthenticationScheme = () => (
         </p>
         <div className='bordered'><code>
           hsignature = Base64UrlEncode(Sign(algorithm, thirdPartySignatureKey, integrityString)
-        </code></div>
+        </code>
+        </div>
       </div>
       <h4>5. Create Signature http header </h4>
       <div className='margin-container'>
@@ -369,7 +432,9 @@ const SignatureAuthenticationScheme = () => (
           <a
             className='color-word-blue'
             target='_blank'
-            href={`https://tools.ietf.org/html/rfc7235#section-4.1`}>RFC 7235, 4.1</a>), where the
+            href='https://tools.ietf.org/html/rfc7235#section-4.1'
+          >RFC 7235, 4.1
+          </a>), where the
           "auth-param" meet the BNPPF's requirements.
           Here is how to compute the value to put in the "Signature" header:
         </p>
@@ -380,12 +445,14 @@ const SignatureAuthenticationScheme = () => (
           ( resultString += LOVERWASE( signature_param name) || “=” || ‘”’ || signature_param value || “,” )
           list of auth-params with names in lowercase , values, separated by “,”
           Attention that request-target will not be part of resulting string !
-        </code></div>
+        </code>
+        </div>
         <p>Here is an example of signature header computed this way:</p>
         <div className='bordered'><code>
           {`Signature:keyId:”https://tpp.domain.com/certificates/signature.pem”,algorithm=”PS256”,headers=”algorithm, headers, (request-target), aud,  txn , (created), (expires), digest”,aud=”api.bnpparibasfortis.be”,txn=”c09059f6-af3b-4ef0-ad32-82c0eacb82d8”, created=1449282920 , expires=1449286520,
           digest=”SHA-256=X48E9qOokqqrvdts8nOJRJN3OWDUoyWxBf7kbu9DBPE=”, signature=”<computed signature>”`}
-        </code></div>
+        </code>
+        </div>
         <p>Here are the <strong> http headers </strong>strong> that must be present at minimum in the request/reply:
         </p>
         <ul>
@@ -407,21 +474,25 @@ const SignatureAuthenticationScheme = () => (
         <p>When validating a JWS, the following steps are performed.<br />
           The order of the steps is not significant in cases where there are no dependencies between the inputs and
           outputs of the steps.<br />
-          If any of the listed steps fails, then the signature or MAC cannot be validated.</p>
+          If any of the listed steps fails, then the signature or MAC cannot be validated.
+        </p>
         <div className='margin-container'>
           <p>1. Parse the JWS representation to extract the serialized values for the components of the JWS.<br />
             JWS signature must be first split single period ('.')<br />
             When using the JWS Compact “Detached” Serialization, these parts are :<br />
             [A] : the base64url-encoded representations of the JWS Protected Header (JOSE)<br />
-            [B] : the base64url-encoded of the JWS Signature</p>
+            [B] : the base64url-encoded of the JWS Signature
+          </p>
         </div>
         <div className='margin-container'>
           <p>2. Base64url-decode the encoded representation of the JWS Protected Header (JOSE), following the
-            restriction that no line breaks, whitespace, or other additional characters have been used.</p>
+            restriction that no line breaks, whitespace, or other additional characters have been used.
+          </p>
         </div>
         <div className='margin-container'>
           <p>3. Verify that the resulting octet sequence is a UTF-8-encoded representation of a completely valid JSON
-            object conforming to RFC 7159 [RFC7159]; let the JWS Protected Header be this JSON object.</p>
+            object conforming to RFC 7159 [RFC7159]; let the JWS Protected Header be this JSON object.
+          </p>
         </div>
         <div className='margin-container'>
           <p>4. Verify that the resulting JOSE Header does not contain duplicate Header Parameter names. </p>
@@ -433,29 +504,34 @@ const SignatureAuthenticationScheme = () => (
             by the algorithm being used, or by the "crit" Header Parameter value, and that the values of those
             parameters
             are
-            also understood and supported.</p>
+            also understood and supported.
+          </p>
         </div>
         <div className='margin-container'>
           <p>6. Compute and encoded version of the body : BASE64URL( body))</p>
         </div>
         <div className='margin-container'>
           <p>7. Base64url-decode the encoded representation of the JWS Signature, following the restriction that no line
-            breaks, whitespace, or other additional characters have been used.</p>
+            breaks, whitespace, or other additional characters have been used.
+          </p>
         </div>
         <div className='margin-container'>
           <p>8. Validate the JWS Signature against the JWS Signing Input :</p>
           <div className='bordered'><code>
             ASCII(BASE64URL(UTF8(JWS Protected Header)) || '.' || BASE64URL( result from 6 ))
-          </code></div>
+          </code>
+          </div>
           <p> in the manner defined for the algorithm being used, which MUST be accurately represented by the value of
             the
             "alg" (algorithm) Header Parameter, <br />
             which MUST be present.<br />
-            Record whether the validation succeeded or not.</p>
+            Record whether the validation succeeded or not.
+          </p>
         </div>
         <p>9. In the JWS Compact</p>
         <p>Serialization case, the result can simply indicate whether or not<br />
-          the JWS was successfully validated.</p>
+          the JWS was successfully validated.
+        </p>
         <p>
           Finally, note that it is an application decision which algorithms may be used in a given context.<br />
           Even if a JWS can be successfully validated, unless the algorithm(s) used in the JWS are acceptable to the
@@ -506,7 +582,9 @@ const SignatureAuthenticationScheme = () => (
             </tr>
             <tr>
               <td><code>Validate coherency of algorithm mentioned in claim or signature parameter and info present in
-                certificate</code></td>
+                certificate
+              </code>
+              </td>
               <td>Algorithm mentioned in meta data should be the same as the one proposed in certificate</td>
             </tr>
             <tr>

@@ -12,7 +12,7 @@ import {
   fetchApiProductsError,
   GET_API_PRODUCT,
   getApiProductSuccess,
-  getApiProductError
+  getApiProductError,
 } from './ducks'
 
 /**
@@ -26,7 +26,7 @@ function * fetchApiProductsWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -54,7 +54,7 @@ function * getApiProductWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {

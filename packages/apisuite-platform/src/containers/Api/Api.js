@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 class Api extends Component {
   state = {
-    apidocs: {}
+    apidocs: {},
   }
 
   componentDidMount () {
@@ -45,32 +45,30 @@ class Api extends Component {
               colors: {
                 tonalOffset: 0,
                 primary: {
-                  main: themeVariables.grey
-                }
+                  main: themeVariables.grey,
+                },
               },
               typography: {
                 fontWeightRegular: '400',
                 fontWeightBold: '600',
                 fontWeightLight: '300',
                 headings: {
-                  fontFamily: 'Roboto, sans-serif'
-                }
+                  fontFamily: 'Roboto, sans-serif',
+                },
               },
               rightPanel: {
-                backgroundColor: themeVariables.primaryColor
-              }
-            }
+                backgroundColor: themeVariables.primaryColor,
+              },
+            },
           }}
           spec={sandboxSpec}
-        />
-        }
+        />}
         {ui.loading &&
           <div className='api-loading'>
             <div className='loading'>
               <CircularProgress className='loading-circle' />
             </div>
-          </div>
-        }
+          </div>}
       </div>
     )
   }
@@ -84,7 +82,7 @@ Api.propTypes = {
   match: object.isRequired,
   apidocs: object.isRequired,
   ui: object.isRequired,
-  getApiDocs: func.isRequired
+  getApiDocs: func.isRequired,
 }
 
 export default Api

@@ -10,9 +10,9 @@ describe('<Pagination />', () => {
     pager: {
       page: 1,
       rowCount: 11,
-      pageCount: 2
+      pageCount: 2,
     },
-    onChangePage: jest.fn()
+    onChangePage: jest.fn(),
   }
 
   const wrapper = shallow(<Pagination {...props} />)

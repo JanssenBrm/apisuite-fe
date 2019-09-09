@@ -10,7 +10,7 @@ import {
   SEND_SUPPORT_FORM,
   sendSupportFormSuccess,
   sendSupportFormError,
-  resetSupportModal
+  resetSupportModal,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 
@@ -30,7 +30,7 @@ function * sendSupportForm (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {

@@ -19,20 +19,20 @@ import moment from 'moment'
 const timeRanges = [
   {
     name: 'Last day',
-    value: 'day'
+    value: 'day',
   },
   {
     name: 'Last week',
-    value: 'week'
+    value: 'week',
   },
   {
     name: 'Last month',
-    value: 'month'
+    value: 'month',
   },
   {
     name: 'Full history',
-    value: 'all'
-  }
+    value: 'all',
+  },
 ]
 
 const tabs = ['general', 'authorization', 'sandbox', 'user']
@@ -40,42 +40,42 @@ const tabs = ['general', 'authorization', 'sandbox', 'user']
 const kpisObj = {
   appCount: { tab: 0, action: 'APP_CREATION', value: 'year' },
   testUserLoginCount: { tab: 1, action: 'TEST_USER_LOGIN', value: 'week' },
-  portalLoginCount: { tab: 3, action: 'USER_LOGIN', value: 'week' }
+  portalLoginCount: { tab: 3, action: 'USER_LOGIN', value: 'week' },
 }
 
 const styles = theme => ({
   flexContainer: {
     display: 'flex',
     alignItems: 'center',
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
   tableRow: {
-    cursor: 'pointer'
+    cursor: 'pointer',
   },
   tableRowHover: {
     '&:hover': {
-      backgroundColor: theme.palette.grey[200]
-    }
+      backgroundColor: theme.palette.grey[200],
+    },
   },
   tableCell: {
-    flex: 1
+    flex: 1,
   },
   noClick: {
-    cursor: 'initial'
-  }
+    cursor: 'initial',
+  },
 })
 
 class MuiVirtualizedTable extends React.PureComponent {
   static defaultProps = {
     headerHeight: 48,
-    rowHeight: 48
+    rowHeight: 48,
   }
 
   getRowClassName = ({ index }) => {
     const { classes, onRowClick } = this.props
 
     return classnames('table-row', classes.tableRow, classes.flexContainer, {
-      [classes.tableRowHover]: index !== -1 && onRowClick != null
+      [classes.tableRowHover]: index !== -1 && onRowClick != null,
     })
   }
 
@@ -102,7 +102,7 @@ class MuiVirtualizedTable extends React.PureComponent {
       <TableCell
         component='div'
         className={classnames(classes.tableCell, classes.flexContainer, {
-          [classes.noClick]: onRowClick == null
+          [classes.noClick]: onRowClick == null,
         })}
         variant='body'
         style={{ height: rowHeight }}
@@ -143,9 +143,8 @@ class MuiVirtualizedTable extends React.PureComponent {
                 headerRenderer={headerProps =>
                   this.headerRenderer({
                     ...headerProps,
-                    columnIndex: index
-                  })
-                }
+                    columnIndex: index,
+                  })}
                 className={classes.flexContainer}
                 cellRenderer={this.cellRenderer}
                 dataKey={dataKey}
@@ -164,7 +163,7 @@ MuiVirtualizedTable.propTypes = {
   columns: arrayOf(object).isRequired,
   headerHeight: number,
   onRowClick: func,
-  rowHeight: number
+  rowHeight: number,
 }
 
 const VirtualizedTable = withStyles(styles)(MuiVirtualizedTable)
@@ -175,12 +174,12 @@ class ActivityLog extends Component {
     selectedTab: 0,
     logs: {
       records: [],
-      pagination: {}
+      pagination: {},
     },
     kpis: {},
     ui: {
-      loading: false
-    }
+      loading: false,
+    },
   }
 
   componentDidMount () {
@@ -188,7 +187,7 @@ class ActivityLog extends Component {
     const filters = {
       category: tabs[selectedTab],
       from: +moment().subtract(1, 'day'),
-      to: +moment()
+      to: +moment(),
     }
 
     this.props.fetchActivities(filters)
@@ -213,13 +212,13 @@ class ActivityLog extends Component {
     const filters = {
       category: tabs[this.state.selectedTab],
       from: target.value === 'all' ? 0 : +moment().subtract(1, target.value),
-      to: +moment()
+      to: +moment(),
     }
 
     this.props.fetchActivities(filters)
 
     this.setState({
-      selectedTimeRange: target.value
+      selectedTimeRange: target.value,
     })
   }
 
@@ -229,7 +228,7 @@ class ActivityLog extends Component {
     const filters = {
       category: tabs[value],
       from: selectedTimeRange === 'all' ? 0 : +moment().subtract(1, selectedTimeRange),
-      to: +moment()
+      to: +moment(),
     }
     this.props.fetchActivities(filters)
 
@@ -244,7 +243,7 @@ class ActivityLog extends Component {
       pageSize: 50,
       category: tabs[selectedTab],
       from: selectedTimeRange === 'all' ? 0 : +moment().subtract(1, selectedTimeRange),
-      to: +moment()
+      to: +moment(),
     }
     this.props.fetchActivities(filters)
   }
@@ -260,7 +259,7 @@ class ActivityLog extends Component {
       category: tabs[kpi.tab],
       from: +moment().subtract(1, kpi.value),
       to: +moment(),
-      action: kpi.action
+      action: kpi.action,
     }
     this.props.fetchActivities(filters)
     const timeRange = kpi.value === 'year' ? 'all' : kpi.value
@@ -270,19 +269,19 @@ class ActivityLog extends Component {
   render () {
     const { selectedTimeRange, selectedTab, logs, kpis, ui } = this.state
     const { intl } = this.props
-    const appsCreated = intl.formatMessage({id: 'activityLog.kpi.apps'})
-    const testuserLogins = intl.formatMessage({id: 'activityLog.kpi.testuser'})
-    const portalLogins = intl.formatMessage({id: 'activityLog.kpi.portal'})
-    const lastWeek = intl.formatMessage({id: 'activityLog.kpi.week'})
-    const lastYear = intl.formatMessage({id: 'activityLog.kpi.year'})
-    const generalActivities = intl.formatMessage({id: 'activityLog.tab.general'})
-    const authActivities = intl.formatMessage({id: 'activityLog.tab.auth'})
-    const sandboxActivities = intl.formatMessage({id: 'activityLog.tab.sandbox'})
-    const userActivities = intl.formatMessage({id: 'activityLog.tab.user'})
-    const timeLabel = intl.formatMessage({id: 'activityLog.column.time'})
-    const creatorLabel = intl.formatMessage({id: 'activityLog.column.creator'})
-    const actionLabel = intl.formatMessage({id: 'activityLog.column.action'})
-    const infoLabel = intl.formatMessage({id: 'activityLog.column.info'})
+    const appsCreated = intl.formatMessage({ id: 'activityLog.kpi.apps' })
+    const testuserLogins = intl.formatMessage({ id: 'activityLog.kpi.testuser' })
+    const portalLogins = intl.formatMessage({ id: 'activityLog.kpi.portal' })
+    const lastWeek = intl.formatMessage({ id: 'activityLog.kpi.week' })
+    const lastYear = intl.formatMessage({ id: 'activityLog.kpi.year' })
+    const generalActivities = intl.formatMessage({ id: 'activityLog.tab.general' })
+    const authActivities = intl.formatMessage({ id: 'activityLog.tab.auth' })
+    const sandboxActivities = intl.formatMessage({ id: 'activityLog.tab.sandbox' })
+    const userActivities = intl.formatMessage({ id: 'activityLog.tab.user' })
+    const timeLabel = intl.formatMessage({ id: 'activityLog.column.time' })
+    const creatorLabel = intl.formatMessage({ id: 'activityLog.column.creator' })
+    const actionLabel = intl.formatMessage({ id: 'activityLog.column.action' })
+    const infoLabel = intl.formatMessage({ id: 'activityLog.column.info' })
 
     const isAdmin = this.checkRole('ADMIN')
     const isSales = this.checkRole('SALES')
@@ -323,16 +322,16 @@ class ActivityLog extends Component {
           <div className='table-container'>
             <Tabs
               variant='fullWidth'
-              classes={{root: 'tabs', flexContainer: 'tabs-flex'}}
+              classes={{ root: 'tabs', flexContainer: 'tabs-flex' }}
               value={selectedTab}
               indicatorColor='primary'
               textColor='primary'
               onChange={this.handleTabChange}
             >
-              <Tab classes={{root: 'tab', label: 'tab-label'}} label={generalActivities} disabled={isSales} />
-              <Tab classes={{root: 'tab', label: 'tab-label'}} label={authActivities} disabled={isSales} />
-              <Tab classes={{root: 'tab', label: 'tab-label'}} label={sandboxActivities} disabled={isSales} />
-              <Tab classes={{root: 'tab', label: 'tab-label', disabled: 'tab-disabled'}} label={userActivities} disabled={isSales || !isAdmin} />
+              <Tab classes={{ root: 'tab', label: 'tab-label' }} label={generalActivities} disabled={isSales} />
+              <Tab classes={{ root: 'tab', label: 'tab-label' }} label={authActivities} disabled={isSales} />
+              <Tab classes={{ root: 'tab', label: 'tab-label' }} label={sandboxActivities} disabled={isSales} />
+              <Tab classes={{ root: 'tab', label: 'tab-label', disabled: 'tab-disabled' }} label={userActivities} disabled={isSales || !isAdmin} />
             </Tabs>
             <Paper className='paper-wrapper'>
               {logs.records && logs.records.length > 0
@@ -342,33 +341,31 @@ class ActivityLog extends Component {
                   columns={[
                     {
                       label: timeLabel,
-                      dataKey: 'created'
+                      dataKey: 'created',
                     },
                     {
                       width: 100,
                       label: creatorLabel,
-                      dataKey: 'creator'
+                      dataKey: 'creator',
                     },
                     {
                       label: actionLabel,
-                      dataKey: 'action'
+                      dataKey: 'action',
                     },
                     {
                       width: 300,
                       label: infoLabel,
-                      dataKey: 'additionalInfo'
-                    }
+                      dataKey: 'additionalInfo',
+                    },
                   ]}
                 />
                 : <div className='empty-table'>
                   <FormattedMessage id='activityLog.empty' />
-                </div>
-              }
+                </div>}
               {ui.loading &&
                 <div className='loading'>
                   <CircularProgress className='loading-circle' />
-                </div>
-              }
+                </div>}
             </Paper>
           </div>
           {logs.pagination &&
@@ -376,8 +373,7 @@ class ActivityLog extends Component {
               items={logs.records}
               pager={logs.pagination}
               onChangePage={this.handleChangePage}
-            />
-          }
+            />}
         </div>
       </div>
     )
@@ -391,7 +387,7 @@ ActivityLog.propTypes = {
   kpis: object.isRequired,
   ui: object.isRequired,
   fetchActivities: func.isRequired,
-  fetchKpis: func.isRequired
+  fetchKpis: func.isRequired,
 }
 
 export default ActivityLog

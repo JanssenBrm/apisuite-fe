@@ -6,21 +6,21 @@ import RecoveryPage from './RecoveryPage'
 import { translationMessages, formats } from 'util/i18n'
 import { IntlProvider } from 'react-intl'
 
-const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages['en'], formats })
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
 const { intl } = intlProvider.getChildContext()
 
 describe('<LoginPage />', () => {
   const props = {
     auth: {
       ui: {
-        loading: false
+        loading: false,
       },
-      TwoFA: {}
+      TwoFA: {},
     },
     twoFaAuth: jest.fn(),
     openRecovery: jest.fn(),
     sendSMSCode: jest.fn(),
-    intl
+    intl,
   }
   const wrapper = mountWithIntl(<LoginPage {...props} />)
 
@@ -30,7 +30,7 @@ describe('<LoginPage />', () => {
 
   it('should call twoFaAuth on submit', () => {
     const code = '123456'
-    wrapper.setState({code})
+    wrapper.setState({ code })
     wrapper.find('.two-fa-submit').first().simulate('click')
     expect(props.twoFaAuth).toHaveBeenCalledWith(code)
   })
@@ -45,13 +45,13 @@ describe('<RecoveryPage />', () => {
   const props = {
     auth: {
       ui: {
-        loading: false
+        loading: false,
       },
-      TwoFA: {}
+      TwoFA: {},
     },
     verifyRecoveryCode: jest.fn(),
     openSupport: jest.fn(),
-    intl
+    intl,
   }
   const wrapper = mountWithIntl(<RecoveryPage {...props} />)
 
@@ -61,7 +61,7 @@ describe('<RecoveryPage />', () => {
 
   it('should call verifyRecoveryCode on submit', () => {
     const code = '123456'
-    wrapper.setState({code})
+    wrapper.setState({ code })
     wrapper.find('.two-fa-submit').first().simulate('click')
     expect(props.verifyRecoveryCode).toHaveBeenCalledWith(code)
   })

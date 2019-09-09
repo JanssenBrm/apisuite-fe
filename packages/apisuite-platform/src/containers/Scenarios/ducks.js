@@ -31,8 +31,8 @@ const initialState = {
   endpoints: {},
   apis: [],
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 
 /**
@@ -48,65 +48,65 @@ export default function reducer (state = initialState, action) {
     case GET_SCENARIO:
       return update(state, {
         ui: {
-          loading: { $set: true }
-        }
+          loading: { $set: true },
+        },
       })
     case FETCH_APIS_SUCCESS:
       return update(state, {
         apis: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_APIS_ERROR:
       return update(state, {
         apis: { $set: [] },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_ENDPOINTS_SUCCESS:
       return update(state, {
         endpoints: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_ENDPOINTS_ERROR:
       return update(state, {
         endpoints: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_SCENARIOS_SUCCESS:
       return update(state, {
         data: { $set: action.data.records },
         scenario: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_SCENARIOS_ERROR:
       return update(state, {
         data: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_SCENARIO_SUCCESS:
       return update(state, {
         scenario: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_SCENARIO_ERROR:
       return update(state, {
         scenario: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     default:
       return state

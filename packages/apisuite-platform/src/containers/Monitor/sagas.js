@@ -26,7 +26,7 @@ function getFailType (action) {
 function * monitor (monitoredAction) {
   const { fail } = yield race({
     success: take(getSuccessType(monitoredAction)),
-    fail: take(getFailType(monitoredAction))
+    fail: take(getFailType(monitoredAction)),
   })
 
   if (fail && fail.error && fail.error.status === 401 && fail.type !== 'Auth/LOGIN_USER_ERROR') {

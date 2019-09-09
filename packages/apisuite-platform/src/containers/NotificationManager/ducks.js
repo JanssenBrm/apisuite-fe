@@ -17,7 +17,7 @@ const initialState = {
   variant: null,
   message: null,
   show: false,
-  fromAPI: false
+  fromAPI: false,
 }
 /**
  * Reducer
@@ -31,11 +31,11 @@ export default function reducer (state = initialState, action) {
         variant: { $set: action.variant },
         message: { $set: action.message },
         show: { $set: true },
-        fromAPI: { $set: Boolean(action.fromAPI) }
+        fromAPI: { $set: Boolean(action.fromAPI) },
       })
     case HIDE_NOTIFICATION:
       return update(state, {
-        show: { $set: false }
+        show: { $set: false },
       })
     default:
       return state

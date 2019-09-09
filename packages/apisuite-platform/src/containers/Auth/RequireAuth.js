@@ -10,7 +10,7 @@ import { USER_ROLES } from 'constants/global'
 
 export class RequireAuth extends Component {
   state = {
-    isAuthorized: false
+    isAuthorized: false,
   }
 
   componentWillMount () {
@@ -86,7 +86,7 @@ RequireAuth.propTypes = {
   /**
    * Open Login modal action
    */
-  openLoginModal: func.isRequired
+  openLoginModal: func.isRequired,
 }
 
 export default RequireAuth

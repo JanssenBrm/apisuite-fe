@@ -5,7 +5,9 @@ const ProductionEndpoints = () => (
     <h2 className='headline'>Accessing Production Endpoints</h2>
     <h4>PSD2 APIs</h4>
     <p><strong>This section provides details on how to access PSD2 APIs from BNP Paribas Fortis in production
-      environment.</strong></p>
+      environment.
+    </strong>
+    </p>
     <p><strong>The currently tested and available APIs are accessible from the following urls: </strong></p>
     <table>
       <thead>
@@ -20,7 +22,9 @@ const ProductionEndpoints = () => (
           <td>
             <a
               target='_blank'
-              href={`https://regulatory.api.bnpparibasfortis.be/token`}>https://regulatory.api.bnpparibasfortis.be</a>
+              href='https://regulatory.api.bnpparibasfortis.be/token'
+            >https://regulatory.api.bnpparibasfortis.be
+            </a>
           </td>
         </tr>
         <tr>
@@ -28,11 +32,14 @@ const ProductionEndpoints = () => (
           <td>
             <a
               target='_blank'
-              href={`https://regulatory.api.hellobank.be/token`}>https://regulatory.api.hellobank.be</a></td>
+              href='https://regulatory.api.hellobank.be/token'
+            >https://regulatory.api.hellobank.be
+            </a>
+          </td>
         </tr>
         <tr>
           <td><code>Fintro</code></td>
-          <td><a target='_blank' href={`https://regulatory.api.fintro.be/token`}>https://regulatory.api.fintro.be</a>
+          <td><a target='_blank' href='https://regulatory.api.fintro.be/token'>https://regulatory.api.fintro.be</a>
           </td>
         </tr>
       </tbody>
@@ -97,7 +104,9 @@ const ProductionEndpoints = () => (
           <td>
             <a
               target='_blank'
-              href={`https://services.bnpparibasfortis.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={TPP_CLIENT_ID}&scope=aisp&response_type=code&state={TPP_STATE}&redirect_uri={TPP_REDIRECT_URL}`}>https://services.bnpparibasfortis.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={`{TPP_CLIENT_ID}`}&scope=aisp&response_type=code&state={`{TPP_STATE}`}&redirect_uri={`{TPP_REDIRECT_URL}`}</a>
+              href={'https://services.bnpparibasfortis.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={TPP_CLIENT_ID}&scope=aisp&response_type=code&state={TPP_STATE}&redirect_uri={TPP_REDIRECT_URL}'}
+            >https://services.bnpparibasfortis.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={'{TPP_CLIENT_ID}'}&scope=aisp&response_type=code&state={'{TPP_STATE}'}&redirect_uri={'{TPP_REDIRECT_URL}'}
+            </a>
           </td>
         </tr>
         <tr>
@@ -105,7 +114,9 @@ const ProductionEndpoints = () => (
           <td>
             <a
               target='_blank'
-              href={`https://services.hellobank.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={TPP_CLIENT_ID}&scope=aisp&response_type=code&state={TPP_STATE}&redirect_uri={TPP_REDIRECT_URL}`}>https://services.hellobank.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={`{TPP_CLIENT_ID}`}&scope=aisp&response_type=code&state={`{TPP_STATE}`}&redirect_uri={`{TPP_REDIRECT_URL}`}</a>
+              href={'https://services.hellobank.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={TPP_CLIENT_ID}&scope=aisp&response_type=code&state={TPP_STATE}&redirect_uri={TPP_REDIRECT_URL}'}
+            >https://services.hellobank.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={'{TPP_CLIENT_ID}'}&scope=aisp&response_type=code&state={'{TPP_STATE}'}&redirect_uri={'{TPP_REDIRECT_URL}'}
+            </a>
           </td>
         </tr>
         <tr>
@@ -113,7 +124,9 @@ const ProductionEndpoints = () => (
           <td>
             <a
               target='_blank'
-              href={`https://services.fintro.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={TPP_CLIENT_ID}&scope=aisp&response_type=code&state={TPP_STATE}&redirect_uri={TPP_REDIRECT_URL}`}>https://services.fintro.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={`{TPP_CLIENT_ID}`}&scope=aisp&response_type=code&state={`{TPP_STATE}`}&redirect_uri={`{TPP_REDIRECT_URL}`}</a>
+              href={'https://services.fintro.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={TPP_CLIENT_ID}&scope=aisp&response_type=code&state={TPP_STATE}&redirect_uri={TPP_REDIRECT_URL}'}
+            >https://services.fintro.be/SEPLJ04/sps/oauth/oauth20/authorize?client_id={'{TPP_CLIENT_ID}'}&scope=aisp&response_type=code&state={'{TPP_STATE}'}&redirect_uri={'{TPP_REDIRECT_URL}'}
+            </a>
           </td>
         </tr>
       </tbody>
@@ -158,13 +171,13 @@ const ProductionEndpoints = () => (
         </tr>
         <tr>
           <td><code>GET</code></td>
-          <td>/v1/accounts/{`{accountResourceId}`}/balances</td>
+          <td>/v1/accounts/{'{accountResourceId}'}/balances</td>
           <td>authorization_code</td>
           <td><strong>LIVE</strong></td>
         </tr>
         <tr>
           <td><code>GET</code></td>
-          <td>/v1/accounts/{`{accountResourceId}/transactions`}/transactions</td>
+          <td>/v1/accounts/{'{accountResourceId}/transactions'}/transactions</td>
           <td>authorization_code</td>
           <td><strong>LIVE</strong></td>
         </tr>
@@ -182,7 +195,7 @@ const ProductionEndpoints = () => (
         </tr>
         <tr>
           <td><code>GET</code></td>
-          <td>/v1/payment-requests/{`{paymentRequestResourceId}`}</td>
+          <td>/v1/payment-requests/{'{paymentRequestResourceId}'}</td>
           <td>client_credentials</td>
           <td><strong>LIVE</strong></td>
         </tr>

@@ -17,11 +17,11 @@ const initialState = {
   data: {
     external_resources: [],
     source_account: '',
-    pagination: {}
+    pagination: {},
   },
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 /**
  * Reducer
@@ -33,22 +33,22 @@ export default function reducer (state = initialState, action) {
     case FETCH_RESOURCES:
       return update(state, {
         ui: {
-          loading: { $set: true }
-        }
+          loading: { $set: true },
+        },
       })
     case FETCH_RESOURCES_SUCCESS:
       return update(state, {
         data: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_RESOURCES_ERROR:
       return update(state, {
         data: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     default:
       return state

@@ -10,14 +10,14 @@ const NotFound = ({ message }) => (
 )
 
 NotFound.defaultProps = {
-  message: '404 Page Not Found'
+  message: '404 Page Not Found',
 }
 
 NotFound.propTypes = {
   /**
    * Error message to be displayed
    */
-  message: string
+  message: string,
 }
 
 export default NotFound

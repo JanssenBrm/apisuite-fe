@@ -59,7 +59,7 @@ export const routesConfig = [
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
   { path: '/cookies', component: Cookies },
-  { component: NotFound, footer: true }
+  { component: NotFound, footer: true },
 ]
 
 export default () => (

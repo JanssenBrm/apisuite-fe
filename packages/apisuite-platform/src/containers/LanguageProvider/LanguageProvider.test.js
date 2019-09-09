@@ -14,7 +14,7 @@ describe('<LanguageProvider />', () => {
   const props = {
     lang: { locale: 'en' },
     messages: { en: {} },
-    children: <MockElement />
+    children: <MockElement />,
   }
 
   it('should render IntlProvider', () => {
@@ -27,7 +27,7 @@ describe('<LocaleSelect />', () => {
   const props = {
     lang: { locale: 'en', locales: ['en', 'pt', 'nl'] },
     messages: { en: {} },
-    onLocalChange: jest.fn()
+    onLocalChange: jest.fn(),
   }
 
   const wrapper = shallow(<LocaleSelect {...props} />)
@@ -46,7 +46,7 @@ describe('<LocaleSelect />', () => {
 describe('LanguageProvider reducer', () => {
   const initialState = {
     locale: validateLocale(),
-    locales: appLocales
+    locales: appLocales,
   }
 
   it('should return the initial state', () => {
@@ -54,7 +54,7 @@ describe('LanguageProvider reducer', () => {
   })
 
   it('should set locale on CHANGE_LOCALE', () => {
-    expect(reducer(initialState, changeLocale(appLocales[1]))).toEqual({...initialState, locale: appLocales[1]})
+    expect(reducer(initialState, changeLocale(appLocales[1]))).toEqual({ ...initialState, locale: appLocales[1] })
   })
 })
 
@@ -62,7 +62,7 @@ describe('LanguageProvider middleware', () => {
   const create = () => {
     const store = {
       getState: jest.fn(() => ({})),
-      dispatch: jest.fn()
+      dispatch: jest.fn(),
     }
 
     const next = jest.fn()
@@ -74,7 +74,7 @@ describe('LanguageProvider middleware', () => {
 
   it('should allways call next with the action and not perform any action', () => {
     const { next, invoke } = create()
-    const action = {type: 'TEST'}
+    const action = { type: 'TEST' }
     invoke(action)
 
     expect(next).toHaveBeenCalledWith(action)

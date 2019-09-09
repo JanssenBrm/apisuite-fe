@@ -40,7 +40,7 @@ const sagas = [
   ...TeamSagas,
   ...ActivityLogSagas,
   ...ExternalResourcesSagas,
-  ...PortalNotificationSagas
+  ...PortalNotificationSagas,
 ]
 
 export default sagas

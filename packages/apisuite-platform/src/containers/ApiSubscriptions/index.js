@@ -6,16 +6,16 @@ import { injectIntl } from 'react-intl'
 import { fetchApiSubscriptions, createApiSubscription } from 'containers/ApiSubscriptions/ducks'
 import { fetchApps } from 'containers/AppsPage/ducks'
 
-const mapStateToProps = ({auth, subscriptions, apps}) => ({
+const mapStateToProps = ({ auth, subscriptions, apps }) => ({
   auth,
   subscriptions,
-  apps: apps.data
+  apps: apps.data,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   fetchApiSubscriptions: () => dispatch(fetchApiSubscriptions()),
   createApiSubscription: (organizationId, productIds) => dispatch(createApiSubscription(organizationId, productIds)),
-  fetchApps: (organizationId) => dispatch(fetchApps(organizationId))
+  fetchApps: (organizationId) => dispatch(fetchApps(organizationId)),
 })
 
 const Enhanced = compose(

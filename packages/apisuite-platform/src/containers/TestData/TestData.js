@@ -24,19 +24,19 @@ class TestData extends Component {
     testusers: {},
     testUser: null,
     ui: {
-      loading: false
-    }
+      loading: false,
+    },
   }
 
   componentDidMount () {
     const { testModalOpen } = this.state
-    const {user: {organizations}, location: {state}} = this.props
+    const { user: { organizations }, location: { state } } = this.props
     const organizationId = organizations && organizations.length ? organizations[0].id : null
     this.props.fetchTestData()
     if (organizationId) this.props.fetchApps(organizationId)
     this.props.fetchApiSubscriptions()
     if (state && state.testUser) {
-      this.setState({testModalOpen: true, testUser: state.testUser})
+      this.setState({ testModalOpen: true, testUser: state.testUser })
     }
   }
 
@@ -44,7 +44,7 @@ class TestData extends Component {
     if (nextProps.testusers !== prevState.testusers || nextProps.ui !== prevState.ui) {
       return {
         testusers: nextProps.testusers,
-        ui: nextProps.ui
+        ui: nextProps.ui,
       }
     }
 
@@ -52,11 +52,11 @@ class TestData extends Component {
   }
 
   openAppModal = (open) => event => {
-    this.setState({appModalOpen: open})
+    this.setState({ appModalOpen: open })
   }
 
   openTestUserModal = (open) => event => {
-    this.setState({testModalOpen: open})
+    this.setState({ testModalOpen: open })
   }
 
   navigate = route => event => {
@@ -77,15 +77,15 @@ class TestData extends Component {
     </div>
 
   render () {
-    const {apps, intl, createApp, user, theme, subscriptions, createApiSubscription, fetchApiSubscriptions} = this.props
-    const {appModalOpen, testModalOpen, testusers, testUser, ui} = this.state
+    const { apps, intl, createApp, user, theme, subscriptions, createApiSubscription, fetchApiSubscriptions } = this.props
+    const { appModalOpen, testModalOpen, testusers, testUser, ui } = this.state
     const testdata = testusers.users
     const organization = user.organizations && user.organizations.length > 0 ? user.organizations[0] : null
 
-    const rightTitle = intl.formatMessage({id: 'createApp.title'})
-    const rightSubtitle = intl.formatMessage({id: 'createApp.content'})
-    const testRightTitle = intl.formatMessage({id: 'testData.create.title'})
-    const testRightSubtitle = intl.formatMessage({id: 'testData.create.content'})
+    const rightTitle = intl.formatMessage({ id: 'createApp.title' })
+    const rightSubtitle = intl.formatMessage({ id: 'createApp.content' })
+    const testRightTitle = intl.formatMessage({ id: 'testData.create.title' })
+    const testRightSubtitle = intl.formatMessage({ id: 'testData.create.content' })
 
     const hasSubscriptions = subscriptions.products.some(sub => sub.isSubscribed)
 
@@ -94,47 +94,46 @@ class TestData extends Component {
       : true
 
     return (
-      <div className={classnames('testdata-container', {'fallback-bg': sandboxUnavailable})}>
+      <div className={classnames('testdata-container', { 'fallback-bg': sandboxUnavailable })}>
         {!sandboxUnavailable && testdata && apps.length > 0 && !ui.loading && <div className='testdata-content'>
           <div className='testdata-wrapper'>
             {testdata.length > 0 &&
-            <Card children={[
-              <div className='testdata-list'>
-                <div className='testdata-header'><FormattedMessage id='testData.header' /></div>
-                {testdata.map((user, idx) => {
-                  const splitName = user.name.split(' ')
-                  const userInitials = splitName.length >= 2 ? `${splitName[0].charAt(0)}${splitName[1].charAt(0)}` : splitName[0].slice(0, 2)
-                  // const userAccounts = this.checkAccounts(user.customerId)
-                  const accountLabel = user.accounts.length > 0 ? user.accounts.length === 1 ? user.accounts[0].accountId.iban : `${user.accounts.length} ASSIGNED ACCOUNTS` : 'NO ASSIGNED ACCOUNTS'
-                  return (
-                    <div key={`user-${user.id}`} className='testdata-item'>
-                      <div className='testuser-content'>
-                        <div className='testuser-avatar'><span>{userInitials}</span></div>
-                        <div className='testuser-details'>
-                          <div className='testuser-name'>{user.name}</div>
-                          <div className='testuser-account'>{accountLabel}</div>
+              <Card children={[
+                <div className='testdata-list'>
+                  <div className='testdata-header'><FormattedMessage id='testData.header' /></div>
+                  {testdata.map((user, idx) => {
+                    const splitName = user.name.split(' ')
+                    const userInitials = splitName.length >= 2 ? `${splitName[0].charAt(0)}${splitName[1].charAt(0)}` : splitName[0].slice(0, 2)
+                    // const userAccounts = this.checkAccounts(user.customerId)
+                    const accountLabel = user.accounts.length > 0 ? user.accounts.length === 1 ? user.accounts[0].accountId.iban : `${user.accounts.length} ASSIGNED ACCOUNTS` : 'NO ASSIGNED ACCOUNTS'
+                    return (
+                      <div key={`user-${user.id}`} className='testdata-item'>
+                        <div className='testuser-content'>
+                          <div className='testuser-avatar'><span>{userInitials}</span></div>
+                          <div className='testuser-details'>
+                            <div className='testuser-name'>{user.name}</div>
+                            <div className='testuser-account'>{accountLabel}</div>
+                          </div>
                         </div>
+                        <IconButton onClick={this.navigate(`/testdata/${user.id}`)}>
+                          <CaretRightIcon />
+                        </IconButton>
                       </div>
-                      <IconButton onClick={this.navigate(`/testdata/${user.id}`)}>
-                        <CaretRightIcon />
-                      </IconButton>
-                    </div>
-                  )
-                })}
-                <div className='testdata-footer' onClick={this.openTestUserModal(true)}>
-                  <div className='add-test-user'><FormattedMessage id='testData.footer.add' /></div>
-                  <AddIcon />
-                </div>
-              </div>
-            ]} />
-            }
+                    )
+                  })}
+                  <div className='testdata-footer' onClick={this.openTestUserModal(true)}>
+                    <div className='add-test-user'><FormattedMessage id='testData.footer.add' /></div>
+                    <AddIcon />
+                  </div>
+                </div>,
+              ]}
+              />}
             {testusers.pagination &&
               <Pagination
                 items={testusers.users}
                 pager={testusers.pagination}
                 onChangePage={this.handleChangePage}
-              />
-            }
+              />}
           </div>
           <div className='testdata-description'>
             <Typography variant='display3' gutterBottom><FormattedMessage id='testData.title' /></Typography>
@@ -150,68 +149,70 @@ class TestData extends Component {
               <FormattedMessage id='testData.proposeFeature' />
             </Button> */}
           </div>
-        </div>
-        }
+        </div>}
         {((apps.length > 0 && sandboxUnavailable) || apps.length === 0) && !ui.loading &&
-        <div className='first-app'>
-          <div className='first-app-wrapper'>
-            <img
-              className='create-app-image'
-              src={sandboxUnavailable ? emptyTestdataCircle : (theme.firstApp || firstApp)} />
-            {sandboxUnavailable && <img className='image-placeholder' src={graphicPlaceholder} />}
-          </div>
-          <Typography variant='display3' className='create-app-title'>{<FormattedMessage
-            id={sandboxUnavailable ? 'testData.fallback.title' : 'appsPage.createApp'} />}</Typography>
-          <div className='create-app-subtitle'>{<FormattedMessage
-            id={sandboxUnavailable ? 'testData.fallback.subtitle' : 'testData.createApp.subtitle'} />}</div>
-          {!sandboxUnavailable &&
-          <Button
-            testid='create-app-btn'
-            variant='fab'
-            color='secondary'
-            aria-label='Add'
-            className='create-app-button'
-            onClick={this.openAppModal(true)}>
-            <AddIcon />
-          </Button>}
-        </div>
-        }
+          <div className='first-app'>
+            <div className='first-app-wrapper'>
+              <img
+                className='create-app-image'
+                src={sandboxUnavailable ? emptyTestdataCircle : (theme.firstApp || firstApp)}
+              />
+              {sandboxUnavailable && <img className='image-placeholder' src={graphicPlaceholder} />}
+            </div>
+            <Typography variant='display3' className='create-app-title'>{<FormattedMessage
+              id={sandboxUnavailable ? 'testData.fallback.title' : 'appsPage.createApp'}
+            />}
+            </Typography>
+            <div className='create-app-subtitle'>{<FormattedMessage
+              id={sandboxUnavailable ? 'testData.fallback.subtitle' : 'testData.createApp.subtitle'}
+            />}
+            </div>
+            {!sandboxUnavailable &&
+              <Button
+                testid='create-app-btn'
+                variant='fab'
+                color='secondary'
+                aria-label='Add'
+                className='create-app-button'
+                onClick={this.openAppModal(true)}
+              >
+                <AddIcon />
+              </Button>}
+          </div>}
         {organization &&
-        <ModalSplit
-          open={appModalOpen}
-          onClose={this.openAppModal(false)}
-          component={<CreateApp
-            user={user}
-            organization={organization}
-            createApp={createApp}
-            subscriptions={subscriptions}
-            fetchApiSubscriptions={fetchApiSubscriptions}
-            createApiSubscription={createApiSubscription}
-            closeModal={this.openAppModal(false)}
+          <ModalSplit
+            open={appModalOpen}
+            onClose={this.openAppModal(false)}
+            component={<CreateApp
+              user={user}
+              organization={organization}
+              createApp={createApp}
+              subscriptions={subscriptions}
+              fetchApiSubscriptions={fetchApiSubscriptions}
+              createApiSubscription={createApiSubscription}
+              closeModal={this.openAppModal(false)}
+            />}
+            rightTitle={rightTitle}
+            rightSubtitle={rightSubtitle}
+            isApps
           />}
-          rightTitle={rightTitle}
-          rightSubtitle={rightSubtitle}
-          isApps
-        />
-        }
         {organization &&
-        <ModalSplit
-          open={testModalOpen}
-          onClose={this.openTestUserModal(false)}
-          component={<CreateTestUser
-            organization={organization}
-            testUser={testUser}
-            ui={ui}
-            closeModal={this.openTestUserModal(false)}
-            accounts={this.props.accounts}
-            createTestUser={this.props.createTestUser}
-            getTestUserAccounts={this.props.getTestUserAccounts}
+          <ModalSplit
+            open={testModalOpen}
+            onClose={this.openTestUserModal(false)}
+            component={<CreateTestUser
+              organization={organization}
+              testUser={testUser}
+              ui={ui}
+              closeModal={this.openTestUserModal(false)}
+              accounts={this.props.accounts}
+              createTestUser={this.props.createTestUser}
+              getTestUserAccounts={this.props.getTestUserAccounts}
+            />}
+            rightTitle={testRightTitle}
+            rightSubtitle={testRightSubtitle}
+            isApps
           />}
-          rightTitle={testRightTitle}
-          rightSubtitle={testRightSubtitle}
-          isApps
-        />
-        }
         {ui.loading && this.renderLoading()}
       </div>
     )
@@ -291,7 +292,7 @@ TestData.propTypes = {
   /**
    * Get the list of test user account types
    */
-  getTestUserAccounts: func.isRequired
+  getTestUserAccounts: func.isRequired,
 }
 
 export default TestData

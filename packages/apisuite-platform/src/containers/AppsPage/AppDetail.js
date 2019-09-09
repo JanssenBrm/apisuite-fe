@@ -23,12 +23,12 @@ class AppDetail extends Component {
       // policyURL: ''
       clientId: '',
       clientSecret: '',
-      container: ''
+      container: '',
     },
     showErrors: false,
     deleteConfirmationOpen: false,
     errors: [],
-    modalOpen: false
+    modalOpen: false,
   }
 
   componentDidMount () {
@@ -41,7 +41,7 @@ class AppDetail extends Component {
   componentWillReceiveProps (nextProps) {
     if (nextProps.app !== this.props.app) {
       if (nextProps.app.redirectURLs) {
-        this.setState({ app: {...nextProps.app, redirectURLs: nextProps.app.redirectURLs[0]} })
+        this.setState({ app: { ...nextProps.app, redirectURLs: nextProps.app.redirectURLs[0] } })
       }
     }
   }
@@ -50,8 +50,8 @@ class AppDetail extends Component {
 
   handleChange = ({ target }, errors) => {
     this.setState({
-      app: {...this.state.app, [target.name]: target.value},
-      errors: parseErrors(target, errors, this.state.errors)
+      app: { ...this.state.app, [target.name]: target.value },
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -67,19 +67,19 @@ class AppDetail extends Component {
         description: app.description,
         iconURL: app.iconURL,
         publicURL: app.publicURL,
-        redirectURLs: [app.redirectURLs]
+        redirectURLs: [app.redirectURLs],
       }
       this.props.updateApp(organizationId, data)
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
 
   toggleDeleteConfirmation = () =>
     this.setState({
-      deleteConfirmationOpen: !this.state.deleteConfirmationOpen
+      deleteConfirmationOpen: !this.state.deleteConfirmationOpen,
     })
 
   deleteConfirmationContent = () => (
@@ -108,22 +108,22 @@ class AppDetail extends Component {
     const appInitials = splitName.length >= 2 ? `${splitName[0].charAt(0)}${splitName[1].charAt(0)}` : splitName[0].slice(0, 2)
     const creationDate = moment(app.createdAt).format('MMMM Do, YYYY')
 
-    const appNameLabel = intl.formatMessage({id: 'app.name.label'})
-    const appNameRequired = intl.formatMessage({id: 'app.name.required'})
-    const appDescriptionLabel = intl.formatMessage({id: 'app.description.label'})
-    const appPublicURLLabel = intl.formatMessage({id: 'app.publicUrl.label'})
-    const appPublicURLRequired = intl.formatMessage({id: 'app.publicUrl.required'})
-    const appRedirectURLLabel = intl.formatMessage({id: 'app.redirectUrl.label'})
-    const appRedirectURLRequired = intl.formatMessage({id: 'app.redirectUrl.required'})
+    const appNameLabel = intl.formatMessage({ id: 'app.name.label' })
+    const appNameRequired = intl.formatMessage({ id: 'app.name.required' })
+    const appDescriptionLabel = intl.formatMessage({ id: 'app.description.label' })
+    const appPublicURLLabel = intl.formatMessage({ id: 'app.publicUrl.label' })
+    const appPublicURLRequired = intl.formatMessage({ id: 'app.publicUrl.required' })
+    const appRedirectURLLabel = intl.formatMessage({ id: 'app.redirectUrl.label' })
+    const appRedirectURLRequired = intl.formatMessage({ id: 'app.redirectUrl.required' })
     // const appPolicyURLLabel = intl.formatMessage({id: 'app.policyUrl.label'})
-    const appLogoURLLabel = intl.formatMessage({id: 'app.logoUrl.label'})
-    const urlTypeError = intl.formatMessage({id: 'app.url.typeError'})
-    const accessDetailsTitle = intl.formatMessage({id: 'app.accessDetails.title'})
-    const appClientIdLabel = intl.formatMessage({id: 'app.clientID.label'})
-    const appClientSecretLabel = intl.formatMessage({id: 'app.clientSecret.label'})
-    const appContainerLabel = intl.formatMessage({id: 'app.container.label'})
-    const rightTitle = intl.formatMessage({id: 'createApp.title'})
-    const rightSubtitle = intl.formatMessage({id: 'createApp.content'})
+    const appLogoURLLabel = intl.formatMessage({ id: 'app.logoUrl.label' })
+    const urlTypeError = intl.formatMessage({ id: 'app.url.typeError' })
+    const accessDetailsTitle = intl.formatMessage({ id: 'app.accessDetails.title' })
+    const appClientIdLabel = intl.formatMessage({ id: 'app.clientID.label' })
+    const appClientSecretLabel = intl.formatMessage({ id: 'app.clientSecret.label' })
+    const appContainerLabel = intl.formatMessage({ id: 'app.container.label' })
+    const rightTitle = intl.formatMessage({ id: 'createApp.title' })
+    const rightSubtitle = intl.formatMessage({ id: 'createApp.content' })
 
     const organization = organizations && organizations.length > 0 ? user.organizations[0] : null
     const organizationState = organization ? organization.state : null
@@ -143,7 +143,7 @@ class AppDetail extends Component {
               onChange={this.handleChange}
               value={app.name}
               rules={[
-                {rule: app.name.length, message: appNameRequired}
+                { rule: app.name.length, message: appNameRequired },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -166,17 +166,17 @@ class AppDetail extends Component {
               label={appPublicURLLabel}
               name='publicURL'
               backgroundcolor='blue'
-              startadornment={<LinkIcon style={{fill: '#fff'}} className='adornement-icon start' />}
+              startadornment={<LinkIcon style={{ fill: '#fff' }} className='adornement-icon start' />}
               onChange={this.handleChange}
               value={app.publicURL}
               rules={[
-                {rule: app.publicURL ? isValidURL(app.publicURL) : true, message: appPublicURLRequired}
+                { rule: app.publicURL ? isValidURL(app.publicURL) : true, message: appPublicURLRequired },
               ]}
               showerrors={`${showErrors}`}
             />
           </div>
           <div className='right-container'>
-            <div className='app-icon' style={{...(isValidURL(app.iconURL) && { backgroundImage: `url(${app.iconURL})` })}}>
+            <div className='app-icon' style={{ ...(isValidURL(app.iconURL) && { backgroundImage: `url(${app.iconURL})` }) }}>
               {!isValidURL(app.iconURL) && <span>{appInitials}</span>}
             </div>
             <div className='app-details'>
@@ -185,7 +185,8 @@ class AppDetail extends Component {
                 <div className={classnames(
                   'status-badge',
                   organizationState ? organizationStates[organizationState].slug : null
-                )} />
+                )}
+                />
                 {organizationState ? organizationStates[organizationState].sandboxtext : ''}
               </div>
 
@@ -263,7 +264,7 @@ class AppDetail extends Component {
               onChange={this.handleChange}
               value={app.redirectURLs}
               rules={[
-                {rule: isValidURL(app.redirectURLs), message: appRedirectURLRequired}
+                { rule: isValidURL(app.redirectURLs), message: appRedirectURLRequired },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -291,7 +292,7 @@ class AppDetail extends Component {
               onChange={this.handleChange}
               value={app.iconURL || ''}
               rules={[
-                {rule: app.iconURL ? isValidURL(app.iconURL) : true, message: urlTypeError}
+                { rule: app.iconURL ? isValidURL(app.iconURL) : true, message: urlTypeError },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -306,7 +307,7 @@ class AppDetail extends Component {
               </div>
               {appScopes && appScopes.length > 0 && <div className='option-wrapper'>
                 <div className='options-title'>{<FormattedMessage id='app.scopes' />}</div>
-                <div className='scopes' id='app-scopes' >
+                <div className='scopes' id='app-scopes'>
                   {appScopes.map((scope, idx) => (
                     <Badge key={idx} text={scope} type='inactive space' />
                   ))}
@@ -344,7 +345,7 @@ class AppDetail extends Component {
               onClick={this.deleteApp}
             >
               <FormattedMessage id='app.delete.remove' />
-            </Button>
+            </Button>,
           ]}
         />
         <ModalSplit
@@ -420,7 +421,7 @@ AppDetail.propTypes = {
   /**
    * Fetch user API Subscriptions
    */
-  fetchApiSubscriptions: func.isRequired
+  fetchApiSubscriptions: func.isRequired,
 }
 
 export default AppDetail

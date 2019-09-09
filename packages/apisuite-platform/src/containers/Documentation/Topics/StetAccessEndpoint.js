@@ -25,12 +25,12 @@ const StetAccessEndpoint = () => (
         </tr>
         <tr>
           <td><code>GET</code></td>
-          <td>{`/v1/accounts/{accountResourceId}/balances`}</td>
+          <td>{'/v1/accounts/{accountResourceId}/balances'}</td>
           <td>authorization_code</td>
         </tr>
         <tr>
           <td><code>GET</code></td>
-          <td>{`/v1/accounts/{accountResourceId}/transactions`}</td>
+          <td>{'/v1/accounts/{accountResourceId}/transactions'}</td>
           <td>authorization_code</td>
         </tr>
         <tr>
@@ -40,7 +40,7 @@ const StetAccessEndpoint = () => (
         </tr>
         <tr>
           <td><code>GET</code></td>
-          <td>{`/v1/payment-requests/{paymentRequestResourceId}`}</td>
+          <td>{'/v1/payment-requests/{paymentRequestResourceId}'}</td>
           <td>client_credentials</td>
         </tr>
       </tbody>

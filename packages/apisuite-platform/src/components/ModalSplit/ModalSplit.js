@@ -12,19 +12,19 @@ import { Typography } from '@material-ui/core'
 import isMobile from 'util/detectMobile'
 
 const steps = [
-  {name: 'Log in'},
-  {name: '2-Factor Authentication'}
+  { name: 'Log in' },
+  { name: '2-Factor Authentication' },
 ]
 
 const icons = [
   {
     key: 'thumb',
-    src: thumbImg
+    src: thumbImg,
   },
   {
     key: 'eye',
-    src: eyeImg
-  }
+    src: eyeImg,
+  },
 ]
 
 const ModalSplit = ({ component, open, onClose, title, rightImg, rightTitle, rightSubtitle, additionalContent, step, isApps }) => (
@@ -35,13 +35,12 @@ const ModalSplit = ({ component, open, onClose, title, rightImg, rightTitle, rig
     disableBackdropClick
     disableEscapeKeyDown
   >
-    <Paper className={classnames('modal-split-content', {'mobile': isMobile})}>
+    <Paper className={classnames('modal-split-content', { mobile: isMobile })}>
       <div className='modal-split-left'>
         {isMobile &&
           <div className='close-icon'>
             <CloseIcon onClick={onClose} />
-          </div>
-        }
+          </div>}
         <div className='modal-split-left-content'>
           <Typography variant='display4' gutterBottom>{title}</Typography>
           {component}
@@ -49,8 +48,7 @@ const ModalSplit = ({ component, open, onClose, title, rightImg, rightTitle, rig
           {isMobile &&
             <div className='recaptcha-container'>
               {additionalContent}
-            </div>
-          }
+            </div>}
         </div>
       </div>
       <div className='modal-split-right'>
@@ -65,14 +63,12 @@ const ModalSplit = ({ component, open, onClose, title, rightImg, rightTitle, rig
           </div>
           {<div className='modal-split-right-bottom'>
             {!isApps
-              ? <Fragment>
-                {step > 0 && <Stepper steps={steps} currentStep={step} simple labelColor={'#ffffff'} />}
+              ? <>
+                {step > 0 && <Stepper steps={steps} currentStep={step} simple labelColor='#ffffff' />}
                 {additionalContent}
-              </Fragment>
-              : <img src={createAppImg} />
-            }
-          </div>
-          }
+                </>
+              : <img src={createAppImg} />}
+          </div>}
         </div>
       </div>
     </Paper>
@@ -80,7 +76,7 @@ const ModalSplit = ({ component, open, onClose, title, rightImg, rightTitle, rig
 )
 
 ModalSplit.defaultProps = {
-  rightImg: 'thumb'
+  rightImg: 'thumb',
 }
 
 ModalSplit.propTypes = {
@@ -94,7 +90,7 @@ ModalSplit.propTypes = {
   isSubscriptions: bool,
   rightImg: string,
   step: number,
-  additionalContent: node
+  additionalContent: node,
 }
 
 export default ModalSplit

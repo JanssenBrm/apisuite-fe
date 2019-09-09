@@ -4,7 +4,7 @@ import { Typography } from '@material-ui/core'
 
 class RecoveryCodes extends Component {
   state = {
-    codes: []
+    codes: [],
   }
 
   componentWillMount () {
@@ -64,7 +64,7 @@ RecoveryCodes.propTypes = {
   history: object.isRequired,
   theme: object.isRequired,
   codes: array.isRequired,
-  cleanCodes: func.isRequired
+  cleanCodes: func.isRequired,
 }
 
 export default RecoveryCodes

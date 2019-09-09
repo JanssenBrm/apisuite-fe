@@ -59,10 +59,14 @@ const OnboardingFlowEndpoint = () => (
       <tbody>
         <tr>
           <td><a
-            href='https://regulatory.api.bnpparibasfortis.be/third-party-onboarding/v1/third-party'>https://regulatory.api.bnpparibasfortis.be/third-party-onboarding/v1/third-party</a>
+            href='https://regulatory.api.bnpparibasfortis.be/third-party-onboarding/v1/third-party'
+          >https://regulatory.api.bnpparibasfortis.be/third-party-onboarding/v1/third-party
+          </a>
           </td>
           <td><a
-            href='https://sandbox.middleware.bnpparibasfortis.com/third-party'>https://sandbox.middleware.bnpparibasfortis.com/third-party</a>
+            href='https://sandbox.middleware.bnpparibasfortis.com/third-party'
+          >https://sandbox.middleware.bnpparibasfortis.com/third-party
+          </a>
           </td>
         </tr>
       </tbody>
@@ -113,7 +117,8 @@ const OnboardingFlowEndpoint = () => (
           </td>
           <td>
             <p>This header is expected as a JWT which is structured as a JWS. This JWT should contain the JWS
-              representation of the information that is provided in the body of the request.</p>
+              representation of the information that is provided in the body of the request.
+            </p>
             <p><b>Note :</b> in the sandbox this value is not checked, so any string can be provided. In production it
               has to be a valid JWS signature however; please refer to section Production > Message Signature for API
             </p>
@@ -209,7 +214,7 @@ const OnboardingFlowEndpoint = () => (
         <tr>
           <td />
           <td><em>phone</em></td>
-          <td><code>{`pattern: ^[0-9]{1,15}$`}</code></td>
+          <td><code>{'pattern: ^[0-9]{1,15}$'}</code></td>
           <td>(Optional) Phone number linked to TPP (for the sandbox this is fixed to the phone number of the user who
             created the company in the developer portal)
           </td>
@@ -269,7 +274,7 @@ const OnboardingFlowEndpoint = () => (
           <td>
             String
             <br />
-            <code>pattern:{` [A-Za-z0-9âäàáãåçñ&éêëèíîïìßÂÄÀÁÃÅÇÑÉÊËÈÍÎÏÌýµÝôöòóõûüùúÿÔÖÒÓÕÛÜÙÚ*'\\s+-.]{1,40}`}</code>
+            <code>pattern:{' [A-Za-z0-9âäàáãåçñ&éêëèíîïìßÂÄÀÁÃÅÇÑÉÊËÈÍÎÏÌýµÝôöòóõûüùúÿÔÖÒÓÕÛÜÙÚ*\'\\s+-.]{1,40}'}</code>
           </td>
           <td>The first name of the contact person linked to the client/application of the TPP</td>
         </tr>
@@ -279,7 +284,7 @@ const OnboardingFlowEndpoint = () => (
           <td>
             String
             <br />
-            <code>pattern:{` [A-Za-z0-9âäàáãåçñ&éêëèíîïìßÂÄÀÁÃÅÇÑÉÊËÈÍÎÏÌýµÝôöòóõûüùúÿÔÖÒÓÕÛÜÙÚ*'\\s+-.]{1,60}`}</code>
+            <code>pattern:{' [A-Za-z0-9âäàáãåçñ&éêëèíîïìßÂÄÀÁÃÅÇÑÉÊËÈÍÎÏÌýµÝôöòóõûüùúÿÔÖÒÓÕÛÜÙÚ*\'\\s+-.]{1,60}'}</code>
           </td>
           <td>The last name of the contact person linked to the client/application of the TPP</td>
         </tr>
@@ -299,7 +304,7 @@ const OnboardingFlowEndpoint = () => (
           <td />
           <td><em>phone</em></td>
           <td>
-            <code>{`pattern: ^[0-9]{1,15}$`}</code>
+            <code>{'pattern: ^[0-9]{1,15}$'}</code>
           </td>
           <td>(Optional) The phone number of the contact person linked to the client/application of the TPP</td>
         </tr>

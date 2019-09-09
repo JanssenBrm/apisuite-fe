@@ -7,7 +7,7 @@ describe('<Checkbox />', () => {
     onChange: jest.fn(),
     value: 'terms',
     checked: false,
-    label: 'Accept'
+    label: 'Accept',
   }
   const wrapper = shallow(<Checkbox {...props} />)
 

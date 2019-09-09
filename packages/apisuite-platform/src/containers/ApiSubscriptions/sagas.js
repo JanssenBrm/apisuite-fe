@@ -12,7 +12,7 @@ import {
   fetchApiSubscriptionsError,
   CREATE_API_SUBSCRIPTION,
   createApiSubscriptionSuccess,
-  createApiSubscriptionError
+  createApiSubscriptionError,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 
@@ -28,7 +28,7 @@ function * fetchApiSubscriptionsWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -55,13 +55,13 @@ function * createApiSubscriptionWorker (action) {
   const requestUrl = `${API_URL}/organizations/${action.organizationId}/products`
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
   const body = JSON.stringify({
-    productIds: action.productIds
+    productIds: action.productIds,
   })
 
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {

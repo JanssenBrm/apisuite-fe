@@ -15,7 +15,7 @@ const Topic = () => (
     <ol>
       <li><a href='/signup'>Sign up</a> to get access to the Alpha AppCenter</li>
       <p>
-        Signing up sends you to your apps dashboard. Otherwise, from the top navigation, select Dashboard.<br/>
+        Signing up sends you to your apps dashboard. Otherwise, from the top navigation, select Dashboard.<br />
         If you already have an account, sign in.
       </p>
 

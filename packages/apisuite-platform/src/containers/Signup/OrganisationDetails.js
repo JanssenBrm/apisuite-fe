@@ -6,10 +6,10 @@ import MenuItem from '@material-ui/core/MenuItem'
 import { Typography } from '@material-ui/core'
 
 const roles = [
-  {value: '1', description: 'Administrator'},
-  {value: '2', description: 'Developer'},
-  {value: '3', description: 'Tester'},
-  {value: '4', description: 'Sales'}
+  { value: '1', description: 'Administrator' },
+  { value: '2', description: 'Developer' },
+  { value: '3', description: 'Tester' },
+  { value: '4', description: 'Sales' },
 ]
 
 class OrganisationDetails extends Component {
@@ -19,9 +19,9 @@ class OrganisationDetails extends Component {
       name: '',
       vat: '',
       website: '',
-      role: '1'
+      role: '1',
     },
-    errors: []
+    errors: [],
   }
 
   handleSubmit = e => {
@@ -31,7 +31,7 @@ class OrganisationDetails extends Component {
       this.props.nextStep(form)
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
@@ -42,8 +42,8 @@ class OrganisationDetails extends Component {
 
   handleChange = ({ target }, errors) => {
     this.setState({
-      form: {...this.state.form, [target.name]: target.value},
-      errors: parseErrors(target, errors, this.state.errors)
+      form: { ...this.state.form, [target.name]: target.value },
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -51,15 +51,15 @@ class OrganisationDetails extends Component {
     const { intl, ui } = this.props
     const { form, showErrors, errors } = this.state
 
-    const organisationTitle = intl.formatMessage({id: 'signup.organisation.title'})
-    const organisationText = intl.formatMessage({id: 'signup.organisation.text'})
-    const organisationLabel = intl.formatMessage({id: 'signup.organisation.label'})
-    const vatLabel = intl.formatMessage({id: 'signup.organisation.vat'})
-    const websiteLabel = intl.formatMessage({id: 'signup.organisation.website'})
-    const websiteTypeError = intl.formatMessage({id: 'signup.organisation.website.typeError'})
-    const roleLabel = intl.formatMessage({id: 'signup.organisation.role'})
-    const nextBtn = intl.formatMessage({id: 'signup.register.next'})
-    const skipBtn = intl.formatMessage({id: 'signup.register.skip'})
+    const organisationTitle = intl.formatMessage({ id: 'signup.organisation.title' })
+    const organisationText = intl.formatMessage({ id: 'signup.organisation.text' })
+    const organisationLabel = intl.formatMessage({ id: 'signup.organisation.label' })
+    const vatLabel = intl.formatMessage({ id: 'signup.organisation.vat' })
+    const websiteLabel = intl.formatMessage({ id: 'signup.organisation.website' })
+    const websiteTypeError = intl.formatMessage({ id: 'signup.organisation.website.typeError' })
+    const roleLabel = intl.formatMessage({ id: 'signup.organisation.role' })
+    const nextBtn = intl.formatMessage({ id: 'signup.register.next' })
+    const skipBtn = intl.formatMessage({ id: 'signup.register.skip' })
 
     return (
       <div className='signup-personal-details'>
@@ -92,7 +92,7 @@ class OrganisationDetails extends Component {
           onChange={this.handleChange}
           value={form.website}
           rules={[
-            {rule: form.website ? isValidURL(form.website) : true, message: websiteTypeError}
+            { rule: form.website ? isValidURL(form.website) : true, message: websiteTypeError },
           ]}
           showerrors={`${showErrors}`}
         />
@@ -110,7 +110,7 @@ class OrganisationDetails extends Component {
           data={roles}
           onChange={this.handleChange}
           showerrors={`${showErrors}`}
-          inputlabelprops={{shrink: true}}
+          inputlabelprops={{ shrink: true }}
         >
           {roles.map((p, idx) => (
             <MenuItem
@@ -153,7 +153,7 @@ OrganisationDetails.propTypes = {
   ui: PropTypes.object.isRequired,
   nextStep: PropTypes.func.isRequired,
   previousStep: PropTypes.func.isRequired,
-  skipStep: PropTypes.func.isRequired
+  skipStep: PropTypes.func.isRequired,
 }
 
 export default OrganisationDetails

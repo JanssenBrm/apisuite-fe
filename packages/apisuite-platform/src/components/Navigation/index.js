@@ -6,7 +6,7 @@ import { changeTopic } from 'containers/Documentation/ducks'
 
 const mapStateToProps = ({ documentation, auth }) => ({ documentation, auth })
 const mapDispatchToProps = (dispatch) => ({
-  changeTopic: (topic, child) => dispatch(changeTopic(topic, child))
+  changeTopic: (topic, child) => dispatch(changeTopic(topic, child)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(

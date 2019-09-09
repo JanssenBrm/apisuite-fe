@@ -11,7 +11,7 @@ class NotificationManager extends Component {
 
   render () {
     const { variant, message, show, intl, fromAPI } = this.props
-    const formatedMessage = message ? fromAPI ? message : intl.formatMessage({id: message}) : null
+    const formatedMessage = message ? fromAPI ? message : intl.formatMessage({ id: message }) : null
     return (
       <PopMessage
         open={show}
@@ -29,7 +29,7 @@ NotificationManager.propTypes = {
   show: bool,
   variant: string,
   message: string,
-  fromAPI: bool
+  fromAPI: bool,
 }
 
 export default injectIntl(NotificationManager)

@@ -4,7 +4,7 @@ import {
   fetchApis,
   fetchEndpoints,
   fetchScenarios,
-  getScenario
+  getScenario,
 } from './ducks'
 import { injectIntl } from 'react-intl'
 
@@ -13,14 +13,14 @@ const mapStateToProps = ({ scenarios }) => ({
   scenario: scenarios.scenario,
   ui: scenarios.ui,
   endpoints: scenarios.endpoints,
-  apis: scenarios.apis
+  apis: scenarios.apis,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   fetchApis: () => dispatch(fetchApis()),
   fetchEndpoints: (apiName, version) => dispatch(fetchEndpoints(apiName, version)),
   fetchScenarios: (endpoints) => dispatch(fetchScenarios(endpoints)),
-  getScenario: (id) => dispatch(getScenario(id))
+  getScenario: (id) => dispatch(getScenario(id)),
 })
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(Scenarios))

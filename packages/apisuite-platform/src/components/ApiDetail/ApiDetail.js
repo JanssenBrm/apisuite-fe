@@ -10,7 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 class ApiDetail extends Component {
   state = {
-    product: {}
+    product: {},
   }
 
   componentDidMount () {
@@ -33,7 +33,7 @@ class ApiDetail extends Component {
     return (
       <div className='api-detail-container'>
         {product.version &&
-          <Fragment>
+          <>
             <div className='detail-header-wrapper'>
               <div className='detail-header-content'>
                 <div className='account-info'>
@@ -80,19 +80,17 @@ class ApiDetail extends Component {
                             <div className='api-feature-text'>{feature.description}</div>
                           </div>
                         </div>
-                      )
+                    )
                     }
                   />
                 </div>
               </div>
             </div>
-          </Fragment>
-        }
+          </>}
         {ui.loading &&
           <div className='loading'>
             <CircularProgress className='loading-circle' />
-          </div>
-        }
+          </div>}
       </div>
     )
   }
@@ -107,7 +105,7 @@ ApiDetail.propTypes = {
   match: object.isRequired,
   ui: object.isRequired,
   product: object.isRequired,
-  getApiProduct: func.isRequired
+  getApiProduct: func.isRequired,
 }
 
 export default ApiDetail

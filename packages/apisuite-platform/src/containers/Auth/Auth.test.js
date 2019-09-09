@@ -18,7 +18,7 @@ import {
   removeAccountSaga,
   meGenerateQRCodeSaga,
   meSendSMSCodeSaga,
-  verifyRecoveryCodeSaga
+  verifyRecoveryCodeSaga,
 } from './sagas'
 import RequireAuth from 'containers/Auth/RequireAuth'
 import ForgotPassword from 'containers/Auth/ForgotPassword'
@@ -73,29 +73,29 @@ import reducer, {
   verifyRecoveryCodeError,
   verifyRecoveryCode,
   verifyRecoveryCodeSuccess,
-  openLoginModal
+  openLoginModal,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 import { translationMessages, formats } from 'util/i18n'
 import { IntlProvider } from 'react-intl'
 import { signupSecuritySuccess } from '../Signup/ducks'
-import { replace } from 'react-router-redux'
+import { replace } from 'connected-react-router'
 
-const intlProvider = new IntlProvider({locale: 'en', messages: translationMessages['en'], formats})
-const {intl} = intlProvider.getChildContext()
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
+const { intl } = intlProvider.getChildContext()
 
 const props = {
-  history: {replace: jest.fn()},
-  location: {pathname: '/'},
+  history: { replace: jest.fn() },
+  location: { pathname: '/' },
   user: {},
   ui: {
-    showLoginModal: true
+    showLoginModal: true,
   },
   isAuthorizing: false,
   isLoggingIn: false,
   Component: () => (<div />),
   roleRequired: 'user',
-  openLoginModal: jest.fn()
+  openLoginModal: jest.fn(),
 }
 
 describe('Auth', () => {
@@ -107,14 +107,14 @@ describe('Auth', () => {
 
   it('should check authorization when it receives new props', () => {
     const checkAuthSpy = jest.spyOn(wrapper.instance(), 'checkAuth')
-    wrapper.setProps({user: {role: 'user'}, isAuthorizing: false})
+    wrapper.setProps({ user: { role: 'user' }, isAuthorizing: false })
 
     expect(checkAuthSpy).toHaveBeenCalled()
   })
 })
 
-const credentialsMock = {email: 'foo', password: 'bar'}
-const twoFaCredentialsMock = {pass: '123456'}
+const credentialsMock = { email: 'foo', password: 'bar' }
+const twoFaCredentialsMock = { pass: '123456' }
 const tokenMock = 'abc.123.xxx'
 const initialState = {
   authToken: null,
@@ -125,7 +125,7 @@ const initialState = {
   forgot: {
     email: '',
     sent: false,
-    reason: null
+    reason: null,
   },
   TwoFA: {
     active: false,
@@ -135,8 +135,8 @@ const initialState = {
     verify: false,
     method: '',
     sms: {
-      sent: false
-    }
+      sent: false,
+    },
   },
   ui: {
     success: false,
@@ -144,11 +144,11 @@ const initialState = {
     scope: null,
     loading: false,
     showLoginModal: false,
-    showTwoFaModal: false
-  }
+    showTwoFaModal: false,
+  },
 }
-const dataMock = {'id': 0, 'name': 'Zé', 'role': 'user', 'access_token': tokenMock}
-const errorMock = {message: 'error-stub'}
+const dataMock = { id: 0, name: 'Zé', role: 'user', access_token: tokenMock }
+const errorMock = { message: 'error-stub' }
 const fullState = {
   authToken: 'abc.123.xxx',
   user: dataMock,
@@ -158,7 +158,7 @@ const fullState = {
   forgot: {
     email: '',
     sent: false,
-    reason: null
+    reason: null,
   },
   ui: {
     success: false,
@@ -166,7 +166,7 @@ const fullState = {
     scope: null,
     loading: false,
     showLoginModal: false,
-    showTwoFaModal: false
+    showTwoFaModal: false,
   },
   TwoFA: {
     active: false,
@@ -176,20 +176,20 @@ const fullState = {
     verify: false,
     method: '',
     sms: {
-      sent: false
-    }
-  }
+      sent: false,
+    },
+  },
 }
-const mockOrganization = {id: 208, name: 'myOrg', state: 'NON_VALIDATED'}
+const mockOrganization = { id: 208, name: 'myOrg', state: 'NON_VALIDATED' }
 const mockState = {
   auth: {
     authToken: '123',
     user: {
       organizations: [
-        mockOrganization
-      ]
-    }
-  }
+        mockOrganization,
+      ],
+    },
+  },
 }
 
 const userMock = {
@@ -199,10 +199,10 @@ const userMock = {
   phone: '+351961111111',
   avatar: '',
   confirmationCode: '',
-  method: '1'
+  method: '1',
 }
 
-const passMock = {oldPassword: 'old', newPassword: 'new'}
+const passMock = { oldPassword: 'old', newPassword: 'new' }
 
 describe('Auth reducer', () => {
   it('should return the initial state', () => {
@@ -213,7 +213,7 @@ describe('Auth reducer', () => {
     expect(reducer(initialState, login(credentialsMock))).toEqual({
       ...initialState,
       isAuthorizing: true,
-      ui: {...initialState.ui, loading: true}
+      ui: { ...initialState.ui, loading: true },
     })
   })
 
@@ -221,103 +221,103 @@ describe('Auth reducer', () => {
     expect(reducer(initialState, getMe(tokenMock))).toEqual({
       ...initialState,
       isAuthorizing: true,
-      ui: {...initialState.ui, loading: true}
+      ui: { ...initialState.ui, loading: true },
     })
   })
 
   it('should set the token and set authorizing flag on LOGIN_USER_SUCCESS', () => {
     expect(
       reducer(
-        {...initialState, isAuthorizing: true, isLoggingIn: true},
+        { ...initialState, isAuthorizing: true, isLoggingIn: true },
         loginSuccess(dataMock)
-      )).toEqual({...initialState, authToken: dataMock['access_token'], isLoggingIn: true})
+      )).toEqual({ ...initialState, authToken: dataMock.access_token, isLoggingIn: true })
   })
 
   it('should set the user and authorizing flag on ME_SUCCESS', () => {
     expect(
       reducer(
-        {...initialState, isAuthorizing: true, authToken: 'abc.123.xxx'},
+        { ...initialState, isAuthorizing: true, authToken: 'abc.123.xxx' },
         getMeSuccess(dataMock)
-      )).toEqual({...initialState, user: dataMock, authToken: 'abc.123.xxx'})
+      )).toEqual({ ...initialState, user: dataMock, authToken: 'abc.123.xxx' })
   })
 
   it('should reset state on LOGIN_USER_ERROR', () => {
-    expect(reducer({...fullState}, loginError(errorMock))).toEqual({
+    expect(reducer({ ...fullState }, loginError(errorMock))).toEqual({
       ...initialState,
-      ui: {loading: false, success: false, error: false, scope: null, showLoginModal: true, showTwoFaModal: false}
+      ui: { loading: false, success: false, error: false, scope: null, showLoginModal: true, showTwoFaModal: false },
     })
   })
 
   it('should reset state on ME_ERROR', () => {
-    expect(reducer({...fullState}, getMeError(errorMock))).toEqual({...initialState})
+    expect(reducer({ ...fullState }, getMeError(errorMock))).toEqual({ ...initialState })
   })
 
   it('should reset state on LOGOUT_USER_SUCCESS', () => {
-    expect(reducer({...fullState}, logoutSuccess())).toEqual({...initialState})
+    expect(reducer({ ...fullState }, logoutSuccess())).toEqual({ ...initialState })
   })
 
   it('should reset state on LOGOUT_USER_ERROR', () => {
-    expect(reducer({...fullState}, logoutError(errorMock))).toEqual({
+    expect(reducer({ ...fullState }, logoutError(errorMock))).toEqual({
       ...initialState,
       user: dataMock,
       authToken: 'abc.123.xxx',
-      isAuthorizing: true
+      isAuthorizing: true,
     })
   })
 
   it('should update state on RESET_PASSWORD_SUCCESS', () => {
-    expect(reducer(initialState, resetPasswordSuccess({authToken: 'abc.123.xxx', password: 'password-stub'}))).toEqual({
+    expect(reducer(initialState, resetPasswordSuccess({ authToken: 'abc.123.xxx', password: 'password-stub' }))).toEqual({
       ...initialState,
-      ui: {loading: false, success: true, error: false, scope: null, showLoginModal: false, showTwoFaModal: false}
+      ui: { loading: false, success: true, error: false, scope: null, showLoginModal: false, showTwoFaModal: false },
     })
   })
 
   it('should update state on RESET_PASSWORD_ERROR', () => {
     expect(reducer(initialState, resetPasswordError(errorMock))).toEqual({
       ...initialState,
-      ui: {loading: false, success: false, error: true, scope: null, showLoginModal: false, showTwoFaModal: false}
+      ui: { loading: false, success: false, error: true, scope: null, showLoginModal: false, showTwoFaModal: false },
     })
   })
 
   it('should update state on FORGOT_PASSWORD_SUCCESS', () => {
-    expect(reducer(initialState, forgotPasswordSuccess({email: 'email@example.com'}))).toEqual({
+    expect(reducer(initialState, forgotPasswordSuccess({ email: 'email@example.com' }))).toEqual({
       ...initialState,
-      forgot: {email: 'email@example.com', sent: true, reason: null}
+      forgot: { email: 'email@example.com', sent: true, reason: null },
     })
   })
 
   it('should update state on FORGOT_PASSWORD_ERROR', () => {
     expect(reducer(initialState, forgotPasswordError(errorMock))).toEqual({
       ...initialState,
-      forgot: {email: '', sent: false, reason: null}
+      forgot: { email: '', sent: false, reason: null },
     })
   })
 
   it('should update state on LOGIN_USER_TWOFA', () => {
-    const data = {'access_token': tokenMock, 'two_factor_authentication_method': 'authorizationApp'}
+    const data = { access_token: tokenMock, two_factor_authentication_method: 'authorizationApp' }
     expect(reducer(initialState, loginTwoFa(data))).toEqual({
       ...initialState,
       isAuthorizing: false,
       authToken: tokenMock,
-      TwoFA: {...initialState.TwoFA, active: true, method: 'authorizationApp'},
-      ui: {...initialState.ui, showLoginModal: true, showTwoFaModal: true}
+      TwoFA: { ...initialState.TwoFA, active: true, method: 'authorizationApp' },
+      ui: { ...initialState.ui, showLoginModal: true, showTwoFaModal: true },
     })
   })
 
   it('should update state on LOGIN_USER_TWOFA_AUTH_SUCCESS', () => {
-    const data = {'access_token': tokenMock}
+    const data = { access_token: tokenMock }
     expect(reducer(initialState, twoFaAuthSuccess(data))).toEqual({
       ...initialState,
       isAuthorizing: false,
       authToken: tokenMock,
-      ui: {...initialState.ui, showLoginModal: false, showTwoFaModal: false}
+      ui: { ...initialState.ui, showLoginModal: false, showTwoFaModal: false },
     })
   })
 
   it('should update state on LOGIN_USER_TWOFA_AUTH_ERROR', () => {
     expect(reducer(initialState, twoFaAuthError(errorMock))).toEqual({
       ...initialState,
-      ui: {...initialState.ui, showLoginModal: true, showTwoFaModal: true}
+      ui: { ...initialState.ui, showLoginModal: true, showTwoFaModal: true },
     })
   })
 
@@ -325,60 +325,60 @@ describe('Auth reducer', () => {
     const isValid = true
     expect(reducer(initialState, twoFaVerifySuccess(isValid))).toEqual({
       ...initialState,
-      TwoFA: {...initialState.TwoFA, verify: true, qrcode: null},
-      user: {twoFA: true},
-      ui: {...initialState.ui, success: true}
+      TwoFA: { ...initialState.TwoFA, verify: true, qrcode: null },
+      user: { twoFA: true },
+      ui: { ...initialState.ui, success: true },
     })
   })
 
   it('should update state on TWOFA_VERIFY_ERROR', () => {
     expect(reducer(initialState, twoFaVerifyError(errorMock))).toEqual({
       ...initialState,
-      ui: {...initialState.ui, showLoginModal: true, showTwoFaModal: true, loading: false}
+      ui: { ...initialState.ui, showLoginModal: true, showTwoFaModal: true, loading: false },
     })
   })
 
   it('should update state on TWOFA_UPDATE_SUCCESS', () => {
-    const data = {qrcode: 'xxx'}
+    const data = { qrcode: 'xxx' }
     expect(reducer(initialState, twoFaUpdateSuccess(data))).toEqual({
       ...initialState,
-      TwoFA: {...initialState.TwoFA, success: true, qrcode: data.qrcode},
-      user: {twoFA: true}
+      TwoFA: { ...initialState.TwoFA, success: true, qrcode: data.qrcode },
+      user: { twoFA: true },
     })
   })
 
   it('should update state on UPDATE_PASSWORD_SUCCESS', () => {
     expect(reducer(initialState, updatePasswordSuccess({}))).toEqual({
       ...initialState,
-      ui: {...initialState.ui, success: true, scope: 'password'}
+      ui: { ...initialState.ui, success: true, scope: 'password' },
     })
   })
 
   it('should update state on UPDATE_PASSWORD_ERROR', () => {
     expect(reducer(initialState, updatePasswordError(errorMock))).toEqual({
       ...initialState,
-      ui: {...initialState.ui, scope: 'password', error: true}
+      ui: { ...initialState.ui, scope: 'password', error: true },
     })
   })
 
   it('should update state on REMOVE_ACCOUNT_SUCCESS', () => {
     expect(reducer(initialState, removeAccountSuccess({}))).toEqual({
       ...initialState,
-      ui: {...initialState.ui, success: true, scope: 'account'}
+      ui: { ...initialState.ui, success: true, scope: 'account' },
     })
   })
 
   it('should update state on REMOVE_ACCOUNT_ERROR', () => {
     expect(reducer(initialState, removeAccountError(errorMock))).toEqual({
       ...initialState,
-      ui: {...initialState.ui, error: true, scope: 'account'}
+      ui: { ...initialState.ui, error: true, scope: 'account' },
     })
   })
 
   it('should update state on RESET_PASSWORD', () => {
     expect(reducer(initialState, resetPassword({}))).toEqual({
       ...initialState,
-      ui: {...initialState.ui, success: false, error: false, scope: null}
+      ui: { ...initialState.ui, success: false, error: false, scope: null },
     })
   })
 
@@ -386,34 +386,34 @@ describe('Auth reducer', () => {
     const data = 'qrcode'
     expect(reducer(initialState, meGenerateQRCodeSuccess(data))).toEqual({
       ...initialState,
-      TwoFA: {...initialState.TwoFA, qrcode: data}
+      TwoFA: { ...initialState.TwoFA, qrcode: data },
     })
   })
 
   it('should update state on SEND_SMS_CODE_SUCCESS', () => {
     expect(reducer(initialState, meSendSMSCodeSuccess())).toEqual({
       ...initialState,
-      TwoFA: {...initialState.TwoFA, sms: {sent: true}}
+      TwoFA: { ...initialState.TwoFA, sms: { sent: true } },
     })
   })
 
   it('should update state on RESET_LOGIN_MODAL', () => {
-    expect(reducer(initialState, resetLoginModal())).toEqual({...initialState})
+    expect(reducer(initialState, resetLoginModal())).toEqual({ ...initialState })
   })
 
   it('should update state on OPEN_LOGIN_MODAL', () => {
-    expect(reducer({...fullState}, openLoginModal())).toEqual({
+    expect(reducer({ ...fullState }, openLoginModal())).toEqual({
       ...initialState,
-      ui: {loading: false, success: false, error: false, scope: null, showLoginModal: true, showTwoFaModal: false}
+      ui: { loading: false, success: false, error: false, scope: null, showLoginModal: true, showTwoFaModal: false },
     })
   })
 })
 
 describe('Auth integration', () => {
   it('should call login API and return a user object', () => {
-    const fakeCredentials = {email: 'foo', password: 'bar'}
-    const fakeUser = {name: 'John', role: 'user'}
-    const fakeResponse = {data: fakeUser}
+    const fakeCredentials = { email: 'foo', password: 'bar' }
+    const fakeUser = { name: 'John', role: 'user' }
+    const fakeResponse = { data: fakeUser }
 
     return expectSaga(loginSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -423,7 +423,7 @@ describe('Auth integration', () => {
   })
 
   it('should call login API and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(loginSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -433,8 +433,8 @@ describe('Auth integration', () => {
   })
 
   it('should call twoFaAuth API and return an access token', () => {
-    const dataMock = {'access_token': tokenMock}
-    const fakeResponse = {data: dataMock}
+    const dataMock = { access_token: tokenMock }
+    const fakeResponse = { data: dataMock }
 
     return expectSaga(login2FASaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -445,7 +445,7 @@ describe('Auth integration', () => {
   })
 
   it('should call twoFaAuth API and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(login2FASaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -465,7 +465,7 @@ describe('Auth integration', () => {
   )
 
   it('should call logout API and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(logoutSaga)
       .withState(mockState)
@@ -476,7 +476,7 @@ describe('Auth integration', () => {
   })
 
   it('should call authorization API and return user object', () => {
-    const fakeResponse = {data: dataMock}
+    const fakeResponse = { data: dataMock }
 
     return expectSaga(getMeSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -486,7 +486,7 @@ describe('Auth integration', () => {
   })
 
   it('should call authorization API and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(getMeSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -497,18 +497,18 @@ describe('Auth integration', () => {
 
   it('should call forgot password API', () => {
     const email = 'email@example.be'
-    const fakeResponse = {data: email}
+    const fakeResponse = { data: email }
 
     return expectSaga(forgotPasswordSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
-      .put(forgotPasswordSuccess({email}))
+      .put(forgotPasswordSuccess({ email }))
       .dispatch(forgotPassword(email))
       .silentRun()
   })
 
   it('should call forgot password API and handle the error', () => {
     const email = 'email@example.be'
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(forgotPasswordSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -519,7 +519,7 @@ describe('Auth integration', () => {
 
   it('should call reset password API', () => {
     const password = 'my super password'
-    const fakeResponse = {data: password}
+    const fakeResponse = { data: password }
 
     return expectSaga(resetPasswordSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -531,7 +531,7 @@ describe('Auth integration', () => {
 
   it('should call reset password API and handle the error', () => {
     const password = 'my super password'
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(resetPasswordSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -543,7 +543,7 @@ describe('Auth integration', () => {
 
   it('should call twofa verify API', () => {
     const pass = '123456'
-    const fakeResponse = {data: pass}
+    const fakeResponse = { data: pass }
 
     return expectSaga(twoFaVerifySaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -554,7 +554,7 @@ describe('Auth integration', () => {
 
   it('should call twofa verify API and handle the error', () => {
     const pass = '123456'
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(twoFaVerifySaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -565,7 +565,7 @@ describe('Auth integration', () => {
 
   it('should call twofa update API', () => {
     const enable = true
-    const fakeResponse = {data: enable}
+    const fakeResponse = { data: enable }
 
     return expectSaga(twoFaUpdateSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -576,7 +576,7 @@ describe('Auth integration', () => {
 
   it('should call twofa update API and handle the error', () => {
     const enable = true
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(twoFaUpdateSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -586,7 +586,7 @@ describe('Auth integration', () => {
   })
 
   it('should call update user API', () => {
-    const fakeResponse = {data: userMock}
+    const fakeResponse = { data: userMock }
 
     return expectSaga(updateUserSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -596,7 +596,7 @@ describe('Auth integration', () => {
   })
 
   it('should call update user API and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(updateUserSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -606,7 +606,7 @@ describe('Auth integration', () => {
   })
 
   it('should call update password API', () => {
-    const fakeResponse = {data: passMock}
+    const fakeResponse = { data: passMock }
 
     return expectSaga(updatePasswordSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -618,7 +618,7 @@ describe('Auth integration', () => {
   })
 
   it('should call update password API and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(updatePasswordSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -628,9 +628,8 @@ describe('Auth integration', () => {
       .silentRun()
   })
 
-
   it('should call update password RBAC API', () => {
-    const fakeResponse = {data: passMock}
+    const fakeResponse = { data: passMock }
 
     return expectSaga(updatePasswordRBACSaga)
       .withState(mockState)
@@ -643,7 +642,7 @@ describe('Auth integration', () => {
   })
 
   it('should call update password RBAC API and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(updatePasswordRBACSaga)
       .withState(mockState)
@@ -669,7 +668,7 @@ describe('Auth integration', () => {
 
   it('should call remove account API and handle the error', () => {
     const userId = 1
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(removeAccountSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -680,7 +679,7 @@ describe('Auth integration', () => {
   })
 
   it('should call generate QRCode API', () => {
-    const fakeResponse = {data: {}}
+    const fakeResponse = { data: {} }
 
     return expectSaga(meGenerateQRCodeSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -690,7 +689,7 @@ describe('Auth integration', () => {
   })
 
   it('should call generate QR Code API and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(meGenerateQRCodeSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -701,7 +700,7 @@ describe('Auth integration', () => {
   })
 
   it('should call send SMS code API', () => {
-    const fakeResponse = {data: {}}
+    const fakeResponse = { data: {} }
 
     return expectSaga(meSendSMSCodeSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -712,7 +711,7 @@ describe('Auth integration', () => {
   })
 
   it('should call send SMS code API and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(meSendSMSCodeSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -724,7 +723,7 @@ describe('Auth integration', () => {
 
   it('should call verify recovery code  API', () => {
     const code = '123456'
-    const fakeResponse = {data: {}}
+    const fakeResponse = { data: {} }
 
     return expectSaga(verifyRecoveryCodeSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -735,7 +734,7 @@ describe('Auth integration', () => {
 
   it('should call verify recovery code API and handle the error', () => {
     const code = '123456'
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(verifyRecoveryCodeSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -753,29 +752,29 @@ describe('Auth middleware', () => {
         isLoggingIn: true,
         authToken: 'xxx',
         user: {
-          activated: true
-        }
-      }
+          activated: true,
+        },
+      },
     }
     const history = {
       replace: jest.fn(),
-      location: {}
+      location: {},
     }
     const store = {
       getState: jest.fn(() => (state)),
-      dispatch: jest.fn()
+      dispatch: jest.fn(),
     }
 
     const next = jest.fn()
 
     const invoke = (action) => createAuthMiddleware(history)(store)(next)(action)
 
-    return {store, next, invoke, history}
+    return { store, next, invoke, history }
   }
 
   it('should allways call next with the action and not perform any action', () => {
-    const {next, invoke, history} = create()
-    const action = {type: 'TEST'}
+    const { next, invoke, history } = create()
+    const action = { type: 'TEST' }
     invoke(action)
 
     expect(next).toHaveBeenCalledWith(action)
@@ -784,7 +783,7 @@ describe('Auth middleware', () => {
   })
 
   it('should save a token cookie on LOGIN_USER_SUCCESS and replace the path', () => {
-    const {next, invoke} = create()
+    const { next, invoke } = create()
     const action = loginSuccess(dataMock)
     const cookie = process.env.DEV_PORTAL_CLIENT_ID === 'cl0ud0k001' ? `${TOKEN_KEY}=${tokenMock}` : ''
 
@@ -795,7 +794,7 @@ describe('Auth middleware', () => {
   })
 
   it('should remove the token cookie on ME_ERROR', () => {
-    const {next, invoke} = create()
+    const { next, invoke } = create()
     const action = getMeError(errorMock)
     const cookie = process.env.DEV_PORTAL_CLIENT_ID === 'cl0ud0k001' ? `${TOKEN_KEY}=${tokenMock}` : ''
     expect(global.document.cookie).toEqual(cookie)
@@ -807,7 +806,7 @@ describe('Auth middleware', () => {
   })
 
   it('should remove the token cookie on LOGOUT_USER and replace the path', () => {
-    const {next, invoke, history} = create()
+    const { next, invoke, history } = create()
     invoke(loginSuccess(dataMock))
 
     const action = logout()
@@ -819,7 +818,7 @@ describe('Auth middleware', () => {
   })
 
   it('should redirect to dashboard on GET_ME_SUCCESS', () => {
-    const {next, invoke, history} = create()
+    const { next, invoke, history } = create()
     const action = getMeSuccess(dataMock)
 
     invoke(action)
@@ -830,7 +829,7 @@ describe('Auth middleware', () => {
   })
 
   it('should redirect to dashboard on SIGNUP_SECURITY_SUCCESS', () => {
-    const {next, invoke, history} = create()
+    const { next, invoke, history } = create()
     const action = signupSecuritySuccess()
 
     invoke(action)
@@ -844,15 +843,15 @@ describe('Auth middleware', () => {
 describe('<ForgotPassword />', () => {
   const props = {
     intl,
-    history: {push: jest.fn()},
+    history: { push: jest.fn() },
     forgotPassword: jest.fn(),
     goBack: jest.fn(),
     forgot: {
-      sent: false
+      sent: false,
     },
     ui: {
-      loading: false
-    }
+      loading: false,
+    },
   }
 
   const wrapper = mountWithIntl(<ForgotPassword {...props} />)
@@ -864,13 +863,13 @@ describe('<ForgotPassword />', () => {
 
   it('should call onButtonClick if email not empty', () => {
     const email = 'example@mail.com'
-    wrapper.setState({email})
+    wrapper.setState({ email })
     wrapper.find('.forgot-send-button').first().simulate('click')
     expect(props.forgotPassword).toHaveBeenCalled()
   })
 
   it('should hide input field after sending email', () => {
-    wrapper.setProps({forgot: {...props.forgot, sent: true}})
+    wrapper.setProps({ forgot: { ...props.forgot, sent: true } })
     expect(wrapper.find('.forgot-input').length).toEqual(0)
   })
 
@@ -884,15 +883,15 @@ describe('<ForgotPassword />', () => {
 describe('<ResetPassword />', () => {
   const props = {
     intl,
-    history: {push: jest.fn(), goBack: jest.fn()},
-    location: {pathname: '/'},
+    history: { push: jest.fn(), goBack: jest.fn() },
+    location: { pathname: '/' },
     resetPassword: jest.fn(),
     updatePasswordRBAC: jest.fn(),
     resetModal: jest.fn(),
-    match: {params: {token: 'token'}},
+    match: { params: { token: 'token' } },
     ui: {
-      success: false
-    }
+      success: false,
+    },
   }
 
   const wrapper = mountWithIntl(<ResetPassword {...props} />)
@@ -905,7 +904,7 @@ describe('<ResetPassword />', () => {
   it('should call resetPassword onButtonClick if passwords match', () => {
     const passPhrase = '1234567891234'
     const token = '87defec4-5346-4c42-9628-b3baeb71cd3a'
-    wrapper.setState({form: {passPhrase}, token})
+    wrapper.setState({ form: { passPhrase }, token })
     wrapper.find('.recover-submit').first().simulate('click')
     expect(props.resetPassword).toHaveBeenCalled()
   })
@@ -914,7 +913,7 @@ describe('<ResetPassword />', () => {
     props.userId = 202
     const wrapper = mountWithIntl(<ResetPassword {...props} />)
     const passPhrase = '1234567891234'
-    wrapper.setState({form: {passPhrase}})
+    wrapper.setState({ form: { passPhrase } })
     wrapper.find('.recover-submit').first().simulate('click')
     expect(props.updatePasswordRBAC).toHaveBeenCalled()
   })
@@ -926,7 +925,7 @@ describe('<ResetPassword />', () => {
   })
 
   it('should open login if recover done', () => {
-    wrapper.setProps({ui: {success: true}})
+    wrapper.setProps({ ui: { success: true } })
     wrapper.find('#recover-done-btn').first().simulate('click')
     expect(props.resetModal).toHaveBeenCalled()
   })

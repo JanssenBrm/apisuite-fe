@@ -10,13 +10,13 @@ const mapStateToProps = ({ apps, auth, subscriptions }) => ({
   apps: apps.data,
   ui: apps.ui,
   user: auth.user,
-  subscriptions
+  subscriptions,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   fetchApps: (organizationId) => dispatch(fetchApps(organizationId)),
   createApp: (organizationId, app) => dispatch(createApp(organizationId, app)),
-  fetchApiSubscriptions: () => dispatch(fetchApiSubscriptions())
+  fetchApiSubscriptions: () => dispatch(fetchApiSubscriptions()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(
@@ -27,7 +27,7 @@ const appDetailMapStateToProps = ({ apps, auth, subscriptions }) => ({
   app: apps.app,
   organizations: auth.user.organizations,
   user: auth.user,
-  subscriptions
+  subscriptions,
 })
 
 const appDetailMapDispatchToProps = (dispatch) => ({
@@ -35,7 +35,7 @@ const appDetailMapDispatchToProps = (dispatch) => ({
   updateApp: (organizationId, data) => dispatch(updateApp(organizationId, data)),
   deleteApp: (organizationId, appId) => dispatch(deleteApp(organizationId, appId)),
   createApp: (organizationId, app) => dispatch(createApp(organizationId, app)),
-  fetchApiSubscriptions: () => dispatch(fetchApiSubscriptions())
+  fetchApiSubscriptions: () => dispatch(fetchApiSubscriptions()),
 })
 
 export const AppDetail = injectIntl(connect(appDetailMapStateToProps, appDetailMapDispatchToProps)(AppDetailComponent))

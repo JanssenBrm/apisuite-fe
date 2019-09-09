@@ -5,8 +5,6 @@
  *
  */
 
-import 'whatwg-fetch'
-
 function checkStatus (response) {
   if (response.ok) {
     const contentType = response.headers.get('Content-Type')
@@ -29,7 +27,7 @@ function checkStatus (response) {
     const reason = {
       status: response.status,
       statusText: response.statusText,
-      message: json.message || response.statusText
+      message: json.message || response.statusText,
     }
 
     return Promise.reject(reason)

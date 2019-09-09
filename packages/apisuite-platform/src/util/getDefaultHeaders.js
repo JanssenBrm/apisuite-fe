@@ -19,7 +19,7 @@ function getDefaultHeaders ({ state, type, token }) {
       break
     case 'basic':
       headers['Content-Type'] = 'application/x-www-form-urlencoded'
-      headers['authorization'] = `Basic ${basicb64}`
+      headers.authorization = `Basic ${basicb64}`
       break
     default:
       break

@@ -20,7 +20,7 @@ class Scenarios extends Component {
       endpoints: [],
       scenario: '',
       scenarioId: '',
-      title: ''
+      title: '',
     },
     errors: [],
     apis: [],
@@ -28,13 +28,13 @@ class Scenarios extends Component {
     scenarios: [],
     selectedApi: {
       api: '',
-      versions: []
+      versions: [],
     },
     selectedVersion: '',
     selectedEndpoints: [],
     endpointsExpanded: false,
     activeScenario: '',
-    anchorEl: null
+    anchorEl: null,
   }
 
   componentDidMount () {
@@ -45,10 +45,11 @@ class Scenarios extends Component {
     if (nextProps.scenario !== this.props.scenario) {
       this.setState({
         scenario:
-          {...nextProps.scenario,
+          {
+            ...nextProps.scenario,
             body: nextProps.scenario.body ? JSON.stringify(JSON.parse(nextProps.scenario.body), null, 3) : '',
-            endpoints: nextProps.scenario.endpoints
-          }
+            endpoints: nextProps.scenario.endpoints,
+          },
       })
     }
 
@@ -58,7 +59,7 @@ class Scenarios extends Component {
 
     if (nextProps.scenarios !== this.props.scenarios) {
       this.setState({
-        scenarios: nextProps.scenarios
+        scenarios: nextProps.scenarios,
       })
     }
 
@@ -67,14 +68,14 @@ class Scenarios extends Component {
         apis: nextProps.apis,
         selectedApi: {
           api: nextProps.apis[0].api,
-          versions: nextProps.apis[0].versions
-        }
+          versions: nextProps.apis[0].versions,
+        },
       })
     }
 
     if (nextProps.ui !== this.props.ui) {
       this.setState({
-        ui: nextProps.ui
+        ui: nextProps.ui,
       })
     }
   }
@@ -91,7 +92,7 @@ class Scenarios extends Component {
 
     this.setState({
       selectedApi,
-      selectedVersion
+      selectedVersion,
     })
 
     if (selectedApi.api && selectedVersion) {
@@ -162,7 +163,7 @@ class Scenarios extends Component {
                   value={selectedApi ? selectedApi.api : ''}
                   data={apis}
                   onChange={this.handleApiChange}
-                  inputlabelprops={{shrink: true}}
+                  inputlabelprops={{ shrink: true }}
                 >
                   {apis.map((item, idx) => (
                     <MenuItem
@@ -208,7 +209,7 @@ class Scenarios extends Component {
                 <Button
                   id='filter-button'
                   testid='filter-btn'
-                  className={classnames('filter-button', { 'disabled': !selectedEndpoints.length })}
+                  className={classnames('filter-button', { disabled: !selectedEndpoints.length })}
                   variant='outlined'
                   onClick={this.handleFilter}
                   disabled={!selectedEndpoints.length}
@@ -223,7 +224,7 @@ class Scenarios extends Component {
                   key={`scenario-${idx}`}
                   className={classnames(
                     'scenario-row',
-                    { 'active': activeScenario === s.scenarioId }
+                    { active: activeScenario === s.scenarioId }
                   )}
                   onClick={this.handleScenarioDisplay(s.scenarioId)}
                 >
@@ -236,8 +237,7 @@ class Scenarios extends Component {
               )
                 : <div className='empty-list'>
                   <FormattedMessage id='docs.scenarios.empty' />
-                </div>
-              }
+                </div>}
             </div>
             <div className='footer-actions'>
               <div className='action-wrapper' onClick={this.navigate('/scenarios/manual')}>
@@ -350,7 +350,7 @@ Scenarios.propTypes = {
   ui: object.isRequired,
   endpoints: object.isRequired,
   scenarios: array.isRequired,
-  apis: array.isRequired
+  apis: array.isRequired,
 }
 
 export default Scenarios

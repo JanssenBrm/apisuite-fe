@@ -4,13 +4,13 @@
 
 import request from 'util/request'
 import getDefaultHeaders from 'util/getDefaultHeaders'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 import { takeLatest, call, put, select } from 'redux-saga/effects'
 import { API_URL } from 'constants/endpoints'
 import {
   GET_CODES,
   getCodesSuccess,
-  getCodesError
+  getCodesError,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 
@@ -22,12 +22,12 @@ function * getCodesWorker (action) {
   const requestUrl = `${API_URL}/users/me/recovery_codes`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
-  const body = JSON.stringify({pass: action.pass})
+  const body = JSON.stringify({ pass: action.pass })
 
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -47,5 +47,5 @@ export function * getCodesSaga () {
 }
 
 export default [
-  getCodesSaga
+  getCodesSaga,
 ]

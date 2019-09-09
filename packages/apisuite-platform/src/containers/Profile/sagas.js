@@ -15,7 +15,7 @@ import {
   updateOrganizationError,
   GET_ONBOARDING_TOKEN,
   getOnboardingTokenSuccess,
-  getOnboardingTokenError
+  getOnboardingTokenError,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 
@@ -30,7 +30,7 @@ function * fetchOrganizationsWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -61,7 +61,7 @@ function * updateOrganizationWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'PUT',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -90,7 +90,7 @@ function * getOnboardingTokenWorker (action) {
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
   const response = yield call(request, requestUrl, {
     method: 'POST',
-    headers
+    headers,
   })
 
   if (!response.err) {

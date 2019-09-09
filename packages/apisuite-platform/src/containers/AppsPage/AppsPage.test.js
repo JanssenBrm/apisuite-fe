@@ -23,79 +23,79 @@ import reducer, {
   updateAppError,
   deleteApp,
   deleteAppSuccess,
-  deleteAppError
+  deleteAppError,
 } from './ducks'
 import { translationMessages, formats } from 'util/i18n'
 import { IntlProvider } from 'react-intl'
 
-const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages['en'], formats })
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
 const { intl } = intlProvider.getChildContext()
 
 const mockApps = [
   {
-    'id': 1,
-    'name': 'My First App',
-    'description': 'Very cool app',
-    'iconURL': 'http://myicon',
-    'publicURL': 'public.com',
-    'redirectURLs': ['redirect.com'],
-    'clientId': '123',
-    'clientSecret': 'xxxx',
-    'container': 'container1',
-    'productIds': [1, 4]
-  }
+    id: 1,
+    name: 'My First App',
+    description: 'Very cool app',
+    iconURL: 'http://myicon',
+    publicURL: 'public.com',
+    redirectURLs: ['redirect.com'],
+    clientId: '123',
+    clientSecret: 'xxxx',
+    container: 'container1',
+    productIds: [1, 4],
+  },
 ]
 const errorMock = { message: 'error-stub' }
 const mockApp = {
-  'id': 1,
-  'name': 'My Second App',
-  'description': 'Very cool app',
-  'iconURL': 'http://myicon',
-  'publicURL': 'public.com',
-  'redirectURLs': ['redirect.com'],
-  'clientId': '123',
-  'clientSecret': 'xxxx',
-  'container': 'container1',
-  'productIds': [1, 4]
+  id: 1,
+  name: 'My Second App',
+  description: 'Very cool app',
+  iconURL: 'http://myicon',
+  publicURL: 'public.com',
+  redirectURLs: ['redirect.com'],
+  clientId: '123',
+  clientSecret: 'xxxx',
+  container: 'container1',
+  productIds: [1, 4],
 }
 
 const mockSubscriptions = {
-  'products': [
+  products: [
     {
-      'id': 4,
-      'name': 'Payment Initiation API',
-      'longname': 'Payment Initiation – Bank One Accounts',
-      'intro': 'Give customers the option to initiate payments via our Bank One Payment Initiation API.',
-      'description': 'With our Bank One Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian Bank One payment accounts.',
-      'image': 'logo.svg',
-      'role': 'pisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-02-20T10:52:41.000Z',
-      'updated_at': '2019-02-20T10:52:41.000Z',
-      'brand_id': 1,
-      'isSubscribed': true
-    }
+      id: 4,
+      name: 'Payment Initiation API',
+      longname: 'Payment Initiation – Bank One Accounts',
+      intro: 'Give customers the option to initiate payments via our Bank One Payment Initiation API.',
+      description: 'With our Bank One Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian Bank One payment accounts.',
+      image: 'logo.svg',
+      role: 'pisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-02-20T10:52:41.000Z',
+      updated_at: '2019-02-20T10:52:41.000Z',
+      brand_id: 1,
+      isSubscribed: true,
+    },
   ],
-  'brands': [
+  brands: [
     {
-      'id': 1,
-      'name': 'Bank One',
-      'logo': 'logo.svg',
-      'shortname': 'bnppf'
+      id: 1,
+      name: 'Bank One',
+      logo: 'logo.svg',
+      shortname: 'bnppf',
     },
     {
-      'id': 2,
-      'name': 'Bank Two',
-      'logo': 'hellobank_logo.svg',
-      'shortname': 'hb'
+      id: 2,
+      name: 'Bank Two',
+      logo: 'hellobank_logo.svg',
+      shortname: 'hb',
     },
     {
-      'id': 3,
-      'name': 'Bank Three',
-      'logo': 'fintro_logo.svg',
-      'shortname': 'fintro'
-    }
-  ]
+      id: 3,
+      name: 'Bank Three',
+      logo: 'fintro_logo.svg',
+      shortname: 'fintro',
+    },
+  ],
 }
 
 const mockOrganizations = [{ id: 1, name: 'myOrg', state: 'NON_TRUSTED' }]
@@ -111,19 +111,19 @@ describe('<AppsPage />', () => {
     fetchApiSubscriptions: jest.fn(),
     createApiSubscription: jest.fn(),
     ui: {
-      loading: false
+      loading: false,
     },
     user: {
       id: 123,
       fullName: 'Clau',
       email: 'clau@cloudoki.com',
-      organizations: mockOrganizations
+      organizations: mockOrganizations,
     },
     theme: {},
     subscriptions: {
       products: mockSubscriptions.products,
-      brands: mockSubscriptions.brands
-    }
+      brands: mockSubscriptions.brands,
+    },
   }
 
   const wrapper = mountWithIntl(shallowWithIntl(<AppsPage {...props} />).get(0))
@@ -172,8 +172,8 @@ describe('<CreateApp />', () => {
       id: 123,
       fullName: 'Clau',
       email: 'clau@cloudoki.com',
-      organizations: mockOrganizations
-    }
+      organizations: mockOrganizations,
+    },
   }
 
   const wrapper = mountWithIntl(shallowWithIntl(<CreateApp {...props} />).get(0))
@@ -198,7 +198,7 @@ describe('<CreateApp />', () => {
   it('should call createApp on api subscriptions submit click', () => {
     wrapper.setProps({ app: null })
     const { clientId, clientSecret, container, id, ...rest } = mockApp
-    wrapper.setState({ form: { ...mockApp, redirectURLs: mockApp.redirectURLs[0] }, subscribed: [{id: 1, name: 'api 1'}, {id: 2, name: 'api 2'}] })
+    wrapper.setState({ form: { ...mockApp, redirectURLs: mockApp.redirectURLs[0] }, subscribed: [{ id: 1, name: 'api 1' }, { id: 2, name: 'api 2' }] })
     wrapper.find('.create-app-submit').first().simulate('click')
 
     expect(props.createApp).toHaveBeenCalledWith(mockOrganization.id, { ...rest, redirectURLs: [mockApp.redirectURLs[0]], productIds: [1, 2] })
@@ -208,7 +208,7 @@ describe('<CreateApp />', () => {
 describe('<AppDetail />', () => {
   const props = {
     app: mockApp,
-    match: { params: {appId: '2'} },
+    match: { params: { appId: '2' } },
     history: { push: jest.fn() },
     getApp: jest.fn(),
     createApp: jest.fn(),
@@ -218,14 +218,14 @@ describe('<AppDetail />', () => {
     fetchApiSubscriptions: jest.fn(),
     subscriptions: {
       products: mockSubscriptions.products,
-      brands: mockSubscriptions.brands
+      brands: mockSubscriptions.brands,
     },
     organizations: mockOrganizations,
     user: {
       fullName: 'Dummy User',
-      organizations: mockOrganizations
+      organizations: mockOrganizations,
     },
-    intl
+    intl,
   }
 
   const wrapper = mountWithIntl(<AppDetail {...props} />)
@@ -235,8 +235,8 @@ describe('<AppDetail />', () => {
   })
 
   it('should update app when it receives new props', () => {
-    wrapper.setProps({ app: {...mockApp, name: 'test'} })
-    expect(wrapper.state().app).toEqual({...mockApp, name: 'test', redirectURLs: mockApp.redirectURLs[0]})
+    wrapper.setProps({ app: { ...mockApp, name: 'test' } })
+    expect(wrapper.state().app).toEqual({ ...mockApp, name: 'test', redirectURLs: mockApp.redirectURLs[0] })
   })
 
   it('should call updateApp on save click', () => {
@@ -274,8 +274,8 @@ const initialState = {
   data: [],
   app: {},
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 
 describe('AppsPage reducer', () => {
@@ -284,72 +284,72 @@ describe('AppsPage reducer', () => {
   })
 
   it('should update state on FETCH_APPS', () => {
-    expect(reducer(initialState, fetchApps(mockOrganization.id))).toEqual({...initialState, ui: {loading: true}})
+    expect(reducer(initialState, fetchApps(mockOrganization.id))).toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on FETCH_APPS_SUCCESS', () => {
-    expect(reducer(initialState, fetchAppsSuccess(mockApps))).toEqual({...initialState, data: mockApps})
+    expect(reducer(initialState, fetchAppsSuccess(mockApps))).toEqual({ ...initialState, data: mockApps })
   })
 
   it('should update state on FETCH_APPS_ERROR', () => {
-    expect(reducer(initialState, fetchAppsError(errorMock))).toEqual({...initialState, data: []})
+    expect(reducer(initialState, fetchAppsError(errorMock))).toEqual({ ...initialState, data: [] })
   })
 
   it('should update state on CREATE_APP', () => {
-    expect(reducer(initialState, createApp(mockOrganization.id, mockApp))).toEqual({...initialState, ui: {loading: true}})
+    expect(reducer(initialState, createApp(mockOrganization.id, mockApp))).toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on CREATE_APP_SUCCESS', () => {
-    expect(reducer(initialState, createAppSuccess(mockApp))).toEqual({...initialState, data: [mockApp]})
+    expect(reducer(initialState, createAppSuccess(mockApp))).toEqual({ ...initialState, data: [mockApp] })
   })
 
   it('should update state on CREATE_APP_ERROR', () => {
-    expect(reducer(initialState, createAppError(errorMock))).toEqual({...initialState, ui: {loading: false}})
+    expect(reducer(initialState, createAppError(errorMock))).toEqual({ ...initialState, ui: { loading: false } })
   })
 
   it('should update state on GET_APP', () => {
     const appId = '123'
-    expect(reducer(initialState, getApp(mockOrganization.id, appId))).toEqual({...initialState, ui: {loading: true}})
+    expect(reducer(initialState, getApp(mockOrganization.id, appId))).toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on GET_APP_SUCCESS', () => {
-    expect(reducer(initialState, getAppSuccess(mockApp))).toEqual({...initialState, app: mockApp})
+    expect(reducer(initialState, getAppSuccess(mockApp))).toEqual({ ...initialState, app: mockApp })
   })
 
   it('should update state on GET_APP_ERROR', () => {
-    expect(reducer(initialState, getAppError(errorMock))).toEqual({...initialState, app: {}, ui: {loading: false}})
+    expect(reducer(initialState, getAppError(errorMock))).toEqual({ ...initialState, app: {}, ui: { loading: false } })
   })
 
   it('should update state on UPDATE_APP', () => {
-    expect(reducer(initialState, updateApp(mockOrganization.id, mockApp))).toEqual({...initialState, ui: {loading: true}})
+    expect(reducer(initialState, updateApp(mockOrganization.id, mockApp))).toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on UPDATE_APP_SUCCESS', () => {
     const editApp = {
-      'id': 1,
-      'name': 'Edited name',
-      'description': 'Very cool app',
-      'iconURL': 'http://myicon',
-      'publicURL': 'public.com',
-      'redirectURLs': ['redirect.com']
+      id: 1,
+      name: 'Edited name',
+      description: 'Very cool app',
+      iconURL: 'http://myicon',
+      publicURL: 'public.com',
+      redirectURLs: ['redirect.com'],
     }
-    expect(reducer({...initialState, data: mockApps}, updateAppSuccess(editApp))).toEqual({...initialState, data: [editApp], app: editApp})
+    expect(reducer({ ...initialState, data: mockApps }, updateAppSuccess(editApp))).toEqual({ ...initialState, data: [editApp], app: editApp })
   })
 
   it('should update state on UPDATE_APP_ERROR', () => {
-    expect(reducer(initialState, updateAppError(errorMock))).toEqual({...initialState, app: {}, ui: {loading: false}})
+    expect(reducer(initialState, updateAppError(errorMock))).toEqual({ ...initialState, app: {}, ui: { loading: false } })
   })
 
   it('should update state on DELETE_APP', () => {
-    expect(reducer(initialState, deleteApp(mockOrganization.id, mockApp.id))).toEqual({...initialState, ui: {loading: true}})
+    expect(reducer(initialState, deleteApp(mockOrganization.id, mockApp.id))).toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on DELETE_APP_SUCCESS', () => {
-    expect(reducer({...initialState, data: mockApps}, deleteAppSuccess(mockApps[0]))).toEqual({...initialState, data: [], app: {}})
+    expect(reducer({ ...initialState, data: mockApps }, deleteAppSuccess(mockApps[0]))).toEqual({ ...initialState, data: [], app: {} })
   })
 
   it('should update state on DELETE_APP_ERROR', () => {
-    expect(reducer(initialState, deleteAppError(errorMock))).toEqual({...initialState, app: {}, ui: {loading: false}})
+    expect(reducer(initialState, deleteAppError(errorMock))).toEqual({ ...initialState, app: {}, ui: { loading: false } })
   })
 })
 

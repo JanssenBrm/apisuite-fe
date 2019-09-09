@@ -9,7 +9,7 @@ import { API_URL } from 'constants/endpoints'
 import {
   FETCH_API,
   getApiDocsSuccess,
-  getApiDocsError
+  getApiDocsError,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 
@@ -25,7 +25,7 @@ function * getApiDocsWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {

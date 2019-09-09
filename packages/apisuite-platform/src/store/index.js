@@ -6,8 +6,8 @@
 
 import { createStore, applyMiddleware, compose } from 'redux'
 import createSagaMiddleware from 'redux-saga'
-import { routerMiddleware } from 'react-router-redux'
-import createHistory from 'history/createBrowserHistory'
+import { routerMiddleware } from 'connected-react-router'
+import { createBrowserHistory } from 'history'
 import { createLogger } from 'redux-logger'
 import { createAuthMiddleware } from 'containers/Auth/ducks'
 import { localeMiddleware } from 'containers/LanguageProvider/ducks'
@@ -15,9 +15,9 @@ import { localeMiddleware } from 'containers/LanguageProvider/ducks'
 import combinedReducers from './combinedReducers'
 import combinedSagas from './combinedSagas'
 
-export const history = createHistory()
+export const history = createBrowserHistory()
 
-history.listen((location, action) => {
+history.listen(() => {
   window.scrollTo(0, 0)
 })
 
@@ -39,7 +39,7 @@ const composeEnhancer = __DEV__ && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
   ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : compose
 
 const enhancer = composeEnhancer(applyMiddleware(...middleware))
-const store = createStore(combinedReducers, enhancer)
+const store = createStore(combinedReducers(history), enhancer)
 
 combinedSagas.forEach((saga) => {
   sagaMiddleware.run(saga)

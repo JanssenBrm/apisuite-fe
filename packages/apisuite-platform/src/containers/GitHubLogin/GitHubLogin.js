@@ -25,15 +25,15 @@ class GitHubLogin extends Component {
 const styles = {
   container: {
     textAlign: 'center',
-    padding: '200px 0'
-  }
+    padding: '200px 0',
+  },
 }
 
 GitHubLogin.propTypes = {
   location: PropTypes.object.isRequired,
   auth: PropTypes.object.isRequired,
   ghLogin: PropTypes.func.isRequired,
-  intl: PropTypes.object.isRequired
+  intl: PropTypes.object.isRequired,
 }
 
 export default GitHubLogin

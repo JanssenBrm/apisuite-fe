@@ -11,16 +11,16 @@ describe('<Api />', () => {
         brand: 'bnp',
         productId: 1,
         role: 'aisp',
-        version: '1.0.0'
-      }
+        version: '1.0.0',
+      },
     },
     getApiDocs: jest.fn(),
     apidocs: {
-      swagger: {}
+      swagger: {},
     },
     ui: {
-      loading: false
-    }
+      loading: false,
+    },
   }
 
   const wrapper = shallow(<Api {...props} />)

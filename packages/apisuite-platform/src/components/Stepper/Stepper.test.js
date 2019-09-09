@@ -5,12 +5,12 @@ import Stepper, { pickHex } from './Stepper'
 const steps = [
   { name: 'Step 1' },
   { name: 'Step 2' },
-  { name: 'Step 3' }
+  { name: 'Step 3' },
 ]
 
 const colors = {
   tealColor: '#2DB7BA',
-  lightGreen: '#14DE2D'
+  lightGreen: '#14DE2D',
 }
 
 describe('<Stepper />', () => {

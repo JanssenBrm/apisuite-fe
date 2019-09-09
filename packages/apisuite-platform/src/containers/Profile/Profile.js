@@ -14,12 +14,12 @@ import validatePassword from 'util/validatePassword'
 const methods = [
   {
     value: '1',
-    key: 'authorizationApp'
+    key: 'authorizationApp',
   },
   {
     value: '2',
-    key: 'authorizationSms'
-  }
+    key: 'authorizationSms',
+  },
 ]
 
 class Profile extends Component {
@@ -32,7 +32,7 @@ class Profile extends Component {
       avatar: '',
       confirmationCode: '',
       method: '2',
-      github: false
+      github: false,
     },
     oldPassword: '',
     newPassword: '',
@@ -44,7 +44,7 @@ class Profile extends Component {
     confirmationType: '',
     confirmationOpen: false,
     temporaryMethod: null,
-    errors: []
+    errors: [],
   }
 
   syncTwoFaMethod = (user) => {
@@ -60,7 +60,7 @@ class Profile extends Component {
     const { user } = this.props
     const method = this.syncTwoFaMethod(user)
 
-    if (!_isEmpty(user)) this.setState({ user: {...user, method} })
+    if (!_isEmpty(user)) this.setState({ user: { ...user, method } })
   }
 
   componentWillReceiveProps (nextProps) {
@@ -85,7 +85,7 @@ class Profile extends Component {
   handleChange = ({ target }, errors) => {
     this.setState({
       user: { ...this.state.user, [target.name]: target.value },
-      errors: parseErrors(target, errors, this.state.errors)
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -98,7 +98,7 @@ class Profile extends Component {
         user: { ...this.state.user, code: '' },
         temporaryMethod: target.value,
         code: '',
-        smsSent: false
+        smsSent: false,
       })
     }
   }
@@ -110,7 +110,7 @@ class Profile extends Component {
   handlePasswordChange = ({ target }, errors) => {
     this.setState({
       [target.name]: target.value,
-      errors: parseErrors(target, errors, this.state.errors)
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -121,7 +121,7 @@ class Profile extends Component {
       this.props.updateUser(user)
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
@@ -138,14 +138,14 @@ class Profile extends Component {
       temporaryMethod: null,
       smsSent: false,
       user: { ...this.state.user, code: '' },
-      code: ''
+      code: '',
     })
   }
 
   handleCodeChange = ({ target }, errors) => {
     this.setState({
       code: target.value,
-      errors: parseErrors(target, errors, this.state.errors)
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -167,9 +167,9 @@ class Profile extends Component {
     if (type === '2fa') {
       const { intl } = this.props
       const { code, showErrors, smsSent } = this.state
-      const codePlaceholder = intl.formatMessage({id: 'twofa.code.placeholder'})
-      const codeLabel = intl.formatMessage({id: 'twofa.code.label'})
-      const codeRequired = intl.formatMessage({id: 'twofa.code.required'})
+      const codePlaceholder = intl.formatMessage({ id: 'twofa.code.placeholder' })
+      const codeLabel = intl.formatMessage({ id: 'twofa.code.label' })
+      const codeRequired = intl.formatMessage({ id: 'twofa.code.required' })
 
       return (
         <div>
@@ -201,10 +201,10 @@ class Profile extends Component {
             value={code}
             fullWidth
             rules={[
-              {rule: code && code.length === 6, message: codeRequired}
+              { rule: code && code.length === 6, message: codeRequired },
             ]}
             showerrors={`${showErrors}`}
-            InputLabelProps={{shrink: true}}
+            InputLabelProps={{ shrink: true }}
             disabled={!smsSent}
           />
         </div>
@@ -244,7 +244,7 @@ class Profile extends Component {
       confirmationType,
       code,
       smsSent,
-      errors
+      errors,
     } = this.state
 
     const securityTitle = intl.formatMessage({ id: 'navigation.security' })
@@ -273,7 +273,7 @@ class Profile extends Component {
       user.fullName && <div className='profile-container' id='profile-settings'>
         <div className='profile-section'>
           <div className='left-container'>
-            <div className='avatar' style={{...(isValidURL(user.avatar) && { backgroundImage: `url(${user.avatar})` })}}>
+            <div className='avatar' style={{ ...(isValidURL(user.avatar) && { backgroundImage: `url(${user.avatar})` }) }}>
               {!isValidURL(user.avatar) && <span>{userInitials}</span>}
             </div>
             <div className='account-details'>
@@ -311,7 +311,7 @@ class Profile extends Component {
               onChange={this.handleChange}
               value={user.fullName}
               rules={[
-                { rule: user.fullName.length >= 2, message: fullNameRequired }
+                { rule: user.fullName.length >= 2, message: fullNameRequired },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -350,7 +350,7 @@ class Profile extends Component {
               onChange={this.handleChange}
               value={user.phone}
               rules={[
-                { rule: isValidPhoneNumber(user.phone), message: phoneNumberTypeError }
+                { rule: isValidPhoneNumber(user.phone), message: phoneNumberTypeError },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -364,7 +364,7 @@ class Profile extends Component {
               onChange={this.handleChange}
               value={user.avatar}
               rules={[
-                { rule: user.avatar ? isValidURL(user.avatar) : true, message: avatarTypeError }
+                { rule: user.avatar ? isValidURL(user.avatar) : true, message: avatarTypeError },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -387,7 +387,7 @@ class Profile extends Component {
                             id='profile.twofa.content.italic'
                           />
                         </i>
-                      )
+                      ),
                     }}
                   />
                 </div>
@@ -403,7 +403,7 @@ class Profile extends Component {
                       ),
                       duo: (
                         <a className='option-link' href='https://duo.com/'>Duo</a>
-                      )
+                      ),
                     }}
                   />
                 </div>
@@ -422,7 +422,7 @@ class Profile extends Component {
               onChange={this.handlePasswordChange}
               value={oldPassword}
               rules={[
-                { rule: !validatePassword(oldPassword).length, message: `${passwordRequired} ${validatePassword(oldPassword).join(', ')}` }
+                { rule: !validatePassword(oldPassword).length, message: `${passwordRequired} ${validatePassword(oldPassword).join(', ')}` },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -447,7 +447,7 @@ class Profile extends Component {
                 onChange={this.handlePasswordChange}
                 value={newPassword}
                 rules={[
-                  { rule: !validatePassword(newPassword).length, message: `${passwordRequired} ${validatePassword(newPassword).join(', ')}` }
+                  { rule: !validatePassword(newPassword).length, message: `${passwordRequired} ${validatePassword(newPassword).join(', ')}` },
                 ]}
                 showerrors={`${showErrors}`}
               />
@@ -501,7 +501,7 @@ class Profile extends Component {
               disabled={confirmationType === '2fa' ? (!smsSent || !code || errors.length > 0) : false}
             >
               <FormattedMessage id={`${confirmationType === '2fa' ? 'profile.twofa.dialog.confirm' : 'profile.removeaccount.remove'}`} />
-            </Button>
+            </Button>,
           ]}
         />
       </div>
@@ -562,7 +562,7 @@ Profile.propTypes = {
   /**
    * Fetch recovery codes with 2FA
    */
-  getCodes: func.isRequired
+  getCodes: func.isRequired,
 }
 
 export default Profile

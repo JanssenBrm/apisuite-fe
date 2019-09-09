@@ -17,7 +17,8 @@ const OnboardingFlowUsingTesting = () => (
       applies, so please refer to the documentation on how to access a specific AISP or PISP endpoint for more details
       (see section “AUTHORIZATION FLOWS” in the documentation :
       <a
-        href='https://developer.bnpparibasfortis.com/docs'>https://developer.bnpparibasfortis.com/docs
+        href='https://developer.bnpparibasfortis.com/docs'
+      >https://developer.bnpparibasfortis.com/docs
       </a>).
     </p>
   </div>

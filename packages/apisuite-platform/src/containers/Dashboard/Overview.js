@@ -14,40 +14,41 @@ class Overview extends Component {
       intlId: 'dashboard.overview.nav.myApps',
       img: theme.myApps || navApps,
       route: '/apps',
-      tag: 'overview-apps'
+      tag: 'overview-apps',
     },
     {
       intlId: 'dashboard.overview.nav.testData',
       img: theme.testData || navDefaultLogo,
       route: '/testdata',
-      tag: 'overview-testdata'
+      tag: 'overview-testdata',
     },
     {
       intlId: 'dashboard.overview.nav.team',
       img: theme.userRoles || navDefaultLogo,
       route: '/team',
-      tag: 'overview-users'
+      tag: 'overview-users',
     },
     {
       intlId: 'dashboard.overview.nav.activity',
       img: theme.activityLogs || navDefaultLogo,
       route: '/activity-log',
       disabled: true,
-      tag: 'overview-activity-logs'
+      tag: 'overview-activity-logs',
     },
     {
       intlId: 'dashboard.overview.nav.documentation',
       img: theme.documentation || navDefaultLogo,
       route: '/docs',
-      tag: 'overview-docs'
+      tag: 'overview-docs',
     },
     {
       intlId: 'dashboard.overview.nav.support',
       img: theme.support || navSupport,
       action: 'openSupportModal',
-      tag: 'overview-support'
-    }
+      tag: 'overview-support',
+    },
   ]
+
   navigate = route => this.props.history.push(route)
 
   openSupport = option => e => this.props.openSupportModal(option)
@@ -62,6 +63,7 @@ class Overview extends Component {
       }
     }
   }
+
   render () {
     const { theme } = this.props
 
@@ -69,20 +71,22 @@ class Overview extends Component {
       <div className='section-light-grey overview-section'>
         <div className='section-content'>
           <div className='nav-cards'>
-            <Card scope='dashboard' children={
-              this.getNavigationItems(theme).map(item => (
-                <div
-                  className={classnames('nav-item', {'item-inactive': item.disabled})}
-                  testid={item.tag}
-                  onClick={() => this.handleItemClick(item)}
-                >
-                  <div className='nav-item-logo-wrapper'>
-                    <img className='nav-item-logo' src={item.img} />
+            <Card
+              scope='dashboard' children={
+                this.getNavigationItems(theme).map(item => (
+                  <div
+                    className={classnames('nav-item', { 'item-inactive': item.disabled })}
+                    testid={item.tag}
+                    onClick={() => this.handleItemClick(item)}
+                  >
+                    <div className='nav-item-logo-wrapper'>
+                      <img className='nav-item-logo' src={item.img} />
+                    </div>
+                    <div className='nav-item-title'><FormattedMessage id={item.intlId} /></div>
                   </div>
-                  <div className='nav-item-title'><FormattedMessage id={item.intlId} /></div>
-                </div>
-              ))
-            } />
+                ))
+              }
+            />
           </div>
           <div className='nav-description'>
             <p><FormattedMessage id='dashboard.overview.nav.description1' /></p>
@@ -109,7 +113,7 @@ Overview.propTypes = {
   fullName: string.isRequired,
   history: object.isRequired,
   openSupportModal: func.isRequired,
-  theme: object.isRequired
+  theme: object.isRequired,
 }
 
 export default Overview

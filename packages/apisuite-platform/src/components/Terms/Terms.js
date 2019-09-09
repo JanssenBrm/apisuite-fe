@@ -10,65 +10,65 @@ import { FormattedMessage } from 'react-intl'
 const topics = [
   {
     title: 'Introduction',
-    key: 'introduction'
+    key: 'introduction',
   },
   {
     titleIntlId: 'terms.topic1.title',
-    key: 'provisions'
+    key: 'provisions',
   },
   {
     titleIntlId: 'terms.topic2.title',
-    key: 'registration'
+    key: 'registration',
   },
   {
     titleIntlId: 'terms.topic3.title',
-    key: 'visit'
+    key: 'visit',
   },
   {
     titleIntlId: 'terms.topic4.title',
-    key: 'editor'
+    key: 'editor',
   },
   {
     titleIntlId: 'terms.topic5.title',
-    key: 'content'
+    key: 'content',
   },
   {
     titleIntlId: 'terms.topic6.title',
-    key: 'intelectual'
+    key: 'intelectual',
   },
   {
     titleIntlId: 'terms.topic7.title',
-    key: 'trademarks'
+    key: 'trademarks',
   },
   {
     titleIntlId: 'terms.topic8.title',
-    key: 'privacy'
+    key: 'privacy',
   },
   {
     titleIntlId: 'terms.topic9.title',
-    key: 'confidentiality'
+    key: 'confidentiality',
   },
   {
     titleIntlId: 'terms.topic10.title',
-    key: 'suspension'
+    key: 'suspension',
   },
   {
     titleIntlId: 'terms.topic11.title',
-    key: 'liability'
+    key: 'liability',
   },
   {
     titleIntlId: 'terms.topic12.title',
-    key: 'law'
+    key: 'law',
   },
   {
     titleIntlId: 'terms.topic13.title',
-    key: 'miscellaneous'
-  }
+    key: 'miscellaneous',
+  },
 ]
 
 class Terms extends Component {
   state = {
-    component: TermsAndConditions
+    component: TermsAndConditions,
   }
 
   handleClick = item => e => {
@@ -92,7 +92,7 @@ class Terms extends Component {
       <div className='terms-container'>
         <List
           component='nav'
-          classes={{root: 'terms-side-menu'}}
+          classes={{ root: 'terms-side-menu' }}
         >
           {topics.map((item) =>
             <ListItem
@@ -101,7 +101,7 @@ class Terms extends Component {
               onClick={this.handleClick(item)}
               className={classnames(
                 'terms-nested-menu',
-                { 'selected': component === item.key }
+                { selected: component === item.key }
               )}
             >
               <ListItemText primary={item.title ? item.title : <FormattedMessage id={item.titleIntlId} />} />

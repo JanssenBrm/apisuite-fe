@@ -17,17 +17,17 @@ describe('<Documentation />', () => {
   const props = {
     auth: {
       user: {
-        id: 1
-      }
+        id: 1,
+      },
     },
     history: { push: jest.fn() },
     location: { search: '?access_token=1234', pathname: '/docs/started' },
     changeTopic: jest.fn(),
     documentation: {
       topic: null,
-      child: null
+      child: null,
     },
-    theme: themes.default
+    theme: themes.default,
   }
   const wrapper = mountWithIntl(<Documentation {...props} />)
 
@@ -53,7 +53,7 @@ describe('<Documentation />', () => {
 describe('Documentation reducer', () => {
   const initialState = {
     topic: null,
-    child: null
+    child: null,
   }
 
   it('should return the initial state', () => {
@@ -63,7 +63,7 @@ describe('Documentation reducer', () => {
   it('should update state on CHANGE_TOPIC', () => {
     const topic = 0
     const child = 0
-    expect(reducer(initialState, changeTopic(topic, child))).toEqual({...initialState, child, topic})
+    expect(reducer(initialState, changeTopic(topic, child))).toEqual({ ...initialState, child, topic })
   })
 })
 

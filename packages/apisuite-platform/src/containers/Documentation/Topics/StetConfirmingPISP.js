@@ -12,7 +12,7 @@ const StetConfirmingPISP = () => (
     <h4>Confirming a Payment - Redirect flow</h4>
 
     <p>You should have already initiated a payment using the <pre>POST /v1/payment-requests</pre> endpoint. As per the swagger contract, you could either go without a debtor account or choose to provide a debtor account from your test data. Either way, you should receive a <pre>consentApprovalUrl</pre> in the API response. This url will look something like this:</p>
-    <pre>{`https://sandbox.auth.bnpparibasfortis.com/payment-requests/{paymentRequestResourceId}/consent?client_id=<YOUR_APP_CLIENT_ID>`}</pre>
+    <pre>{'https://sandbox.auth.bnpparibasfortis.com/payment-requests/{paymentRequestResourceId}/consent?client_id=<YOUR_APP_CLIENT_ID>'}</pre>
 
     <p>You have to copy paste this url in your browser. If the <pre>PSU</pre> is not authenticated, you will be redirected to the <pre>Login</pre> screen.</p>
 
@@ -26,7 +26,7 @@ const StetConfirmingPISP = () => (
     <p>In the account selection screen, the accounts of the authenticated <pre>PSU</pre> will be displayed. You just have to click on the account to select it and confirm the payment. You will then be redirected to the <code>successfulReportUrl</code> provided in the payment request.</p>
 
     <img src={accountselectionscreen} />
-  </div >
+  </div>
 )
 
 export default StetConfirmingPISP

@@ -10,7 +10,7 @@ import {
   SEND_NEWSLETTER_FORM,
   sendNewsletterFormSuccess,
   sendNewsletterFormError,
-  resetNewsletterForm
+  resetNewsletterForm,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 
@@ -21,15 +21,15 @@ import { showNotification } from 'containers/NotificationManager/ducks'
  */
 function * sendNewsletterForm (action) {
   const requestUrl = `${API_URL}/newsletter/subscribe`
-  const body = JSON.stringify({email: action.form})
+  const body = JSON.stringify({ email: action.form })
   const state = yield select()
-  const headers = yield call(getDefaultHeaders, {state, type: 'bearer'})
+  const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
   headers['Content-Type'] = 'application/json'
 
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {

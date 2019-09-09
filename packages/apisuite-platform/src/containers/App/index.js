@@ -14,7 +14,7 @@ const mapDispatchToProps = (dispatch) => ({
   resetSupportModal: () => dispatch(resetSupportModal()),
   saveCaptcha: value => dispatch(saveCaptcha(value)),
   resetCaptcha: () => dispatch(resetCaptcha()),
-  sendSMSCode: () => dispatch(meSendSMSCode())
+  sendSMSCode: () => dispatch(meSendSMSCode()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App)

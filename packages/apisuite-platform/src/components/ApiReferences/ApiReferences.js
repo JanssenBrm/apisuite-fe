@@ -31,43 +31,42 @@ class ApiReferences extends Component {
         <div className='api-references-wrapper'>
           <div className='api-references-apis'>
             {!ui.loading && products.length > 0 &&
-            <Card
-              scope='api-references'
-              children={
-                products.filter(api => api.version).map(api =>
-                  <div className='api-reference-api'>
-                    <img
-                      src={(theme.name === 'bnpp' && requireIfExists(brands.find(br => br.id === api.brand_id).logo)) || apiDefaultHeader}
-                    />
-                    <div className='api-reference-title' onClick={() => this.goToApi(`${encodeURIComponent(brands.filter(brand => brand.id === api.brand_id)[0].name.toLowerCase())}/${api.id}/${api.role}/${api.version.match(/[\d.]+/gmi)}`)}>
-                      <Typography variant='display1'>
-                        {api.longname}
-                      </Typography>
-                      <div className='api-caret'>
-                        <img src={caretRightIcon} />
+              <Card
+                scope='api-references'
+                children={
+                  products.filter(api => api.version).map(api =>
+                    <div className='api-reference-api'>
+                      <img
+                        src={(theme.name === 'bnpp' && requireIfExists(brands.find(br => br.id === api.brand_id).logo)) || apiDefaultHeader}
+                      />
+                      <div className='api-reference-title' onClick={() => this.goToApi(`${encodeURIComponent(brands.filter(brand => brand.id === api.brand_id)[0].name.toLowerCase())}/${api.id}/${api.role}/${api.version.match(/[\d.]+/gmi)}`)}>
+                        <Typography variant='display1'>
+                          {api.longname}
+                        </Typography>
+                        <div className='api-caret'>
+                          <img src={caretRightIcon} />
+                        </div>
+                      </div>
+                      <div className='api-references-detail'>
+                        <p><FormattedMessage id='docs.apireferences.apiversion' /></p>
+                        <Badge type='teal' text={api.version} />
+                        {/* <Badge type='green' text='version 1' /> */}
+                        {/* <Badge type='grey' text='beta' /> */}
+                      </div>
+                      <div className='api-references-info'>
+                        <p>Also: <a className='info-link' onClick={() => this.goToDetail(api.id)}>
+                          <FormattedMessage id='docs.apireferences.productinfo' />
+                        </a>
+                        </p>
                       </div>
                     </div>
-                    <div className='api-references-detail'>
-                      <p><FormattedMessage id='docs.apireferences.apiversion' /></p>
-                      <Badge type='teal' text={api.version} />
-                      {/* <Badge type='green' text='version 1' /> */}
-                      {/* <Badge type='grey' text='beta' /> */}
-                    </div>
-                    <div className='api-references-info'>
-                      <p>Also: <a className='info-link' onClick={() => this.goToDetail(api.id)}>
-                        <FormattedMessage id='docs.apireferences.productinfo' /></a>
-                      </p>
-                    </div>
-                  </div>
-                )
-              }
-            />
-            }
+                  )
+                }
+              />}
             {ui.loading &&
-            <div className='loading'>
-              <CircularProgress className='loading-circle' />
-            </div>
-            }
+              <div className='loading'>
+                <CircularProgress className='loading-circle' />
+              </div>}
           </div>
 
           <div className='api-references-description'>
@@ -108,7 +107,7 @@ ApiReferences.propTypes = {
   ui: object.isRequired,
   products: array.isRequired,
   brands: array.isRequired,
-  fetchApiProducts: func.isRequired
+  fetchApiProducts: func.isRequired,
 }
 
 export default ApiReferences

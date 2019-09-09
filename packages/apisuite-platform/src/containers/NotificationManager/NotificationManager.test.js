@@ -8,14 +8,14 @@ const initialState = {
   variant: null,
   message: null,
   show: false,
-  fromAPI: false
+  fromAPI: false,
 }
 const mockMessage = {
   message: 'test message',
-  variant: 'success'
+  variant: 'success',
 }
 const props = {
-  hideNotification: jest.fn()
+  hideNotification: jest.fn(),
 }
 
 describe('<NotificationManager />', () => {
@@ -48,10 +48,11 @@ describe('NotificationManager reducer', () => {
     const { message, variant } = mockMessage
     const wrapperProps = wrapper.props()
 
-    expect(reducer(initialState, showNotification(variant, message))).toEqual({...initialState,
+    expect(reducer(initialState, showNotification(variant, message))).toEqual({
+      ...initialState,
       message: mockMessage.message,
       variant: mockMessage.variant,
-      show: true
+      show: true,
     })
     expect(
       wrapperProps.show === true &&
@@ -62,8 +63,9 @@ describe('NotificationManager reducer', () => {
   })
 
   it('should trigger a PopMessage hide', () => {
-    expect(reducer(initialState, hideNotification())).toEqual({...initialState,
-      show: false
+    expect(reducer(initialState, hideNotification())).toEqual({
+      ...initialState,
+      show: false,
     })
   })
 })

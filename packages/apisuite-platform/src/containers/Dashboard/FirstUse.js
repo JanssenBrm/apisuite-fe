@@ -9,18 +9,18 @@ const tasks = [
   {
     title: 'dashboard.firstuse.1.title',
     content: 'dashboard.firstuse.1.content',
-    route: '/apps'
+    route: '/apps',
   },
   {
     title: 'dashboard.firstuse.2.title',
     content: 'dashboard.firstuse.2.content',
-    route: '/api-subscriptions'
+    route: '/api-subscriptions',
   },
   {
     title: 'dashboard.firstuse.3.title',
     content: 'dashboard.firstuse.3.content',
-    route: '/testdata'
-  }
+    route: '/testdata',
+  },
 ]
 
 class FirstUse extends Component {
@@ -34,7 +34,7 @@ class FirstUse extends Component {
       <div className='first-use-section'>
         {tasks.map((task, idx) =>
           <div key={`task-${idx}`} className='task-container'>
-            <div className={classnames('task-step', { 'locked': active !== idx })}>
+            <div className={classnames('task-step', { locked: active !== idx })}>
               <span>{idx + 1}</span>
               {active === idx && <div className='task-button' testid={`task-btn-${idx + 1}`} onClick={this.navigate(task.route)}><KeyboardArrowRightIcon /></div>}
             </div>
@@ -55,7 +55,7 @@ FirstUse.propTypes = {
   /**
    * User apps
    */
-  apps: array.isRequired
+  apps: array.isRequired,
 }
 
 export default FirstUse

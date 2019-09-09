@@ -29,9 +29,9 @@ const initialState = {
   data: [],
   organization: {},
   ui: {
-    loading: false
+    loading: false,
   },
-  onboardingToken: {}
+  onboardingToken: {},
 }
 
 /**
@@ -46,22 +46,22 @@ export default function reducer (state = initialState, action) {
     case GET_ONBOARDING_TOKEN:
       return update(state, {
         ui: {
-          loading: { $set: true }
-        }
+          loading: { $set: true },
+        },
       })
     case FETCH_ORGANIZATIONS_SUCCESS:
       return update(state, {
         data: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_ORGANIZATIONS_ERROR:
       return update(state, {
         data: { $set: [] },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
 
     case UPDATE_ORGANIZATION_SUCCESS:
@@ -70,28 +70,28 @@ export default function reducer (state = initialState, action) {
         data: { [organizationIndex]: { $set: action.data } },
         organization: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case UPDATE_ORGANIZATION_ERROR:
       return update(state, {
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_ONBOARDING_TOKEN_SUCCESS:
       return update(state, {
         onboardingToken: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_ONBOARDING_TOKEN_ERROR:
       return update(state, {
         onboardingToken: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     default:
       return state

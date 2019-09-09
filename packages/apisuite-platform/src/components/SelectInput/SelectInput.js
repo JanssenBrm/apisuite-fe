@@ -19,10 +19,9 @@ const SelectInput = ({ helperText, children, displayKey, ...custom }) => (
         required={false}
       >
         {custom.label}
-      </InputLabel>
-    }
+      </InputLabel>}
     <Select
-      classes={{icon: `select-icon ${custom.disabled && 'hide-icon'}`}}
+      classes={{ icon: `select-icon ${custom.disabled && 'hide-icon'}` }}
       children={children}
       input={<Input disableUnderline id='select-multiple' />}
       renderValue={selected => {
@@ -42,8 +41,8 @@ const SelectInput = ({ helperText, children, displayKey, ...custom }) => (
       SelectDisplayProps={{
         className: classnames(
           'select-display',
-          { 'disabled': custom.disabled }
-        )
+          { disabled: custom.disabled }
+        ),
       }}
       IconComponent={KeyboardArrowDownIcon}
       {...custom}
@@ -54,14 +53,14 @@ const SelectInput = ({ helperText, children, displayKey, ...custom }) => (
 
 SelectInput.defaultProps = {
   onChange: () => {},
-  displayKey: 'description'
+  displayKey: 'description',
 }
 
 SelectInput.propTypes = {
   children: node,
   onChange: func,
   helperText: string,
-  displayKey: string
+  displayKey: string,
 }
 
 export default SelectInput

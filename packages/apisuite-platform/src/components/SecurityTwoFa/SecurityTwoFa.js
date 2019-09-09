@@ -24,13 +24,13 @@ class SecurityTwoFa extends Component {
       {
         value: '1',
         key: 'authorizationApp',
-        description: intl.formatMessage({ id: 'signup.security.qrcode' })
+        description: intl.formatMessage({ id: 'signup.security.qrcode' }),
       },
       {
         value: '2',
         key: 'authorizationSms',
-        description: intl.formatMessage({ id: 'signup.security.sms' })
-      }
+        description: intl.formatMessage({ id: 'signup.security.sms' }),
+      },
     ]
   }
 
@@ -83,7 +83,7 @@ class SecurityTwoFa extends Component {
           value={confirmationCode}
           disabled={loading}
           rules={[
-            { rule: confirmationCode && confirmationCode.length === 6, message: method === '1' ? codeRequired : smsRequired }
+            { rule: confirmationCode && confirmationCode.length === 6, message: method === '1' ? codeRequired : smsRequired },
           ]}
           showerrors={`${showErrors}`}
         />
@@ -127,7 +127,8 @@ class SecurityTwoFa extends Component {
               'qrcode-container',
               `${route && route.replace('/', '')}`
             )
-          }>
+          }
+          >
             <div className='qrcode-wrapper'>
               <div
                 className={
@@ -149,8 +150,7 @@ class SecurityTwoFa extends Component {
                   disabled={!verified && (!confirmationCode || errors.length > 0)}
                 >
                   {updateBtn}
-                </Button>
-              }
+                </Button>}
             </div>
             <div
               className={
@@ -167,14 +167,13 @@ class SecurityTwoFa extends Component {
               </div>
               {renderConfirmation()}
             </div>
-          </div>
-        }
+          </div>}
         {method === '2' &&
-          <Fragment>
+          <>
             <Button
               id='send-sms-button'
               testid='send-sms-btn'
-              className={classnames('send-sms-btn', { 'signup': !isProfile })}
+              className={classnames('send-sms-btn', { signup: !isProfile })}
               variant='outlined'
               onClick={this.sendSMS}
               disabled={loading}
@@ -193,10 +192,8 @@ class SecurityTwoFa extends Component {
                 disabled={!verified && (!confirmationCode || errors.length > 0)}
               >
                 {updateBtn}
-              </Button>
-            }
-          </Fragment>
-        }
+              </Button>}
+          </>}
       </div>
     )
   }
@@ -216,7 +213,7 @@ SecurityTwoFa.propTypes = {
   verified: bool,
   qrcode: string,
   errors: array,
-  handleTwoFaMethodChange: func
+  handleTwoFaMethodChange: func,
 }
 
 export default SecurityTwoFa

@@ -13,10 +13,10 @@ const MultiSelect = ({ label, options, displayKey, expanded, disabled, selected,
   <div className='multiselect-container'>
     <div className='multiselect-label'>{label}</div>
     <ExpansionPanel expanded={expanded} disabled={disabled} className='multiselect-panel' onChange={onClick}>
-      <ExpansionPanelSummary classes={{root: 'multiselect-summary', expanded: 'summary-expanded', content: 'summary-content'}} expandIcon={<ExpandMoreIcon />}>
+      <ExpansionPanelSummary classes={{ root: 'multiselect-summary', expanded: 'summary-expanded', content: 'summary-content' }} expandIcon={<ExpandMoreIcon />}>
         <Typography className='multiselect-placeholder'>Select...</Typography>
       </ExpansionPanelSummary>
-      <ExpansionPanelDetails classes={{root: 'multiselect-details'}}>
+      <ExpansionPanelDetails classes={{ root: 'multiselect-details' }}>
         <FormControl component='fieldset' className='multiselect-form-control'>
           <FormGroup>
             {options.map((option, idx) => (
@@ -25,7 +25,7 @@ const MultiSelect = ({ label, options, displayKey, expanded, disabled, selected,
                 multiselect='true'
                 label={displayKey === 'path' ? `${option.method} ${option.path}` : option[displayKey]}
                 labelProps={{
-                  labelPlacement: 'start'
+                  labelPlacement: 'start',
                 }}
                 checked={Boolean(selected.find(s => s.id === option.id))}
                 onChange={onChange(option)}
@@ -41,7 +41,7 @@ const MultiSelect = ({ label, options, displayKey, expanded, disabled, selected,
 
 MultiSelect.defaultProps = {
   expanded: true,
-  displayKey: 'name'
+  displayKey: 'name',
 }
 
 MultiSelect.propTypes = {
@@ -76,7 +76,7 @@ MultiSelect.propTypes = {
   /**
    * Option key to be displayed as label
    */
-  displayKey: string
+  displayKey: string,
 }
 
 export default MultiSelect

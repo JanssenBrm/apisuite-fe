@@ -17,22 +17,22 @@ const Topic = () => (
         In order to retrieve all accounts for a certain application, that third party application can make a GET request to the accounts service. Note that this will return all accounts that were created with this specific client (= this unique ClientId).
       </p>
       <p>
-        If you only want to retrieve the accounts for a specific customer (i.e. the end user of your application) then you can make a GET request to the <pre>accounts/customerId/{`{customerId}`}</pre> endpoint. The customerId parameter can be found as part of the user data which is accessible in the Test data tab of the app view.
+        If you only want to retrieve the accounts for a specific customer (i.e. the end user of your application) then you can make a GET request to the <pre>accounts/customerId/{'{customerId}'}</pre> endpoint. The customerId parameter can be found as part of the user data which is accessible in the Test data tab of the app view.
       </p>
 
       <li>Get One User Account</li>
       <p>
-        If the goal is to retrieve one account in particular, then a GET request to the <pre>accounts/{`{id}`}</pre> endpoint must be made. The id parameter is generated at account creation and is found in the response of createAccount request (see above).
+        If the goal is to retrieve one account in particular, then a GET request to the <pre>accounts/{'{id}'}</pre> endpoint must be made. The id parameter is generated at account creation and is found in the response of createAccount request (see above).
       </p>
 
       <li>Get Account Balance</li>
       <p>
-        You can simply retrieve the balance of a specific account with a GET request to <pre>accounts/{`{id}`}/balances</pre>
+        You can simply retrieve the balance of a specific account with a GET request to <pre>accounts/{'{id}'}/balances</pre>
       </p>
 
       <li>Get Account Transactions</li>
       <p>
-        The list of transactions can be retrieved by sending a GET request to the <pre>accounts/{`{id}`}/transactions</pre> endpoint. This will actually return the list of payments for which the given account was either debtor or creditor and which were successfully submitted. So the payment initiations will not appear in the transaction list as long as the payment was not confirmed and processed.
+        The list of transactions can be retrieved by sending a GET request to the <pre>accounts/{'{id}'}/transactions</pre> endpoint. This will actually return the list of payments for which the given account was either debtor or creditor and which were successfully submitted. So the payment initiations will not appear in the transaction list as long as the payment was not confirmed and processed.
       </p>
     </ol>
   </div>

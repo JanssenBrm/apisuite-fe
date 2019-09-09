@@ -7,12 +7,12 @@ const mapStateToProps = ({ auth, activity }) => ({
   user: auth.user,
   logs: activity.logs,
   kpis: activity.kpis,
-  ui: activity.ui
+  ui: activity.ui,
 })
 
 const mapDispatchToProps = (dispatch) => ({
   fetchActivities: (filters) => dispatch(fetchActivities(filters)),
-  fetchKpis: () => dispatch(fetchKpis())
+  fetchKpis: () => dispatch(fetchKpis()),
 })
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(ActivityLog))

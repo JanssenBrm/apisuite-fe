@@ -25,8 +25,7 @@ const Overview = ({ onLinkClick, theme }) => (
             <h3 className='headline'>
               <FormattedMessage id='navigation.docs.knowledgebase' />
             </h3>
-          </div>
-        }
+          </div>}
       </div>
     </div>
   </div>
@@ -34,7 +33,7 @@ const Overview = ({ onLinkClick, theme }) => (
 
 Overview.propTypes = {
   onLinkClick: func.isRequired,
-  theme: object.isRequired
+  theme: object.isRequired,
 }
 
 export default Overview

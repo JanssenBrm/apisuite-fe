@@ -9,41 +9,41 @@ import DataPrivacy from './Topics/DataPrivacy'
 const topics = [
   {
     title: '1. Which personal data do we use about you?',
-    key: 'personaldata'
+    key: 'personaldata',
   },
   {
     title: '2. Why and on which basis do we use your personal data?',
-    key: 'basis'
+    key: 'basis',
   },
   {
     title: '3. Who do we share your personal data with?',
-    key: 'share'
+    key: 'share',
   },
   {
     title: '4. Transfers of personal data outside the European Economic Area (“EEA”)',
-    key: 'transfer'
+    key: 'transfer',
   },
   {
     title: '5. How long do we keep your personal data for?',
-    key: 'howlong'
+    key: 'howlong',
   },
   {
     title: '6. What are your rights and how can you exercise them?',
-    key: 'rights'
+    key: 'rights',
   },
   {
     title: '7. How can you keep up with changes to this Privacy Notice?',
-    key: 'keepupchanges'
+    key: 'keepupchanges',
   },
   {
     title: '8. How to contact us?',
-    key: 'contactus'
-  }
+    key: 'contactus',
+  },
 ]
 
 class Privacy extends Component {
   state = {
-    component: DataPrivacy
+    component: DataPrivacy,
   }
 
   handleClick = item => e => {
@@ -60,7 +60,7 @@ class Privacy extends Component {
     // Download pdf action
   }
 
-  render() {
+  render () {
     const { component } = this.state
 
     return (
@@ -76,7 +76,7 @@ class Privacy extends Component {
               onClick={this.handleClick(item)}
               className={classnames(
                 'privacy-nested-menu',
-                { 'selected': component === item.key }
+                { selected: component === item.key }
               )}
             >
               <ListItemText primary={item.title} />
