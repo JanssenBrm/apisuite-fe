@@ -12,7 +12,8 @@ import ActivationPageComponent from './ActivationPage'
 import InvitationPageComponent from './InvitationPage'
 import { injectIntl } from 'react-intl'
 
-const mapStateToProps = ({ auth, signup, team }) => ({ ui: signup.ui, auth, signup, user: signup.user, invitation: team.ticket })
+const mapStateToProps = ({ auth, signup, team }) =>
+  ({ ui: signup.ui, auth, signup, user: signup.user, invitation: team.ticket })
 
 const mapDispatchToProps = (dispatch) => ({
   signupUser: userData => dispatch(signupUser(userData)),

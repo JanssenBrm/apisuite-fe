@@ -55,7 +55,7 @@ class Support extends Component {
     }
   }
 
-  navigate = route => e => {
+  navigate = route => () => {
     this.props.history.push(route)
   }
 
@@ -80,7 +80,7 @@ class Support extends Component {
       errors.length > 0
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { isLoggedIn, resetCaptcha, auth } = this.props
     const { errors, form, captcha } = this.state
     const { user } = auth
@@ -243,12 +243,10 @@ class Support extends Component {
               ))}
             </FormField>}
           <FormField
-            className={
-              classnames(
-                'support-input',
-                { 'support-input-top': isLoggedIn }
-              )
-            }
+            className={classnames(
+              'support-input',
+              { 'support-input-top': isLoggedIn }
+            )}
             id='subject'
             testid='support-subject'
             name='subject'

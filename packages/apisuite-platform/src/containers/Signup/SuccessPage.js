@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { object, func } from 'prop-types'
+import { object } from 'prop-types'
 import checkImage1 from 'assets/check_shadow_1.svg'
 import checkImage2 from 'assets/check_shadow_2.svg'
 import checkImage3 from 'assets/check_shadow_3.svg'
@@ -74,8 +74,6 @@ class SuccessPage extends Component {
 
 SuccessPage.propTypes = {
   intl: object.isRequired,
-  openLoginModal: func.isRequired,
-  sendActivationEmail: func.isRequired,
   user: object.isRequired,
   history: object.isRequired,
   invitation: object.isRequired,

@@ -9,7 +9,7 @@ class LandingPage extends Component {
     this.props.fetchApiProducts()
   }
 
-  navigate = route => event => {
+  navigate = route => () => {
     this.props.history.push(route)
   }
 
@@ -46,7 +46,6 @@ class LandingPage extends Component {
 LandingPage.propTypes = {
   history: object,
   auth: object.isRequired,
-  theme: object.isRequired,
   fetchApiProducts: func.isRequired,
   products: array.isRequired,
   brands: array.isRequired,

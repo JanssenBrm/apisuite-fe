@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { object } from 'prop-types'
 import classnames from 'classnames'
 import apiProductSlider from 'assets/api_products_slider.svg'
@@ -9,6 +9,7 @@ import Button from '@material-ui/core/Button'
 import { Typography } from '@material-ui/core'
 
 export const sliderControls = ({ slideCount, currentSlide, goToSlide }) =>
+  // eslint-disable-next-line prefer-spread
   Array.apply(null, Array(slideCount)).map((slide, index) =>
     <div
       key={`slider-bullet-${index}`}

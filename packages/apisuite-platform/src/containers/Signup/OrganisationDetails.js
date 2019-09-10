@@ -24,7 +24,7 @@ class OrganisationDetails extends Component {
     errors: [],
   }
 
-  handleSubmit = e => {
+  handleSubmit = () => {
     const { errors, form } = this.state
 
     if (!errors.length) {
@@ -36,7 +36,7 @@ class OrganisationDetails extends Component {
     }
   }
 
-  handleSkip = e => {
+  handleSkip = () => {
     this.props.skipStep()
   }
 
@@ -152,7 +152,6 @@ OrganisationDetails.propTypes = {
   intl: PropTypes.object.isRequired,
   ui: PropTypes.object.isRequired,
   nextStep: PropTypes.func.isRequired,
-  previousStep: PropTypes.func.isRequired,
   skipStep: PropTypes.func.isRequired,
 }
 

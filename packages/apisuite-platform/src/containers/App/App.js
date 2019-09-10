@@ -182,20 +182,17 @@ class App extends Component {
     const isLoggedIn = Boolean(auth.user.id)
     this.setState({
       title: null,
-      component: <Support
-        isLoggedIn={isLoggedIn}
-        option={option}
-        resetCaptcha={resetCaptcha}
-        history={history}
-      />,
+      component: <Support isLoggedIn={isLoggedIn} option={option} resetCaptcha={resetCaptcha} history={history} />,
       rightImg: 'eye',
       rightTitle: intl.formatMessage({ id: 'support.title' }),
       rightSubtitle: intl.formatMessage({ id: 'support.description' }),
-      additionalContent: !isLoggedIn && <ReCAPTCHA
-        ref={recaptchaRef}
-        sitekey={RECAPTCHA_KEY}
-        onChange={this.onVerifyCaptcha}
-      />,
+      additionalContent: !isLoggedIn && (
+        <ReCAPTCHA
+          ref={recaptchaRef}
+          sitekey={RECAPTCHA_KEY}
+          onChange={this.onVerifyCaptcha}
+        />
+      ),
       step: -1,
     })
     this.props.openSupportModal(option)
@@ -218,7 +215,7 @@ class App extends Component {
     this.props.resetSupportModal()
   }
 
-  navigate = route => event => {
+  navigate = route => () => {
     const isFeedback = route === '/feedback'
     if (route === '/support' || isFeedback) {
       this.openLoginModal(true)
@@ -259,7 +256,17 @@ class App extends Component {
 
   render () {
     const { intl, logout, auth, history } = this.props
-    const { modalOpen, title, component, rightTitle, rightSubtitle, rightImg, step, isExpanded, additionalContent } = this.state
+    const {
+      modalOpen,
+      title,
+      component,
+      rightTitle,
+      rightSubtitle,
+      rightImg,
+      step,
+      isExpanded,
+      additionalContent,
+    } = this.state
     const hasTransparentBG = ['/', '/dashboard', '/recovery'].includes(history.location.pathname)
 
     return (
@@ -274,7 +281,9 @@ class App extends Component {
           {routes()}
         </div>
 
-        {enhancedMatchPath(location.pathname) && <Footer intl={intl} user={auth.user} navigate={this.navigate} logout={logout} />}
+        {enhancedMatchPath(location.pathname) && (
+          <Footer intl={intl} user={auth.user} navigate={this.navigate} logout={logout} />
+        )}
 
         <ModalSplit
           open={modalOpen}

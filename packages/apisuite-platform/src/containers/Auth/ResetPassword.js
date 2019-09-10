@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import Button from '@material-ui/core/Button'
 import { object, func, number } from 'prop-types'
 import { FormattedMessage } from 'react-intl'
@@ -44,7 +44,7 @@ class ResetPassword extends Component {
     })
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { errors, form, token } = this.state
     const { resetPassword, userId, updatePasswordRBAC } = this.props
     const { passPhrase } = form

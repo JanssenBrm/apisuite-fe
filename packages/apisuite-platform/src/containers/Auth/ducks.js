@@ -719,7 +719,7 @@ export function resetLoginModal () {
  * Open login modal action creator
  * * @param {Boolean} unauthorized - Boolean value flagging if the user comes from a self triggered modal or
  *                                   an authorized action popup.
- *                                   In case of an unauthorized action, the user needs to be redirected back, upon modal close.
+ *                           In case of an unauthorized action, the user needs to be redirected back, upon modal close.
  */
 export function openLoginModal (unauthorized) {
   return { type: OPEN_LOGIN_MODAL, unauthorized }
@@ -737,7 +737,10 @@ export const createAuthMiddleware = (history) => (store) => (next) => (action) =
   const state = store.getState()
 
   next(action)
-  if (action.type === LOGIN_USER_SUCCESS || action.type === GITHUB_LOGIN_USER_SUCCESS || action.type === LOGIN_USER_TWOFA_AUTH_SUCCESS) {
+  if (
+    action.type === LOGIN_USER_SUCCESS || action.type === GITHUB_LOGIN_USER_SUCCESS ||
+    action.type === LOGIN_USER_TWOFA_AUTH_SUCCESS
+  ) {
     cookie.set(TOKEN_KEY, action.data.access_token, {
       path: '/',
       expires: TOKEN_MAX_AGE,

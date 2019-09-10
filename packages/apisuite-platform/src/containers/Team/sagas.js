@@ -43,7 +43,7 @@ import { push } from 'connected-react-router'
  * Fetch Team saga worker
  * @param {Object} action
  */
-function * fetchTeamWorker (action) {
+function * fetchTeamWorker () {
   const state = yield select()
   const organizationId = state.auth.user.organizations[0].id
   const requestUrl = `${API_URL}/team/${organizationId}`

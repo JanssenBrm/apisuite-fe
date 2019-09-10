@@ -23,9 +23,11 @@ const DynamicFieldSet = ({ fields, errorMessage, actionLabel, inputLabel, initia
           inputProps={{ index }}
           {...props}
         />
-        {!props.disabled && <IconButton id='remove-button' aria-label='Remove' color='primary' onClick={onRemove(index)}>
-          <RemoveCircleOutlineIcon />
-        </IconButton>}
+        {!props.disabled && (
+          <IconButton id='remove-button' aria-label='Remove' color='primary' onClick={onRemove(index)}>
+            <RemoveCircleOutlineIcon />
+          </IconButton>
+        )}
       </div>
     ))}
     <Button

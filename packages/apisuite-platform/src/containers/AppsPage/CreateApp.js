@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { func, object } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import FormField, { parseErrors, isValidURL } from 'components/FormField'
@@ -42,7 +42,7 @@ class CreateApp extends Component {
     }
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { errors, form, step, subscribed } = this.state
     const { name, description, redirectURLs, iconURL, publicURL } = form
     const { organization, app } = this.props
@@ -90,7 +90,9 @@ class CreateApp extends Component {
 
   handleCheckboxChange = item => event => {
     const { subscribed } = this.state
-    this.setState({ subscribed: event.target.checked ? [...subscribed, item] : subscribed.filter(sub => sub.id !== item.id) })
+    this.setState({
+      subscribed: event.target.checked ? [...subscribed, item] : subscribed.filter(sub => sub.id !== item.id),
+    })
   }
 
   render () {
@@ -218,7 +220,8 @@ class CreateApp extends Component {
                 expanded={isValidated}
                 disabled={!isValidated || subscriptionsToShow.length === 0}
                 label={apiSubscriptionsLabel}
-                options={subscriptionsToShow.filter(sub => sub.version).map(sub => ({ id: sub.id, name: sub.longname }))}
+                options={subscriptionsToShow
+                  .filter(sub => sub.version).map(sub => ({ id: sub.id, name: sub.longname }))}
                 onChange={this.handleCheckboxChange}
                 selected={subscribed}
               />
@@ -252,9 +255,7 @@ class CreateApp extends Component {
 
           {isValidated &&
             <div className='api-subscriptions-help'>
-              <FormattedMessage id='createApp.subscriptions.help' /> <a className='link' testid='manage-subscriptions-link' href='/api-subscriptions'>
-                <FormattedMessage id='createApp.subscriptions.link' />
-              </a>
+              <FormattedMessage id='createApp.subscriptions.help' /> <a className='link' testid='manage-subscriptions-link' href='/api-subscriptions'><FormattedMessage id='createApp.subscriptions.link' /></a>
             </div>}
 
           <div className='create-app-actions'>
@@ -270,9 +271,7 @@ class CreateApp extends Component {
             </Button>
             {!isValidated &&
               <div className='create-app-help'>
-                <FormattedMessage id='createApp.actions.help' /> <a className='create-app-link' testid='create-app-link' href='/docs'>
-                  <FormattedMessage id='createApp.actions.link' />
-                </a>.
+                <FormattedMessage id='createApp.actions.help' /> <a className='create-app-link' testid='create-app-link' href='/docs'><FormattedMessage id='createApp.actions.link' /></a>.
               </div>}
           </div>
         </div>

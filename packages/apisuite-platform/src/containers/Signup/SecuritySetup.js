@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { func, object, string } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import FormField, { parseErrors } from 'components/FormField'
@@ -36,7 +36,7 @@ class SecuritySetup extends Component {
     this.setState({ passwordVisible: !this.state.passwordVisible })
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { errors, form } = this.state
     const { password, confirmationCode, method } = form
 
@@ -147,7 +147,10 @@ class SecuritySetup extends Component {
               variant='contained'
               color='primary'
               onClick={this.handleSubmit}
-              disabled={!form.confirmationCode || !form.password || form.password.length < MIN_LENGTH || errors.length > 0 || ui.loading}
+              disabled={
+                !form.confirmationCode || !form.password || form.password.length < MIN_LENGTH || errors.length > 0 |
+                ui.loading
+              }
             >
               {registerBtn}
             </Button>
@@ -162,10 +165,7 @@ class SecuritySetup extends Component {
 SecuritySetup.propTypes = {
   intl: object.isRequired,
   ui: object.isRequired,
-  previousStep: func.isRequired,
-  handleSubmit: func.isRequired,
   email: string.isRequired,
-  number: string.isRequired,
   sendSecurityDetails: func.isRequired,
   route: string,
   qrcode: string,

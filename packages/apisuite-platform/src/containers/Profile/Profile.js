@@ -89,7 +89,7 @@ class Profile extends Component {
     })
   }
 
-  handleTwoFaMethodChange = ({ target }, errors) => {
+  handleTwoFaMethodChange = ({ target }) => {
     const { user } = this.state
     if (user.method !== target.value) {
       this.setState({
@@ -131,7 +131,7 @@ class Profile extends Component {
     this.props.updatePassword({ oldPassword, newPassword })
   }
 
-  toggleConfirmation = type => event => {
+  toggleConfirmation = type => () => {
     this.setState({
       confirmationOpen: !this.state.confirmationOpen,
       confirmationType: type,
@@ -223,7 +223,7 @@ class Profile extends Component {
     this.props.removeAccount(this.props.user.id)
   }
 
-  togglePasswordVisibility = fieldName => event => {
+  togglePasswordVisibility = fieldName => () => {
     this.setState({ [`${fieldName}Visible`]: !this.state[`${fieldName}Visible`] })
   }
 
@@ -270,241 +270,247 @@ class Profile extends Component {
     const userRole = orgRole ? orgRole.role.charAt(0).toUpperCase() + orgRole.role.slice(1).toLowerCase() : 'Developer'
 
     return (
-      user.fullName && <div className='profile-container' id='profile-settings'>
-        <div className='profile-section'>
-          <div className='left-container'>
-            <div className='avatar' style={{ ...(isValidURL(user.avatar) && { backgroundImage: `url(${user.avatar})` }) }}>
-              {!isValidURL(user.avatar) && <span>{userInitials}</span>}
-            </div>
-            <div className='account-details'>
-              <div className='detail-title'>{<FormattedMessage id='profile.accessLevel' />}</div>
-              <div className='detail-value'>{userRole}<div className='access-level-badge trusted' /></div>
+      user.fullName && (
+        <div className='profile-container' id='profile-settings'>
+          <div className='profile-section'>
+            <div className='left-container'>
+              <div className='avatar' style={{ ...(isValidURL(user.avatar) && { backgroundImage: `url(${user.avatar})` }) }}>
+                {!isValidURL(user.avatar) && <span>{userInitials}</span>}
+              </div>
+              <div className='account-details'>
+                <div className='detail-title'>{<FormattedMessage id='profile.accessLevel' />}</div>
+                <div className='detail-value'>{userRole}<div className='access-level-badge trusted' /></div>
 
-              {/* <div className='detail-title'>{<FormattedMessage id='profile.lastLogin' />}</div>
+                {/* <div className='detail-title'>{<FormattedMessage id='profile.lastLogin' />}</div>
               <div className='detail-value'>Yesterday</div> */}
 
-              <div className='detail-title'>{<FormattedMessage id='profile.memberSince' />}</div>
-              <div className='detail-value'>{memberSince}</div>
+                <div className='detail-title'>{<FormattedMessage id='profile.memberSince' />}</div>
+                <div className='detail-value'>{memberSince}</div>
 
-              <div className='detail-title actions'>{<FormattedMessage id='profile.actions' />}</div>
-              <Button
-                id='save-profile-btn'
-                testid='save-profile-btn'
-                className='save-button gradient'
-                variant='outlined'
-                onClick={this.saveProfile}
-                disabled={errors.length > 0}
-              >
-                <FormattedMessage id='profile.actions.save' />
-              </Button>
-            </div>
-          </div>
-          <div className='right-container profile-wrapper'>
-            <FormField
-              bigfont='true'
-              nobackground={1}
-              id='user-name'
-              testid='user-name'
-              className='user-name'
-              label={fullNameLabel}
-              name='fullName'
-              onChange={this.handleChange}
-              value={user.fullName}
-              rules={[
-                { rule: user.fullName.length >= 2, message: fullNameRequired },
-              ]}
-              showerrors={`${showErrors}`}
-            />
-            <FormField
-              multiline
-              rows={4}
-              id='user-bio'
-              testid='user-bio'
-              className='user-bio'
-              label={bioLabel}
-              name='bio'
-              startadornment={<Create className='adornement-icon start' />}
-              onChange={this.handleChange}
-              value={user.bio}
-              showerrors={`${showErrors}`}
-            />
-            <FormField
-              disabled
-              id='user-email'
-              testid='user-email'
-              className='user-email'
-              label={emailLabel}
-              name='email'
-              startadornment={<AssignmentInd className='adornement-icon start' />}
-              onChange={this.handleChange}
-              value={user.email}
-            />
-            <FormField
-              id='user-phone'
-              testid='user-phone'
-              className='user-phone'
-              disabled
-              label={phoneNumberLabel}
-              name='phone'
-              startadornment={<PermDeviceInformation className='adornement-icon start' />}
-              onChange={this.handleChange}
-              value={user.phone}
-              rules={[
-                { rule: isValidPhoneNumber(user.phone), message: phoneNumberTypeError },
-              ]}
-              showerrors={`${showErrors}`}
-            />
-            <FormField
-              id='user-avatar'
-              testid='user-avatar'
-              className='user-avatar'
-              label={avatarLabel}
-              name='avatar'
-              startadornment={<AccountCircle className='adornement-icon start' />}
-              onChange={this.handleChange}
-              value={user.avatar}
-              rules={[
-                { rule: user.avatar ? isValidURL(user.avatar) : true, message: avatarTypeError },
-              ]}
-              showerrors={`${showErrors}`}
-            />
-          </div>
-        </div>
-
-        <div className='separator' id='security-settings'>{securityTitle}</div>
-        <div className='profile-section'>
-          <div className='left-container'>
-            <div className='twofactor-auth-info-container'>
-              <div className='twofactor-auth-info-title'><FormattedMessage id='profile.twofa.title' /></div>
-              <div className='twofactor-auth-info-content'>
-                <div className='info-block'>
-                  <FormattedMessage
-                    id='profile.twofa.content'
-                    values={{
-                      italic: (
-                        <i>
-                          <FormattedMessage
-                            id='profile.twofa.content.italic'
-                          />
-                        </i>
-                      ),
-                    }}
-                  />
-                </div>
-                <div className='info-block'>
-                  <FormattedMessage
-                    id='profile.twofa.apps'
-                    values={{
-                      googleAuth: (
-                        <a className='option-link' href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2'>Google Authenticator</a>
-                      ),
-                      hdeGen: (
-                        <a className='option-link' href='https://www.hde.co.jp/otp/'>HDE OTP Generator</a>
-                      ),
-                      duo: (
-                        <a className='option-link' href='https://duo.com/'>Duo</a>
-                      ),
-                    }}
-                  />
-                </div>
-                <div><i><FormattedMessage id='profile.twofa.apps.italic' /></i></div>
+                <div className='detail-title actions'>{<FormattedMessage id='profile.actions' />}</div>
+                <Button
+                  id='save-profile-btn'
+                  testid='save-profile-btn'
+                  className='save-button gradient'
+                  variant='outlined'
+                  onClick={this.saveProfile}
+                  disabled={errors.length > 0}
+                >
+                  <FormattedMessage id='profile.actions.save' />
+                </Button>
               </div>
             </div>
-          </div>
-          <div className='right-container'>
-            <FormField
-              id='user-old-password'
-              testid='user-old-password'
-              label={oldPasswordLabel}
-              name='oldPassword'
-              inputtype={oldPasswordVisible ? 'text' : 'password'}
-              startadornment={<OldPasswordIcon id='old-password-icon' test='old-password-icon' className='adornement-icon start' onClick={this.togglePasswordVisibility('oldPassword')} />}
-              onChange={this.handlePasswordChange}
-              value={oldPassword}
-              rules={[
-                { rule: !validatePassword(oldPassword).length, message: `${passwordRequired} ${validatePassword(oldPassword).join(', ')}` },
-              ]}
-              showerrors={`${showErrors}`}
-            />
-            <div className='password-wrapper'>
+            <div className='right-container profile-wrapper'>
               <FormField
-                id='user-new-password'
-                testid='user-new-password'
-                label={newPasswordLabel}
-                name='newPassword'
-                inputtype={newPasswordVisible ? 'text' : 'password'}
-                startadornment={<NewPasswordIcon id='new-password-icon' testid='new-password-icon' className='adornement-icon start' onClick={this.togglePasswordVisibility('newPassword')} />}
-                endadornment={<Button
-                  id='change-pass-btn'
-                  testid='change-pass-btn'
-                  className='change-pass-button'
-                  variant='outlined'
-                  onClick={this.changePassword}
-                  disabled={validatePassword(newPassword).length > 0}
-                >
-                  <FormattedMessage id='profile.passphrase.change' />
-                </Button>}
-                onChange={this.handlePasswordChange}
-                value={newPassword}
+                bigfont='true'
+                nobackground={1}
+                id='user-name'
+                testid='user-name'
+                className='user-name'
+                label={fullNameLabel}
+                name='fullName'
+                onChange={this.handleChange}
+                value={user.fullName}
                 rules={[
-                  { rule: !validatePassword(newPassword).length, message: `${passwordRequired} ${validatePassword(newPassword).join(', ')}` },
+                  { rule: user.fullName.length >= 2, message: fullNameRequired },
                 ]}
                 showerrors={`${showErrors}`}
               />
+              <FormField
+                multiline
+                rows={4}
+                id='user-bio'
+                testid='user-bio'
+                className='user-bio'
+                label={bioLabel}
+                name='bio'
+                startadornment={<Create className='adornement-icon start' />}
+                onChange={this.handleChange}
+                value={user.bio}
+                showerrors={`${showErrors}`}
+              />
+              <FormField
+                disabled
+                id='user-email'
+                testid='user-email'
+                className='user-email'
+                label={emailLabel}
+                name='email'
+                startadornment={<AssignmentInd className='adornement-icon start' />}
+                onChange={this.handleChange}
+                value={user.email}
+              />
+              <FormField
+                id='user-phone'
+                testid='user-phone'
+                className='user-phone'
+                disabled
+                label={phoneNumberLabel}
+                name='phone'
+                startadornment={<PermDeviceInformation className='adornement-icon start' />}
+                onChange={this.handleChange}
+                value={user.phone}
+                rules={[
+                  { rule: isValidPhoneNumber(user.phone), message: phoneNumberTypeError },
+                ]}
+                showerrors={`${showErrors}`}
+              />
+              <FormField
+                id='user-avatar'
+                testid='user-avatar'
+                className='user-avatar'
+                label={avatarLabel}
+                name='avatar'
+                startadornment={<AccountCircle className='adornement-icon start' />}
+                onChange={this.handleChange}
+                value={user.avatar}
+                rules={[
+                  { rule: user.avatar ? isValidURL(user.avatar) : true, message: avatarTypeError },
+                ]}
+                showerrors={`${showErrors}`}
+              />
+            </div>
+          </div>
 
+          <div className='separator' id='security-settings'>{securityTitle}</div>
+          <div className='profile-section'>
+            <div className='left-container'>
+              <div className='twofactor-auth-info-container'>
+                <div className='twofactor-auth-info-title'><FormattedMessage id='profile.twofa.title' /></div>
+                <div className='twofactor-auth-info-content'>
+                  <div className='info-block'>
+                    <FormattedMessage
+                      id='profile.twofa.content'
+                      values={{
+                        italic: (
+                          <i>
+                            <FormattedMessage
+                              id='profile.twofa.content.italic'
+                            />
+                          </i>
+                        ),
+                      }}
+                    />
+                  </div>
+                  <div className='info-block'>
+                    <FormattedMessage
+                      id='profile.twofa.apps'
+                      values={{
+                        googleAuth: (
+                          <a className='option-link' href='https://play.google.com/store/apps/details?id=com.google.android.apps.authenticator2'>Google Authenticator</a>
+                        ),
+                        hdeGen: (
+                          <a className='option-link' href='https://www.hde.co.jp/otp/'>HDE OTP Generator</a>
+                        ),
+                        duo: (
+                          <a className='option-link' href='https://duo.com/'>Duo</a>
+                        ),
+                      }}
+                    />
+                  </div>
+                  <div><i><FormattedMessage id='profile.twofa.apps.italic' /></i></div>
+                </div>
+              </div>
             </div>
-            <SecurityTwoFa
-              intl={intl}
-              method={user.method}
-              confirmationCode={user.confirmationCode}
-              handleChange={this.handleChange}
-              handleTwoFaMethodChange={this.handleTwoFaMethodChange}
-              showErrors={showErrors}
-              errors={errors}
-              loading={false}
-              route={history.location.pathname}
-              generateQRCode={generateQRCode}
-              sendSMSCode={sendSMSCode}
-              qrcode={TwoFA.qrcode}
-              verified={TwoFA.verify}
-              twoFaUpdate={twoFaUpdate}
-            />
-          </div>
-          <div className='security-additional-options'>
-            <div className='options-title'>{<FormattedMessage id='profile.additionalActions' />}</div>
-            <div className='option-link' testid='show-codes-btn' onClick={this.toggleConfirmation('2fa')}>{<FormattedMessage id='profile.additionalActions.print' />}</div>
-            <div className='option-link' testid='logout-btn' onClick={logout}>{<FormattedMessage id='profile.additionalActions.logout' />}</div>
-            <div className='option-link' id='remove-account-trigger' testid='remove-account-btn' onClick={this.toggleConfirmation('remove')}>
-              {<FormattedMessage id='profile.additionalActions.delete' />}
+            <div className='right-container'>
+              <FormField
+                id='user-old-password'
+                testid='user-old-password'
+                label={oldPasswordLabel}
+                name='oldPassword'
+                inputtype={oldPasswordVisible ? 'text' : 'password'}
+                startadornment={<OldPasswordIcon id='old-password-icon' test='old-password-icon' className='adornement-icon start' onClick={this.togglePasswordVisibility('oldPassword')} />}
+                onChange={this.handlePasswordChange}
+                value={oldPassword}
+                rules={[
+                  { rule: !validatePassword(oldPassword).length, message: `${passwordRequired} ${validatePassword(oldPassword).join(', ')}` },
+                ]}
+                showerrors={`${showErrors}`}
+              />
+              <div className='password-wrapper'>
+                <FormField
+                  id='user-new-password'
+                  testid='user-new-password'
+                  label={newPasswordLabel}
+                  name='newPassword'
+                  inputtype={newPasswordVisible ? 'text' : 'password'}
+                  startadornment={<NewPasswordIcon id='new-password-icon' testid='new-password-icon' className='adornement-icon start' onClick={this.togglePasswordVisibility('newPassword')} />}
+                  endadornment={
+                    <Button
+                      id='change-pass-btn'
+                      testid='change-pass-btn'
+                      className='change-pass-button'
+                      variant='outlined'
+                      onClick={this.changePassword}
+                      disabled={validatePassword(newPassword).length > 0}
+                    >
+                      <FormattedMessage id='profile.passphrase.change' />
+                    </Button>
+                  }
+                  onChange={this.handlePasswordChange}
+                  value={newPassword}
+                  rules={[
+                    { rule: !validatePassword(newPassword).length, message: `${passwordRequired} ${validatePassword(newPassword).join(', ')}` },
+                  ]}
+                  showerrors={`${showErrors}`}
+                />
+
+              </div>
+              <SecurityTwoFa
+                intl={intl}
+                method={user.method}
+                confirmationCode={user.confirmationCode}
+                handleChange={this.handleChange}
+                handleTwoFaMethodChange={this.handleTwoFaMethodChange}
+                showErrors={showErrors}
+                errors={errors}
+                loading={false}
+                route={history.location.pathname}
+                generateQRCode={generateQRCode}
+                sendSMSCode={sendSMSCode}
+                qrcode={TwoFA.qrcode}
+                verified={TwoFA.verify}
+                twoFaUpdate={twoFaUpdate}
+              />
+            </div>
+            <div className='security-additional-options'>
+              <div className='options-title'>{<FormattedMessage id='profile.additionalActions' />}</div>
+              <div className='option-link' testid='show-codes-btn' onClick={this.toggleConfirmation('2fa')}>{<FormattedMessage id='profile.additionalActions.print' />}</div>
+              <div className='option-link' testid='logout-btn' onClick={logout}>{<FormattedMessage id='profile.additionalActions.logout' />}</div>
+              <div className='option-link' id='remove-account-trigger' testid='remove-account-btn' onClick={this.toggleConfirmation('remove')}>
+                {<FormattedMessage id='profile.additionalActions.delete' />}
+              </div>
             </div>
           </div>
+          <DialogBox
+            id={`${confirmationType === '2fa' ? '2fa' : 'remove-account'}-dialog`}
+            open={confirmationOpen}
+            content={this.confirmationContent(confirmationType)}
+            actions={[
+              <Button
+                key='dialog-cancel'
+                id='dialog-cancel'
+                testid='dialog-cancel-btn'
+                variant='outlined'
+                onClick={this.toggleConfirmation(confirmationType)}
+              >
+                <FormattedMessage id='profile.removeaccount.cancel' />
+              </Button>,
+              <Button
+                key={`${confirmationType === '2fa' ? '2fa' : 'remove-account'}-confirm`}
+                id={`${confirmationType === '2fa' ? '2fa' : 'remove-account'}-confirm`}
+                testid={`${confirmationType === '2fa' ? '2fa' : 'remove-account'}-confirm-btn`}
+                variant='contained'
+                color='primary'
+                onClick={confirmationType === '2fa' ? this.verify2Fa : this.removeAccount}
+                disabled={confirmationType === '2fa' ? (!smsSent || !code || errors.length > 0) : false}
+              >
+                <FormattedMessage id={`${confirmationType === '2fa' ? 'profile.twofa.dialog.confirm' : 'profile.removeaccount.remove'}`} />
+              </Button>,
+            ]}
+          />
         </div>
-        <DialogBox
-          id={`${confirmationType === '2fa' ? '2fa' : 'remove-account'}-dialog`}
-          open={confirmationOpen}
-          content={this.confirmationContent(confirmationType)}
-          actions={[
-            <Button
-              id='dialog-cancel'
-              testid='dialog-cancel-btn'
-              variant='outlined'
-              onClick={this.toggleConfirmation(confirmationType)}
-            >
-              <FormattedMessage id='profile.removeaccount.cancel' />
-            </Button>,
-            <Button
-              id={`${confirmationType === '2fa' ? '2fa' : 'remove-account'}-confirm`}
-              testid={`${confirmationType === '2fa' ? '2fa' : 'remove-account'}-confirm-btn`}
-              variant='contained'
-              color='primary'
-              onClick={confirmationType === '2fa' ? this.verify2Fa : this.removeAccount}
-              disabled={confirmationType === '2fa' ? (!smsSent || !code || errors.length > 0) : false}
-            >
-              <FormattedMessage id={`${confirmationType === '2fa' ? 'profile.twofa.dialog.confirm' : 'profile.removeaccount.remove'}`} />
-            </Button>,
-          ]}
-        />
-      </div>
+      )
     )
   }
 }

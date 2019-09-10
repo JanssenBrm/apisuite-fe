@@ -46,7 +46,7 @@ class Privacy extends Component {
     component: DataPrivacy,
   }
 
-  handleClick = item => e => {
+  handleClick = item => () => {
     this.setState({ component: item.key })
 
     const scrollingElement = document.getElementById(item.key)

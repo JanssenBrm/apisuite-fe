@@ -148,7 +148,7 @@ class Team extends React.Component {
     this.handleCloseConfirm()
   }
 
-  toggleInvitationForm = open => event => {
+  toggleInvitationForm = open => () => {
     this.setState({ showInvitationForm: open })
   }
 
@@ -231,7 +231,11 @@ class Team extends React.Component {
           {resetMessage}
         </DialogTitle>
         <DialogContent>
-          <ResetPassword location={location} resetModal={this.handleCloseReset} userId={selectedUser && selectedUser.id} />
+          <ResetPassword
+            location={location}
+            resetModal={this.handleCloseReset}
+            userId={selectedUser && selectedUser.id}
+          />
         </DialogContent>
       </Dialog>
     )
@@ -426,8 +430,8 @@ class Team extends React.Component {
                 {inviteLabel}
               </Button>
             </div>}
-          {showInvitationForm
-            ? <div className='invitation-form'>
+          {showInvitationForm ? (
+            <div className='invitation-form'>
               <Button
                 className='send-invite-button'
                 testid='send-invite-btn'
@@ -468,12 +472,14 @@ class Team extends React.Component {
               />
               {this.renderRoles(form, showInvitationForm)}
             </div>
-            : <div className='invite-member-help'>
+          ) : (
+            <div className='invite-member-help'>
               <FormattedMessage id='team.actions.help' />
               <a className='invite-member-link' testid='invite-member-link' href='/docs'>
                 <FormattedMessage id='team.actions.link' />
               </a>.
-            </div>}
+            </div>
+          )}
         </div>
       )
     } else {

@@ -16,7 +16,7 @@ import {
  * Fetch Portal Latest Notification saga worker
  * @param {Object} action
  */
-function * fetchLatestNotificationWorker (action) {
+function * fetchLatestNotificationWorker () {
   const state = yield select()
   const requestUrl = `${API_URL}/notifications/latest`
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })

@@ -34,7 +34,7 @@ class Cookies extends Component {
     component: DataCookies,
   }
 
-  handleClick = item => e => {
+  handleClick = (item) => () => {
     this.setState({ component: item.key })
 
     const scrollingElement = document.getElementById(item.key)

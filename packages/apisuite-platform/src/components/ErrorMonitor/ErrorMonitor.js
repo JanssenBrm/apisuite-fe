@@ -5,6 +5,19 @@ import { API_URL } from 'constants/endpoints'
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '1rem',
+  },
+  errorInfo: {
+    color: 'red',
+  },
+}
+
 class ErrorMonitor extends Component {
   state = {
     hasError: false,
@@ -61,19 +74,6 @@ class ErrorMonitor extends Component {
 
     return this.props.children
   }
-}
-
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '1rem',
-  },
-  errorInfo: {
-    color: 'red',
-  },
 }
 
 ErrorMonitor.propTypes = {

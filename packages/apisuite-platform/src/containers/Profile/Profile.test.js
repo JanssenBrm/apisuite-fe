@@ -188,7 +188,8 @@ describe('Profile reducer', () => {
   })
 
   it('should update state on FETCH_ORGANIZATIONS_SUCCESS', () => {
-    expect(reducer(initialState, fetchOrganizationsSuccess(mockOrganizations))).toEqual({ ...initialState, data: mockOrganizations })
+    expect(reducer(initialState, fetchOrganizationsSuccess(mockOrganizations)))
+      .toEqual({ ...initialState, data: mockOrganizations })
   })
 
   it('should update state on FETCH_ORGANIZATIONS_ERROR', () => {
@@ -196,7 +197,8 @@ describe('Profile reducer', () => {
   })
 
   it('should update state on UPDATE_ORGANIZATION', () => {
-    expect(reducer(initialState, updateOrganization(organisationMock))).toEqual({ ...initialState, ui: { loading: true } })
+    expect(reducer(initialState, updateOrganization(organisationMock)))
+      .toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on UPDATE_ORGANIZATION_SUCCESS', () => {
@@ -206,11 +208,13 @@ describe('Profile reducer', () => {
       vat: '123456789',
       website: 'https://www.thebank.com',
     }
-    expect(reducer({ ...initialState, data: mockOrganizations }, updateOrganizationSuccess(editOrganization))).toEqual({ ...initialState, data: [editOrganization], organization: editOrganization })
+    expect(reducer({ ...initialState, data: mockOrganizations }, updateOrganizationSuccess(editOrganization)))
+      .toEqual({ ...initialState, data: [editOrganization], organization: editOrganization })
   })
 
   it('should update state on UPDATE_APP_ERROR', () => {
-    expect(reducer(initialState, updateOrganizationError(errorMock))).toEqual({ ...initialState, ui: { loading: false } })
+    expect(reducer(initialState, updateOrganizationError(errorMock)))
+      .toEqual({ ...initialState, ui: { loading: false } })
   })
 })
 

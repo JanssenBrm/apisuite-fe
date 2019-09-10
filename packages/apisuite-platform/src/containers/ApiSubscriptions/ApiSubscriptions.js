@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { object, func, array } from 'prop-types'
 import Card from 'components/Card'
 import Badge from 'components/Badge'
@@ -52,7 +52,7 @@ class ApiSubscriptions extends Component {
     }
   }
 
-  trySubscribe = product => event => {
+  trySubscribe = product => () => {
     const { auth } = this.props
     const { organizations } = auth ? auth.user : null
     const { state } = (organizations && organizations.length) ? organizations[0] : null
@@ -64,13 +64,13 @@ class ApiSubscriptions extends Component {
     }
   }
 
-  openModal = open => event => {
+  openModal = open => () => {
     this.setState({ modalOpen: open })
   }
 
-  navigate = route => event => this.props.history.push(route)
+  navigate = route => () => this.props.history.push(route)
 
-  handleExpand = menuIndex => e => {
+  handleExpand = menuIndex => () => {
     const { expanded } = this.state
     this.setState({ expanded: expanded.includes(`e${menuIndex}`) ? expanded.filter(o => o !== `e${menuIndex}`) : [...expanded, `e${menuIndex}`] })
   }
@@ -127,7 +127,7 @@ class ApiSubscriptions extends Component {
                 <Card
                   scope='api-subscriptions' children={
                     subscriptions.products.filter(sub => sub.version).map((product, idx) => (
-                      <div className='api-subscription'>
+                      <div key={product.brand_id} className='api-subscription'>
                         <ExpansionPanel
                           className='expansion-panel' expanded={expanded.includes(`e${idx}`)}
                           onChange={this.handleExpand(idx)} classes={{ root: 'expansion-panel-root' }}

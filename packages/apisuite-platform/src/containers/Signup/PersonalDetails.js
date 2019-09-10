@@ -27,7 +27,7 @@ class PersonalDetails extends Component {
     }
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { errors, form } = this.state
     const { email, confirmEmail, fullName, phoneNumber, terms, privacy } = form
 
@@ -145,9 +145,7 @@ class PersonalDetails extends Component {
             onChange={this.handleCheckboxChange('terms')}
             label={
               <span>
-                {agreeTerms1} <a id='signup-terms-link' testid='signup-terms-link' target='_blank' rel='noopener noreferrer' href='/terms' className='link checkbox-label'>
-                  {agreeTerms2}
-                </a>
+                {agreeTerms1} <a id='signup-terms-link' testid='signup-terms-link' target='_blank' rel='noopener noreferrer' href='/terms' className='link checkbox-label'>{agreeTerms2}</a>
               </span>
             }
           />
@@ -159,9 +157,7 @@ class PersonalDetails extends Component {
             onChange={this.handleCheckboxChange('privacy')}
             label={
               <span>
-                {agreePrivacy1} <a id='signup-privacy-link' testid='signup-privacy-link' target='_blank' rel='noopener noreferrer' href='/privacy' className='link checkbox-label'>
-                  {agreePrivacy2}
-                </a>
+                {agreePrivacy1} <a id='signup-privacy-link' testid='signup-privacy-link' target='_blank' rel='noopener noreferrer' href='/privacy' className='link checkbox-label'>{agreePrivacy2}</a>
               </span>
             }
           />
@@ -173,7 +169,10 @@ class PersonalDetails extends Component {
           variant='contained'
           color='primary'
           onClick={this.handleSubmit}
-          disabled={!form.email || !form.confirmEmail || !form.fullName || !form.phoneNumber || !form.terms || !form.privacy || errors.length > 0 || ui.loading}
+          disabled={
+            !form.email || !form.confirmEmail || !form.fullName || !form.phoneNumber || !form.terms || !form.privacy ||
+            errors.length > 0 || ui.loading
+          }
         >
           {nextBtn}
         </Button>
@@ -186,8 +185,6 @@ PersonalDetails.propTypes = {
   intl: object.isRequired,
   ui: object.isRequired,
   nextStep: func.isRequired,
-  goToTerms: func.isRequired,
-  goToPrivacy: func.isRequired,
   invitation: object.isRequired,
 }
 

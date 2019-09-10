@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { node, string, bool, func, number } from 'prop-types'
 import Modal from '@material-ui/core/Modal'
 import Paper from '@material-ui/core/Paper'
@@ -27,7 +27,18 @@ const icons = [
   },
 ]
 
-const ModalSplit = ({ component, open, onClose, title, rightImg, rightTitle, rightSubtitle, additionalContent, step, isApps }) => (
+const ModalSplit = ({
+  component,
+  open,
+  onClose,
+  title,
+  rightImg,
+  rightTitle,
+  rightSubtitle,
+  additionalContent,
+  step,
+  isApps,
+}) => (
   <Modal
     className='modal-split'
     open={open}
@@ -61,14 +72,16 @@ const ModalSplit = ({ component, open, onClose, title, rightImg, rightTitle, rig
             <Typography variant='display4' gutterBottom>{rightTitle}</Typography>
             <p>{rightSubtitle}</p>
           </div>
-          {<div className='modal-split-right-bottom'>
+          <div className='modal-split-right-bottom'>
             {!isApps
-              ? <>
-                {step > 0 && <Stepper steps={steps} currentStep={step} simple labelColor='#ffffff' />}
-                {additionalContent}
+              ? (
+                <>
+                  {step > 0 && <Stepper steps={steps} currentStep={step} simple labelColor='#ffffff' />}
+                  {additionalContent}
                 </>
+              )
               : <img src={createAppImg} />}
-          </div>}
+          </div>
         </div>
       </div>
     </Paper>
@@ -87,7 +100,6 @@ ModalSplit.propTypes = {
   rightTitle: string,
   rightSubtitle: string,
   isApps: bool,
-  isSubscriptions: bool,
   rightImg: string,
   step: number,
   additionalContent: node,

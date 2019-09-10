@@ -24,7 +24,7 @@ const tasks = [
 ]
 
 class FirstUse extends Component {
-  navigate = route => event => this.props.history.push(route)
+  navigate = route => () => this.props.history.push(route)
 
   render () {
     const { apps } = this.props

@@ -34,8 +34,8 @@ class ApiReferences extends Component {
               <Card
                 scope='api-references'
                 children={
-                  products.filter(api => api.version).map(api =>
-                    <div className='api-reference-api'>
+                  products.filter((api) => api.version).map((api) => (
+                    <div key={api.brand_id} className='api-reference-api'>
                       <img
                         src={(theme.name === 'bnpp' && requireIfExists(brands.find(br => br.id === api.brand_id).logo)) || apiDefaultHeader}
                       />
@@ -54,13 +54,14 @@ class ApiReferences extends Component {
                         {/* <Badge type='grey' text='beta' /> */}
                       </div>
                       <div className='api-references-info'>
-                        <p>Also: <a className='info-link' onClick={() => this.goToDetail(api.id)}>
-                          <FormattedMessage id='docs.apireferences.productinfo' />
-                        </a>
+                        <p>Also:&nsbp;
+                          <a className='info-link' onClick={() => this.goToDetail(api.id)}>
+                            <FormattedMessage id='docs.apireferences.productinfo' />
+                          </a>
                         </p>
                       </div>
                     </div>
-                  )
+                  ))
                 }
               />}
             {ui.loading &&

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { func, object } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import FormField, { parseErrors, isValidURL, isValidEmail } from 'components/FormField'
@@ -53,7 +53,7 @@ class CreateTestUser extends React.Component {
     }
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { organization } = this.props
     const { errors, form } = this.state
     const { name, email, password, avatar, accounts } = form
@@ -238,7 +238,10 @@ class CreateTestUser extends React.Component {
               variant='contained'
               color='primary'
               onClick={this.handleSubmit}
-              disabled={!form.name || !form.email || !form.password || !form.accounts.length || form.password.length < MIN_LENGTH || errors.length > 0 || ui.loading}
+              disabled={
+                !form.name || !form.email || !form.password || !form.accounts.length ||
+                form.password.length < MIN_LENGTH || errors.length > 0 || ui.loading
+              }
             >
               {submitLabel}
             </Button>

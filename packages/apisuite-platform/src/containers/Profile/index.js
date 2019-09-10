@@ -31,4 +31,9 @@ const organisationSectionMapDispatchToProps = (dispatch) => ({
   getOnboardingToken: () => dispatch(getOnboardingToken()),
 })
 
-export const OrganisationSection = injectIntl(connect(({ organizations }) => ({ organisation: organizations.data[0], onboardingToken: organizations.onboardingToken }), organisationSectionMapDispatchToProps)(OrganisationSectionComponent))
+export const OrganisationSection = injectIntl(
+  connect(({ organizations }) => ({
+    organisation: organizations.data[0],
+    onboardingToken: organizations.onboardingToken,
+  }),
+  organisationSectionMapDispatchToProps)(OrganisationSectionComponent))

@@ -166,7 +166,7 @@ export function * signupSecuritySaga () {
  * Generate QRCode saga worker
  * @param {Object} action
  */
-function * generateQRCode (action) {
+function * generateQRCode () {
   const requestUrl = `${API_URL}/users_registration/2fa/qrcode`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer', token: state.signup.user.token })
@@ -196,7 +196,7 @@ export function * generateQRCodeSaga () {
  * @param {String} action.data.email
  * @param {String} action.data.number
  */
-function * sendSMSCode (action) {
+function * sendSMSCode () {
   const requestUrl = `${API_URL}/users_registration/sms_code`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer', token: state.signup.user.token })
@@ -221,4 +221,11 @@ export function * sendSMSCodeSaga () {
   yield takeLatest(SEND_SMS_CODE, sendSMSCode)
 }
 
-export default [signupUserSaga, signupOrganizationSaga, signupSecuritySaga, sendActivationEmailSaga, generateQRCodeSaga, sendSMSCodeSaga]
+export default [
+  signupUserSaga,
+  signupOrganizationSaga,
+  signupSecuritySaga,
+  sendActivationEmailSaga,
+  generateQRCodeSaga,
+  sendSMSCodeSaga,
+]

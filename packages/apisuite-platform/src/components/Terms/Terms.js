@@ -71,7 +71,7 @@ class Terms extends Component {
     component: TermsAndConditions,
   }
 
-  handleClick = item => e => {
+  handleClick = item => () => {
     this.setState({ component: item.key })
 
     const scrollingElement = document.getElementById(item.key)

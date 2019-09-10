@@ -91,7 +91,8 @@ class OrganisationSection extends Component {
     const organizationStateText = organizationState ? organizationStates[organizationState].name : ''
     let organisationInitials = ''
 
-    const certificate = organisation.certificates && organisation.certificates.length > 0 ? organisation.certificates[0] : null
+    const certificate = organisation.certificates && organisation.certificates.length > 0
+      ? organisation.certificates[0] : null
 
     if (organisation && organisation.name) {
       const splitName = organisation.name.split(' ')

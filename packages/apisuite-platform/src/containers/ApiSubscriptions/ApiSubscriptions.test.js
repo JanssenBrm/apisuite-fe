@@ -233,11 +233,8 @@ describe('ApiSubscriptions reducer', () => {
 
   it('should update state on CREATE_API_SUBSCRIPTION_SUCCESS', () => {
     expect(reducer(initialState,
-      createApiSubscriptionSuccess({ products: mockSubscriptions.products, brands: mockSubscriptions.brands }))).toEqual({
-      ...initialState,
-      products: mockSubscriptions.products,
-      brands: mockSubscriptions.brands,
-    })
+      createApiSubscriptionSuccess({ products: mockSubscriptions.products, brands: mockSubscriptions.brands })))
+      .toEqual({ ...initialState, products: mockSubscriptions.products, brands: mockSubscriptions.brands })
   })
 
   it('should update state on CREATE_API_SUBSCRIPTION_ERROR', () => {

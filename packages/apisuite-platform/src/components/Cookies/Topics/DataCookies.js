@@ -40,7 +40,9 @@ const DataPrivacy = () => (
         <td>N/A</td>
         <td>N/A</td>
         <td>a_t</td>
-        <td>This cookie is the user’s token enabling persistent login. It allows the user to stay logged in on the portal</td>
+        <td>
+          This cookie is the user’s token enabling persistent login. It allows the user to stay logged in on the portal
+        </td>
         <td>60 min</td>
       </tr>
     </table>

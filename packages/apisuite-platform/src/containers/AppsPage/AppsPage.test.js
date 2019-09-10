@@ -201,7 +201,10 @@ describe('<CreateApp />', () => {
     wrapper.setState({ form: { ...mockApp, redirectURLs: mockApp.redirectURLs[0] }, subscribed: [{ id: 1, name: 'api 1' }, { id: 2, name: 'api 2' }] })
     wrapper.find('.create-app-submit').first().simulate('click')
 
-    expect(props.createApp).toHaveBeenCalledWith(mockOrganization.id, { ...rest, redirectURLs: [mockApp.redirectURLs[0]], productIds: [1, 2] })
+    expect(props.createApp)
+      .toHaveBeenCalledWith(mockOrganization.id,
+        { ...rest, redirectURLs: [mockApp.redirectURLs[0]], productIds: [1, 2] }
+      )
   })
 })
 
@@ -296,7 +299,8 @@ describe('AppsPage reducer', () => {
   })
 
   it('should update state on CREATE_APP', () => {
-    expect(reducer(initialState, createApp(mockOrganization.id, mockApp))).toEqual({ ...initialState, ui: { loading: true } })
+    expect(reducer(initialState, createApp(mockOrganization.id, mockApp)))
+      .toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on CREATE_APP_SUCCESS', () => {
@@ -309,7 +313,8 @@ describe('AppsPage reducer', () => {
 
   it('should update state on GET_APP', () => {
     const appId = '123'
-    expect(reducer(initialState, getApp(mockOrganization.id, appId))).toEqual({ ...initialState, ui: { loading: true } })
+    expect(reducer(initialState, getApp(mockOrganization.id, appId)))
+      .toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on GET_APP_SUCCESS', () => {
@@ -321,7 +326,8 @@ describe('AppsPage reducer', () => {
   })
 
   it('should update state on UPDATE_APP', () => {
-    expect(reducer(initialState, updateApp(mockOrganization.id, mockApp))).toEqual({ ...initialState, ui: { loading: true } })
+    expect(reducer(initialState, updateApp(mockOrganization.id, mockApp)))
+      .toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on UPDATE_APP_SUCCESS', () => {
@@ -333,23 +339,28 @@ describe('AppsPage reducer', () => {
       publicURL: 'public.com',
       redirectURLs: ['redirect.com'],
     }
-    expect(reducer({ ...initialState, data: mockApps }, updateAppSuccess(editApp))).toEqual({ ...initialState, data: [editApp], app: editApp })
+    expect(reducer({ ...initialState, data: mockApps }, updateAppSuccess(editApp)))
+      .toEqual({ ...initialState, data: [editApp], app: editApp })
   })
 
   it('should update state on UPDATE_APP_ERROR', () => {
-    expect(reducer(initialState, updateAppError(errorMock))).toEqual({ ...initialState, app: {}, ui: { loading: false } })
+    expect(reducer(initialState, updateAppError(errorMock)))
+      .toEqual({ ...initialState, app: {}, ui: { loading: false } })
   })
 
   it('should update state on DELETE_APP', () => {
-    expect(reducer(initialState, deleteApp(mockOrganization.id, mockApp.id))).toEqual({ ...initialState, ui: { loading: true } })
+    expect(reducer(initialState, deleteApp(mockOrganization.id, mockApp.id)))
+      .toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on DELETE_APP_SUCCESS', () => {
-    expect(reducer({ ...initialState, data: mockApps }, deleteAppSuccess(mockApps[0]))).toEqual({ ...initialState, data: [], app: {} })
+    expect(reducer({ ...initialState, data: mockApps }, deleteAppSuccess(mockApps[0])))
+      .toEqual({ ...initialState, data: [], app: {} })
   })
 
   it('should update state on DELETE_APP_ERROR', () => {
-    expect(reducer(initialState, deleteAppError(errorMock))).toEqual({ ...initialState, app: {}, ui: { loading: false } })
+    expect(reducer(initialState, deleteAppError(errorMock)))
+      .toEqual({ ...initialState, app: {}, ui: { loading: false } })
   })
 })
 

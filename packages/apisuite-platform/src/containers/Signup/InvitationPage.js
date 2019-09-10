@@ -58,8 +58,8 @@ class InvitationPage extends Component {
         <div className='signup-invitation'>
           {this.state.loading
             ? <CircularProgress className='signup-loading-circle' />
-            : error
-              ? <div>
+            : error ? (
+              <div>
                 <Typography variant='display4' gutterBottom>
                   <FormattedMessage
                     id='signup.invitation.notfound'
@@ -71,7 +71,8 @@ class InvitationPage extends Component {
                   />
                 </p>
               </div>
-              : <div>
+            ) : (
+              <div>
                 <Typography variant='display4' gutterBottom>
                   <FormattedMessage
                     id='signup.invitation.title'
@@ -115,7 +116,8 @@ class InvitationPage extends Component {
                     {remindBtn}
                   </Button>
                 </div>
-              </div>}
+              </div>
+            )}
           {invitation.isRegistered &&
             <div className='invitation-info'>
               <FormattedMessage id='signup.invitation.info' />

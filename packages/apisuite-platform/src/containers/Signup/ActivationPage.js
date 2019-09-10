@@ -75,7 +75,6 @@ class ActivationPage extends Component {
 
 ActivationPage.propTypes = {
   intl: object.isRequired,
-  openLoginModal: func.isRequired,
   sendActivationEmail: func.isRequired,
   auth: object.isRequired,
 }

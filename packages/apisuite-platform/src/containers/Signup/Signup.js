@@ -91,7 +91,7 @@ class Signup extends Component {
     })
   }
 
-  navigate = route => event => this.props.history.push(route)
+  navigate = route => () => this.props.history.push(route)
 
   handleSubmit = (fields) => {
     this.nextStep(fields)
@@ -125,14 +125,15 @@ class Signup extends Component {
 
     return (
       <div className='signup-container'>
-        {isLoggedIn && !isUserActivated && !isTwoFaModal
-          ? <ActivationPage
+        {isLoggedIn && !isUserActivated && !isTwoFaModal ? (
+          <ActivationPage
             intl={intl}
             openLoginModal={openLoginModal}
             sendActivationEmail={sendActivationEmail}
             auth={auth}
           />
-          : <div>
+        ) : (
+          <div>
             <div className='signup-steps-wrapper'>
               <div className='signup-steps'>
                 <Stepper steps={isInvitation ? invitationSteps : defaultSteps} currentStep={step} />
@@ -226,7 +227,8 @@ class Signup extends Component {
                   <CircularProgress className='signup-loading-circle' />
                 </div>}
             </div>
-          </div>}
+          </div>
+        )}
       </div>
     )
   }

@@ -88,8 +88,10 @@ export default function reducer (state = initialState, action) {
           loading: { $set: false },
         },
       })
-    case UPDATE_APP_SUCCESS:
+
+    case UPDATE_APP_SUCCESS: {
       const appIndex = state.data.findIndex(app => app.id === action.data.id)
+
       return update(state, {
         data: {
           $apply: apps => {
@@ -104,6 +106,8 @@ export default function reducer (state = initialState, action) {
           loading: { $set: false },
         },
       })
+    }
+
     case CREATE_APP_ERROR:
     case UPDATE_APP_ERROR:
     case DELETE_APP_ERROR:

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { object, func } from 'prop-types'
 import apiAccountInfo from 'assets/api_products_slider.svg'
 import apiFeature from 'assets/api_feature_icon.svg'
@@ -72,7 +72,7 @@ class ApiDetail extends Component {
                   <Card
                     scope='api-detail'
                     children={
-                      product.features.map((feature, idx) =>
+                      product.features.map((feature, idx) => (
                         <div key={`feature-${idx}`} className='api-feature'>
                           <img src={theme.accountDetails || apiFeature} className='api-feature-icon' />
                           <div className='api-feature-content'>
@@ -80,7 +80,7 @@ class ApiDetail extends Component {
                             <div className='api-feature-text'>{feature.description}</div>
                           </div>
                         </div>
-                    )
+                      ))
                     }
                   />
                 </div>
@@ -97,10 +97,6 @@ class ApiDetail extends Component {
 }
 
 ApiDetail.propTypes = {
-  /**
-   * Browser history session
-   */
-  history: object.isRequired,
   theme: object.isRequired,
   match: object.isRequired,
   ui: object.isRequired,

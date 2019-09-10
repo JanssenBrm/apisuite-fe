@@ -43,7 +43,7 @@ class TestDetail extends Component {
     }
   }
 
-  togglePasswordVisibility = fieldName => event => {
+  togglePasswordVisibility = fieldName => () => {
     this.setState({ [`${fieldName}Visible`]: !this.state[`${fieldName}Visible`] })
   }
 
@@ -67,7 +67,7 @@ class TestDetail extends Component {
   calculateTransactions = () =>
     this.state.testuser.accounts.reduce((acc, curr) => (acc + curr.totalTransactions), 0)
 
-  navigate = route => event => {
+  navigate = route => () => {
     this.props.history.push(route)
   }
 
@@ -89,14 +89,16 @@ class TestDetail extends Component {
           <div className='detail-row'>
             <div className='left-container'>
               <div className='left-container-avatar'>
-                {testuser.avatarUrl
-                  ? <div
+                {testuser.avatarUrl ? (
+                  <div
                     className={classnames('test-user-avatar', { 'empty-avatar': !isValidURL(testuser.avatarUrl) })}
                     style={{ ...(isValidURL(testuser.avatarUrl) && { backgroundImage: `url(${testuser.avatarUrl})` }) }}
                   />
-                  : <div className='test-user-avatar test-user-default'>
+                ) : (
+                  <div className='test-user-avatar test-user-default'>
                     <img src={avatarDefault} />
-                  </div>}
+                  </div>
+                )}
               </div>
               <div className='left-container-button'>
                 <Button

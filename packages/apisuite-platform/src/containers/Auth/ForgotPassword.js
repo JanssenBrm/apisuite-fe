@@ -19,7 +19,7 @@ class ForgotPassword extends Component {
     })
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { errors, email } = this.state
 
     if (email && !errors.length) {

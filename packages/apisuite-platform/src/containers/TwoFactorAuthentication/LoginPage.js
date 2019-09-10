@@ -102,7 +102,6 @@ TwoFaLogin.propTypes = {
   auth: object.isRequired,
   twoFaAuth: func.isRequired,
   intl: object.isRequired,
-  sendSMSCode: func.isRequired,
   openRecovery: func.isRequired,
 }
 

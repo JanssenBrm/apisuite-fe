@@ -18,8 +18,8 @@ class ArrowTooltip extends Component {
     const { classes, isLoggedIn } = this.props
     const { arrowRef } = this.state
 
-    return (
-      isLoggedIn && <Tooltip
+    return (isLoggedIn && (
+      <Tooltip
         disableFocusListener
         classes={{ tooltip: classes.blackTooltip }}
         title={
@@ -43,7 +43,7 @@ class ArrowTooltip extends Component {
           {this.props.children}
         </div>
       </Tooltip>
-    )
+    ))
   }
 }
 
@@ -58,7 +58,7 @@ ArrowTooltip.propTypes = {
   isLoggedIn: bool,
 }
 
-const styles = theme => ({
+const styles = () => ({
   blackTooltip: {
     background: '#000',
     fontSize: '.7em',

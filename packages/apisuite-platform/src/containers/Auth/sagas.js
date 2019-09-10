@@ -457,7 +457,7 @@ export function * updatePasswordRBACSaga () {
  * @param {Object} action
 //  * @param {data} action.userId
  */
-function * removeAccount (action) {
+function * removeAccount () {
   const requestUrl = `${API_URL}/users/me`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
@@ -488,7 +488,7 @@ export function * removeAccountSaga () {
  * Generate QRCode saga worker
  * @param {Object} action
  */
-function * meGenerateQRCode (action) {
+function * meGenerateQRCode () {
   const requestUrl = `${API_URL}/users/me/2fa/qrcode`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
@@ -516,7 +516,7 @@ export function * meGenerateQRCodeSaga () {
  * Send SMS code saga worker
  * @param {Object} action
  */
-function * meSendSMSCode (action) {
+function * meSendSMSCode () {
   const requestUrl = `${API_URL}/users/me/sms_code`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })

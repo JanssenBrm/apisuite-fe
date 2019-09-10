@@ -48,9 +48,9 @@ class AppsPage extends Component {
     },
   ]
 
-  navigate = route => event => this.props.history.push(route)
+  navigate = route => () => this.props.history.push(route)
 
-  openModal = (open) => event => {
+  openModal = (open) => () => {
     this.setState({ modalOpen: open })
   }
 
@@ -72,7 +72,7 @@ class AppsPage extends Component {
                   scope='apps'
                   children={
                     apps.map(app => (
-                      <AppCard history={history} app={app} organization={organization} />
+                      <AppCard key={app.id} history={history} app={app} organization={organization} />
                     ))
                   }
                   creator={
@@ -117,14 +117,16 @@ class AppsPage extends Component {
         <ModalSplit
           open={modalOpen}
           onClose={this.openModal(false)}
-          component={<CreateApp
-            user={user}
-            organization={organization}
-            subscriptions={subscriptions}
-            createApp={createApp}
-            fetchApiSubscriptions={fetchApiSubscriptions}
-            closeModal={this.openModal(false)}
-          />}
+          component={
+            <CreateApp
+              user={user}
+              organization={organization}
+              subscriptions={subscriptions}
+              createApp={createApp}
+              fetchApiSubscriptions={fetchApiSubscriptions}
+              closeModal={this.openModal(false)}
+            />
+          }
           rightTitle={rightTitle}
           rightSubtitle={rightSubtitle}
           isApps

@@ -22,11 +22,7 @@ const Notification = ({ tag, message, url, handleClose }) => (
     <div className='portal-notification'>
 
       <div className='notification-wrapper'>
-        {
-          tag && <div className='tag'>
-            {tag}
-          </div>
-        }
+        {tag && <div className='tag'>{tag}</div>}
 
         <div className='message-wrapper'>
           <LightTooltip title={
@@ -37,11 +33,11 @@ const Notification = ({ tag, message, url, handleClose }) => (
           >
             <div className='message' dangerouslySetInnerHTML={{ __html: message }} />
           </LightTooltip>
-          {
-            url && <div className='view-more' onClick={() => navigate(url)}>
+          {url && (
+            <div className='view-more' onClick={() => navigate(url)}>
               <FormattedMessage id='notification.view.more' />
             </div>
-          }
+          )}
         </div>
       </div>
 

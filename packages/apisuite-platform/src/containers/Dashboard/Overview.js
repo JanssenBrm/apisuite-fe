@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { string, object, func } from 'prop-types'
+import { object, func } from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import classnames from 'classnames'
 import Button from '@material-ui/core/Button'
@@ -51,7 +51,7 @@ class Overview extends Component {
 
   navigate = route => this.props.history.push(route)
 
-  openSupport = option => e => this.props.openSupportModal(option)
+  openSupport = option => () => this.props.openSupportModal(option)
 
   handleItemClick = (item) => {
     if (!item.disabled) {
@@ -73,8 +73,9 @@ class Overview extends Component {
           <div className='nav-cards'>
             <Card
               scope='dashboard' children={
-                this.getNavigationItems(theme).map(item => (
+                this.getNavigationItems(theme).map((item, idx) => (
                   <div
+                    key={`theme-item-${idx}`}
                     className={classnames('nav-item', { 'item-inactive': item.disabled })}
                     testid={item.tag}
                     onClick={() => this.handleItemClick(item)}
@@ -110,7 +111,6 @@ class Overview extends Component {
 }
 
 Overview.propTypes = {
-  fullName: string.isRequired,
   history: object.isRequired,
   openSupportModal: func.isRequired,
   theme: object.isRequired,

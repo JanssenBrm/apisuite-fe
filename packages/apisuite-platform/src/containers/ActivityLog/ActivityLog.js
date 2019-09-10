@@ -196,7 +196,12 @@ class ActivityLog extends Component {
 
   UNSAFE_componentWillReceiveProps (nextProps) {
     if (this.props.logs !== nextProps.logs && nextProps.logs.records && nextProps.logs.records.length) {
-      this.setState({ logs: { ...nextProps.logs, records: nextProps.logs.records.sort((a, b) => +moment(b.created) - +moment(a.created)) } })
+      this.setState({
+        logs: {
+          ...nextProps.logs,
+          records: nextProps.logs.records.sort((a, b) => +moment(b.created) - +moment(a.created)),
+        },
+      })
     }
 
     if (this.props.kpis !== nextProps.kpis) {
@@ -314,9 +319,30 @@ class ActivityLog extends Component {
               ))}
             </FormField>
             <div className='kpi-wrapper'>
-              {(kpis.appCount || kpis.appCount === 0) && <Kpi title={appsCreated} subtitle={lastYear} value={kpis.appCount} onClick={() => this.handleKPIClick(kpisObj.appCount)} />}
-              {(kpis.testUserLoginCount || kpis.testUserLoginCount === 0) && <Kpi title={testuserLogins} subtitle={lastWeek} value={kpis.testUserLoginCount} onClick={() => this.handleKPIClick(kpisObj.testUserLoginCount)} />}
-              {(kpis.portalLoginCount || kpis.portalLoginCount === 0) && <Kpi title={portalLogins} subtitle={lastWeek} value={kpis.portalLoginCount} onClick={() => this.handleKPIClick(kpisObj.portalLoginCount)} />}
+              {(kpis.appCount || kpis.appCount === 0) && (
+                <Kpi
+                  title={appsCreated}
+                  subtitle={lastYear}
+                  value={kpis.appCount}
+                  onClick={() => this.handleKPIClick(kpisObj.appCount)}
+                />
+              )}
+              {(kpis.testUserLoginCount || kpis.testUserLoginCount === 0) && (
+                <Kpi
+                  title={testuserLogins}
+                  subtitle={lastWeek}
+                  value={kpis.testUserLoginCount}
+                  onClick={() => this.handleKPIClick(kpisObj.testUserLoginCount)}
+                />
+              )}
+              {(kpis.portalLoginCount || kpis.portalLoginCount === 0) && (
+                <Kpi
+                  title={portalLogins}
+                  subtitle={lastWeek}
+                  value={kpis.portalLoginCount}
+                  onClick={() => this.handleKPIClick(kpisObj.portalLoginCount)}
+                />
+              )}
             </div>
           </div>
           <div className='table-container'>
@@ -334,8 +360,8 @@ class ActivityLog extends Component {
               <Tab classes={{ root: 'tab', label: 'tab-label', disabled: 'tab-disabled' }} label={userActivities} disabled={isSales || !isAdmin} />
             </Tabs>
             <Paper className='paper-wrapper'>
-              {logs.records && logs.records.length > 0
-                ? <VirtualizedTable
+              {logs.records && logs.records.length > 0 ? (
+                <VirtualizedTable
                   rowCount={logs.records ? logs.records.length : 0}
                   rowGetter={({ index }) => logs.records[index]}
                   columns={[
@@ -359,13 +385,16 @@ class ActivityLog extends Component {
                     },
                   ]}
                 />
-                : <div className='empty-table'>
+              ) : (
+                <div className='empty-table'>
                   <FormattedMessage id='activityLog.empty' />
-                </div>}
-              {ui.loading &&
+                </div>
+              )}
+              {ui.loading && (
                 <div className='loading'>
                   <CircularProgress className='loading-circle' />
-                </div>}
+                </div>
+              )}
             </Paper>
           </div>
           {logs.pagination &&

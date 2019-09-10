@@ -28,13 +28,15 @@ const SelectInput = ({ helperText, children, displayKey, ...custom }) => (
         const itemIndex = custom.data.findIndex(item => (custom.usevalue ? item.value : item[displayKey]) === selected)
         return (
           custom.multiple
-            ? <div className='chips'>
-              {selected.map(value => {
-                const chip = custom.data.find(item => item.id === value)
-                return (chip &&
-                  <Chip key={chip.id} label={chip[displayKey]} className='chip' />)
-              })}
-            </div>
+            ? (
+              <div className='chips'>
+                {selected.map(value => {
+                  const chip = custom.data.find(item => item.id === value)
+                  return (chip &&
+                    <Chip key={chip.id} label={chip[displayKey]} className='chip' />)
+                })}
+              </div>
+            )
             : <span className='select-single'>{itemIndex === -1 ? selected : custom.data[itemIndex][displayKey]}</span>
         )
       }}

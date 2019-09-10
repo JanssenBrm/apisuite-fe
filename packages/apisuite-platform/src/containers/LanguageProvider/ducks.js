@@ -63,7 +63,7 @@ export function changeLocale (locale) {
  * Intercepts locale changes and saves it to local storage
  * sowhen the user reloads or comes back it can presist.
  */
-export const localeMiddleware = (store) => (next) => (action) => {
+export const localeMiddleware = () => (next) => (action) => {
   next(action)
   if (action.type === CHANGE_LOCALE) {
     localPut('_lang', action.locale)

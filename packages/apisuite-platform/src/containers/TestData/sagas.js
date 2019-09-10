@@ -161,7 +161,7 @@ export function * updateTestUserSaga () {
  * @param {Object} action
  * @param {data} action.appId
  */
-function * getTestUserAccountsWorker (action) {
+function * getTestUserAccountsWorker () {
   const state = yield select()
   const requestUrl = `${API_URL}/testdata/form`
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
@@ -214,4 +214,11 @@ export function * getTestUserTransactionsSaga () {
   yield takeLatest(GET_TESTUSER_TRANSACTIONS, getTestUserTransactionsWorker)
 }
 
-export default [fetchTestDataSaga, getTestUserSaga, createTestUserSaga, updateTestUserSaga, getTestUserAccountsSaga, getTestUserTransactionsSaga]
+export default [
+  fetchTestDataSaga,
+  getTestUserSaga,
+  createTestUserSaga,
+  updateTestUserSaga,
+  getTestUserAccountsSaga,
+  getTestUserTransactionsSaga,
+]

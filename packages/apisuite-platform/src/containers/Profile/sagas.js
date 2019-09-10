@@ -23,7 +23,7 @@ import { showNotification } from 'containers/NotificationManager/ducks'
  * Fetch organizations saga worker
  * @param {Object} action
  */
-function * fetchOrganizationsWorker (action) {
+function * fetchOrganizationsWorker () {
   const requestUrl = `${API_URL}/organizations`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
@@ -84,7 +84,7 @@ export function * updateOrganizationSaga () {
  * Get onboarding access token saga worker
  * @param {Object} action
  */
-function * getOnboardingTokenWorker (action) {
+function * getOnboardingTokenWorker () {
   const requestUrl = `${API_URL}/onboarding/token`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })

@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { object, func } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import FormField, { parseErrors, isValidEmail } from 'components/FormField'
@@ -42,7 +42,7 @@ class SectionSubscribe extends Component {
     saveAs('assets/docs/Our_Open_Banking_Program.pdf', 'Our Open Banking Program.pdf')
   }
 
-  subscribe = email => event => {
+  subscribe = email => () => {
     this.props.sendNewsletterForm(email)
   }
 
@@ -127,9 +127,8 @@ class SectionSubscribe extends Component {
             </div>
           </div>
           <div className='pre-footer-pdf'>
-            <Typography variant='display3' className='pre-footer-header'><FormattedMessage
-              id='landing.pdf.title'
-            />
+            <Typography variant='display3' className='pre-footer-header'>
+              <FormattedMessage id='landing.pdf.title' />
             </Typography>
             <p><FormattedMessage id='landing.pdf.text' /></p>
             <Button

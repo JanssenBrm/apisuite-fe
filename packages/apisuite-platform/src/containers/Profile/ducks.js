@@ -64,8 +64,9 @@ export default function reducer (state = initialState, action) {
         },
       })
 
-    case UPDATE_ORGANIZATION_SUCCESS:
+    case UPDATE_ORGANIZATION_SUCCESS: {
       const organizationIndex = state.data.findIndex(organization => organization.id === action.data.id)
+
       return update(state, {
         data: { [organizationIndex]: { $set: action.data } },
         organization: { $set: action.data },
@@ -73,6 +74,8 @@ export default function reducer (state = initialState, action) {
           loading: { $set: false },
         },
       })
+    }
+
     case UPDATE_ORGANIZATION_ERROR:
       return update(state, {
         ui: {

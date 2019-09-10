@@ -389,7 +389,8 @@ describe('TestData reducer', () => {
   })
 
   it('should update state on FETCH_TESTDATA', () => {
-    expect(reducer(initialState, fetchTestData(mockOrganization.id))).toEqual({ ...initialState, ui: { loading: true } })
+    expect(reducer(initialState, fetchTestData(mockOrganization.id)))
+      .toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on FETCH_TESTDATA_SUCCESS', () => {
@@ -401,7 +402,8 @@ describe('TestData reducer', () => {
   })
 
   // it('should update state on CREATE_TESTUSER', () => {
-  //   expect(reducer(initialState, createTestUser(mockOrganization.id, mockUsers[0]))).toEqual({...initialState, ui: {loading: true}})
+  //   expect(reducer(initialState, createTestUser(mockOrganization.id, mockUsers[0])))
+  //    .toEqual({ ...initialState, ui: { loading: true } })
   // })
 
   // it('should update state on CREATE_TESTUSER_SUCCESS', () => {

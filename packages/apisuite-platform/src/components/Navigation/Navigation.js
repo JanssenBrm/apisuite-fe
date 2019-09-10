@@ -190,9 +190,9 @@ class Navigation extends Component {
     })
   };
 
-  navigate = route => event => this.props.history.push(route)
+  navigate = route => () => this.props.history.push(route)
 
-  handleScroll = (event) => {
+  handleScroll = () => {
     const isTop = (window.scrollY || window.pageYOffset) < 50
     const isOutsideDetailHeader = (window.scrollY || window.pageYOffset) > 20
 
@@ -211,7 +211,7 @@ class Navigation extends Component {
     this.props.history.push(userMenu.submenu[0].route)
   }
 
-  handleMenuClick = menu => event => {
+  handleMenuClick = menu => () => {
     const { history, openLoginModal, openSupportModal } = this.props
     if (menu.submenu) {
       const currentMenu = appBarMenu.find(item => item.name === menu.name)
@@ -229,7 +229,7 @@ class Navigation extends Component {
     }
   }
 
-  handleSubmenuClick = submenu => event => {
+  handleSubmenuClick = submenu => () => {
     this.setState({ selectedSubmenu: submenu })
 
     if (this.state.selectedMenu.name === 'user') {
@@ -303,7 +303,7 @@ class Navigation extends Component {
     )
   }
 
-  renderSubmenu = menu => {
+  renderSubmenu = () => {
     const { isLoggedIn, history, documentation, auth } = this.props
     const { pathname } = history.location
     const { selectedMenu, selectedSubmenu, isOutsideDetailHeader } = this.state
@@ -384,38 +384,40 @@ class Navigation extends Component {
             </div>}
           {!this.hideSubmenuItems() && selectedMenu.submenu.map((submenu, index) =>
             submenu.icon
-              ? <Tooltip content={submenu.tooltip} key={index} isLoggedIn={isLoggedIn}>
-                <IconButton
+              ? (
+                <Tooltip content={submenu.tooltip} key={index} isLoggedIn={isLoggedIn}>
+                  <IconButton
+                    id={`${submenu.name}-submenu`}
+                    testid={`${submenu.tag || submenu.name}-submenu`}
+                    key={submenu.name}
+                    onClick={this.handleSubmenuClick(submenu)}
+                    className={classnames({
+                      selected: selectedSubmenu && selectedSubmenu.name === submenu.name,
+                      hidden: (submenu.protected && !isLoggedIn) || submenu.hidden,
+                      disabled: submenu.disabled,
+                    })}
+                    disabled={submenu.disabled}
+                  >
+                    <img src={submenu.icon} />
+                  </IconButton>
+                </Tooltip>
+              )
+              : (
+                <Button
                   id={`${submenu.name}-submenu`}
-                  testid={`${submenu.tag || submenu.name}-submenu`}
+                  testid={`${submenu.name}-submenu`}
                   key={submenu.name}
-                  onClick={this.handleSubmenuClick(submenu)}
                   className={classnames({
                     selected: selectedSubmenu && selectedSubmenu.name === submenu.name,
                     hidden: (submenu.protected && !isLoggedIn) || submenu.hidden,
-                    disabled: submenu.disabled,
+                    disabled: submenu.disabled || (submenu.name === 'team' && !isAdmin),
                   })}
-                  disabled={submenu.disabled}
+                  onClick={this.handleSubmenuClick(submenu)}
+                  disabled={submenu.disabled || (submenu.name === 'team' && !isAdmin)}
                 >
-                  <img src={submenu.icon} />
-                </IconButton>
-              </Tooltip>
-              : <Button
-                id={`${submenu.name}-submenu`}
-                testid={`${submenu.name}-submenu`}
-                key={submenu.name}
-                className={classnames({
-                  selected: selectedSubmenu && selectedSubmenu.name === submenu.name,
-                  hidden: (submenu.protected && !isLoggedIn) || submenu.hidden,
-                  disabled: submenu.disabled || (submenu.name === 'team' && !isAdmin),
-                })}
-                onClick={this.handleSubmenuClick(submenu)}
-                disabled={submenu.disabled || (submenu.name === 'team' && !isAdmin)}
-              >
-                <FormattedMessage id={submenu.intlId} />
-              </Button>
-          )}
-
+                  <FormattedMessage id={submenu.intlId} />
+                </Button>
+              ))}
         </div>
       </div>
     )
@@ -462,21 +464,22 @@ class Navigation extends Component {
               <ListItem key='user-avatar'>
                 {
                   isLoggedIn && isUserActivated &&
-                  (user.avatar
-                    ? <div
+                  (user.avatar ? (
+                    <div
                       key='user-avatar'
                       testid='user-avatar-btn'
                       className='user-avatar'
                       style={{ backgroundImage: `url('${user.avatar}')` }}
                       onClick={this.handleUserClick}
                     />
-                    : <img
+                  ) : (
+                    <img
                       src={avatarDefaultIcon}
                       className='user-avatar'
                       testid='user-avatar-btn'
                       onClick={this.handleUserClick}
                     />
-                  )
+                  ))
                 }
               </ListItem>,
             ]
@@ -510,21 +513,22 @@ class Navigation extends Component {
             </div>
             <div className={classnames('user-details', { selected: selectedMenu.name === userMenu.name })}>
               {isLoggedIn && isUserActivated &&
-                (user.avatar
-                  ? <div
+                (user.avatar ? (
+                  <div
                     key='user-avatar'
                     testid='user-avatar-btn'
                     className='user-avatar'
                     style={{ backgroundImage: `url('${user.avatar}')` }}
                     onClick={this.handleUserClick}
                   />
-                  : <img
+                ) : (
+                  <img
                     src={avatarDefaultIcon}
                     className='user-avatar'
                     testid='user-avatar-btn'
                     onClick={this.handleUserClick}
                   />
-                )}
+                ))}
             </div>
             {this.renderMenu()}
           </div>

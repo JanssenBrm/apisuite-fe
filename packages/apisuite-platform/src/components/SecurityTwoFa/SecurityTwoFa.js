@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { object, string, func, bool, array } from 'prop-types'
 import classnames from 'classnames'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -34,7 +34,7 @@ class SecurityTwoFa extends Component {
     ]
   }
 
-  sendSMS = e => this.props.sendSMSCode()
+  sendSMS = () => this.props.sendSMSCode()
 
   update2fa = () => {
     const { confirmationCode, method, showErrors } = this.props
@@ -93,12 +93,10 @@ class SecurityTwoFa extends Component {
     return (
       <div className='securityTwoFa'>
         <FormField
-          className={
-            classnames(
-              'select',
-              `${route && route.replace('/', '')}`
-            )
-          }
+          className={classnames(
+            'select',
+            `${route && route.replace('/', '')}`
+          )}
           disabled={isSignup}
           id='twofa-method'
           testid='twofa-method'
@@ -122,21 +120,17 @@ class SecurityTwoFa extends Component {
           ))}
         </FormField>
         {method === '1' && qrcode &&
-          <div className={
-            classnames(
-              'qrcode-container',
-              `${route && route.replace('/', '')}`
-            )
-          }
+          <div className={classnames(
+            'qrcode-container',
+            `${route && route.replace('/', '')}`
+          )}
           >
             <div className='qrcode-wrapper'>
               <div
-                className={
-                  classnames(
-                    'qrcode-scan',
-                    `${route && route.replace('/', '')}`
-                  )
-                }
+                className={classnames(
+                  'qrcode-scan',
+                  `${route && route.replace('/', '')}`
+                )}
               >
                 <img src={qrcode} />
               </div>
@@ -153,12 +147,10 @@ class SecurityTwoFa extends Component {
                 </Button>}
             </div>
             <div
-              className={
-                classnames(
-                  'qrcode-steps',
-                  `${route && route.replace('/', '')}`
-                )
-              }
+              className={classnames(
+                'qrcode-steps',
+                `${route && route.replace('/', '')}`
+              )}
             >
               <div className='steps-wrapper'>
                 {isSignup && <div className='step'>{codeStep1}</div>}

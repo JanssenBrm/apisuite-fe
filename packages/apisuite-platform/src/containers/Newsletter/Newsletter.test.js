@@ -1,5 +1,5 @@
-import React from 'react'
-import { shallowWithIntl } from 'util/test-utils'
+// import React from 'react'
+// import { shallowWithIntl } from 'util/test-utils'
 import request from 'util/request'
 import { expectSaga } from 'redux-saga-test-plan'
 import * as matchers from 'redux-saga-test-plan/matchers'
@@ -10,11 +10,11 @@ import reducer, {
   sendNewsletterFormError,
   resetNewsletterForm,
 } from './ducks'
-import { translationMessages, formats } from 'util/i18n'
-import { IntlProvider } from 'react-intl'
-import SectionSubscribe from '../../components/SectionSubscribe/SectionSubscribe'
-const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
-const { intl } = intlProvider.getChildContext()
+// import { translationMessages, formats } from 'util/i18n'
+// import { IntlProvider } from 'react-intl'
+// import SectionSubscribe from '../../components/SectionSubscribe/SectionSubscribe'
+// const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
+// const { intl } = intlProvider.getChildContext()
 const initialState = {
   form: null,
   success: null,
@@ -24,13 +24,13 @@ const initialState = {
 const errorMock = { message: 'error-stub' }
 
 describe('<Newsletter />', () => {
-  const props = {
-    intl,
-    newsletter: {},
-    sendNewsletterForm: jest.fn(),
-    theme: {},
-  }
-  const wrapper = shallowWithIntl(<SectionSubscribe {...props} />)
+  // const props = {
+  //   intl,
+  //   newsletter: {},
+  //   sendNewsletterForm: jest.fn(),
+  //   theme: {},
+  // }
+  // const wrapper = shallowWithIntl(<SectionSubscribe {...props} />)
 
   // it('should send the newsletter form successfully', () => {
   //   const emailField = wrapper.find('#email')

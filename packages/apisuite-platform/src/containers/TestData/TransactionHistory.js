@@ -16,15 +16,6 @@ class TransactionHistory extends Component {
     errors: [],
   }
 
-  componentDidMount () {
-    const { organizations } = this.props
-    const organizationId = organizations && organizations.length ? organizations[0].id : null
-    const { resourceId } = this.props.match.params
-    if (organizationId) {
-      this.props.getTestUserTransactions(organizationId, resourceId)
-    }
-  }
-
   static getDerivedStateFromProps (nextProps, prevState) {
     if (nextProps.transactions !== prevState.transactions || nextProps.ui !== prevState.ui) {
       return {
@@ -35,7 +26,16 @@ class TransactionHistory extends Component {
     return null
   }
 
-  navigate = route => event => {
+  componentDidMount () {
+    const { organizations } = this.props
+    const organizationId = organizations && organizations.length ? organizations[0].id : null
+    const { resourceId } = this.props.match.params
+    if (organizationId) {
+      this.props.getTestUserTransactions(organizationId, resourceId)
+    }
+  }
+
+  navigate = route => () => {
     this.props.history.push(route)
   }
 
@@ -87,11 +87,9 @@ class TransactionHistory extends Component {
 TransactionHistory.propTypes = {
   history: object.isRequired,
   match: object.isRequired,
-  testuser: object.isRequired,
   getTestUserTransactions: func.isRequired,
   organizations: array.isRequired,
   transactions: object.isRequired,
-  intl: object.isRequired,
   ui: object.isRequired,
 }
 

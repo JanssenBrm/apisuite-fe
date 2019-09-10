@@ -20,7 +20,7 @@ import { showNotification } from 'containers/NotificationManager/ducks'
  * Fetch API Subscriptions saga worker
  * @param {Object} action
  */
-function * fetchApiSubscriptionsWorker (action) {
+function * fetchApiSubscriptionsWorker () {
   const state = yield select()
   const organizationId = state.auth.user.organizations[0].id
   const requestUrl = `${API_URL}/organizations/${organizationId}/products`

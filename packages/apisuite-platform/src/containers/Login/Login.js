@@ -15,9 +15,9 @@ class Login extends Component {
     errors: [],
   }
 
-  navigate = route => e => this.props.history.push(route)
+  navigate = route => () => this.props.history.push(route)
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { errors, form } = this.state
     const { password, email } = form
 
@@ -139,10 +139,6 @@ Login.propTypes = {
    * Login action
    */
   logUserIn: PropTypes.func.isRequired,
-  /**
-   * Github Login action
-   */
-  ghLogin: PropTypes.func.isRequired,
   /**
    * `react-intl` formatting API
    * See {@link https://github.com/yahoo/react-intl/wiki/API#injection-api}

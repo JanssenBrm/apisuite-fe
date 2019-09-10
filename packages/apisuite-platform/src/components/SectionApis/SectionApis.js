@@ -10,15 +10,17 @@ import requireIfExists from 'util/requireIfExists'
 import Carousel from 'nuka-carousel'
 import caretRightIcon from 'assets/caret_right.svg'
 
-export const leftControl = ({ previousSlide }) =>
-  (<div className='product-left-caret' onClick={previousSlide}>
+export const leftControl = ({ previousSlide }) => (
+  <div className='product-left-caret' onClick={previousSlide}>
     <img src={caretRightIcon} />
-  </div>)
+  </div>
+)
 
-export const rightControl = ({ nextSlide }) =>
-  (<div className='product-right-caret' onClick={nextSlide}>
+export const rightControl = ({ nextSlide }) => (
+  <div className='product-right-caret' onClick={nextSlide}>
     <img src={caretRightIcon} />
-  </div>)
+  </div>
+)
 
 export default class SectionApis extends React.Component {
   state = {
@@ -60,12 +62,10 @@ export default class SectionApis extends React.Component {
         </div>
         <div className='apis-api-block-footer'>
           <div
-            className={
-              classnames(
-                'apis-api-block-action',
-                { disabled: !product.version }
-              )
-            }
+            className={classnames(
+              'apis-api-block-action',
+              { disabled: !product.version }
+            )}
             testid={`api-block-${idx}`}
             onClick={() => goToApi(product.id)}
           >
@@ -85,7 +85,6 @@ export default class SectionApis extends React.Component {
 
   renderProducts (products) {
     if (products && products.length > 0) {
-      const { brands } = this.props
       return (
         <ul className='product-apis'>
           {
@@ -101,12 +100,10 @@ export default class SectionApis extends React.Component {
                   </p>
                   <div className='apis-api-block-footer'>
                     <div
-                      className={
-                        classnames(
-                          'apis-api-block-action',
-                          { disabled: !product.version }
-                        )
-                      }
+                      className={classnames(
+                        'apis-api-block-action',
+                        { disabled: !product.version }
+                      )}
                       testid={`api-block-${idx}`}
                       onClick={() => goToApi(product.id)}
                     >

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import classnames from 'classnames'
 import { bool, func, object } from 'prop-types'
 import SvgIcon from 'components/SvgIcon'
@@ -99,12 +99,10 @@ const Footer = ({ mini, navigate, user, intl, logout, theme }) => {
               <div key={section.name} className='footer-sitemap-section'>
                 <>
                   <div
-                    className={
-                      classnames(
-                        'section-title',
-                        { 'disabled-link': section.disabled || (section.name === 'team' && !isAdmin) }
-                    )
-                    }
+                    className={classnames(
+                      'section-title',
+                      { 'disabled-link': section.disabled || (section.name === 'team' && !isAdmin) }
+                    )}
                     onClick={navigate(section.route)}
                   >
                     {section.name}
@@ -114,12 +112,10 @@ const Footer = ({ mini, navigate, user, intl, logout, theme }) => {
                       <a
                         onClick={item.action ? logout : navigate(item.route)}
                         key={`${item.name}`}
-                        className={
-                          classnames(
-                            'footer-sitemap-link',
-                            { 'disabled-link': item.disabled || (item.route === '/team' && !isAdmin) }
-                        )
-                        }
+                        className={classnames(
+                          'footer-sitemap-link',
+                          { 'disabled-link': item.disabled || (item.route === '/team' && !isAdmin) }
+                        )}
                       >
                         {item.name}
                       </a>
@@ -138,25 +134,25 @@ const Footer = ({ mini, navigate, user, intl, logout, theme }) => {
                 Copyright © 2019 {<FormattedMessage id='footer.bank' />}
               </div>
               <div className='footer-icons'>
-                <a target='_blank' href='https://www.bnpparibasfortis.com'>
+                <a target='_blank' rel='noopener noreferrer' href='https://www.bnpparibasfortis.com'>
                   <div className='footer-icon'>
                     {theme.socialWeb && <img src={theme.socialWeb} />}
                     {!theme.socialWeb && <SvgIcon name='earth' size={16} />}
                   </div>
                 </a>
-                <a target='_blank' href='https://twitter.com/BNPPFBelgique'>
+                <a target='_blank' rel='noopener noreferrer' href='https://twitter.com/BNPPFBelgique'>
                   <div className='footer-icon'>
                     {theme.socialTwitter && <img src={theme.socialTwitter} />}
                     {!theme.socialTwitter && <SvgIcon name='twitter' size={16} />}
                   </div>
                 </a>
-                <a target='_blank' href='https://www.facebook.com/BNPParibasFortisBelgique'>
+                <a target='_blank' rel='noopener noreferrer' href='https://www.facebook.com/BNPParibasFortisBelgique'>
                   <div className='footer-icon'>
                     {theme.socialFacebook && <img src={theme.socialFacebook} />}
                     {!theme.socialFacebook && <SvgIcon name='facebook' size={16} />}
                   </div>
                 </a>
-                <a target='_blank' href='https://www.linkedin.com/company/bnpparibasfortis/'>
+                <a target='_blank' rel='noopener noreferrer' href='https://www.linkedin.com/company/bnpparibasfortis/'>
                   <div className='footer-icon'>
                     {theme.socialLinkedIn && <img src={theme.socialLinkedIn} />}
                     {!theme.socialLinkedIn && <SvgIcon name='facebook' size={16} />}

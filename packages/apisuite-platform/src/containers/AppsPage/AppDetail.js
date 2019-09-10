@@ -46,7 +46,7 @@ class AppDetail extends Component {
     }
   }
 
-  navigate = route => event => this.props.history.push(route)
+  navigate = route => () => this.props.history.push(route)
 
   handleChange = ({ target }, errors) => {
     this.setState({
@@ -96,7 +96,7 @@ class AppDetail extends Component {
     if (organizationId) this.props.deleteApp(organizationId, appId)
   }
 
-  openAppSubscriptionsModal = (open) => event => {
+  openAppSubscriptionsModal = (open) => () => {
     this.setState({ modalOpen: open })
   }
 
@@ -305,14 +305,16 @@ class AppDetail extends Component {
                   {<FormattedMessage id='app.apiSubscriptions.manage' />}
                 </div>
               </div>
-              {appScopes && appScopes.length > 0 && <div className='option-wrapper'>
-                <div className='options-title'>{<FormattedMessage id='app.scopes' />}</div>
-                <div className='scopes' id='app-scopes'>
-                  {appScopes.map((scope, idx) => (
-                    <Badge key={idx} text={scope} type='inactive space' />
-                  ))}
+              {appScopes && appScopes.length > 0 && (
+                <div className='option-wrapper'>
+                  <div className='options-title'>{<FormattedMessage id='app.scopes' />}</div>
+                  <div className='scopes' id='app-scopes'>
+                    {appScopes.map((scope, idx) => (
+                      <Badge key={idx} text={scope} type='inactive space' />
+                    ))}
+                  </div>
                 </div>
-              </div>}
+              )}
               <div className='option-wrapper'>
                 <div className='options-title'>{<FormattedMessage id='app.additionalActions' />}</div>
                 <div className='option-link disabled-link'>{<FormattedMessage id='app.additionalActions.transfer' />}</div>
@@ -330,6 +332,7 @@ class AppDetail extends Component {
           content={this.deleteConfirmationContent()}
           actions={[
             <Button
+              key='delete-app-cancel'
               id='delete-app-cancel'
               testid='delete-app-cancel-btn'
               variant='outlined'
@@ -338,6 +341,7 @@ class AppDetail extends Component {
               <FormattedMessage id='app.delete.cancel' />
             </Button>,
             <Button
+              key='delete-app-confirm'
               id='delete-app-confirm'
               testid='delete-app-confirm-btn'
               variant='contained'
@@ -351,16 +355,18 @@ class AppDetail extends Component {
         <ModalSplit
           open={modalOpen}
           onClose={this.openAppSubscriptionsModal(false)}
-          component={<CreateApp
-            user={user}
-            organization={organization}
-            subscriptions={subscriptions}
-            createApp={createApp}
-            updateApp={updateApp}
-            fetchApiSubscriptions={fetchApiSubscriptions}
-            closeModal={this.openAppSubscriptionsModal(false)}
-            app={app}
-          />}
+          component={
+            <CreateApp
+              user={user}
+              organization={organization}
+              subscriptions={subscriptions}
+              createApp={createApp}
+              updateApp={updateApp}
+              fetchApiSubscriptions={fetchApiSubscriptions}
+              closeModal={this.openAppSubscriptionsModal(false)}
+              app={app}
+            />
+          }
           rightTitle={rightTitle}
           rightSubtitle={rightSubtitle}
           isApps

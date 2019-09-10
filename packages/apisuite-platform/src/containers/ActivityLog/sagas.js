@@ -40,7 +40,7 @@ export function * fetchActivitiesSaga () {
  * Fetch kpis saga worker
  * @param {Object} action
  */
-function * fetchKpisWorker (action) {
+function * fetchKpisWorker () {
   const state = yield select()
   const organizationId = state.auth.user.organizations[0].id
   const requestUrl = `${API_URL}/activity/${organizationId}/kpi`

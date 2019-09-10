@@ -19,7 +19,7 @@ import {
  * Fetch API Products saga worker
  * @param {Object} action
  */
-function * fetchApiProductsWorker (action) {
+function * fetchApiProductsWorker () {
   const state = yield select()
   const requestUrl = `${API_URL}/products`
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })

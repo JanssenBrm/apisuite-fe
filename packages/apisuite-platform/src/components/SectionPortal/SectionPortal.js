@@ -38,7 +38,7 @@ const SectionPortal = ({ navigate, isLoggedIn }) => (
         <Card
           scope='landing' children={
             portals.map((portal, idx) => (
-              <div className='portal-content-item'>
+              <div key={`portal-content-item-${idx}`} className='portal-content-item'>
                 <div className='portal-body'>
                   <div className='portal-circle'><span style={{ color: portal.color }}>{idx + 1}</span></div>
                   <Typography variant='display3' gutterBottom style={{ color: portal.color }}><FormattedMessage id={portal.title} /></Typography>

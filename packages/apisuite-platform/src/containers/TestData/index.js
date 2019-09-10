@@ -56,7 +56,9 @@ const historyMapStateToProps = ({ testdata, auth }) => ({
 })
 
 const historyDispatchToProps = (dispatch) => ({
-  getTestUserTransactions: (organizationId, resourceId) => dispatch(getTestUserTransactions(organizationId, resourceId)),
+  getTestUserTransactions: (organizationId, resourceId) =>
+    dispatch(getTestUserTransactions(organizationId, resourceId)),
 })
 
-export const TransactionHistory = injectIntl(connect(historyMapStateToProps, historyDispatchToProps)(TransactionHistoryComponent))
+export const TransactionHistory = injectIntl(
+  connect(historyMapStateToProps, historyDispatchToProps)(TransactionHistoryComponent))
