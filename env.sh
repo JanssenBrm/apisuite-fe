@@ -5,7 +5,7 @@
 # |                                  |
 # | (C) 2019 - cloudoki              |
 # |                                  |
-# | Script to manager the modules |
+# | Script to manager the modules    |
 # +----------------------------------+
 
 # Docker compose for sandbox
