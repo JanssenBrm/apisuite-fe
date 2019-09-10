@@ -1,6 +1,6 @@
 {
   "name": "openbank-sandbox-api",
-  "version": "0.7.3",
+  "version": "0.7.4",
   "main": "src/index.js",
   "repository": "git@github.com:Cloudoki/openbank-sandbox-api.git",
   "author": "Cloudoki <hello@cloudoki.com> (http://cloudoki.com)",
