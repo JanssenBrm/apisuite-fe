@@ -303,7 +303,7 @@ exports.removeUserFromOrganization = {
 				'500': { 'description': 'Internal Server Error' },
 			},
 		},
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['ADMIN'],
 			mode: 'exactly',
 		},
@@ -312,14 +312,14 @@ exports.removeUserFromOrganization = {
 		strategy: 'appcenterToken',
 	},
 	handler: async (request, h) => {
-		
+
 		try {
 			const { userId, organizationId } = request.params
 			if (!await orgSrvc.canRemoveUser(userId, organizationId)) {
 				return Boom.preconditionFailed('User cannot be removed from organization.')
 			}
 			await orgSrvc.removeUserFromOrganization(userId, organizationId)
-			return h.response().code(204)			
+			return h.response().code(204)
 		} catch (error) {
 			log.error(error)
 			throw Boom.internal(error)
@@ -345,7 +345,7 @@ exports.updateUserPassword = {
 				'500': { 'description': 'Internal Server Error' },
 			},
 		},
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['ADMIN'],
 			mode: 'exactly',
 		},

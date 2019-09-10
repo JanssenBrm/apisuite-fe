@@ -37,27 +37,27 @@ const schema = {
 			doc: 'Appcenter restrict allowed origins',
 			format: Boolean,
 			default: true,
-			env: 'OPENBANK_MIDDLEWARE_API_RESTRICT_ORIGIN',
+			env: 'APISUITE_MIDDLEWARE_API_RESTRICT_ORIGIN',
 		},
 	},
 	sandboxAuthServer: {
 		host: {
-			doc: 'Openbank sandbox auth server api url',
+			doc: 'APISuite sandbox auth server api url',
 			format: String,
 			default: 'https://auth.develop.openbankportal.be',
-			env: 'OPENBANK_MIDDLEWARE_API_SANDBOX_AUTH_API_HOST',
+			env: 'APISUITE_MIDDLEWARE_API_SANDBOX_AUTH_API_HOST',
 		},
 		clientId: {
-			doc: 'Openbank sandbox auth server, middleware client id',
+			doc: 'APISuite sandbox auth server, middleware client id',
 			format: String,
 			default: '',
-			env: 'OPENBANK_MIDDLEWARE_API_SANDBOX_AUTH_CLIENT_ID',
+			env: 'APISUITE_MIDDLEWARE_API_SANDBOX_AUTH_CLIENT_ID',
 		},
 		clientSecret: {
-			doc: 'Openbank sandbox auth server, middleware client secret',
+			doc: 'APISuite sandbox auth server, middleware client secret',
 			format: String,
 			default: '',
-			env: 'OPENBANK_MIDDLEWARE_API_SANDBOX_AUTH_CLIENT_SECRET',
+			env: 'APISUITE_MIDDLEWARE_API_SANDBOX_AUTH_CLIENT_SECRET',
 		},
 	},
 	server: {
@@ -123,13 +123,13 @@ const schema = {
 		email: {
 			doc: 'The email to send the support tickets to.',
 			format: String,
-			env: 'OPENBANK_MIDDLEWARE_API_SUPPORT_API_EMAIL',
+			env: 'APISUITE_MIDDLEWARE_API_SUPPORT_API_EMAIL',
 			default: 'openbanking@bnpparibasfortis.com',
 		},
 		tpemail: {
 			doc: 'The email to send the tp support tickets to.',
 			format: String,
-			env: 'OPENBANK_MIDDLEWARE_API_SUPPORT_API_TP_EMAIL',
+			env: 'APISUITE_MIDDLEWARE_API_SUPPORT_API_TP_EMAIL',
 			default: 'tpsupport@bnpparibasfortis.com',
 		},
 	},
@@ -137,7 +137,7 @@ const schema = {
 		from: {
 			doc: 'The email to use in the `from` field when sending emails.',
 			format: String,
-			env: 'OPENBANK_MIDDLEWARE_API_CONTACT_FROM_EMAIL',
+			env: 'APISUITE_MIDDLEWARE_API_CONTACT_FROM_EMAIL',
 			default: 'openbanking@bnpparibasfortis.com',
 		},
 	},
@@ -145,7 +145,7 @@ const schema = {
 		email: {
 			doc: 'The email to send admin notifications to.',
 			format: String,
-			env: 'OPENBANK_MIDDLEWARE_API_ADMIN_NOTIFY_EMAIL',
+			env: 'APISUITE_MIDDLEWARE_API_ADMIN_NOTIFY_EMAIL',
 			default: 'openbanking@bnpparibasfortis.com',
 		},
 	},
@@ -153,7 +153,7 @@ const schema = {
 		email: {
 			doc: 'The email to send the newsletter to.',
 			format: String,
-			env: 'OPENBANK_MIDDLEWARE_API_NEWSLETTER_API_EMAIL',
+			env: 'APISUITE_MIDDLEWARE_API_NEWSLETTER_API_EMAIL',
 			default: 'openbanking@bnpparibasfortis.com',
 		},
 	},
@@ -409,7 +409,7 @@ const schema = {
 			doc: 'NG Communications sender id',
 			format: String,
 			env: 'APPCENTER_API_NG_SENDER_ID',
-			default: 'openbank-sender-id',
+			default: 'apisuite-sender-id',
 		},
 		testNumber: {
 			doc: 'The Number to be used for testing purposes. Applies only to NGCommunications',
@@ -438,7 +438,7 @@ const schema = {
 		endpoints: {
 			authenticatedUser: '/user',
 		},
-		userAgent: 'openbank',
+		userAgent: 'apisuite',
 		app: {
 			client_id: {
 				doc: 'The github oauth app client id',
@@ -527,13 +527,13 @@ const schema = {
 		verifyURL: {
 			doc: 'The google URL to verify tokens.',
 			format: String,
-			env: 'OPENBANK_MIDDLEWARE_API_RECAPTCHA_VERIFY_URL',
+			env: 'APISUITE_MIDDLEWARE_API_RECAPTCHA_VERIFY_URL',
 			default: 'https://www.google.com/recaptcha/api/siteverify',
 		},
 		secret: {
 			doc: 'The secret used to validate the recaptcha',
 			format: String,
-			env: 'OPENBANK_MIDDLEWARE_API_RECAPTCHA_SECRET',
+			env: 'APISUITE_MIDDLEWARE_API_RECAPTCHA_SECRET',
 			default: '',
 		},
 	},
@@ -541,25 +541,25 @@ const schema = {
 		withCert: {
 			doc: 'Should use the certificate in the request',
 			format: Boolean,
-			env: 'OPENBANK_MW_REQUEST_WITH_CERT',
+			env: 'APISUITE_MW_REQUEST_WITH_CERT',
 			default: true,
 		},
 		certPath: {
 			doc: 'The certificate path',
 			format: String,
-			env: 'OPENBANK_MW_CERT_PATH',
+			env: 'APISUITE_MW_CERT_PATH',
 			default: '',
 		},
 		keyPath: {
 			doc: 'The key path',
 			format: String,
-			env: 'OPENBANK_MW_CERT_KEY_PATH',
+			env: 'APISUITE_MW_CERT_KEY_PATH',
 			default: '',
 		},
 		certPassphrase: {
 			doc: 'The certificate passphrase',
 			format: String,
-			env: 'OPENBANK_MW_CERT_PASSPHRASE',
+			env: 'APISUITE_MW_CERT_PASSPHRASE',
 			default: '',
 		},
 	},
@@ -567,7 +567,7 @@ const schema = {
 		doc: 'Should templates be branded.',
 		format: Boolean,
 		default: true,
-		env: 'OPENBANK_MW_BRANDED',
+		env: 'APISUITE_MW_BRANDED',
 	},
 }
 

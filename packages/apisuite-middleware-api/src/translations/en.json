@@ -396,7 +396,7 @@
   },
   {
     "id": "signup.title",
-    "defaultMessage": "Join BNPPF Openbank",
+    "defaultMessage": "Join APISuite",
     "message": ""
   },
   {
@@ -886,7 +886,7 @@
   },
   {
     "id": "landing.apis.title",
-    "defaultMessage": "Openbank APIs",
+    "defaultMessage": "APISuite APIs",
     "message": ""
   },
   {

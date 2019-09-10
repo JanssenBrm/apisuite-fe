@@ -21,7 +21,7 @@ const Boom = require('boom')
  */
 async function start() {
 
-	log.fatal('##### Starting Openbank Middleware API #####')
+	log.fatal('##### Starting APISuite Middleware API #####')
 
 	const plugins = config.get('plugins').map(plugin => require(plugin))
 
@@ -31,7 +31,7 @@ async function start() {
 
 	log.info('All plugins were loaded successfuly')
 
-	log.info('openbank-middleware-api is up and running on port %s', config.get('server').port)
+	log.info('apisuite-middleware-api is up and running on port %s', config.get('server').port)
 
 	cleaner.startCleaningSchedule()
 	registrationTokenCleaner.startCleaningSchedule()

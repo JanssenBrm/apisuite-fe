@@ -19,7 +19,7 @@ exports = module.exports = {}
  * POST /third-party
  */
 exports.onBoardingRegistration = {
-	id: 'openbank-third-party-onboarding-registration',
+	id: 'apisuite-third-party-onboarding-registration',
 	description: 'Register a client by way of a JSON in the body of the request',
 	notes: ['Endpoint will be secured by way of Mutual Authentication over TLS'],
 	tags: ['api'],
@@ -181,7 +181,7 @@ exports.onBoardingRegistration = {
  * POST /onboarding/token
  */
 exports.onBoardingToken = {
-	id: 'openbank-third-party-onboarding-token',
+	id: 'apisuite-third-party-onboarding-token',
 	description: 'Generates an onboarding access token from a middleware token',
 	tags: ['api'],
 	plugins: {

@@ -12,7 +12,7 @@ exports = module.exports = {}
  * POST /rbac/{organizationId}/user/{userId}
  */
 exports.addUserOrganizationRole = {
-	id: 'openbank-rbac-add-role',
+	id: 'apisuite-rbac-add-role',
 	description: 'Adds a role to the user on the given organization',
 	tags: ['api'],
 	plugins: {
@@ -25,7 +25,7 @@ exports.addUserOrganizationRole = {
 				'500': { 'description': 'Internal Server Error' },
 			},
 		},
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['ADMIN'],
 			mode: 'oneOf',
 		},
@@ -41,12 +41,12 @@ exports.addUserOrganizationRole = {
 		const { userId, organizationId } = request.params
 
 		try {
-			await userSrvc.addUserOrganizationRole(userId, organizationId, roleId)	
+			await userSrvc.addUserOrganizationRole(userId, organizationId, roleId)
 		} catch (error) {
 			Logger.error(error)
 			return Boom.internal(error)
 		}
-		
+
 		return h.response().code(201)
 
 	},
@@ -56,7 +56,7 @@ exports.addUserOrganizationRole = {
  * PUT /rbac/{organizationId}/user/{userId}
  */
 exports.updateUserOrganizationRole = {
-	id: 'openbank-rbac-update-role',
+	id: 'apisuite-rbac-update-role',
 	description: 'Adds a role to the user on the given organization',
 	tags: ['api'],
 	plugins: {
@@ -69,7 +69,7 @@ exports.updateUserOrganizationRole = {
 				'500': { 'description': 'Internal Server Error' },
 			},
 		},
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['ADMIN'],
 			mode: 'oneOf',
 		},
@@ -86,7 +86,7 @@ exports.updateUserOrganizationRole = {
 	handler: async (request, h) => {
 		const { oldRoleId, newRoleId } = request.payload
 		const { userId, organizationId } = request.params
-		
+
 		// VALIDATE THE TARGET USER
 		try {
 			await userSrvc.canUpdateUserRole(userId, organizationId, newRoleId)
@@ -96,7 +96,7 @@ exports.updateUserOrganizationRole = {
 		}
 
 		let userRoleId
-		
+
 		try {
 			userRoleId = await userSrvc.getUserRole(userId, organizationId, oldRoleId)
 		} catch (error) {
@@ -110,12 +110,12 @@ exports.updateUserOrganizationRole = {
 		}
 
 		try {
-			await userSrvc.updateUserOrganizationRole(userRoleId.get('id'), newRoleId)	
+			await userSrvc.updateUserOrganizationRole(userRoleId.get('id'), newRoleId)
 		} catch (error) {
 			Logger.error(error)
 			return Boom.internal(error)
 		}
-		
+
 		return h.response().code(200)
 
 	},
@@ -125,7 +125,7 @@ exports.updateUserOrganizationRole = {
  * GET /rbac/{organizationId}/user/{userId}
  */
 exports.getUserOrganizationRoles = {
-	id: 'openbank-rbac-get-organization-role',
+	id: 'apisuite-rbac-get-organization-role',
 	description: 'Adds a role to the user on the given organization',
 	tags: ['api'],
 	plugins: {
@@ -138,7 +138,7 @@ exports.getUserOrganizationRoles = {
 				'500': { 'description': 'Internal Server Error' },
 			},
 		},
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['ADMIN'],
 			mode: 'oneOf',
 		},
@@ -151,12 +151,12 @@ exports.getUserOrganizationRoles = {
 
 		let retval
 		try {
-			retval = await userSrvc.getUserOrganizationRoles(userId, organizationId)	
+			retval = await userSrvc.getUserOrganizationRoles(userId, organizationId)
 		} catch (error) {
 			Logger.error(error)
 			return Boom.internal(error)
 		}
-		
+
 		if (!retval) {
 			Logger.debug('No roles were found')
 			return Boom.notFound()
@@ -170,7 +170,7 @@ exports.getUserOrganizationRoles = {
  * GET /rbac/user/{userId}
  */
 exports.getAllUserOrganizationRoles = {
-	id: 'openbank-rbac-all-roles',
+	id: 'apisuite-rbac-all-roles',
 	description: 'Adds a role to the user on the given organization',
 	tags: ['api'],
 	plugins: {
@@ -191,14 +191,14 @@ exports.getAllUserOrganizationRoles = {
 		const userId  = request.auth.credentials.user.get('id')
 
 		try {
-			const result = await userSrvc.getAllUserOrganizationRoles(userId)	
+			const result = await userSrvc.getAllUserOrganizationRoles(userId)
 			const retval = result.toJSON()
 
 			if (!retval) {
 				Logger.debug('No roles were found')
 				return Boom.notFound()
 			}
-	
+
 			return h.response(retval).code(200)
 		} catch (error) {
 			Logger.error(error)
@@ -212,7 +212,7 @@ exports.getAllUserOrganizationRoles = {
  * DELETE /rbac/{organizationId}/user/{userId}/role/{roleId}
  */
 exports.removeUserOrganizationRole = {
-	id: 'openbank-rbac-remove-role',
+	id: 'apisuite-rbac-remove-role',
 	description: 'Removes a role to the user on the given organization',
 	tags: ['api'],
 	plugins: {
@@ -225,7 +225,7 @@ exports.removeUserOrganizationRole = {
 				'500': { 'description': 'Internal Server Error' },
 			},
 		},
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['ADMIN'],
 			mode: 'oneOf',
 		},
@@ -237,9 +237,9 @@ exports.removeUserOrganizationRole = {
 		const { userId, organizationId, roleId } = request.params
 
 		let userRoleId
-		
+
 		try {
-			userRoleId = await userSrvc.getUserRole(userId, organizationId, roleId)			
+			userRoleId = await userSrvc.getUserRole(userId, organizationId, roleId)
 		} catch (error) {
 			Logger.error(error)
 			throw Boom.internal(error)
@@ -265,7 +265,7 @@ exports.removeUserOrganizationRole = {
  * GET /rbac/roles
  */
 exports.getExistingRoles = {
-	id: 'openbank-rbac-existing-roles',
+	id: 'apisuite-rbac-existing-roles',
 	description: 'Lists the available roles',
 	tags: ['api'],
 	plugins: {
@@ -278,7 +278,7 @@ exports.getExistingRoles = {
 				'500': { 'description': 'Internal Server Error' },
 			},
 		},
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['ADMIN'],
 			mode: 'oneOf',
 		},
@@ -287,15 +287,15 @@ exports.getExistingRoles = {
 		strategy: 'appcenterToken',
 	},
 	handler: async (request, h) => {
-		
+
 		let retval
 		try {
-			retval = await userSrvc.getExistingRoles()	
+			retval = await userSrvc.getExistingRoles()
 		} catch (error) {
 			Logger.error(error)
 			return Boom.internal(error)
 		}
-		
+
 		if (!retval) {
 			Logger.debug('No roles were found')
 			return Boom.notFound()

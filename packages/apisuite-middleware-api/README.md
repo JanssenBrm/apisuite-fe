@@ -1,4 +1,4 @@
-# openbank-middleware-api
+# apisuite-middleware-api
 
 - [Installation](#Installation)
 	- [Pre-requisites](#Pre-requisites)
@@ -19,7 +19,7 @@
 Go to your project root folder and get the dependencies
 ```
 git clone git@github.com:Cloudoki/openbank-middleware-api.git
-cd openbank-middleware-api/
+cd apisuite-middleware-api/
 yarn // or npm install
 ```
 
@@ -41,7 +41,7 @@ In `src/config/envs/development.js` update the values with your settings
 		"options": {
 			"host": "localhost",
 			"port": 3306,
-			"database": "openbank",
+			"database": "apisuite",
 			"user": "root",
 			"password": "cloudoki"
 		}
@@ -49,7 +49,7 @@ In `src/config/envs/development.js` update the values with your settings
 ```
 
 ### Create a database
-In your mysql client (*Sequel Pro* or *MySQL Workbench*, ...), create the db (`openbank` for the example)
+In your mysql client (*Sequel Pro* or *MySQL Workbench*, ...), create the db (`apisuite` for the example)
 
 ### Run the migrations
 ```
@@ -90,7 +90,7 @@ export DEV_PORTAL_CLIENT_ID=<client_id>
 export DEV_PORTAL_CLIENT_SECRET=<client_secret>
 ```
 
-`client_id` and `client_secret` can be found in the `openbank` database, `oauth_client` table. It should be the row having this description _Cloudoki OAuth2 Client_.
+`client_id` and `client_secret` can be found in the `apisuite` database, `oauth_client` table. It should be the row having this description _Cloudoki OAuth2 Client_.
 
 #### ob-admin
 
@@ -110,7 +110,7 @@ export ADMIN_PORTAL_CLIENT_ID=<client_id>
 export ADMIN_PORTAL_CLIENT_SECRET=<client_secret>
 ```
 
-`client_id` and `client_secret` can be found in the `openbank` database, `oauth_client` table. It should be the row having this description _Openbank admin client_.
+`client_id` and `client_secret` can be found in the `apisuite` database, `oauth_client` table. It should be the row having this description _APISuite admin client_.
 
 
 #### ob-sandbox-auth-server

@@ -6,7 +6,7 @@ let allRoles = ['ADMIN', 'DEVELOPER', 'TESTER', 'SALES']
 
 internals.validateRoles = (request, h) => {
 
-	if (!request.route.settings.plugins['openbank-rbac']) {
+	if (!request.route.settings.plugins['apisuite-rbac']) {
 		return h.continue
 	}
 
@@ -15,25 +15,25 @@ internals.validateRoles = (request, h) => {
 
 		throw Boom.forbidden('RBAC requires an authenticated user')
 	}
-	
-	const routeRbac = request.route.settings.plugins['openbank-rbac']
-	
-	
+
+	const routeRbac = request.route.settings.plugins['apisuite-rbac']
+
+
 	if (routeRbac) {
 
 		allRoles = allRoles.map(a => a.toLowerCase())
-	
+
 		const organizationId = request.params.orgId || request.params.organizationId || -1
-		
-			
+
+
 		const userRoles = request.auth.credentials.roles ? request.auth.credentials.roles : []
-		
-		if (userRoles.length === 0) 
+
+		if (userRoles.length === 0)
 			throw Boom.forbidden('User has no roles and this routes requires elevated access level')
 
-		
+
 		const userOrganizationRoles = userRoles.reduce((result, elem) => {
-			
+
 			// User has no roles. Does not throw here. Instead, it throws on the next check.
 			if (!elem || !elem.role) return result
 
@@ -50,7 +50,7 @@ internals.validateRoles = (request, h) => {
 		if (userOrganizationRoles.indexOf('admin') >= 0) return h.continue
 
 		let target  = [...routeRbac.roles]
-		
+
 		target = target.map(t => t.toLowerCase())
 
 
@@ -71,7 +71,7 @@ internals.validateRoles = (request, h) => {
 		if(routeRbac.mode === 'hierarchy') {
 			const highest = userOrganizationRoles[0]
 			const virtualUserRoles = allRoles.slice(allRoles.indexOf(highest))
-			
+
 			if(!target.some(elem => virtualUserRoles.indexOf(elem) >= 0)) {
 				logger.error('User does not have the required roles to access this route')
 				throw Boom.forbidden('User does not have sufficient access level to use this route')
@@ -86,11 +86,11 @@ internals.validateRoles = (request, h) => {
 
 
 const plugin = {
-	name: 'openbank-rbac',
+	name: 'apisuite-rbac',
 	version: '1.0.0',
 	multiple: false,
 	register: (server) => {
-		
+
 		// Testing purpose. Replace onPreAuth with onPostAuth
 		server.ext('onPostAuth', internals.validateRoles)
 	},

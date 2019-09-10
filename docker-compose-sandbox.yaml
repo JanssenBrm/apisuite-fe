@@ -1,0 +1,22 @@
+version: '3'
+services:
+  middleware-api:
+    build: ./packages/apisuite-middleware-api
+    image: cloudoki/apisuite/sandbox/middleware-api
+    expose:
+      - "3000"
+  sandbox-api:
+    build: ./packages/apisuite-sandbox-api
+    image: cloudoki/apisuite/sandbox/sandbox-api
+    depends_on:
+      - middleware-api
+      - sandbox-auth-server
+    expose:
+      - "3000"
+  sandbox-auth-server:
+    build: ./packages/apisuite-sandbox-auth-server
+    image: cloudoki/apisuite/sandbox/sandbox-auth-server
+    depends_on:
+      - middleware-api
+    expose:
+      - "3000"

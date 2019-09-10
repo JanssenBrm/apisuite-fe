@@ -18,7 +18,7 @@ exports = module.exports = {}
  * GET /organizations/{orgId}/products
  */
 exports.listOrganizationSubscriptions = {
-	id: 'openbank-list-organization-subscriptions',
+	id: 'apisuite-list-organization-subscriptions',
 	description: 'Returns a list of organization product subscriptions',
 	notes: ['Returns user organizations'],
 	tags: ['api'],
@@ -133,7 +133,7 @@ exports.createOrganizationSubscriptions = {
 		const brands = await Brand.findAll()
 
 		await productSubscriptionSrvc.addProductsToOrganization(request.params.orgId, request.payload.productIds)
-		
+
 		const subscriptions = await productSubscriptionSrvc.listOrganizationProducts(request.params.orgId)
 		const subscriptionIds = subscriptions.toJSON().map(subscription => subscription.id)
 
