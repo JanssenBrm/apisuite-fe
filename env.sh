@@ -63,7 +63,7 @@ function dockerCompose() {
     #elif [ "$cmd" == "kill" ]; then
     #    docker kill ${moduleName}
     else
-        echo "** Command '${cmd}' is not supported! **"
+        echo "* Command '${cmd}' is not supported! *"
         exit 0
     fi
 }
