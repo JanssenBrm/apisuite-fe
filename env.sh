@@ -15,7 +15,7 @@ function help() {
     echo -e "\033[0;36m
 Tool to manage the local APISuite environment
 
-Usage: $0 [cmd] [method] [sleep (wait for each request) ]
+Usage: $0 [cmd] [method] [scale] [sleep (wait for each request) ]
 
    - cmd:\tstart, stop, pull, restart, build, up-build or kill
    - method:\tall (Start all environment): sandbox, marketplace, sso and portal
@@ -27,6 +27,8 @@ Usage: $0 [cmd] [method] [sleep (wait for each request) ]
    - $0 start sandbox
    - $0 build portal
 
+   - scale: Optional parameter
+
    - sleep: Optional parameter. The time must be in seconds
 \033[0m"
     exit 0
@@ -34,6 +36,8 @@ Usage: $0 [cmd] [method] [sleep (wait for each request) ]
 
 function initialize() {
     [ ! -f ${DOCKER_COMPOSE_SANDBOX} ] && echo "The file '${DOCKER_COMPOSE_SANDBOX}' not found!" && exit 0
+    #
+    # TODO: Add here the others compose files
 }
 
 function dockerCompose() {
@@ -44,6 +48,8 @@ function dockerCompose() {
     if [ "$cmd" == "start" ]; then
         docker-compose -f ${dockerComposeFile} up -d --force-recreate --remove-orphans
         #checkIsRunning ${moduleName}
+    elif [ "$cmd" == "scale" ]; then
+        docker-compose -f ${dockerComposeFile} up -d --scale ${SCALE}
     elif [ "$cmd" == "stop" ]; then
         docker-compose -f ${dockerComposeFile} down
     elif [ "$cmd" == "pull" ]; then
@@ -130,7 +136,8 @@ MODULES=( "sandbox=${DOCKER_COMPOSE_SANDBOX}" )
 # ARGS
 CMD=$1
 METHOD=$2
-SLEEP=${3:-32} # DEFAULT SLEEP = 32 sec
+SCALE=$3
+SLEEP=${4:-1} # DEFAULT SLEEP = 1 sec
 
 # Validate arguments
 if [ "$CMD" == "" ] || [ "$METHOD" = "" ]; then
