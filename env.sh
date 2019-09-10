@@ -12,7 +12,7 @@
 DOCKER_COMPOSE_SANDBOX=docker-compose-sandbox.yaml
 
 function help() {
-    echo -e "
+    echo -e "\033[0;36m
 Tool to manage the local APISuite environment
 
 Usage: $0 [cmd] [method] [sleep (wait for each request) ]
@@ -28,7 +28,7 @@ Usage: $0 [cmd] [method] [sleep (wait for each request) ]
    - $0 build portal
 
    - sleep: Optional parameter. The time must be in seconds
-"
+\033[0m"
     exit 0
 }
 
