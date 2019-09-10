@@ -245,14 +245,6 @@ class Navigation extends Component {
         }
       }
     } else {
-      if (submenu.route === '/docs') {
-        this.props.changeTopic(null, null)
-      }
-
-      if (submenu.route === '/docs/started') {
-        this.props.changeTopic(0, 0)
-      }
-
       if (submenu.route === '/feedback') {
         this.props.openSupportModal('incident')
       } else {
@@ -304,7 +296,7 @@ class Navigation extends Component {
   }
 
   renderSubmenu = () => {
-    const { isLoggedIn, history, documentation, auth } = this.props
+    const { isLoggedIn, history, auth } = this.props
     const { pathname } = history.location
     const { selectedMenu, selectedSubmenu, isOutsideDetailHeader } = this.state
     const isApiDetail = pathname.startsWith('/api-detail/')
@@ -320,11 +312,8 @@ class Navigation extends Component {
     const hasVisibleItems = unprotectedItems.length > 0 || isLoggedIn || isApiDetail || isTerms || isDataPrivacy
     const isAdmin = auth.user.roles && !!auth.user.roles.find(r => r.role === 'ADMIN' && r.organizationId === auth.user.organizations[0].id)
 
-    // Documentation specific
-    const isDocumentation = pathname.includes('/docs', '/docs/started')
-    const isScenarios = pathname === '/scenarios'
+    // Documentation specifi
     const isScenariosManual = pathname === '/scenarios/manual'
-    const showBackDocsButton = isDocumentation ? documentation.topic !== null : false
 
     return (
       <div
@@ -341,18 +330,6 @@ class Navigation extends Component {
             <div className='back-navigation' testid='api-detail-back-btn' onClick={history.goBack}>
               <img src={caretLeftIcon} />
               <FormattedMessage id='landing.apiDetail.navigation' />
-            </div>}
-          {(showBackDocsButton || isScenarios) &&
-            <div
-              className='back-navigation'
-              testid='docs-back-btn'
-              onClick={() => {
-                history.push('/docs')
-                this.props.changeTopic(null, null)
-              }}
-            >
-              <img src={caretLeftIcon} />
-              <FormattedMessage id='navigation.docs.backtooverview' />
             </div>}
           {(isScenariosManual) &&
             <div
@@ -584,14 +561,6 @@ Navigation.propTypes = {
    * tells root view if there is an expanded menu or not
    */
   checkExpanded: func.isRequired,
-  /**
-   * Documentation state for information on navigation
-   */
-  documentation: object.isRequired,
-  /**
-   * Changes documentation topic
-   */
-  changeTopic: func.isRequired,
   /**
    * Opens the Support Modal
    */

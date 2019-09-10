@@ -2,14 +2,10 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import withTheme from 'components/ThemeContext/withTheme'
 import Navigation from './Navigation'
-import { changeTopic } from 'containers/Documentation/ducks'
 
-const mapStateToProps = ({ documentation, auth }) => ({ documentation, auth })
-const mapDispatchToProps = (dispatch) => ({
-  changeTopic: (topic, child) => dispatch(changeTopic(topic, child)),
-})
+const mapStateToProps = ({ auth }) => ({ auth })
 
-export default connect(mapStateToProps, mapDispatchToProps)(
+export default connect(mapStateToProps)(
   withRouter(
     withTheme(Navigation)
   )

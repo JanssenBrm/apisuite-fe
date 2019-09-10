@@ -17,10 +17,8 @@ import MonitorSagas from 'containers/Monitor/sagas'
 import NewsletterSagas from 'containers/Newsletter/sagas'
 import RecoverySagas from 'containers/RecoveryCodes/sagas'
 import ApiSagas from 'containers/Api/sagas'
-import ScenariosSagas from 'containers/Scenarios/sagas'
 import TeamSagas from 'containers/Team/sagas'
 import ActivityLogSagas from 'containers/ActivityLog/sagas'
-import ExternalResourcesSagas from 'containers/ExternalResources/sagas'
 import PortalNotificationSagas from 'containers/PortalNotification/sagas'
 
 const sagas = [
@@ -36,10 +34,8 @@ const sagas = [
   ...NewsletterSagas,
   ...RecoverySagas,
   ...ApiSagas,
-  ...ScenariosSagas,
   ...TeamSagas,
   ...ActivityLogSagas,
-  ...ExternalResourcesSagas,
   ...PortalNotificationSagas,
 ]
 
