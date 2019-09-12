@@ -117,7 +117,7 @@ const schema = {
 		],
 	},
 	cookie: {
-		name: 'sid-openbank-cookie',
+		name: 'sid-apisuite-cookie',
 	},
 	pino: {
 		config: {

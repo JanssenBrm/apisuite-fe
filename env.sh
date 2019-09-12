@@ -8,16 +8,16 @@
 # | Script to manager the modules    |
 # +----------------------------------+
 
-# Docker compose for sandbox
-DOCKER_COMPOSE_SANDBOX=docker-compose-sandbox.yaml
-
+# --------------------------------------------------------------------------
+# Print help
+# --------------------------------------------------------------------------
 function help() {
     echo -e "\033[0;36m
 Tool to manage the local APISuite environment
 
 Usage: $0 [cmd] [method] [scale] [sleep (wait for each request) ]
 
-   - cmd:\tstart, stop, pull, restart, build, up-build or kill
+   - cmd:\tstart, stop, pull, restart, build and up-build
    - method:\tall (Start all environment): sandbox, marketplace, sso and portal
 
        Or
@@ -27,19 +27,26 @@ Usage: $0 [cmd] [method] [scale] [sleep (wait for each request) ]
    - $0 start sandbox
    - $0 build portal
 
-   - scale: Optional parameter
+   Optional parameters
 
-   - sleep: Optional parameter. The time must be in seconds
+   - scale: Number of container for a service
+   - sleep: The time must be in seconds
 \033[0m"
     exit 0
 }
 
-function initialize() {
+# --------------------------------------------------------------------------
+# Check prerequisits
+# --------------------------------------------------------------------------
+function checkPrerequisits() {
     [ ! -f ${DOCKER_COMPOSE_SANDBOX} ] && echo "The file '${DOCKER_COMPOSE_SANDBOX}' not found!" && exit 0
     #
     # TODO: Add here the others compose files
 }
 
+# --------------------------------------------------------------------------
+# Run docker-compose
+# --------------------------------------------------------------------------
 function dockerCompose() {
     local cmd=$1
     local dockerComposeFile=$2
@@ -49,7 +56,8 @@ function dockerCompose() {
         docker-compose -f ${dockerComposeFile} up -d --force-recreate --remove-orphans
         #checkIsRunning ${moduleName}
     elif [ "$cmd" == "scale" ]; then
-        docker-compose -f ${dockerComposeFile} up -d --scale ${SCALE}
+        echo "docker-compose -f ${dockerComposeFile} up -d --scale ${SCALE}"
+        docker-compose -f ${dockerComposeFile} up --scale ${SCALE} -d
     elif [ "$cmd" == "stop" ]; then
         docker-compose -f ${dockerComposeFile} down
     elif [ "$cmd" == "pull" ]; then
@@ -61,20 +69,14 @@ function dockerCompose() {
         docker-compose -f ${dockerComposeFile} build
     elif [ "$cmd" == "up-build" ]; then
         docker-compose -f ${dockerComposeFile} up --build
-        #
-        # TODO: Refactor
         #checkIsRunning ${moduleName}
-    #
-    # TODO: Refactor
-    #elif [ "$cmd" == "kill" ]; then
-    #    docker kill ${moduleName}
     else
         echo "* Command '${cmd}' is not supported! *"
         exit 0
     fi
 }
 
-# TODO: Refactor
+# TODO: Refactor this function
 # function checkIsRunning() {
 #     local moduleName=$1
 #     shift
@@ -91,11 +93,17 @@ function dockerCompose() {
 #     done
 # }
 
+# --------------------------------------------------------------------------
+# Docker inspect image. Check image is running
+# --------------------------------------------------------------------------
 function dockerInspect() {
     local moduleName=$1
     echo $(docker inspect --format="{{ .State.Running }}" ${moduleName})
 }
 
+# --------------------------------------------------------------------------
+# Run docker-compose file by module
+# --------------------------------------------------------------------------
 function run() {
     local cmd=$1
     shift
@@ -104,8 +112,7 @@ function run() {
         module_name="${module%%=*}"
         module_docker_compose="${module##*=}"
 
-        echo "${cmd} ${module_name} - [${module_docker_compose}]"
-        # Run docker-compose
+        echo -e "\033[0;36m$(echo ${cmd} | tr '[a-z]' '[A-Z]') ${module_name} [ ${module_docker_compose} ]\033[0m\n"
         dockerCompose ${cmd} ${module_docker_compose}
 
         if [ "${cmd}" == "start" ] || [ "${cmd}" == "restart" ]; then
@@ -114,6 +121,9 @@ function run() {
     done
 }
 
+# --------------------------------------------------------------------------
+# Check what modules will be start
+# --------------------------------------------------------------------------
 function prepareToRun() {
     local method=$1
     local cmd=$2
@@ -131,6 +141,10 @@ function prepareToRun() {
     fi
 }
 
+# Docker compose for sandbox
+DOCKER_COMPOSE_SANDBOX=docker-compose-sandbox.yaml
+
+# Modules of the APISuite
 MODULES=( "sandbox=${DOCKER_COMPOSE_SANDBOX}" )
 
 # ARGS
@@ -144,8 +158,8 @@ if [ "$CMD" == "" ] || [ "$METHOD" = "" ]; then
     help
 fi
 
-# Create bucket and network
-initialize
+# Check prerequesits
+checkPrerequisits
 
 # Run command and method. Example: ./env.sh start all
 prepareToRun ${METHOD} ${CMD}

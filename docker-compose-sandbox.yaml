@@ -1,8 +1,10 @@
-version: '3'
+version: '3.6'
 services:
   middleware-api:
     build: ./packages/apisuite-middleware-api
     image: cloudoki/apisuite/sandbox/middleware-api
+    networks:
+      - kong-network
     expose:
       - "3000"
   sandbox-api:
@@ -11,6 +13,8 @@ services:
     depends_on:
       - middleware-api
       - sandbox-auth-server
+    networks:
+      - kong-network
     expose:
       - "3000"
   sandbox-auth-server:
@@ -18,5 +22,32 @@ services:
     image: cloudoki/apisuite/sandbox/sandbox-auth-server
     depends_on:
       - middleware-api
+    networks:
+      - kong-network
     expose:
       - "3000"
+  container-manager:
+    build: ./packages/apisuite-container-manager
+    image: cloudoki/apisuite/sandbox/container-manager
+    depends_on:
+      - middleware-api
+      - sandbox-api
+      - sandbox-auth-server
+    networks:
+      - kong-network
+    expose:
+      - "3000"
+  # kong-setup:
+  #   build: ./packages/apisuite-kong-setup
+  #   image: cloudoki/apisuite/sandbox/kong-setup
+  #   depends_on:
+  #     - middleware-api
+  #     - sandbox-api
+  #     - sandbox-auth-server
+  #     - container-manager
+  #   expose:
+  #     - "3000"
+
+networks:
+  kong-network:
+    name: kong-global-network

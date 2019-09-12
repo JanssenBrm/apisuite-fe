@@ -13,29 +13,29 @@ const createStaticServices = async ( ...payloads ) => {
         console.log(`Creating Kong Service: ${payload.service.name}`)
         const baseUrl = `${kongAdminUrl}${UPSERT_SERVICE.path}`
         console.log(baseUrl)
-    
+
         let response
         try {
             response = await axios.post(`${baseUrl}`,
-    
-            payload.service) 
+
+            payload.service)
         } catch (e) {
             console.log(`[${payload.service.name}] already exists. Skipping this service configuration`)
             return
         }
-        
-    
+
+
         if (response && response.status === 201) {
             const serviceId = response.data.id
             console.log(`Creating route for kong service: ${payload.service.name}`)
-            const {routeRes, routeErr} = 
+            const {routeRes, routeErr} =
                     await axios.post(`${baseUrl}${payload.service.name}/routes`, payload.route)
-            
+
 
             if (payload.transform_plugin) {
                 console.log(`Enabling Request Transform Advanced on this service`)
-    
-                const  {pluginRes, pluginErr} = 
+
+                const  {pluginRes, pluginErr} =
                         await axios.post(`${baseUrl}${payload.service.name}/plugins`,{
                             name : "request-transformer-advanced",
                             config: {
@@ -61,7 +61,7 @@ const createDemoSandboxes = async (...payloads) => {
         try {
 
             response = await axios.post(`${baseUrl}`,payload.upstream)
-            
+
             if (response  && response.status === 201) {
 
                 payload.targets.forEach(async (target) => {
@@ -70,11 +70,11 @@ const createDemoSandboxes = async (...payloads) => {
 
                         if (err) {
                             console.log(`Error creating the upstream target ${target.url}`)
-                        }    
+                        }
                     } catch (error) {
                         console.log(error.message)
                     }
-                    
+
                 })
             }
         } catch (error) {
@@ -86,19 +86,19 @@ const createDemoSandboxes = async (...payloads) => {
 
 const enableGlobalPlugins = async (...payloads) => {
 payloads.forEach( async(payload) => {
-        
+
     try {
         const {res, err} = await axios.post(`${kongAdminUrl}/plugins`, payload.plugin)
     } catch (error) {
-     console.log(error.message) 
+     console.log(error.message)
     }
 })
 }
 
 const authServer = {
     service: {
-        name: "openbank-auth-server",
-        url: "http://openbank_auth_server:3000",
+        name: "apisuite-auth-server",
+        url: "http://apisuite_auth_server:3000",
     },
     transform_plugin: true,
     route: {
@@ -112,8 +112,8 @@ const authServer = {
 
 const resourceServer = {
     service: {
-        name: "openbank-resource-server",
-        url: "http://openbank_resource_server:3000",
+        name: "apisuite-resource-server",
+        url: "http://apisuite_resource_server:3000",
     },
     transform_plugin: true,
     route: {
@@ -127,8 +127,8 @@ const resourceServer = {
 
 const apiGenerator = {
     service: {
-        name: "openbank-api-generator",
-        url: "http://openbank_api_generator:3000",
+        name: "apisuite-api-generator",
+        url: "http://apisuite_api_generator:3000",
     },
     transform_plugin: true,
     route: {
@@ -142,8 +142,8 @@ const apiGenerator = {
 
 const containerManager = {
     service: {
-        name: "openbank-container-manager",
-        url: "http://openbank_container_manager:3000",
+        name: "apisuite-container-manager",
+        url: "http://apisuite_container_manager:3000",
     },
     transform_plugin: true,
     route: {
@@ -157,8 +157,8 @@ const containerManager = {
 
 const demoOrg = {
     service: {
-        name: "openbank-demo-org",
-        url: "http://openbank_demo_org:3000",
+        name: "apisuite-demo-org",
+        url: "http://apisuite_demo_org:3000",
     },
     transform_plugin: false,
     route: {
@@ -167,10 +167,10 @@ const demoOrg = {
         paths: ['/accounts'],
         strip_path: false,
         preserve_host: false,
-        hosts: ["openbank_demo_org"]
+        hosts: ["apisuite_demo_org"]
     },
     upstream: {
-        name: "openbank_demo_org",
+        name: "apisuite_demo_org",
         slots: 10,
         healthchecks : {
 
@@ -194,22 +194,22 @@ const demoOrg = {
     },
     targets: [
         {
-            target: "openbank_demo_org:3000",
+            target: "apisuite_demo_org:3000",
             weight: 1000
         },
         {
-            target: "openbank_container_manager:3000",
+            target: "apisuite_container_manager:3000",
             weight: 1
         },
 
     ]
 }
 
-const headerUpstreamPlugin = { 
+const headerUpstreamPlugin = {
     plugin : {
         name: 'header-upstream',
         config: {
-            source_header: 'X-OpenBank-Organization',
+            source_header: 'X-APISuite-Organization',
             target_header: 'Host'
         }
     }

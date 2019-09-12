@@ -1,4 +1,4 @@
-# openbank-sandbox-auth-server
+# apisuite-sandbox-auth-server
 
 - [Installation](#Installation)
 	- [Pre-requisites](#Pre-requisites)
@@ -253,7 +253,7 @@ This is now the Bearer token or Access token that your App will use to issue req
 
 ### Accessing an Endpoint
 
-With the Access token obtained from the authorization_code or client_credentials flow in the previous steps, you can access the STET endpoints by passing in that token on the Authorization header of the request as a Bearer token. Just like on the previous requests, the X-Openbank-Organization, X-Openbank-Stet-Version are required headers, as well as an X-Request-Id and a Signature.
+With the Access token obtained from the authorization_code or client_credentials flow in the previous steps, you can access the STET endpoints by passing in that token on the Authorization header of the request as a Bearer token. Just like on the previous requests, the X-APISuite-Organization, X-APISuite-Stet-Version are required headers, as well as an X-Request-Id and a Signature.
 
 The currently tested and available endpoints are accessible from the url https://sandbox.api.bnpparibasfortis.com.
 

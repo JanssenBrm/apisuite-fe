@@ -18,7 +18,7 @@ async function start () {
 	log.info('All plugins were loaded successfuly')
 
 	await server.start()
-	log.info('openbank-sandbox-auth-server is up and running on port %s', config.get('server').port)
+	log.info('apisuite-sandbox-auth-server is up and running on port %s', config.get('server').port)
 }
 
 start()
