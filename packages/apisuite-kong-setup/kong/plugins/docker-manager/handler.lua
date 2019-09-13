@@ -33,7 +33,7 @@ function plugin:init_worker()
   plugin.super.access(self)
 
   -- your custom code here
-  
+
 end --]]
 
 --[[ runs in the ssl_certificate_by_lua_block handler
@@ -41,12 +41,12 @@ function plugin:certificate(plugin_conf)
   plugin.super.access(self)
 
   -- your custom code here
-  
+
 end --]]
 
 ---[[ runs in the 'rewrite_by_lua_block' (from version 0.10.2+)
 -- IMPORTANT: during the `rewrite` phase neither the `api` nor the `consumer` will have
--- been identified, hence this handler will only be executed if the plugin is 
+-- been identified, hence this handler will only be executed if the plugin is
 -- configured as a global plugin!
 function plugin:access(plugin_conf)
   plugin.super.access(self)
@@ -57,17 +57,17 @@ end --]]
 function plugin:access(plugin_conf)
   plugin.super.access(self)
   -- your custom code here
-  
+
 
   local headers, err = ngx.req.get_headers()
-  
+
   for k, v in pairs(headers) do
     print(k, ": ", v )
   end
 
   ngx.var.upstream_uri = "/info/swagger"
   --access.execute(plugin_conf)
-  
+
 end --]]
 
 --[[ runs in the 'header_filter_by_lua_block'
@@ -84,7 +84,7 @@ function plugin:body_filter(plugin_conf)
   plugin.super.access(self)
 
   -- your custom code here
-  
+
 end --]]
 
 --[[ runs in the 'log_by_lua_block'
@@ -92,7 +92,7 @@ function plugin:log(plugin_conf)
   plugin.super.access(self)
 
   -- your custom code here
-  
+
 end --]]
 
 
