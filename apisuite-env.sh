@@ -18,7 +18,7 @@ Tool to manage the local APISuite environment
 Usage: $0 [method] [component] [scale] [sleep (wait for each request) ]
 
    - method:\tstart, stop, pull, restart, build and up-build
-   - component:\tall (Start all environment): sandbox, marketplace, sso and portal
+   - component:\tall (Start all environment): sandbox, marketplace, sso, portal and Kong
 
        Or
 
@@ -147,22 +147,29 @@ function dockerCompose() {
 # --------------------------------------------------------------------------
 # Docker inspect image. Check image is running
 # --------------------------------------------------------------------------
-function dockerInspect() {
-    local moduleName=$1
-    echo $(docker inspect --format="{{ .State.Running }}" ${moduleName})
-}
+# function dockerInspect() {
+#     local moduleName=$1
+#     echo $(docker inspect --format="{{ .State.Running }}" ${moduleName})
+# }
 
 # --------------------------------------------------------------------------
-# Run docker-compose file by module
+# Run docker-compose file by component
 # --------------------------------------------------------------------------
 function run() {
-    local modules=("$@")
-    for module in "${modules[@]}"; do
-        module_name="${module%%=*}"
-        module_docker_compose="${module##*=}"
+    local components=("$@")
+    for component in "${components[@]}"; do
+        component_name="${component%%=*}"
+        component_docker_compose="${component##*=}"
 
-        echo -e "\033[0;36m$(echo ${METHOD} | tr '[a-z]' '[A-Z]') ${module_name} [ ${module_docker_compose} ]\033[0m\n"
-        dockerCompose ${module_docker_compose}
+        echo -e "\033[0;36m$(echo ${METHOD} | tr '[a-z]' '[A-Z]') ${component_name} [ ${component_docker_compose} ]\033[0m\n"
+
+        if [ ${component_name} == "kong" ]; then
+            cd packages/apisuite-kong-setup
+            dockerCompose ${component_docker_compose}
+            cd ../../
+        else
+            dockerCompose ${component_docker_compose}
+        fi
 
         if [ "${METHOD}" == "start" ] || [ "${METHOD}" == "restart" ]; then
            sleep $SLEEP
@@ -175,24 +182,34 @@ function run() {
 # --------------------------------------------------------------------------
 function prepareToRun() {
     if [ "$COMPONENT" == "all" ]; then
-        run ${MODULES[@]}
+        run ${COMPONENTS[@]}
     else
-        for module in "${MODULES[@]}"; do
-            if [ "${module%%=*}" == "${COMPONENT%/}" ]; then
-                run ${module}
+        for component in "${COMPONENTS[@]}"; do
+            if [ "${component%%=*}" == "${COMPONENT%/}" ]; then
+                run ${component}
                 break
             fi
         done
     fi
 }
 
-# Docker compose for sandbox
+# --------------------------------------------------------------------------
+# Validate arguments
+# --------------------------------------------------------------------------
+function validArgs() {
+    if [ "$METHOD" == "" ] || [ "$COMPONENT" = "" ]; then
+        help
+    fi
+}
+
+# Docker compose of the components
 #
 DOCKER_COMPOSE_SANDBOX=docker-compose-sandbox.yaml
+DOCKER_COMPOSE_KONG=docker-compose-kong.yaml
 #
 
 # Modules of the APISuite
-MODULES=( "sandbox=${DOCKER_COMPOSE_SANDBOX}" )
+COMPONENTS=( "sandbox=${DOCKER_COMPOSE_SANDBOX}" "kong=${DOCKER_COMPOSE_KONG}" )
 
 # ARGS
 METHOD=$1
@@ -201,9 +218,7 @@ SCALE=$3
 SLEEP=${4:-1} # DEFAULT SLEEP = 1 sec
 
 # Validate arguments
-if [ "$METHOD" == "" ] || [ "$COMPONENT" = "" ]; then
-    help
-fi
+validArgs
 
 # Check prerequesits
 checkPrerequisits
