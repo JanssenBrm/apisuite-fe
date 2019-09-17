@@ -26,6 +26,7 @@ Usage: $0 [method] [component] [scale] [sleep (wait for each request) ]
 
    - $0 start sandbox
    - $0 build portal
+   - $0 start kong
 
    Optional parameters
 
@@ -49,7 +50,6 @@ function checkPrerequisits() {
 # --------------------------------------------------------------------------
 function startImage() {
     docker-compose -f ${dockerComposeFile} up -d --force-recreate --remove-orphans
-    #checkIsRunning ${moduleName}
 }
 
 # --------------------------------------------------------------------------
@@ -99,8 +99,7 @@ function scaleImage() {
 # Run docker-compose
 # --------------------------------------------------------------------------
 function dockerCompose() {
-    local dockerComposeFile=$1
-    shift
+    dockerComposeFile=$1
 
     case ${METHOD} in
         start)
@@ -127,30 +126,6 @@ function dockerCompose() {
         ;;
     esac
 }
-
-# function checkIsRunning() {
-#     local moduleName=$1
-#     shift
-#
-#     while true; do
-#           RUNNING=$(dockerInspect ${moduleName})
-#
-#           if [ "$RUNNING" == "true" ] ; then
-#                echo -e "-- $moduleName is running.\n"
-#                break
-#           else
-#                sleep 1
-#           fi
-#     done
-# }
-
-# --------------------------------------------------------------------------
-# Docker inspect image. Check image is running
-# --------------------------------------------------------------------------
-# function dockerInspect() {
-#     local moduleName=$1
-#     echo $(docker inspect --format="{{ .State.Running }}" ${moduleName})
-# }
 
 # --------------------------------------------------------------------------
 # Run docker-compose file by component
@@ -203,10 +178,8 @@ function validArgs() {
 }
 
 # Docker compose of the components
-#
 DOCKER_COMPOSE_SANDBOX=docker-compose-sandbox.yaml
 DOCKER_COMPOSE_KONG=docker-compose-kong.yaml
-#
 
 # Modules of the APISuite
 COMPONENTS=( "sandbox=${DOCKER_COMPOSE_SANDBOX}" "kong=${DOCKER_COMPOSE_KONG}" )
