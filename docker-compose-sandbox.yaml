@@ -7,7 +7,7 @@ services:
       - kong-network
     expose:
       - "3000"
-      
+
   sandbox-api:
     build: ./packages/apisuite-sandbox-api
     image: cloudoki/apisuite/sandbox/sandbox-api
@@ -40,16 +40,6 @@ services:
       - kong-network
     expose:
       - "3000"
-  # kong-setup:
-  #   build: ./packages/apisuite-kong-setup
-  #   image: cloudoki/apisuite/sandbox/kong-setup
-  #   depends_on:
-  #     - middleware-api
-  #     - sandbox-api
-  #     - sandbox-auth-server
-  #     - container-manager
-  #   expose:
-  #     - "3000"
 
 networks:
   kong-network:
