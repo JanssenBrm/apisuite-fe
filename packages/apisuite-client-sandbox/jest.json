@@ -1,0 +1,36 @@
+{
+  "testRegex": "./src/.*.test.(js|ts)x?$",
+  "moduleFileExtensions": ["ts", "tsx", "js", "jsx", "json", "node"],
+  "transform": {
+    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
+    ".+\\.(jpg|jpeg|png|gif|svg|css|scss)$": "<rootDir>/internals/jest/transformStub.js"
+  },
+  "transformIgnorePatterns": ["<rootDir>/node_modules/"],
+  "setupFiles": [
+    "./internals/jest/shim.js",
+    "./internals/jest/setup.js"
+  ],
+  "modulePaths": [
+    "src"
+  ],
+  "collectCoverageFrom": [
+    "src/**/*.js",
+    "!src/index.js",
+    "!src/**/index.js",
+    "!src/**/routes.js"
+  ],
+  "coveragePathIgnorePatterns": [
+    "/util/",
+    "/store/",
+    "/App/",
+    "/ErrorMonitor/"
+  ],
+  "coverageThreshold": {
+    "global": {
+      "branches": 35,
+      "functions": 35,
+      "lines": 35,
+      "statements": 35
+    }
+  }
+}

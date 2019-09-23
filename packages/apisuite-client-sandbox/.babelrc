@@ -1,0 +1,27 @@
+{
+  "presets": [
+    ["@babel/preset-env", {
+      "corejs": 3,
+      "useBuiltIns": "usage",
+      "forceAllTransforms": true
+    }],
+    "@babel/preset-react",
+    "@babel/typescript"
+  ],
+  "env": {
+    "dev": {
+      "plugins": ["react-hot-loader/babel"]
+    },
+    "test": {
+      "presets": [["@babel/env"]],
+      "plugins": ["@babel/plugin-transform-runtime"]
+    },
+    "production": {
+      "plugins": ["ignite-ignore-reactotron", "babel-plugin-jsx-remove-data-test-id"]
+    }
+  },
+  "plugins": [
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties"
+  ]
+}

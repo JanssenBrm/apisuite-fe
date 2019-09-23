@@ -10,9 +10,10 @@
     "packages/*"
   ],
   "scripts": {
-    "changelog": "lerna version --conventional-commits"
+    "changelog": "lerna version --conventional-commits",
+    "clean": "lerna clean"
   },
   "devDependencies": {
-    "lerna": "^3.16.4"
+    "lerna": "3.16.4"
   }
 }
