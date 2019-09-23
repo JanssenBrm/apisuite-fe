@@ -25,7 +25,7 @@ exports.inviteUserToOrganization = {
 		strategy: 'appcenterToken',
 	},
 	plugins: {
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['ADMIN'],
 			mode: 'hierarchy',
 		},
@@ -75,7 +75,7 @@ exports.inviteUserToOrganization = {
 
 			// If user exists, check if he is in org already
 			const organization = await orgSrvc.getUserOrganization(invitedUser.get('id'), request.params.organizationId)
-			
+
 			if (organization && organization.related('users').length)
 				throw Boom.conflict('User already belongs to that organization')
 		}
@@ -102,7 +102,7 @@ exports.getOrganizationInvitations = {
 		strategy: 'appcenterToken',
 	},
 	plugins: {
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['ADMIN'],
 			mode: 'hierarchy',
 		},
@@ -165,7 +165,7 @@ exports.acceptInvitation = {
 		} catch (e) {
 			log.warn(e, 'An error occurred while accepting invitation')
 			return Boom.badRequest()
-		} 
+		}
 	},
 }
 
@@ -192,7 +192,7 @@ exports.postponeInvitation = {
 		} catch (e) {
 			log.warn(e, 'An error occurred while postponing invitation')
 			return Boom.badRequest()
-		} 
+		}
 	},
 }
 
@@ -206,7 +206,7 @@ exports.deleteOrganizationInvitation = {
 		strategy: 'appcenterToken',
 	},
 	plugins: {
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['ADMIN'],
 			mode: 'hierarchy',
 		},
@@ -223,10 +223,10 @@ exports.deleteOrganizationInvitation = {
 	},
 	handler: async (request, h) => {
 		// Delete invitation
-		
+
 		try {
 			await userInvitationSrvc.deleteInvitationTicket(request.params.invitationId)
-			
+
 			return h.response().code(204)
 		} catch (error) {
 			log.warn({ error }, 'Failed to delete invitation ticket')
@@ -258,7 +258,7 @@ exports.getInvitation = {
 				email: invitation.get('email'),
 				user_name: invitation.get('user_name'),
 				organization_name: invitation.related('organization').get('name'),
-				isRegistered: !!(invitation.related('user') && invitation.related('user').get('password')), 
+				isRegistered: !!(invitation.related('user') && invitation.related('user').get('password')),
 				expiresAt: invitation.get('expiration_date'),
 			}
 

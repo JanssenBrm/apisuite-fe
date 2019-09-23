@@ -29,8 +29,8 @@ exports.getPayment = async (container, paymentRequestId, token) => {
 			...agentOptions,
 		}),
 		headers: {
-			'X-Openbank-Organization': container,
-			'X-Openbank-Stet-Version': imageTag,
+			'X-APISuite-Organization': container,
+			'X-APISuite-Stet-Version': imageTag,
 			'Authorization': `Bearer ${token}`,
 			'X-Request-Id': uuid(),
 			'Signature': uuid(),
@@ -47,8 +47,8 @@ exports.confirmPayment = async (container, paymentRequestId, payload, token) => 
 			...agentOptions,
 		}),
 		headers: {
-			'X-Openbank-Organization': container,
-			'X-Openbank-Stet-Version': imageTag,
+			'X-APISuite-Organization': container,
+			'X-APISuite-Stet-Version': imageTag,
 			'Authorization': `Bearer ${token}`,
 			'X-Request-Id': uuid(),
 			'Signature': uuid(),

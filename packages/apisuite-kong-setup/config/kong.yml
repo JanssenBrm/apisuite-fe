@@ -11,8 +11,8 @@
 ## If you want to load custom plugins that are not supported by Kong, uncomment and update
 ## this property with the names of the plugins to load.
 ## Plugins will be loaded from the kong.plugins.{name}.* namespace.
-custom_plugins:
-  - kong-plugin-header-upstream
+#custom_plugins:
+  # - kong-plugin-header-upstream
   # - custom_plugin2
   # - ...
 

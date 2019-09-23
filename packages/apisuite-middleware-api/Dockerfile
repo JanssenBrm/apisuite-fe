@@ -1,6 +1,6 @@
 FROM node:10.15.3-alpine
 
-WORKDIR /openbank-middleware-api
+WORKDIR /apisuite-middleware-api
 
 RUN apk update
 # todo remove 'curl openssl jq' needed for the sentia script
@@ -26,4 +26,4 @@ RUN yarn run doc
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "/openbank-middleware-api/wait-for-it.sh -- yarn start"]
+CMD ["sh", "-c", "/apisuite-middleware-api/wait-for-it.sh -- yarn start"]

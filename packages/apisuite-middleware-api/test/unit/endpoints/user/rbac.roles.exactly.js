@@ -18,7 +18,7 @@ const testPlugin = {
 						return h.response({ msg: 'OK' }).code(200)
 					},
 					plugins: {
-						'openbank-rbac': {
+						'apisuite-rbac': {
 							roles: ['DEVELOPER', 'SALES'],
 							mode: 'exactly',
 						},
@@ -38,13 +38,13 @@ server.auth.scheme('mock', (server, options) => {
 		authenticate: (request, h) => {
 			return h.authenticated({
 				credentials: options,
-			})  
+			})
 		},
 	}
 })
 
-server.auth.strategy('test-rbac-strategy', 'mock', 
-	{ user: {id: 1}, 
+server.auth.strategy('test-rbac-strategy', 'mock',
+	{ user: {id: 1},
 		roles : [
 			{ role: 'SALES', organizationId: 1 },
 		],
@@ -100,6 +100,6 @@ describe('(UNIT) GET /users/me', async () => {
 		it('Should return status code 403', () => {
 			expect(resp.statusCode).to.be.equal(403)
 		})
-    
+
 	})
 })

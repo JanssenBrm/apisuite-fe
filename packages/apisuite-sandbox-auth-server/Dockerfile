@@ -2,7 +2,7 @@ FROM node:10.15.3-alpine
 
 ENV OBSANDBOXAUTH_BRANDED=${OBSANDBOXAUTH_BRANDED}
 
-WORKDIR /openbank-sandbox-auth-server
+WORKDIR /apisuite-sandbox-auth-server
 
 RUN apk update
 RUN apk add --no-cache make gcc g++ python mysql-client
@@ -23,4 +23,4 @@ RUN OBSANDBOXAUTH_BRANDED=${OBSANDBOXAUTH_BRANDED} yarn build-prod
 
 EXPOSE 3000
 
-CMD ["sh", "-c", "/openbank-sandbox-auth-server/wait-for-it.sh -- yarn start"]
+CMD ["sh", "-c", "/apisuite-sandbox-auth-server/wait-for-it.sh -- yarn start"]

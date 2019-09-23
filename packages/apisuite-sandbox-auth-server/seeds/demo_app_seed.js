@@ -21,7 +21,7 @@ exports.seed = function (knex, Promise) {
 				]),
 				knex('app_container').insert([
 					{
-						name: 'openbank_demo_org',
+						name: 'apisuite_demo_org',
 						app_id: app_id,
 					},
 				]),

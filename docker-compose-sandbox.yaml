@@ -1,0 +1,46 @@
+version: '3.6'
+services:
+  middleware-api:
+    build: ./packages/apisuite-middleware-api
+    image: cloudoki/apisuite/sandbox/middleware-api
+    networks:
+      - apisuite-network
+    expose:
+      - "3000"
+
+  sandbox-api:
+    build: ./packages/apisuite-sandbox-api
+    image: cloudoki/apisuite/sandbox/sandbox-api
+    depends_on:
+      - middleware-api
+      - sandbox-auth-server
+    networks:
+      - apisuite-network
+    expose:
+      - "3000"
+
+  sandbox-auth-server:
+    build: ./packages/apisuite-sandbox-auth-server
+    image: cloudoki/apisuite/sandbox/sandbox-auth-server
+    depends_on:
+      - middleware-api
+    networks:
+      - apisuite-network
+    expose:
+      - "3000"
+
+  container-manager:
+    build: ./packages/apisuite-container-manager
+    image: cloudoki/apisuite/sandbox/container-manager
+    depends_on:
+      - middleware-api
+      - sandbox-api
+      - sandbox-auth-server
+    networks:
+      - apisuite-network
+    expose:
+      - "3000"
+
+networks:
+  apisuite-network:
+    name: apisuite-global-network

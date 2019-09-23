@@ -1,7 +1,0 @@
-version: '3.6'
-services:
-  apisuite-sandbox-api:
-    build: ./packages/apisuite-sandbox-api
-    image: cloudoki/apisuite-sandbox-api
-    expose:
-      - "3000"

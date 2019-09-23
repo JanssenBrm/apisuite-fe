@@ -13,7 +13,7 @@ exports = module.exports = {}
  * POST /admin/products
  */
 exports.createProduct = {
-	id: 'openbank-create-product',
+	id: 'apisuite-create-product',
 	description: 'Creates a new API products',
 	notes: ['Creates a new product'],
 	tags: ['api'],
@@ -72,7 +72,7 @@ exports.createProduct = {
  * POST /admin/products/{productId}/quarantine
  */
 exports.quarantineProduct = {
-	id: 'openbank-quarantine-product',
+	id: 'apisuite-quarantine-product',
 	description: 'Quarantine a API product',
 	notes: ['Puts a product in quarantine'],
 	tags: ['api'],
@@ -105,7 +105,7 @@ exports.quarantineProduct = {
  * PUT /admin/products/{productId}
  */
 exports.updateProduct = {
-	id: 'openbank-update-product',
+	id: 'apisuite-update-product',
 	description: 'Updates an API products',
 	notes: ['Updates a product'],
 	tags: ['api'],
@@ -170,7 +170,7 @@ exports.updateProduct = {
  * DELETE /admin/products/{productId}
  */
 exports.deleteProduct = {
-	id: 'openbank-delete-product',
+	id: 'apisuite-delete-product',
 	description: 'Deletes the API product',
 	notes: ['Deletes product'],
 	tags: ['api'],
@@ -204,7 +204,7 @@ exports.deleteProduct = {
  * GET /admin/products
  */
 exports.listAdminProducts = {
-	id: 'openbank-list-admin-products',
+	id: 'apisuite-list-admin-products',
 	description: 'Returns a list of API products',
 	notes: ['Returns products'],
 	tags: ['api'],
@@ -243,7 +243,7 @@ exports.listAdminProducts = {
  * PUT /admin/products/{productId}/apidocs/{apidocsId}
  */
 exports.updateAPIState = {
-	id: 'openbank-update-product-api',
+	id: 'apisuite-update-product-api',
 	description: 'Updates a product API states',
 	notes: ['Updates a api product state'],
 	tags: ['api'],
@@ -278,7 +278,7 @@ exports.updateAPIState = {
  * DELETE /admin/products/{productId}/apidocs/{apidocsId}
  */
 exports.deleteAPI = {
-	id: 'openbank-delete-product-api',
+	id: 'apisuite-delete-product-api',
 	description: 'Deletes a product api',
 	notes: ['Deletes a api product'],
 	tags: ['api'],
@@ -315,7 +315,7 @@ exports.deleteAPI = {
  * GET /admin/products/{productId}
  */
 exports.getAdminProduct = {
-	id: 'openbank-get-admin-product',
+	id: 'apisuite-get-admin-product',
 	description: 'Returns the API product',
 	notes: ['Returns product'],
 	tags: ['api'],
@@ -354,7 +354,7 @@ exports.getAdminProduct = {
  * GET /products
  */
 exports.listProducts = {
-	id: 'openbank-list-products',
+	id: 'apisuite-list-products',
 	description: 'Returns a list of API products',
 	notes: ['Returns products'],
 	tags: ['api'],
@@ -386,7 +386,7 @@ exports.listProducts = {
  * GET /products/{productId}
  */
 exports.getProduct = {
-	id: 'openbank-get-product',
+	id: 'apisuite-get-product',
 	description: 'Returns the API product',
 	notes: ['Returns product'],
 	tags: ['api'],

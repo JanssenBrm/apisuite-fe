@@ -97,7 +97,7 @@ const schema = {
 			name: {
 				doc: 'The sandbox image name',
 				format: String,
-				default: 'openbank-sandbox-api',
+				default: 'apisuite-sandbox-api',
 				env: 'OBCMANAGER_SANDBOX_IMAGE_NAME',
 			},
 			version: {
@@ -109,7 +109,7 @@ const schema = {
 			fullName: {
 				doc: 'The fully qualified docker image and tag',
 				format : String,
-				default: 'cloudokihub/openbank-sandbox-api:1.4.0.47.develop',
+				default: 'cloudokihub/apisuite-sandbox-api:1.4.0.47.develop',
 				env: 'OBCMANAGER_SANDBOX_FULL_NAME',
 			},
 		},
@@ -137,7 +137,7 @@ const schema = {
 		url: {
 			doc: 'The auth server url',
 			format: String,
-			default: 'https://auth.develop.openbankportal.be',
+			default: 'https://auth.develop.apisuiteportal.be',
 			env: 'OBCMANAGER_AUTH_SERVER_URL',
 		},
 	},

@@ -40,8 +40,8 @@ exports.validatePsu = async (uid, pwd, container) => {
 			...agentOptions,
 		}),
 		headers: {
-			'X-Openbank-Organization': container,
-			'X-Openbank-Stet-Version': imageTag,
+			'X-APISuite-Organization': container,
+			'X-APISuite-Stet-Version': imageTag,
 		},
 	})
 
@@ -68,8 +68,8 @@ exports.createAccreditation = async (clientId, clientSecret, userId, scope, cont
 			...agentOptions,
 		}),
 		headers: {
-			'X-Openbank-Organization': container,
-			'X-Openbank-Stet-Version': imageTag,
+			'X-APISuite-Organization': container,
+			'X-APISuite-Stet-Version': imageTag,
 			'X-Client-Id': clientId,
 			'X-Client-Secret': clientSecret,
 			'X-Client-Scope': 'internal',
@@ -100,8 +100,8 @@ exports.getAccounts = async (token, container) => {
 			...agentOptions,
 		}),
 		headers: {
-			'X-Openbank-Organization': container,
-			'X-Openbank-Stet-Version' : imageTag,
+			'X-APISuite-Organization': container,
+			'X-APISuite-Stet-Version' : imageTag,
 			'Authorization': `Bearer ${token}`,
 			'X-Request-Id': uuid(),
 			'Signature': uuid(),
@@ -127,8 +127,8 @@ exports.getPsuAccounts = async (token, container) => {
 			...agentOptions,
 		}),
 		headers: {
-			'X-Openbank-Organization': container,
-			'X-Openbank-Stet-Version' : imageTag,
+			'X-APISuite-Organization': container,
+			'X-APISuite-Stet-Version' : imageTag,
 			'Authorization': `Bearer ${token}`,
 			'X-Request-Id': uuid(),
 			'Signature': uuid(),

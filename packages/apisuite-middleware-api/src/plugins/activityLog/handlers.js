@@ -11,7 +11,7 @@ exports = module.exports = {}
  * GET /activityLogs
  */
 exports.list = {
-	id: 'openbank-activity-logs',
+	id: 'apisuite-activity-logs',
 	description: 'Returns a list of activity log',
 	notes: ['Returns activity logs'],
 	tags: ['api'],
@@ -23,8 +23,8 @@ exports.list = {
 				'500': { 'description': 'Internal Server Error' },
 			},
 		},
-		'openbank-rbac': {
-			roles: ['TESTER'], 
+		'apisuite-rbac': {
+			roles: ['TESTER'],
 			mode: 'hierarchical', // makes it that every user with any role with higher or equal previlege than TESTER is allowed
 		},
 	},
@@ -46,7 +46,7 @@ exports.list = {
 		strategy: 'appcenterToken',
 	},
 	handler: async (request, h) => {
-		
+
 		const { pageSize, page, category, from, to } = request.query
 		const user = request.auth.artifacts.user
 		const { organizationId } = request.params
@@ -82,7 +82,7 @@ exports.list = {
 			pagination: result.pagination,
 			records: result.toJSON(),
 		}
-		
+
 		return h.response(retval).code(200)
 	},
 }
@@ -91,7 +91,7 @@ exports.list = {
  * GET /activity/{organizationId}/kpi
  */
 exports.listKPI = {
-	id: 'openbank-activity-logs-kpi',
+	id: 'apisuite-activity-logs-kpi',
 	description: 'Returns a list of activity log KPI',
 	notes: ['Returns activity logs KPI'],
 	tags: ['api'],
@@ -103,7 +103,7 @@ exports.listKPI = {
 				'500': { 'description': 'Internal Server Error' },
 			},
 		},
-		'openbank-rbac': {
+		'apisuite-rbac': {
 			roles: ['TESTER'],
 			mode: 'hierarchical', // makes it that every user with any role with higher or equal previlege than TESTER is allowed
 		},
