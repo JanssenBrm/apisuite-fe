@@ -15,21 +15,21 @@ import reducer, {
   fetchOrganizationsError,
   updateOrganization,
   updateOrganizationSuccess,
-  updateOrganizationError
+  updateOrganizationError,
 } from './ducks'
 
-const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages['en'], formats })
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
 const { intl } = intlProvider.getChildContext()
 
 const mockOrganizations = [
   {
-    'id': 123456,
-    'name': 'THE BANK',
-    'vat': '123456789',
-    'website': 'https://www.thebank.com',
-    'createdAt': '2018/02/01',
-    'updatedAt': '2018/02/01'
-  }
+    id: 123456,
+    name: 'THE BANK',
+    vat: '123456789',
+    website: 'https://www.thebank.com',
+    createdAt: '2018/02/01',
+    updatedAt: '2018/02/01',
+  },
 ]
 
 const userMock = {
@@ -47,16 +47,16 @@ const userMock = {
     {
       id: 1,
       orgId: 208,
-      name: 'ADMIN'
-    }
-  ]
+      name: 'ADMIN',
+    },
+  ],
 }
 
 const organisationMock = {
-  'id': 123456,
-  'name': 'THE BANK',
-  'vat': '123456789',
-  'website': 'https://www.thebank.com'
+  id: 123456,
+  name: 'THE BANK',
+  vat: '123456789',
+  website: 'https://www.thebank.com',
 }
 
 const errorMock = { message: 'error-stub' }
@@ -72,14 +72,14 @@ describe('<Profile />', () => {
     TwoFA: {},
     history: {
       location: {
-        pathname: ''
-      }
+        pathname: '',
+      },
     },
     generateQRCode: jest.fn(),
     sendSMSCode: jest.fn(),
     twoFaUpdate: jest.fn(),
     twoFaVerify: jest.fn(),
-    getCodes: jest.fn()
+    getCodes: jest.fn(),
   }
 
   const wrapper = mountWithIntl(<Profile {...props} />)
@@ -146,7 +146,7 @@ describe('<OrganisationSection />', () => {
     updateOrganisation: jest.fn(),
     fetchOrganizations: jest.fn(),
     updateOrganization: jest.fn(),
-    getOnboardingToken: jest.fn()
+    getOnboardingToken: jest.fn(),
   }
 
   const wrapper = mountWithIntl(<OrganisationSection {...props} />)
@@ -157,7 +157,7 @@ describe('<OrganisationSection />', () => {
   })
 
   it('should call updateOrganisation on Save click', () => {
-    const editedOrganisation = {...organisationMock, description: 'k'}
+    const editedOrganisation = { ...organisationMock, description: 'k' }
     wrapper.setState({ organisation: editedOrganisation })
     wrapper.find('#save-organisation-btn').first().simulate('click')
     expect(props.updateOrganization).toHaveBeenCalled()
@@ -174,8 +174,8 @@ const initialState = {
   organization: {},
   onboardingToken: {},
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 
 describe('Profile reducer', () => {
@@ -184,33 +184,37 @@ describe('Profile reducer', () => {
   })
 
   it('should update state on FETCH_ORGANIZATIONS', () => {
-    expect(reducer(initialState, fetchOrganizations())).toEqual({...initialState, ui: {loading: true}})
+    expect(reducer(initialState, fetchOrganizations())).toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on FETCH_ORGANIZATIONS_SUCCESS', () => {
-    expect(reducer(initialState, fetchOrganizationsSuccess(mockOrganizations))).toEqual({...initialState, data: mockOrganizations})
+    expect(reducer(initialState, fetchOrganizationsSuccess(mockOrganizations)))
+      .toEqual({ ...initialState, data: mockOrganizations })
   })
 
   it('should update state on FETCH_ORGANIZATIONS_ERROR', () => {
-    expect(reducer(initialState, fetchOrganizationsError(errorMock))).toEqual({...initialState, data: []})
+    expect(reducer(initialState, fetchOrganizationsError(errorMock))).toEqual({ ...initialState, data: [] })
   })
 
   it('should update state on UPDATE_ORGANIZATION', () => {
-    expect(reducer(initialState, updateOrganization(organisationMock))).toEqual({...initialState, ui: {loading: true}})
+    expect(reducer(initialState, updateOrganization(organisationMock)))
+      .toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on UPDATE_ORGANIZATION_SUCCESS', () => {
     const editOrganization = {
-      'id': 123456,
-      'name': 'THE BANK edit',
-      'vat': '123456789',
-      'website': 'https://www.thebank.com'
+      id: 123456,
+      name: 'THE BANK edit',
+      vat: '123456789',
+      website: 'https://www.thebank.com',
     }
-    expect(reducer({...initialState, data: mockOrganizations}, updateOrganizationSuccess(editOrganization))).toEqual({...initialState, data: [editOrganization], organization: editOrganization})
+    expect(reducer({ ...initialState, data: mockOrganizations }, updateOrganizationSuccess(editOrganization)))
+      .toEqual({ ...initialState, data: [editOrganization], organization: editOrganization })
   })
 
   it('should update state on UPDATE_APP_ERROR', () => {
-    expect(reducer(initialState, updateOrganizationError(errorMock))).toEqual({...initialState, ui: {loading: false}})
+    expect(reducer(initialState, updateOrganizationError(errorMock)))
+      .toEqual({ ...initialState, ui: { loading: false } })
   })
 })
 

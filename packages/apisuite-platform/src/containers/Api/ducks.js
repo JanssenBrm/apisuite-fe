@@ -19,8 +19,8 @@ export const FETCH_API_ERROR = 'API/FETCH_API_ERROR'
 const initialState = {
   apidocs: {},
   ui: {
-    loading: true
-  }
+    loading: true,
+  },
 }
 
 /**
@@ -34,15 +34,15 @@ export default function reducer (state = initialState, action) {
       return update(state, {
         apidocs: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_API_ERROR:
       return update(state, {
         apidocs: { $set: {} },
         ui: {
-          loading: { $set: true }
-        }
+          loading: { $set: true },
+        },
       })
 
     default:

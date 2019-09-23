@@ -9,21 +9,21 @@ import { API_URL } from 'constants/endpoints'
 import {
   FETCH_LATEST_NOTIFICATION,
   fetchLatestNotificationSuccess,
-  fetchLatestNotificationError
+  fetchLatestNotificationError,
 } from './ducks'
 
 /**
  * Fetch Portal Latest Notification saga worker
  * @param {Object} action
  */
-function * fetchLatestNotificationWorker (action) {
+function * fetchLatestNotificationWorker () {
   const state = yield select()
   const requestUrl = `${API_URL}/notifications/latest`
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {

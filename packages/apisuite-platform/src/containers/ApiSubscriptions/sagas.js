@@ -12,7 +12,7 @@ import {
   fetchApiSubscriptionsError,
   CREATE_API_SUBSCRIPTION,
   createApiSubscriptionSuccess,
-  createApiSubscriptionError
+  createApiSubscriptionError,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 
@@ -20,7 +20,7 @@ import { showNotification } from 'containers/NotificationManager/ducks'
  * Fetch API Subscriptions saga worker
  * @param {Object} action
  */
-function * fetchApiSubscriptionsWorker (action) {
+function * fetchApiSubscriptionsWorker () {
   const state = yield select()
   const organizationId = state.auth.user.organizations[0].id
   const requestUrl = `${API_URL}/organizations/${organizationId}/products`
@@ -28,7 +28,7 @@ function * fetchApiSubscriptionsWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -55,13 +55,13 @@ function * createApiSubscriptionWorker (action) {
   const requestUrl = `${API_URL}/organizations/${action.organizationId}/products`
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
   const body = JSON.stringify({
-    productIds: action.productIds
+    productIds: action.productIds,
   })
 
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {

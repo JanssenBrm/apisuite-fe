@@ -11,7 +11,7 @@ class TwoFaLogin extends Component {
     showErrors: false,
     message: '',
     variant: 'info',
-    displayMessage: false
+    displayMessage: false,
   }
 
   handleSubmit = () => {
@@ -20,7 +20,7 @@ class TwoFaLogin extends Component {
       this.props.twoFaAuth(this.state.code)
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
@@ -28,7 +28,7 @@ class TwoFaLogin extends Component {
   handleFieldChange = ({ target }, errors) => {
     this.setState({
       code: target.value,
-      errors: parseErrors(target, errors, this.state.errors)
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -39,16 +39,15 @@ class TwoFaLogin extends Component {
     const { ui, TwoFA } = auth
     const { method } = TwoFA
     const { code, showErrors, errors } = this.state
-    const codePlaceholder = intl.formatMessage({id: 'twofa.code.placeholder'})
-    const codeLabel = intl.formatMessage({id: 'twofa.code.label'})
-    const codeRequired = intl.formatMessage({id: 'twofa.code.required'})
+    const codePlaceholder = intl.formatMessage({ id: 'twofa.code.placeholder' })
+    const codeLabel = intl.formatMessage({ id: 'twofa.code.label' })
+    const codeRequired = intl.formatMessage({ id: 'twofa.code.required' })
     // const smsResendBtn = intl.formatMessage({ id: 'twofa.code.sms.resend' })
 
     return (
       <div className='page-content-wrapper two-fa-login'>
-        { method &&
-          <FormattedMessage id={`twofa.login.${method}`} />
-        }
+        {method &&
+          <FormattedMessage id={`twofa.login.${method}`} />}
         <FormField
           className='two-fa-input'
           inputtype='number'
@@ -61,10 +60,10 @@ class TwoFaLogin extends Component {
           value={code}
           fullWidth
           rules={[
-            {rule: code && code.length === 6, message: codeRequired}
+            { rule: code && code.length === 6, message: codeRequired },
           ]}
           showerrors={`${showErrors}`}
-          InputLabelProps={{shrink: true}}
+          InputLabelProps={{ shrink: true }}
         />
         <Button
           className='two-fa-submit'
@@ -73,7 +72,8 @@ class TwoFaLogin extends Component {
           variant='contained'
           color='primary'
           onClick={this.handleSubmit}
-          disabled={!code || errors.length > 0 || ui.loading}>
+          disabled={!code || errors.length > 0 || ui.loading}
+        >
           <FormattedMessage id='twofa.code.verify' />
         </Button>
         {/* { method && method === 'authorizationSms' &&
@@ -102,8 +102,7 @@ TwoFaLogin.propTypes = {
   auth: object.isRequired,
   twoFaAuth: func.isRequired,
   intl: object.isRequired,
-  sendSMSCode: func.isRequired,
-  openRecovery: func.isRequired
+  openRecovery: func.isRequired,
 }
 
 export default TwoFaLogin

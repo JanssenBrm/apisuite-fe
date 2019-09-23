@@ -15,110 +15,110 @@ import reducer, {
   fetchApiSubscriptionsError,
   createApiSubscription,
   createApiSubscriptionSuccess,
-  createApiSubscriptionError
+  createApiSubscriptionError,
 } from './ducks'
 
-const intlProvider = new IntlProvider({locale: 'en', messages: translationMessages['en'], formats})
-const {intl} = intlProvider.getChildContext()
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
+const { intl } = intlProvider.getChildContext()
 
-const errorMock = {message: 'error-stub'}
+const errorMock = { message: 'error-stub' }
 const mockSubscriptions = {
-  brands: [{'id': 1, 'name': 'BNP Paribas Fortis', 'logo': 'logo.svg'}, {
-    'id': 2,
-    'name': 'Hello Bank!',
-    'logo': 'hellobank_logo.svg'
-  }, {'id': 3, 'name': 'Fintro', 'logo': 'fintro_logo.svg'}],
+  brands: [{ id: 1, name: 'BNP Paribas Fortis', logo: 'logo.svg' }, {
+    id: 2,
+    name: 'Hello Bank!',
+    logo: 'hellobank_logo.svg',
+  }, { id: 3, name: 'Fintro', logo: 'fintro_logo.svg' }],
   products: [
     {
-      'id': 4,
-      'name': 'Payment Initiation API',
-      'longname': 'Payment Initiation – BNP Paribas Fortis Accounts',
-      'intro': 'Give customers the option to initiate payments via our BNP Paribas Fortis Payment Initiation API.',
-      'description': 'With our BNP Paribas Fortis Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
-      'image': 'logo.svg',
-      'role': 'pisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 1,
-      'isSubscribed': false
+      id: 4,
+      name: 'Payment Initiation API',
+      longname: 'Payment Initiation – BNP Paribas Fortis Accounts',
+      intro: 'Give customers the option to initiate payments via our BNP Paribas Fortis Payment Initiation API.',
+      description: 'With our BNP Paribas Fortis Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
+      image: 'logo.svg',
+      role: 'pisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 1,
+      isSubscribed: false,
     }, {
-      'id': 5,
-      'name': 'Payment Initiation API',
-      'longname': 'Payment Initiation – Hello Bank! Accounts',
-      'intro': 'Give customers the option to initiate payments via our Hello Bank! Payment Initiation API.',
-      'description': 'With our Hello Bank! Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
-      'image': 'hellobank_logo.svg',
-      'role': 'pisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 2,
-      'isSubscribed': false
+      id: 5,
+      name: 'Payment Initiation API',
+      longname: 'Payment Initiation – Hello Bank! Accounts',
+      intro: 'Give customers the option to initiate payments via our Hello Bank! Payment Initiation API.',
+      description: 'With our Hello Bank! Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
+      image: 'hellobank_logo.svg',
+      role: 'pisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 2,
+      isSubscribed: false,
     }, {
-      'id': 6,
-      'name': 'Payment Initiation API',
-      'longname': 'Payment Initiation – Fintro Accounts',
-      'intro': 'Give customers the option to initiate payments via our Fintro Payment Initiation API.',
-      'description': 'With our Fintro Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
-      'image': 'fintro_logo.svg',
-      'role': 'pisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 3,
-      'isSubscribed': false
+      id: 6,
+      name: 'Payment Initiation API',
+      longname: 'Payment Initiation – Fintro Accounts',
+      intro: 'Give customers the option to initiate payments via our Fintro Payment Initiation API.',
+      description: 'With our Fintro Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
+      image: 'fintro_logo.svg',
+      role: 'pisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 3,
+      isSubscribed: false,
     }, {
-      'id': 7,
-      'name': 'Account Information API',
-      'longname': 'Account Information – BNP Paribas Fortis Accounts',
-      'intro': 'Give customers secure access to transaction data and balance data via our BNP Paribas Fortis Account Information API.',
-      'description': 'With our BNP Paribas Fortis Account Information API you can allow customers to connect to balance and transaction data. Our Account Information API will enable secure access to Belgian BNP Paribas Fortis payment accounts.',
-      'image': 'logo.svg',
-      'role': 'aisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 1,
-      'isSubscribed': false
+      id: 7,
+      name: 'Account Information API',
+      longname: 'Account Information – BNP Paribas Fortis Accounts',
+      intro: 'Give customers secure access to transaction data and balance data via our BNP Paribas Fortis Account Information API.',
+      description: 'With our BNP Paribas Fortis Account Information API you can allow customers to connect to balance and transaction data. Our Account Information API will enable secure access to Belgian BNP Paribas Fortis payment accounts.',
+      image: 'logo.svg',
+      role: 'aisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 1,
+      isSubscribed: false,
     }, {
-      'id': 8,
-      'name': 'Account Information API',
-      'longname': 'Account Information – Hello Bank! Accounts',
-      'intro': 'Give customers secure access to transaction data and balance data via our Hello Bank! Account Information API.',
-      'description': 'Create Account Information consuming applications that offer great added value to your customers. The Banks’s Account Information Service will enable secure access to all European The Bank payments accounts.',
-      'image': 'hellobank_logo.svg',
-      'role': 'aisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 2,
-      'isSubscribed': false
+      id: 8,
+      name: 'Account Information API',
+      longname: 'Account Information – Hello Bank! Accounts',
+      intro: 'Give customers secure access to transaction data and balance data via our Hello Bank! Account Information API.',
+      description: 'Create Account Information consuming applications that offer great added value to your customers. The Banks’s Account Information Service will enable secure access to all European The Bank payments accounts.',
+      image: 'hellobank_logo.svg',
+      role: 'aisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 2,
+      isSubscribed: false,
     }, {
-      'id': 9,
-      'name': 'Account Information API',
-      'longname': 'Account Information – Fintro Accounts',
-      'intro': 'Give customers secure access to transaction data and balance data via our Fintro Account Information API.',
-      'description': 'Create Account Information consuming applications that offer great added value to your customers. The Banks’s Account Information Service will enable secure access to all European The Bank payments accounts.',
-      'image': 'fintro_logo.svg',
-      'role': 'aisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 3,
-      'isSubscribed': false
-    }
-  ]
+      id: 9,
+      name: 'Account Information API',
+      longname: 'Account Information – Fintro Accounts',
+      intro: 'Give customers secure access to transaction data and balance data via our Fintro Account Information API.',
+      description: 'Create Account Information consuming applications that offer great added value to your customers. The Banks’s Account Information Service will enable secure access to all European The Bank payments accounts.',
+      image: 'fintro_logo.svg',
+      role: 'aisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 3,
+      isSubscribed: false,
+    },
+  ],
 }
 
-const mockOrganization = {id: 1, name: 'myOrg', state: 'NON_VALIDATED'}
+const mockOrganization = { id: 1, name: 'myOrg', state: 'NON_VALIDATED' }
 
 describe('<ApiSubscriptions />', () => {
   const props = {
-    history: {push: jest.fn()},
+    history: { push: jest.fn() },
     intl,
     theme: {
-      name: ''
+      name: '',
     },
     fetchApiSubscriptions: jest.fn(),
     createApiSubscription: jest.fn(),
@@ -127,17 +127,17 @@ describe('<ApiSubscriptions />', () => {
       products: mockSubscriptions.products,
       brands: mockSubscriptions.brands,
       ui: {
-        loading: false
-      }
+        loading: false,
+      },
     },
     auth: {
       user: {
         organizations: [
-          mockOrganization
-        ]
-      }
+          mockOrganization,
+        ],
+      },
     },
-    apps: []
+    apps: [],
   }
   const wrapper = mountWithIntl(<ApiSubscriptions {...props} />)
 
@@ -151,8 +151,8 @@ describe('<ApiSubscriptions />', () => {
       subscriptions: {
         ...props.subscriptions,
         products: mockSubscriptions.products,
-        brands: mockSubscriptions.brands
-      }
+        brands: mockSubscriptions.brands,
+      },
     })
     wrapper.find(ExpansionPanel).first().simulate('click')
     expect(expandSpy).toHaveBeenCalledWith(0)
@@ -169,13 +169,13 @@ describe('<ApiSubscriptions />', () => {
   })
 
   it('should request sandbox access if user is validated', () => {
-    wrapper.setProps({auth: {...props.auth, user: {organizations: [{id: 1, name: 'myOrg', state: 'NON_TRUSTED'}]}}})
+    wrapper.setProps({ auth: { ...props.auth, user: { organizations: [{ id: 1, name: 'myOrg', state: 'NON_TRUSTED' }] } } })
     wrapper.find('#api-subscription-btn').first().simulate('click')
     expect(props.createApiSubscription).toHaveBeenCalledWith(mockOrganization.id, [`${mockSubscriptions.products[0].id}`])
   })
 
   it('should display loading status', () => {
-    wrapper.setProps({subscriptions: {...props.subscriptions, ui: {loading: true}}})
+    wrapper.setProps({ subscriptions: { ...props.subscriptions, ui: { loading: true } } })
     expect(wrapper.find(CircularProgress)).toHaveLength(1)
   })
 })
@@ -184,18 +184,18 @@ const initialState = {
   products: [],
   brands: [],
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 
 const mockState = {
   auth: {
     user: {
       organizations: [
-        mockOrganization
-      ]
-    }
-  }
+        mockOrganization,
+      ],
+    },
+  },
 }
 
 describe('ApiSubscriptions reducer', () => {
@@ -204,14 +204,14 @@ describe('ApiSubscriptions reducer', () => {
   })
 
   it('should update state on FETCH_API_SUBSCRIPTIONS', () => {
-    expect(reducer(initialState, fetchApiSubscriptions())).toEqual({...initialState, ui: {loading: true}})
+    expect(reducer(initialState, fetchApiSubscriptions())).toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on FETCH_API_SUBSCRIPTIONS_SUCCESS', () => {
     expect(reducer(initialState, fetchApiSubscriptionsSuccess(mockSubscriptions))).toEqual({
       ...initialState,
       products: mockSubscriptions.products,
-      brands: mockSubscriptions.brands
+      brands: mockSubscriptions.brands,
     })
   })
 
@@ -219,7 +219,7 @@ describe('ApiSubscriptions reducer', () => {
     expect(reducer(initialState, fetchApiSubscriptionsError(errorMock))).toEqual({
       ...initialState,
       products: [],
-      brands: []
+      brands: [],
     })
   })
 
@@ -227,30 +227,27 @@ describe('ApiSubscriptions reducer', () => {
     const productIds = ['2']
     expect(reducer(initialState, createApiSubscription(mockOrganization.id, productIds))).toEqual({
       ...initialState,
-      ui: {loading: true}
+      ui: { loading: true },
     })
   })
 
   it('should update state on CREATE_API_SUBSCRIPTION_SUCCESS', () => {
     expect(reducer(initialState,
-      createApiSubscriptionSuccess({products: mockSubscriptions.products, brands: mockSubscriptions.brands}))).toEqual({
-      ...initialState,
-      products: mockSubscriptions.products,
-      brands: mockSubscriptions.brands
-    })
+      createApiSubscriptionSuccess({ products: mockSubscriptions.products, brands: mockSubscriptions.brands })))
+      .toEqual({ ...initialState, products: mockSubscriptions.products, brands: mockSubscriptions.brands })
   })
 
   it('should update state on CREATE_API_SUBSCRIPTION_ERROR', () => {
     expect(reducer(initialState, createApiSubscriptionError(errorMock))).toEqual({
       ...initialState,
-      ui: {loading: false}
+      ui: { loading: false },
     })
   })
 })
 
 describe('ApiSubscriptions sagas', () => {
   it('should call fetchApiSubscriptions and return an object', () => {
-    const fakeResponse = {data: mockSubscriptions}
+    const fakeResponse = { data: mockSubscriptions }
 
     return expectSaga(fetchApiSubscriptionsSaga)
       .withState(mockState)
@@ -261,7 +258,7 @@ describe('ApiSubscriptions sagas', () => {
   })
 
   it('should call fetchApiSubscriptions and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(fetchApiSubscriptionsSaga)
       .withState(mockState)
@@ -272,17 +269,17 @@ describe('ApiSubscriptions sagas', () => {
   })
 
   it('should call createApiSubscription and return an object', () => {
-    const fakeResponse = {data: {productIds: [`${mockSubscriptions.products[0].id}`]}}
+    const fakeResponse = { data: { productIds: [`${mockSubscriptions.products[0].id}`] } }
 
     return expectSaga(createApiSubscriptionSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
-      .put(createApiSubscriptionSuccess({productIds: [`${mockSubscriptions.products[0].id}`]}))
+      .put(createApiSubscriptionSuccess({ productIds: [`${mockSubscriptions.products[0].id}`] }))
       .dispatch(createApiSubscription(mockOrganization.id, [`${mockSubscriptions.products[0].id}`]))
       .silentRun()
   })
 
   it('should call createApiSubscription and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(createApiSubscriptionSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])

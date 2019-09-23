@@ -9,7 +9,7 @@ import { mount, shallow } from 'enzyme'
 import { IntlProvider, intlShape } from 'react-intl'
 import { translationMessages, formats } from 'util/i18n'
 
-const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages['en'], formats })
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
 const { intl } = intlProvider.getChildContext()
 
 const nodeWithIntlProp = (node) =>
@@ -21,25 +21,25 @@ export const getChildrenAttrs = (nodes, name) => nodes.map(node => getNodeAttr(n
 export const mountWithIntl = (tree) =>
   mount(
     nodeWithIntlProp(tree), {
-      context: {...intlProvider.getChildContext()},
-      childContextTypes: { intl: intlShape }
+      context: { ...intlProvider.getChildContext() },
+      childContextTypes: { intl: intlShape },
     }
   )
 
 export const shallowWithIntl = (tree) =>
   shallow(
     nodeWithIntlProp(tree), {
-      context: {...intlProvider.getChildContext()},
-      childContextTypes: { intl: intlShape }
+      context: { ...intlProvider.getChildContext() },
+      childContextTypes: { intl: intlShape },
     }
   )
 
 export const fullMount = (tree) => mount(tree, {
-  context: {...createRouterContext(), ...intlProvider.getChildContext()},
+  context: { ...createRouterContext(), ...intlProvider.getChildContext() },
   childContextTypes: {
     router: object,
-    intl: intlShape
-  }
+    intl: intlShape,
+  },
 })
 
 // Takes the context data we want to test, or uses defaults
@@ -47,8 +47,8 @@ export const getComponentWithContext = (path, context) => {
   // Will then mock the ThemeContext module being used in our component
   jest.doMock('../components/ThemeContext', () => ({
     ThemeContext: {
-      Consumer: (props) => props.children(context)
-    }
+      Consumer: (props) => props.children(context),
+    },
   }))
   // you need to re-require after calling jest.doMock.
   // return the updated Component module that now includes the mocked context

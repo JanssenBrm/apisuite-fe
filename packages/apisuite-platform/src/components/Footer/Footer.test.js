@@ -5,7 +5,7 @@ import { translationMessages, formats } from 'util/i18n'
 import { IntlProvider } from 'react-intl'
 import themes from 'themes'
 
-const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages['en'], formats })
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
 const { intl } = intlProvider.getChildContext()
 
 describe('<Footer />', () => {
@@ -15,8 +15,8 @@ describe('<Footer />', () => {
     theme: themes.default,
     user: {
       id: 1,
-      scopes: []
-    }
+      scopes: [],
+    },
   }
   const wrapper = shallow(<Footer {...props} />)
 

@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import { func, object } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import FormField, { parseErrors, isValidURL, isValidEmail } from 'components/FormField'
@@ -17,17 +17,17 @@ class CreateTestUser extends React.Component {
       email: '',
       password: '',
       avatar: '',
-      accounts: []
+      accounts: [],
     },
     accountTypes: [],
     errors: [],
     showErrors: false,
-    passwordVisible: false
+    passwordVisible: false,
   }
 
   componentDidMount () {
-    const {accounts, testUser} = this.props
-    const {form} = this.state
+    const { accounts, testUser } = this.props
+    const { form } = this.state
     // Fetch accounts types
     if (!accounts.length) {
       this.props.getTestUserAccounts()
@@ -39,31 +39,31 @@ class CreateTestUser extends React.Component {
           name: testUser.fullName,
           email: testUser.email,
           avatar: testUser.avatar,
-          password: randomPass()
+          password: randomPass(),
         },
-        passwordVisible: true
+        passwordVisible: true,
       })
     }
   }
 
-  componentWillReceiveProps (nextProps) {
-    const {accounts} = nextProps
+  UNSAFE_componentWillReceiveProps (nextProps) {
+    const { accounts } = nextProps
     if (accounts && this.props.accounts !== accounts) {
-      this.setState({accountTypes: accounts.form.accountTypes.map((t) => ({id: t.id, name: t.type}))})
+      this.setState({ accountTypes: accounts.form.accountTypes.map((t) => ({ id: t.id, name: t.type })) })
     }
   }
 
-  handleSubmit = (e) => {
-    const {organization} = this.props
-    const {errors, form} = this.state
-    const {name, email, password, avatar, accounts} = form
+  handleSubmit = () => {
+    const { organization } = this.props
+    const { errors, form } = this.state
+    const { name, email, password, avatar, accounts } = form
 
     if (!errors.length) {
       const testuserData = {
         fullName: name,
         email,
         passPhrase: password,
-        accountTypes: accounts
+        accountTypes: accounts,
       }
       if (avatar) {
         testuserData.avatar = avatar
@@ -72,26 +72,26 @@ class CreateTestUser extends React.Component {
       this.props.closeModal(true)
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
 
-  handleChange = ({target}, errors) => {
+  handleChange = ({ target }, errors) => {
     this.setState({
-      form: {...this.state.form, [target.name]: target.value},
-      errors: parseErrors(target, errors, this.state.errors)
+      form: { ...this.state.form, [target.name]: target.value },
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
   handleCheckboxChange = item => event => {
-    const {form} = this.state
-    const {accounts} = form
+    const { form } = this.state
+    const { accounts } = form
     this.setState({
       form: {
         ...form,
-        accounts: event.target.checked ? [...accounts, item] : accounts.filter(sub => sub.id !== item.id)
-      }
+        accounts: event.target.checked ? [...accounts, item] : accounts.filter(sub => sub.id !== item.id),
+      },
     })
   }
 
@@ -99,32 +99,32 @@ class CreateTestUser extends React.Component {
     const passPhrase = {
       target: {
         name: 'password',
-        value: randomPass()
-      }
+        value: randomPass(),
+      },
     }
-    this.setState({passwordVisible: true})
+    this.setState({ passwordVisible: true })
     this.handleChange(passPhrase)
   }
 
   togglePasswordVisibility = () => {
-    this.setState({passwordVisible: !this.state.passwordVisible})
+    this.setState({ passwordVisible: !this.state.passwordVisible })
   }
 
   render () {
-    const {intl, ui} = this.props
-    const {form, accountTypes, showErrors, errors, passwordVisible} = this.state
-    const basicInfoLabel = intl.formatMessage({id: 'testData.create.basicinfo'})
-    const namePlaceholder = intl.formatMessage({id: 'testData.create.name.placeholder'})
-    const nameRequired = intl.formatMessage({id: 'testData.name.required'})
-    const emailPlaceholder = intl.formatMessage({id: 'testData.create.email.placeholder'})
-    const emailRequired = intl.formatMessage({id: 'testData.email.required'})
-    const avatarURLPlaceholder = intl.formatMessage({id: 'testData.create.avatar.placeholder'})
-    const avatarURLRequired = intl.formatMessage({id: 'testData.create.avatar.required'})
-    const passwordLabel = intl.formatMessage({id: 'testData.create.password.label'})
-    const passwordRequired = intl.formatMessage({id: 'testData.create.password.required'})
-    const passwordHelper = intl.formatMessage({id: 'testData.create.password.helper'})
-    const accountsLabel = intl.formatMessage({id: 'testData.create.accounts.label'})
-    const submitLabel = intl.formatMessage({id: 'createApp.actions.submit'})
+    const { intl, ui } = this.props
+    const { form, accountTypes, showErrors, errors, passwordVisible } = this.state
+    const basicInfoLabel = intl.formatMessage({ id: 'testData.create.basicinfo' })
+    const namePlaceholder = intl.formatMessage({ id: 'testData.create.name.placeholder' })
+    const nameRequired = intl.formatMessage({ id: 'testData.name.required' })
+    const emailPlaceholder = intl.formatMessage({ id: 'testData.create.email.placeholder' })
+    const emailRequired = intl.formatMessage({ id: 'testData.email.required' })
+    const avatarURLPlaceholder = intl.formatMessage({ id: 'testData.create.avatar.placeholder' })
+    const avatarURLRequired = intl.formatMessage({ id: 'testData.create.avatar.required' })
+    const passwordLabel = intl.formatMessage({ id: 'testData.create.password.label' })
+    const passwordRequired = intl.formatMessage({ id: 'testData.create.password.required' })
+    const passwordHelper = intl.formatMessage({ id: 'testData.create.password.helper' })
+    const accountsLabel = intl.formatMessage({ id: 'testData.create.accounts.label' })
+    const submitLabel = intl.formatMessage({ id: 'createApp.actions.submit' })
 
     // User is validated to subscribe to APIs
     // subscriptions.products.sort((p1, p2) => p1.brand_id - p2.brand_id)
@@ -144,9 +144,9 @@ class CreateTestUser extends React.Component {
             placeholder={namePlaceholder}
             onChange={this.handleChange}
             value={form.name}
-            InputLabelProps={{shrink: true}}
+            InputLabelProps={{ shrink: true }}
             rules={[
-              {rule: form.name.length, message: nameRequired}
+              { rule: form.name.length, message: nameRequired },
             ]}
             showerrors={`${showErrors}`}
           />
@@ -159,9 +159,9 @@ class CreateTestUser extends React.Component {
             placeholder={emailPlaceholder}
             onChange={this.handleChange}
             value={form.email}
-            InputLabelProps={{shrink: true}}
+            InputLabelProps={{ shrink: true }}
             rules={[
-              {rule: form.email ? isValidEmail(form.email) : true, message: emailRequired}
+              { rule: form.email ? isValidEmail(form.email) : true, message: emailRequired },
             ]}
             showerrors={`${showErrors}`}
           />
@@ -173,9 +173,9 @@ class CreateTestUser extends React.Component {
             placeholder={avatarURLPlaceholder}
             onChange={this.handleChange}
             value={form.avatar}
-            InputLabelProps={{shrink: true}}
+            InputLabelProps={{ shrink: true }}
             rules={[
-              {rule: form.avatar ? isValidURL(form.avatar) : true, message: avatarURLRequired}
+              { rule: form.avatar ? isValidURL(form.avatar) : true, message: avatarURLRequired },
             ]}
             showerrors={`${showErrors}`}
           />
@@ -192,7 +192,7 @@ class CreateTestUser extends React.Component {
             onChange={this.handleChange}
             value={form.password}
             endadornment={
-              <Fragment>
+              <>
                 <Button
                   className='password-btn auto-generate-btn end'
                   id='security-generate-pass-btn'
@@ -204,20 +204,20 @@ class CreateTestUser extends React.Component {
                 <Button
                   id='security-pass-toggle-btn'
                   testid='security-pass-toggle-btn'
-                  classes={{root: 'password-btn'}}
+                  classes={{ root: 'password-btn' }}
                   variant='outlined'
                   onClick={this.togglePasswordVisibility}
                 >
                   <PasswordIcon />
                 </Button>
-              </Fragment>
+              </>
             }
             disabled={ui.loading}
             rules={[
               {
                 rule: !validatePassword(form.password).length,
-                message: `${passwordRequired} ${validatePassword(form.password).join(', ')}`
-              }
+                message: `${passwordRequired} ${validatePassword(form.password).join(', ')}`,
+              },
             ]}
             showerrors={`${showErrors}`}
           />
@@ -238,7 +238,10 @@ class CreateTestUser extends React.Component {
               variant='contained'
               color='primary'
               onClick={this.handleSubmit}
-              disabled={!form.name || !form.email || !form.password || !form.accounts.length || form.password.length < MIN_LENGTH || errors.length > 0 || ui.loading}
+              disabled={
+                !form.name || !form.email || !form.password || !form.accounts.length ||
+                form.password.length < MIN_LENGTH || errors.length > 0 || ui.loading
+              }
             >
               {submitLabel}
             </Button>
@@ -288,7 +291,7 @@ CreateTestUser.propTypes = {
   /**
    * Get the list of test user accounts types
    */
-  getTestUserAccounts: func.isRequired
+  getTestUserAccounts: func.isRequired,
 }
 
 export default injectIntl(CreateTestUser)

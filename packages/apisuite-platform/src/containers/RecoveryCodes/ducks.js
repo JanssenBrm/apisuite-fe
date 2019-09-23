@@ -13,7 +13,7 @@ export const GET_CODES_ERROR = 'RecoveryCodes/GET_CODES_ERROR'
 export const CLEAN_CODES = 'RecoveryCodes/CLEAN_CODES'
 
 const initialState = {
-  codes: []
+  codes: [],
 }
 
 /**
@@ -25,12 +25,12 @@ export default function reducer (state = initialState, action) {
   switch (action.type) {
     case GET_CODES_SUCCESS:
       return update(state, {
-        codes: { $set: action.data }
+        codes: { $set: action.data },
       })
     case CLEAN_CODES:
     case GET_CODES_ERROR:
       return update(state, {
-        codes: { $set: [] }
+        codes: { $set: [] },
       })
     default:
       return state

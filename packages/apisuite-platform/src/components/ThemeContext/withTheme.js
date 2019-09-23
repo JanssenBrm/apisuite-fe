@@ -5,8 +5,7 @@ const withTheme = (Component) =>
   props =>
     <ThemeContext.Consumer>
       {theme =>
-        <Component {...props} theme={theme} />
-      }
+        <Component {...props} theme={theme} />}
     </ThemeContext.Consumer>
 
 export default withTheme

@@ -37,8 +37,8 @@ const initialState = {
   accounts: {},
   transactions: {},
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 
 /**
@@ -56,87 +56,87 @@ export default function reducer (state = initialState, action) {
     case GET_TESTUSER_TRANSACTIONS:
       return update(state, {
         ui: {
-          loading: { $set: true }
-        }
+          loading: { $set: true },
+        },
       })
     case FETCH_TESTDATA_SUCCESS:
       return update(state, {
         data: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_TESTDATA_ERROR:
       return update(state, {
         data: { $set: [] },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case CREATE_TESTUSER_SUCCESS:
       return update(state, {
         data: {
-          users: { $push: [action.data] }
+          users: { $push: [action.data] },
         },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_TESTUSER_SUCCESS:
       return update(state, {
         testuser: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_TESTUSER_ERROR:
       return update(state, {
         testuser: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case UPDATE_TESTUSER_SUCCESS:
       return update(state, {
         testuser: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case CREATE_TESTUSER_ERROR:
     case UPDATE_TESTUSER_ERROR:
       return update(state, {
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_TESTUSER_ACCOUNTS_SUCCESS:
       return update(state, {
         accounts: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_TESTUSER_ACCOUNTS_ERROR:
       return update(state, {
         accounts: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_TESTUSER_TRANSACTIONS_SUCCESS:
       return update(state, {
         transactions: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_TESTUSER_TRANSACTIONS_ERROR:
       return update(state, {
         transactions: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     default:
       return state

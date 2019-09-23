@@ -16,7 +16,7 @@ export const RESET_NEWSLETTER_FORM = 'Newsletter/RESET_NEWSLETTER_FORM'
 const initialState = {
   form: null,
   success: null,
-  error: null
+  error: null,
 }
 
 /**
@@ -28,23 +28,23 @@ export default function reducer (state = initialState, action) {
   switch (action.type) {
     case SEND_NEWSLETTER_FORM:
       return update(state, {
-        form: {$set: action.form},
-        success: {$set: null},
-        error: {$set: null}
+        form: { $set: action.form },
+        success: { $set: null },
+        error: { $set: null },
       })
     case SEND_NEWSLETTER_FORM_SUCCESS:
       return update(state, {
-        success: {$set: action.data}
+        success: { $set: action.data },
       })
     case SEND_NEWSLETTER_FORM_ERROR:
       return update(state, {
-        error: {$set: action.error}
+        error: { $set: action.error },
       })
     case RESET_NEWSLETTER_FORM:
       return update(state, {
-        form: {$set: null},
-        success: {$set: null},
-        error: {$set: null}
+        form: { $set: null },
+        success: { $set: null },
+        error: { $set: null },
       })
     default:
       return state
@@ -55,7 +55,7 @@ export default function reducer (state = initialState, action) {
  * Send support form action creator
  */
 export function sendNewsletterForm (form) {
-  return {type: SEND_NEWSLETTER_FORM, form}
+  return { type: SEND_NEWSLETTER_FORM, form }
 }
 
 /**
@@ -63,19 +63,19 @@ export function sendNewsletterForm (form) {
  * @param {Object} data - data received from the successful call
  */
 export function sendNewsletterFormSuccess (data) {
-  return {type: SEND_NEWSLETTER_FORM_SUCCESS, data}
+  return { type: SEND_NEWSLETTER_FORM_SUCCESS, data }
 }
 
 /**
  * Send newsletter form error
  */
 export function sendNewsletterFormError (error) {
-  return {type: SEND_NEWSLETTER_FORM_ERROR, error}
+  return { type: SEND_NEWSLETTER_FORM_ERROR, error }
 }
 
 /**
  * reset newsletter form
  */
 export function resetNewsletterForm () {
-  return {type: RESET_NEWSLETTER_FORM}
+  return { type: RESET_NEWSLETTER_FORM }
 }

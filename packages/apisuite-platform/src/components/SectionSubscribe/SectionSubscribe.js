@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { object, func } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import FormField, { parseErrors, isValidEmail } from 'components/FormField'
@@ -13,36 +13,36 @@ class SectionSubscribe extends Component {
     termsChecked: false,
     email: '',
     showerrors: false,
-    errors: []
+    errors: [],
   }
 
-  componentWillUpdate () {
-    const {newsletter: {success}} = this.props
-    const {email} = this.state
+  UNSAFE_componentWillUpdate () {
+    const { newsletter: { success } } = this.props
+    const { email } = this.state
     if (success && email !== '') {
       this.setState({
         termsChecked: false,
-        email: ''
+        email: '',
       })
     }
   }
 
-  handleEmail = ({target}, errors) => {
+  handleEmail = ({ target }, errors) => {
     this.setState({
       email: target.value,
-      errors: parseErrors(target, errors, this.state.errors)
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
-  handleCheckboxChange = ({target}) => {
-    this.setState({termsChecked: target.checked})
+  handleCheckboxChange = ({ target }) => {
+    this.setState({ termsChecked: target.checked })
   }
 
   downloadPdf = () => {
     saveAs('assets/docs/Our_Open_Banking_Program.pdf', 'Our Open Banking Program.pdf')
   }
 
-  subscribe = email => event => {
+  subscribe = email => () => {
     this.props.sendNewsletterForm(email)
   }
 
@@ -51,11 +51,11 @@ class SectionSubscribe extends Component {
   }
 
   render () {
-    const {intl, theme} = this.props
-    const {email, termsChecked, showerrors} = this.state
-    const emailNotValid = intl.formatMessage({id: 'landing.subscribe.invalidemail'})
-    const emailPlaceholder = intl.formatMessage({id: 'landing.subscribe.emailPlaceholder'})
-    const themeEmail = intl.formatMessage({id: 'landing.subscribe.email'})
+    const { intl, theme } = this.props
+    const { email, termsChecked, showerrors } = this.state
+    const emailNotValid = intl.formatMessage({ id: 'landing.subscribe.invalidemail' })
+    const emailPlaceholder = intl.formatMessage({ id: 'landing.subscribe.emailPlaceholder' })
+    const themeEmail = intl.formatMessage({ id: 'landing.subscribe.email' })
 
     return (
       <div className='section section-dark-grey pre-footer-section'>
@@ -79,14 +79,14 @@ class SectionSubscribe extends Component {
                   onChange={this.handleEmail}
                   value={email}
                   rules={[
-                    {rule: (email && email !== '') ? isValidEmail(email) : true, message: emailNotValid}
+                    { rule: (email && email !== '') ? isValidEmail(email) : true, message: emailNotValid },
                   ]}
                   showerrors={`${showerrors}`}
                   InputProps={{
                     disableUnderline: true,
                     classes: {
-                      input: `subscribe-email light-input ${email === '' || isValidEmail(email) ? 'box-input' : 'box-input-error'}`
-                    }
+                      input: `subscribe-email light-input ${email === '' || isValidEmail(email) ? 'box-input' : 'box-input-error'}`,
+                    },
                   }}
                 />
               </div>
@@ -99,7 +99,7 @@ class SectionSubscribe extends Component {
                   color='primary'
                   size='large'
                   fullWidth
-                  style={{color: '#ffffff'}}
+                  style={{ color: '#ffffff' }}
                   onClick={this.subscribe(email)}
                 >
                   <FormattedMessage id='landing.subscribe.subscribe' />
@@ -117,7 +117,7 @@ class SectionSubscribe extends Component {
                 label={
                   <span className='terms-checkbox'>
                     <FormattedMessage id='landing.subscribe.terms.1' /> <a href={`mailto:${themeEmail}`}><FormattedMessage id='landing.subscribe.email' /></a>.
-                    {theme.name !== 'bnpp' && <Fragment><FormattedMessage id='landing.subscribe.terms.2' /> <a href='privacy'><FormattedMessage id='landing.subscribe.terms.3' /></a>.</Fragment>}
+                    {theme.name !== 'bnpp' && <><FormattedMessage id='landing.subscribe.terms.2' /> <a href='privacy'><FormattedMessage id='landing.subscribe.terms.3' /></a>.</>}
                   </span>
                 }
               />
@@ -127,8 +127,9 @@ class SectionSubscribe extends Component {
             </div>
           </div>
           <div className='pre-footer-pdf'>
-            <Typography variant='display3' className='pre-footer-header'><FormattedMessage
-              id='landing.pdf.title' /></Typography>
+            <Typography variant='display3' className='pre-footer-header'>
+              <FormattedMessage id='landing.pdf.title' />
+            </Typography>
             <p><FormattedMessage id='landing.pdf.text' /></p>
             <Button
               id='download-pdf-btn'
@@ -152,7 +153,7 @@ SectionSubscribe.propTypes = {
   intl: object.isRequired,
   sendNewsletterForm: func,
   newsletter: object,
-  theme: object.isRequired
+  theme: object.isRequired,
 }
 
 export default SectionSubscribe

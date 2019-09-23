@@ -4,10 +4,10 @@ import { sendNewsletterForm } from './ducks'
 import { injectIntl } from 'react-intl'
 
 const mapStateToProps = (state) => ({
-  newsletter: state.newsletter
+  newsletter: state.newsletter,
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  sendNewsletterForm: form => dispatch(sendNewsletterForm(form))
+  sendNewsletterForm: form => dispatch(sendNewsletterForm(form)),
 })
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(SectionSubscribe))

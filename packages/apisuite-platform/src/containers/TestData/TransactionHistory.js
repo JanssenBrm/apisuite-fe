@@ -11,10 +11,21 @@ class TransactionHistory extends Component {
     transactions: {},
     passwordVisible: false,
     ui: {
-      loading: false
+      loading: false,
     },
-    errors: []
+    errors: [],
   }
+
+  static getDerivedStateFromProps (nextProps, prevState) {
+    if (nextProps.transactions !== prevState.transactions || nextProps.ui !== prevState.ui) {
+      return {
+        transactions: nextProps.transactions,
+        ui: nextProps.ui,
+      }
+    }
+    return null
+  }
+
   componentDidMount () {
     const { organizations } = this.props
     const organizationId = organizations && organizations.length ? organizations[0].id : null
@@ -24,17 +35,7 @@ class TransactionHistory extends Component {
     }
   }
 
-  static getDerivedStateFromProps (nextProps, prevState) {
-    if (nextProps.transactions !== prevState.transactions || nextProps.ui !== prevState.ui) {
-      return {
-        transactions: nextProps.transactions,
-        ui: nextProps.ui
-      }
-    }
-    return null
-  }
-
-  navigate = route => event => {
+  navigate = route => () => {
     this.props.history.push(route)
   }
 
@@ -51,34 +52,32 @@ class TransactionHistory extends Component {
     return (
       <div className='transaction-list-container'>
         {!ui.loading &&
-        <div className='transaction-content'>
-          <span className='transaction-iban'>
+          <div className='transaction-content'>
+            <span className='transaction-iban'>
             IBAN {iban}
-          </span>
-          <div className='transaction-block'>
-            <div className='transaction-block-header'>
-              <FormattedMessage id='testData.transaction.header' />
-            </div>
-            {transactionList.length > 0 && transactionList.map((acc, idx) =>
-              <div key={`account-transaction-${idx}`} className='transaction-block-wrapper'>
-                <div className='transaction-info'>
-                  <div className='transaction-date'>{acc.transactionDate}</div>
-                  <div className='transaction-operation'>{acc.creditDebitIndicator} operation</div>
-                  <div className='transaction-summary'>{acc.summary}</div>
-                  <div className='transaction-summary'>{acc.detailedSummary}</div>
-                </div>
-                <div className='transaction-amount'><Typography variant='display1'>{`${currencySymbols[acc.transactionAmount.currency] || acc.transactionAmount.currency} ${parseFloat(acc.transactionAmount.amount).toFixed(2)}`}</Typography></div>
+            </span>
+            <div className='transaction-block'>
+              <div className='transaction-block-header'>
+                <FormattedMessage id='testData.transaction.header' />
+              </div>
+              {transactionList.length > 0 && transactionList.map((acc, idx) =>
+                <div key={`account-transaction-${idx}`} className='transaction-block-wrapper'>
+                  <div className='transaction-info'>
+                    <div className='transaction-date'>{acc.transactionDate}</div>
+                    <div className='transaction-operation'>{acc.creditDebitIndicator} operation</div>
+                    <div className='transaction-summary'>{acc.summary}</div>
+                    <div className='transaction-summary'>{acc.detailedSummary}</div>
+                  </div>
+                  <div className='transaction-amount'><Typography variant='display1'>{`${currencySymbols[acc.transactionAmount.currency] || acc.transactionAmount.currency} ${parseFloat(acc.transactionAmount.amount).toFixed(2)}`}</Typography></div>
 
-              </div>
-            )}
-            {transactionList.length === 0 &&
-              <div className='transaction-block-wrapper'>
-                <span className='transaction-text'><FormattedMessage id='testData.transaction.notransaction' /></span>
-              </div>
-            }
-          </div>
-        </div>
-        }
+                </div>
+              )}
+              {transactionList.length === 0 &&
+                <div className='transaction-block-wrapper'>
+                  <span className='transaction-text'><FormattedMessage id='testData.transaction.notransaction' /></span>
+                </div>}
+            </div>
+          </div>}
         {ui.loading && this.renderLoading()}
       </div>
     )
@@ -88,12 +87,10 @@ class TransactionHistory extends Component {
 TransactionHistory.propTypes = {
   history: object.isRequired,
   match: object.isRequired,
-  testuser: object.isRequired,
   getTestUserTransactions: func.isRequired,
   organizations: array.isRequired,
   transactions: object.isRequired,
-  intl: object.isRequired,
-  ui: object.isRequired
+  ui: object.isRequired,
 }
 
 export default TransactionHistory

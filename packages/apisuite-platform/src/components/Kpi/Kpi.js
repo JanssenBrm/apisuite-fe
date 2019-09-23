@@ -32,12 +32,12 @@ Kpi.propTypes = {
    * KPI value
    */
   value: oneOfType([
-    string, number
+    string, number,
   ]),
   /**
    * KPI on click function
    */
-  onClick: func
+  onClick: func,
 }
 
 export default Kpi

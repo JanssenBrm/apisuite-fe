@@ -12,21 +12,21 @@ import reducer, {
   openSupportModal,
   resetSupportModal,
   saveCaptcha,
-  resetCaptcha
+  resetCaptcha,
 } from './ducks'
 import { translationMessages, formats } from 'util/i18n'
 import { IntlProvider } from 'react-intl'
 
-const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages[ 'en' ], formats })
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
 const { intl } = intlProvider.getChildContext()
 
 const initialState = {
   open: false,
   option: null,
   captcha: {
-    value: null
+    value: null,
   },
-  form: null
+  form: null,
 }
 
 const errorMock = { message: 'error-stub' }
@@ -40,7 +40,7 @@ const fakeForm = {
   fullName: 'MH Mai',
   email: 'example@gmail.com',
   organisation: '',
-  terms: true
+  terms: true,
 }
 
 describe('<Support />', () => {
@@ -48,19 +48,19 @@ describe('<Support />', () => {
     intl,
     isLoggedIn: false,
     captcha: {
-      value: null
+      value: null,
     },
     auth: {
       user: {
         fullName: 'MH',
-        email: 'mh@gmail.com'
-      }
+        email: 'mh@gmail.com',
+      },
     },
     resetCaptcha: jest.fn(),
     sendSupportForm: jest.fn(),
     history: {
-      push: jest.fn()
-    }
+      push: jest.fn(),
+    },
   }
 
   const wrapper = shallowWithIntl(<Support {...props} />)
@@ -86,22 +86,22 @@ describe('<Support />', () => {
       fullName: 'MH Mai',
       email: 'example@gmail.com',
       organisation: '',
-      terms: true
+      terms: true,
     }
     wrapper.setProps({
       isLoggedIn: false,
       captcha: {
-        value: null
-      }
+        value: null,
+      },
     })
     wrapper.setState({
       form: {
         ...fakeForm,
         subject: fakeForm.subject,
         message: fakeForm.message,
-        type: fakeForm.type
+        type: fakeForm.type,
       },
-      errors: []
+      errors: [],
     })
     wrapper.find('#sendBtn').last().simulate('click')
     expect(props.sendSupportForm).not.toHaveBeenCalled()
@@ -117,13 +117,13 @@ describe('<Support />', () => {
       fullName: 'MH Mai',
       email: 'example@gmail.com',
       organisation: '',
-      terms: true
+      terms: true,
     }
     wrapper.setProps({
       isLoggedIn: false,
       captcha: {
-        value: 'toto'
-      }
+        value: 'toto',
+      },
     })
     wrapper.setState({
       form: {
@@ -131,9 +131,9 @@ describe('<Support />', () => {
         subject: fakeForm.subject,
         message: fakeForm.message,
         type: fakeForm.type,
-        environment: fakeForm.environment
+        environment: fakeForm.environment,
       },
-      errors: []
+      errors: [],
     })
     wrapper.find('#sendBtn').last().simulate('click')
     expect(props.sendSupportForm).toHaveBeenCalled()
@@ -149,19 +149,19 @@ describe('<Support />', () => {
       fullName: 'MH Mai',
       email: 'example@gmail.com',
       organisation: '',
-      terms: true
+      terms: true,
     }
     wrapper.setProps({
       isLoggedIn: true,
       captcha: {
-        value: null
-      }
+        value: null,
+      },
     })
     wrapper.setState({
       form: {
-        ...fakeForm
+        ...fakeForm,
       },
-      errors: []
+      errors: [],
     })
     const expectedTicket = {
       subject: 'issue-subject-mock',
@@ -172,7 +172,7 @@ describe('<Support />', () => {
       organization: '',
       refLink: '',
       captcha: null,
-      environment: 'production'
+      environment: 'production',
     }
     wrapper.find('#sendBtn').last().simulate('click')
     expect(props.sendSupportForm).toHaveBeenCalled()
@@ -181,16 +181,16 @@ describe('<Support />', () => {
 
   it('should call sendSupportForm if user is logged in AND type of inquiry, subject, message are filled', () => {
     wrapper.setProps({
-      isLoggedIn: true
+      isLoggedIn: true,
     })
     wrapper.setState({
       form: {
         ...fakeForm,
         subject: fakeForm.subject,
         message: fakeForm.message,
-        type: fakeForm.type
+        type: fakeForm.type,
       },
-      errors: []
+      errors: [],
     })
     wrapper.find('#sendBtn').last().simulate('click')
     expect(props.sendSupportForm).toHaveBeenCalled()
@@ -198,7 +198,7 @@ describe('<Support />', () => {
 
   it('should call sendSupportForm if user is NOT logged in AND type of inquiry, subject, message, fullName, email, terms, captcha are filled', () => {
     wrapper.setProps({
-      isLoggedIn: false
+      isLoggedIn: false,
     })
     wrapper.setState({
       form: {
@@ -208,10 +208,10 @@ describe('<Support />', () => {
         type: fakeForm.type,
         fullName: fakeForm.fullName,
         email: fakeForm.email,
-        terms: fakeForm.terms
+        terms: fakeForm.terms,
       },
       captcha: 'abc',
-      errors: []
+      errors: [],
     })
     wrapper.find('#sendBtn').last().simulate('click')
     expect(props.sendSupportForm).toHaveBeenCalled()
@@ -230,7 +230,7 @@ describe('Support reducer', () => {
     expect(reducer(initialState, openSupportModal(optionStub))).toEqual({
       ...initialState,
       open: true,
-      option: optionStub
+      option: optionStub,
     })
   })
 
@@ -264,7 +264,7 @@ describe('Support integration', () => {
     const fakeResponse = { data: fakeForm }
 
     return expectSaga(sendSupportFormSaga)
-      .provide([ [ matchers.call.fn(request), fakeResponse ] ])
+      .provide([[matchers.call.fn(request), fakeResponse]])
       .put(sendSupportFormSuccess(fakeForm))
       .dispatch(sendSupportForm(fakeForm))
       .silentRun()
@@ -274,7 +274,7 @@ describe('Support integration', () => {
     const fakeResponse = { err: errorMock }
 
     return expectSaga(sendSupportFormSaga)
-      .provide([ [ matchers.call.fn(request), fakeResponse ] ])
+      .provide([[matchers.call.fn(request), fakeResponse]])
       .put(sendSupportFormError(errorMock))
       .dispatch(sendSupportForm(fakeForm))
       .silentRun()

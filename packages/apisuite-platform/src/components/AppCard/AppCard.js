@@ -14,7 +14,7 @@ import { organizationStates } from 'constants/global'
 
 class AppCard extends Component {
   state = {
-    open: false
+    open: false,
   }
 
   handleToggle = () => {
@@ -60,7 +60,8 @@ class AppCard extends Component {
               <div className={classnames(
                 'app-card-badge',
                 organizationState ? organizationStates[organizationState].slug : null
-              )} />
+              )}
+              />
               {app.description}
             </div>
           </div>
@@ -84,9 +85,9 @@ class AppCard extends Component {
                   <Paper>
                     <ClickAwayListener onClickAway={this.handleClose}>
                       <MenuList>
-                        <MenuItem id='app-details' classes={{root: 'app-card-menu-item'}} testid='app-card-details-btn' onClick={this.openAppDetails(app.id)}>{<FormattedMessage id='appsPage.action.details' />}</MenuItem>
-                        <MenuItem classes={{root: 'app-card-menu-item'}} disabled testid='app-card-console-btn' onClick={this.handleClose}>{<FormattedMessage id='appsPage.action.console' />}</MenuItem>
-                        <MenuItem classes={{root: 'app-card-menu-item'}} disabled testid='app-card-publish-btn' onClick={this.handleClose}>{<FormattedMessage id='appsPage.action.publish' />}</MenuItem>
+                        <MenuItem id='app-details' classes={{ root: 'app-card-menu-item' }} testid='app-card-details-btn' onClick={this.openAppDetails(app.id)}>{<FormattedMessage id='appsPage.action.details' />}</MenuItem>
+                        <MenuItem classes={{ root: 'app-card-menu-item' }} disabled testid='app-card-console-btn' onClick={this.handleClose}>{<FormattedMessage id='appsPage.action.console' />}</MenuItem>
+                        <MenuItem classes={{ root: 'app-card-menu-item' }} disabled testid='app-card-publish-btn' onClick={this.handleClose}>{<FormattedMessage id='appsPage.action.publish' />}</MenuItem>
                       </MenuList>
                     </ClickAwayListener>
                   </Paper>
@@ -111,7 +112,7 @@ AppCard.propTypes = {
   /**
    * Browser history session
    */
-  history: object.isRequired
+  history: object.isRequired,
 }
 
 export default AppCard

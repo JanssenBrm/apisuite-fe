@@ -1,9 +1,9 @@
 import React, { Component } from 'react'
-import { string, func, array, object, oneOfType } from 'prop-types'
+import { string, func, object, oneOfType } from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 
 class Pagination extends Component {
-  goToPage = page => event => {
+  goToPage = page => () => {
     const { query } = this.props
     this.props.onChangePage(page, query)
   }
@@ -33,14 +33,13 @@ class Pagination extends Component {
 }
 
 Pagination.defaultProps = {
-  initialPage: 1
+  initialPage: 1,
 }
 
 Pagination.propTypes = {
-  items: array.isRequired,
   pager: object.isRequired,
   onChangePage: func.isRequired,
-  query: oneOfType([string])
+  query: oneOfType([string]),
 }
 
 export default Pagination

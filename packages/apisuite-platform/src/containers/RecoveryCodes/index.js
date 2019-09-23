@@ -7,7 +7,7 @@ import { cleanCodes } from './ducks'
 const mapStateToProps = ({ recovery, auth, signup }) => ({ codes: recovery.codes, auth, signup })
 
 const mapDispatchToProps = (dispatch) => ({
-  cleanCodes: () => dispatch(cleanCodes())
+  cleanCodes: () => dispatch(cleanCodes()),
 })
 
 export default injectIntl(connect(mapStateToProps, mapDispatchToProps)(

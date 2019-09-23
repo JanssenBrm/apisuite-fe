@@ -21,10 +21,10 @@ import {
   deleteAppError,
   CREATE_APP,
   createAppSuccess,
-  createAppError
+  createAppError,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
-import { push } from 'react-router-redux'
+import { push } from 'connected-react-router'
 
 /**
  * Fetch apps saga worker
@@ -37,7 +37,7 @@ function * fetchAppsWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -66,7 +66,7 @@ function * getAppWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -97,7 +97,7 @@ function * createAppWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -132,17 +132,17 @@ function * updateAppWorker (action) {
     icon: appData.icon,
     publicURL: appData.publicURL,
     redirectURLs: appData.redirectURLs,
-    productIds: appData.productIds
+    productIds: appData.productIds,
   })
 
   const response = yield call(request, requestUrl, {
     method: 'PUT',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
-    const data = {...response.data}
+    const data = { ...response.data }
     yield put(updateAppSuccess(data))
     yield put(showNotification('success', 'app.update.success'))
   } else {
@@ -170,7 +170,7 @@ function * deleteAppWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'DELETE',
-    headers
+    headers,
   })
 
   if (!response.err) {

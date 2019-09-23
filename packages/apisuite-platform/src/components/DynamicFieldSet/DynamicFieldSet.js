@@ -15,17 +15,19 @@ const DynamicFieldSet = ({ fields, errorMessage, actionLabel, inputLabel, initia
           id={`dynamic-field-${index}`}
           name={`${field}`}
           index={`${index}`}
-          placeholder={'https://my-new-app.be'}
+          placeholder='https://my-new-app.be'
           value={fields[index]}
           rules={[
-            {rule: isValidURL(field), message: errorMessage}
+            { rule: isValidURL(field), message: errorMessage },
           ]}
-          inputProps={{index}}
+          inputProps={{ index }}
           {...props}
         />
-        {!props.disabled && <IconButton id='remove-button' aria-label='Remove' color='primary' onClick={onRemove(index)}>
-          <RemoveCircleOutlineIcon />
-        </IconButton>}
+        {!props.disabled && (
+          <IconButton id='remove-button' aria-label='Remove' color='primary' onClick={onRemove(index)}>
+            <RemoveCircleOutlineIcon />
+          </IconButton>
+        )}
       </div>
     ))}
     <Button
@@ -49,7 +51,7 @@ DynamicFieldSet.propTypes = {
   fields: array,
   onAdd: func,
   onRemove: func,
-  disabled: bool
+  disabled: bool,
 }
 
 export default DynamicFieldSet

@@ -21,12 +21,13 @@ class TestDetail extends Component {
       password: '',
       avatarUrl: '',
       totalBalance: 0,
-      accounts: []
+      accounts: [],
     },
     passwordVisible: false,
     errors: [],
-    showErrors: false
+    showErrors: false,
   }
+
   componentDidMount () {
     const { organizations } = this.props
     const organizationId = organizations && organizations.length ? organizations[0].id : null
@@ -34,7 +35,7 @@ class TestDetail extends Component {
     if (organizationId) this.props.getTestUser(organizationId, psuId)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.testuser !== this.props.testuser) {
       const { name, email, username, password, avatarUrl, accounts, totalBalance } = nextProps.testuser
       const data = { name, email, username, password, avatarUrl, accounts, totalBalance }
@@ -42,14 +43,14 @@ class TestDetail extends Component {
     }
   }
 
-  togglePasswordVisibility = fieldName => event => {
+  togglePasswordVisibility = fieldName => () => {
     this.setState({ [`${fieldName}Visible`]: !this.state[`${fieldName}Visible`] })
   }
 
   handleChange = ({ target }, errors) => {
     this.setState({
       testuser: { ...this.state.testuser, [target.name]: target.value },
-      errors: parseErrors(target, errors, this.state.errors)
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -66,7 +67,7 @@ class TestDetail extends Component {
   calculateTransactions = () =>
     this.state.testuser.accounts.reduce((acc, curr) => (acc + curr.totalTransactions), 0)
 
-  navigate = route => event => {
+  navigate = route => () => {
     this.props.history.push(route)
   }
 
@@ -88,15 +89,16 @@ class TestDetail extends Component {
           <div className='detail-row'>
             <div className='left-container'>
               <div className='left-container-avatar'>
-                {testuser.avatarUrl
-                  ? <div
+                {testuser.avatarUrl ? (
+                  <div
                     className={classnames('test-user-avatar', { 'empty-avatar': !isValidURL(testuser.avatarUrl) })}
-                    style={{...(isValidURL(testuser.avatarUrl) && { backgroundImage: `url(${testuser.avatarUrl})` })}}
+                    style={{ ...(isValidURL(testuser.avatarUrl) && { backgroundImage: `url(${testuser.avatarUrl})` }) }}
                   />
-                  : <div className='test-user-avatar test-user-default'>
+                ) : (
+                  <div className='test-user-avatar test-user-default'>
                     <img src={avatarDefault} />
                   </div>
-                }
+                )}
               </div>
               <div className='left-container-button'>
                 <Button
@@ -127,7 +129,7 @@ class TestDetail extends Component {
                       value={testuser.name}
                       onChange={this.handleChange}
                       rules={[
-                        { rule: testuser.name.length >= 2, message: nameRequired }
+                        { rule: testuser.name.length >= 2, message: nameRequired },
                       ]}
                       showerrors={`${showErrors}`}
                     />
@@ -140,7 +142,7 @@ class TestDetail extends Component {
                       value={testuser.email}
                       onChange={this.handleChange}
                       rules={[
-                        {rule: isValidEmail(testuser.email), message: emailRequired}
+                        { rule: isValidEmail(testuser.email), message: emailRequired },
                       ]}
                       showerrors={`${showErrors}`}
                     />
@@ -153,7 +155,7 @@ class TestDetail extends Component {
                       onChange={this.handleChange}
                       value={testuser.avatarUrl || ''}
                       rules={[
-                        { rule: testuser.avatarUrl ? isValidURL(testuser.avatarUrl) : true, message: avatarRequired }
+                        { rule: testuser.avatarUrl ? isValidURL(testuser.avatarUrl) : true, message: avatarRequired },
                       ]}
                       showerrors={`${showErrors}`}
                     />
@@ -186,14 +188,14 @@ class TestDetail extends Component {
                         value={testuser.password}
                         onChange={this.handleChange}
                         rules={[
-                          { rule: hasMinLength(testuser.password), message: passwordRequired }
+                          { rule: hasMinLength(testuser.password), message: passwordRequired },
                         ]}
                         showerrors={`${showErrors}`}
                       />
                       <Button
                         id='test-detail-toggle-btn'
                         testid='test-detail-toggle-btn'
-                        classes={{root: 'pass-toggle-button'}}
+                        classes={{ root: 'pass-toggle-button' }}
                         variant='outlined'
                         onClick={this.togglePasswordVisibility('password')}
                       >
@@ -262,7 +264,7 @@ TestDetail.propTypes = {
   getTestUser: func.isRequired,
   updateTestUser: func.isRequired,
   organizations: array.isRequired,
-  intl: object.isRequired
+  intl: object.isRequired,
 }
 
 export default TestDetail

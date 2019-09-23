@@ -12,21 +12,21 @@ import {
   fetchApiProductsError,
   GET_API_PRODUCT,
   getApiProductSuccess,
-  getApiProductError
+  getApiProductError,
 } from './ducks'
 
 /**
  * Fetch API Products saga worker
  * @param {Object} action
  */
-function * fetchApiProductsWorker (action) {
+function * fetchApiProductsWorker () {
   const state = yield select()
   const requestUrl = `${API_URL}/products`
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -54,7 +54,7 @@ function * getApiProductWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {

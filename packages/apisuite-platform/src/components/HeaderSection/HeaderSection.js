@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { object } from 'prop-types'
 import classnames from 'classnames'
 import apiProductSlider from 'assets/api_products_slider.svg'
@@ -9,12 +9,13 @@ import Button from '@material-ui/core/Button'
 import { Typography } from '@material-ui/core'
 
 export const sliderControls = ({ slideCount, currentSlide, goToSlide }) =>
+  // eslint-disable-next-line prefer-spread
   Array.apply(null, Array(slideCount)).map((slide, index) =>
     <div
       key={`slider-bullet-${index}`}
       className={classnames(
         'slider-bullet',
-        {'active': index === currentSlide}
+        { active: index === currentSlide }
       )}
       testid={`slider-bullet-${index}`}
       onClick={() => goToSlide(index)}
@@ -28,20 +29,20 @@ const slides = [
     title: 'landing.header.1.title',
     action: 'scrollToApis',
     link: null,
-    text: 'landing.header.1.text'
+    text: 'landing.header.1.text',
   },
   {
     title: 'landing.header.2.title',
     action: 'scrollToApis',
     link: null,
-    text: 'landing.header.2.text'
+    text: 'landing.header.2.text',
   },
   {
     title: 'landing.header.3.title',
     action: null,
     link: 'assets/docs/Our_Open_Banking_Program.pdf',
-    text: 'landing.header.3.text'
-  }
+    text: 'landing.header.3.text',
+  },
 ]
 
 class HeaderSection extends Component {
@@ -54,7 +55,7 @@ class HeaderSection extends Component {
     renderCenterLeftControls: null,
     renderCenterRightControls: null,
     renderBottomCenterControls: sliderControls,
-    heightMode: 'max'
+    heightMode: 'max',
   }
 
   scrollToApis = () => {
@@ -80,13 +81,12 @@ class HeaderSection extends Component {
                         {slide.badge &&
                           <Badge
                             text={
-                              <Fragment>
+                              <>
                                 <FormattedMessage id={slide.badge} />
                                 <span>{`${sandboxVersion}`}</span>
-                              </Fragment>
+                              </>
                             }
-                          />
-                        }
+                          />}
                       </div>
                     </div>
                     <div className='slide-text'>
@@ -101,8 +101,7 @@ class HeaderSection extends Component {
                         onClick={slide.action ? () => this[slide.action]() : null}
                       >
                         <FormattedMessage id='landing.readmore.button' />
-                      </Button>
-                    }
+                      </Button>}
                     {slide.link &&
                       <a
                         className='header-link'
@@ -111,8 +110,7 @@ class HeaderSection extends Component {
                         target='_blank'
                       >
                         <FormattedMessage id='landing.readmore.button' />
-                      </a>
-                    }
+                      </a>}
                   </div>
                 </div>
               </div>
@@ -131,7 +129,7 @@ class HeaderSection extends Component {
 }
 
 HeaderSection.propTypes = {
-  theme: object.isRequired
+  theme: object.isRequired,
 }
 
 export default HeaderSection

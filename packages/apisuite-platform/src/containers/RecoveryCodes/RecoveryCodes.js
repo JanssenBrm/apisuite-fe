@@ -4,10 +4,10 @@ import { Typography } from '@material-ui/core'
 
 class RecoveryCodes extends Component {
   state = {
-    codes: []
+    codes: [],
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { history, signup, codes } = this.props
 
     if (!codes.length && !signup.user.codes) {
@@ -17,7 +17,7 @@ class RecoveryCodes extends Component {
     this.setState({ codes: signup.user.codes || codes })
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { codes, signup } = nextProps
 
     if (this.props.codes !== codes || this.props.signup.user.codes !== signup.user.codes) {
@@ -64,7 +64,7 @@ RecoveryCodes.propTypes = {
   history: object.isRequired,
   theme: object.isRequired,
   codes: array.isRequired,
-  cleanCodes: func.isRequired
+  cleanCodes: func.isRequired,
 }
 
 export default RecoveryCodes

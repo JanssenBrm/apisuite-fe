@@ -16,7 +16,7 @@ import classnames from 'classnames'
 
 class AppsPage extends Component {
   state = {
-    modalOpen: false
+    modalOpen: false,
   }
 
   componentDidMount () {
@@ -31,26 +31,26 @@ class AppsPage extends Component {
       content: 'appsPage.explore.block1.content',
       img: this.props.theme.gettingStarted || apiDefaultHeader,
       action: 'appsPage.explore.block.action',
-      route: '/docs/started'
+      route: '/docs/started',
     },
     {
       title: 'appsPage.explore.block2.title',
       content: 'appsPage.explore.block2.content',
       img: this.props.theme.walletApp || apiDefaultHeader,
       route: '/wallet',
-      disabled: true
+      disabled: true,
     },
     {
       title: 'appsPage.explore.block3.title',
       content: 'appsPage.explore.block3.content',
       img: this.props.theme.apiReferences || apiDefaultHeader,
-      route: '/api-references'
-    }
+      route: '/api-references',
+    },
   ]
 
-  navigate = route => event => this.props.history.push(route)
+  navigate = route => () => this.props.history.push(route)
 
-  openModal = (open) => event => {
+  openModal = (open) => () => {
     this.setState({ modalOpen: open })
   }
 
@@ -59,8 +59,8 @@ class AppsPage extends Component {
     const { modalOpen } = this.state
     const organization = user.organizations && user.organizations.length > 0 ? user.organizations[0] : null
 
-    const rightTitle = intl.formatMessage({id: 'createApp.title'})
-    const rightSubtitle = intl.formatMessage({id: 'createApp.content'})
+    const rightTitle = intl.formatMessage({ id: 'createApp.title' })
+    const rightSubtitle = intl.formatMessage({ id: 'createApp.content' })
     return (
       <div className='apps-container'>
         {apps.length > 0 && !ui.loading &&
@@ -68,10 +68,11 @@ class AppsPage extends Component {
             <Typography variant='display3' gutterBottom className='section-title'><FormattedMessage id='appsPage.overview' /></Typography>
             <div className='section-content'>
               <div className='app-cards'>
-                <Card scope='apps'
+                <Card
+                  scope='apps'
                   children={
                     apps.map(app => (
-                      <AppCard history={history} app={app} organization={organization} />
+                      <AppCard key={app.id} history={history} app={app} organization={organization} />
                     ))
                   }
                   creator={
@@ -82,8 +83,7 @@ class AppsPage extends Component {
                 />
               </div>
             </div>
-          </div>
-        }
+          </div>}
         {apps.length === 0 && !ui.loading &&
           <div className='first-app'>
             <img className='create-app-image' src={theme.firstApp || firstApp} />
@@ -91,8 +91,7 @@ class AppsPage extends Component {
             <Button variant='fab' color='secondary' aria-label='Add' className='create-app-button' testid='create-app-btn' onClick={this.openModal(true)}>
               <AddIcon />
             </Button>
-          </div>
-        }
+          </div>}
         <div className='explore-section'>
           <div className='explore-wrapper'>
             <Typography variant='display1' gutterBottom className='explore-section-title'>{<FormattedMessage id='appsPage.explore.title' />}</Typography>
@@ -105,7 +104,7 @@ class AppsPage extends Component {
                   <Typography variant='display1' gutterBottom className='explore-block-title'><FormattedMessage id={block.title} /></Typography>
                   <p><FormattedMessage id={block.content} /></p>
                   <div className='explore-block-footer'>
-                    <div className={classnames('explore-block-action', { 'disabled': block.disabled })} testid='explore-docs-btn' onClick={this.navigate(block.route)}>
+                    <div className={classnames('explore-block-action', { disabled: block.disabled })} testid='explore-docs-btn' onClick={this.navigate(block.route)}>
                       <img src={circleCaretRight} />
                       <span><FormattedMessage id={`appsPage.explore.block.${block.disabled ? 'disabled' : 'action'}`} /></span>
                     </div>
@@ -118,14 +117,16 @@ class AppsPage extends Component {
         <ModalSplit
           open={modalOpen}
           onClose={this.openModal(false)}
-          component={<CreateApp
-            user={user}
-            organization={organization}
-            subscriptions={subscriptions}
-            createApp={createApp}
-            fetchApiSubscriptions={fetchApiSubscriptions}
-            closeModal={this.openModal(false)}
-          />}
+          component={
+            <CreateApp
+              user={user}
+              organization={organization}
+              subscriptions={subscriptions}
+              createApp={createApp}
+              fetchApiSubscriptions={fetchApiSubscriptions}
+              closeModal={this.openModal(false)}
+            />
+          }
           rightTitle={rightTitle}
           rightSubtitle={rightSubtitle}
           isApps
@@ -133,8 +134,7 @@ class AppsPage extends Component {
         {ui.loading &&
           <div className='apps-loading'>
             <CircularProgress className='apps-loading-circle' />
-          </div>
-        }
+          </div>}
       </div>
     )
   }
@@ -181,7 +181,7 @@ AppsPage.propTypes = {
   /**
    * Fetch user API Subscriptions
    */
-  fetchApiSubscriptions: func.isRequired
+  fetchApiSubscriptions: func.isRequired,
 }
 
 export default injectIntl(AppsPage)

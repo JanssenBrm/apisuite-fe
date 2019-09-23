@@ -5,7 +5,7 @@ import { twoFaAuth, verifyRecoveryCode, meSendSMSCode } from 'containers/Auth/du
 import { injectIntl } from 'react-intl'
 
 const mapDispatchToPropsRecovery = (dispatch) => ({
-  verifyRecoveryCode: (code) => dispatch(verifyRecoveryCode(code))
+  verifyRecoveryCode: (code) => dispatch(verifyRecoveryCode(code)),
 })
 
 const mapDispatchToPropsLogin = (dispatch) => ({

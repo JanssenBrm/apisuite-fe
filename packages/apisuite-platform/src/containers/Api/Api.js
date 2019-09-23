@@ -7,7 +7,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 class Api extends Component {
   state = {
-    apidocs: {}
+    apidocs: {},
   }
 
   componentDidMount () {
@@ -15,7 +15,7 @@ class Api extends Component {
     this.props.getApiDocs(brand, productId, role, version)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { apidocs } = nextProps
 
     if (this.props.apidocs !== apidocs) {
@@ -36,55 +36,53 @@ class Api extends Component {
 
     return (
       <div className='api-container'>
-        {sandboxSpec && <RedocStandalone
-          options={{
-            scrollYOffset: 160,
-            nativeScrollbars: true,
-            // hideDownloadButton: true,
-            theme: {
-              colors: {
-                tonalOffset: 0,
-                primary: {
-                  main: themeVariables.grey
-                }
+        {sandboxSpec && (
+          <RedocStandalone
+            options={{
+              scrollYOffset: 160,
+              nativeScrollbars: true,
+              // hideDownloadButton: true,
+              theme: {
+                colors: {
+                  tonalOffset: 0,
+                  primary: {
+                    main: themeVariables.grey,
+                  },
+                },
+                typography: {
+                  fontWeightRegular: '400',
+                  fontWeightBold: '600',
+                  fontWeightLight: '300',
+                  headings: {
+                    fontFamily: 'Roboto, sans-serif',
+                  },
+                },
+                rightPanel: {
+                  backgroundColor: themeVariables.primaryColor,
+                },
               },
-              typography: {
-                fontWeightRegular: '400',
-                fontWeightBold: '600',
-                fontWeightLight: '300',
-                headings: {
-                  fontFamily: 'Roboto, sans-serif'
-                }
-              },
-              rightPanel: {
-                backgroundColor: themeVariables.primaryColor
-              }
-            }
-          }}
-          spec={sandboxSpec}
-        />
-        }
-        {ui.loading &&
+            }}
+            spec={sandboxSpec}
+          />
+        )}
+
+        {ui.loading && (
           <div className='api-loading'>
             <div className='loading'>
               <CircularProgress className='loading-circle' />
             </div>
           </div>
-        }
+        )}
       </div>
     )
   }
 }
 
 Api.propTypes = {
-  /**
-   * Browser history session
-   */
-  history: object.isRequired,
   match: object.isRequired,
   apidocs: object.isRequired,
   ui: object.isRequired,
-  getApiDocs: func.isRequired
+  getApiDocs: func.isRequired,
 }
 
 export default Api

@@ -4,7 +4,7 @@ import { hideNotification } from './ducks'
 
 const mapStateToProps = ({ notifications }) => ({ ...notifications })
 const mapDispatchToProps = (dispatch) => ({
-  hideNotification: () => dispatch(hideNotification())
+  hideNotification: () => dispatch(hideNotification()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationManager)

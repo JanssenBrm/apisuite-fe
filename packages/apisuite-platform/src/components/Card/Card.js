@@ -10,7 +10,7 @@ const Card = ({ children, scope, creator }) => (
         { [`${scope}-wrapper`]: scope }
       )}
     >
-      { children.map((content, key) =>
+      {children.map((content, key) =>
         <div
           key={key}
           className={classnames(
@@ -19,8 +19,7 @@ const Card = ({ children, scope, creator }) => (
           )}
         >
           {content}
-        </div>)
-      }
+        </div>)}
       {creator}
     </div>
     {!creator && <div className='card-shadow' />}
@@ -31,7 +30,7 @@ const Card = ({ children, scope, creator }) => (
 Card.propTypes = {
   children: array.isRequired,
   scope: string,
-  creator: node
+  creator: node,
 }
 
 export default Card

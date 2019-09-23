@@ -16,13 +16,13 @@ import qs from 'qs'
 const defaultSteps = [
   { name: 'Personal Details' },
   { name: 'Organisation Details' },
-  { name: 'Security Step' }
+  { name: 'Security Step' },
 ]
 
 const invitationSteps = [
   { name: 'Sign up Invitation' },
   { name: 'Personal Details' },
-  { name: '2-Factor Authentication' }
+  { name: '2-Factor Authentication' },
 ]
 
 class Signup extends Component {
@@ -41,14 +41,14 @@ class Signup extends Component {
       terms: false,
       privacy: false,
       method: '',
-      confirmationCode: ''
+      confirmationCode: '',
     },
     errors: [],
     step: 1,
-    qrcode: ''
+    qrcode: '',
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { signup } = nextProps
     if (this.props.signup !== nextProps.signup) {
       this.setState({ step: signup.step, error: signup.error, qrcode: signup.qrcode })
@@ -78,7 +78,7 @@ class Signup extends Component {
     }
 
     this.setState({
-      form: {...form, ...fields}
+      form: { ...form, ...fields },
     })
   }
 
@@ -87,11 +87,11 @@ class Signup extends Component {
     if (step === 1) { return }
 
     this.setState({
-      form: {...form, ...fields}
+      form: { ...form, ...fields },
     })
   }
 
-  navigate = route => event => this.props.history.push(route)
+  navigate = route => () => this.props.history.push(route)
 
   handleSubmit = (fields) => {
     this.nextStep(fields)
@@ -114,7 +114,7 @@ class Signup extends Component {
       invitation,
       getInvitation,
       acceptInvitation,
-      postponeInvitation
+      postponeInvitation,
     } = this.props
     const { step, form, qrcode } = this.state
     const isLoggedIn = Boolean(auth.user.id)
@@ -125,24 +125,25 @@ class Signup extends Component {
 
     return (
       <div className='signup-container'>
-        {isLoggedIn && !isUserActivated && !isTwoFaModal
-          ? <ActivationPage
+        {isLoggedIn && !isUserActivated && !isTwoFaModal ? (
+          <ActivationPage
             intl={intl}
             openLoginModal={openLoginModal}
             sendActivationEmail={sendActivationEmail}
             auth={auth}
           />
-          : <div>
+        ) : (
+          <div>
             <div className='signup-steps-wrapper'>
               <div className='signup-steps'>
                 <Stepper steps={isInvitation ? invitationSteps : defaultSteps} currentStep={step} />
               </div>
             </div>
             <div className='signup-content'>
-              { step !== 4 &&
+              {step !== 4 &&
                 <div className='signup-wrapper'>
                   <div className='signup-form'>
-                    { ((step === 1 && !isInvitation) || (step === 2 && isInvitation)) &&
+                    {((step === 1 && !isInvitation) || (step === 2 && isInvitation)) &&
                       <PersonalDetails
                         ui={ui}
                         nextStep={this.nextStep}
@@ -151,9 +152,8 @@ class Signup extends Component {
                         goToPrivacy={this.navigate('/privacy')}
                         error={signup.error}
                         invitation={invitation}
-                      />
-                    }
-                    { step === 1 && isInvitation &&
+                      />}
+                    {step === 1 && isInvitation &&
                       <InvitationPage
                         intl={intl}
                         history={history}
@@ -164,9 +164,8 @@ class Signup extends Component {
                         postponeInvitation={postponeInvitation}
                         skipStep={skipStep}
                         error={signup.error}
-                      />
-                    }
-                    { step === 2 && !isInvitation &&
+                      />}
+                    {step === 2 && !isInvitation &&
                       <OrganisationDetails
                         ui={ui}
                         nextStep={this.nextStep}
@@ -174,9 +173,8 @@ class Signup extends Component {
                         skipStep={skipStep}
                         intl={intl}
                         error={signup.error}
-                      />
-                    }
-                    { step === 3 &&
+                      />}
+                    {step === 3 &&
                       <SecuritySetup
                         ui={ui}
                         handleSubmit={this.handleSubmit}
@@ -190,15 +188,14 @@ class Signup extends Component {
                         generateQRCode={generateQRCode}
                         sendSMSCode={sendSMSCode}
                         route={history.location.pathname}
-                      />
-                    }
+                      />}
                   </div>
                   <div className='signup-info-wrapper'>
                     <div className='signup-info-content'>
                       <div className='signup-check'>
                         <img src={checkImage} />
                       </div>
-                      { (step === 1 || step === 2) &&
+                      {(step === 1 || step === 2) &&
                         <div>
                           <Typography variant='display3' gutterBottom className='signup-info-title'><FormattedMessage id='signup.intro.title' /></Typography>
                           <p>
@@ -207,9 +204,8 @@ class Signup extends Component {
                           <p>
                             <FormattedMessage id='signup.intro.text2' />
                           </p>
-                        </div>
-                      }
-                      { step === 3 &&
+                        </div>}
+                      {step === 3 &&
                         <div>
                           <Typography variant='display3' gutterBottom className='signup-info-title'>2-Factor Authentication</Typography>
                           <p>
@@ -221,21 +217,18 @@ class Signup extends Component {
                             <FormattedMessage id='signup.security.help' />
                             <img className='help-img' src={securityOval} />
                           </div>
-                        </div>
-                      }
+                        </div>}
                     </div>
                   </div>
-                </div>
-              }
-              { step === 4 &&
+                </div>}
+              {step === 4 &&
                 <div id='signup-loading' className='signup-loading'>
                   <p><FormattedMessage id='signup.createAccount' /></p>
                   <CircularProgress className='signup-loading-circle' />
-                </div>
-              }
+                </div>}
             </div>
           </div>
-        }
+        )}
       </div>
     )
   }
@@ -260,7 +253,7 @@ Signup.propTypes = {
   resetSignup: func.isRequired,
   getInvitation: func.isRequired,
   acceptInvitation: func.isRequired,
-  postponeInvitation: func.isRequired
+  postponeInvitation: func.isRequired,
 }
 
 export default Signup

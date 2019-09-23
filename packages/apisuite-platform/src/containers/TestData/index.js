@@ -16,7 +16,7 @@ const mapStateToProps = ({ apps, testdata, auth, subscriptions }) => (
     ui: testdata.ui,
     apps: apps.data,
     user: auth.user,
-    subscriptions
+    subscriptions,
   }
 )
 
@@ -28,7 +28,7 @@ const mapDispatchToProps = (dispatch) => ({
   fetchApiSubscriptions: () => dispatch(fetchApiSubscriptions()),
   createApiSubscription: (organizationId, productIds) => dispatch(createApiSubscription(organizationId, productIds)),
   createTestUser: (organizationId, user) => dispatch(createTestUser(organizationId, user)),
-  getTestUserAccounts: () => dispatch(getTestUserAccounts())
+  getTestUserAccounts: () => dispatch(getTestUserAccounts()),
 })
 
 export default injectIntl(
@@ -39,12 +39,12 @@ export default injectIntl(
 
 const detailMapStateToProps = ({ testdata, auth }) => ({
   testuser: testdata.testuser,
-  organizations: auth.user.organizations
+  organizations: auth.user.organizations,
 })
 
 const detailDispatchToProps = (dispatch) => ({
   getTestUser: (organizationId, psuId) => dispatch(getTestUser(organizationId, psuId)),
-  updateTestUser: (organizationId, psuId, data) => dispatch(updateTestUser(organizationId, psuId, data))
+  updateTestUser: (organizationId, psuId, data) => dispatch(updateTestUser(organizationId, psuId, data)),
 })
 
 export const TestDetail = injectIntl(connect(detailMapStateToProps, detailDispatchToProps)(TestDetailComponent))
@@ -52,11 +52,13 @@ export const TestDetail = injectIntl(connect(detailMapStateToProps, detailDispat
 const historyMapStateToProps = ({ testdata, auth }) => ({
   testuser: testdata.testuser,
   organizations: auth.user.organizations,
-  transactions: testdata.transactions
+  transactions: testdata.transactions,
 })
 
 const historyDispatchToProps = (dispatch) => ({
-  getTestUserTransactions: (organizationId, resourceId) => dispatch(getTestUserTransactions(organizationId, resourceId))
+  getTestUserTransactions: (organizationId, resourceId) =>
+    dispatch(getTestUserTransactions(organizationId, resourceId)),
 })
 
-export const TransactionHistory = injectIntl(connect(historyMapStateToProps, historyDispatchToProps)(TransactionHistoryComponent))
+export const TransactionHistory = injectIntl(
+  connect(historyMapStateToProps, historyDispatchToProps)(TransactionHistoryComponent))

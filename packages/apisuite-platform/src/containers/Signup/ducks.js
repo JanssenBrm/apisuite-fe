@@ -37,12 +37,12 @@ export const RESET_SIGNUP = 'Signup/RESET_SIGNUP'
  */
 const initialState = {
   ui: {
-    loading: false
+    loading: false,
   },
   user: {},
   error: null,
   step: 1,
-  qrcode: ''
+  qrcode: '',
 }
 
 /**
@@ -57,27 +57,27 @@ export default function reducer (state = initialState, action) {
     case SIGNUP_SECURITY:
       return update(state, {
         ui: {
-          loading: { $set: true }
-        }
+          loading: { $set: true },
+        },
       })
     case SIGNUP_USER_SUCCESS:
     case SIGNUP_SECURITY_SUCCESS:
       return update(state, {
         ui: {
-          loading: { $set: false }
+          loading: { $set: false },
         },
         user: { $set: action.data },
         step: { $set: state.step + 1 },
-        error: { $set: null }
+        error: { $set: null },
 
       })
     case SIGNUP_ORGANIZATION_SUCCESS:
       return update(state, {
         ui: {
-          loading: { $set: false }
+          loading: { $set: false },
         },
         step: { $set: state.step + 1 },
-        error: { $set: null }
+        error: { $set: null },
 
       })
     case SIGNUP_USER_ERROR:
@@ -86,32 +86,32 @@ export default function reducer (state = initialState, action) {
     case GET_INVITATION_ERROR:
       return update(state, {
         ui: {
-          loading: { $set: false }
+          loading: { $set: false },
         },
         error: { $set: action.error },
         user: { $set: {} },
         step: { $set: 1 },
-        qrcode: { $set: '' }
+        qrcode: { $set: '' },
       })
     case GENERATE_QRCODE_SUCCESS:
       return update(state, {
-        qrcode: { $set: action.data }
+        qrcode: { $set: action.data },
       })
     case SKIP_STEP:
       return update(state, {
         step: { $set: state.step + 1 },
-        error: { $set: null }
+        error: { $set: null },
       })
     case LOGIN_USER:
     case RESET_SIGNUP:
       return update(state, {
         ui: {
-          loading: { $set: false }
+          loading: { $set: false },
         },
         error: { $set: null },
         user: { $set: {} },
         step: { $set: 1 },
-        qrcode: { $set: '' }
+        qrcode: { $set: '' },
       })
     default:
       return state

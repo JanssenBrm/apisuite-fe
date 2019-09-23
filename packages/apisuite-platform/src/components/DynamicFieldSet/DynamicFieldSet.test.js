@@ -7,11 +7,11 @@ import FormField from 'components/FormField'
 const props = {
   fields: [
     'www.test1.com',
-    'www.test2.com'
+    'www.test2.com',
   ],
   onRemove: jest.fn(),
   onAdd: jest.fn(),
-  actionLabel: 'label'
+  actionLabel: 'label',
 }
 
 describe('<DynamicFieldSet />', () => {

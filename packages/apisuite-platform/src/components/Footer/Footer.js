@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import classnames from 'classnames'
 import { bool, func, object } from 'prop-types'
 import SvgIcon from 'components/SvgIcon'
@@ -12,8 +12,8 @@ const siteMap = [
     children: [
       { name: 'Feedback', route: '/feedback', protected: true },
       { name: 'Subscriptions', route: '/api-subscriptions', protected: true },
-      { name: 'API Status', route: '/api-status', disabled: true, protected: true }
-    ]
+      { name: 'API Status', route: '/api-status', disabled: true, protected: true },
+    ],
   },
   {
     name: 'documentation',
@@ -21,8 +21,8 @@ const siteMap = [
     children: [
       { name: 'Getting Started', route: '/docs/started', loggedOut: true },
       { name: 'API References', route: '/api-references', protected: true },
-      { name: 'Search', route: '/search', disabled: true, protected: true }
-    ]
+      { name: 'Search', route: '/search', disabled: true, protected: true },
+    ],
   },
   {
     name: 'dashboard',
@@ -31,8 +31,8 @@ const siteMap = [
     children: [
       { name: 'Manage Apps', route: '/apps', protected: true },
       { name: 'Test Data', route: '/testdata' },
-      { name: 'API Console', route: '/console', disabled: true }
-    ]
+      { name: 'API Console', route: '/console', disabled: true },
+    ],
   },
   {
     name: 'support',
@@ -40,8 +40,8 @@ const siteMap = [
     children: [
       { name: 'Knowledge Base', route: '/knowledge-base', protected: true, disabled: true },
       { name: 'External resources', route: '/external-resources', protected: true, disabled: true },
-      { name: 'Activity Log', route: '/activity-log', protected: true, disabled: true }
-    ]
+      { name: 'Activity Log', route: '/activity-log', protected: true, disabled: true },
+    ],
   },
   {
     name: 'team',
@@ -50,8 +50,8 @@ const siteMap = [
     children: [
       { name: 'Manage Team', route: '/team', protected: true },
       { name: 'Organisation', route: '/organisation', protected: true },
-      { name: 'Profile', route: '/profile', protected: true }
-    ]
+      { name: 'Profile', route: '/profile', protected: true },
+    ],
   },
   {
     name: 'legal notice',
@@ -60,9 +60,9 @@ const siteMap = [
     children: [
       { name: 'Data Privacy Notice', route: '/privacy', protected: true },
       { name: 'Terms of use', route: '/terms', protected: true },
-      { name: 'Cookies policy', route: '/cookies', protected: true }
-    ]
-  }
+      { name: 'Cookies policy', route: '/cookies', protected: true },
+    ],
+  },
 ]
 
 const miniSiteMap = [
@@ -70,7 +70,7 @@ const miniSiteMap = [
   { name: 'API Reference', route: '/api-references', protected: true },
   { name: 'Data Privacy Notice', route: '/privacy', protected: true },
   { name: 'Terms of use', route: '/terms', protected: true },
-  { name: 'Cookies policy', route: '/cookies', protected: true }
+  { name: 'Cookies policy', route: '/cookies', protected: true },
 ]
 
 const Footer = ({ mini, navigate, user, intl, logout, theme }) => {
@@ -82,28 +82,27 @@ const Footer = ({ mini, navigate, user, intl, logout, theme }) => {
   return (
     <div className={classnames(
       'footer-container',
-      {'mini': isMiniFooter}
-    )}>
+      { mini: isMiniFooter }
+    )}
+    >
       {!isMiniFooter && <Newsletter intl={intl} />}
-      <div className={classnames('footer-wrapper', {'extra-padding': !isMiniFooter})}>
+      <div className={classnames('footer-wrapper', { 'extra-padding': !isMiniFooter })}>
         {isMiniFooter &&
           <div className='footer-trademark'>
             © 2019 {<FormattedMessage id='footer.bank' />}
-          </div>
-        }
+          </div>}
         <div
           className='footer-sitemap'
         >
           {footerData.map(section =>
             (!section.protected || (section.protected && isLoggedIn)) &&
               <div key={section.name} className='footer-sitemap-section'>
-                <Fragment>
+                <>
                   <div
-                    className={
-                      classnames(
-                        'section-title',
-                        { 'disabled-link': section.disabled || (section.name === 'team' && !isAdmin) }
-                      )}
+                    className={classnames(
+                      'section-title',
+                      { 'disabled-link': section.disabled || (section.name === 'team' && !isAdmin) }
+                    )}
                     onClick={navigate(section.route)}
                   >
                     {section.name}
@@ -113,16 +112,15 @@ const Footer = ({ mini, navigate, user, intl, logout, theme }) => {
                       <a
                         onClick={item.action ? logout : navigate(item.route)}
                         key={`${item.name}`}
-                        className={
-                          classnames(
-                            'footer-sitemap-link',
-                            { 'disabled-link': item.disabled || (item.route === '/team' && !isAdmin) }
-                          )}
+                        className={classnames(
+                          'footer-sitemap-link',
+                          { 'disabled-link': item.disabled || (item.route === '/team' && !isAdmin) }
+                        )}
                       >
                         {item.name}
                       </a>
                   )}
-                </Fragment>
+                </>
               </div>
           )}
         </div>
@@ -136,25 +134,25 @@ const Footer = ({ mini, navigate, user, intl, logout, theme }) => {
                 Copyright © 2019 {<FormattedMessage id='footer.bank' />}
               </div>
               <div className='footer-icons'>
-                <a target='_blank' href='https://www.bnpparibasfortis.com'>
+                <a target='_blank' rel='noopener noreferrer' href='https://www.bnpparibasfortis.com'>
                   <div className='footer-icon'>
                     {theme.socialWeb && <img src={theme.socialWeb} />}
                     {!theme.socialWeb && <SvgIcon name='earth' size={16} />}
                   </div>
                 </a>
-                <a target='_blank' href='https://twitter.com/BNPPFBelgique'>
+                <a target='_blank' rel='noopener noreferrer' href='https://twitter.com/BNPPFBelgique'>
                   <div className='footer-icon'>
                     {theme.socialTwitter && <img src={theme.socialTwitter} />}
                     {!theme.socialTwitter && <SvgIcon name='twitter' size={16} />}
                   </div>
                 </a>
-                <a target='_blank' href='https://www.facebook.com/BNPParibasFortisBelgique'>
+                <a target='_blank' rel='noopener noreferrer' href='https://www.facebook.com/BNPParibasFortisBelgique'>
                   <div className='footer-icon'>
                     {theme.socialFacebook && <img src={theme.socialFacebook} />}
                     {!theme.socialFacebook && <SvgIcon name='facebook' size={16} />}
                   </div>
                 </a>
-                <a target='_blank' href='https://www.linkedin.com/company/bnpparibasfortis/'>
+                <a target='_blank' rel='noopener noreferrer' href='https://www.linkedin.com/company/bnpparibasfortis/'>
                   <div className='footer-icon'>
                     {theme.socialLinkedIn && <img src={theme.socialLinkedIn} />}
                     {!theme.socialLinkedIn && <SvgIcon name='facebook' size={16} />}
@@ -162,15 +160,14 @@ const Footer = ({ mini, navigate, user, intl, logout, theme }) => {
                 </a>
               </div>
             </div>
-          </div>
-        }
+          </div>}
       </div>
     </div>
   )
 }
 
 Footer.defaultProps = {
-  navigate: () => {}
+  navigate: () => {},
 }
 
 Footer.propTypes = {
@@ -179,7 +176,7 @@ Footer.propTypes = {
   theme: object.isRequired,
   user: object.isRequired,
   intl: object,
-  logout: func
+  logout: func,
 }
 
 export default Footer

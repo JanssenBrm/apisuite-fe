@@ -10,12 +10,12 @@ const typesInquiry = [
   { value: '1', key: 'question', description: 'General question' },
   { value: '2', key: 'incident', description: 'Connection incident' },
   { value: '3', key: 'problem', description: 'I found a bug' },
-  { value: '4', key: 'task', description: 'Feedback' }
+  { value: '4', key: 'task', description: 'Feedback' },
 ]
 const environmentList = [
   { value: '1', key: 'sandbox', description: 'This is a Sandbox issue' },
   { value: '2', key: 'production', description: 'This is a Production incident' },
-  { value: '3', key: 'fallback', description: 'This is a fallback issue (User Interface for PSD2)' }
+  { value: '3', key: 'fallback', description: 'This is a fallback issue (User Interface for PSD2)' },
 ]
 
 class Support extends Component {
@@ -30,44 +30,44 @@ class Support extends Component {
       fullName: '',
       email: '',
       organisation: '',
-      terms: false
+      terms: false,
     },
     captcha: null,
-    errors: []
+    errors: [],
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const typeInquiryReceived = typesInquiry.filter(t => t.key === this.props.option)
     this.setState({
       form: {
         ...this.state.form,
-        type: typeInquiryReceived.length > 0 ? typeInquiryReceived[ 0 ].value : '1'
-      }
+        type: typeInquiryReceived.length > 0 ? typeInquiryReceived[0].value : '1',
+      },
     })
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps !== this.props) {
       this.setState({
         form: { ...this.state.form },
-        captcha: nextProps.captcha.value
+        captcha: nextProps.captcha.value,
       })
     }
   }
 
-  navigate = route => e => {
+  navigate = route => () => {
     this.props.history.push(route)
   }
 
   handleChange = ({ target }, errors) => {
     this.setState({
-      form: { ...this.state.form, [ target.name ]: target.value },
-      errors: parseErrors(target, errors, this.state.errors)
+      form: { ...this.state.form, [target.name]: target.value },
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
   handleCheckboxChange = name => event => {
-    this.setState({ form: { ...this.state.form, [ name ]: event.target.checked } })
+    this.setState({ form: { ...this.state.form, [name]: event.target.checked } })
   }
 
   canSubmit () {
@@ -80,7 +80,7 @@ class Support extends Component {
       errors.length > 0
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { isLoggedIn, resetCaptcha, auth } = this.props
     const { errors, form, captcha } = this.state
     const { user } = auth
@@ -93,13 +93,13 @@ class Support extends Component {
       message,
       name,
       email: mail,
-      type: typesInquiry[ parseInt(type) - 1 ].key,
+      type: typesInquiry[parseInt(type) - 1].key,
       organization: organisation,
       refLink,
-      captcha
+      captcha,
     }
     if (type === '2' && environment !== '') {
-      ticket.environment = environmentList[ +environment - 1 ].key
+      ticket.environment = environmentList[+environment - 1].key
     }
     if ((
       (isLoggedIn) || (!isLoggedIn && fullName && email && terms && captcha)
@@ -107,7 +107,7 @@ class Support extends Component {
       this.props.sendSupportForm(ticket)
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
       resetCaptcha()
     }
@@ -142,52 +142,51 @@ class Support extends Component {
       <div className='support-container'>
         <div className='support-wrapper'>
           {!isLoggedIn &&
-          <div>
-            <FormField
-              className='support-input'
-              id='fullName'
-              testid='support-fullname'
-              name='fullName'
-              fullWidth
-              label={aboutyouLabel}
-              placeholder={fullnamePlaceholder}
-              onChange={this.handleChange}
-              value={fullName}
-              rules={[
-                { rule: fullName, message: fullnameRequired }
-              ]}
-              showerrors={`${showErrors}`}
-              InputLabelProps={{ shrink: true }}
-            />
-            <FormField
-              className='support-input'
-              id='email'
-              testid='support-email'
-              name='email'
-              fullWidth
-              placeholder={emailPlaceholder}
-              onChange={this.handleChange}
-              value={email}
-              rules={[
-                { rule: isValidEmail(email), message: errorText }
-              ]}
-              showerrors={`${showErrors}`}
-              InputLabelProps={{ shrink: true }}
-            />
-            <FormField
-              className='support-input'
-              id='organisation'
-              testid='support-organisation'
-              name='organisation'
-              fullWidth
-              placeholder={organisationPlaceholder}
-              onChange={this.handleChange}
-              value={organisation}
-              showerrors={`${showErrors}`}
-              InputLabelProps={{ shrink: true }}
-            />
-          </div>
-          }
+            <div>
+              <FormField
+                className='support-input'
+                id='fullName'
+                testid='support-fullname'
+                name='fullName'
+                fullWidth
+                label={aboutyouLabel}
+                placeholder={fullnamePlaceholder}
+                onChange={this.handleChange}
+                value={fullName}
+                rules={[
+                  { rule: fullName, message: fullnameRequired },
+                ]}
+                showerrors={`${showErrors}`}
+                InputLabelProps={{ shrink: true }}
+              />
+              <FormField
+                className='support-input'
+                id='email'
+                testid='support-email'
+                name='email'
+                fullWidth
+                placeholder={emailPlaceholder}
+                onChange={this.handleChange}
+                value={email}
+                rules={[
+                  { rule: isValidEmail(email), message: errorText },
+                ]}
+                showerrors={`${showErrors}`}
+                InputLabelProps={{ shrink: true }}
+              />
+              <FormField
+                className='support-input'
+                id='organisation'
+                testid='support-organisation'
+                name='organisation'
+                fullWidth
+                placeholder={organisationPlaceholder}
+                onChange={this.handleChange}
+                value={organisation}
+                showerrors={`${showErrors}`}
+                InputLabelProps={{ shrink: true }}
+              />
+            </div>}
 
           <FormField
             id='type'
@@ -215,42 +214,39 @@ class Support extends Component {
           <br />
           {
             type === '2' && !isLoggedIn &&
-            <div className='info-box'>
-              <p>{connectionIncidentNotLoggedInText}</p>
-            </div>
+              <div className='info-box'>
+                <p>{connectionIncidentNotLoggedInText}</p>
+              </div>
           }
           {type === '2' && isLoggedIn &&
+            <FormField
+              id='connection-incident-environment'
+              testid='connection-incident-environment'
+              name='environment'
+              type='select'
+              label={connectionIncidentEnvironmentLabel}
+              fullWidth
+              usevalue='true'
+              value={environment}
+              data={environmentList}
+              onChange={this.handleChange}
+              showerrors={`${showErrors}`}
+              inputlabelprops={{ shrink: true }}
+            >
+              {environmentList.map((p, idx) => (
+                <MenuItem
+                  key={idx}
+                  value={p.value}
+                >
+                  {p.description}
+                </MenuItem>
+              ))}
+            </FormField>}
           <FormField
-            id='connection-incident-environment'
-            testid='connection-incident-environment'
-            name='environment'
-            type='select'
-            label={connectionIncidentEnvironmentLabel}
-            fullWidth
-            usevalue='true'
-            value={environment}
-            data={environmentList}
-            onChange={this.handleChange}
-            showerrors={`${showErrors}`}
-            inputlabelprops={{ shrink: true }}
-          >
-            {environmentList.map((p, idx) => (
-              <MenuItem
-                key={idx}
-                value={p.value}
-              >
-                {p.description}
-              </MenuItem>
-            ))}
-          </FormField>
-          }
-          <FormField
-            className={
-              classnames(
-                'support-input',
-                { [ `support-input-top` ]: isLoggedIn }
-              )
-            }
+            className={classnames(
+              'support-input',
+              { 'support-input-top': isLoggedIn }
+            )}
             id='subject'
             testid='support-subject'
             name='subject'
@@ -276,48 +272,47 @@ class Support extends Component {
           />
           <br />
           {isLoggedIn &&
-          <FormField
-            className='support-input-space'
-            id='refLink'
-            testid='support-reflink'
-            name='refLink'
-            fullWidth
-            label={refLinkLabel}
-            placeholder={refLinkPlaceholder}
-            onChange={this.handleChange}
-            value={refLink}
-            rules={[
-              { rule: refLink ? isValidURL(refLink) : true, message: errorLink }
-            ]}
-            showerrors={`${showErrors}`}
-            InputLabelProps={{ shrink: true }}
-          />
-          }
+            <FormField
+              className='support-input-space'
+              id='refLink'
+              testid='support-reflink'
+              name='refLink'
+              fullWidth
+              label={refLinkLabel}
+              placeholder={refLinkPlaceholder}
+              onChange={this.handleChange}
+              value={refLink}
+              rules={[
+                { rule: refLink ? isValidURL(refLink) : true, message: errorLink },
+              ]}
+              showerrors={`${showErrors}`}
+              InputLabelProps={{ shrink: true }}
+            />}
           <div className='support-actions'>
             {!isLoggedIn &&
-            <Checkbox
-              value='terms'
-              id='agree-check'
-              testid='support-agree-check'
-              checked={terms}
-              onChange={this.handleCheckboxChange('terms')}
-              label={
-                <span>
-                  {/* TODO: fix navigation to handle show/hide support modal in terms page */}
-                  {/* {agreeText1} <a onClick={this.navigate('/terms')} className='link'> */}
-                  {agreeText1}
-                  <a
-                    testid='support-terms-link'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    href='/terms'
-                    className='link'>
-                    {agreeText2}
-                  </a>
-                </span>
-              }
-            />
-            }
+              <Checkbox
+                value='terms'
+                id='agree-check'
+                testid='support-agree-check'
+                checked={terms}
+                onChange={this.handleCheckboxChange('terms')}
+                label={
+                  <span>
+                    {/* TODO: fix navigation to handle show/hide support modal in terms page */}
+                    {/* {agreeText1} <a onClick={this.navigate('/terms')} className='link'> */}
+                    {agreeText1}
+                    <a
+                      testid='support-terms-link'
+                      target='_blank'
+                      rel='noopener noreferrer'
+                      href='/terms'
+                      className='link'
+                    >
+                      {agreeText2}
+                    </a>
+                  </span>
+                }
+              />}
             <Button
               className='support-submit'
               id='sendBtn'
@@ -325,17 +320,17 @@ class Support extends Component {
               variant='contained'
               color='primary'
               onClick={this.handleSubmit}
-              disabled={this.canSubmit()}>
+              disabled={this.canSubmit()}
+            >
               {submitBtn}
             </Button>
           </div>
           {isLoggedIn &&
-          <div className='support-info'>
-            {helpText1}
-            <br />
-            <a href='/docs' testid='support-docs-link' className='support-link'>{helpText2}</a>
-          </div>
-          }
+            <div className='support-info'>
+              {helpText1}
+              <br />
+              <a href='/docs' testid='support-docs-link' className='support-link'>{helpText2}</a>
+            </div>}
         </div>
       </div>
     )
@@ -350,7 +345,7 @@ Support.propTypes = {
   resetCaptcha: func.isRequired,
   sendSupportForm: func.isRequired,
   auth: object.isRequired,
-  history: object.isRequired
+  history: object.isRequired,
 }
 
 export default Support

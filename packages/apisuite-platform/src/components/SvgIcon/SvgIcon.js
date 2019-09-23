@@ -16,7 +16,7 @@ const SvgIcon = ({ size, name, color, ...rest }) => (
 
 SvgIcon.defaultProps = {
   size: 24,
-  color: '#fff'
+  color: '#fff',
 }
 
 SvgIcon.propTypes = {
@@ -31,7 +31,7 @@ SvgIcon.propTypes = {
   /**
    * The stroke color to be applied to the vector
    */
-  color: string
+  color: string,
 }
 
 export default SvgIcon

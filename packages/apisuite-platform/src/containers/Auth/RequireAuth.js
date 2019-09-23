@@ -10,15 +10,15 @@ import { USER_ROLES } from 'constants/global'
 
 export class RequireAuth extends Component {
   state = {
-    isAuthorized: false
+    isAuthorized: false,
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { user, isAuthorizing, isLoggingIn } = this.props
     this.checkAuth(USER_ROLES.indexOf(user.role), isAuthorizing, isLoggingIn)
   }
 
-  componentWillReceiveProps (nextprops) {
+  UNSAFE_componentWillReceiveProps (nextprops) {
     const { user, isAuthorizing, isLoggingIn } = nextprops
     this.checkAuth(USER_ROLES.indexOf(user.role), isAuthorizing, isLoggingIn)
   }
@@ -86,7 +86,7 @@ RequireAuth.propTypes = {
   /**
    * Open Login modal action
    */
-  openLoginModal: func.isRequired
+  openLoginModal: func.isRequired,
 }
 
 export default RequireAuth

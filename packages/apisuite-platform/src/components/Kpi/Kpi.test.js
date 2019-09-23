@@ -6,7 +6,7 @@ describe('<Kpi />', () => {
   const props = {
     title: 'My KPI',
     subtitle: 'All stats',
-    value: '87'
+    value: '87',
   }
   const wrapper = shallow(<Kpi {...props} />)
 

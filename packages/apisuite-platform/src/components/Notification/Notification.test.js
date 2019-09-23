@@ -7,7 +7,7 @@ describe('<Notification />', () => {
     tag: 'release',
     message: '<strong>NEWS:</strong> A new release.',
     url: 'https://cloudoki.com',
-    handleClose: jest.fn()
+    handleClose: jest.fn(),
   }
 
   const wrapper = shallow(<Notification {...props} />)

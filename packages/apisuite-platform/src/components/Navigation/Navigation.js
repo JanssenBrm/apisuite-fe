@@ -37,8 +37,8 @@ let appBarMenu = [
       { name: 'overview', tag: 'api-overview', intlId: 'navigation.overview', route: '/', protected: true },
       { name: 'feedback', intlId: 'navigation.feedback', route: '/feedback', protected: true },
       { name: 'subscriptions', intlId: 'navigation.subscriptions', route: '/api-subscriptions', protected: true, optional: true },
-      { name: 'status', route: '/api-status', icon: statsIcon, disabled: true, protected: true, tooltip: 'API Status' }
-    ]
+      { name: 'status', route: '/api-status', icon: statsIcon, disabled: true, protected: true, tooltip: 'API Status' },
+    ],
   },
   {
     name: 'documentation',
@@ -49,13 +49,13 @@ let appBarMenu = [
       { name: 'references', intlId: 'navigation.docs.references', route: '/api-references', protected: true },
       { name: 'resources', intlId: 'navigation.docs.resources', route: '/external-resources', protected: true, disabled: true },
       { name: 'scenarios', icon: scenariosIcon, route: '/scenarios', tooltip: 'Scenarios' },
-      { name: 'api', intlId: 'navigation.docs.api', route: '/api', protected: true, hidden: true }
-    ]
+      { name: 'api', intlId: 'navigation.docs.api', route: '/api', protected: true, hidden: true },
+    ],
   },
   {
     name: 'support',
     intlId: 'navigation.support',
-    route: '/support'
+    route: '/support',
   },
   {
     name: 'dashboard',
@@ -66,18 +66,18 @@ let appBarMenu = [
       { name: 'testdata', intlId: 'navigation.testData', route: '/testdata', optional: true },
       { name: 'activitylog', intlId: 'navigation.activityLog', route: '/activity-log', disabled: true },
       // { name: 'users', intlId: 'navigation.users', route: '/users', disabled: true },
-      { name: 'console', route: '/api-console', icon: consoleIcon, disabled: true, tooltip: 'API Console' }
-    ]
+      { name: 'console', route: '/api-console', icon: consoleIcon, disabled: true, tooltip: 'API Console' },
+    ],
   },
   {
     name: 'login',
     intlId: 'navigation.login',
-    route: '/login'
+    route: '/login',
   },
   {
     name: 'signup',
     intlId: 'navigation.registration',
-    route: '/signup'
+    route: '/signup',
   },
   {
     name: 'user',
@@ -87,9 +87,9 @@ let appBarMenu = [
       { name: 'team', intlId: 'navigation.team', route: '/team' },
       { name: 'codes', intlId: 'navigation.codes', route: '/recovery-codes', hidden: true },
       { name: 'organisation', intlId: 'navigation.organisation', route: '/organisation' },
-      { name: 'logout', route: '/logout', icon: powerSettingsIcon, tooltip: 'Logout' }
-    ]
-  }
+      { name: 'logout', route: '/logout', icon: powerSettingsIcon, tooltip: 'Logout' },
+    ],
+  },
 ]
 
 const userMenu = appBarMenu[appBarMenu.length - 1]
@@ -100,7 +100,7 @@ class Navigation extends Component {
     selectedSubmenu: null,
     isTop: true,
     isOutsideDetailHeader: false,
-    drawer: false
+    drawer: false,
   }
 
   checkThemeFeatures = () => {
@@ -112,8 +112,8 @@ class Navigation extends Component {
           return [
             ...acc, {
               ...curr,
-              submenu: curr.submenu.filter(sub => (sub.optional && features.includes(sub.name)) || !sub.optional)
-            }
+              submenu: curr.submenu.filter(sub => (sub.optional && features.includes(sub.name)) || !sub.optional),
+            },
           ]
         }
         return [...acc, curr]
@@ -143,13 +143,13 @@ class Navigation extends Component {
     this.setState({ selectedMenu: currentMenu || defaultMenu, selectedSubmenu: currentSubmenu })
   }
 
-  componentWillMount () {
+  UNSAFE_componentWillMount () {
     const { pathname } = this.props.location
     const defaultMenu = appBarMenu[0]
     this.syncState(pathname, defaultMenu)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { pathname } = nextProps.location
     if (this.props.location.pathname !== pathname) {
       const defaultMenu = pathname === '/dashboard' ? appBarMenu[3] : appBarMenu[0]
@@ -186,13 +186,13 @@ class Navigation extends Component {
 
   toggleDrawer = (side, open) => () => {
     this.setState({
-      [side]: open
+      [side]: open,
     })
   };
 
-  navigate = route => event => this.props.history.push(route)
+  navigate = route => () => this.props.history.push(route)
 
-  handleScroll = (event) => {
+  handleScroll = () => {
     const isTop = (window.scrollY || window.pageYOffset) < 50
     const isOutsideDetailHeader = (window.scrollY || window.pageYOffset) > 20
 
@@ -211,7 +211,7 @@ class Navigation extends Component {
     this.props.history.push(userMenu.submenu[0].route)
   }
 
-  handleMenuClick = menu => event => {
+  handleMenuClick = menu => () => {
     const { history, openLoginModal, openSupportModal } = this.props
     if (menu.submenu) {
       const currentMenu = appBarMenu.find(item => item.name === menu.name)
@@ -229,7 +229,7 @@ class Navigation extends Component {
     }
   }
 
-  handleSubmenuClick = submenu => event => {
+  handleSubmenuClick = submenu => () => {
     this.setState({ selectedSubmenu: submenu })
 
     if (this.state.selectedMenu.name === 'user') {
@@ -245,14 +245,6 @@ class Navigation extends Component {
         }
       }
     } else {
-      if (submenu.route === '/docs') {
-        this.props.changeTopic(null, null)
-      }
-
-      if (submenu.route === '/docs/started') {
-        this.props.changeTopic(0, 0)
-      }
-
       if (submenu.route === '/feedback') {
         this.props.openSupportModal('incident')
       } else {
@@ -281,30 +273,30 @@ class Navigation extends Component {
       <div
         className={classnames(
           'menu app-bar-menu',
-          {'logged-in': isLoggedIn}
+          { 'logged-in': isLoggedIn }
         )}
       >
         {menuOptions.map(menu =>
           this.displayMenuItem(menu) &&
-          <Button
-            id={`${menu.name}-menu`}
-            testid={`${menu.name}-menu`}
-            key={menu.name}
-            className={classnames({ 'selected': selectedMenu.name === menu.name })}
-            onClick={this.handleMenuClick(menu)}
-            style={menu.disabled ? {opacity: '.5'} : null}
-            disabled={menu.disabled}
-          >
-            <FormattedMessage id={menu.intlId} />
-            {menu.submenu && hasTransparentBG && isLoggedIn && isTop && <KeyboardArrowDownIcon className='caret-icon' />}
-          </Button>
+            <Button
+              id={`${menu.name}-menu`}
+              testid={`${menu.name}-menu`}
+              key={menu.name}
+              className={classnames({ selected: selectedMenu.name === menu.name })}
+              onClick={this.handleMenuClick(menu)}
+              style={menu.disabled ? { opacity: '.5' } : null}
+              disabled={menu.disabled}
+            >
+              <FormattedMessage id={menu.intlId} />
+              {menu.submenu && hasTransparentBG && isLoggedIn && isTop && <KeyboardArrowDownIcon className='caret-icon' />}
+            </Button>
         )}
       </div>
     )
   }
 
-  renderSubmenu = menu => {
-    const { isLoggedIn, history, documentation, auth } = this.props
+  renderSubmenu = () => {
+    const { isLoggedIn, history, auth } = this.props
     const { pathname } = history.location
     const { selectedMenu, selectedSubmenu, isOutsideDetailHeader } = this.state
     const isApiDetail = pathname.startsWith('/api-detail/')
@@ -320,20 +312,17 @@ class Navigation extends Component {
     const hasVisibleItems = unprotectedItems.length > 0 || isLoggedIn || isApiDetail || isTerms || isDataPrivacy
     const isAdmin = auth.user.roles && !!auth.user.roles.find(r => r.role === 'ADMIN' && r.organizationId === auth.user.organizations[0].id)
 
-    // Documentation specific
-    const isDocumentation = pathname.includes('/docs', '/docs/started')
-    const isScenarios = pathname === '/scenarios'
+    // Documentation specifi
     const isScenariosManual = pathname === '/scenarios/manual'
-    const showBackDocsButton = isDocumentation ? documentation.topic !== null : false
 
     return (
       <div
         className={classnames(
           'menu app-bar-submenu',
-          {'logged-in': isLoggedIn},
-          {'transparent-submenu': isApiDetail && !isOutsideDetailHeader},
-          {'grey-submenu': (isApiDetail && isOutsideDetailHeader) || isActivityLog},
-          {'hidden': !hasVisibleItems || (selectedSubmenu && selectedSubmenu.hide) || auth.isBlocked}
+          { 'logged-in': isLoggedIn },
+          { 'transparent-submenu': isApiDetail && !isOutsideDetailHeader },
+          { 'grey-submenu': (isApiDetail && isOutsideDetailHeader) || isActivityLog },
+          { hidden: !hasVisibleItems || (selectedSubmenu && selectedSubmenu.hide) || auth.isBlocked }
         )}
       >
         <div className='submenu-wrapper'>
@@ -341,22 +330,10 @@ class Navigation extends Component {
             <div className='back-navigation' testid='api-detail-back-btn' onClick={history.goBack}>
               <img src={caretLeftIcon} />
               <FormattedMessage id='landing.apiDetail.navigation' />
-            </div>
-          }
-          {(showBackDocsButton || isScenarios) &&
-            <div className='back-navigation'
-              testid='docs-back-btn'
-              onClick={() => {
-                history.push('/docs')
-                this.props.changeTopic(null, null)
-              }}
-            >
-              <img src={caretLeftIcon} />
-              <FormattedMessage id='navigation.docs.backtooverview' />
-            </div>
-          }
+            </div>}
           {(isScenariosManual) &&
-            <div className='back-navigation'
+            <div
+              className='back-navigation'
               testid='docs-back-btn'
               onClick={() => {
                 history.push('/scenarios')
@@ -365,61 +342,59 @@ class Navigation extends Component {
             >
               <img src={caretLeftIcon} />
               <FormattedMessage id='navigation.docs.backtoscenarios' />
-            </div>
-          }
+            </div>}
           {(isTerms || isDataPrivacy) &&
             <div className='back-navigation' testid='terms-back-btn' onClick={history.goBack}>
               <img src={caretLeftIcon} />
               <FormattedMessage id='signup.navigation.back' />
-            </div>
-          }
+            </div>}
           {(isAppDetail || isTestDataDetail || isTestDataTransactionHistory) &&
             <div className='back-navigation' testid='app-detail-back-btn' onClick={history.goBack}>
               <img src={caretLeftIcon} />
               <FormattedMessage id='navigation.apps.backtooverview' />
-            </div>
-          }
+            </div>}
           {isCodes &&
             <div className='back-navigation' testid='codes-back-btn' onClick={history.goBack}>
               <img src={caretLeftIcon} />
               {isLoggedIn && <FormattedMessage id='back.security' />}
               {!isLoggedIn && <FormattedMessage id='back.signup' />}
-            </div>
-          }
+            </div>}
           {!this.hideSubmenuItems() && selectedMenu.submenu.map((submenu, index) =>
             submenu.icon
-              ? <Tooltip content={submenu.tooltip} key={index} isLoggedIn={isLoggedIn}>
-                <IconButton
+              ? (
+                <Tooltip content={submenu.tooltip} key={index} isLoggedIn={isLoggedIn}>
+                  <IconButton
+                    id={`${submenu.name}-submenu`}
+                    testid={`${submenu.tag || submenu.name}-submenu`}
+                    key={submenu.name}
+                    onClick={this.handleSubmenuClick(submenu)}
+                    className={classnames({
+                      selected: selectedSubmenu && selectedSubmenu.name === submenu.name,
+                      hidden: (submenu.protected && !isLoggedIn) || submenu.hidden,
+                      disabled: submenu.disabled,
+                    })}
+                    disabled={submenu.disabled}
+                  >
+                    <img src={submenu.icon} />
+                  </IconButton>
+                </Tooltip>
+              )
+              : (
+                <Button
                   id={`${submenu.name}-submenu`}
-                  testid={`${submenu.tag || submenu.name}-submenu`}
+                  testid={`${submenu.name}-submenu`}
                   key={submenu.name}
-                  onClick={this.handleSubmenuClick(submenu)}
                   className={classnames({
-                    'selected': selectedSubmenu && selectedSubmenu.name === submenu.name,
-                    'hidden': (submenu.protected && !isLoggedIn) || submenu.hidden,
-                    'disabled': submenu.disabled
+                    selected: selectedSubmenu && selectedSubmenu.name === submenu.name,
+                    hidden: (submenu.protected && !isLoggedIn) || submenu.hidden,
+                    disabled: submenu.disabled || (submenu.name === 'team' && !isAdmin),
                   })}
-                  disabled={submenu.disabled}
+                  onClick={this.handleSubmenuClick(submenu)}
+                  disabled={submenu.disabled || (submenu.name === 'team' && !isAdmin)}
                 >
-                  <img src={submenu.icon} />
-                </IconButton>
-              </Tooltip>
-              : <Button
-                id={`${submenu.name}-submenu`}
-                testid={`${submenu.name}-submenu`}
-                key={submenu.name}
-                className={classnames({
-                  'selected': selectedSubmenu && selectedSubmenu.name === submenu.name,
-                  'hidden': (submenu.protected && !isLoggedIn) || submenu.hidden,
-                  'disabled': submenu.disabled || (submenu.name === 'team' && !isAdmin)
-                })}
-                onClick={this.handleSubmenuClick(submenu)}
-                disabled={submenu.disabled || (submenu.name === 'team' && !isAdmin)}
-              >
-                <FormattedMessage id={submenu.intlId} />
-              </Button>
-          )}
-
+                  <FormattedMessage id={submenu.intlId} />
+                </Button>
+              ))}
         </div>
       </div>
     )
@@ -447,41 +422,43 @@ class Navigation extends Component {
               [
                 <ListItem
                   button
-                  key={menu.name}>
+                  key={menu.name}
+                >
                   <ListItemText
                     disableTypography
-                    primary={<Typography variant='button' ><FormattedMessage id={menu.intlId} /></Typography>}
+                    primary={<Typography variant='button'><FormattedMessage id={menu.intlId} /></Typography>}
                     onClick={this.handleMenuClick(menu)}
-                    style={menu.disabled ? { opacity: '.5' } : {textColor: 'blue'}}
+                    style={menu.disabled ? { opacity: '.5' } : { textColor: 'blue' }}
                     disabled={menu.disabled}
                   >
                     {menu.submenu && hasTransparentBG && isLoggedIn && isTop && <KeyboardArrowDownIcon className='caret-icon' />}
                   </ListItemText>
 
                 </ListItem>,
-                <Divider key={`divider-${menu.name}`} />
+                <Divider key={`divider-${menu.name}`} />,
               ]
               ),
-              <ListItem key='user-avatar' >
+              <ListItem key='user-avatar'>
                 {
                   isLoggedIn && isUserActivated &&
-                  (user.avatar
-                    ? <div
+                  (user.avatar ? (
+                    <div
                       key='user-avatar'
                       testid='user-avatar-btn'
                       className='user-avatar'
                       style={{ backgroundImage: `url('${user.avatar}')` }}
                       onClick={this.handleUserClick}
                     />
-                    : <img
+                  ) : (
+                    <img
                       src={avatarDefaultIcon}
                       className='user-avatar'
                       testid='user-avatar-btn'
                       onClick={this.handleUserClick}
                     />
-                  )
+                  ))
                 }
-              </ListItem>
+              </ListItem>,
             ]
           }
         </List>
@@ -499,8 +476,9 @@ class Navigation extends Component {
     return (
       <div className={classnames(
         'navigation',
-        {'is-opaque': (hasTransparentBG && !isTop) || !hasTransparentBG || (hasTransparentBG && auth.isBlocked && !isLandingPage)}
-      )}>
+        { 'is-opaque': (hasTransparentBG && !isTop) || !hasTransparentBG || (hasTransparentBG && auth.isBlocked && !isLandingPage) }
+      )}
+      >
         <div className='app-bar'>
           <div className='app-bar-wrapper'>
             <div className='app-bar-header'>
@@ -510,24 +488,24 @@ class Navigation extends Component {
                 {theme.name === 'default' ? <div className='app-title'><strong>{theme.bank}</strong>OPENBANK</div> : <Typography className='app-title'><FormattedMessage id='navigation.title' /></Typography>}
               </div>
             </div>
-            <div className={classnames('user-details', { 'selected': selectedMenu.name === userMenu.name })}>
+            <div className={classnames('user-details', { selected: selectedMenu.name === userMenu.name })}>
               {isLoggedIn && isUserActivated &&
-                (user.avatar
-                  ? <div
+                (user.avatar ? (
+                  <div
                     key='user-avatar'
                     testid='user-avatar-btn'
                     className='user-avatar'
-                    style={{backgroundImage: `url('${user.avatar}')`}}
+                    style={{ backgroundImage: `url('${user.avatar}')` }}
                     onClick={this.handleUserClick}
                   />
-                  : <img
+                ) : (
+                  <img
                     src={avatarDefaultIcon}
                     className='user-avatar'
                     testid='user-avatar-btn'
                     onClick={this.handleUserClick}
                   />
-                )
-              }
+                ))}
             </div>
             {this.renderMenu()}
           </div>
@@ -584,14 +562,6 @@ Navigation.propTypes = {
    */
   checkExpanded: func.isRequired,
   /**
-   * Documentation state for information on navigation
-   */
-  documentation: object.isRequired,
-  /**
-   * Changes documentation topic
-   */
-  changeTopic: func.isRequired,
-  /**
    * Opens the Support Modal
    */
   openSupportModal: func.isRequired,
@@ -606,7 +576,7 @@ Navigation.propTypes = {
   /**
    * User Authentication state
    */
-  auth: object.isRequired
+  auth: object.isRequired,
 }
 
 export default Navigation

@@ -39,10 +39,10 @@ export const POSTPONE_INVITATION_ERROR = 'Team/POSTPONE_INVITATION_ERROR'
 const initialState = {
   team: {},
   ui: {
-    loading: false
+    loading: false,
   },
   invitations: [],
-  ticket: {}
+  ticket: {},
 }
 
 /**
@@ -59,22 +59,22 @@ export default function reducer (state = initialState, action) {
     case REMOVE_USER:
       return update(state, {
         ui: {
-          loading: {$set: true}
-        }
+          loading: { $set: true },
+        },
       })
     case FETCH_TEAM_SUCCESS:
       return update(state, {
-        team: {$set: action.data},
+        team: { $set: action.data },
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_TEAM_ERROR:
       return update(state, {
-        team: {$set: {}},
+        team: { $set: {} },
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     case SAVE_ROLE_SUCCESS:
     case SAVE_ROLE_ERROR:
@@ -83,50 +83,50 @@ export default function reducer (state = initialState, action) {
     case DELETE_INVITATION_ERROR:
       return update(state, {
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_INVITATIONS_SUCCESS:
       return update(state, {
-        invitations: {$set: action.data},
+        invitations: { $set: action.data },
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_INVITATIONS_ERROR:
       return update(state, {
-        invitations: {$set: []},
+        invitations: { $set: [] },
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     case CREATE_INVITATION_SUCCESS:
       return update(state, {
         invitations: { $push: [action.data] },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case DELETE_INVITATION_SUCCESS:
       return update(state, {
         invitations: { $apply: invitations => invitations.filter(inv => action.data.invId !== inv.id) },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_INVITATION_SUCCESS:
       return update(state, {
-        ticket: {$set: action.data},
+        ticket: { $set: action.data },
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     case GET_INVITATION_ERROR:
       return update(state, {
-        ticket: {$set: {}},
+        ticket: { $set: {} },
         ui: {
-          loading: {$set: false}
-        }
+          loading: { $set: false },
+        },
       })
     default:
       return state
@@ -137,7 +137,7 @@ export default function reducer (state = initialState, action) {
  * Fetch Team action creator
  */
 export function fetchTeam () {
-  return {type: FETCH_TEAM}
+  return { type: FETCH_TEAM }
 }
 
 /**
@@ -145,21 +145,21 @@ export function fetchTeam () {
  * @param {Object} data - data received from the successful call
  */
 export function fetchTeamSuccess (data) {
-  return {type: FETCH_TEAM_SUCCESS, data}
+  return { type: FETCH_TEAM_SUCCESS, data }
 }
 
 /**
  * Fetch Team error
  */
 export function fetchTeamError (error) {
-  return {type: FETCH_TEAM_ERROR, error}
+  return { type: FETCH_TEAM_ERROR, error }
 }
 
 /**
  * Save role action creator
  */
 export function saveRole (userId, oldRoleId, newRoleId) {
-  return {type: SAVE_ROLE, userId, oldRoleId, newRoleId}
+  return { type: SAVE_ROLE, userId, oldRoleId, newRoleId }
 }
 
 /**
@@ -167,21 +167,21 @@ export function saveRole (userId, oldRoleId, newRoleId) {
  * @param {Object} data - data received from the successful call
  */
 export function saveRoleSuccess (data) {
-  return {type: SAVE_ROLE_SUCCESS, data}
+  return { type: SAVE_ROLE_SUCCESS, data }
 }
 
 /**
  * Save role error
  */
 export function saveRoleError (error) {
-  return {type: SAVE_ROLE_ERROR, error}
+  return { type: SAVE_ROLE_ERROR, error }
 }
 
 /**
  * Remove user action creator
  */
 export function removeUser (userId) {
-  return {type: REMOVE_USER, userId}
+  return { type: REMOVE_USER, userId }
 }
 
 /**
@@ -189,14 +189,14 @@ export function removeUser (userId) {
  * @param {Object} data - data received from the successful call
  */
 export function removeUserSuccess (data) {
-  return {type: REMOVE_USER_SUCCESS, data}
+  return { type: REMOVE_USER_SUCCESS, data }
 }
 
 /**
  * Remove user error
  */
 export function removeUserError (error) {
-  return {type: REMOVE_USER_ERROR, error}
+  return { type: REMOVE_USER_ERROR, error }
 }
 
 /**

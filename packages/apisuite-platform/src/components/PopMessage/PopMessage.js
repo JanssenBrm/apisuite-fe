@@ -13,7 +13,7 @@ const variantIcon = {
   success: CheckCircleIcon,
   warning: WarningIcon,
   error: ErrorIcon,
-  info: InfoIcon
+  info: InfoIcon,
 }
 
 const PopMessageContent = (props) => {
@@ -39,7 +39,7 @@ const PopMessageContent = (props) => {
           onClick={onClose}
         >
           <CloseIcon className='icon' />
-        </IconButton>
+        </IconButton>,
       ]}
       {...other}
     />
@@ -50,14 +50,15 @@ PopMessageContent.propTypes = {
   className: PropTypes.string,
   message: PropTypes.node,
   onClose: PropTypes.func,
-  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info'])
+  variant: PropTypes.oneOf(['success', 'warning', 'error', 'info']),
 }
 
 const PopMessage = ({ open, message, handleClose, variant, duration, vertical, horizontal }) =>
-  <Snackbar className='pop-message'
+  <Snackbar
+    className='pop-message'
     anchorOrigin={{
       vertical: vertical,
-      horizontal: horizontal
+      horizontal: horizontal,
     }}
     open={open}
     autoHideDuration={duration}
@@ -77,7 +78,7 @@ PopMessage.defaultProps = {
   vertical: 'top',
   horizontal: 'center',
   variant: 'info',
-  handleClose: () => {}
+  handleClose: () => {},
 }
 
 PopMessage.propTypes = {
@@ -87,7 +88,7 @@ PopMessage.propTypes = {
   vertical: string,
   horizontal: string,
   variant: string,
-  handleClose: func
+  handleClose: func,
 }
 
 export default PopMessage

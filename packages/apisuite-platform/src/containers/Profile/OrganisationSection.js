@@ -20,10 +20,10 @@ class OrganisationSection extends Component {
       website: '',
       policyUrl: '',
       logoUrl: '',
-      certificates: []
+      certificates: [],
     },
     showErrors: false,
-    errors: []
+    errors: [],
   }
 
   componentDidMount () {
@@ -33,7 +33,7 @@ class OrganisationSection extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.organisation !== this.props.organisation) {
       const { name, description, vat, website, policyUrl, logoUrl, id, certificates } = nextProps.organisation
       this.setState({ organisation: { name, description, vat, website, policyUrl, logoUrl, id, certificates } })
@@ -42,8 +42,8 @@ class OrganisationSection extends Component {
 
   handleChange = ({ target }, errors) => {
     this.setState({
-      organisation: {...this.state.organisation, [target.name]: target.value},
-      errors: parseErrors(target, errors, this.state.errors)
+      organisation: { ...this.state.organisation, [target.name]: target.value },
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -63,7 +63,7 @@ class OrganisationSection extends Component {
       this.props.updateOrganization(organisation.id, data)
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
@@ -76,22 +76,23 @@ class OrganisationSection extends Component {
     const { intl, onboardingToken } = this.props
     const { organisation, showErrors, errors } = this.state
 
-    const nameLabel = intl.formatMessage({id: 'organisation.name.label'})
-    const nameRequired = intl.formatMessage({id: 'organisation.name.required'})
-    const descriptionLabel = intl.formatMessage({id: 'organisation.description.label'})
-    const vatLabel = intl.formatMessage({id: 'organisation.vat.label'})
-    const websiteLabel = intl.formatMessage({id: 'organisation.website.label'})
-    const policyURLLabel = intl.formatMessage({id: 'organisation.policyURL.label'})
-    const logoURLLabel = intl.formatMessage({id: 'organisation.logoURL.label'})
-    const avatarTypeError = intl.formatMessage({id: 'profile.avatarUrl.typeError'})
-    const onboardingTokenLabel = intl.formatMessage({id: 'organisation.onboardingToken.label'})
-    const onboardingTokenExpiresLabel = intl.formatMessage({id: 'organisation.onboardingToken.expires.label'})
+    const nameLabel = intl.formatMessage({ id: 'organisation.name.label' })
+    const nameRequired = intl.formatMessage({ id: 'organisation.name.required' })
+    const descriptionLabel = intl.formatMessage({ id: 'organisation.description.label' })
+    const vatLabel = intl.formatMessage({ id: 'organisation.vat.label' })
+    const websiteLabel = intl.formatMessage({ id: 'organisation.website.label' })
+    const policyURLLabel = intl.formatMessage({ id: 'organisation.policyURL.label' })
+    const logoURLLabel = intl.formatMessage({ id: 'organisation.logoURL.label' })
+    const avatarTypeError = intl.formatMessage({ id: 'profile.avatarUrl.typeError' })
+    const onboardingTokenLabel = intl.formatMessage({ id: 'organisation.onboardingToken.label' })
+    const onboardingTokenExpiresLabel = intl.formatMessage({ id: 'organisation.onboardingToken.expires.label' })
 
     const organizationState = this.props.organisation ? this.props.organisation.state : null
     const organizationStateText = organizationState ? organizationStates[organizationState].name : ''
     let organisationInitials = ''
 
-    const certificate = organisation.certificates && organisation.certificates.length > 0 ? organisation.certificates[0] : null
+    const certificate = organisation.certificates && organisation.certificates.length > 0
+      ? organisation.certificates[0] : null
 
     if (organisation && organisation.name) {
       const splitName = organisation.name.split(' ')
@@ -102,7 +103,7 @@ class OrganisationSection extends Component {
       <div className='profile-container' id='organisation-settings'>
         <div className='profile-section'>
           <div className='left-container'>
-            <div className='avatar' style={{...(isValidURL(organisation.logoUrl) && { backgroundImage: `url(${organisation.logoUrl})`, backgroundSize: 'cover' })}}>
+            <div className='avatar' style={{ ...(isValidURL(organisation.logoUrl) && { backgroundImage: `url(${organisation.logoUrl})`, backgroundSize: 'cover' }) }}>
               {!isValidURL(organisation.logoUrl) && <span>{organisationInitials}</span>}
             </div>
             <div className='account-details'>
@@ -112,7 +113,8 @@ class OrganisationSection extends Component {
                 <div className={classnames(
                   'access-level-badge',
                   organizationState ? organizationStates[organizationState].slug : null
-                )} />
+                )}
+                />
               </div>
 
               <div className='detail-title actions'>{<FormattedMessage id='profile.actions' />}</div>
@@ -128,11 +130,11 @@ class OrganisationSection extends Component {
               </Button>
               {
                 certificate &&
-                <div className='card-container' >
-                  <img className='card-image' src={certificateProvided} alt='certificate-approved' />
-                  <Typography variant='display3' gutterBottom className='card-title'><FormattedMessage id='organisation.certificateProvided' /></Typography>
-                  <p className='card-text' ><FormattedMessage id='organisation.certificateValid' /> <b>{moment(certificate.expiration_date).format('MMMM Do, YYYY')}</b>.</p>
-                </div>
+                  <div className='card-container'>
+                    <img className='card-image' src={certificateProvided} alt='certificate-approved' />
+                    <Typography variant='display3' gutterBottom className='card-title'><FormattedMessage id='organisation.certificateProvided' /></Typography>
+                    <p className='card-text'><FormattedMessage id='organisation.certificateValid' /> <b>{moment(certificate.expiration_date).format('MMMM Do, YYYY')}</b>.</p>
+                  </div>
               }
             </div>
           </div>
@@ -148,7 +150,7 @@ class OrganisationSection extends Component {
               onChange={this.handleChange}
               value={organisation.name}
               rules={[
-                {rule: (organisation && organisation.name && organisation.name.length >= 2), message: nameRequired}
+                { rule: (organisation && organisation.name && organisation.name.length >= 2), message: nameRequired },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -185,7 +187,7 @@ class OrganisationSection extends Component {
               onChange={this.handleChange}
               value={organisation.website}
               rules={[
-                {rule: organisation.website ? isValidURL(organisation.website) : true, message: avatarTypeError}
+                { rule: organisation.website ? isValidURL(organisation.website) : true, message: avatarTypeError },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -199,7 +201,7 @@ class OrganisationSection extends Component {
               onChange={this.handleChange}
               value={organisation.policyUrl || ''}
               rules={[
-                {rule: organisation.policyUrl ? isValidURL(organisation.policyUrl) : true, message: avatarTypeError}
+                { rule: organisation.policyUrl ? isValidURL(organisation.policyUrl) : true, message: avatarTypeError },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -213,7 +215,7 @@ class OrganisationSection extends Component {
               onChange={this.handleChange}
               value={organisation.logoUrl || ''}
               rules={[
-                {rule: organisation.logoUrl ? isValidURL(organisation.logoUrl) : true, message: avatarTypeError}
+                { rule: organisation.logoUrl ? isValidURL(organisation.logoUrl) : true, message: avatarTypeError },
               ]}
               showerrors={`${showErrors}`}
             />
@@ -265,7 +267,7 @@ OrganisationSection.propTypes = {
   onboardingToken: object.isRequired,
   fetchOrganizations: func.isRequired,
   updateOrganization: func.isRequired,
-  getOnboardingToken: func.isRequired
+  getOnboardingToken: func.isRequired,
 }
 
 export default OrganisationSection

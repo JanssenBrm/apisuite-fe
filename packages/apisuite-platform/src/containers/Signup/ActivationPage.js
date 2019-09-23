@@ -15,14 +15,14 @@ class ActivationPage extends Component {
   render () {
     const { intl } = this.props
 
-    const headerTitle = intl.formatMessage({id: 'signup.activation.header'})
-    const confirmationTitle1 = intl.formatMessage({id: 'signup.activation.title1'})
-    const confirmationDescription1 = intl.formatMessage({id: 'signup.activation.description1.1'})
-    const confirmationDescription2 = intl.formatMessage({id: 'signup.activation.description1.2'})
-    const confirmationDescription3 = intl.formatMessage({id: 'signup.activation.description1.3'})
-    const toBeActivatedTitle = intl.formatMessage({id: 'signup.activation.title2'})
-    const toBeActivatedDescription = intl.formatMessage({id: 'signup.activation.description2'})
-    const resendBtn = intl.formatMessage({id: 'signup.activation.resend'})
+    const headerTitle = intl.formatMessage({ id: 'signup.activation.header' })
+    const confirmationTitle1 = intl.formatMessage({ id: 'signup.activation.title1' })
+    const confirmationDescription1 = intl.formatMessage({ id: 'signup.activation.description1.1' })
+    const confirmationDescription2 = intl.formatMessage({ id: 'signup.activation.description1.2' })
+    const confirmationDescription3 = intl.formatMessage({ id: 'signup.activation.description1.3' })
+    const toBeActivatedTitle = intl.formatMessage({ id: 'signup.activation.title2' })
+    const toBeActivatedDescription = intl.formatMessage({ id: 'signup.activation.description2' })
+    const resendBtn = intl.formatMessage({ id: 'signup.activation.resend' })
 
     return (
       <div className='activation-container'>
@@ -75,9 +75,8 @@ class ActivationPage extends Component {
 
 ActivationPage.propTypes = {
   intl: object.isRequired,
-  openLoginModal: func.isRequired,
   sendActivationEmail: func.isRequired,
-  auth: object.isRequired
+  auth: object.isRequired,
 }
 
 export default ActivationPage

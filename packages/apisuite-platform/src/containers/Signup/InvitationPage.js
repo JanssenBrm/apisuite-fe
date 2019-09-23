@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 class InvitationPage extends Component {
   state = {
-    loading: true
+    loading: true,
   }
 
   componentDidMount () {
@@ -17,10 +17,10 @@ class InvitationPage extends Component {
     if (token) this.props.getInvitation(token)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.invitation !== this.props.invitation || nextProps.invitation.error) {
       this.setState({
-        loading: false
+        loading: false,
       })
     }
   }
@@ -48,18 +48,18 @@ class InvitationPage extends Component {
 
   render () {
     const { intl, invitation, error } = this.props
-    const invitationText2 = intl.formatMessage({id: 'signup.invitation.text.2'})
-    const joinBtn = intl.formatMessage({id: 'signup.invitation.join'})
-    const remindBtn = intl.formatMessage({id: 'signup.invitation.remind'})
-    const unnamedLabel = intl.formatMessage({id: 'signup.invitation.unnamed'})
+    const invitationText2 = intl.formatMessage({ id: 'signup.invitation.text.2' })
+    const joinBtn = intl.formatMessage({ id: 'signup.invitation.join' })
+    const remindBtn = intl.formatMessage({ id: 'signup.invitation.remind' })
+    const unnamedLabel = intl.formatMessage({ id: 'signup.invitation.unnamed' })
 
     return (
       <div className='signup-center'>
         <div className='signup-invitation'>
-          { this.state.loading
+          {this.state.loading
             ? <CircularProgress className='signup-loading-circle' />
-            : error
-              ? <div>
+            : error ? (
+              <div>
                 <Typography variant='display4' gutterBottom>
                   <FormattedMessage
                     id='signup.invitation.notfound'
@@ -71,14 +71,15 @@ class InvitationPage extends Component {
                   />
                 </p>
               </div>
-              : <div>
+            ) : (
+              <div>
                 <Typography variant='display4' gutterBottom>
                   <FormattedMessage
                     id='signup.invitation.title'
                     values={{
                       organisation: (
                         <span>{invitation.organization_name || unnamedLabel}</span>
-                      )
+                      ),
                     }}
                   />
                 </Typography>
@@ -88,7 +89,7 @@ class InvitationPage extends Component {
                     values={{
                       organisation: (
                         <strong>{invitation.organization_name}</strong>
-                      )
+                      ),
                     }}
                   />
                 </p>
@@ -116,12 +117,11 @@ class InvitationPage extends Component {
                   </Button>
                 </div>
               </div>
-          }
+            )}
           {invitation.isRegistered &&
             <div className='invitation-info'>
               <FormattedMessage id='signup.invitation.info' />
-            </div>
-          }
+            </div>}
         </div>
       </div>
     )
@@ -137,7 +137,7 @@ InvitationPage.propTypes = {
   acceptInvitation: func.isRequired,
   postponeInvitation: func.isRequired,
   skipStep: func.isRequired,
-  error: object
+  error: object,
 }
 
 export default InvitationPage

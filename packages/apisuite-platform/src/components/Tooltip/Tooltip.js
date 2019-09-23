@@ -5,12 +5,12 @@ import { any, object, bool } from 'prop-types'
 
 class ArrowTooltip extends Component {
   state = {
-    arrowRef: null
+    arrowRef: null,
   }
 
   handleArrowRef = node => {
     this.setState({
-      arrowRef: node
+      arrowRef: node,
     })
   }
 
@@ -18,53 +18,53 @@ class ArrowTooltip extends Component {
     const { classes, isLoggedIn } = this.props
     const { arrowRef } = this.state
 
-    return (
-      isLoggedIn && <Tooltip
+    return (isLoggedIn && (
+      <Tooltip
         disableFocusListener
         classes={{ tooltip: classes.blackTooltip }}
         title={
-          <React.Fragment>
+          <>
             {this.props.content}
             <span className='arrowArrow' ref={this.handleArrowRef} />
-          </React.Fragment>
+          </>
         }
         PopperProps={{
           popperOptions: {
             modifiers: {
               arrow: {
                 enabled: Boolean(arrowRef),
-                element: arrowRef
-              }
-            }
-          }
+                element: arrowRef,
+              },
+            },
+          },
         }}
       >
         <div className='tooltip'>
-          { this.props.children }
+          {this.props.children}
         </div>
       </Tooltip>
-    )
+    ))
   }
 }
 
 ArrowTooltip.defaultProps = {
-  content: ''
+  content: '',
 }
 
 ArrowTooltip.propTypes = {
   content: any,
   children: any.isRequired,
   classes: object.isRequired,
-  isLoggedIn: bool
+  isLoggedIn: bool,
 }
 
-const styles = theme => ({
+const styles = () => ({
   blackTooltip: {
     background: '#000',
     fontSize: '.7em',
     position: 'relative',
-    top: '-10px'
-  }
+    top: '-10px',
+  },
 })
 
 export default withStyles(styles)(ArrowTooltip)

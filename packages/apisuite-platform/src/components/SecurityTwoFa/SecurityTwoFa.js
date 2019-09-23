@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { object, string, func, bool, array } from 'prop-types'
 import classnames from 'classnames'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -12,7 +12,7 @@ class SecurityTwoFa extends Component {
     }
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if ((nextProps.method !== this.props.method) && nextProps.method === '1') {
       this.props.generateQRCode()
     }
@@ -24,17 +24,17 @@ class SecurityTwoFa extends Component {
       {
         value: '1',
         key: 'authorizationApp',
-        description: intl.formatMessage({ id: 'signup.security.qrcode' })
+        description: intl.formatMessage({ id: 'signup.security.qrcode' }),
       },
       {
         value: '2',
         key: 'authorizationSms',
-        description: intl.formatMessage({ id: 'signup.security.sms' })
-      }
+        description: intl.formatMessage({ id: 'signup.security.sms' }),
+      },
     ]
   }
 
-  sendSMS = e => this.props.sendSMSCode()
+  sendSMS = () => this.props.sendSMSCode()
 
   update2fa = () => {
     const { confirmationCode, method, showErrors } = this.props
@@ -83,7 +83,7 @@ class SecurityTwoFa extends Component {
           value={confirmationCode}
           disabled={loading}
           rules={[
-            { rule: confirmationCode && confirmationCode.length === 6, message: method === '1' ? codeRequired : smsRequired }
+            { rule: confirmationCode && confirmationCode.length === 6, message: method === '1' ? codeRequired : smsRequired },
           ]}
           showerrors={`${showErrors}`}
         />
@@ -93,12 +93,10 @@ class SecurityTwoFa extends Component {
     return (
       <div className='securityTwoFa'>
         <FormField
-          className={
-            classnames(
-              'select',
-              `${route && route.replace('/', '')}`
-            )
-          }
+          className={classnames(
+            'select',
+            `${route && route.replace('/', '')}`
+          )}
           disabled={isSignup}
           id='twofa-method'
           testid='twofa-method'
@@ -122,20 +120,17 @@ class SecurityTwoFa extends Component {
           ))}
         </FormField>
         {method === '1' && qrcode &&
-          <div className={
-            classnames(
-              'qrcode-container',
-              `${route && route.replace('/', '')}`
-            )
-          }>
+          <div className={classnames(
+            'qrcode-container',
+            `${route && route.replace('/', '')}`
+          )}
+          >
             <div className='qrcode-wrapper'>
               <div
-                className={
-                  classnames(
-                    'qrcode-scan',
-                    `${route && route.replace('/', '')}`
-                  )
-                }
+                className={classnames(
+                  'qrcode-scan',
+                  `${route && route.replace('/', '')}`
+                )}
               >
                 <img src={qrcode} />
               </div>
@@ -149,16 +144,13 @@ class SecurityTwoFa extends Component {
                   disabled={!verified && (!confirmationCode || errors.length > 0)}
                 >
                   {updateBtn}
-                </Button>
-              }
+                </Button>}
             </div>
             <div
-              className={
-                classnames(
-                  'qrcode-steps',
-                  `${route && route.replace('/', '')}`
-                )
-              }
+              className={classnames(
+                'qrcode-steps',
+                `${route && route.replace('/', '')}`
+              )}
             >
               <div className='steps-wrapper'>
                 {isSignup && <div className='step'>{codeStep1}</div>}
@@ -167,14 +159,13 @@ class SecurityTwoFa extends Component {
               </div>
               {renderConfirmation()}
             </div>
-          </div>
-        }
+          </div>}
         {method === '2' &&
-          <Fragment>
+          <>
             <Button
               id='send-sms-button'
               testid='send-sms-btn'
-              className={classnames('send-sms-btn', { 'signup': !isProfile })}
+              className={classnames('send-sms-btn', { signup: !isProfile })}
               variant='outlined'
               onClick={this.sendSMS}
               disabled={loading}
@@ -193,10 +184,8 @@ class SecurityTwoFa extends Component {
                 disabled={!verified && (!confirmationCode || errors.length > 0)}
               >
                 {updateBtn}
-              </Button>
-            }
-          </Fragment>
-        }
+              </Button>}
+          </>}
       </div>
     )
   }
@@ -216,7 +205,7 @@ SecurityTwoFa.propTypes = {
   verified: bool,
   qrcode: string,
   errors: array,
-  handleTwoFaMethodChange: func
+  handleTwoFaMethodChange: func,
 }
 
 export default SecurityTwoFa

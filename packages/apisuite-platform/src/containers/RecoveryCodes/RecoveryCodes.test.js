@@ -9,7 +9,7 @@ import reducer, {
   getCodes,
   getCodesSuccess,
   getCodesError,
-  cleanCodes
+  cleanCodes,
 } from './ducks'
 import { getCodesSaga } from './sagas'
 
@@ -17,22 +17,22 @@ describe('<RecoveryCodes />', () => {
   const props = {
     intl: {},
     auth: {
-      user: {}
+      user: {},
     },
     signup: {
-      user: {}
+      user: {},
     },
     history: { push: jest.fn() },
     theme: themes.default,
     cleanCodes: jest.fn(),
-    codes: []
+    codes: [],
   }
 
   const dummyCodes = ['123', '456']
   const dummySignup = {
     user: {
-      codes: dummyCodes
-    }
+      codes: dummyCodes,
+    },
   }
 
   const wrapper = mountWithIntl(<RecoveryCodes {...props} />)
@@ -46,12 +46,12 @@ describe('<RecoveryCodes />', () => {
   })
 
   it('should get codes from signup', () => {
-    const wrapper2 = mountWithIntl(<RecoveryCodes {...{...props, signup: dummySignup}} />)
+    const wrapper2 = mountWithIntl(<RecoveryCodes {...{ ...props, signup: dummySignup }} />)
     expect(wrapper2.state().codes).toBe(dummyCodes)
   })
 
   it('should update codes state from new signup props', () => {
-    const wrapper3 = mountWithIntl(<RecoveryCodes {...{...props, auth: {...props.auth, authToken: 'xxx'}, signup: dummySignup}} />)
+    const wrapper3 = mountWithIntl(<RecoveryCodes {...{ ...props, auth: { ...props.auth, authToken: 'xxx' }, signup: dummySignup }} />)
     const codes = dummySignup.user.codes
     wrapper3.setProps({ auth: { user: { codes } } })
     expect(wrapper3.instance().state.codes).toEqual(codes)
@@ -70,7 +70,7 @@ describe('<RecoveryCodes />', () => {
 })
 
 const initialState = {
-  codes: []
+  codes: [],
 }
 
 describe('RecoveryCodes ducks', () => {
@@ -80,15 +80,15 @@ describe('RecoveryCodes ducks', () => {
 
   it('should update state on GET_CODES_SUCCESS', () => {
     const data = ['xxx', 'yyy']
-    expect(reducer(initialState, getCodesSuccess(data))).toEqual({...initialState, codes: data})
+    expect(reducer(initialState, getCodesSuccess(data))).toEqual({ ...initialState, codes: data })
   })
 
   it('should reset codes state on GET_CODES_ERROR', () => {
-    expect(reducer(initialState, getCodesError())).toEqual({...initialState, codes: []})
+    expect(reducer(initialState, getCodesError())).toEqual({ ...initialState, codes: [] })
   })
 
   it('should reset state on CLEAN_CODES', () => {
-    expect(reducer(initialState, cleanCodes())).toEqual({...initialState, codes: []})
+    expect(reducer(initialState, cleanCodes())).toEqual({ ...initialState, codes: [] })
   })
 })
 

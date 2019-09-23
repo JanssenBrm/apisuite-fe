@@ -23,193 +23,193 @@ import reducer, {
   getTestUserError,
   updateTestUser,
   updateTestUserSuccess,
-  updateTestUserError
+  updateTestUserError,
 } from './ducks'
 
-const intlProvider = new IntlProvider({locale: 'en', messages: translationMessages['en'], formats})
-const {intl} = intlProvider.getChildContext()
+const intlProvider = new IntlProvider({ locale: 'en', messages: translationMessages.en, formats })
+const { intl } = intlProvider.getChildContext()
 
-const errorMock = {message: 'error-stub'}
+const errorMock = { message: 'error-stub' }
 const mockUsers = [
   {
-    'id': 2,
-    'email': 'albert.einstein@test.be',
-    'language': 'FR',
-    'name': 'Albert Einstein',
-    'username': '1234567890',
-    'password': '91c7058f-9e76-4405-859c-7e004be76387',
-    'postalAddress': {
-      'country': 'BE',
-      'addressLine': [
+    id: 2,
+    email: 'albert.einstein@test.be',
+    language: 'FR',
+    name: 'Albert Einstein',
+    username: '1234567890',
+    password: '91c7058f-9e76-4405-859c-7e004be76387',
+    postalAddress: {
+      country: 'BE',
+      addressLine: [
         '2 rue de la DSP2',
-        '1000 Bruxelles'
-      ]
+        '1000 Bruxelles',
+      ],
     },
-    'avatarUrl': null,
-    'accounts': [
+    avatarUrl: null,
+    accounts: [
       {
-        'id': 3,
-        'resourceId': 'BE12345678901234EUR',
-        'bicFi': 'GEBABBEB',
-        'name': 'Albert Einstein - FINTRO',
-        'details': null,
-        'linkedAccount': null,
-        'usage': 'PRIV',
-        'cashAccountType': 'CACC',
-        'product': 'CUR - FINTRO',
-        'currency': 'EUR',
-        'accountId': {
-          'iban': 'BE12345678901234'
+        id: 3,
+        resourceId: 'BE12345678901234EUR',
+        bicFi: 'GEBABBEB',
+        name: 'Albert Einstein - FINTRO',
+        details: null,
+        linkedAccount: null,
+        usage: 'PRIV',
+        cashAccountType: 'CACC',
+        product: 'CUR - FINTRO',
+        currency: 'EUR',
+        accountId: {
+          iban: 'BE12345678901234',
         },
-        'balances': [
+        balances: [
           {
-            'id': 5,
-            'name': 'Closing balance',
-            'balanceType': 'CLBD',
-            'referenceDate': '2019-03-26',
-            'balanceAmount': {
-              'currency': 'EUR',
-              'amount': '100.00'
+            id: 5,
+            name: 'Closing balance',
+            balanceType: 'CLBD',
+            referenceDate: '2019-03-26',
+            balanceAmount: {
+              currency: 'EUR',
+              amount: '100.00',
             },
-            'lastChangeDateTime': '2019-03-26T14:54:37',
-            'lastCommittedTransaction': '2019032620190326190000'
+            lastChangeDateTime: '2019-03-26T14:54:37',
+            lastCommittedTransaction: '2019032620190326190000',
           },
           {
-            'id': 6,
-            'name': 'Intraday balance',
-            'balanceType': 'OTHR',
-            'referenceDate': '2019-03-26',
-            'balanceAmount': {
-              'currency': 'EUR',
-              'amount': '100.00'
+            id: 6,
+            name: 'Intraday balance',
+            balanceType: 'OTHR',
+            referenceDate: '2019-03-26',
+            balanceAmount: {
+              currency: 'EUR',
+              amount: '100.00',
             },
-            'lastChangeDateTime': '2019-03-26T14:54:37',
-            'lastCommittedTransaction': '2019032620190326190000'
-          }
+            lastChangeDateTime: '2019-03-26T14:54:37',
+            lastCommittedTransaction: '2019032620190326190000',
+          },
         ],
-        'psuStatus': 'AccountHolder',
-        'totalTransactions': 0
-      }
+        psuStatus: 'AccountHolder',
+        totalTransactions: 0,
+      },
     ],
-    'totalBalance': 100
-  }
+    totalBalance: 100,
+  },
 ]
 const mockApps = [
   {
-    'id': 1,
-    'name': 'My First App',
-    'description': 'Very cool app',
-    'icon': 'http://myicon',
-    'publicURL': 'public.com',
-    'redirectURLs': ['redirect.com']
-  }
+    id: 1,
+    name: 'My First App',
+    description: 'Very cool app',
+    icon: 'http://myicon',
+    publicURL: 'public.com',
+    redirectURLs: ['redirect.com'],
+  },
 ]
 
-const mockOrganizations = [{id: 1, name: 'myOrg', state: 'NON_TRUSTED'}]
+const mockOrganizations = [{ id: 1, name: 'myOrg', state: 'NON_TRUSTED' }]
 const mockOrganization = mockOrganizations[0]
 
 const mockState = {
   auth: {
     user: {
-      organizations: mockOrganizations
-    }
-  }
+      organizations: mockOrganizations,
+    },
+  },
 }
 
 const mockSubscriptions = {
-  brands: [{'id': 1, 'name': 'BNP Paribas Fortis', 'logo': 'logo.svg'}, {
-    'id': 2,
-    'name': 'Hello Bank!',
-    'logo': 'hellobank_logo.svg'
-  }, {'id': 3, 'name': 'Fintro', 'logo': 'fintro_logo.svg'}],
+  brands: [{ id: 1, name: 'BNP Paribas Fortis', logo: 'logo.svg' }, {
+    id: 2,
+    name: 'Hello Bank!',
+    logo: 'hellobank_logo.svg',
+  }, { id: 3, name: 'Fintro', logo: 'fintro_logo.svg' }],
   products: [
     {
-      'id': 4,
-      'name': 'Payment Initiation API',
-      'longname': 'Payment Initiation – BNP Paribas Fortis Accounts',
-      'intro': 'Give customers the option to initiate payments via our BNP Paribas Fortis Payment Initiation API.',
-      'description': 'With our BNP Paribas Fortis Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
-      'image': 'logo.svg',
-      'role': 'pisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 1,
-      'isSubscribed': true
+      id: 4,
+      name: 'Payment Initiation API',
+      longname: 'Payment Initiation – BNP Paribas Fortis Accounts',
+      intro: 'Give customers the option to initiate payments via our BNP Paribas Fortis Payment Initiation API.',
+      description: 'With our BNP Paribas Fortis Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
+      image: 'logo.svg',
+      role: 'pisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 1,
+      isSubscribed: true,
     }, {
-      'id': 5,
-      'name': 'Payment Initiation API',
-      'longname': 'Payment Initiation – Hello Bank! Accounts',
-      'intro': 'Give customers the option to initiate payments via our Hello Bank! Payment Initiation API.',
-      'description': 'With our Hello Bank! Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
-      'image': 'hellobank_logo.svg',
-      'role': 'pisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 2,
-      'isSubscribed': false
+      id: 5,
+      name: 'Payment Initiation API',
+      longname: 'Payment Initiation – Hello Bank! Accounts',
+      intro: 'Give customers the option to initiate payments via our Hello Bank! Payment Initiation API.',
+      description: 'With our Hello Bank! Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
+      image: 'hellobank_logo.svg',
+      role: 'pisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 2,
+      isSubscribed: false,
     }, {
-      'id': 6,
-      'name': 'Payment Initiation API',
-      'longname': 'Payment Initiation – Fintro Accounts',
-      'intro': 'Give customers the option to initiate payments via our Fintro Payment Initiation API.',
-      'description': 'With our Fintro Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
-      'image': 'fintro_logo.svg',
-      'role': 'pisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 3,
-      'isSubscribed': false
+      id: 6,
+      name: 'Payment Initiation API',
+      longname: 'Payment Initiation – Fintro Accounts',
+      intro: 'Give customers the option to initiate payments via our Fintro Payment Initiation API.',
+      description: 'With our Fintro Payment Initiation API you can allow customers to connect to their account and initiate a payment. Our Payment Initiation API will enable secure access to and payment initiation from Belgian BNP Paribas Fortis payment accounts.',
+      image: 'fintro_logo.svg',
+      role: 'pisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 3,
+      isSubscribed: false,
     }, {
-      'id': 7,
-      'name': 'Account Information API',
-      'longname': 'Account Information – BNP Paribas Fortis Accounts',
-      'intro': 'Give customers secure access to transaction data and balance data via our BNP Paribas Fortis Account Information API.',
-      'description': 'With our BNP Paribas Fortis Account Information API you can allow customers to connect to balance and transaction data. Our Account Information API will enable secure access to Belgian BNP Paribas Fortis payment accounts.',
-      'image': 'logo.svg',
-      'role': 'aisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 1,
-      'isSubscribed': false
+      id: 7,
+      name: 'Account Information API',
+      longname: 'Account Information – BNP Paribas Fortis Accounts',
+      intro: 'Give customers secure access to transaction data and balance data via our BNP Paribas Fortis Account Information API.',
+      description: 'With our BNP Paribas Fortis Account Information API you can allow customers to connect to balance and transaction data. Our Account Information API will enable secure access to Belgian BNP Paribas Fortis payment accounts.',
+      image: 'logo.svg',
+      role: 'aisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 1,
+      isSubscribed: false,
     }, {
-      'id': 8,
-      'name': 'Account Information API',
-      'longname': 'Account Information – Hello Bank! Accounts',
-      'intro': 'Give customers secure access to transaction data and balance data via our Hello Bank! Account Information API.',
-      'description': 'Create Account Information consuming applications that offer great added value to your customers. The Banks’s Account Information Service will enable secure access to all European The Bank payments accounts.',
-      'image': 'hellobank_logo.svg',
-      'role': 'aisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 2,
-      'isSubscribed': false
+      id: 8,
+      name: 'Account Information API',
+      longname: 'Account Information – Hello Bank! Accounts',
+      intro: 'Give customers secure access to transaction data and balance data via our Hello Bank! Account Information API.',
+      description: 'Create Account Information consuming applications that offer great added value to your customers. The Banks’s Account Information Service will enable secure access to all European The Bank payments accounts.',
+      image: 'hellobank_logo.svg',
+      role: 'aisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 2,
+      isSubscribed: false,
     }, {
-      'id': 9,
-      'name': 'Account Information API',
-      'longname': 'Account Information – Fintro Accounts',
-      'intro': 'Give customers secure access to transaction data and balance data via our Fintro Account Information API.',
-      'description': 'Create Account Information consuming applications that offer great added value to your customers. The Banks’s Account Information Service will enable secure access to all European The Bank payments accounts.',
-      'image': 'fintro_logo.svg',
-      'role': 'aisp',
-      'version': 'Sandbox v1.4.0.47',
-      'created_at': '2019-04-03T11:44:35.000Z',
-      'updated_at': '2019-04-03T11:44:35.000Z',
-      'brand_id': 3,
-      'isSubscribed': false
-    }
-  ]
+      id: 9,
+      name: 'Account Information API',
+      longname: 'Account Information – Fintro Accounts',
+      intro: 'Give customers secure access to transaction data and balance data via our Fintro Account Information API.',
+      description: 'Create Account Information consuming applications that offer great added value to your customers. The Banks’s Account Information Service will enable secure access to all European The Bank payments accounts.',
+      image: 'fintro_logo.svg',
+      role: 'aisp',
+      version: 'Sandbox v1.4.0.47',
+      created_at: '2019-04-03T11:44:35.000Z',
+      updated_at: '2019-04-03T11:44:35.000Z',
+      brand_id: 3,
+      isSubscribed: false,
+    },
+  ],
 }
 
 describe('<TestData />', () => {
   const props = {
     apps: mockApps,
     ui: {
-      loading: false
+      loading: false,
     },
     testusers: {
       users: mockUsers,
@@ -217,12 +217,12 @@ describe('<TestData />', () => {
         page: 1,
         pageSize: 5,
         rowCount: 7,
-        pageCount: 2
-      }
+        pageCount: 2,
+      },
     },
     accounts: {},
-    history: {push: jest.fn()},
-    location: {state: {}},
+    history: { push: jest.fn() },
+    location: { state: {} },
     openSupportModal: jest.fn(),
     fetchApps: jest.fn(),
     createApp: jest.fn(),
@@ -233,13 +233,13 @@ describe('<TestData />', () => {
       id: 123,
       fullName: 'Clau',
       email: 'clau@cloudoki.com',
-      organizations: mockOrganizations
+      organizations: mockOrganizations,
     },
     intl,
     subscriptions: mockSubscriptions,
     theme: {},
     fetchApiSubscriptions: jest.fn(),
-    createApiSubscription: jest.fn()
+    createApiSubscription: jest.fn(),
   }
 
   const wrapper = mountWithIntl(<TestData {...props} />)
@@ -254,7 +254,7 @@ describe('<TestData />', () => {
 
   it('should navigate to testdata detail', () => {
     wrapper.find(IconButton).last().simulate('click')
-    expect(props.history.push).toHaveBeenCalledWith(`/testdata/2`)
+    expect(props.history.push).toHaveBeenCalledWith('/testdata/2')
   })
 
   // it('should open support modal on propose feature', () => {
@@ -263,7 +263,7 @@ describe('<TestData />', () => {
   // })
 
   it('should display first use screen if no apps', () => {
-    wrapper.setProps({apps: []})
+    wrapper.setProps({ apps: [] })
     expect(wrapper.find('.first-app')).toHaveLength(1)
   })
 
@@ -273,12 +273,12 @@ describe('<TestData />', () => {
   })
 
   it('should display loading icon', () => {
-    wrapper.setProps({ui: {loading: true}})
+    wrapper.setProps({ ui: { loading: true } })
     expect(wrapper.find('.testdata-loading')).toHaveLength(1)
   })
 
   it('should open add user modal', () => {
-    props.location.state = {testUser: {fullName: 'Super Test User', email: 'test@test.com', avatar: ''}}
+    props.location.state = { testUser: { fullName: 'Super Test User', email: 'test@test.com', avatar: '' } }
     const wrapperWithTestUser = mountWithIntl(<TestData {...props} />)
     expect(wrapperWithTestUser.state().testModalOpen).toEqual(true)
   })
@@ -288,19 +288,19 @@ describe('<CreateTestUser />', () => {
   const props = {
     intl,
     ui: {
-      loading: false
+      loading: false,
     },
     organization: mockOrganization,
     testUser: {
       fullName: 'Super Test User',
       email: 'test@test.com',
-      avatar: 'https://github.com/superTesterAvatar.png'
+      avatar: 'https://github.com/superTesterAvatar.png',
     },
     closeModal: jest.fn(),
     accounts: {},
-    history: {push: jest.fn()},
+    history: { push: jest.fn() },
     createTestUser: jest.fn(),
-    getTestUserAccounts: jest.fn()
+    getTestUserAccounts: jest.fn(),
   }
   const wrapperWithTestUser = mountWithIntl(<CreateTestUser {...props} />)
 
@@ -323,12 +323,12 @@ describe('<CreateTestUser />', () => {
 describe('<TestDetail />', () => {
   const props = {
     testuser: {},
-    history: {push: jest.fn()},
+    history: { push: jest.fn() },
     organizations: mockOrganizations,
     getTestUser: jest.fn(),
     updateTestUser: jest.fn(),
-    match: {params: {psuId: 1}},
-    intl
+    match: { params: { psuId: 1 } },
+    intl,
   }
 
   const wrapper = mountWithIntl(<TestDetail {...props} />)
@@ -342,7 +342,7 @@ describe('<TestDetail />', () => {
   })
 
   it('should render user accounts', () => {
-    wrapper.setProps({testuser: mockUsers[0]})
+    wrapper.setProps({ testuser: mockUsers[0] })
     expect(wrapper.find('.account-info')).toHaveLength(1)
   })
 
@@ -354,9 +354,9 @@ describe('<TestDetail />', () => {
 
   it('should call updateTestUser on Update click', () => {
     wrapper.find('#update-testuser-btn').first().simulate('click')
-    wrapper.setState({testuser: mockUsers[0]})
-    const {name, email, password, avatarUrl} = wrapper.state().testuser
-    const data = {name, email, password, avatarUrl}
+    wrapper.setState({ testuser: mockUsers[0] })
+    const { name, email, password, avatarUrl } = wrapper.state().testuser
+    const data = { name, email, password, avatarUrl }
     expect(props.updateTestUser).toHaveBeenCalledWith(props.organizations[0].id, props.match.params.psuId, data)
   })
 })
@@ -367,8 +367,8 @@ const initialState = {
   accounts: {},
   transactions: {},
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 
 const mockTestData = {
@@ -377,8 +377,8 @@ const mockTestData = {
     page: 1,
     pageSize: 5,
     rowCount: 7,
-    pageCount: 2
-  }
+    pageCount: 2,
+  },
 }
 
 const mockTestUser = mockUsers[0]
@@ -389,19 +389,21 @@ describe('TestData reducer', () => {
   })
 
   it('should update state on FETCH_TESTDATA', () => {
-    expect(reducer(initialState, fetchTestData(mockOrganization.id))).toEqual({...initialState, ui: {loading: true}})
+    expect(reducer(initialState, fetchTestData(mockOrganization.id)))
+      .toEqual({ ...initialState, ui: { loading: true } })
   })
 
   it('should update state on FETCH_TESTDATA_SUCCESS', () => {
-    expect(reducer(initialState, fetchTestDataSuccess(mockTestData))).toEqual({...initialState, data: mockTestData})
+    expect(reducer(initialState, fetchTestDataSuccess(mockTestData))).toEqual({ ...initialState, data: mockTestData })
   })
 
   it('should update state on FETCH_TESTDATA_ERROR', () => {
-    expect(reducer(initialState, fetchTestDataError(errorMock))).toEqual({...initialState, data: []})
+    expect(reducer(initialState, fetchTestDataError(errorMock))).toEqual({ ...initialState, data: [] })
   })
 
   // it('should update state on CREATE_TESTUSER', () => {
-  //   expect(reducer(initialState, createTestUser(mockOrganization.id, mockUsers[0]))).toEqual({...initialState, ui: {loading: true}})
+  //   expect(reducer(initialState, createTestUser(mockOrganization.id, mockUsers[0])))
+  //    .toEqual({ ...initialState, ui: { loading: true } })
   // })
 
   // it('should update state on CREATE_TESTUSER_SUCCESS', () => {
@@ -416,52 +418,52 @@ describe('TestData reducer', () => {
     const psuId = '2'
     expect(reducer(initialState, getTestUser(mockOrganization.id, psuId))).toEqual({
       ...initialState,
-      ui: {loading: true}
+      ui: { loading: true },
     })
   })
 
   it('should update state on GET_TESTUSER_SUCCESS', () => {
-    expect(reducer(initialState, getTestUserSuccess(mockUsers[0]))).toEqual({...initialState, testuser: mockUsers[0]})
+    expect(reducer(initialState, getTestUserSuccess(mockUsers[0]))).toEqual({ ...initialState, testuser: mockUsers[0] })
   })
 
   it('should update state on GET_TESTUDER_ERROR', () => {
     expect(reducer(initialState, getTestUserError(errorMock))).toEqual({
       ...initialState,
       testuser: {},
-      ui: {loading: false}
+      ui: { loading: false },
     })
   })
 
   it('should update state on UPDATE_TESTUSER', () => {
     expect(reducer(initialState, updateTestUser(mockOrganization.id, mockUsers[0]))).toEqual({
       ...initialState,
-      ui: {loading: true}
+      ui: { loading: true },
     })
   })
 
   it('should update state on UPDATE_TESTUSER_SUCCESS', () => {
     const editPsu = {
-      'id': 2,
-      'name': 'Edited name',
-      'email': 'psu@email.com',
-      'avatarUrl': 'http://myicon',
-      'password': '1234567'
+      id: 2,
+      name: 'Edited name',
+      email: 'psu@email.com',
+      avatarUrl: 'http://myicon',
+      password: '1234567',
     }
-    expect(reducer(initialState, updateTestUserSuccess(editPsu))).toEqual({...initialState, testuser: editPsu})
+    expect(reducer(initialState, updateTestUserSuccess(editPsu))).toEqual({ ...initialState, testuser: editPsu })
   })
 
   it('should update state on UPDATE_TESTUSER_ERROR', () => {
     expect(reducer(initialState, updateTestUserError(errorMock))).toEqual({
       ...initialState,
       testuser: {},
-      ui: {loading: false}
+      ui: { loading: false },
     })
   })
 })
 
 describe('TestData sagas', () => {
   it('should call fetchTestData and return an array', () => {
-    const fakeResponse = {data: mockTestData}
+    const fakeResponse = { data: mockTestData }
 
     return expectSaga(fetchTestDataSaga)
       .withState(mockState)
@@ -472,7 +474,7 @@ describe('TestData sagas', () => {
   })
 
   it('should call fetchTestData and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(fetchTestDataSaga)
       .withState(mockState)
@@ -483,7 +485,7 @@ describe('TestData sagas', () => {
   })
 
   it('should call createTestUser and return an object', () => {
-    const fakeResponse = {data: mockTestUser}
+    const fakeResponse = { data: mockTestUser }
 
     return expectSaga(createTestUserSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -493,7 +495,7 @@ describe('TestData sagas', () => {
   })
 
   it('should call createTestUser and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(createTestUserSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -503,7 +505,7 @@ describe('TestData sagas', () => {
   })
 
   it('should call getTestUser and return an object', () => {
-    const fakeResponse = {data: mockUsers[0]}
+    const fakeResponse = { data: mockUsers[0] }
 
     return expectSaga(getTestUserSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -513,7 +515,7 @@ describe('TestData sagas', () => {
   })
 
   it('should call getTestUser and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(getTestUserSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -524,7 +526,7 @@ describe('TestData sagas', () => {
 
   it('should call updateTestUser and return an object', () => {
     const testUser = mockUsers[0]
-    const fakeResponse = {data: testUser}
+    const fakeResponse = { data: testUser }
 
     return expectSaga(updateTestUserSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])
@@ -534,7 +536,7 @@ describe('TestData sagas', () => {
   })
 
   it('should call updateTestUser and handle the error', () => {
-    const fakeResponse = {err: errorMock}
+    const fakeResponse = { err: errorMock }
 
     return expectSaga(updateTestUserSaga)
       .provide([[matchers.call.fn(request), fakeResponse]])

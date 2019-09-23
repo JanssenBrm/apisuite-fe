@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { object, func } from 'prop-types'
 import apiAccountInfo from 'assets/api_products_slider.svg'
 import apiFeature from 'assets/api_feature_icon.svg'
@@ -10,7 +10,7 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 
 class ApiDetail extends Component {
   state = {
-    product: {}
+    product: {},
   }
 
   componentDidMount () {
@@ -18,7 +18,7 @@ class ApiDetail extends Component {
     this.props.getApiProduct(productId)
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     const { product } = nextProps
 
     if (this.props.product !== product) {
@@ -33,7 +33,7 @@ class ApiDetail extends Component {
     return (
       <div className='api-detail-container'>
         {product.version &&
-          <Fragment>
+          <>
             <div className='detail-header-wrapper'>
               <div className='detail-header-content'>
                 <div className='account-info'>
@@ -72,7 +72,7 @@ class ApiDetail extends Component {
                   <Card
                     scope='api-detail'
                     children={
-                      product.features.map((feature, idx) =>
+                      product.features.map((feature, idx) => (
                         <div key={`feature-${idx}`} className='api-feature'>
                           <img src={theme.accountDetails || apiFeature} className='api-feature-icon' />
                           <div className='api-feature-content'>
@@ -80,34 +80,28 @@ class ApiDetail extends Component {
                             <div className='api-feature-text'>{feature.description}</div>
                           </div>
                         </div>
-                      )
+                      ))
                     }
                   />
                 </div>
               </div>
             </div>
-          </Fragment>
-        }
+          </>}
         {ui.loading &&
           <div className='loading'>
             <CircularProgress className='loading-circle' />
-          </div>
-        }
+          </div>}
       </div>
     )
   }
 }
 
 ApiDetail.propTypes = {
-  /**
-   * Browser history session
-   */
-  history: object.isRequired,
   theme: object.isRequired,
   match: object.isRequired,
   ui: object.isRequired,
   product: object.isRequired,
-  getApiProduct: func.isRequired
+  getApiProduct: func.isRequired,
 }
 
 export default ApiDetail

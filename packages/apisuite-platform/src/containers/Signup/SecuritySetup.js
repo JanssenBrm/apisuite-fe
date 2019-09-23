@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import React, { Component } from 'react'
 import { func, object, string } from 'prop-types'
 import Button from '@material-ui/core/Button'
 import FormField, { parseErrors } from 'components/FormField'
@@ -13,12 +13,12 @@ import validatePassword, { MIN_LENGTH } from 'util/validatePassword'
 const methods = [
   {
     value: '1',
-    key: 'authorizationApp'
+    key: 'authorizationApp',
   },
   {
     value: '2',
-    key: 'authorizationSms'
-  }
+    key: 'authorizationSms',
+  },
 ]
 class SecuritySetup extends Component {
   state = {
@@ -26,17 +26,17 @@ class SecuritySetup extends Component {
     form: {
       password: '',
       method: '2',
-      confirmationCode: ''
+      confirmationCode: '',
     },
     errors: [],
-    passwordVisible: false
+    passwordVisible: false,
   }
 
   togglePasswordVisibility = () => {
     this.setState({ passwordVisible: !this.state.passwordVisible })
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { errors, form } = this.state
     const { password, confirmationCode, method } = form
 
@@ -44,19 +44,19 @@ class SecuritySetup extends Component {
       this.props.sendSecurityDetails({
         password,
         confirmationCode,
-        method: methods.filter(m => m.value === method)[0].key
+        method: methods.filter(m => m.value === method)[0].key,
       })
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
 
   handleChange = ({ target }, errors) => {
     this.setState({
-      form: {...this.state.form, [target.name]: target.value},
-      errors: parseErrors(target, errors, this.state.errors)
+      form: { ...this.state.form, [target.name]: target.value },
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
@@ -64,8 +64,8 @@ class SecuritySetup extends Component {
     const passPhrase = {
       target: {
         name: 'password',
-        value: randomPass()
-      }
+        value: randomPass(),
+      },
     }
     this.setState({ passwordVisible: true })
     this.handleChange(passPhrase)
@@ -75,12 +75,12 @@ class SecuritySetup extends Component {
     const { intl, ui, email, route, qrcode, generateQRCode, sendSMSCode } = this.props
     const { form, showErrors, errors, passwordVisible } = this.state
 
-    const securityTitle = intl.formatMessage({id: 'signup.security.title'})
-    const securityText = intl.formatMessage({id: 'signup.security.text'})
-    const passwordLabel = intl.formatMessage({id: 'signup.password.label'})
-    const passwordRequired = intl.formatMessage({id: 'signup.password.required'})
-    const passwordHelper = intl.formatMessage({id: 'signup.security.password.helper'})
-    const registerBtn = intl.formatMessage({id: 'signup.register.label'})
+    const securityTitle = intl.formatMessage({ id: 'signup.security.title' })
+    const securityText = intl.formatMessage({ id: 'signup.security.text' })
+    const passwordLabel = intl.formatMessage({ id: 'signup.password.label' })
+    const passwordRequired = intl.formatMessage({ id: 'signup.password.required' })
+    const passwordHelper = intl.formatMessage({ id: 'signup.security.password.helper' })
+    const registerBtn = intl.formatMessage({ id: 'signup.register.label' })
     const userEmail = <FormattedMessage id='signup.security.send.email' values={{ email }} />
     const PasswordIcon = passwordVisible ? VisibilityOutlined : VisibilityOffOutlined
 
@@ -100,7 +100,7 @@ class SecuritySetup extends Component {
           onChange={this.handleChange}
           value={form.password}
           endadornment={
-            <Fragment>
+            <>
               <Button
                 className='password-btn auto-generate-btn end'
                 id='security-generate-pass-btn'
@@ -112,17 +112,17 @@ class SecuritySetup extends Component {
               <Button
                 id='security-pass-toggle-btn'
                 testid='security-pass-toggle-btn'
-                classes={{root: 'password-btn'}}
+                classes={{ root: 'password-btn' }}
                 variant='outlined'
                 onClick={this.togglePasswordVisibility}
               >
                 <PasswordIcon />
               </Button>
-            </Fragment>
+            </>
           }
           disabled={ui.loading}
           rules={[
-            { rule: !validatePassword(form.password).length, message: `${passwordRequired} ${validatePassword(form.password).join(', ')}` }
+            { rule: !validatePassword(form.password).length, message: `${passwordRequired} ${validatePassword(form.password).join(', ')}` },
           ]}
           showerrors={`${showErrors}`}
         />
@@ -147,7 +147,10 @@ class SecuritySetup extends Component {
               variant='contained'
               color='primary'
               onClick={this.handleSubmit}
-              disabled={!form.confirmationCode || !form.password || form.password.length < MIN_LENGTH || errors.length > 0 || ui.loading}
+              disabled={
+                !form.confirmationCode || !form.password || form.password.length < MIN_LENGTH || errors.length > 0 |
+                ui.loading
+              }
             >
               {registerBtn}
             </Button>
@@ -162,15 +165,12 @@ class SecuritySetup extends Component {
 SecuritySetup.propTypes = {
   intl: object.isRequired,
   ui: object.isRequired,
-  previousStep: func.isRequired,
-  handleSubmit: func.isRequired,
   email: string.isRequired,
-  number: string.isRequired,
   sendSecurityDetails: func.isRequired,
   route: string,
   qrcode: string,
   generateQRCode: func.isRequired,
-  sendSMSCode: func.isRequired
+  sendSMSCode: func.isRequired,
 }
 
 export default SecuritySetup

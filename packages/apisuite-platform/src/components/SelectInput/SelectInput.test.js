@@ -10,15 +10,15 @@ describe('<SelectInput />', () => {
     helperText: 'helper',
     children: [
       <MenuItem key='key1' value={{ description: 'descr1', value: 'val1' }}>descr1</MenuItem>,
-      <MenuItem key='key2' value={{ description: 'descr2', value: 'val2' }}>descr2</MenuItem>
+      <MenuItem key='key2' value={{ description: 'descr2', value: 'val2' }}>descr2</MenuItem>,
     ],
     value: [1],
     data: [
       { id: 1, description: 'descr1', value: 'val1' },
-      { id: 2, description: 'descr2', value: 'val2' }
+      { id: 2, description: 'descr2', value: 'val2' },
     ],
     multiple: true,
-    shrink: 'true'
+    shrink: 'true',
 
   }
   const wrapper = mount(<SelectInput {...props} />)

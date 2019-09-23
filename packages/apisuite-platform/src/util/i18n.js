@@ -33,7 +33,7 @@ addLocaleData(nlLocaleData)
 export const appLocales = [
   'en',
   'fr',
-  'nl'
+  'nl',
 ]
 
 /**
@@ -43,13 +43,13 @@ export const formats = {
   number: {
     GBP: {
       style: 'currency',
-      currency: 'GBP'
+      currency: 'GBP',
     },
     EUR: {
       style: 'currency',
-      currency: 'EUR'
-    }
-  }
+      currency: 'EUR',
+    },
+  },
 }
 
 /**
@@ -86,5 +86,5 @@ const nlTheme = require(`../themes/${THEME}/translations/nl.json`)
 export const translationMessages = {
   en: formatTranslationMessages([...enTranslationMessages, ...enTheme]),
   fr: formatTranslationMessages([...frTranslationMessages, ...frTheme]),
-  nl: formatTranslationMessages([...nlTranslationMessages, ...nlTheme])
+  nl: formatTranslationMessages([...nlTranslationMessages, ...nlTheme]),
 }

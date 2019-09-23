@@ -7,7 +7,7 @@ import { getApiProduct } from '../../containers/LandingPage/ducks'
 const mapStateToProps = ({ products }) => ({ product: products.product, ui: products.ui })
 
 const mapDispatchToProps = (dispatch) => ({
-  getApiProduct: (id) => dispatch(getApiProduct(id))
+  getApiProduct: (id) => dispatch(getApiProduct(id)),
 })
 
 const Enhanced = compose(

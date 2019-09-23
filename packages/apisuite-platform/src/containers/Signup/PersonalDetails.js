@@ -21,13 +21,13 @@ class PersonalDetails extends Component {
         fullName,
         phoneNumber: '',
         terms: false,
-        privacy: false
+        privacy: false,
       },
-      errors: []
+      errors: [],
     }
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { errors, form } = this.state
     const { email, confirmEmail, fullName, phoneNumber, terms, privacy } = form
 
@@ -35,42 +35,42 @@ class PersonalDetails extends Component {
       this.props.nextStep(form)
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
 
   handleChange = ({ target }, errors) => {
     this.setState({
-      form: {...this.state.form, [target.name]: target.value},
-      errors: parseErrors(target, errors, this.state.errors)
+      form: { ...this.state.form, [target.name]: target.value },
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
   handleCheckboxChange = name => event => {
-    this.setState({ form: {...this.state.form, [name]: event.target.checked} })
+    this.setState({ form: { ...this.state.form, [name]: event.target.checked } })
   }
 
   render () {
     const { intl, ui, invitation } = this.props
     const { form, showErrors, errors } = this.state
 
-    const emailLabel = intl.formatMessage({id: 'signup.email.label'})
-    const confirmEmailLabel = intl.formatMessage({id: 'signup.confirmEmail.label'})
-    const emailTypeError = intl.formatMessage({id: 'signup.email.typeError'})
-    const confirmEmailTypeError = intl.formatMessage({id: 'signup.confirmEmail.typeError'})
-    const phoneNumberLabel = intl.formatMessage({id: 'signup.phoneNumber.label'})
-    const phoneNumberTypeError = intl.formatMessage({id: 'signup.phoneNumber.typeError'})
-    const personalTitle = intl.formatMessage({id: 'signup.personal.title'})
-    const personalText = intl.formatMessage({id: 'signup.personal.text'})
-    const agreeTerms1 = intl.formatMessage({id: 'signup.personal.agreeterms1'})
-    const agreeTerms2 = intl.formatMessage({id: 'signup.personal.agreeterms2'})
-    const agreePrivacy1 = intl.formatMessage({id: 'signup.personal.agreeprivacy1'})
-    const agreePrivacy2 = intl.formatMessage({id: 'signup.personal.agreeprivacy2'})
-    const formLabel = intl.formatMessage({id: 'signup.form.label'})
-    const fullNameLabel = intl.formatMessage({id: 'signup.fullName.label'})
-    const fullNameRequired = intl.formatMessage({id: 'signup.fullName.required'})
-    const nextBtn = intl.formatMessage({id: 'signup.register.next'})
+    const emailLabel = intl.formatMessage({ id: 'signup.email.label' })
+    const confirmEmailLabel = intl.formatMessage({ id: 'signup.confirmEmail.label' })
+    const emailTypeError = intl.formatMessage({ id: 'signup.email.typeError' })
+    const confirmEmailTypeError = intl.formatMessage({ id: 'signup.confirmEmail.typeError' })
+    const phoneNumberLabel = intl.formatMessage({ id: 'signup.phoneNumber.label' })
+    const phoneNumberTypeError = intl.formatMessage({ id: 'signup.phoneNumber.typeError' })
+    const personalTitle = intl.formatMessage({ id: 'signup.personal.title' })
+    const personalText = intl.formatMessage({ id: 'signup.personal.text' })
+    const agreeTerms1 = intl.formatMessage({ id: 'signup.personal.agreeterms1' })
+    const agreeTerms2 = intl.formatMessage({ id: 'signup.personal.agreeterms2' })
+    const agreePrivacy1 = intl.formatMessage({ id: 'signup.personal.agreeprivacy1' })
+    const agreePrivacy2 = intl.formatMessage({ id: 'signup.personal.agreeprivacy2' })
+    const formLabel = intl.formatMessage({ id: 'signup.form.label' })
+    const fullNameLabel = intl.formatMessage({ id: 'signup.fullName.label' })
+    const fullNameRequired = intl.formatMessage({ id: 'signup.fullName.required' })
+    const nextBtn = intl.formatMessage({ id: 'signup.register.next' })
 
     return (
       <div className='signup-personal-details'>
@@ -87,7 +87,7 @@ class PersonalDetails extends Component {
           onChange={this.handleChange}
           value={form.fullName}
           rules={[
-            {rule: form.fullName.length, message: fullNameRequired}
+            { rule: form.fullName.length, message: fullNameRequired },
           ]}
           showerrors={`${showErrors}`}
         />
@@ -101,7 +101,7 @@ class PersonalDetails extends Component {
           onChange={this.handleChange}
           value={form.email}
           rules={[
-            {rule: isValidEmail(form.email), message: emailTypeError}
+            { rule: isValidEmail(form.email), message: emailTypeError },
           ]}
           showerrors={`${showErrors}`}
           disabled={!_isEmpty(invitation) && !invitation.isRegistered}
@@ -116,8 +116,8 @@ class PersonalDetails extends Component {
           onChange={this.handleChange}
           value={form.confirmEmail}
           rules={[
-            {rule: isValidEmail(form.confirmEmail), message: emailTypeError},
-            {rule: form.confirmEmail === form.email, message: confirmEmailTypeError}
+            { rule: isValidEmail(form.confirmEmail), message: emailTypeError },
+            { rule: form.confirmEmail === form.email, message: confirmEmailTypeError },
           ]}
           showerrors={`${showErrors}`}
           disabled={!_isEmpty(invitation) && !invitation.isRegistered}
@@ -132,7 +132,7 @@ class PersonalDetails extends Component {
           onChange={this.handleChange}
           value={form.phoneNumber}
           rules={[
-            {rule: isValidPhoneNumber(form.phoneNumber), message: phoneNumberTypeError}
+            { rule: isValidPhoneNumber(form.phoneNumber), message: phoneNumberTypeError },
           ]}
           showerrors={`${showErrors}`}
         />
@@ -145,9 +145,7 @@ class PersonalDetails extends Component {
             onChange={this.handleCheckboxChange('terms')}
             label={
               <span>
-                {agreeTerms1} <a id='signup-terms-link' testid='signup-terms-link' target='_blank' rel='noopener noreferrer' href='/terms' className='link checkbox-label'>
-                  {agreeTerms2}
-                </a>
+                {agreeTerms1} <a id='signup-terms-link' testid='signup-terms-link' target='_blank' rel='noopener noreferrer' href='/terms' className='link checkbox-label'>{agreeTerms2}</a>
               </span>
             }
           />
@@ -159,9 +157,7 @@ class PersonalDetails extends Component {
             onChange={this.handleCheckboxChange('privacy')}
             label={
               <span>
-                {agreePrivacy1} <a id='signup-privacy-link' testid='signup-privacy-link' target='_blank' rel='noopener noreferrer' href='/privacy' className='link checkbox-label'>
-                  {agreePrivacy2}
-                </a>
+                {agreePrivacy1} <a id='signup-privacy-link' testid='signup-privacy-link' target='_blank' rel='noopener noreferrer' href='/privacy' className='link checkbox-label'>{agreePrivacy2}</a>
               </span>
             }
           />
@@ -173,7 +169,10 @@ class PersonalDetails extends Component {
           variant='contained'
           color='primary'
           onClick={this.handleSubmit}
-          disabled={!form.email || !form.confirmEmail || !form.fullName || !form.phoneNumber || !form.terms || !form.privacy || errors.length > 0 || ui.loading}
+          disabled={
+            !form.email || !form.confirmEmail || !form.fullName || !form.phoneNumber || !form.terms || !form.privacy ||
+            errors.length > 0 || ui.loading
+          }
         >
           {nextBtn}
         </Button>
@@ -186,9 +185,7 @@ PersonalDetails.propTypes = {
   intl: object.isRequired,
   ui: object.isRequired,
   nextStep: func.isRequired,
-  goToTerms: func.isRequired,
-  goToPrivacy: func.isRequired,
-  invitation: object.isRequired
+  invitation: object.isRequired,
 }
 
 export default PersonalDetails

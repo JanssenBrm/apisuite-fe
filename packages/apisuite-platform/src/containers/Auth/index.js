@@ -18,24 +18,26 @@ export default (Component, roleRequired = USER_ROLES[0]) => {
   const mapStateToProps = ({ auth }) => ({
     ...auth,
     Component,
-    roleRequired
+    roleRequired,
   })
   const mapDispatchToProps = (dispatch) => ({
-    openLoginModal: (unauthorized) => dispatch(openLoginModal(unauthorized))
+    openLoginModal: (unauthorized) => dispatch(openLoginModal(unauthorized)),
   })
 
   return connect(mapStateToProps, mapDispatchToProps)(RequireAuth)
 }
 
 const forgotPasswordMapDispatchToProps = (dispatch) => ({
-  forgotPassword: (email) => dispatch(forgotPassword(email))
+  forgotPassword: (email) => dispatch(forgotPassword(email)),
 })
 
-export const ForgotPassword = injectIntl(connect(({ auth }) => ({ forgot: auth.forgot, ui: auth.ui }), forgotPasswordMapDispatchToProps)(ForgotPasswordComponent))
+export const ForgotPassword = injectIntl(connect(({ auth }) => ({ forgot: auth.forgot, ui: auth.ui }),
+  forgotPasswordMapDispatchToProps)(ForgotPasswordComponent))
 
 const resetPasswordMapDispatchToProps = (dispatch) => ({
   resetPassword: (token, password) => dispatch(resetPassword(token, password)),
-  updatePasswordRBAC: (userId, password) => dispatch(updatePasswordRBAC(userId, password))
+  updatePasswordRBAC: (userId, password) => dispatch(updatePasswordRBAC(userId, password)),
 })
 
-export const ResetPassword = injectIntl(connect(({ auth }) => ({ ui: auth.ui }), resetPasswordMapDispatchToProps)(ResetPasswordComponent))
+export const ResetPassword = injectIntl(connect(({ auth }) => ({ ui: auth.ui }),
+  resetPasswordMapDispatchToProps)(ResetPasswordComponent))

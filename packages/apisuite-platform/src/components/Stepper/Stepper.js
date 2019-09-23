@@ -11,9 +11,15 @@ const hex = (x) => {
 export const pickHex = (color1, color2, percentage) => {
   let midColor = color2
 
-  const r = Math.ceil(parseInt(color1.substring(0, 2), 16) * percentage + parseInt(color2.substring(0, 2), 16) * (1 - percentage))
-  const g = Math.ceil(parseInt(color1.substring(2, 4), 16) * percentage + parseInt(color2.substring(2, 4), 16) * (1 - percentage))
-  const b = Math.ceil(parseInt(color1.substring(4, 6), 16) * percentage + parseInt(color2.substring(4, 6), 16) * (1 - percentage))
+  const r = Math.ceil(
+    parseInt(color1.substring(0, 2), 16) * percentage + parseInt(color2.substring(0, 2), 16) * (1 - percentage)
+  )
+  const g = Math.ceil(
+    parseInt(color1.substring(2, 4), 16) * percentage + parseInt(color2.substring(2, 4), 16) * (1 - percentage)
+  )
+  const b = Math.ceil(
+    parseInt(color1.substring(4, 6), 16) * percentage + parseInt(color2.substring(4, 6), 16) * (1 - percentage)
+  )
 
   if (r && g && b) {
     midColor = hex(r) + hex(g) + hex(b)
@@ -24,14 +30,15 @@ export const pickHex = (color1, color2, percentage) => {
 
 class Stepper extends Component {
   render () {
-    const { currentStep, steps, simple, labelColor } = this.props
-    const { tealColor, lightGreen, midGrey } = typeof themeVariables === 'object' ? themeVariables : this.props.colors
+    const { currentStep, steps, simple, labelColor, colors } = this.props
+    const { tealColor, lightGreen, midGrey } = typeof colors === 'object' ? colors : themeVariables
 
     return (
       <div className={classnames(
         'stepper',
-        {'simple': simple}
-      )}>
+        { simple: simple }
+      )}
+      >
         <div className='stepper-line' />
         <div className='stepper-content'>
           {steps.map((step, index) => {
@@ -50,33 +57,30 @@ class Stepper extends Component {
                 key={index}
                 className={classnames(
                   'step',
-                  { 'current': isCurrent },
-                  { 'active': isActive },
+                  { current: isCurrent },
+                  { active: isActive },
                   { 'not-active': isNotActive }
                 )}
                 ref={index}
               >
                 <div className='step-image'>
-                  { (isCurrent || isActive) &&
-                    <div className='step-circle' style={{background: `#${startColor}`}} />
-                  }
+                  {(isCurrent || isActive) &&
+                    <div className='step-circle' style={{ background: `#${startColor}` }} />}
                 </div>
                 <div className='step-label'>
                   {index + 1}
                 </div>
-                <div className='step-name' style={labelColor ? {color: labelColor} : {}}>{step.name}</div>
-                { isActive && (index + 1) < steps.length &&
+                <div className='step-name' style={labelColor ? { color: labelColor } : {}}>{step.name}</div>
+                {isActive && (index + 1) < steps.length &&
                   <div
                     className='stepper-progress-line'
-                    style={{background: `linear-gradient(to right, #${startColor} 0%,#${endColor} 100%)`}}
-                  />
-                }
-                { index === 0 && !isActive && !simple &&
+                    style={{ background: `linear-gradient(to right, #${startColor} 0%,#${endColor} 100%)` }}
+                  />}
+                {index === 0 && !isActive && !simple &&
                   <div
                     className='stepper-progress-line'
-                    style={{background: `linear-gradient(to right, ${lightGreen} 0%, ${tealColor} 50%, #FFFFFF 100%)`}}
-                  />
-                }
+                    style={{ background: `linear-gradient(to right, ${lightGreen} 0%, ${tealColor} 50%, #FFFFFF 100%)` }}
+                  />}
               </div>
             )
           })}
@@ -90,8 +94,8 @@ Stepper.defaultProps = {
   colors: {
     tealColor: '#2DB7BA',
     lightGreen: '#14DE2D',
-    midGrey: '#AAAAAA'
-  }
+    midGrey: '#AAAAAA',
+  },
 }
 
 Stepper.propTypes = {
@@ -99,7 +103,7 @@ Stepper.propTypes = {
   steps: array,
   simple: bool,
   labelColor: string,
-  colors: object // for testing purposes
+  colors: object, // for testing purposes
 }
 
 export default Stepper

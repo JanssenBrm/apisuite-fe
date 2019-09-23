@@ -15,7 +15,7 @@ import {
   updateOrganizationError,
   GET_ONBOARDING_TOKEN,
   getOnboardingTokenSuccess,
-  getOnboardingTokenError
+  getOnboardingTokenError,
 } from './ducks'
 import { showNotification } from 'containers/NotificationManager/ducks'
 
@@ -23,14 +23,14 @@ import { showNotification } from 'containers/NotificationManager/ducks'
  * Fetch organizations saga worker
  * @param {Object} action
  */
-function * fetchOrganizationsWorker (action) {
+function * fetchOrganizationsWorker () {
   const requestUrl = `${API_URL}/organizations`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -61,7 +61,7 @@ function * updateOrganizationWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'PUT',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -84,13 +84,13 @@ export function * updateOrganizationSaga () {
  * Get onboarding access token saga worker
  * @param {Object} action
  */
-function * getOnboardingTokenWorker (action) {
+function * getOnboardingTokenWorker () {
   const requestUrl = `${API_URL}/onboarding/token`
   const state = yield select()
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
   const response = yield call(request, requestUrl, {
     method: 'POST',
-    headers
+    headers,
   })
 
   if (!response.err) {

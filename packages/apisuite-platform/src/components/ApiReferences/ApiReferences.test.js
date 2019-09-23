@@ -10,7 +10,7 @@ describe('<ApiReferences />', () => {
       intro: 'Intro 1',
       role: 'aisp',
       version: 'Sandbox v1',
-      brand_id: 1
+      brand_id: 1,
     },
     {
       id: 2,
@@ -18,16 +18,16 @@ describe('<ApiReferences />', () => {
       intro: 'Intro 2',
       role: 'pisp',
       version: 'Sandbox v1',
-      brand_id: 1
-    }
+      brand_id: 1,
+    },
   ]
 
   const mockBrands = [
     {
       id: 1,
       name: 'Brand 1',
-      logo: 'logo.svg'
-    }
+      logo: 'logo.svg',
+    },
   ]
 
   const props = {
@@ -36,12 +36,12 @@ describe('<ApiReferences />', () => {
     products: mockProducts,
     brands: mockBrands,
     theme: {
-      name: ''
+      name: '',
     },
     ui: {
-      loading: false
+      loading: false,
     },
-    fetchApiProducts: jest.fn()
+    fetchApiProducts: jest.fn(),
   }
 
   const wrapper = mountWithIntl(<ApiReferences {...props} />)

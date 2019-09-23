@@ -32,8 +32,8 @@ const initialState = {
   data: [],
   app: {},
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 
 /**
@@ -50,73 +50,79 @@ export default function reducer (state = initialState, action) {
     case DELETE_APP:
       return update(state, {
         ui: {
-          loading: { $set: true }
-        }
+          loading: { $set: true },
+        },
       })
     case FETCH_APPS_SUCCESS:
       return update(state, {
         data: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_APPS_ERROR:
       return update(state, {
         data: { $set: [] },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case CREATE_APP_SUCCESS:
       return update(state, {
         data: { $push: [action.data] },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_APP_SUCCESS:
       return update(state, {
         app: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case GET_APP_ERROR:
       return update(state, {
         app: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
-    case UPDATE_APP_SUCCESS:
+
+    case UPDATE_APP_SUCCESS: {
       const appIndex = state.data.findIndex(app => app.id === action.data.id)
+
       return update(state, {
-        data: { $apply: apps => {
-          if (appIndex !== -1) {
-            apps[appIndex] = action.data
-          }
-          return apps
-        }},
+        data: {
+          $apply: apps => {
+            if (appIndex !== -1) {
+              apps[appIndex] = action.data
+            }
+            return apps
+          },
+        },
         app: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
+    }
+
     case CREATE_APP_ERROR:
     case UPDATE_APP_ERROR:
     case DELETE_APP_ERROR:
       return update(state, {
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case DELETE_APP_SUCCESS:
       return update(state, {
         data: { $apply: apps => apps.filter(app => action.data.id !== app.id) },
         app: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     default:
       return state

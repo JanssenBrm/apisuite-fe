@@ -5,11 +5,24 @@ import { API_URL } from 'constants/endpoints'
 
 const __DEV__ = process.env.NODE_ENV !== 'production'
 
+const styles = {
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: '1rem',
+  },
+  errorInfo: {
+    color: 'red',
+  },
+}
+
 class ErrorMonitor extends Component {
   state = {
     hasError: false,
     error: '',
-    errorStack: ''
+    errorStack: '',
   }
 
   componentDidCatch (error, info) {
@@ -37,13 +50,13 @@ class ErrorMonitor extends Component {
       return [
         <div key='error'>{error.toString()}</div>,
         ...stack,
-        <button key='refresh' onMouseUp={this.refreshWindow}>RELOAD</button>
+        <button key='refresh' onMouseUp={this.refreshWindow}>RELOAD</button>,
       ]
     }
 
     return [
       <div key='message'>Something went wrong! We are trying to fix it.</div>,
-      <button key='refresh' onMouseUp={this.refreshWindow}>RELOAD</button>
+      <button key='refresh' onMouseUp={this.refreshWindow}>RELOAD</button>,
     ]
   }
 
@@ -63,21 +76,8 @@ class ErrorMonitor extends Component {
   }
 }
 
-const styles = {
-  container: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '1rem'
-  },
-  errorInfo: {
-    color: 'red'
-  }
-}
-
 ErrorMonitor.propTypes = {
-  children: node
+  children: node,
 }
 
 export default ErrorMonitor

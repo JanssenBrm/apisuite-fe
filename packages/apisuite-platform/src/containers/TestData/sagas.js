@@ -24,7 +24,7 @@ import {
   getTestUserAccountsError,
   GET_TESTUSER_TRANSACTIONS,
   getTestUserTransactionsSuccess,
-  getTestUserTransactionsError
+  getTestUserTransactionsError,
 } from './ducks'
 import qs from 'qs'
 import { showNotification } from 'containers/NotificationManager/ducks'
@@ -43,7 +43,7 @@ function * fetchTestDataWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -72,7 +72,7 @@ function * getTestUserWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -103,7 +103,7 @@ function * createTestUserWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'POST',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -137,7 +137,7 @@ function * updateTestUserWorker (action) {
   const response = yield call(request, requestUrl, {
     method: 'PUT',
     headers,
-    body
+    body,
   })
 
   if (!response.err) {
@@ -161,14 +161,14 @@ export function * updateTestUserSaga () {
  * @param {Object} action
  * @param {data} action.appId
  */
-function * getTestUserAccountsWorker (action) {
+function * getTestUserAccountsWorker () {
   const state = yield select()
   const requestUrl = `${API_URL}/testdata/form`
   const headers = yield call(getDefaultHeaders, { state, type: 'bearer' })
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -197,7 +197,7 @@ function * getTestUserTransactionsWorker (action) {
 
   const response = yield call(request, requestUrl, {
     method: 'GET',
-    headers
+    headers,
   })
 
   if (!response.err) {
@@ -214,4 +214,11 @@ export function * getTestUserTransactionsSaga () {
   yield takeLatest(GET_TESTUSER_TRANSACTIONS, getTestUserTransactionsWorker)
 }
 
-export default [fetchTestDataSaga, getTestUserSaga, createTestUserSaga, updateTestUserSaga, getTestUserAccountsSaga, getTestUserTransactionsSaga]
+export default [
+  fetchTestDataSaga,
+  getTestUserSaga,
+  createTestUserSaga,
+  updateTestUserSaga,
+  getTestUserAccountsSaga,
+  getTestUserTransactionsSaga,
+]

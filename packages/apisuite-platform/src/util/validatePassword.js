@@ -11,7 +11,7 @@ const complexity = {
   lowerCase: LOWER_MIN_LENGTH,
   upperCase: UPPER_MIN_LENGTH,
   numbers: NUMBERS_MIN_LENGTH,
-  symbols: SYMBOLS_MIN_LENGTH
+  symbols: SYMBOLS_MIN_LENGTH,
 }
 
 export const hasMinLength = (str) => str.length >= complexity.min

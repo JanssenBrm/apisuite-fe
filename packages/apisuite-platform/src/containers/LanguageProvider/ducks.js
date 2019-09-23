@@ -30,7 +30,7 @@ export const validateLocale = () => {
  */
 const initialState = {
   locale: validateLocale(),
-  locales: appLocales
+  locales: appLocales,
 }
 
 /**
@@ -42,7 +42,7 @@ export default function reducer (state = initialState, action) {
   switch (action.type) {
     case CHANGE_LOCALE:
       return update(state, {
-        locale: { $set: action.locale }
+        locale: { $set: action.locale },
       })
     default:
       return state
@@ -63,7 +63,7 @@ export function changeLocale (locale) {
  * Intercepts locale changes and saves it to local storage
  * sowhen the user reloads or comes back it can presist.
  */
-export const localeMiddleware = (store) => (next) => (action) => {
+export const localeMiddleware = () => (next) => (action) => {
   next(action)
   if (action.type === CHANGE_LOCALE) {
     localPut('_lang', action.locale)

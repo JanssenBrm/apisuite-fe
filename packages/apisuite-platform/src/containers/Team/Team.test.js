@@ -28,78 +28,78 @@ import reducer, {
   acceptInvitationError,
   postponeInvitation,
   postponeInvitationSuccess,
-  postponeInvitationError
+  postponeInvitationError,
 } from './ducks'
 import { fetchTeamSaga, saveRoleSaga, removeUserSaga, fetchInvitationsSaga, createInvitationSaga, getInvitationSaga, acceptInvitationSaga, postponeInvitationSaga } from './sagas'
 
 const mockTeam = {
   users: [
     {
-      'id': 204,
-      'email': 'manaf.melloul@gmail.com',
-      'fullName': 'manaf',
-      'avatar': '',
-      'bio': '',
-      'phone': '+32488206060',
-      'activated': true,
-      'github': false,
-      'created': '2019-04-09T09:48:31.000Z',
-      'updated': '2019-04-09T09:49:25.000Z',
-      'twofa': {'enabled': true, 'method': 'authorizationApp'},
-      'roles': [{'id': 1, 'orgId': 208, 'name': 'ADMIN'}]
+      id: 204,
+      email: 'manaf.melloul@gmail.com',
+      fullName: 'manaf',
+      avatar: '',
+      bio: '',
+      phone: '+32488206060',
+      activated: true,
+      github: false,
+      created: '2019-04-09T09:48:31.000Z',
+      updated: '2019-04-09T09:49:25.000Z',
+      twofa: { enabled: true, method: 'authorizationApp' },
+      roles: [{ id: 1, orgId: 208, name: 'ADMIN' }],
     },
     {
-      'id': 202,
-      'email': 'mhm@wemanity.com',
-      'fullName': 'Mh Mai',
-      'avatar': '',
-      'bio': 'C\'est moi',
-      'phone': '+33632225104',
-      'activated': true,
-      'github': false,
-      'created': '2019-03-25T09:39:17.000Z',
-      'updated': '2019-04-24T11:59:07.000Z',
-      'twofa': {'enabled': true, 'method': 'authorizationSms'},
-      'roles': [{'id': 3, 'orgId': 208, 'name': 'TESTER'}]
+      id: 202,
+      email: 'mhm@wemanity.com',
+      fullName: 'Mh Mai',
+      avatar: '',
+      bio: 'C\'est moi',
+      phone: '+33632225104',
+      activated: true,
+      github: false,
+      created: '2019-03-25T09:39:17.000Z',
+      updated: '2019-04-24T11:59:07.000Z',
+      twofa: { enabled: true, method: 'authorizationSms' },
+      roles: [{ id: 3, orgId: 208, name: 'TESTER' }],
     }],
   roles: [
     {
-      'id': 1, 'name': 'ADMIN', 'level': 0, 'created': null, 'updated': null
+      id: 1, name: 'ADMIN', level: 0, created: null, updated: null,
     },
     {
-      'id': 2,
-      'name': 'DEVELOPER',
-      'level': 1,
-      'created': null,
-      'updated': null
+      id: 2,
+      name: 'DEVELOPER',
+      level: 1,
+      created: null,
+      updated: null,
     },
     {
-      'id': 3, 'name': 'TESTER', 'level': 2, 'created': null, 'updated': null
+      id: 3, name: 'TESTER', level: 2, created: null, updated: null,
     },
     {
-      'id': 4,
-      'name': 'SALES',
-      'level': 3,
-      'created': null,
-      'updated': null
-    }
-  ]
+      id: 4,
+      name: 'SALES',
+      level: 3,
+      created: null,
+      updated: null,
+    },
+  ],
 }
-const mockOrganization = {id: 208, name: 'myOrg', state: 'NON_VALIDATED'}
+const mockOrganization = { id: 208, name: 'myOrg', state: 'NON_VALIDATED' }
 const mockState = {
   auth: {
     user: {
       organizations: [
-        mockOrganization
-      ]
-    }
-  }
+        mockOrganization,
+      ],
+    },
+  },
 }
-const errorMock = {message: 'error-load-team'}
+const errorMock = { message: 'error-load-team' }
 
 describe('<Team />', () => {
   const props = {
-    history: {push: jest.fn()},
+    history: { push: jest.fn() },
     fetchTeam: jest.fn(),
     fetchInvitations: jest.fn(),
     createInvitation: jest.fn(),
@@ -112,14 +112,14 @@ describe('<Team />', () => {
       user: {
         id: 204,
         organizations: [
-          mockOrganization
-        ]
-      }
+          mockOrganization,
+        ],
+      },
     },
     intl: {},
     ui: {
-      loading: false
-    }
+      loading: false,
+    },
   }
 
   const wrapper = mountWithIntl(<Team {...props} />)
@@ -130,17 +130,17 @@ describe('<Team />', () => {
 
   it('should call fetchTeam on mount', () => {
     expect(props.fetchTeam).toHaveBeenCalledTimes(1)
-    wrapper.setProps({team: mockTeam})
+    wrapper.setProps({ team: mockTeam })
     expect(wrapper.state().team).toEqual(mockTeam.users)
   })
 
   it('should update ui state with new props', () => {
-    wrapper.setProps({ui: {loading: true}})
+    wrapper.setProps({ ui: { loading: true } })
     expect(wrapper.state().ui.loading).toEqual(true)
   })
 
   it('should render 2 users', () => {
-    wrapper.setProps({team: mockTeam, ui: {loading: false}})
+    wrapper.setProps({ team: mockTeam, ui: { loading: false } })
     expect(wrapper.find('.member-row')).toHaveLength(2)
   })
 
@@ -158,8 +158,8 @@ describe('<Team />', () => {
       invitations: [],
       ticket: {},
       ui: {
-        loading: false
-      }
+        loading: false,
+      },
     }
 
     it('should return the initial state', () => {
@@ -171,8 +171,8 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: true
-          }
+            loading: true,
+          },
         })
     })
 
@@ -181,9 +181,9 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: false
+            loading: false,
           },
-          team: mockTeam
+          team: mockTeam,
         })
     })
 
@@ -192,9 +192,9 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: false
+            loading: false,
           },
-          team: {}
+          team: {},
         })
     })
 
@@ -203,8 +203,8 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: true
-          }
+            loading: true,
+          },
         })
     })
 
@@ -213,9 +213,9 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: false
+            loading: false,
           },
-          team: {}
+          team: {},
         })
     })
 
@@ -224,9 +224,9 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: false
+            loading: false,
           },
-          team: {}
+          team: {},
         })
     })
 
@@ -235,8 +235,8 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: true
-          }
+            loading: true,
+          },
         })
     })
 
@@ -245,9 +245,9 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: false
+            loading: false,
           },
-          team: {}
+          team: {},
         })
     })
 
@@ -256,9 +256,9 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: false
+            loading: false,
           },
-          team: {}
+          team: {},
         })
     })
 
@@ -267,8 +267,8 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: true
-          }
+            loading: true,
+          },
         })
     })
 
@@ -278,9 +278,9 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: false
+            loading: false,
           },
-          invitations: mockInvitations
+          invitations: mockInvitations,
         })
     })
 
@@ -289,9 +289,9 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: false
+            loading: false,
           },
-          invitations: []
+          invitations: [],
         })
     })
 
@@ -301,8 +301,8 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: true
-          }
+            loading: true,
+          },
         })
     })
 
@@ -312,9 +312,9 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: false
+            loading: false,
           },
-          ticket: mockTicket
+          ticket: mockTicket,
         })
     })
 
@@ -323,16 +323,16 @@ describe('<Team />', () => {
         .toEqual({
           ...initialState,
           ui: {
-            loading: false
+            loading: false,
           },
-          ticket: {}
+          ticket: {},
         })
     })
   })
 
   describe('sagas', () => {
     it('should call fetchTeam and return an object', () => {
-      const fakeResponse = {data: mockTeam}
+      const fakeResponse = { data: mockTeam }
       return expectSaga(fetchTeamSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -342,7 +342,7 @@ describe('<Team />', () => {
     })
 
     it('should call fetchTeam and handle the error', () => {
-      const fakeResponse = {err: errorMock}
+      const fakeResponse = { err: errorMock }
       return expectSaga(fetchTeamSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -352,7 +352,7 @@ describe('<Team />', () => {
     })
 
     it('should call saveRole and return an object', () => {
-      const fakeResponse = {data: mockTeam}
+      const fakeResponse = { data: mockTeam }
       return expectSaga(saveRoleSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -362,7 +362,7 @@ describe('<Team />', () => {
     })
 
     it('should call saveRole and handle the error', () => {
-      const fakeResponse = {err: errorMock}
+      const fakeResponse = { err: errorMock }
       return expectSaga(saveRoleSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -372,7 +372,7 @@ describe('<Team />', () => {
     })
 
     it('should call removeUser and return an object', () => {
-      const fakeResponse = {data: mockTeam}
+      const fakeResponse = { data: mockTeam }
       return expectSaga(removeUserSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -382,7 +382,7 @@ describe('<Team />', () => {
     })
 
     it('should call removeUser and handle the error', () => {
-      const fakeResponse = {err: errorMock}
+      const fakeResponse = { err: errorMock }
       return expectSaga(removeUserSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -393,7 +393,7 @@ describe('<Team />', () => {
 
     it('should call fetchInvitations and return an array', () => {
       const mockInvitations = []
-      const fakeResponse = {data: mockInvitations}
+      const fakeResponse = { data: mockInvitations }
       return expectSaga(fetchInvitationsSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -403,7 +403,7 @@ describe('<Team />', () => {
     })
 
     it('should call fetchInvitations and handle the error', () => {
-      const fakeResponse = {err: errorMock}
+      const fakeResponse = { err: errorMock }
       return expectSaga(fetchInvitationsSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -414,14 +414,14 @@ describe('<Team />', () => {
 
     const orgId = 1
     const mockData = {
-      'email': 'john@doe.com',
-      'name': 'John Doe',
-      'role': 1
+      email: 'john@doe.com',
+      name: 'John Doe',
+      role: 1,
     }
 
     it('should call createInvitation and return an object', () => {
       const mockInvitation = {}
-      const fakeResponse = {data: mockInvitation}
+      const fakeResponse = { data: mockInvitation }
       return expectSaga(createInvitationSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -431,7 +431,7 @@ describe('<Team />', () => {
     })
 
     it('should call createInvitation and handle the error', () => {
-      const fakeResponse = {err: errorMock}
+      const fakeResponse = { err: errorMock }
       return expectSaga(createInvitationSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -444,7 +444,7 @@ describe('<Team />', () => {
 
     it('should call getInvitation and return an object', () => {
       const mockInvitation = {}
-      const fakeResponse = {data: mockInvitation}
+      const fakeResponse = { data: mockInvitation }
       return expectSaga(getInvitationSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -454,7 +454,7 @@ describe('<Team />', () => {
     })
 
     it('should call getInvitation and handle the error', () => {
-      const fakeResponse = {err: errorMock}
+      const fakeResponse = { err: errorMock }
       return expectSaga(getInvitationSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -465,7 +465,7 @@ describe('<Team />', () => {
 
     it('should call acceptInvitation and redirect the user', () => {
       const mockInvitation = {}
-      const fakeResponse = {data: mockInvitation}
+      const fakeResponse = { data: mockInvitation }
       return expectSaga(acceptInvitationSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -475,7 +475,7 @@ describe('<Team />', () => {
     })
 
     it('should call acceptInvitation and handle the error', () => {
-      const fakeResponse = {err: errorMock}
+      const fakeResponse = { err: errorMock }
       return expectSaga(acceptInvitationSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -486,7 +486,7 @@ describe('<Team />', () => {
 
     it('should call postponeInvitation and redirect the user', () => {
       const mockInvitation = {}
-      const fakeResponse = {data: mockInvitation}
+      const fakeResponse = { data: mockInvitation }
       return expectSaga(postponeInvitationSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])
@@ -496,7 +496,7 @@ describe('<Team />', () => {
     })
 
     it('should call postponeInvitation and handle the error', () => {
-      const fakeResponse = {err: errorMock}
+      const fakeResponse = { err: errorMock }
       return expectSaga(postponeInvitationSaga)
         .withState(mockState)
         .provide([[matchers.call.fn(request), fakeResponse]])

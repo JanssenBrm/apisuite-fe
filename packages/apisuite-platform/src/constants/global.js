@@ -26,19 +26,19 @@ export const THEME = process.env.THEME || 'default'
  * Organization states
  */
 export const organizationStates = {
-  'NON_TRUSTED': {
+  NON_TRUSTED: {
     name: 'Non Trusted',
     slug: 'nontrusted',
-    sandboxtext: 'Sandbox Access'
+    sandboxtext: 'Sandbox Access',
   },
-  'TRUSTED': {
+  TRUSTED: {
     name: 'Trusted',
     slug: 'trusted',
-    sandboxtext: 'Sandbox Access'
+    sandboxtext: 'Sandbox Access',
   },
-  'NON_VALIDATED': {
+  NON_VALIDATED: {
     name: 'Non Validated',
     slug: 'nonvalidated',
-    sandboxtext: 'No Sandbox Access'
-  }
+    sandboxtext: 'No Sandbox Access',
+  },
 }

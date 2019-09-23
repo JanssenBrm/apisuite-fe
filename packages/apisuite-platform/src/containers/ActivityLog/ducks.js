@@ -20,8 +20,8 @@ const initialState = {
   logs: {},
   kpis: {},
   ui: {
-    loading: false
-  }
+    loading: false,
+  },
 }
 /**
  * Reducer
@@ -34,36 +34,36 @@ export default function reducer (state = initialState, action) {
     case FETCH_KPIS:
       return update(state, {
         ui: {
-          loading: { $set: true }
-        }
+          loading: { $set: true },
+        },
       })
     case FETCH_ACTIVITIES_SUCCESS:
       return update(state, {
         logs: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_ACTIVITIES_ERROR:
       return update(state, {
         logs: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_KPIS_SUCCESS:
       return update(state, {
         kpis: { $set: action.data },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     case FETCH_KPIS_ERROR:
       return update(state, {
         kpis: { $set: {} },
         ui: {
-          loading: { $set: false }
-        }
+          loading: { $set: false },
+        },
       })
     default:
       return state

@@ -9,24 +9,24 @@ class ForgotPassword extends Component {
   state = {
     showErrors: false,
     email: '',
-    errors: []
+    errors: [],
   }
 
   handleChange = ({ target }, errors) => {
     this.setState({
       email: target.value,
-      errors: parseErrors(target, errors, this.state.errors)
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
-  handleSubmit = (e) => {
+  handleSubmit = () => {
     const { errors, email } = this.state
 
     if (email && !errors.length) {
       this.props.forgotPassword(email)
     } else {
       this.setState({
-        showErrors: true
+        showErrors: true,
       })
     }
   }
@@ -36,10 +36,10 @@ class ForgotPassword extends Component {
     const { showErrors, errors, email } = this.state
     const { sent } = forgot
 
-    const emailPlaceholder = intl.formatMessage({id: 'login.email.placeholder'})
-    const errorText = intl.formatMessage({id: 'forgotPassword.invalid'})
-    const sendButton = intl.formatMessage({id: 'forgotPassword.send'})
-    const backButton = intl.formatMessage({id: 'forgotPassword.back'})
+    const emailPlaceholder = intl.formatMessage({ id: 'login.email.placeholder' })
+    const errorText = intl.formatMessage({ id: 'forgotPassword.invalid' })
+    const sendButton = intl.formatMessage({ id: 'forgotPassword.send' })
+    const backButton = intl.formatMessage({ id: 'forgotPassword.back' })
 
     return (
       <div className='forgot-container'>
@@ -56,7 +56,7 @@ class ForgotPassword extends Component {
                         id='forgotPassword.resetLink'
                       />
                     </strong>
-                  )
+                  ),
                 }}
               />
               <div className='forgot-input'>
@@ -71,14 +71,13 @@ class ForgotPassword extends Component {
                   value={email}
                   disabled={ui.loading}
                   rules={[
-                    {rule: isValidEmail(email), message: errorText}
+                    { rule: isValidEmail(email), message: errorText },
                   ]}
                   showerrors={`${showErrors}`}
-                  InputLabelProps={{shrink: true}}
+                  InputLabelProps={{ shrink: true }}
                 />
               </div>
-            </div>
-          }
+            </div>}
           <div className='forgot-actions'>
             {!sent &&
               <Button
@@ -88,17 +87,18 @@ class ForgotPassword extends Component {
                 variant='contained'
                 color='primary'
                 onClick={this.handleSubmit}
-                disabled={!email || errors.length > 0 || ui.loading}>
+                disabled={!email || errors.length > 0 || ui.loading}
+              >
                 {sendButton}
-              </Button>
-            }
+              </Button>}
             <Button
               className='forgot-back-button'
               id='forgot-back-btn'
               testid='forgot-back-btn'
               variant='outlined'
               onClick={goBack}
-              disabled={ui.loading}>
+              disabled={ui.loading}
+            >
               {backButton}
             </Button>
           </div>
@@ -133,7 +133,7 @@ ForgotPassword.propTypes = {
   /**
    * Auth UI state
    */
-  ui: PropTypes.object.isRequired
+  ui: PropTypes.object.isRequired,
 }
 
 export default ForgotPassword

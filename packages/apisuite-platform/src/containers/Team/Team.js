@@ -30,7 +30,7 @@ class Team extends React.Component {
     form: {
       email: '',
       name: '',
-      role: null
+      role: null,
     },
     showErrors: false,
     errors: [],
@@ -38,9 +38,9 @@ class Team extends React.Component {
     resetOpen: false,
     selectedUser: null,
     ui: {
-      loading: false
+      loading: false,
     },
-    invitations: []
+    invitations: [],
   }
 
   componentDidMount () {
@@ -48,32 +48,32 @@ class Team extends React.Component {
     this.props.fetchInvitations()
   }
 
-  componentWillReceiveProps (nextProps) {
+  UNSAFE_componentWillReceiveProps (nextProps) {
     if (nextProps.team !== this.props.team) {
       this.setState({
         team: nextProps.team.users,
         roles: nextProps.team.roles,
         form: {
           ...this.state.form,
-          role: nextProps.team.roles[1].name
-        }
+          role: nextProps.team.roles[1].name,
+        },
       })
     }
     if (nextProps.invitations !== this.props.invitations) {
       this.setState({
-        invitations: nextProps.invitations
+        invitations: nextProps.invitations,
       })
     }
     if (nextProps.ui !== this.props.ui) {
       this.setState({
-        ui: nextProps.ui
+        ui: nextProps.ui,
       })
     }
   }
 
   isAdmin = () => {
-    const {team} = this.state
-    const {auth} = this.props
+    const { team } = this.state
+    const { auth } = this.props
     if (team && team.length > 0) {
       return !!team.find(user => user.id === auth.user.id)
         .roles.find(r => r.id === 1)
@@ -81,46 +81,46 @@ class Team extends React.Component {
   }
 
   isMe (user) {
-    const {auth} = this.props
+    const { auth } = this.props
     return user.id === auth.user.id
   }
 
   handleResetPassword = () => {
-    this.setState({resetOpen: true, anchorEl: null})
+    this.setState({ resetOpen: true, anchorEl: null })
   }
 
   handleClone = () => {
-    const {history} = this.props
-    const {selectedUser} = this.state
+    const { history } = this.props
+    const { selectedUser } = this.state
     history.push({
       pathname: '/testdata',
       state: {
-        testUser: selectedUser
-      }
+        testUser: selectedUser,
+      },
     })
   }
 
   handleRemove = () => {
-    this.setState({confirmOpen: true, anchorEl: null})
+    this.setState({ confirmOpen: true, anchorEl: null })
   }
 
-  handleActionMenuClick = ({currentTarget}) => {
-    const {team} = this.state
+  handleActionMenuClick = ({ currentTarget }) => {
+    const { team } = this.state
     const selectedUser = team.find(user => user.id === +currentTarget.name)
-    this.setState({selectedUser, anchorEl: currentTarget})
+    this.setState({ selectedUser, anchorEl: currentTarget })
   }
 
-  handlePendingActionMenuClick = member => ({currentTarget}) => {
-    this.setState({selectedUser: member, anchorEl: currentTarget})
+  handlePendingActionMenuClick = member => ({ currentTarget }) => {
+    this.setState({ selectedUser: member, anchorEl: currentTarget })
   }
 
   handleClose = () => {
-    this.setState({anchorEl: null})
+    this.setState({ anchorEl: null })
   }
 
-  handleSaveRole = ({target}) => {
-    const {saveRole} = this.props
-    const {team, roles} = this.state
+  handleSaveRole = ({ target }) => {
+    const { saveRole } = this.props
+    const { team, roles } = this.state
     const memberId = +target.name
     const newRoleId = roles.find(r => r.name === target.value).id
     const oldRoleId = team.find(user => user.id === memberId).roles[0].id
@@ -128,54 +128,54 @@ class Team extends React.Component {
   }
 
   handleCloseConfirm = () => {
-    this.setState({selectedUser: null, confirmOpen: false})
+    this.setState({ selectedUser: null, confirmOpen: false })
   }
 
   handleCloseReset = () => {
-    this.setState({selectedUser: null, resetOpen: false})
+    this.setState({ selectedUser: null, resetOpen: false })
   }
 
   handleRemoveUser = () => {
-    const {removeUser} = this.props
+    const { removeUser } = this.props
     removeUser(this.state.selectedUser.id)
     this.handleCloseConfirm()
   }
 
   handleDeleteInvitation = () => {
-    const {deleteInvitation} = this.props
+    const { deleteInvitation } = this.props
     const organizationId = this.state.team[0].roles[0].orgId
     deleteInvitation(organizationId, this.state.selectedUser.id)
     this.handleCloseConfirm()
   }
 
-  toggleInvitationForm = open => event => {
-    this.setState({showInvitationForm: open})
+  toggleInvitationForm = open => () => {
+    this.setState({ showInvitationForm: open })
   }
 
-  handleChange = ({target}, errors) => {
+  handleChange = ({ target }, errors) => {
     this.setState({
-      form: {...this.state.form, [target.name]: target.value},
-      errors: parseErrors(target, errors, this.state.errors)
+      form: { ...this.state.form, [target.name]: target.value },
+      errors: parseErrors(target, errors, this.state.errors),
     })
   }
 
-  handleRoleChange = ({target}) => {
-    this.setState({form: {...this.state.form, role: target.value}})
+  handleRoleChange = ({ target }) => {
+    this.setState({ form: { ...this.state.form, role: target.value } })
   }
 
   handleInvite = () => {
-    const {form, team, roles} = this.state
+    const { form, team, roles } = this.state
 
     // Or retrieve the orgId from the auth.user
     const organizationId = team[0].roles[0].orgId
     const data = {
       email: form.email,
-      ...(form.name && {name: form.name}),
-      role: roles.find(r => r.name === form.role).id
+      ...(form.name && { name: form.name }),
+      role: roles.find(r => r.name === form.role).id,
     }
 
     this.props.createInvitation(organizationId, data)
-    this.setState({showInvitationForm: false, form: {...form, email: '', name: ''}})
+    this.setState({ showInvitationForm: false, form: { ...form, email: '', name: '' } })
   }
 
   getTwoFaMethod = (method) => {
@@ -188,25 +188,27 @@ class Team extends React.Component {
   }
 
   renderConfirmDialog () {
-    const {intl} = this.props
-    const {selectedUser, confirmOpen} = this.state
+    const { intl } = this.props
+    const { selectedUser, confirmOpen } = this.state
     const isPending = selectedUser && !selectedUser.fullName
-    const confirmMessage = isPending ? intl.formatMessage({id: 'team.dialog.confirmRemove.pending'}) : intl.formatMessage({id: 'team.dialog.confirmRemove'})
+    const confirmMessage = isPending ? intl.formatMessage({ id: 'team.dialog.confirmRemove.pending' }) : intl.formatMessage({ id: 'team.dialog.confirmRemove' })
     return (
       <Dialog
         open={confirmOpen}
         onClose={this.handleCloseConfirm}
-        aria-labelledby='confirm-dialog-title'>
+        aria-labelledby='confirm-dialog-title'
+      >
         <DialogTitle
-          id='confirm-dialog-title'>
+          id='confirm-dialog-title'
+        >
           {`${confirmMessage} ${!isPending && selectedUser ? selectedUser.fullName : ''} ?`}
         </DialogTitle>
         <DialogActions>
           <Button onClick={this.handleCloseConfirm} color='primary'>
-            {intl.formatMessage({id: 'team.dialog.cancel'})}
+            {intl.formatMessage({ id: 'team.dialog.cancel' })}
           </Button>
           <Button onClick={isPending ? this.handleDeleteInvitation : this.handleRemoveUser} color='primary' autoFocus>
-            {intl.formatMessage({id: 'team.dialog.remove'})}
+            {intl.formatMessage({ id: 'team.dialog.remove' })}
           </Button>
         </DialogActions>
       </Dialog>
@@ -214,27 +216,33 @@ class Team extends React.Component {
   }
 
   renderResetModal () {
-    const {intl} = this.props
-    const {resetOpen, selectedUser} = this.state
-    const resetMessage = intl.formatMessage({id: 'team.dialog.reset'})
+    const { intl } = this.props
+    const { resetOpen, selectedUser } = this.state
+    const resetMessage = intl.formatMessage({ id: 'team.dialog.reset' })
     return (
       <Dialog
         open={resetOpen}
         onClose={this.handleCloseReset}
-        aria-labelledby='reset-dialog-title'>
+        aria-labelledby='reset-dialog-title'
+      >
         <DialogTitle
-          id='reset-dialog-title'>
+          id='reset-dialog-title'
+        >
           {resetMessage}
         </DialogTitle>
         <DialogContent>
-          <ResetPassword location={location} resetModal={this.handleCloseReset} userId={selectedUser && selectedUser.id} />
+          <ResetPassword
+            location={location}
+            resetModal={this.handleCloseReset}
+            userId={selectedUser && selectedUser.id}
+          />
         </DialogContent>
       </Dialog>
     )
   }
 
   renderRoles = (member, isCreate) => {
-    const {roles, form, ui} = this.state
+    const { roles, form, ui } = this.state
     if (roles && roles.length > 0) {
       const selectedRole = isCreate ? roles[1] : roles.find(r => r.id === member.roles[0].id)
       return (
@@ -271,29 +279,29 @@ class Team extends React.Component {
   }
 
   renderActionMenu (member) {
-    const {intl} = this.props
-    const {anchorEl, selectedUser} = this.state
+    const { intl } = this.props
+    const { anchorEl, selectedUser } = this.state
     const open = Boolean(anchorEl && selectedUser && member.id === selectedUser.id)
     const isPending = !member.fullName
 
     const actions = [
       {
-        label: intl.formatMessage({id: 'team.action.resetPassword'}),
+        label: intl.formatMessage({ id: 'team.action.resetPassword' }),
         callback: this.handleResetPassword,
         disabled: false,
-        hidden: isPending
+        hidden: isPending,
       },
       {
-        label: intl.formatMessage({id: 'team.action.cloneAsTestUser'}),
+        label: intl.formatMessage({ id: 'team.action.cloneAsTestUser' }),
         callback: this.handleClone,
         disabled: false,
-        hidden: isPending
+        hidden: isPending,
       },
       {
-        label: intl.formatMessage({id: `${isPending ? 'team.action.delete' : 'team.action.remove'}`}),
+        label: intl.formatMessage({ id: `${isPending ? 'team.action.delete' : 'team.action.remove'}` }),
         callback: this.handleRemove,
-        disabled: this.isMe(member)
-      }
+        disabled: this.isMe(member),
+      },
     ]
     return (
       <div>
@@ -313,8 +321,8 @@ class Team extends React.Component {
           onClose={this.handleClose}
           PaperProps={{
             style: {
-              maxHeight: ITEM_HEIGHT * 4.5
-            }
+              maxHeight: ITEM_HEIGHT * 4.5,
+            },
           }}
         >
           {actions.map((action, idx) => (
@@ -322,7 +330,8 @@ class Team extends React.Component {
               <MenuItem
                 disabled={action.disabled}
                 key={`action-${idx}`}
-                onClick={action.callback}>
+                onClick={action.callback}
+              >
                 {action.label}
               </MenuItem>
           ))}
@@ -332,14 +341,14 @@ class Team extends React.Component {
   }
 
   renderTeam () {
-    const {team, ui, showInvitationForm, form, invitations, showErrors, errors} = this.state
-    const {intl} = this.props
-    const inviteLabel = intl.formatMessage({id: 'team.invite.button'})
-    const sendLabel = intl.formatMessage({id: 'team.send.button'})
-    const emailLabel = intl.formatMessage({id: 'team.invite.email.placeholder'})
-    const emailTypeError = intl.formatMessage({id: 'team.invite.email.error'})
-    const nameLabel = intl.formatMessage({id: 'team.invite.name.placeholder'})
-    const nameTypeError = intl.formatMessage({id: 'team.invite.name.error'})
+    const { team, ui, showInvitationForm, form, invitations, showErrors, errors } = this.state
+    const { intl } = this.props
+    const inviteLabel = intl.formatMessage({ id: 'team.invite.button' })
+    const sendLabel = intl.formatMessage({ id: 'team.send.button' })
+    const emailLabel = intl.formatMessage({ id: 'team.invite.email.placeholder' })
+    const emailTypeError = intl.formatMessage({ id: 'team.invite.email.error' })
+    const nameLabel = intl.formatMessage({ id: 'team.invite.name.placeholder' })
+    const nameTypeError = intl.formatMessage({ id: 'team.invite.name.error' })
 
     if (ui && ui.loading) {
       return (
@@ -350,12 +359,12 @@ class Team extends React.Component {
         </div>
       )
     }
-    const noMembersLabel = intl.formatMessage({id: 'team.no.members'})
+    const noMembersLabel = intl.formatMessage({ id: 'team.no.members' })
     if (team && team.length > 0) {
       team.sort((m1, m2) => m1.fullName.localeCompare(m2.fullName))
-      const organizationMembersLabel = intl.formatMessage({id: 'team.organisation.members'})
-      const roleLabel = intl.formatMessage({id: 'team.member.role'})
-      const newUserLabel = intl.formatMessage({id: 'team.invitation.newuser'})
+      const organizationMembersLabel = intl.formatMessage({ id: 'team.organisation.members' })
+      const roleLabel = intl.formatMessage({ id: 'team.member.role' })
+      const newUserLabel = intl.formatMessage({ id: 'team.invitation.newuser' })
 
       return (
         <div className='team-list-wrapper'>
@@ -410,20 +419,19 @@ class Team extends React.Component {
             </table>
           </div>
           {!showInvitationForm &&
-          <div className='invite-member-actions'>
-            <Button
-              className='invite-member-submit'
-              testid='invite-member-btn'
-              variant='contained'
-              color='primary'
-              onClick={this.toggleInvitationForm(true)}
-            >
-              {inviteLabel}
-            </Button>
-          </div>
-          }
-          {showInvitationForm
-            ? <div className='invitation-form'>
+            <div className='invite-member-actions'>
+              <Button
+                className='invite-member-submit'
+                testid='invite-member-btn'
+                variant='contained'
+                color='primary'
+                onClick={this.toggleInvitationForm(true)}
+              >
+                {inviteLabel}
+              </Button>
+            </div>}
+          {showInvitationForm ? (
+            <div className='invitation-form'>
               <Button
                 className='send-invite-button'
                 testid='send-invite-btn'
@@ -444,7 +452,7 @@ class Team extends React.Component {
                 onChange={this.handleChange}
                 value={form.email}
                 rules={[
-                  {rule: isValidEmail(form.email), message: emailTypeError}
+                  { rule: isValidEmail(form.email), message: emailTypeError },
                 ]}
                 showerrors={`${showErrors}`}
               />
@@ -458,19 +466,20 @@ class Team extends React.Component {
                 onChange={this.handleChange}
                 value={form.name}
                 rules={[
-                  {rule: form.name ? form.name.length >= 2 : true, message: nameTypeError}
+                  { rule: form.name ? form.name.length >= 2 : true, message: nameTypeError },
                 ]}
                 showerrors={`${showErrors}`}
               />
               {this.renderRoles(form, showInvitationForm)}
             </div>
-            : <div className='invite-member-help'>
+          ) : (
+            <div className='invite-member-help'>
               <FormattedMessage id='team.actions.help' />
               <a className='invite-member-link' testid='invite-member-link' href='/docs'>
                 <FormattedMessage id='team.actions.link' />
               </a>.
             </div>
-          }
+          )}
         </div>
       )
     } else {
@@ -502,7 +511,7 @@ Team.propTypes = {
   deleteInvitation: func.isRequired,
   ui: object.isRequired,
   history: object.isRequired,
-  invitations: array.isRequired
+  invitations: array.isRequired,
 }
 
 export default Team

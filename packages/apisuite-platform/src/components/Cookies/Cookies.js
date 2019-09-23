@@ -9,32 +9,32 @@ import DataCookies from './Topics/DataCookies'
 const topics = [
   {
     title: 'Introduction',
-    key: 'introduction'
+    key: 'introduction',
   },
   {
     title: 'What is a Cookie?',
-    key: 'cookie'
+    key: 'cookie',
   },
   {
     title: 'Cookies on this Portal',
-    key: 'cookiesonportal'
+    key: 'cookiesonportal',
   },
   {
     title: 'Responsible for the cookies',
-    key: 'responsibility'
+    key: 'responsibility',
   },
   {
     title: 'Your rights as a visitor on our Portal',
-    key: 'rights'
-  }
+    key: 'rights',
+  },
 ]
 
 class Cookies extends Component {
   state = {
-    component: DataCookies
+    component: DataCookies,
   }
 
-  handleClick = item => e => {
+  handleClick = (item) => () => {
     this.setState({ component: item.key })
 
     const scrollingElement = document.getElementById(item.key)
@@ -56,7 +56,7 @@ class Cookies extends Component {
       <div className='cookies-container'>
         <List
           component='nav'
-          classes={{root: 'cookies-side-menu'}}
+          classes={{ root: 'cookies-side-menu' }}
         >
           {topics.map((item) =>
             <ListItem
@@ -65,7 +65,7 @@ class Cookies extends Component {
               onClick={this.handleClick(item)}
               className={classnames(
                 'cookies-nested-menu',
-                { 'selected': component === item.key }
+                { selected: component === item.key }
               )}
             >
               <ListItemText primary={item.title} />
