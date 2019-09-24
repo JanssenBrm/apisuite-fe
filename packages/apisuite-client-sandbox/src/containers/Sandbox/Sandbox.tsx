@@ -59,7 +59,15 @@ const Sandbox: React.FC<SandboxProps> = ({ inform, requesting, requestError }) =
               We'd be happy to share when <b>Cloudoki Sandbox</b> goes live.
             </p>
 
-            <div role='button' arial-label='inform me' className='inform-btn' onClick={openDialog}>Inform me*</div>
+            <div
+              data-testid='inform-btn'
+              role='button'
+              arial-label='inform me'
+              className='inform-btn'
+              onClick={openDialog}
+            >
+              Inform me*
+            </div>
             <div className='inform-text'>* We only use your data for this <a href='/privacy' target='_blank'>single purpose.</a></div>
           </section>
         </section>

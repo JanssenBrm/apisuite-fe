@@ -13,7 +13,7 @@
     "prebuild": "yarn test && rimraf dist",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "pretest": "yarn lint && yarn check-types",
-    "test": "cross-env NODE_ENV=test jest --c ./jest.json --coverage",
+    "test": "start-server-and-test dev http://localhost:9001 cy:run",
     "commit": "git-cz",
     "prestart": "yarn build",
     "start": "serve -s dist -l 8080",
@@ -39,6 +39,7 @@
     "redux": "4.0.4",
     "redux-saga": "1.0.5",
     "sass-mq": "5.0.1",
+    "start-server-and-test": "1.10.2",
     "tinycolor2": "1.4.1",
     "typeface-roboto": "0.0.75"
   },

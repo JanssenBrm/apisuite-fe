@@ -18,6 +18,8 @@ describe('Sandbox', () => {
         .find('input')
         .type('worngemail')
 
+      cy.get('.MuiFormHelperText-root').contains('* A valid emails must be provided')
+
       cy.testID('inform-dialog-terms').click()
 
       cy.testID('inform-dialog-submit').should('be.disabled')
@@ -44,9 +46,10 @@ describe('Sandbox', () => {
 
       cy.testID('inform-dialog')
         .should('not.be.visible')
+    })
 
-      const supportUrl = Cypress.env('supporUrl')
-      // shows response error
+    it('should show response error if server responds with none ok status', () => {
+      const supportUrl = Cypress.env('supportUrl')
       cy.server()
       cy.route({
         method: 'POST',
@@ -62,6 +65,8 @@ describe('Sandbox', () => {
         .type('test@email.com')
 
       cy.testID('inform-dialog-submit').click()
+
+      cy.get('.MuiFormHelperText-root').contains('An unexpected error occurred please try again later.')
     })
   })
 })
