@@ -15,7 +15,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
-  { component: NotFound },
+  { render: () => <NotFound /> },
 ]
 
 export default () => (

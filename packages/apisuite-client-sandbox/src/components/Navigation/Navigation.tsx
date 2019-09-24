@@ -1,6 +1,7 @@
 import * as React from 'react'
 import clsx from 'clsx'
 
+import { APP_URL } from 'constants/endpoints'
 import SvgIcon from 'components/SvgIcon'
 
 import './styles.scss'
@@ -19,6 +20,8 @@ function getBarValues (parent: React.RefObject<HTMLDivElement>, target: React.Re
 
   return values
 }
+
+const [protocol, domain] = typeof APP_URL === 'string' ? APP_URL.split('://') : []
 
 const Navigation: React.FC<NavigationProps> = (props) => {
   const { title, className, tabNames, tabIndex, onTabChange, onGobackClick, chevronColor, ...rest } = props
@@ -42,13 +45,13 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     setBarValues(getBarValues(tabsRef, refs[tabIndex]))
   }, [tabIndex])
 
-  function handleTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
-    const tabIndex = Number(currentTarget.dataset.tab) || 0
+  // function handleTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
+  //   const tabIndex = Number(currentTarget.dataset.tab) || 0
 
-    if (tabIndex < tabNames.length) {
-      onTabChange(tabIndex)
-    }
-  }
+  //   if (tabIndex < tabNames.length) {
+  //     onTabChange(tabIndex)
+  //   }
+  // }
 
   return (
     <nav className={clsx('navigation', className, { scrolled: scrollPos >= 40 })} {...rest}>
@@ -59,23 +62,24 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 
         <div className='space' />
 
-        <a href='https://cloudoki.com' className='domain'>
-          <span>cloudoki.com</span>
+        <a href={APP_URL} className='domain'>
+          <span>{domain}</span>
           <SvgIcon name='chevron-right' size={18} color={chevronColor} />
         </a>
 
         <div ref={tabsRef} className='tabs'>
           {tabNames.map((tabName, idx) => (
-            <div
+            <a
               data-testid={`nav-tab-${tabName}`}
               key={tabName}
               ref={refs[idx]}
               data-tab={idx}
-              onClick={handleTabClick}
+              // onClick={handleTabClick}
               className={clsx('tab', { selected: idx === tabIndex })}
+              href={`${protocol}://${tabName.toLocaleLowerCase()}.${domain}`}
             >
               {tabName}
-            </div>
+            </a>
           ))}
 
           <div className='bottom-bar' style={{ left: barValues.left, width: barValues.width }} />

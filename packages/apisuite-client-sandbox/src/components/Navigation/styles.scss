@@ -17,6 +17,10 @@
     color: inherit;
   }
 
+  a {
+    text-decoration: none;
+  }
+
   &.scrolled {
     transform: translateY(0);
     background-color: white;

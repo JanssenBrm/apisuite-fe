@@ -46,19 +46,16 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   public render () {
-    const { currentTab } = this.state
     return (
       <>
-        {currentTab > -1 && (
-          <Navigation
-            key='app-navigation'
-            tabNames={tabs.map((tab) => tab.name)}
-            tabIndex={currentTab}
-            onTabChange={this.handleTabChange}
-            onGobackClick={this.handleGoBack}
-            chevronColor={tabs[currentTab].chevronColor}
-          />
-        )}
+        <Navigation
+          key='app-navigation'
+          tabNames={tabs.map((tab) => tab.name)}
+          tabIndex={1}
+          onTabChange={this.handleTabChange}
+          onGobackClick={this.handleGoBack}
+          chevronColor={tabs[1].chevronColor}
+        />
 
         {routes()}
 
