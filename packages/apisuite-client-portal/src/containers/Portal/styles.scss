@@ -1,0 +1,38 @@
+@import '~sass-mq';
+@import 'styles/variables';
+@import 'styles/mixins';
+
+.portal-page {
+  @include page-base;
+  padding-bottom: 120px;
+
+  background-color: $portal-color;
+
+  .content .info h1,
+  .content .info .inform-text {
+    color: #14BC7D;
+  }
+
+  .card a {
+    font-weight: 500;
+
+    &.sandbox {
+      color: #2DB7BA;
+    }
+
+    &.mp {
+      color: #1AB42D;
+    }
+
+
+    &.sso {
+      color: #EB8A23;
+    }
+
+
+    &.contact {
+      font-weight: inherit;
+      color: #15BC7E;
+    }
+  }
+}

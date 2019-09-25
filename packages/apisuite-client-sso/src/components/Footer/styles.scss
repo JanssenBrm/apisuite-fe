@@ -1,0 +1,23 @@
+@import 'styles/variables';
+
+.footer {
+  width: 100%;
+  background-color: $primary-700;
+  color: white;
+  padding: 20px;
+
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+
+    .logo {
+      display: block;
+      width: 45px;
+      height: auto;
+      margin-right: 40px;
+    }
+  }
+}

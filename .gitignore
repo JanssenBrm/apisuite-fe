@@ -43,3 +43,9 @@ jsconfig.json
 # environment variables file
 .env
 local.conf
+cypress.env.json
+
+# cypress assets
+**/cypress/screenshots/
+**/cypress/video/
+.nyc_output

@@ -1,0 +1,154 @@
+
+@mixin page-base {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 100%;
+  padding-top: 120px;
+  overflow: auto;
+
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    color: inherit;
+  }
+
+  .back-image {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: block;
+    max-width: 95%;
+    height: auto;
+    pointer-events: none;
+
+    @include mq($until: tablet) {
+      display: none;
+    }
+  }
+
+  .content {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+
+    @include mq($until: tablet) {
+      justify-content: center;
+    }
+
+    .info {
+      width: 350px;
+      margin-top: 200px;
+
+      h1 {
+        display: inline-block;
+        font-size: 26px;
+        font-weight: 100;
+        background-color: white;
+        border-radius: 2px;
+        padding: 8px 16px;
+        margin: 0;
+        margin-bottom: 8px;
+      }
+
+      p {
+        margin-bottom: 48px;
+      }
+
+      .inform-btn {
+        display: inline-block;
+        color: white;
+        background-color: #646464;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+
+      .inform-text {
+        font-size: 14px;
+        font-style: italic;
+        margin-top: 12px;
+      }
+
+      @include mq($until: desktop) {
+       margin-top: 60px;
+      }
+
+      @include mq($until: tablet) {
+       margin-top: 20px;
+      }
+    }
+  }
+
+  .card-container {
+    margin: 0 auto;
+    margin-top: 120px;
+    width: 95%;
+    max-width: 900px;
+
+    .card {
+      position: relative;
+      display: flex;
+      background-color: white;
+      border-radius: 4px;
+      box-shadow: -1px -1px 1px 0px rgba(0,0,0,0.03);
+
+      .card-shadow {
+        position: absolute;
+        left: 30px;
+        top: 101%;
+        margin-top: -4px;
+        transform: skew(45deg);
+        width: 100%;
+        height: 60px;
+        background: linear-gradient(top, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%);
+      }
+
+      .card-shadow-side {
+        position: absolute;
+        right: -60px;
+        top: 30px;
+        transform: skewY(45deg);
+        height: 100%;
+        width: 60px;
+        background: linear-gradient(left, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%);
+      }
+    }
+
+    .wheel-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 24px 48px;
+      border-right: 1px solid #EEEEEE;
+    }
+
+    .card-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 24px 48px;
+
+      h1 {
+        margin: 0;
+        margin-bottom: 16px;
+        font-size: 26px;
+        font-weight: 100;
+      }
+
+      p {
+        margin: 0;
+
+        &.contact-paragraph {
+          font-style: italic;
+        }
+      }
+    }
+  }
+}
