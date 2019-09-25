@@ -1,0 +1,7 @@
+version: '3.6'
+services:
+  portal-client:
+    build: .
+    image: cloudoki/apisuite/portal/client
+    ports:
+      - "3500:8080"
