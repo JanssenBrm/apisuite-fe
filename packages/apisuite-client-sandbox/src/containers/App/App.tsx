@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { ThemeProvider } from '@material-ui/styles'
 
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
@@ -6,6 +7,7 @@ import Footer from 'components/Footer'
 import routes from './routes'
 import './styles.scss'
 import { AppProps, AppState } from './types'
+import theme from './theme'
 
 const tabs = [
   {
@@ -47,7 +49,7 @@ class App extends React.Component<AppProps, AppState> {
 
   public render () {
     return (
-      <>
+      <ThemeProvider theme={theme}>
         <Navigation
           key='app-navigation'
           tabNames={tabs.map((tab) => tab.name)}
@@ -60,7 +62,7 @@ class App extends React.Component<AppProps, AppState> {
         {routes()}
 
         <Footer />
-      </>
+      </ThemeProvider>
     )
   }
 
