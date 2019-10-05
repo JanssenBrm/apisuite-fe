@@ -13,7 +13,7 @@ const Wheel = (props: ApiSuiteWheelProps) => {
     trColor = '#00bf80',
     blColor = '#00e13d',
     brColor = '#00bbbb',
-    selectedColor = '#d5d5d5',
+    unselectedColor = '#d5d5d5',
     selected,
     size = 201,
   } = props
@@ -87,9 +87,9 @@ const Wheel = (props: ApiSuiteWheelProps) => {
           <g transform='translate(-249.000000, -151.000000)'>
             <g transform='translate(249.000000, 151.000000)'>
               <g transform='translate(0.000000, 0.500000)'>
-                <path fill={selected !== 'tl' ? tlColor : selectedColor} d='M97.9690923,0.186267166 C44.4887333,1.4928839 1.31488359,44.3930087 -1.42108547e-14,97.5338327 L50.2873179,97.5338327 C51.5572974,71.9578027 72.2297692,51.4164794 97.9690923,50.1548065 L97.9690923,0.186267166 Z' />
+                <path fill={selected === 'tl' ? tlColor : unselectedColor} d='M97.9690923,0.186267166 C44.4887333,1.4928839 1.31488359,44.3930087 -1.42108547e-14,97.5338327 L50.2873179,97.5338327 C51.5572974,71.9578027 72.2297692,51.4164794 97.9690923,50.1548065 L97.9690923,0.186267166 Z' />
 
-                {selected !== 'tl' && (
+                {selected === 'tl' && (
                   <>
                     <mask id='mask-2' fill='white'>
                       <use xlinkHref='#path-1' />
@@ -101,9 +101,9 @@ const Wheel = (props: ApiSuiteWheelProps) => {
               </g>
 
               <g transform='translate(0.000000, 103.500000)'>
-                <path fill={selected !== 'bl' ? blColor : selectedColor} d='M-1.42108547e-14,0.0308691059 C1.31495897,53.4444611 44.4887333,96.5644109 97.9690923,97.8776529 L97.9690923,47.6531157 C72.2297692,46.3847217 51.5572974,25.7380582 50.2873179,0.0308691059 L-1.42108547e-14,0.0308691059 Z' />
+                <path fill={selected === 'bl' ? blColor : unselectedColor} d='M-1.42108547e-14,0.0308691059 C1.31495897,53.4444611 44.4887333,96.5644109 97.9690923,97.8776529 L97.9690923,47.6531157 C72.2297692,46.3847217 51.5572974,25.7380582 50.2873179,0.0308691059 L-1.42108547e-14,0.0308691059 Z' />
 
-                {selected !== 'bl' && (
+                {selected === 'bl' && (
                   <>
                     <mask id='mask-4' fill='white'>
                       <use xlinkHref='#path-3' />
@@ -115,9 +115,9 @@ const Wheel = (props: ApiSuiteWheelProps) => {
               </g>
 
               <g transform='translate(103.000000, 103.500000)'>
-                <path fill={selected !== 'br' ? brColor : selectedColor} d='M97.9690923,0.0308691059 C96.6541333,53.4444611 53.4801077,96.5644109 -2.84217094e-14,97.8776529 L-2.84217094e-14,47.6531157 C25.7393231,46.3847217 46.4117949,25.7380582 47.6817744,0.0308691059 L97.9690923,0.0308691059 Z' />
+                <path fill={selected === 'br' ? brColor : unselectedColor} d='M97.9690923,0.0308691059 C96.6541333,53.4444611 53.4801077,96.5644109 -2.84217094e-14,97.8776529 L-2.84217094e-14,47.6531157 C25.7393231,46.3847217 46.4117949,25.7380582 47.6817744,0.0308691059 L97.9690923,0.0308691059 Z' />
 
-                {selected !== 'br' && (
+                {selected === 'br' && (
                   <>
                     <mask id='mask-6' fill='white'>
                       <use xlinkHref='#path-5' />
@@ -129,9 +129,9 @@ const Wheel = (props: ApiSuiteWheelProps) => {
               </g>
 
               <g transform='translate(103.000000, 1.000000)'>
-                <path fill={selected !== 'tr' ? trColor : selectedColor} d='M-2.84217094e-14,0.186267166 C53.480359,1.4928839 96.6541333,44.3930087 97.9690923,97.5338327 L47.6817744,97.5338327 C46.4117949,71.9578027 25.7393231,51.4164794 -2.84217094e-14,50.1548065 L-2.84217094e-14,0.186267166 Z' />
+                <path fill={selected === 'tr' ? trColor : unselectedColor} d='M-2.84217094e-14,0.186267166 C53.480359,1.4928839 96.6541333,44.3930087 97.9690923,97.5338327 L47.6817744,97.5338327 C46.4117949,71.9578027 25.7393231,51.4164794 -2.84217094e-14,50.1548065 L-2.84217094e-14,0.186267166 Z' />
 
-                {selected !== 'tr' && (
+                {selected === 'tr' && (
                   <>
                     <mask id='mask-8' fill='white'>
                       <use xlinkHref='#path-7' />

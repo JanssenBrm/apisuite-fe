@@ -5,7 +5,26 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   name:
   | 'chevron-right'
   | 'chevron-left-circle'
-  | 'headset',
+  | 'headset'
+  | 'airplane-landing'
+  | 'paw'
+  | 'infinity'
+  |'human-pregnant'
+  | 'animation-play-outline'
+  |'cloud-outline'
+  | 'account-multiple-plus-outline'
+  | 'account-multiple'
+  | 'fingerprint'
+  | 'usb'
+  | 'shield-check-outline'
+  | 'book-open'
+  | 'briefcase'
+  | 'fullscreen'
+  | 'key'
+  | 'earth'
+  | 'twitter'
+  | 'facebook'
+  | 'github-face',
   /** The fill to be applied to the vector */
   color?: string,
 }

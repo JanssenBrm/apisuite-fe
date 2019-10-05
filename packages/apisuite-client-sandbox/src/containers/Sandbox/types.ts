@@ -1,10 +1,20 @@
-import { AppStorePayloads } from 'containers/App/types'
+import { SvgIconProps } from 'components/SvgIcon/types'
 
-export interface SandboxProps extends SandboxMapDispatchToProps {
-  requesting: boolean,
-  requestError: string,
+export interface SlideConfig {
+  /** key should be unique to leverage render optimization */
+  key: string,
+  title: string,
+  p1: string,
+  p2?: string,
+  btnStr: string,
+  btn: 1 | 2 | 3,
+  imgUrl: string,
 }
 
-export interface SandboxMapDispatchToProps {
-  inform: (payload: AppStorePayloads['inform']) => void,
+export interface ListConfig {
+  /** key should be unique to leverage render optimization */
+  key: string,
+  title: string,
+  desc: string,
+  icon: SvgIconProps['name'],
 }

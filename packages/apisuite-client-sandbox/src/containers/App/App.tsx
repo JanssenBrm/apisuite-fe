@@ -1,78 +1,50 @@
 import * as React from 'react'
 import { ThemeProvider } from '@material-ui/styles'
 
-import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 
-import routes from './routes'
-import './styles.scss'
-import { AppProps, AppState } from './types'
 import theme from './theme'
+import routes from './routes'
+import { AppProps } from './types'
+import Navigation from 'components/Navigation'
+import logoSrc from 'assets/api-logo.png'
 
 const tabs = [
   {
-    name: 'Portal',
+    name: 'Sandbox Features',
     route: '/',
-    chevronColor: '#14BC7D',
   },
   {
-    name: 'Sandbox',
-    route: '/sandbox',
-    chevronColor: '#2DB7BA',
+    name: 'Contact',
+    route: '/contact',
   },
   {
-    name: 'Marketplace',
-    route: '/marketplace',
-    chevronColor: '#14DE2D',
+    name: 'Log in',
+    route: '/login',
   },
   {
-    name: 'SSO',
-    route: '/sso',
-    chevronColor: '#F5A623',
+    name: 'Demo',
+    route: '/demo',
   },
 ]
 
-class App extends React.Component<AppProps, AppState> {
-  public state = {
-    currentTab: -1,
-  }
+const App: React.FC<AppProps> = () => {
+  const [currentTab, setCurrentTab] = React.useState(0)
 
-  public static getDerivedStateFromProps (nextProps: AppProps, prevState: AppState) {
-    const nextIndx = tabs.findIndex((tab) => tab.route === nextProps.location.pathname)
+  return (
+    <ThemeProvider theme={theme}>
+      <Navigation
+        key='app-navigation'
+        tabNames={tabs.map((tab) => tab.name)}
+        tabIndex={currentTab}
+        onTabChange={setCurrentTab}
+        logoSrc={logoSrc}
+      />
 
-    if (nextIndx !== prevState.currentTab) {
-      return { currentTab: nextIndx }
-    }
-
-    return null
-  }
-
-  public render () {
-    return (
-      <ThemeProvider theme={theme}>
-        <Navigation
-          key='app-navigation'
-          tabNames={tabs.map((tab) => tab.name)}
-          tabIndex={1}
-          onTabChange={this.handleTabChange}
-          onGobackClick={this.handleGoBack}
-          chevronColor={tabs[1].chevronColor}
-        />
-
-        {routes()}
-
-        <Footer />
-      </ThemeProvider>
-    )
-  }
-
-  private handleTabChange = (indx: number) => {
-    this.props.history.push(tabs[indx].route)
-  }
-
-  private handleGoBack = () => {
-    this.props.history.goBack()
-  }
+      {routes()}
+      <Footer />
+    </ThemeProvider>
+  )
 }
 
 export default App

@@ -4,20 +4,76 @@
   width: 100%;
   background-color: $primary-700;
   color: white;
-  padding: 20px;
+  padding: 60px;
+
+  a:link,
+  a:visited,
+  a:hover,
+  a:active {
+    color: inherit;
+  }
 
   .container {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
     align-items: center;
     flex-wrap: wrap;
     width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    font-weight: 100;
 
     .logo {
       display: block;
-      width: 45px;
+      width: 38px;
       height: auto;
       margin-right: 40px;
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: 14px;
+      margin: 0;
+      padding: 0;
+    }
+
+    .logo-container {
+      margin-right: 140px;
+
+      .icons-container {
+        display: flex;
+        flex-direction: row;
+        margin: 16px 0;
+
+        svg {
+          margin-right: 8px;
+        }
+      }
+    }
+
+    .sections-container {
+      display: flex;
+      flex-direction: row;
+
+      .section {
+        margin-left: 40px;
+      }
+
+      .sub-section {
+        margin-bottom: 16px;
+
+        h3 {
+          font-size: 18px;
+          color: white;
+          font-weight: 300;
+          margin: 0;
+          padding: 0;
+        }
+
+        p {
+          color: rgba(255,255,255, .5)
+        }
+      }
     }
   }
 }
