@@ -4,10 +4,10 @@ import { Route } from 'react-router-dom'
 import NotFound from 'components/NotFound'
 import PageLoad from 'components/PageLoad'
 import LazySwitch from 'components/LazySwitch'
+import Sandbox from 'containers/Sandbox'
 
 import { AppRouteProps } from './types'
 
-const Sandbox = React.lazy(() => import(/* webpackChunkName: "sb" */ 'containers/Sandbox'))
 const Terms = React.lazy(() => import(/* webpackChunkName: "terms" */ 'components/Terms'))
 const Privacy = React.lazy(() => import(/* webpackChunkName: "privacy" */ 'components/Privacy'))
 

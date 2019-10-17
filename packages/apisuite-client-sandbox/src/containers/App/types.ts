@@ -7,10 +7,6 @@ export interface AppProps {
   history: History<any>,
 }
 
-export interface AppState {
-  currentTab: number,
-}
-
 export type AppRouteProps = RouteProps
 
 export interface AppStoreState {
