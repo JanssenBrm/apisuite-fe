@@ -124,10 +124,10 @@ export default makeStyles({
     margin: '0 40px',
   },
   featureAvatar: {
-    backgroundColor: '#21BA9C',
+    background: 'linear-gradient(270deg, #2DB7BA 0%, #14BC7D 100%)',
   },
   otherAvatar: {
-    backgroundColor: '#14CA5D',
+    background: 'linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)',
   },
   partnersContainer: {
     display: 'felx',
@@ -175,9 +175,9 @@ export default makeStyles({
       justifyContent: 'center',
       alignItems: 'center',
       borderRadius: '50%',
-      border: '1px solid #9D9D9D',
+      border: '2px solid #9D9D9D',
       fontSize: '48px',
-      fontWeight: 100,
+      fontWeight: 300,
     },
     '& > h3': {
       width: '100%',
@@ -241,5 +241,21 @@ export default makeStyles({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+  },
+  emailTextfield: {
+    backgroundColor: '#646464',
+    border: '1px solid #7C7C7C',
+    borderRadius: 4,
+    color: '#ACACAC',
+  },
+  checkBoxLabel: {
+    fontSize: '14px',
+    fontWeight: 300,
+    '& > a': {
+      color: '#409CB0',
+    },
+  },
+  checkbox: {
+    color: 'white',
   },
 })

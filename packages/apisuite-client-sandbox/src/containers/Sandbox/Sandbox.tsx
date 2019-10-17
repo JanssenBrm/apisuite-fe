@@ -260,6 +260,9 @@ const Sandbox: React.FC<{}> = () => {
                 margin='dense'
                 type='email'
                 fullWidth
+                InputProps={{
+                  classes: { input: classes.emailTextfield },
+                }}
               />
 
               <div
@@ -276,6 +279,8 @@ const Sandbox: React.FC<{}> = () => {
 
             <FormGroup row>
               <FormControlLabel
+                classes={{ label: classes.checkBoxLabel }}
+
                 label={
                   <>
                     I agree that Cloudoki sends me newsletters about API related news. I can withdraw my consent at any
@@ -287,6 +292,7 @@ const Sandbox: React.FC<{}> = () => {
                   <Checkbox
                     checked={false}
                     color='primary'
+                    classes={{ root: classes.checkbox }}
                   />
                 }
               />

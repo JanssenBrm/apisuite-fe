@@ -30,3 +30,10 @@ body {
   padding: 0;
   font-weight: 300;
 }
+
+a:link,
+a:visited,
+a:hover,
+a:active {
+  color: inherit;
+}
