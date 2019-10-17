@@ -52,8 +52,16 @@
     }
 
     .sections-container {
+      position: relative;
       display: flex;
       flex-direction: row;
+
+      .fab-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate3d(-6px, -80px, 0);
+      }
 
       .section {
         margin-left: 40px;
