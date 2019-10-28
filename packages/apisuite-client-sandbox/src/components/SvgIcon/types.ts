@@ -6,6 +6,7 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   | 'chevron-right'
   | 'chevron-up'
   | 'chevron-left-circle'
+  | 'chevron-right-circle'
   | 'headset'
   | 'airplane-landing'
   | 'paw'

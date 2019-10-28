@@ -5,6 +5,7 @@ import NotFound from 'components/NotFound'
 import PageLoad from 'components/PageLoad'
 import LazySwitch from 'components/LazySwitch'
 import Sandbox from 'containers/Sandbox'
+import LandingPage from 'containers/LandingPage'
 
 import { AppRouteProps } from './types'
 
@@ -13,6 +14,7 @@ const Privacy = React.lazy(() => import(/* webpackChunkName: "privacy" */ 'compo
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
+  { path: '/dashboard', exact: true, component: LandingPage },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
   { render: () => <NotFound /> },

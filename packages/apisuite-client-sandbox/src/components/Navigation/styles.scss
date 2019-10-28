@@ -2,25 +2,33 @@
 $header-space: 50px;
 
 .navigation {
-  position: absolute;
-  height: $nav-spacing;
+  position: fixed;
   transition: .195s ease;
-  min-width: 100%;
+  width: 100%;
   color: white;
   background-color: transparent;
   z-index: 4;
   display: flex;
   flex-direction: column;
 
+  &.scrolled {
+    background-color: #333333;
+  }
+
   header {
+    position: relative;
     flex: 1;
-    width: 100%;
     display: flex;
     flex-direction: row;
     padding: $header-space 0;
     margin: 0 $header-space;
     border-bottom: 1px solid white;
     align-items: center;
+
+    &.scrolled {
+      padding: 24px 0;
+      border-bottom: none;
+    }
 
     h1 {
       font-size: 24px;
@@ -32,22 +40,59 @@ $header-space: 50px;
       }
     }
 
-    img {
+    .img {
       display: inline-block;
       width: 61px;
       height: auto;
       margin-right: 30px;
     }
 
+    .avatar-container {
+      position: absolute;
+      right: 0;
+      display: flex;
+      justify-content: flex-end;
+
+      & span {
+        margin-right: 16px;
+      }
+    }
   }
 
   .container {
     flex: 1;
     display: flex;
-    justify-content: flex-end;
-    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
     flex-wrap: nowrap;
-    margin: 0 $header-space;
+    margin: 0;
+    transform: translateY(110px);
+
+    &.scrolled {
+      transform: translateY(0);
+      margin-right: 44px;
+    }
+  }
+
+
+
+  .sub-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+    margin: 0;
+    transform: translateY(100%);
+    padding: 0 $header-space;
+
+    &.scrolled {
+      transform: translateY(0);
+      background-color: #E3E3E3;
+      color: #333333;
+    }
   }
 
   .tabs {
@@ -64,6 +109,10 @@ $header-space: 50px;
       cursor: pointer;
     }
 
+    .sub-tab {
+      font-size: 14px;
+    }
+
     .selected {
       font-weight: 600;
     }
@@ -73,6 +122,17 @@ $header-space: 50px;
       z-index: 10;
       left: 16px;
       top: 0;
+      height: 2px;
+      width: 41.78px;
+      background: currentColor;
+      transition: left .2s ease, width .2s ease;
+    }
+
+    .bottom-bar {
+      position: absolute;
+      z-index: 10;
+      left: 16px;
+      bottom: 0;
       height: 2px;
       width: 41.78px;
       background: currentColor;

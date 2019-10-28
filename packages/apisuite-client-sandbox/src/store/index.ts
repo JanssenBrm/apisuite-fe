@@ -12,8 +12,6 @@ import reactotronConfig from 'util/reactotronConfig'
 import combinedReducers from './combinedReducers'
 import combinedSagas from './combinedSagas'
 
-import { appMiddleware } from 'containers/App/ducks'
-
 export const history = createBrowserHistory()
 // Build the middleware for intercepting and dispatching navigation actions
 const sagaMiddlewareOpts: any = {}
@@ -26,7 +24,7 @@ const sagaMiddleware = createSagaMiddleware(sagaMiddlewareOpts)
 
 const routingMiddleware = routerMiddleware(history)
 
-const middleware = [sagaMiddleware, routingMiddleware, appMiddleware]
+const middleware = [sagaMiddleware, routingMiddleware]
 
 let composedMiddleware
 

@@ -41,6 +41,7 @@
     "react-swipeable-views-utils": "0.13.3",
     "redux": "4.0.4",
     "redux-saga": "1.0.5",
+    "reselect": "4.0.0",
     "sass-mq": "5.0.1",
     "start-server-and-test": "1.10.2",
     "tinycolor2": "1.4.1",
