@@ -28,7 +28,20 @@ const useStyles = makeStyles({
 })
 
 const Navigation: React.FC<NavigationProps> = (props) => {
-  const { title, className, tabNames, subTabNames, tabIndex, subTabIndex, onTabChange, logoSrc, user, ...rest } = props
+  const {
+    title,
+    className,
+    tabNames,
+    subTabNames,
+    tabIndex,
+    subTabIndex,
+    onTabChange,
+    onSubTabChange,
+    logoSrc,
+    user,
+    forceScrolled,
+    ...rest
+  } = props
   const classes = useStyles()
   const [scrollPos, setScrollPos] = React.useState(0)
   const [barValues, setBarValues] = React.useState({ left: 0, width: 0 })
@@ -50,6 +63,14 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     }
   }
 
+  function handleSubTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
+    const tabIndex = Number(currentTarget.dataset.tab) || 0
+
+    if (tabIndex < tabNames.length) {
+      onSubTabChange(tabIndex)
+    }
+  }
+
   React.useEffect(() => {
     window.addEventListener('scroll', scrollHandler)
     return () => {
@@ -68,13 +89,13 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   const scrolled = scrollPos >= 10
 
   return (
-    <div className={clsx('navigation', className, { scrolled })} {...rest}>
-      <header className={clsx({ scrolled })}>
+    <div className={clsx('navigation', className, { scrolled: scrolled || forceScrolled })} {...rest}>
+      <header className={clsx({ scrolled: scrolled || forceScrolled })}>
         <img src={logoSrc} alt='logo' className='img' />
 
         <h1>CLOUDOKI <b>SANDBOX</b></h1>
 
-        <nav className={clsx('container', { scrolled })}>
+        <nav className={clsx('container', { scrolled: scrolled || forceScrolled })}>
           <div ref={tabsRef} className='tabs'>
             {tabNames.map((tabName, idx) => (
               <div
@@ -89,20 +110,22 @@ const Navigation: React.FC<NavigationProps> = (props) => {
               </div>
             ))}
 
-            {!scrolled && <div className='top-bar' style={{ left: barValues.left, width: barValues.width }} />}
+            {!(scrolled || forceScrolled) && (
+              <div className='top-bar' style={{ left: barValues.left, width: barValues.width }} />
+            )}
           </div>
         </nav>
 
         {user && (
           <div className='avatar-container'>
-            {!scrolled && <span>{user.fName}</span>}
+            {!(scrolled || forceScrolled) && <span>{user.fName}</span>}
             <Avatar src={user.avatar} className={classes.avatar} />
           </div>
         )}
       </header>
 
       {!!subTabNames && (
-        <div className={clsx('sub-container', { scrolled })}>
+        <div className={clsx('sub-container', { scrolled: scrolled || forceScrolled })}>
 
           <div ref={subTabsRef} className='tabs'>
             {subTabNames.map((tabName, idx) => (
@@ -110,13 +133,17 @@ const Navigation: React.FC<NavigationProps> = (props) => {
                 data-testid={`nav-sub-tab-${tabName}`}
                 key={`nav-sub-tab-${tabName}`}
                 ref={subRefs[idx]}
+                data-tab={idx}
+                onClick={handleSubTabClick}
                 className={clsx('tab', 'sub-tab', { selected: idx === subTabIndex })}
               >
                 {tabName}
               </div>
             ))}
 
-            {scrolled && <div className='bottom-bar' style={{ left: subBarValues.left, width: subBarValues.width }} />}
+            {(scrolled || forceScrolled) && (
+              <div className='bottom-bar' style={{ left: subBarValues.left, width: subBarValues.width }} />
+            )}
           </div>
         </div>
       )}

@@ -12,7 +12,17 @@ import { initTabs, loginTabs } from './config'
 
 const App: React.FC<AppProps> = ({ user, login, history }) => {
   const [currentTab, setCurrentTab] = React.useState(0)
+  const [currentSubTab, setCurrentSubTab] = React.useState(0)
   const [tabs, setTabs] = React.useState(initTabs)
+  const [navScrolled, setNavScrolled] = React.useState(false)
+
+  React.useEffect(() => {
+    if (history.location.pathname.startsWith('/dashboard/apps')) {
+      setNavScrolled(true)
+    } else {
+      setNavScrolled(false)
+    }
+  }, [history.location.pathname])
 
   function handleOnTabChange (index: number) {
     if (index === 2 && !user) {
@@ -27,6 +37,15 @@ const App: React.FC<AppProps> = ({ user, login, history }) => {
     }
   }
 
+  function handleOnSubTabChange (index: number) {
+    const subTabs = tabs[currentTab].subTabs
+
+    if (Array.isArray(subTabs)) {
+      setCurrentSubTab(index)
+      history.push(subTabs[index].route)
+    }
+  }
+
   const subTabs = tabs[currentTab].subTabs
 
   return (
@@ -36,10 +55,12 @@ const App: React.FC<AppProps> = ({ user, login, history }) => {
         tabNames={tabs.map((tab) => tab.name)}
         subTabNames={Array.isArray(subTabs) ? subTabs.map((tab) => tab.name) : undefined}
         tabIndex={currentTab}
-        subTabIndex={0}
+        subTabIndex={currentSubTab}
         onTabChange={handleOnTabChange}
+        onSubTabChange={handleOnSubTabChange}
         logoSrc={logoSrc}
         user={user}
+        forceScrolled={navScrolled}
       />
 
       {routes()}

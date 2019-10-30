@@ -26,7 +26,10 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   | 'earth'
   | 'twitter'
   | 'facebook'
-  | 'github-face',
+  | 'github-face'
+  | 'plus'
+  | 'dots-vrtical'
+  | 'circle',
   /** The fill to be applied to the vector */
   color?: string,
 }
