@@ -31,8 +31,8 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   const {
     title,
     className,
-    tabNames,
-    subTabNames,
+    tabs,
+    subTabs,
     tabIndex,
     subTabIndex,
     onTabChange,
@@ -46,8 +46,8 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   const [scrollPos, setScrollPos] = React.useState(0)
   const [barValues, setBarValues] = React.useState({ left: 0, width: 0 })
   const [subBarValues, setSubBarValues] = React.useState({ left: 0, width: 0 })
-  const refs = tabNames.map(() => React.useRef(null))
-  const subRefs = tabNames.map(() => React.useRef(null))
+  const refs = tabs.map(() => React.useRef(null))
+  const subRefs = tabs.map(() => React.useRef(null))
   const tabsRef = React.useRef(null)
   const subTabsRef = React.useRef(null)
 
@@ -58,7 +58,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   function handleTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
     const tabIndex = Number(currentTarget.dataset.tab) || 0
 
-    if (tabIndex < tabNames.length) {
+    if (tabIndex < tabs.length) {
       onTabChange(tabIndex)
     }
   }
@@ -66,7 +66,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   function handleSubTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
     const tabIndex = Number(currentTarget.dataset.tab) || 0
 
-    if (tabIndex < tabNames.length) {
+    if (tabIndex < tabs.length) {
       onSubTabChange(tabIndex)
     }
   }
@@ -80,11 +80,11 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 
   React.useEffect(() => {
     setBarValues(getBarValues(tabsRef, refs[tabIndex]))
-  }, [tabIndex, tabNames])
+  }, [tabIndex, tabs])
 
   React.useEffect(() => {
     setSubBarValues(getBarValues(subTabsRef, subRefs[subTabIndex]))
-  }, [subTabIndex, subTabNames])
+  }, [subTabIndex, subTabs])
 
   const scrolled = scrollPos >= 10
 
@@ -97,16 +97,16 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 
         <nav className={clsx('container', { scrolled: scrolled || forceScrolled })}>
           <div ref={tabsRef} className='tabs'>
-            {tabNames.map((tabName, idx) => (
+            {tabs.map((tab, idx) => (
               <div
-                data-testid={`nav-tab-${tabName}`}
-                key={`nav-tab-${tabName}`}
+                data-testid={`nav-tab-${idx}`}
+                key={`nav-tab-${idx}`}
                 ref={refs[idx]}
                 data-tab={idx}
                 onClick={handleTabClick}
                 className={clsx('tab', { selected: idx === tabIndex })}
               >
-                {tabName}
+                {tab}
               </div>
             ))}
 
@@ -124,20 +124,20 @@ const Navigation: React.FC<NavigationProps> = (props) => {
         )}
       </header>
 
-      {!!subTabNames && (
+      {!!subTabs && (
         <div className={clsx('sub-container', { scrolled: scrolled || forceScrolled })}>
 
           <div ref={subTabsRef} className='tabs'>
-            {subTabNames.map((tabName, idx) => (
+            {subTabs.map((subTab, idx) => (
               <div
-                data-testid={`nav-sub-tab-${tabName}`}
-                key={`nav-sub-tab-${tabName}`}
+                data-testid={`nav-sub-tab-${idx}`}
+                key={`nav-sub-tab-${idx}`}
                 ref={subRefs[idx]}
                 data-tab={idx}
                 onClick={handleSubTabClick}
                 className={clsx('tab', 'sub-tab', { selected: idx === subTabIndex })}
               >
-                {tabName}
+                {subTab}
               </div>
             ))}
 

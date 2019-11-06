@@ -1,8 +1,8 @@
 import { User } from 'containers/Auth/types'
 
 export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
-  tabNames: string[],
-  subTabNames?: string[],
+  tabs: React.ReactNode[],
+  subTabs?: React.ReactNode[],
   tabIndex: number,
   subTabIndex: number,
   logoSrc: string,

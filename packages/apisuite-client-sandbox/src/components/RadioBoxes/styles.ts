@@ -5,6 +5,8 @@ export default makeStyles({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'nowrap',
+    marginTop: 8,
+    marginBottom: 4,
   },
   controlWrapper: {
     border: '1px solid rgba(0,0,0,0.23)',

@@ -52,8 +52,8 @@ const App: React.FC<AppProps> = ({ user, login, history }) => {
     <ThemeProvider theme={theme}>
       <Navigation
         key='app-navigation'
-        tabNames={tabs.map((tab) => tab.name)}
-        subTabNames={Array.isArray(subTabs) ? subTabs.map((tab) => tab.name) : undefined}
+        tabs={tabs.map((tab) => tab.label)}
+        subTabs={Array.isArray(subTabs) ? subTabs.map((tab) => tab.label) : undefined}
         tabIndex={currentTab}
         subTabIndex={currentSubTab}
         onTabChange={handleOnTabChange}
