@@ -2,6 +2,7 @@ import * as React from 'react'
 import clsx from 'clsx'
 import Avatar from '@material-ui/core/Avatar'
 import { makeStyles } from '@material-ui/core/styles'
+import SvgIcon from 'components/SvgIcon'
 import './styles.scss'
 import { NavigationProps } from './types'
 
@@ -40,6 +41,9 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     logoSrc,
     user,
     forceScrolled,
+    showBackButton,
+    backButtonLabel,
+    onGoBackCLick,
     ...rest
   } = props
   const classes = useStyles()
@@ -97,6 +101,8 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 
         <nav className={clsx('container', { scrolled: scrolled || forceScrolled })}>
           <div ref={tabsRef} className='tabs'>
+            <div className='space' />
+
             {tabs.map((tab, idx) => (
               <div
                 data-testid={`nav-tab-${idx}`}
@@ -126,8 +132,15 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 
       {!!subTabs && (
         <div className={clsx('sub-container', { scrolled: scrolled || forceScrolled })}>
-
           <div ref={subTabsRef} className='tabs'>
+            {showBackButton && (
+              <div role='button' className='back-btn' onClick={onGoBackCLick}>
+                <SvgIcon name='chevron-left-circle' size={28} /> &nbsp;&nbsp; <span>{backButtonLabel}</span>
+              </div>
+            )}
+
+            <div className='space' />
+
             {subTabs.map((subTab, idx) => (
               <div
                 data-testid={`nav-sub-tab-${idx}`}

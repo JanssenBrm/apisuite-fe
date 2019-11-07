@@ -77,3 +77,14 @@ export const loginTabs: TabOpt[] = [
     ],
   },
 ]
+
+export const gobackConfig = [
+  {
+    path: '/dashboard/apps/create',
+    label: 'Cancel',
+  },
+  {
+    path: '/dashboard/apps/detail',
+    label: 'Back to overview',
+  },
+]

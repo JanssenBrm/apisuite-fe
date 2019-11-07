@@ -8,19 +8,29 @@ import routes from './routes'
 import { AppProps } from './types'
 import Navigation from 'components/Navigation'
 import logoSrc from 'assets/api-logo.png'
-import { initTabs, loginTabs } from './config'
+import { initTabs, loginTabs, gobackConfig } from './config'
 
 const App: React.FC<AppProps> = ({ user, login, history }) => {
   const [currentTab, setCurrentTab] = React.useState(0)
   const [currentSubTab, setCurrentSubTab] = React.useState(0)
   const [tabs, setTabs] = React.useState(initTabs)
   const [navScrolled, setNavScrolled] = React.useState(false)
+  const [gobackLabel, setGobackLabel] = React.useState('')
 
   React.useEffect(() => {
-    if (history.location.pathname.startsWith('/dashboard/apps')) {
+    const pathname = history.location.pathname
+    if (pathname.startsWith('/dashboard/apps')) {
       setNavScrolled(true)
     } else {
       setNavScrolled(false)
+    }
+
+    const gb = gobackConfig.find((item) => item.path === pathname)
+
+    if (gb) {
+      setGobackLabel(gb.label)
+    } else {
+      setGobackLabel('')
     }
   }, [history.location.pathname])
 
@@ -46,6 +56,10 @@ const App: React.FC<AppProps> = ({ user, login, history }) => {
     }
   }
 
+  function handleGobackClick () {
+    history.goBack()
+  }
+
   const subTabs = tabs[currentTab].subTabs
 
   return (
@@ -61,6 +75,9 @@ const App: React.FC<AppProps> = ({ user, login, history }) => {
         logoSrc={logoSrc}
         user={user}
         forceScrolled={navScrolled}
+        showBackButton={gobackLabel.length > 0}
+        backButtonLabel={gobackLabel}
+        onGoBackCLick={handleGobackClick}
       />
 
       {routes()}

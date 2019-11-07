@@ -10,4 +10,7 @@ export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
   onSubTabChange: (index: number) => void,
   user?: User,
   forceScrolled?: boolean,
+  showBackButton?: boolean,
+  backButtonLabel?: string,
+  onGoBackCLick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
 }

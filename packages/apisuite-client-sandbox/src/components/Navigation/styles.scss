@@ -98,10 +98,20 @@ $header-space: 50px;
   .tabs {
     position: relative;
     display: flex;
+    width: 100%;
     align-items: center;
 
-    .tab {
+    .back-btn {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    .space {
       flex: 1;
+    }
+
+    .tab {
       margin: 16px;
       transition: opacity .2s ease;
       white-space: nowrap;
