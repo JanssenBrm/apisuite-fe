@@ -37,3 +37,7 @@ a:hover,
 a:active {
   color: inherit;
 }
+
+input:read-only {
+  background-color: #EEEEEE;
+}

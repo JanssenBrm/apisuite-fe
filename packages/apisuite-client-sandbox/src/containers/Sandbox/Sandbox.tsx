@@ -15,6 +15,7 @@ import Link from '@material-ui/core/Link'
 import Carousel from 'components/Carousel'
 import Wheel from 'components/ApiSuiteWheel'
 import SvgIcon from 'components/SvgIcon'
+import Panel from 'components/Panel'
 
 import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
@@ -63,10 +64,7 @@ const Sandbox: React.FC<{}> = () => {
 
       <br /><br /><br /><br />
 
-      <section className={classes.card}>
-        <div className={classes.cardShadow} />
-        <div className={classes.cardShadowSide} />
-
+      <Panel>
         <div className={classes.cardContent}>
           <h1 className={classes.featuresTitle}>Sandbox Features</h1>
 
@@ -139,15 +137,12 @@ const Sandbox: React.FC<{}> = () => {
         </div>
 
         <br />
-      </section>
+      </Panel>
 
       <br /><br /><br />
 
       <section className={classes.stepsContainer}>
-        <div className={classes.card}>
-          <div className={classes.cardShadow} />
-          <div className={classes.cardShadowSide} />
-
+        <Panel>
           <div className={classes.steps}>
             <div className={clsx(classes.step, classes.stepDivider)}>
               <h1 style={{ color: '#1BDF33' }}>1</h1>
@@ -204,7 +199,7 @@ const Sandbox: React.FC<{}> = () => {
               </Button>
             </div>
           </div>
-        </div>
+        </Panel>
 
         <aside className={classes.stepSide}>
           <h1>Dive into the Sandbox</h1>
@@ -230,16 +225,13 @@ const Sandbox: React.FC<{}> = () => {
 
       <br /><br /><br />
 
-      <section className={classes.card}>
-        <div className={classes.cardShadow} />
-        <div className={classes.cardShadowSide} />
-
+      <Panel>
         <div className={classes.partnersContainer}>
           <h1 className={classes.partnersTitle}>Cloudoki customers & partners</h1>
           <img src={partnersUrl} alt='partners' className={classes.partnersImg} />
           <p className={classes.partnersLink}>View more on <a href='https://cloudoki.com'>cloudoki.com</a></p>
         </div>
-      </section>
+      </Panel>
 
       <br /><br /><br />
 

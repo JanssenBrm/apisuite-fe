@@ -4,6 +4,7 @@ import card2 from 'assets/landing-card-2.png'
 import card3 from 'assets/landing-card-3.png'
 import card4 from 'assets/landing-card-4.png'
 import SvgIcon from 'components/SvgIcon'
+import Panel from 'components/Panel'
 
 import useStyles from './styles'
 import { LandingPageProps } from './types'
@@ -48,10 +49,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
       <br /><br /><br />
 
       <section className={classes.cardContainer}>
-        <div className={classes.card}>
-          <div className={classes.cardShadow} />
-          <div className={classes.cardShadowSide} />
-
+        <Panel>
           <div className={classes.cardRow}>
             <div className={classes.cardItem} style={{ borderRight: borderStyle, borderBottom: borderStyle }}>
               <img src={card1} />
@@ -73,7 +71,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
               <p>Documentation</p>
             </div>
           </div>
-        </div>
+        </Panel>
 
         <aside className={classes.cardSide}>
           <h1>Hi, {fname} {lname}</h1>
