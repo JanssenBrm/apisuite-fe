@@ -32,7 +32,9 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   | 'circle'
   | 'launch'
   | 'cloud-upload'
-  | 'code',
+  | 'code'
+  | 'content-copy'
+  | 'autorenew',
   /** The fill to be applied to the vector */
   color?: string,
 }

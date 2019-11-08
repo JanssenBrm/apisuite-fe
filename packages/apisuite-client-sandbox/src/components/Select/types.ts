@@ -1,6 +1,7 @@
 
 export interface SelectProps {
   options: SelectOption[],
+  selected?: SelectOption,
 }
 
 export interface SelectOption {
