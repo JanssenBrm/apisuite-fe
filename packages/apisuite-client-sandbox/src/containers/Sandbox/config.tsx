@@ -50,32 +50,32 @@ export const slidesConfig: SlideConfig[] = [
 export const featuresLeftConfig: ListConfig[] = [
   {
     key: 'f-left-1',
-    title: 'Automated onboarding',
-    desc: 'Let you customers set up an account without delays',
+    title: 'sandboxPage.features.left.one.title',
+    desc: 'sandboxPage.features.left.one.desc',
     icon: 'airplane-landing',
   },
   {
     key: 'f-left-2',
-    title: 'Configured by OpenAPI contracts',
-    desc: 'Swagger definitions is all your sandbox needs',
+    title: 'sandboxPage.features.left.two.title',
+    desc: 'sandboxPage.features.left.two.desc',
     icon: 'paw',
   },
   {
     key: 'f-left-3',
-    title: 'Unlimited API’s and versions',
-    desc: 'Gracefully test or deprecate without worrying about cost',
+    title: 'sandboxPage.features.left.tree.title',
+    desc: 'sandboxPage.features.left.tree.desc',
     icon: 'infinity',
   },
   {
     key: 'f-left-4',
-    title: 'Live Sandbox with data storage',
-    desc: 'Build persistent interaction with your users, over multiple API\'s',
+    title: 'sandboxPage.features.left.four.title',
+    desc: 'sandboxPage.features.left.four.desc',
     icon: 'human-pregnant',
   },
   {
     key: 'f-left-5',
-    title: 'Sandbox silo per account',
-    desc: 'Each customer gets a mini-you. No leaks, no performance impact',
+    title: 'sandboxPage.features.left.five.title',
+    desc: 'sandboxPage.features.left.five.desc',
     icon: 'animation-play-outline',
   },
 ]

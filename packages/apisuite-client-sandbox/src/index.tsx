@@ -13,6 +13,9 @@ import App from 'containers/App'
 import 'typeface-roboto'
 import 'styles/app.scss'
 
+// Translations
+import 'Language/i18n'
+
 if (process.env.NODE_ENV === 'development') {
   import('util/reactotronConfig').then(() => console.log('Reactotron Configured'))
 }

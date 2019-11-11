@@ -1,6 +1,7 @@
 
 import * as React from 'react'
 import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -23,6 +24,7 @@ import partnersUrl from 'assets/partners.png'
 
 const Sandbox: React.FC<{}> = () => {
   const classes = useStyles()
+  const [t] = useTranslation()
 
   return (
     <main className={classes.root}>
@@ -83,7 +85,7 @@ const Sandbox: React.FC<{}> = () => {
                     <SvgIcon name={item.icon} color='white' />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={item.title} secondary={item.desc} />
+                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
               </ListItem>
             ))}
           </List>

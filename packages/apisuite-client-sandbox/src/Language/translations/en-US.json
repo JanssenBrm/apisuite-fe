@@ -1,0 +1,28 @@
+{
+  "sandboxPage": {
+    "features": {
+      "left": {
+        "one": {
+          "title": "Automated onboarding",
+          "desc": "Let your customers set up an account without delays"
+        },
+        "two": {
+          "title": "Configured by OpenAPI contracts",
+          "desc": "Swagger definitions is all your sandbox needs"
+        },
+        "tree": {
+          "title": "Unlimited API’s and versions",
+          "desc": "Gracefully test or deprecate without worrying about cost"
+        },
+        "four": {
+          "title": "Live Sandbox with data storage",
+          "desc": "Build persistent interaction with your users, over multiple API's"
+        },
+        "five": {
+          "title": "Sandbox silo per account",
+          "desc": "Each customer gets a mini-you. No leaks, no performance impact"
+        }
+      }
+    }
+  }
+}

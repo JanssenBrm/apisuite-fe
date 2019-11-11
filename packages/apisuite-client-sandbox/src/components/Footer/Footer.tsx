@@ -1,10 +1,11 @@
 import * as React from 'react'
+import SvgIcon from 'components/SvgIcon'
+import Fab from '@material-ui/core/Fab'
+import LocaleSelect from 'Language/LocaleSelect'
 
 import logoUrl from 'assets/logo-blue.png'
 
 import './styles.scss'
-import SvgIcon from 'components/SvgIcon'
-import Fab from '@material-ui/core/Fab'
 
 const Footer = () => {
   function handleFabClick () {
@@ -19,6 +20,7 @@ const Footer = () => {
           <p>© Cloudoki 2019.</p>
           <p>All rights reserved.</p>
           <p>Proudly made in Europe</p>
+
           <div className='icons-container'>
             <a href='https://cloudoki.com' target='_blank' rel='noopener noreferrer'>
               <SvgIcon size={24} name='earth' />
@@ -33,6 +35,8 @@ const Footer = () => {
               <SvgIcon size={24} name='github-face' />
             </a>
           </div>
+
+          <LocaleSelect />
         </div>
 
         <div className='sections-container'>
