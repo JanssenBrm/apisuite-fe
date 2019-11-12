@@ -37,14 +37,15 @@ const Sandbox: React.FC<{}> = () => {
               <div className={classes.spacer} />
 
               <section className={classes.slideInfo}>
-                <h1 className={classes.slideInfoH1}>{slide.title}</h1>
+                <h1 className={classes.slideInfoH1}>{t(slide.title)}</h1>
 
-                <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: slide.p1 }} />
+                {/** TODO: strings are not being escaped from translations, this needs to be reviwed */}
+                <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: t(slide.p1) }} />
 
                 {slide.p2 && (
                   <p
                     className={classes.slideInfoParagraph}
-                    dangerouslySetInnerHTML={{ __html: slide.p2 }}
+                    dangerouslySetInnerHTML={{ __html: t(slide.p2) }}
                   />
                 )}
 
@@ -56,7 +57,7 @@ const Sandbox: React.FC<{}> = () => {
                     [classes.btn3]: slide.btn === 3,
                   })}
                 >
-                  {slide.btnStr}
+                  {t(slide.btnStr)}
                 </div>
               </section>
             </div>
@@ -68,12 +69,8 @@ const Sandbox: React.FC<{}> = () => {
 
       <Panel>
         <div className={classes.cardContent}>
-          <h1 className={classes.featuresTitle}>Sandbox Features</h1>
-
-          <p className={classes.featuresDesc}>
-            Focus on your product. No matter where you are, from ideation to POC design,
-             assign all your resources to the creative process!
-          </p>
+          <h1 className={classes.featuresTitle}>{t('sandboxPage.features.title')}</h1>
+          <p className={classes.featuresDesc}>{t('sandboxPage.features.desc')}</p>
         </div>
 
         <div className={classes.listContainer}>
@@ -98,16 +95,18 @@ const Sandbox: React.FC<{}> = () => {
                     <SvgIcon name={item.icon} color='white' />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={item.title} secondary={item.desc} />
+                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
               </ListItem>
             ))}
           </List>
         </div>
 
         <div className={classes.cardContent}>
-          <h1 className={clsx(classes.featuresTitle, classes.otherTitle)}>Other Treats</h1>
+          <h1 className={clsx(classes.featuresTitle, classes.otherTitle)}>
+            {t('sandboxPage.otherTreats.title')}
+          </h1>
 
-          <p className={classes.featuresDesc}>And there are even more cool features under the hood…</p>
+          <p className={classes.featuresDesc}>{t('sandboxPage.otherTreats.desc')}</p>
         </div>
 
         <div className={classes.listContainer}>
@@ -119,7 +118,7 @@ const Sandbox: React.FC<{}> = () => {
                     <SvgIcon name={item.icon} color='white' />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={item.title} secondary={item.desc} />
+                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
               </ListItem>
             ))}
           </List>
@@ -132,7 +131,7 @@ const Sandbox: React.FC<{}> = () => {
                     <SvgIcon name={item.icon} color='white' />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={item.title} secondary={item.desc} />
+                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
               </ListItem>
             ))}
           </List>

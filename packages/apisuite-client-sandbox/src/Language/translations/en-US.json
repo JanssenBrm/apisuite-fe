@@ -1,6 +1,33 @@
 {
   "sandboxPage": {
+    "slides": {
+      "one": {
+        "title": "Experience the Sandbox",
+        "p1": "We have released a <b>Live Demo</b> of our Sandbox product. Browse through the features below to see what you can expect.",
+        "p2": "The proof of the pudding is, as they say, in the eating.",
+        "btnStr": "Register"
+      },
+      "two": {
+        "title": "Secure Proof of Concepts",
+        "p1": "With Cloudoki Sandbox, secure <b>proof of concepts</b> are as easy to manage as calling an Uber. (We have an app for that.)",
+        "p2": "Talk to one of our humans for more information.",
+        "btnStr": "Contact"
+      },
+      "three": {
+        "title": "Sail the Seas of Innovation",
+        "p1": "Cloudoki <b>Sandbox</b> is built on open source technology, just ahead of the curve, in order to give you a long and smooth lifetime cycle.",
+        "p2": "Docker, Kubernetes, Kong, it is all there.",
+        "btnStr": "Features"
+      },
+      "four": {
+        "title": "Extend and Customize",
+        "p1": "The Cloudoki Sandbox is purpose built for customization. Do you need a manual onboarding process? <b>Extend</b>. Send your 2FA sms’es through Twillio? <b>Configure</b>. Support Korean i18n? <b>Customize</b>.",
+        "btnStr": "Documentation"
+      }
+    },
     "features": {
+      "title": "Sandbox Features",
+      "desc": "Focus on your product. No matter where you are, from ideation to POC design, assign all your resources to the creative process!",
       "left": {
         "one": {
           "title": "Automated onboarding",
@@ -10,7 +37,7 @@
           "title": "Configured by OpenAPI contracts",
           "desc": "Swagger definitions is all your sandbox needs"
         },
-        "tree": {
+        "three": {
           "title": "Unlimited API’s and versions",
           "desc": "Gracefully test or deprecate without worrying about cost"
         },
@@ -21,6 +48,60 @@
         "five": {
           "title": "Sandbox silo per account",
           "desc": "Each customer gets a mini-you. No leaks, no performance impact"
+        }
+      },
+      "right": {
+        "one": {
+          "title": "Dockerised on any cloud",
+          "desc": "All you need is Docker. Sandbox is \"cloud agnostic\""
+        },
+        "two": {
+          "title": "Managed test users (Oauth2)",
+          "desc": "Depth of test data and PSU emulation, out of the box"
+        },
+        "three": {
+          "title": "Two-factor authentication (2FA)",
+          "desc": "Allow a leveled security grade throughout your ecosystem"
+        },
+        "four": {
+          "title": "Multiple users per account",
+          "desc": "Sandbox enables account RBAC for customer self-service"
+        },
+        "five": {
+          "title": "100% Open Source",
+          "desc": "MIT license, no lock-in. Sandbox is simply open source."
+        }
+      }
+    },
+    "otherTreats": {
+      "title": "Other Treats",
+      "desc": "And there are even more cool features under the hood…",
+      "left": {
+        "one": {
+          "title": "Secure account access (OAuth2)",
+          "desc": "Prove your salt, certainly in your Sandbox environment"
+        },
+        "two": {
+          "title": "Live API reference docs",
+          "desc": "You focus on proper API contracts, your sandbox generates the output"
+        },
+        "three": {
+          "title": "Integrated Support",
+          "desc": "Integrate your favourite support service where your user needs it"
+        }
+      },
+      "right": {
+        "one": {
+          "title": "Optimised for SaaS",
+          "desc": "Cloudoki is a SaaS provider. It shows in the Sandbox DNA."
+        },
+        "two": {
+          "title": "Scalable Portal",
+          "desc": "Read more about the Cloudoki Developer Portal features"
+        },
+        "three": {
+          "title": "Ready for SSO and SCA",
+          "desc": "Read more about the Cloudoki SSO features"
         }
       }
     }
