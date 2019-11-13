@@ -1,13 +1,14 @@
 import * as React from 'react'
 import { ThemeProvider } from '@material-ui/styles'
+import requireImage from 'util/requireImage'
 
+import { config } from 'constants/global'
+import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 
 import theme from './theme'
 import routes from './routes'
 import { AppProps } from './types'
-import Navigation from 'components/Navigation'
-import logoSrc from 'assets/api-logo.png'
 import { initTabs, loginTabs, gobackConfig } from './config'
 
 const App: React.FC<AppProps> = ({ user, login, history }) => {
@@ -72,7 +73,8 @@ const App: React.FC<AppProps> = ({ user, login, history }) => {
         subTabIndex={currentSubTab}
         onTabChange={handleOnTabChange}
         onSubTabChange={handleOnSubTabChange}
-        logoSrc={logoSrc}
+        name={config.navbar.name}
+        logoSrc={requireImage(config.navbar.logoUrl)}
         user={user}
         forceScrolled={navScrolled}
         showBackButton={gobackLabel.length > 0}

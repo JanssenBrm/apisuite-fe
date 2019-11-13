@@ -28,6 +28,8 @@ const useStyles = makeStyles({
   },
 })
 
+const tabsRange = Array.from(Array(10).keys())
+
 const Navigation: React.FC<NavigationProps> = (props) => {
   const {
     title,
@@ -38,6 +40,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     subTabIndex,
     onTabChange,
     onSubTabChange,
+    name,
     logoSrc,
     user,
     forceScrolled,
@@ -50,10 +53,12 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   const [scrollPos, setScrollPos] = React.useState(0)
   const [barValues, setBarValues] = React.useState({ left: 0, width: 0 })
   const [subBarValues, setSubBarValues] = React.useState({ left: 0, width: 0 })
-  const refs = tabs.map(() => React.useRef(null))
-  const subRefs = tabs.map(() => React.useRef(null))
   const tabsRef = React.useRef(null)
   const subTabsRef = React.useRef(null)
+
+  // TODO: this needs another look into it, right now tabs and sub tabs are limit to 10 each.
+  const refs = tabsRange.map(() => React.useRef(null))
+  const subRefs = tabsRange.map(() => React.useRef(null))
 
   function scrollHandler () {
     setScrollPos(window.scrollY)
@@ -70,7 +75,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   function handleSubTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
     const tabIndex = Number(currentTarget.dataset.tab) || 0
 
-    if (tabIndex < tabs.length) {
+    if (tabIndex < subTabs!.length) {
       onSubTabChange(tabIndex)
     }
   }
@@ -97,7 +102,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
       <header className={clsx({ scrolled: scrolled || forceScrolled })}>
         <img src={logoSrc} alt='logo' className='img' />
 
-        <h1>CLOUDOKI <b>SANDBOX</b></h1>
+        <h1>{name} <b>SANDBOX</b></h1>
 
         <nav className={clsx('container', { scrolled: scrolled || forceScrolled })}>
           <div ref={tabsRef} className='tabs'>

@@ -1,9 +1,9 @@
 import * as React from 'react'
+import { config } from 'constants/global'
+import requireImage from 'util/requireImage'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
 import LocaleSelect from 'Language/LocaleSelect'
-
-import logoUrl from 'assets/logo-blue.png'
 
 import './styles.scss'
 
@@ -16,10 +16,8 @@ const Footer = () => {
     <footer className='footer'>
       <div className='container'>
         <div className='logo-container'>
-          <img src={logoUrl} alt='logo' className='logo' />
-          <p>© Cloudoki 2019.</p>
-          <p>All rights reserved.</p>
-          <p>Proudly made in Europe</p>
+          <img src={requireImage(config.footer.logoUrl)} alt='logo' className='logo' />
+          <p>{config.footer.copyright}</p>
 
           <div className='icons-container'>
             <a href='https://cloudoki.com' target='_blank' rel='noopener noreferrer'>

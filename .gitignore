@@ -44,6 +44,7 @@ jsconfig.json
 .env
 local.conf
 cypress.env.json
+sandbox.config.json
 
 # cypress assets
 **/cypress/screenshots/

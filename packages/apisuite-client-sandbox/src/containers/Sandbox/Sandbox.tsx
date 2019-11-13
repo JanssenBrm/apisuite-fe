@@ -17,6 +17,7 @@ import Carousel from 'components/Carousel'
 import Wheel from 'components/ApiSuiteWheel'
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
+import { config } from 'constants/global'
 
 import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
@@ -25,6 +26,10 @@ import partnersUrl from 'assets/partners.png'
 const Sandbox: React.FC<{}> = () => {
   const classes = useStyles()
   const [t] = useTranslation()
+
+  // #conditional-loader-start: alert
+  window.alert(config.navbar.name)
+  // #conditional-loader-end
 
   return (
     <main className={classes.root}>
@@ -101,6 +106,7 @@ const Sandbox: React.FC<{}> = () => {
           </List>
         </div>
 
+        {/** #conditional-loader-start: other */}
         <div className={classes.cardContent}>
           <h1 className={clsx(classes.featuresTitle, classes.otherTitle)}>
             {t('sandboxPage.otherTreats.title')}
@@ -136,6 +142,7 @@ const Sandbox: React.FC<{}> = () => {
             ))}
           </List>
         </div>
+        {/** #conditional-loader-end */}
 
         <br />
       </Panel>
@@ -226,6 +233,7 @@ const Sandbox: React.FC<{}> = () => {
 
       <br /><br /><br />
 
+      {/** #conditional-loader-start: partners */}
       <Panel>
         <div className={classes.partnersContainer}>
           <h1 className={classes.partnersTitle}>Cloudoki customers & partners</h1>
@@ -235,6 +243,7 @@ const Sandbox: React.FC<{}> = () => {
       </Panel>
 
       <br /><br /><br />
+      {/** #conditional-loader-end */}
 
       <section className={classes.subscribeContainer}>
         <div className={classes.wheelContainer}>

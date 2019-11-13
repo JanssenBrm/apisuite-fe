@@ -1,7 +1,5 @@
 
-export type Locale = 'en-US' | 'pt-PT'
-
 export interface LocaleOption {
-  locale: Locale,
+  locale: string,
   label: string,
 }

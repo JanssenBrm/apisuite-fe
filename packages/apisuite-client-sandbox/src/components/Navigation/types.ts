@@ -5,6 +5,7 @@ export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
   subTabs?: React.ReactNode[],
   tabIndex: number,
   subTabIndex: number,
+  name: string,
   logoSrc: string,
   onTabChange: (index: number) => void,
   onSubTabChange: (index: number) => void,

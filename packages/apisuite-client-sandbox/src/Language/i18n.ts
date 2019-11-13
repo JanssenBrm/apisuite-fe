@@ -3,20 +3,22 @@ import { initReactI18next } from 'react-i18next'
 import { localGet } from 'util/storage'
 
 import enUS from './translations/en-US.json'
-import ptPT from './translations/pt-PT.json'
-
-const resources = {
-  'en-US': { translation: enUS },
-  'pt-PT': { translation: ptPT },
-}
 
 export const LOCALE_KEY = 'lng'
+
+export async function changeLocale (locale: string) {
+  if (locale !== 'en-US') {
+    i18n.addResourceBundle(locale, 'translation', await import(`./translations/${locale}.json`), true, true)
+  }
+
+  i18n.changeLanguage(locale)
+}
 
 i18n
   .use(initReactI18next)
   .init({
-    resources,
-    lng: localGet(LOCALE_KEY) || 'en-US',
+    resources: { 'en-US': { translation: enUS } },
+    lng: 'en-US',
     fallbackLng: 'en-US',
     debug: process.env.NODE_ENV === 'development',
     interpolation: {
@@ -26,5 +28,11 @@ i18n
       useSuspense: false,
     },
   })
+
+const selected = localGet(LOCALE_KEY)
+
+if (selected != null && selected !== 'en-US') {
+  changeLocale(selected)
+}
 
 export default i18n

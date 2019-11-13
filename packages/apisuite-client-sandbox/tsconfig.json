@@ -21,8 +21,9 @@
     "baseUrl": ".",
     "paths": {
       "*": [
-        "src/*"
-      ]
+        "src/*",
+      ],
+      "translations": ["translations"],
     }
 	},
 	"include": [
