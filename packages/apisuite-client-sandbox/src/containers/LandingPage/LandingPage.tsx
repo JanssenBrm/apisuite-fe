@@ -1,8 +1,5 @@
 import * as React from 'react'
-import card1 from 'assets/landing-card-1.png'
-import card2 from 'assets/landing-card-2.png'
-import card3 from 'assets/landing-card-3.png'
-import card4 from 'assets/landing-card-4.png'
+import requireImage from 'util/requireImage'
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
 
@@ -52,22 +49,22 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
         <Panel>
           <div className={classes.cardRow}>
             <div className={classes.cardItem} style={{ borderRight: borderStyle, borderBottom: borderStyle }}>
-              <img src={card1} />
+              <img src={requireImage('landing-card-1.png')} />
               <p>Client Applications</p>
             </div>
             <div className={classes.cardItem} style={{ borderBottom: borderStyle }}>
-              <img src={card2} />
+              <img src={requireImage('landing-card-2.png')} />
               <p>Subscriptions</p>
             </div>
           </div>
 
           <div className={classes.cardRow}>
             <div className={classes.cardItem} style={{ borderRight: borderStyle }}>
-              <img src={card3} />
+              <img src={requireImage('landing-card-3.png')} />
               <p style={{ marginTop: 0 }}>Test Data</p>
             </div>
             <div className={classes.cardItem}>
-              <img src={card4} />
+              <img src={requireImage('landing-card-4.png')} />
               <p>Documentation</p>
             </div>
           </div>

@@ -1,7 +1,8 @@
 import { SlideConfig, ListConfig } from './types'
+import requireImage from 'util/requireImage'
 
-import slideOvalUrl from 'assets/slide-oval.png'
-import slideFeatureslUrl from 'assets/features-illustration.png'
+const slideOvalUrl = requireImage('slide-oval.png')
+const slideFeatureslUrl = requireImage('features-illustration.png')
 
 /**
  * Slides configuration

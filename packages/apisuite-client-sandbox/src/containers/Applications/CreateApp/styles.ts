@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
+import requireImage from 'util/requireImage'
 
 export default makeStyles({
   container: {
@@ -95,7 +96,7 @@ export default makeStyles({
     border: '1px solid #979797',
     borderRadius: '50%',
     margin: '16px 0',
-    background: 'url("../../assets/create-app-1.png") no-repeat',
+    background: `url("${requireImage('create-app-1.png')}") no-repeat`,
     backgroundPosition: 'center',
     backgroundSize: '140% 140%',
   },
