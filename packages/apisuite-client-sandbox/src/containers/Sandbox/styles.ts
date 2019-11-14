@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
+import requireImage from 'util/requireImage'
 
 export default makeStyles({
   root: {
@@ -6,7 +7,7 @@ export default makeStyles({
     flexDirection: 'column',
     width: '100%',
     minHeight: '100%',
-    background: 'url("../../assets/sandbox-background.png") no-repeat',
+    background: `url("${requireImage('sandbox-background.png')}") no-repeat`,
     backgroundSize: '100% 100%',
     paddingTop: 300,
     paddingBottom: 45,
@@ -62,35 +63,6 @@ export default makeStyles({
     backgroundColor: '#14C762',
     color: 'white',
     border: '1px solid white',
-  },
-  card: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    backgroundColor: 'white',
-    borderRadius: 8,
-    boxShadow: '-1px -1px 1px 0px rgba(0,0,0,0.03)',
-    maxWidth: 900,
-    margin: '0 auto',
-  },
-  cardShadow: {
-    position: 'absolute',
-    left: 30,
-    top: 'calc(100% + 5px)',
-    marginTop: -4,
-    transform: 'skew(45deg)',
-    width: '100%',
-    height: 60,
-    background: 'linear-gradient(top, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%)',
-  },
-  cardShadowSide: {
-    position: 'absolute',
-    right: -60,
-    top: 31,
-    transform: 'skewY(45deg)',
-    height: '100%',
-    width: 60,
-    background: 'linear-gradient(left, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%)',
   },
   cardContent: {
     display: 'flex',

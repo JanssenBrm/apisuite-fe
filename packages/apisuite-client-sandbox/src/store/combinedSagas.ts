@@ -2,10 +2,10 @@
  * Combine all sagas in the this file and export them.
  */
 
-import app from 'containers/App/sagas'
+import auth from 'containers/Auth/sagas'
 
 const sagas = [
-  app,
+  auth,
 ]
 
 export default sagas

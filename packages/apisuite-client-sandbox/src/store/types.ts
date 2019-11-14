@@ -1,8 +1,8 @@
 import { RouterState } from 'connected-react-router'
 
-import { AppStoreState } from 'containers/App/types'
+import { AuthStore } from 'containers/Auth/types'
 
 export interface Store {
   router: RouterState,
-  app: AppStoreState,
+  auth: AuthStore,
 }

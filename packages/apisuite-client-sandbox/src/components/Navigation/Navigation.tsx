@@ -1,5 +1,8 @@
 import * as React from 'react'
 import clsx from 'clsx'
+import Avatar from '@material-ui/core/Avatar'
+import { makeStyles } from '@material-ui/core/styles'
+import SvgIcon from 'components/SvgIcon'
 import './styles.scss'
 import { NavigationProps } from './types'
 
@@ -17,50 +20,151 @@ function getBarValues (parent: React.RefObject<HTMLDivElement>, target: React.Re
   return values
 }
 
-const Navigation: React.FC<NavigationProps> = (props) => {
-  const { title, className, tabNames, tabIndex, onTabChange, ...rest } = props
-  const [barValues, setBarValues] = React.useState({ left: 0, width: 0 })
-  const refs = tabNames.map(() => React.useRef(null))
-  const tabsRef = React.useRef(null)
+const useStyles = makeStyles({
+  avatar: {
+    width: 28,
+    height: 28,
+    border: '2px solid white',
+  },
+})
 
-  React.useEffect(() => {
-    setBarValues(getBarValues(tabsRef, refs[tabIndex]))
-  }, [tabIndex])
+const tabsRange = Array.from(Array(10).keys())
+
+const Navigation: React.FC<NavigationProps> = (props) => {
+  const {
+    title,
+    className,
+    tabs,
+    subTabs,
+    tabIndex,
+    subTabIndex,
+    onTabChange,
+    onSubTabChange,
+    name,
+    logoSrc,
+    user,
+    forceScrolled,
+    showBackButton,
+    backButtonLabel,
+    onGoBackCLick,
+    ...rest
+  } = props
+  const classes = useStyles()
+  const [scrollPos, setScrollPos] = React.useState(0)
+  const [barValues, setBarValues] = React.useState({ left: 0, width: 0 })
+  const [subBarValues, setSubBarValues] = React.useState({ left: 0, width: 0 })
+  const tabsRef = React.useRef(null)
+  const subTabsRef = React.useRef(null)
+
+  // TODO: this needs another look into it, right now tabs and sub tabs are limit to 10 each.
+  const refs = tabsRange.map(() => React.useRef(null))
+  const subRefs = tabsRange.map(() => React.useRef(null))
+
+  function scrollHandler () {
+    setScrollPos(window.scrollY)
+  }
 
   function handleTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
     const tabIndex = Number(currentTarget.dataset.tab) || 0
 
-    if (tabIndex < tabNames.length) {
+    if (tabIndex < tabs.length) {
       onTabChange(tabIndex)
     }
   }
 
-  return (
-    <div className={clsx('navigation', className)} {...rest}>
-      <header>
-        <img src={props.logoSrc} alt='logo' />
+  function handleSubTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
+    const tabIndex = Number(currentTarget.dataset.tab) || 0
 
-        <h1>CLOUDOKI <b>SANDBOX</b></h1>
+    if (tabIndex < subTabs!.length) {
+      onSubTabChange(tabIndex)
+    }
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('scroll', scrollHandler)
+    return () => {
+      window.removeEventListener('scroll', scrollHandler)
+    }
+  }, [])
+
+  React.useEffect(() => {
+    setBarValues(getBarValues(tabsRef, refs[tabIndex]))
+  }, [tabIndex, tabs])
+
+  React.useEffect(() => {
+    setSubBarValues(getBarValues(subTabsRef, subRefs[subTabIndex]))
+  }, [subTabIndex, subTabs])
+
+  const scrolled = scrollPos >= 10
+
+  return (
+    <div className={clsx('navigation', className, { scrolled: scrolled || forceScrolled })} {...rest}>
+      <header className={clsx({ scrolled: scrolled || forceScrolled })}>
+        <img src={logoSrc} alt='logo' className='img' />
+
+        <h1>{name} <b>SANDBOX</b></h1>
+
+        <nav className={clsx('container', { scrolled: scrolled || forceScrolled })}>
+          <div ref={tabsRef} className='tabs'>
+            <div className='space' />
+
+            {tabs.map((tab, idx) => (
+              <div
+                data-testid={`nav-tab-${idx}`}
+                key={`nav-tab-${idx}`}
+                ref={refs[idx]}
+                data-tab={idx}
+                onClick={handleTabClick}
+                className={clsx('tab', { selected: idx === tabIndex })}
+              >
+                {tab}
+              </div>
+            ))}
+
+            {!(scrolled || forceScrolled) && (
+              <div className='top-bar' style={{ left: barValues.left, width: barValues.width }} />
+            )}
+          </div>
+        </nav>
+
+        {user && (
+          <div className='avatar-container'>
+            {!(scrolled || forceScrolled) && <span>{user.fName}</span>}
+            <Avatar src={user.avatar} className={classes.avatar} />
+          </div>
+        )}
       </header>
 
-      <nav className='container'>
-        <div ref={tabsRef} className='tabs'>
-          {tabNames.map((tabName, idx) => (
-            <div
-              data-testid={`nav-tab-${tabName}`}
-              key={tabName}
-              ref={refs[idx]}
-              data-tab={idx}
-              onClick={handleTabClick}
-              className={clsx('tab', { selected: idx === tabIndex })}
-            >
-              {tabName}
-            </div>
-          ))}
+      {!!subTabs && (
+        <div className={clsx('sub-container', { scrolled: scrolled || forceScrolled })}>
+          <div ref={subTabsRef} className='tabs'>
+            {showBackButton && (
+              <div role='button' className='back-btn' onClick={onGoBackCLick}>
+                <SvgIcon name='chevron-left-circle' size={28} /> &nbsp;&nbsp; <span>{backButtonLabel}</span>
+              </div>
+            )}
 
-          <div className='top-bar' style={{ left: barValues.left, width: barValues.width }} />
+            <div className='space' />
+
+            {subTabs.map((subTab, idx) => (
+              <div
+                data-testid={`nav-sub-tab-${idx}`}
+                key={`nav-sub-tab-${idx}`}
+                ref={subRefs[idx]}
+                data-tab={idx}
+                onClick={handleSubTabClick}
+                className={clsx('tab', 'sub-tab', { selected: idx === subTabIndex })}
+              >
+                {subTab}
+              </div>
+            ))}
+
+            {(scrolled || forceScrolled) && (
+              <div className='bottom-bar' style={{ left: subBarValues.left, width: subBarValues.width }} />
+            )}
+          </div>
         </div>
-      </nav>
+      )}
     </div>
   )
 }

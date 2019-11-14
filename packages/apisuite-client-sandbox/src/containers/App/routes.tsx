@@ -1,27 +1,34 @@
 import * as React from 'react'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 
 import NotFound from 'components/NotFound'
-import PageLoad from 'components/PageLoad'
-import LazySwitch from 'components/LazySwitch'
+import Terms from 'components/Terms'
+import Privacy from 'components/Privacy'
 import Sandbox from 'containers/Sandbox'
+import LandingPage from 'containers/LandingPage'
+import ListApps from 'containers/Applications/ListApps'
+import CreateApp from 'containers/Applications/CreateApp'
+import AppDetail from 'containers/Applications/AppDetail'
+import Console from 'containers/Console'
 
 import { AppRouteProps } from './types'
 
-const Terms = React.lazy(() => import(/* webpackChunkName: "terms" */ 'components/Terms'))
-const Privacy = React.lazy(() => import(/* webpackChunkName: "privacy" */ 'components/Privacy'))
-
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
+  { path: '/dashboard', exact: true, component: LandingPage },
+  { path: '/dashboard/apps', exact: true, component: ListApps },
+  { path: '/dashboard/apps/create', exact: true, component: CreateApp },
+  { path: '/dashboard/apps/detail', exact: true, component: AppDetail },
+  // #conditional-loader-start: console
+  { path: '/dashboard/console', component: Console },
+  // #conditional-loader-end
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
   { render: () => <NotFound /> },
 ]
 
 export default () => (
-  <React.Suspense fallback={<PageLoad />}>
-    <LazySwitch key='routes'>
-      {routesConfig.map((options, indx) => <Route key={`routes-${indx}`} {...options} />)}
-    </LazySwitch>
-  </React.Suspense>
+  <Switch key='routes'>
+    {routesConfig.map((options, indx) => <Route key={`routes-${indx}`} {...options} />)}
+  </Switch>
 )

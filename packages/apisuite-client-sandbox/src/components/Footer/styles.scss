@@ -40,6 +40,11 @@
     .logo-container {
       margin-right: 140px;
 
+      p {
+        max-width: 140px;
+        white-space: pre;
+      }
+
       .icons-container {
         display: flex;
         flex-direction: row;
@@ -79,7 +84,7 @@
         }
 
         p {
-          color: rgba(255,255,255, .5)
+          color: rgba(255,255,255, .5);
         }
       }
     }

@@ -7,6 +7,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
 const Dotenv = require('dotenv-webpack')
+const sandboxConfig = require('./sandbox.config.json')
 
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index'),
@@ -17,12 +18,23 @@ module.exports = {
     publicPath: '/',
   },
 
+  resolveLoader: {
+    alias: {
+      'conditional-loader': path.join(__dirname, './scripts/conditional-loader'),
+    },
+  },
+
   module: {
     rules: [
       {
         test: /\.(js|ts)x?$/,
         exclude: /node_modules/,
-        use: 'babel-loader',
+        use: [
+          'babel-loader',
+          {
+            loader: 'conditional-loader',
+            options: { includes: sandboxConfig.includes },
+          }],
       },
       {
         test: /\.s?css$/,

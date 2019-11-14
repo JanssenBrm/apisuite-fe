@@ -7,6 +7,6 @@ export interface ApiSuiteWheelProps {
   blColor?: string,
   brColor?: string,
   unselectedColor?: string,
-  selected?: apiSuiteWheelPositions,
+  selected?: apiSuiteWheelPositions | apiSuiteWheelPositions[],
   size?: number,
 }

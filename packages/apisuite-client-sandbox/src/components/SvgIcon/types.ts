@@ -6,6 +6,7 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   | 'chevron-right'
   | 'chevron-up'
   | 'chevron-left-circle'
+  | 'chevron-right-circle'
   | 'headset'
   | 'airplane-landing'
   | 'paw'
@@ -25,7 +26,15 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   | 'earth'
   | 'twitter'
   | 'facebook'
-  | 'github-face',
+  | 'github-face'
+  | 'plus'
+  | 'dots-vrtical'
+  | 'circle'
+  | 'launch'
+  | 'cloud-upload'
+  | 'code'
+  | 'content-copy'
+  | 'autorenew',
   /** The fill to be applied to the vector */
   color?: string,
 }

@@ -1,6 +1,7 @@
 
 import * as React from 'react'
 import clsx from 'clsx'
+import { useTranslation } from 'react-i18next'
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
@@ -15,6 +16,8 @@ import Link from '@material-ui/core/Link'
 import Carousel from 'components/Carousel'
 import Wheel from 'components/ApiSuiteWheel'
 import SvgIcon from 'components/SvgIcon'
+import Panel from 'components/Panel'
+import { config } from 'constants/global'
 
 import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
@@ -22,6 +25,11 @@ import partnersUrl from 'assets/partners.png'
 
 const Sandbox: React.FC<{}> = () => {
   const classes = useStyles()
+  const [t] = useTranslation()
+
+  // #conditional-loader-start: alert
+  window.alert(config.navbar.name)
+  // #conditional-loader-end
 
   return (
     <main className={classes.root}>
@@ -34,14 +42,15 @@ const Sandbox: React.FC<{}> = () => {
               <div className={classes.spacer} />
 
               <section className={classes.slideInfo}>
-                <h1 className={classes.slideInfoH1}>{slide.title}</h1>
+                <h1 className={classes.slideInfoH1}>{t(slide.title)}</h1>
 
-                <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: slide.p1 }} />
+                {/** TODO: strings are not being escaped from translations, this needs to be reviwed */}
+                <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: t(slide.p1) }} />
 
                 {slide.p2 && (
                   <p
                     className={classes.slideInfoParagraph}
-                    dangerouslySetInnerHTML={{ __html: slide.p2 }}
+                    dangerouslySetInnerHTML={{ __html: t(slide.p2) }}
                   />
                 )}
 
@@ -53,7 +62,7 @@ const Sandbox: React.FC<{}> = () => {
                     [classes.btn3]: slide.btn === 3,
                   })}
                 >
-                  {slide.btnStr}
+                  {t(slide.btnStr)}
                 </div>
               </section>
             </div>
@@ -63,17 +72,10 @@ const Sandbox: React.FC<{}> = () => {
 
       <br /><br /><br /><br />
 
-      <section className={classes.card}>
-        <div className={classes.cardShadow} />
-        <div className={classes.cardShadowSide} />
-
+      <Panel>
         <div className={classes.cardContent}>
-          <h1 className={classes.featuresTitle}>Sandbox Features</h1>
-
-          <p className={classes.featuresDesc}>
-            Focus on your product. No matter where you are, from ideation to POC design,
-             assign all your resources to the creative process!
-          </p>
+          <h1 className={classes.featuresTitle}>{t('sandboxPage.features.title')}</h1>
+          <p className={classes.featuresDesc}>{t('sandboxPage.features.desc')}</p>
         </div>
 
         <div className={classes.listContainer}>
@@ -85,7 +87,7 @@ const Sandbox: React.FC<{}> = () => {
                     <SvgIcon name={item.icon} color='white' />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={item.title} secondary={item.desc} />
+                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
               </ListItem>
             ))}
           </List>
@@ -98,16 +100,19 @@ const Sandbox: React.FC<{}> = () => {
                     <SvgIcon name={item.icon} color='white' />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={item.title} secondary={item.desc} />
+                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
               </ListItem>
             ))}
           </List>
         </div>
 
+        {/** #conditional-loader-start: other */}
         <div className={classes.cardContent}>
-          <h1 className={clsx(classes.featuresTitle, classes.otherTitle)}>Other Treats</h1>
+          <h1 className={clsx(classes.featuresTitle, classes.otherTitle)}>
+            {t('sandboxPage.otherTreats.title')}
+          </h1>
 
-          <p className={classes.featuresDesc}>And there are even more cool features under the hood…</p>
+          <p className={classes.featuresDesc}>{t('sandboxPage.otherTreats.desc')}</p>
         </div>
 
         <div className={classes.listContainer}>
@@ -119,7 +124,7 @@ const Sandbox: React.FC<{}> = () => {
                     <SvgIcon name={item.icon} color='white' />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={item.title} secondary={item.desc} />
+                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
               </ListItem>
             ))}
           </List>
@@ -132,22 +137,20 @@ const Sandbox: React.FC<{}> = () => {
                     <SvgIcon name={item.icon} color='white' />
                   </Avatar>
                 </ListItemAvatar>
-                <ListItemText primary={item.title} secondary={item.desc} />
+                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
               </ListItem>
             ))}
           </List>
         </div>
+        {/** #conditional-loader-end */}
 
         <br />
-      </section>
+      </Panel>
 
       <br /><br /><br />
 
       <section className={classes.stepsContainer}>
-        <div className={classes.card}>
-          <div className={classes.cardShadow} />
-          <div className={classes.cardShadowSide} />
-
+        <Panel>
           <div className={classes.steps}>
             <div className={clsx(classes.step, classes.stepDivider)}>
               <h1 style={{ color: '#1BDF33' }}>1</h1>
@@ -204,7 +207,7 @@ const Sandbox: React.FC<{}> = () => {
               </Button>
             </div>
           </div>
-        </div>
+        </Panel>
 
         <aside className={classes.stepSide}>
           <h1>Dive into the Sandbox</h1>
@@ -230,18 +233,17 @@ const Sandbox: React.FC<{}> = () => {
 
       <br /><br /><br />
 
-      <section className={classes.card}>
-        <div className={classes.cardShadow} />
-        <div className={classes.cardShadowSide} />
-
+      {/** #conditional-loader-start: partners */}
+      <Panel>
         <div className={classes.partnersContainer}>
           <h1 className={classes.partnersTitle}>Cloudoki customers & partners</h1>
           <img src={partnersUrl} alt='partners' className={classes.partnersImg} />
           <p className={classes.partnersLink}>View more on <a href='https://cloudoki.com'>cloudoki.com</a></p>
         </div>
-      </section>
+      </Panel>
 
       <br /><br /><br />
+      {/** #conditional-loader-end */}
 
       <section className={classes.subscribeContainer}>
         <div className={classes.wheelContainer}>

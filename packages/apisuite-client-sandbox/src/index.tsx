@@ -13,13 +13,16 @@ import App from 'containers/App'
 import 'typeface-roboto'
 import 'styles/app.scss'
 
+// Translations
+import 'Language/i18n'
+
 if (process.env.NODE_ENV === 'development') {
   import('util/reactotronConfig').then(() => console.log('Reactotron Configured'))
 }
 
 function render (Component: any) {
   // @ts-ignore
-  ReactDOM.unstable_createRoot(document.getElementById('root')).render(
+  ReactDOM.render(
     <ErrorMonitor>
       <Provider store={store}>
         <ConnectedRouter history={history}>
@@ -27,6 +30,7 @@ function render (Component: any) {
         </ConnectedRouter>
       </Provider>
     </ErrorMonitor>,
+    document.getElementById('root'),
   )
 }
 
