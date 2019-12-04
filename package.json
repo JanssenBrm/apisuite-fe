@@ -1,19 +1,13 @@
 {
-  "name": "APISuite",
+  "name": "api-suite",
   "version": "1.0.0",
   "main": "index.js",
   "repository": "git@github.com:Cloudoki/APISuite.git",
   "author": "Cloudoki",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "packages/*"
-  ],
+  "workspaces": ["packages/*"],
   "scripts": {
-    "changelog": "lerna version --conventional-commits",
-    "clean": "lerna clean"
-  },
-  "devDependencies": {
-    "lerna": "3.16.4"
+    "sandbox-dev": "yarn workspace apisuite-client-sandbox dev"
   }
 }
