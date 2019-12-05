@@ -51,7 +51,7 @@ const getEmailError = (value: string) => {
 }
 
 const InformDialog: React.FC<InformDialogProps> = (
-  { open, textTarget, onCancel, onConfirm, showLoading, error, ...props }
+  { open, textTarget, onCancel, onConfirm, showLoading, error, ...props },
 ) => {
   const classes = useStyles()
   const [values, setValues] = React.useState(defaultValues)

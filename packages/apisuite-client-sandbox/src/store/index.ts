@@ -13,8 +13,6 @@ import combinedReducers from './combinedReducers'
 import combinedSagas from './combinedSagas'
 
 export const history = createBrowserHistory()
-// Build the middleware for intercepting and dispatching navigation actions
-const sagaMiddlewareOpts: any = {}
 
 const sagaMiddleware = createSagaMiddleware()
 
@@ -25,7 +23,7 @@ const middleware = [sagaMiddleware, routingMiddleware]
 let composedMiddleware
 
 if (process.env.NODE_ENV === 'development') {
-  const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ 
+  const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : composeWithDevTools
   middleware.push(createLogger())
   composedMiddleware = composeEnhancer(applyMiddleware(...middleware))

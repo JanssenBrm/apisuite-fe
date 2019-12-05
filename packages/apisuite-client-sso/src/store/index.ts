@@ -15,8 +15,6 @@ import combinedSagas from './combinedSagas'
 import { appMiddleware } from 'containers/App/ducks'
 
 export const history = createBrowserHistory()
-// Build the middleware for intercepting and dispatching navigation actions
-const sagaMiddlewareOpts: any = {}
 
 const sagaMiddleware = createSagaMiddleware()
 
