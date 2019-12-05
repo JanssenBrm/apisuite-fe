@@ -17,7 +17,7 @@
       "plugins": ["@babel/plugin-transform-runtime"]
     },
     "production": {
-      "plugins": ["ignite-ignore-reactotron", "babel-plugin-jsx-remove-data-test-id"]
+      "plugins": ["babel-plugin-jsx-remove-data-test-id"]
     }
   },
   "plugins": [

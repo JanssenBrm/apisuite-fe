@@ -2,12 +2,12 @@
  * Redux Store
  */
 
-import { createStore, applyMiddleware, compose } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
-import Reactotron from 'reactotron-react-js'
-import reactotronConfig from 'util/reactotronConfig'
+import { createLogger } from 'redux-logger'
+import { composeWithDevTools } from 'redux-devtools-extension'
 
 import combinedReducers from './combinedReducers'
 import combinedSagas from './combinedSagas'
@@ -16,11 +16,7 @@ export const history = createBrowserHistory()
 // Build the middleware for intercepting and dispatching navigation actions
 const sagaMiddlewareOpts: any = {}
 
-if (process.env.NODE_ENV === 'development') {
-  sagaMiddlewareOpts.sagaMonitor = Reactotron.createSagaMonitor!()
-}
-
-const sagaMiddleware = createSagaMiddleware(sagaMiddlewareOpts)
+const sagaMiddleware = createSagaMiddleware()
 
 const routingMiddleware = routerMiddleware(history)
 
@@ -29,7 +25,10 @@ const middleware = [sagaMiddleware, routingMiddleware]
 let composedMiddleware
 
 if (process.env.NODE_ENV === 'development') {
-  composedMiddleware = compose(applyMiddleware(...middleware), reactotronConfig.createEnhancer!())
+  const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ 
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : composeWithDevTools
+  middleware.push(createLogger())
+  composedMiddleware = composeEnhancer(applyMiddleware(...middleware))
 } else {
   composedMiddleware = applyMiddleware(...middleware)
 }
