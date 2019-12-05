@@ -13,10 +13,6 @@ import App from 'containers/App'
 import 'typeface-roboto'
 import 'styles/app.scss'
 
-if (process.env.NODE_ENV === 'development') {
-  import('util/reactotronConfig').then(() => console.log('Reactotron Configured'))
-}
-
 function render (Component: any) {
   // @ts-ignore
   ReactDOM.unstable_createRoot(document.getElementById('root')).render(
