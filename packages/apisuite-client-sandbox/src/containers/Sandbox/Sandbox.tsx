@@ -62,7 +62,9 @@ const Sandbox: React.FC<{}> = () => {
                     [classes.btn3]: slide.btn === 3,
                   })}
                 >
-                  {t(slide.btnStr)}
+                  <a href={slide.linkTo}>
+                    {t(slide.btnStr)}
+                  </a>
                 </div>
               </section>
             </div>
