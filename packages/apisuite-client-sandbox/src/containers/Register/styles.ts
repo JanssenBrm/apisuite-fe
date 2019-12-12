@@ -56,6 +56,12 @@ const useStyles = makeStyles ({
     fieldContainer: {
       marginTop: 20,
       marginBottom: 20 
+    },
+    shuffleIcon: {
+      color: 'white'
+    },
+    visibilityIcon: {
+      color: 'white'
     }
 })
 

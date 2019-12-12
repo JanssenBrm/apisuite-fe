@@ -15,14 +15,42 @@ const Register: React.FC<{}> = () => {
     const classes = useStyles()
 
     const [showPassword, setShowPassword] = React.useState(false)
+    const [emailValue, setEmailValue] = React.useState('')
+    const [nameValue, setNameValue] = React.useState('')
+    const [emailError, setEmailError] = React.useState(false)
+    const [emailLastType, setEmailLastType] = React.useState(0)
 
     const registerTitle = "Registration"
     const registerButtonLabel = "Confirm"
     const closeRoute = "/"
     const escapeKeyPress = useKeyPress('Escape')
+    const typePause = 1000
 
     function handleClickShowPassword () {
         setShowPassword(!showPassword)
+    }
+
+    function handleEmailChange (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const currentTime = (new Date()).getTime()
+        let lastType = emailLastType
+        
+        if (emailValue === '') {
+            setEmailLastType(currentTime)
+            lastType = currentTime
+        }
+
+        if (emailError || (currentTime - lastType > typePause)){
+            setEmailError(!isValidEmail(emailValue))
+        }
+
+        setEmailValue(e.target.value)
+        setEmailLastType(currentTime)
+
+    }
+    
+    function isValidEmail (email: string) {
+        const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        return re.test(String(email).toLowerCase())
     }
 
     if (portalRoot !== null) {
@@ -34,12 +62,14 @@ const Register: React.FC<{}> = () => {
                 <div className={classes.content}>
                     <FormCard title={registerTitle} buttonLabel={registerButtonLabel} closeRoute={closeRoute} >
                         <div className={classes.fieldContainer}>
-                            <h5 className={classes.fieldTitle}>GDPR Protected</h5>
+                            <h5 className={classes.fieldTitle}>GDPR protected</h5>
                             <TextField
                             placeholder='Your name'
                             variant='outlined'
                             margin='none'
-                            type='email'
+                            type='text'
+                            value={nameValue}
+                            onChange={e => setNameValue(e.target.value)}
                             autoFocus
                             fullWidth
                             InputProps={{
@@ -50,10 +80,14 @@ const Register: React.FC<{}> = () => {
                         <div className={classes.fieldContainer}>
                             <h5 className={classes.fieldTitle}>E-mail address</h5>
                             <TextField
+                            id='email-field'
                             placeholder='example@cloudoki.com'
                             variant='outlined'
                             margin='none'
                             type='email'
+                            value={emailValue}
+                            onChange={handleEmailChange}
+                            error={emailError}
                             fullWidth
                             InputProps={{
                                 classes: { input: classes.emailTextfield },
@@ -76,10 +110,10 @@ const Register: React.FC<{}> = () => {
                                     <IconButton
                                     onClick={handleClickShowPassword}
                                     >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        {showPassword ? <VisibilityOff className={classes.visibilityIcon} /> : <Visibility className={classes.visibilityIcon}/>}
                                     </IconButton>
                                     <IconButton>
-                                        <Shuffle />
+                                        <Shuffle className={classes.shuffleIcon} />
                                     </IconButton>
                                 </div>
                             </div>
@@ -120,5 +154,11 @@ function useKeyPress (targetKey: string) {
     
     return keyPressed
 }
+
+// function useInterval (callback) {
+//     React.useEffect(() => {
+//         setInterval(callback, 1000)
+//     })
+// }
 
 export default Register

@@ -3,6 +3,11 @@ import { FormCardProps } from './types'
 import useStyles from './styles'
 import CloseIcon from '@material-ui/icons/Close'
 
+const iconStyle = {
+    height: '42px',
+    width: '42px'
+}
+
 const FormCard: React.FC<FormCardProps> = (props) => {
     const {
         title,
@@ -14,8 +19,11 @@ const FormCard: React.FC<FormCardProps> = (props) => {
 
     return (
         <div className={classes.formCard}>
-            <a className={classes.closeIcon} href={closeRoute}>
-                <CloseIcon />
+            <a href={closeRoute}>
+                <CloseIcon
+                className={classes.closeIcon}
+                style={iconStyle}
+                />
             </a>
             <h2 className={classes.formTitle}>{title}</h2>
             {props.children}

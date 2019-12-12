@@ -64,10 +64,10 @@ const Login: React.FC<{}> = () => {
                                     <IconButton
                                       onClick={handleClickShowPassword}
                                     >
-                                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                                        {showPassword ? <VisibilityOff className={classes.visibilityIcon} /> : <Visibility className={classes.visibilityIcon} />}
                                     </IconButton>
                                     <IconButton>
-                                        <Shuffle />
+                                        <Shuffle className={classes.shuffleIcon} />
                                     </IconButton>
                                 </div>
                             </div>

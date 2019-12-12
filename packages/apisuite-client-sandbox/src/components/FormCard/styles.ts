@@ -11,6 +11,7 @@ const useStyles = makeStyles ({
       position: 'absolute',
       top: '24px',
       right: '24px',
+      color: 'white'
     },
     formTitle: {
      fontSize: '26',
