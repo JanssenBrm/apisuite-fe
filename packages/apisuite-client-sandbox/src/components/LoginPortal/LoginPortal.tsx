@@ -19,6 +19,18 @@ const LoginPortal: React.FC<{}> = () => {
     function handleClickShowPassword () {
         setShowPassword(!showPassword)
     }
+    
+    React.useEffect(() => {
+        const url = 'http://127.0.0.1:3001/auth/apisuite';
+        const options = {
+            method: 'GET',
+        }
+
+        fetch(url, options)
+            .then(response => {
+                console.log(response.text());
+            });
+    }, [])
 
     return(
         <div className={classes.loginContainer}>
