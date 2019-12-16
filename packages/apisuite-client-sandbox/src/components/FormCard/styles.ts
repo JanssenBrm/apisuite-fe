@@ -3,9 +3,10 @@ import { makeStyles } from '@material-ui/styles'
 const useStyles = makeStyles ({
     formCard: {
       display: 'block',
-      width: '50%',
+      width: '40%',
       maxWidth: '550px',
-      maxHeight: '650px'
+      minWidth: '450px',
+      minHeight: '420px'
     },
     closeIcon: {
       position: 'absolute',
@@ -19,6 +20,7 @@ const useStyles = makeStyles ({
      color: 'white'
     },
     submitBtn: {
+      textTransform: 'none',
       width: '160px',
       background: 'transparent',
       fontSize: 14,

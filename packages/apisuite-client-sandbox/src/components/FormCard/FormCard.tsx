@@ -2,6 +2,7 @@ import * as React from 'react'
 import { FormCardProps } from './types'
 import useStyles from './styles'
 import CloseIcon from '@material-ui/icons/Close'
+import Button from '@material-ui/core/Button'
 
 const iconStyle = {
     height: '42px',
@@ -12,7 +13,8 @@ const FormCard: React.FC<FormCardProps> = (props) => {
     const {
         title,
         buttonLabel,
-        closeRoute
+        closeRoute,
+        buttonDisabled
     } = props
 
     const classes = useStyles()
@@ -27,7 +29,7 @@ const FormCard: React.FC<FormCardProps> = (props) => {
             </a>
             <h2 className={classes.formTitle}>{title}</h2>
             {props.children}
-            <button className={classes.submitBtn}>{buttonLabel}</button>
+            <Button variant='outlined' disabled={buttonDisabled} className={classes.submitBtn}>{buttonLabel}</Button>
         </div>
     )
 } 

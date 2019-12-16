@@ -14,34 +14,57 @@ const RegisterPortal: React.FC<{}> = () => {
     const [showPassword, setShowPassword] = React.useState(false)
     const [emailValue, setEmailValue] = React.useState('')
     const [nameValue, setNameValue] = React.useState('')
+    const [passValue, setPassValue] = React.useState('')
     const [emailError, setEmailError] = React.useState(false)
-    const [emailLastType, setEmailLastType] = React.useState(0)
+    const [passError, setPassError] = React.useState(false)
+    const [nameError, setNameError] = React.useState(false)
+    const [focusedField, setFocusedField] = React.useState('name-field')
+    const [filledName, setFilledName] = React.useState(false)
+    const [filledEmail, setFilledEmail] = React.useState(false)
+    const [filledPass, setFilledPass] = React.useState(false)
+    const [buttonDisabled, setButtonDisabled] = React.useState(true)
 
+    const nameFieldId = 'name-field'
+    const emailFieldId = 'email-field'
+    const passFieldId = 'pass-field'
     const registerTitle = "Registration"
     const registerButtonLabel = "Confirm"
     const closeRoute = "/"
-    const typePause = 1000
+    const passMinLength = 12
 
     function handleClickShowPassword () {
         setShowPassword(!showPassword)
     }
 
+    function handleNameChange (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const newName = e.target.value
+        setNameValue(newName)
+        if (nameError) {
+            setNameError(!isValidName(newName))
+        }
+        isFormValid(newName, emailValue, passValue)
+    }
+
     function handleEmailChange (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-        const currentTime = (new Date()).getTime()
-        let lastType = emailLastType
-        
-        if (emailValue === '') {
-            setEmailLastType(currentTime)
-            lastType = currentTime
+        const newEmail = e.target.value
+        setEmailValue(newEmail)
+        if (emailError) {
+            setEmailError(!isValidEmail(newEmail))
         }
+        isFormValid(nameValue, newEmail, passValue)
+    }
 
-        if (emailError || (currentTime - lastType > typePause)){
-            setEmailError(!isValidEmail(emailValue))
+    function handlePassChange (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        const newPass = e.target.value
+        setPassValue(newPass)
+        if (passError) {
+            setPassError(!isValidPass(newPass))
         }
+        isFormValid(nameValue, emailValue, newPass)
+    }
 
-        setEmailValue(e.target.value)
-        setEmailLastType(currentTime)
-
+    function handleInputFocus (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+        setFocusedField(e.target.id)
     }
     
     function isValidEmail (email: string) {
@@ -49,20 +72,67 @@ const RegisterPortal: React.FC<{}> = () => {
         return re.test(String(email).toLowerCase())
     }
 
+    function isValidPass (pass: string) {
+        const uppercase = /[A-Z]/ 
+        const lowercase = /[a-z]/
+        const symbol = /[\W]{1,}/
+        const passLength = (pass.length >= passMinLength)
+        return ( uppercase.test(pass) && lowercase.test(pass) && symbol.test(pass) && passLength )
+    }
+
+    function isValidName (name: string) {
+        return ( name.length > 0 )
+    }
+
+    function isFormValid (name: string, email: string, pass: string) {
+        setButtonDisabled(!( filledName && filledEmail && filledPass && isValidName(name) && isValidEmail(email) && isValidPass(pass) ))
+    }
+
+    React.useEffect(() => {
+        if (focusedField === nameFieldId) {
+            setFilledName(true)
+            if (filledEmail) {
+                setEmailError(!isValidEmail(emailValue))
+            }
+            if (filledPass) {
+                setPassError(!isValidPass(passValue))
+            }
+        } else if (focusedField === emailFieldId) {
+            setFilledEmail(true)
+            if (filledPass) {
+                setPassError(!isValidPass(passValue))
+            }
+            if (filledName) {
+                setNameError(!isValidName(nameValue))
+            }
+        } else if (focusedField === passFieldId) {
+            setFilledPass(true)
+            if (filledEmail) {
+                setEmailError(!isValidEmail(emailValue))
+            }
+            if (filledName) {
+                setNameError(!isValidName(nameValue))
+            }
+        }
+    }, [focusedField])
+
     return(
             <div className={classes.registerContainer}>
                 <div className={classes.content}>
-                    <FormCard title={registerTitle} buttonLabel={registerButtonLabel} closeRoute={closeRoute} >
+                    <FormCard title={registerTitle} buttonLabel={registerButtonLabel} buttonDisabled={buttonDisabled} closeRoute={closeRoute} >
                         <div className={classes.fieldContainer}>
                             <h5 className={classes.fieldTitle}>GDPR protected</h5>
                             <TextField
+                            id={nameFieldId}
                             placeholder='Your name'
                             variant='outlined'
                             margin='none'
                             type='text'
                             value={nameValue}
-                            onChange={e => setNameValue(e.target.value)}
+                            onChange={handleNameChange}
                             autoFocus
+                            onFocus={handleInputFocus}
+                            error={nameError}
                             fullWidth
                             InputProps={{
                                 classes: { input: classes.emailTextfield },
@@ -72,13 +142,14 @@ const RegisterPortal: React.FC<{}> = () => {
                         <div className={classes.fieldContainer}>
                             <h5 className={classes.fieldTitle}>E-mail address</h5>
                             <TextField
-                            id='email-field'
+                            id={emailFieldId}
                             placeholder='example@cloudoki.com'
                             variant='outlined'
                             margin='none'
                             type='email'
                             value={emailValue}
                             onChange={handleEmailChange}
+                            onFocus={handleInputFocus}
                             error={emailError}
                             fullWidth
                             InputProps={{
@@ -90,10 +161,15 @@ const RegisterPortal: React.FC<{}> = () => {
                             <h5 className={classes.fieldTitle}>Pass Phrase</h5>
                             <div className={classes.passPhraseContainer}>
                                 <TextField
+                                id={passFieldId}
                                 variant='outlined'
                                 margin='none'
                                 type={showPassword ? 'text' : 'password'}
+                                value={passValue}
                                 fullWidth
+                                onChange={handlePassChange}
+                                onFocus={handleInputFocus}
+                                error={passError}
                                 InputProps={{
                                     classes: { input: classes.passPhrasefield },
                                 }}
