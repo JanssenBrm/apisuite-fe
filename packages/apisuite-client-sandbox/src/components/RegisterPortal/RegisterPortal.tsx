@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Shuffle from '@material-ui/icons/Shuffle'
+import generator from 'generate-password'
 
 const RegisterPortal: React.FC<{}> = () => {
     const classes = useStyles()
@@ -86,6 +87,16 @@ const RegisterPortal: React.FC<{}> = () => {
 
     function isFormValid (name: string, email: string, pass: string) {
         setButtonDisabled(!( filledName && filledEmail && filledPass && isValidName(name) && isValidEmail(email) && isValidPass(pass) ))
+    }
+
+    function generatePass () {
+        const pass = generator.generate({
+            length: 20,
+            numbers: true,
+            uppercase: true,
+            symbols: true
+        })
+        setPassValue(pass)
     }
 
     React.useEffect(() => {
@@ -182,7 +193,9 @@ const RegisterPortal: React.FC<{}> = () => {
                                     >
                                         {showPassword ? <VisibilityOff className={classes.visibilityIcon} /> : <Visibility className={classes.visibilityIcon}/>}
                                     </IconButton>
-                                    <IconButton>
+                                    <IconButton
+                                    onClick={generatePass}
+                                    >
                                         <Shuffle className={classes.shuffleIcon} />
                                     </IconButton>
                                 </div>
