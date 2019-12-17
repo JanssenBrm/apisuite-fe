@@ -138,6 +138,7 @@ const RegisterPortal: React.FC<{}> = () => {
                                 classes: { input: classes.emailTextfield },
                             }}
                             />
+                            { nameError ? <div className={classes.alert}>Your name must be at least one caracter long.</div> : null }
                         </div>
                         <div className={classes.fieldContainer}>
                             <h5 className={classes.fieldTitle}>E-mail address</h5>
@@ -156,6 +157,7 @@ const RegisterPortal: React.FC<{}> = () => {
                                 classes: { input: classes.emailTextfield },
                             }}
                             />
+                            { emailError ? <div className={classes.alert}>Please enter a valid email address.</div> : null }
                         </div>
                         <div className={classes.fieldContainer}>
                             <h5 className={classes.fieldTitle}>Pass Phrase</h5>
@@ -185,6 +187,7 @@ const RegisterPortal: React.FC<{}> = () => {
                                     </IconButton>
                                 </div>
                             </div>
+                            { passError ? <div className={classes.bigAlert}>Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long.</div> : null }
                         </div>
                     </FormCard>
                 </div>

@@ -62,6 +62,37 @@ const useStyles = makeStyles ({
     },
     visibilityIcon: {
       color: 'white'
+    },
+    alert: {
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: '4px',
+      backgroundColor: '#F2DEDE',
+      border: 'solid',
+      height: '25px',
+      borderWidth: '1px',
+      borderRadius: '4px',
+      borderColor: '#A94442',
+      color: '#A94442',
+      fontSize: '13px',
+      paddingLeft: 6,
+      paddingRight: 6
+    },
+    bigAlert: {
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: '4px',
+      backgroundColor: '#F2DEDE',
+      border: 'solid',
+      height: '40px',
+      borderWidth: '1px',
+      borderRadius: '4px',
+      borderColor: '#A94442',
+      color: '#A94442',
+      fontSize: '13px',
+      paddingLeft: 6,
+      paddingRight: 6,
+      lineHeight: '110%'
     }
 })
 
