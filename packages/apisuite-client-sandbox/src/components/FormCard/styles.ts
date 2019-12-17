@@ -4,8 +4,8 @@ const useStyles = makeStyles ({
     formCard: {
       display: 'block',
       width: '40%',
-      maxWidth: '550px',
-      minWidth: '450px',
+      maxWidth: '400px',
+      minWidth: '350px',
       minHeight: '420px'
     },
     closeIcon: {

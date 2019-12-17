@@ -62,6 +62,38 @@ const useStyles = makeStyles ({
     },
     visibilityIcon: {
       color: 'white'
+    },
+    alert: {
+      display: 'flex',
+      alignItems: 'center',
+      marginTop: '4px',
+      backgroundColor: '#F2DEDE',
+      border: 'solid',
+      height: '25px',
+      borderWidth: '1px',
+      borderRadius: '4px',
+      borderColor: '#A94442',
+      color: '#A94442',
+      fontSize: '13px',
+      paddingLeft: 6,
+      paddingRight: 6
+    },
+    option: {
+      color: 'white',
+      fontSize: '13px',
+      textDecoration: 'none',
+      '& > a': {
+        textDecoration: 'none'
+      },
+      '&:hover': {
+        color: 'white',
+        textDecoration: 'underline'
+      }
+    },
+    optionsContainer: {
+      display: 'flex',
+      flexDirection: 'column',
+      color: 'white'
     }
 })
 
