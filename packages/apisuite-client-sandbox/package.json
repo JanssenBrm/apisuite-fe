@@ -19,7 +19,7 @@
     "start": "serve -s dist -l 8080",
     "open-cov": "open coverage/lcov-report/index.html",
     "check-types": "tsc",
-    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "lint": "eslint './src/**/*.{ts,tsx}' --fix",
     "cy": "cross-env NODE_ENV=test cypress open",
     "cy:run": "cross-env NODE_ENV=test cypress run"
   },

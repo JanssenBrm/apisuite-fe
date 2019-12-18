@@ -25,7 +25,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/dashboard/console', component: Console },
   // #conditional-loader-end
   { path: '/login', component: Login },
-  { path: '/register', component: Register},
+  { path: '/register', component: Register },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
   { render: () => <NotFound /> },
