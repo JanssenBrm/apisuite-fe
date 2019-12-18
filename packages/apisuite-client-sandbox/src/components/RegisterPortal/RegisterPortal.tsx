@@ -97,6 +97,7 @@ const RegisterPortal: React.FC<{}> = () => {
             symbols: true
         })
         setPassValue(pass)
+        isFormValid(nameValue, emailValue, pass)
     }
 
     React.useEffect(() => {
