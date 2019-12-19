@@ -19,15 +19,17 @@
     "start": "serve -s dist -l 8080",
     "open-cov": "open coverage/lcov-report/index.html",
     "check-types": "tsc",
-    "lint": "eslint './src/**/*.{ts,tsx}'",
+    "lint": "eslint './src/**/*.{ts,tsx}' --fix",
     "cy": "cross-env NODE_ENV=test cypress open",
     "cy:run": "cross-env NODE_ENV=test cypress run"
   },
   "dependencies": {
     "@material-ui/core": "4.7.1",
     "@material-ui/lab": "4.0.0-alpha.34",
+    "@types/redux-logger": "3.0.7",
     "clsx": "1.0.4",
     "connected-react-router": "6.6.1",
+    "generate-password": "1.4.2",
     "history": "4.10.1",
     "i18next": "19.0.1",
     "immutability-helper": "3.0.1",

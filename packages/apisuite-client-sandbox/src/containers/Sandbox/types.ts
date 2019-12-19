@@ -7,6 +7,7 @@ export interface SlideConfig {
   p1: string,
   p2?: string,
   btnStr: string,
+  linkTo: string,
   btn: 1 | 2 | 3,
   imgUrl: string,
 }
