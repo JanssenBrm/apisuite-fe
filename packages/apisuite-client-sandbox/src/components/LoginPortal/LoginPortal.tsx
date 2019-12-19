@@ -11,14 +11,16 @@ const LoginPortal: React.FC<{}> = () => {
   const classes = useStyles()
 
   const [showPassword, setShowPassword] = React.useState(false)
-  const [emailValue, setEmailValue] = React.useState('')
-  const [passValue, setPassValue] = React.useState('')
   const [buttonDisabled, setButtonDisabled] = React.useState(true)
   const [emailError, setEmailError] = React.useState(false)
   const [passError, setPassError] = React.useState(false)
   const [focusedField, setFocusedField] = React.useState('email-field')
   const [filledEmail, setFilledEmail] = React.useState(false)
   const [filledPass, setFilledPass] = React.useState(false)
+  const [input, setInput] = React.useState({
+    email: '',
+    password: '',
+  })
 
   const emailFieldId = 'email-field'
   const passFieldId = 'pass-field'
@@ -39,54 +41,51 @@ const LoginPortal: React.FC<{}> = () => {
     setButtonDisabled(!(filledEmail && filledPass && isValidEmail(email) && isValidPass(pass)))
   }
 
+  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+    if (e.target.name === 'email') {
+      if (emailError) {
+        setEmailError(!isValidEmail(e.target.value))
+      }
+      isFormValid(e.target.value, input.email)
+    }
+    if (e.target.name === 'password') {
+      if (passError) {
+        setPassError(!isValidPass(e.target.value))
+      }
+      isFormValid(input.email, e.target.value)
+    }
+  }
+
   function handleClickShowPassword () {
     setShowPassword(!showPassword)
   }
 
-  function handleEmailChange (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const newEmail = e.target.value
-    setEmailValue(newEmail)
-    if (emailError) {
-      setEmailError(!isValidEmail(newEmail))
-    }
-    isFormValid(newEmail, passValue)
-  }
-
-  function handlePassChange (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    const newPass = e.target.value
-    setPassValue(newPass)
-    if (passError) {
-      setPassError(!isValidPass(newPass))
-    }
-    isFormValid(emailValue, newPass)
-  }
-
-  function handleInputFocus (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleInputFocus (e: React.ChangeEvent<HTMLInputElement |
+  HTMLTextAreaElement>) {
     setFocusedField(e.target.id)
   }
-
-  React.useEffect(() => {
-    const url = 'http://127.0.0.1:3001/auth/apisuite'
-    const options = {
-      method: 'GET',
-    }
-
-    fetch(url, options)
-      .then(response => {
-        console.log(response.text())
-      })
-  }, [])
 
   React.useEffect(() => {
     if (focusedField === emailFieldId) {
       setFilledEmail(true)
       if (filledPass) {
-        setPassError(!isValidPass(passValue))
+        setPassError(!isValidPass(input.password))
       }
     } else if (focusedField === passFieldId) {
       setFilledPass(true)
       if (filledEmail) {
-        setEmailError(!isValidEmail(emailValue))
+        setEmailError(!isValidEmail(input.email))
+      }
+    } else if (focusedField === containerId) {
+      if (filledEmail) {
+        setEmailError(!isValidEmail(input.email))
+      }
+      if (filledPass) {
+        setPassError(!isValidPass(input.password))
       }
     }
   }, [focusedField])
@@ -108,8 +107,9 @@ const LoginPortal: React.FC<{}> = () => {
               variant='outlined'
               margin='none'
               type='email'
-              value={emailValue}
-              onChange={handleEmailChange}
+              name='email'
+              value={input.email}
+              onChange={handleInputs}
               onFocus={handleInputFocus}
               error={emailError}
               autoFocus
@@ -118,9 +118,7 @@ const LoginPortal: React.FC<{}> = () => {
                 classes: { input: classes.emailTextfield },
               }}
             />
-            {emailError
-              ? <div className={classes.alert}>Please enter a valid email address.</div>
-              : null}
+            {emailError && <div className={classes.alert}>Please enter a valid email address.</div>}
           </div>
           <div className={classes.fieldContainer}>
             <h5 className={classes.fieldTitle}>Pass Phrase</h5>
@@ -130,8 +128,9 @@ const LoginPortal: React.FC<{}> = () => {
                 variant='outlined'
                 margin='none'
                 type={showPassword ? 'text' : 'password'}
-                value={passValue}
-                onChange={handlePassChange}
+                name='password'
+                value={input.password}
+                onChange={handleInputs}
                 onFocus={handleInputFocus}
                 error={passError}
                 fullWidth
@@ -152,7 +151,7 @@ const LoginPortal: React.FC<{}> = () => {
                 </IconButton>
               </div>
             </div>
-            {passError ? <div className={classes.alert}>Please fill in your pass phrase.</div> : null}
+            {passError && <div className={classes.alert}>Please fill in your pass phrase.</div>}
             <div className={classes.optionsContainer}>
               <a className={classes.option} href='/'>Forgot your pass phrase?</a>
               <a className={classes.option} href='/register'>Not registered yet? Sign up.</a>

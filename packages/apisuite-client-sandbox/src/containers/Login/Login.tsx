@@ -2,36 +2,9 @@ import * as React from 'react'
 import ReactDom from 'react-dom'
 import { Redirect } from 'react-router'
 import LoginPortal from 'components/LoginPortal'
+import { useKeyPress } from 'util/useKeyPress'
 
-const portalRoot = document.getElementById('portal-root')
-
-function useKeyPress (targetKey: string) {
-  const [keyPressed, setKeyPressed] = React.useState(false)
-
-  const keyDownHandler = (e: KeyboardEvent) => {
-    if (e.key === targetKey) {
-      setKeyPressed(true)
-    }
-  }
-
-  const keyUpHandler = (e: KeyboardEvent) => {
-    if (e.key === targetKey) {
-      setKeyPressed(false)
-    }
-  }
-
-  React.useEffect(() => {
-    document.addEventListener('keydown', keyDownHandler)
-    document.addEventListener('keyup', keyUpHandler)
-
-    return () => {
-      document.removeEventListener('keydown', keyDownHandler)
-      document.removeEventListener('keyup', keyUpHandler)
-    }
-  }, [])
-
-  return keyPressed
-}
+const portalRoot = document.getElementById('root')
 
 const Login: React.FC<{}> = () => {
   const closeRoute = '/'
