@@ -146,9 +146,6 @@ const LoginPortal: React.FC<{}> = () => {
                     ? <VisibilityOff className={classes.visibilityIcon} />
                     : <Visibility className={classes.visibilityIcon} />}
                 </IconButton>
-                <IconButton>
-                  <Shuffle className={classes.shuffleIcon} />
-                </IconButton>
               </div>
             </div>
             {passError && <div className={classes.alert}>Please fill in your pass phrase.</div>}
