@@ -4,5 +4,6 @@ export interface FormCardProps extends React.HTMLAttributes<HTMLDivElement> {
   buttonLabel: string,
   closeRoute: string,
   buttonDisabled: boolean,
+  handleSubmit: () => void,
   children: React.ReactNodeArray,
 }

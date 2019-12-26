@@ -3,9 +3,11 @@
  */
 
 import auth from 'containers/Auth/sagas'
+import register from 'components/RegisterPortal/sagas'
 
 const sagas = [
   auth,
+  register,
 ]
 
 export default sagas

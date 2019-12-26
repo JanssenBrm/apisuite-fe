@@ -9,7 +9,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Shuffle from '@material-ui/icons/Shuffle'
 import generator from 'generate-password'
 
-const RegisterPortal: React.FC<{}> = () => {
+const RegisterPortal: React.FC<> = ({ registerUser }) => {
   const classes = useStyles()
 
   const [showPassword, setShowPassword] = React.useState(false)
@@ -134,15 +134,25 @@ const RegisterPortal: React.FC<{}> = () => {
     }
   }, [focusedField])
 
+  function handleSubmit (e: React.FormEvent<HTMLInputElement>) {
+    e.preventDefault()
+    registerUser({
+      first_name: input.name,
+      last_name: '',
+      email: input.email,
+      password: input.password,
+    })
+  }
+
   return (
     <div className={classes.registerContainer}>
-      {console.log(focusedField)}
       <div className={classes.content}>
         <FormCard
           title={registerTitle}
           buttonLabel={registerButtonLabel}
           buttonDisabled={buttonDisabled}
           closeRoute={closeRoute}
+          handleSubmit={handleSubmit}
         >
           <div className={classes.fieldContainer}>
             <h5 className={classes.fieldTitle}>GDPR protected</h5>
