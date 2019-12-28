@@ -5,7 +5,6 @@ import useStyles from './styles'
 import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import Shuffle from '@material-ui/icons/Shuffle'
 
 const LoginPortal: React.FC<{}> = () => {
   const classes = useStyles()
@@ -17,6 +16,8 @@ const LoginPortal: React.FC<{}> = () => {
   const [focusedField, setFocusedField] = React.useState('email-field')
   const [filledEmail, setFilledEmail] = React.useState(false)
   const [filledPass, setFilledPass] = React.useState(false)
+  const [csrf, setCsrf] = React.useState('')
+  const [token, setToken] = React.useState('')
   const [input, setInput] = React.useState({
     email: '',
     password: '',
@@ -90,6 +91,43 @@ const LoginPortal: React.FC<{}> = () => {
     }
   }, [focusedField])
 
+  function fetchToken () {
+    const url = 'http://127.0.0.1:3001/auth/apisuite'
+    fetch(url, {
+      method: 'GET',
+    })
+      .then((res) => { return res.text() })
+      .then((res) => {
+        console.log(res)
+        const csrfRe = /_csrf"\svalue="([^"]*)"/
+        const csrf = res.match(csrfRe)
+        setCsrf(csrf[1])
+        const tokenRe = /"challenge"\svalue="([^"]*)"/
+        const token = res.match(tokenRe)
+        setToken(token[1])
+      })
+  }
+
+  React.useEffect(() => {
+    fetchToken()
+  }, [])
+
+  function handleSubmit (e: React.FormEvent<HTMLInputElement>) {
+    e.preventDefault()
+    console.log('Submit login form')
+    const url = 'http://127.0.0.1:3001/auth/login'
+    fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        _csrf: csrf,
+        challenge: token,
+        email: input.email,
+        password: input.password,
+      }),
+    })
+  }
+
   return (
     <div className={classes.loginContainer}>
       <div className={classes.content}>
@@ -98,6 +136,7 @@ const LoginPortal: React.FC<{}> = () => {
           buttonLabel={loginButtonLabel}
           buttonDisabled={buttonDisabled}
           closeRoute={closeRoute}
+          handleSubmit={handleSubmit}
         >
           <div className={classes.fieldContainer}>
             <h5 className={classes.fieldTitle}>E-mail address</h5>
