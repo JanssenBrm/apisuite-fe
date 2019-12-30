@@ -5,9 +5,11 @@ import useStyles from './styles'
 import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import { useTranslation } from 'react-i18next'
 
 const LoginPortal: React.FC<{}> = () => {
   const classes = useStyles()
+  const [t] = useTranslation()
 
   const [showPassword, setShowPassword] = React.useState(false)
   const [buttonDisabled, setButtonDisabled] = React.useState(true)
@@ -25,9 +27,8 @@ const LoginPortal: React.FC<{}> = () => {
 
   const emailFieldId = 'email-field'
   const passFieldId = 'pass-field'
-  const loginTitle = 'Login'
-  const loginButtonLabel = 'Login'
   const closeRoute = '/'
+  const containerId = 'container'
 
   function isValidEmail (email: string) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -134,14 +135,14 @@ const LoginPortal: React.FC<{}> = () => {
     <div className={classes.loginContainer}>
       <div className={classes.content}>
         <FormCard
-          title={loginTitle}
-          buttonLabel={loginButtonLabel}
+          title={t('loginPortal.title')}
+          buttonLabel={t('loginPortal.button')}
           buttonDisabled={buttonDisabled}
           closeRoute={closeRoute}
           handleSubmit={handleSubmit}
         >
           <div className={classes.fieldContainer}>
-            <h5 className={classes.fieldTitle}>E-mail address</h5>
+            <h5 className={classes.fieldTitle}>{t('loginPortal.fields.email')}</h5>
             <TextField
               id={emailFieldId}
               placeholder='example@cloudoki.com'
@@ -159,10 +160,10 @@ const LoginPortal: React.FC<{}> = () => {
                 classes: { input: classes.emailTextfield },
               }}
             />
-            {emailError && <div className={classes.alert}>Please enter a valid email address.</div>}
+            {emailError && <div className={classes.alert}>{t('loginPortal.warnings.email')}.</div>}
           </div>
           <div className={classes.fieldContainer}>
-            <h5 className={classes.fieldTitle}>Pass Phrase</h5>
+            <h5 className={classes.fieldTitle}>{t('loginPortal.fields.password')}</h5>
             <div className={classes.passPhraseContainer}>
               <TextField
                 id={passFieldId}
@@ -189,7 +190,7 @@ const LoginPortal: React.FC<{}> = () => {
                 </IconButton>
               </div>
             </div>
-            {passError && <div className={classes.alert}>Please fill in your pass phrase.</div>}
+            {passError && <div className={classes.alert}>{t('loginPortal.warnings.password')}</div>}
             <div className={classes.optionsContainer}>
               <a className={classes.option} href='/'>Forgot your pass phrase?</a>
               <a className={classes.option} href='/register'>Not registered yet? Sign up.</a>

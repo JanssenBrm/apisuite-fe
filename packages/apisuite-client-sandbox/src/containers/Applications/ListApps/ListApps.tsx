@@ -9,9 +9,12 @@ import AppCard from 'components/AppCard'
 import { docs } from './config'
 import SvgIcon from 'components/SvgIcon'
 
+import { useTranslation } from 'react-i18next'
+
 const ListApps: React.FC<ListAppsProps> = ({ history }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
+  const [t] = useTranslation()
 
   function handleAppClick () {
     history.push('/dashboard/apps/detail')
@@ -24,7 +27,7 @@ const ListApps: React.FC<ListAppsProps> = ({ history }) => {
   return (
     <div className={commonClasses.root}>
       <section className={commonClasses.contentContainer}>
-        <h1 className={classes.title}>Apps overview</h1>
+        <h1 className={classes.title}>{t('listApps.overview.title')}</h1>
 
         <div className={classes.appsContainer}>
           <AppCard name='Example app' onClick={handleAppClick} />
@@ -34,7 +37,7 @@ const ListApps: React.FC<ListAppsProps> = ({ history }) => {
 
       <div className={classes.docsContainer}>
         <section className={commonClasses.contentContainer}>
-          <h1 className={classes.title}>Knowlage base</h1>
+          <h1 className={classes.title}>{t('listApps.description.title')}</h1>
 
           <br />
 
@@ -52,7 +55,7 @@ const ListApps: React.FC<ListAppsProps> = ({ history }) => {
                 <div className={classes.spacer} />
 
                 <div className={classes.readMore}>
-                  <SvgIcon name='chevron-right-circle' size={28} /> &nbsp;&nbsp; <span>Read more</span>
+                  <SvgIcon name='chevron-right-circle' size={28} /> &nbsp;&nbsp; <span>{t('listApps.buttons.readMore')}</span>
                 </div>
               </div>
             ))}

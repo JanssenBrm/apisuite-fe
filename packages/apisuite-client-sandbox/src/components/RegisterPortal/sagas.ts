@@ -6,9 +6,10 @@ import { API_URL } from 'constants/endpoints'
 
 import { REGISTER_USER } from './ducks'
 import { takeLatest, call } from 'redux-saga/effects'
+import { RegisterAction } from './types'
 import request from 'util/request'
 
-function * registerUser (action) {
+function * registerUser (action: RegisterAction) {
   const requestUrl = `${API_URL}/auth/signup`
   const response = yield call(request, requestUrl, {
     method: 'POST',
