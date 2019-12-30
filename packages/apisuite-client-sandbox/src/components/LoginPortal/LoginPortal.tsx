@@ -17,7 +17,7 @@ const LoginPortal: React.FC<{}> = () => {
   const [filledEmail, setFilledEmail] = React.useState(false)
   const [filledPass, setFilledPass] = React.useState(false)
   const [csrf, setCsrf] = React.useState('')
-  const [token, setToken] = React.useState('')
+  const [challenge, setChallenge] = React.useState('')
   const [input, setInput] = React.useState({
     email: '',
     password: '',
@@ -91,40 +91,42 @@ const LoginPortal: React.FC<{}> = () => {
     }
   }, [focusedField])
 
-  function fetchToken () {
+  function fetchCredentials () {
     const url = 'http://127.0.0.1:3001/auth/apisuite'
     fetch(url, {
       method: 'GET',
+      credentials: 'include',
     })
-      .then((res) => { return res.text() })
+      .then((res) => {
+        return res.text()
+      })
       .then((res) => {
         console.log(res)
         const csrfRe = /_csrf"\svalue="([^"]*)"/
         const csrf = res.match(csrfRe)
         setCsrf(csrf[1])
-        const tokenRe = /"challenge"\svalue="([^"]*)"/
-        const token = res.match(tokenRe)
-        setToken(token[1])
+        const challengeRe = /"challenge"\svalue="([^"]*)"/
+        const challenge = res.match(challengeRe)
+        setChallenge(challenge[1])
       })
   }
 
   React.useEffect(() => {
-    fetchToken()
+    fetchCredentials()
   }, [])
 
   function handleSubmit (e: React.FormEvent<HTMLInputElement>) {
     e.preventDefault()
     console.log('Submit login form')
     const url = 'http://127.0.0.1:3001/auth/login'
+    const formData = new FormData()
+    formData.append('_csrf', csrf)
+    formData.append('challenge', challenge)
+    formData.append('email', input.email)
+    formData.append('password', input.password)
     fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        _csrf: csrf,
-        challenge: token,
-        email: input.email,
-        password: input.password,
-      }),
+      body: formData,
     })
   }
 
