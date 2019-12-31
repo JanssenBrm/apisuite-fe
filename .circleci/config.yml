@@ -22,9 +22,6 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      #- run:
-      #    name: Build Project
-      #    command: yarn run build
       - persist_to_workspace:
           root: ~/project/packages/apisuite-client-sandbox
           paths:
@@ -87,20 +84,20 @@ workflows:
         filters:
           branches:
             only:
-              - test-deploy
+              - develop
         requires:
           - test
      - publish:
         filters:
           branches:
             only:
-              - test-deploy
+              - develop
         requires:
           - build
      - deploy:
         filters:
           branches:
             only:
-              - test-deploy
+              - develop
         requires:
           - publish
