@@ -66,9 +66,13 @@ jobs:
  deploy:
    machine: true
    steps:
+     - run:
+         name: Fix ssh could not resolve hotname
+         command: |
+           ssh-keyscan 206.189.118.141 >> ~/.ssh/known_hosts
      - add_ssh_keys:
          fingerprints:
-           - "b8:76:21:2d:0f:40:b4:0f:ac:65:bb:dd:75:37:a0:d3"
+           - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
      - run:
          name: Deploy Over SSH
          command: |
