@@ -22,11 +22,11 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      #- run:
-      #    name: Build Project
-      #    command: yarn build
+      - run:
+          name: Build Project
+          command: yarn run build
       - persist_to_workspace:
-          root: ~/project
+          root: ~/project/packages/apisuite-client-sandbox
           paths:
             - packages/apisuite-client-sandbox
 
@@ -36,7 +36,7 @@ jobs:
       - checkout
       - setup_remote_docker
       - attach_workspace:
-          at: packages/apisuite-client-sandbox
+          at: ~/project/packages/apisuite-client-sandbox
       - run:
           name: Build Docker Image
           command: docker build -t $IMAGE_NAME .
@@ -44,9 +44,35 @@ jobs:
           name: Archive Docker Image
           command: docker save -o image.tar $IMAGE_NAME
       - persist_to_workspace:
-          root: packages/apisuite-client-sandbox
+          root: ~/project/packages/apisuite-client-sandbox
           paths:
             - ./image.tar
+
+  publish:
+    executor: publisher
+    steps:
+      - attach_workspace:
+          at: ~/project/packages/apisuite-client-sandbox
+      - setup_remote_docker
+      - run:
+          name: Load Archived Docker Image
+          command: docker load -i image.tar
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKER_PASSORD" | docker login -u "$DOCKER_USER" --password-stdin
+            docker push $IMAGE_NAME
+
+  deploy:
+    machine: true
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "b8:76:21:2d:0f:40:b4:0f:ac:65:bb:dd:75:37:a0:d3"
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh -o StrictHostKeyChecking=no root@206.189.118.141 "cd /apps/APISuite && docker-compose stop sandbox-client-dev && docker-compose up -d sandbox-client-dev"        
 
 workflows:
  version: 2
@@ -60,3 +86,17 @@ workflows:
               - test-deploy
         requires:
           - test
+     - publish:
+        filters:
+          branches:
+            only:
+              - develop
+        requires:
+          - build
+     - deploy:
+        filters:
+          branches:
+            only:
+              - develop
+        requires:
+          - publish    
