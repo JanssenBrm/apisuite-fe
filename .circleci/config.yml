@@ -46,7 +46,7 @@ jobs:
       - persist_to_workspace:
           root: ~/project/packages/apisuite-client-sandbox
           paths:
-            - packages/apisuite-client-sandbox/image.tar
+            - ./image.tar
 
  publish:
    executor: publisher
