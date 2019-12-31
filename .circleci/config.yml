@@ -27,13 +27,15 @@ jobs:
           command: yarn sandbox-build
       - persist_to_workspace:
           root: ./sandbox
-          paths: ./packages/apisuite-client-sandbox/dist
+          paths: ~/api-suite/packages/apisuite-client-sandbox/dist
+      - run: ls -la
 
   build:
     executor: publisher
     steps:
       - checkout
       - setup_remote_docker
+      - run: ls -la
       - attach_workspace:
           at: ./sandbox
       - run:
@@ -50,6 +52,7 @@ jobs:
   publish:
     executor: publisher
     steps:
+      - run: ls -la
       - attach_workspace:
           at: ./sandbox
       - setup_remote_docker
