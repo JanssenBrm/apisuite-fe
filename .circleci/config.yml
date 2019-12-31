@@ -42,11 +42,11 @@ jobs:
           command: docker build -t $IMAGE_NAME ~/project/packages/apisuite-client-sandbox
       - run:
           name: Archive Docker Image
-          command: docker save -o image.tar $IMAGE_NAME
+          command: docker save -o ~/project/packages/apisuite-client-sandbox/image.tar $IMAGE_NAME
       - persist_to_workspace:
-          root: .
+          root: ~/project/packages/apisuite-client-sandbox
           paths:
-            - ./image.tar
+            - packages/apisuite-client-sandbox/image.tar
 
  publish:
    executor: publisher
@@ -56,7 +56,7 @@ jobs:
      - setup_remote_docker
      - run:
          name: Load Archived Docker Image
-         command: docker load -i image.tar
+         command: docker load -i ~/project/packages/apisuite-client-sandbox/image.tar
      - run:
          name: Publish Docker Image to Docker Hub
          command: |
