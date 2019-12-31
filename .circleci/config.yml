@@ -35,15 +35,14 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
-      - run: ls -la
       - attach_workspace:
           at: .
       - run:
           name: Build Docker Image
-          command: docker build -t $IMAGE_NAME .
+          command: docker build -t $IMAGE_NAME ./packages/apisuite-client-sandbox
       - run:
           name: Archive Docker Image
-          command: docker save -o image.tar $IMAGE_NAME
+          command: docker save -o ./packages/apisuite-client-sandbox/image.tar $IMAGE_NAME
       - persist_to_workspace:
           root: .
           paths:
@@ -52,10 +51,10 @@ jobs:
   publish:
     executor: publisher
     steps:
-      - run: ls -la
       - attach_workspace:
           at: .
       - setup_remote_docker
+      - run: ls -la
       - run:
           name: Load Archived Docker Image
           command: docker load -i image.tar
