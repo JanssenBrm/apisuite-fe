@@ -10,7 +10,7 @@ jobs:
   test:
     working_directory: ~/api-suite
     docker:
-      - image: circleci/node:13.5.0
+      - image: circleci/node:12.13.1
     steps:
       - checkout
       - restore_cache:
