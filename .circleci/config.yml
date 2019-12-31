@@ -90,13 +90,13 @@ workflows:
         filters:
           branches:
             only:
-              - develop
+              - test-deploy
         requires:
           - build
      - deploy:
         filters:
           branches:
             only:
-              - develop
+              - test-deploy
         requires:
-          - publish    
+          - publish
