@@ -86,23 +86,23 @@ workflows:
    jobs:
      - test
      - build:
-        filters:
-          branches:
-            only:
-              - develop
+        # filters:
+        #   branches:
+        #     only:
+        #       - develop
         requires:
           - test
      - publish:
-        filters:
-          branches:
-            only:
-              - develop
+        # filters:
+        #   branches:
+        #     only:
+        #       - develop
         requires:
           - build
      - deploy:
-        filters:
-          branches:
-            only:
-              - develop
+        # filters:
+        #   branches:
+        #     only:
+        #       - develop
         requires:
           - publish
