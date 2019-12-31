@@ -1,5 +1,5 @@
 # node 10.x with cypress dependencies
-FROM cypress/base:10 AS build
+FROM cypress/base:12 AS build
 
 WORKDIR /build
 COPY . /build
