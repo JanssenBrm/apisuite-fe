@@ -22,9 +22,9 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      - run:
-          name: Build Project
-          command: yarn run build
+      #- run:
+      #    name: Build Project
+      #    command: yarn run build
       - persist_to_workspace:
           root: ~/project/packages/apisuite-client-sandbox
           paths:
