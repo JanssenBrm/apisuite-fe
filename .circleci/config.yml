@@ -1,0 +1,35 @@
+version: 2.1
+executors:
+  publisher:
+    environment:
+      IMAGE_NAME: erettozi/apisuite-client-sandbox:dev
+    docker:
+      - image: circleci/buildpack-deps:stretch
+
+jobs:
+  test:
+    docker:
+      - image: circleci/node:12.13.1
+    working_directory: ~/project/packages/apisuite-client-sandbox
+    steps:
+      - checkout
+      - run:
+          name: Install Dependencies
+          command: yarn install --frozen-lockfile
+      - persist_to_workspace:
+          root: ~/project
+          paths:
+            - packages/apisuite-client-sandbox
+
+workflows:
+ version: 2
+ build_deploy:
+   jobs:
+     - test
+     - build:
+        filters:
+          branches:
+            only:
+              - develop
+        requires:
+          - test
