@@ -22,9 +22,9 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      - run:
-          name: Build Project
-          command: yarn build
+      #- run:
+      #    name: Build Project
+      #    command: yarn build
       - persist_to_workspace:
           root: ~/project
           paths:
