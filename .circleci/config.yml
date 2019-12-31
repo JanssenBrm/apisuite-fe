@@ -26,8 +26,8 @@ jobs:
           name: Build Project
           command: yarn sandbox-build
       - persist_to_workspace:
-          root: ./sandbox
-          paths: ~/api-suite/packages/apisuite-client-sandbox/dist
+          root: .
+          paths: ./packages/apisuite-client-sandbox/dist
       - run: ls -la
 
   build:
@@ -37,15 +37,15 @@ jobs:
       - setup_remote_docker
       - run: ls -la
       - attach_workspace:
-          at: ./sandbox
+          at: .
       - run:
           name: Build Docker Image
-          command: docker build -t $IMAGE_NAME ./sandbox
+          command: docker build -t $IMAGE_NAME .
       - run:
           name: Archive Docker Image
-          command: docker save -o ./sandbox/image.tar $IMAGE_NAME
+          command: docker save -o image.tar $IMAGE_NAME
       - persist_to_workspace:
-          root: ./sandbox
+          root: .
           paths:
             - ./image.tar
 
@@ -54,11 +54,11 @@ jobs:
     steps:
       - run: ls -la
       - attach_workspace:
-          at: ./sandbox
+          at: .
       - setup_remote_docker
       - run:
           name: Load Archived Docker Image
-          command: docker load -i ./sandbox/image.tar
+          command: docker load -i image.tar
       - run:
           name: Publish Docker Image to Docker Hub
           command: |
