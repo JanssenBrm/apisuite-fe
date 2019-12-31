@@ -7,10 +7,10 @@ executors:
       - image: circleci/buildpack-deps:stretch
 
 jobs:
- test:
-    working_directory: ~/project/packages/apisuite-client-sandbox
+  test:
+    working_directory: ~/api-suite
     docker:
-      - image: circleci/node:12.13.1
+      - image: circleci/node:13.5.0
     steps:
       - checkout
       - restore_cache:
@@ -22,10 +22,12 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
+      - run:
+          name: Build Project
+          command: yarn sandbox-build
       - persist_to_workspace:
-          root: ~/project/packages/apisuite-client-sandbox
-          paths:
-            - packages/apisuite-client-sandbox
+          root: ./sandbox
+          paths: ./packages/apisuite-client-sandbox/dist
 
  build:
     executor: publisher
@@ -33,15 +35,15 @@ jobs:
       - checkout
       - setup_remote_docker
       - attach_workspace:
-          at: ~/project/packages/apisuite-client-sandbox
+          at: ./sandbox
       - run:
           name: Build Docker Image
-          command: docker build -t $IMAGE_NAME ~/project/packages/apisuite-client-sandbox
+          command: docker build -t $IMAGE_NAME ./sandbox
       - run:
           name: Archive Docker Image
-          command: docker save -o ~/project/packages/apisuite-client-sandbox/image.tar $IMAGE_NAME
+          command: docker save -o ./sandbox/image.tar $IMAGE_NAME
       - persist_to_workspace:
-          root: ~/project/packages/apisuite-client-sandbox
+          root: ./sandbox
           paths:
             - ./image.tar
 
@@ -49,11 +51,11 @@ jobs:
    executor: publisher
    steps:
      - attach_workspace:
-         at: ~/project/packages/apisuite-client-sandbox
+         at: ./sandbox
      - setup_remote_docker
      - run:
          name: Load Archived Docker Image
-         command: docker load -i ~/project/packages/apisuite-client-sandbox/image.tar
+         command: docker load -i ./sandbox/image.tar
      - run:
          name: Publish Docker Image to Docker Hub
          command: |
