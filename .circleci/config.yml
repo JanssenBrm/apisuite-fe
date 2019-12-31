@@ -44,7 +44,7 @@ jobs:
           name: Archive Docker Image
           command: docker save -o image.tar $IMAGE_NAME
       - persist_to_workspace:
-          root: ~/project/packages/apisuite-client-sandbox
+          root: .
           paths:
             - ./image.tar
 
