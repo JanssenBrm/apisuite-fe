@@ -29,7 +29,7 @@ jobs:
           root: ./sandbox
           paths: ./packages/apisuite-client-sandbox/dist
 
- build:
+  build:
     executor: publisher
     steps:
       - checkout
@@ -47,35 +47,35 @@ jobs:
           paths:
             - ./image.tar
 
- publish:
-   executor: publisher
-   steps:
-     - attach_workspace:
-         at: ./sandbox
-     - setup_remote_docker
-     - run:
-         name: Load Archived Docker Image
-         command: docker load -i ./sandbox/image.tar
-     - run:
-         name: Publish Docker Image to Docker Hub
-         command: |
-           echo "$DOCKER_PASSORD" | docker login -u "$DOCKER_USER" --password-stdin
-           docker push $IMAGE_NAME
+  publish:
+    executor: publisher
+    steps:
+      - attach_workspace:
+          at: ./sandbox
+      - setup_remote_docker
+      - run:
+          name: Load Archived Docker Image
+          command: docker load -i ./sandbox/image.tar
+      - run:
+          name: Publish Docker Image to Docker Hub
+          command: |
+            echo "$DOCKER_PASSORD" | docker login -u "$DOCKER_USER" --password-stdin
+            docker push $IMAGE_NAME
 
- deploy:
-   machine: true
-   steps:
-     - run:
-         name: Fix ssh could not resolve hotname
-         command: |
-           ssh-keyscan 206.189.118.141 >> ~/.ssh/known_hosts
-     - add_ssh_keys:
-         fingerprints:
-           - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
-     - run:
-         name: Deploy Over SSH
-         command: |
-           ssh -o StrictHostKeyChecking=no root@206.189.118.141 "cd /apps/APISuite && docker-compose stop sandbox-client-dev && docker-compose up -d sandbox-client-dev"        
+  deploy:
+    machine: true
+    steps:
+      - run:
+          name: Fix ssh could not resolve hotname
+          command: |
+            ssh-keyscan 206.189.118.141 >> ~/.ssh/known_hosts
+      - add_ssh_keys:
+          fingerprints:
+            - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
+      - run:
+          name: Deploy Over SSH
+          command: |
+            ssh -o StrictHostKeyChecking=no root@206.189.118.141 "cd /apps/APISuite && docker-compose stop sandbox-client-dev && docker-compose up -d sandbox-client-dev"        
 
 workflows:
  version: 2
