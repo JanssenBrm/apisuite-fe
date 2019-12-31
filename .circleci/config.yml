@@ -39,7 +39,7 @@ jobs:
           at: ~/project/packages/apisuite-client-sandbox
       - run:
           name: Build Docker Image
-          command: docker build -t $IMAGE_NAME .
+          command: docker build -t $IMAGE_NAME ~/project/packages/apisuite-client-sandbox
       - run:
           name: Archive Docker Image
           command: docker save -o image.tar $IMAGE_NAME
