@@ -36,16 +36,8 @@ const App: React.FC<AppProps> = ({ user, login, history }) => {
   }, [history.location.pathname])
 
   function handleOnTabChange (index: number) {
-    if (index === 2 && !user) {
-      login({ email: 'foo@email.com', password: '1234567890' })
-      setTabs(loginTabs)
-      setCurrentTab(3)
-
-      history.push(loginTabs[3].route)
-    } else {
-      setCurrentTab(index)
-      history.push(tabs[index].route)
-    }
+    setCurrentTab(index)
+    history.push(tabs[index].route)
   }
 
   function handleOnSubTabChange (index: number) {

@@ -52,3 +52,10 @@ export const authActions: AuthStoreActionCreators = {
   loginError: (error) => ({ type: LOGIN_ERROR, error }),
   logout: () => ({ type: LOGOUT }),
 }
+
+export const createAuthMiddleware = (history) => (store) => (next) => (action) => {
+  next(action)
+  if (action.type === LOGIN_SUCCESS) {
+    history.replace('/dashboard')
+  }
+}

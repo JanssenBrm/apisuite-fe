@@ -14,7 +14,7 @@ export const initTabs: TabOpt[] = [
   },
   {
     label: 'Contact',
-    route: '',
+    route: '/',
   },
   {
     label: 'Log in',
@@ -22,7 +22,7 @@ export const initTabs: TabOpt[] = [
   },
   {
     label: 'Demo',
-    route: '/demo',
+    route: '/',
   },
 ]
 
