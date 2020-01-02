@@ -1,5 +1,3 @@
-import { API_URL } from 'constants/endpoints'
-
 /**
  * @module RegisterPortal/sagas
  */
@@ -7,6 +5,7 @@ import { API_URL } from 'constants/endpoints'
 import { REGISTER_USER } from './ducks'
 import { takeLatest, call } from 'redux-saga/effects'
 import { RegisterAction } from './types'
+import { API_URL } from 'constants/endpoints'
 import request from 'util/request'
 
 function * registerUser (action: RegisterAction) {

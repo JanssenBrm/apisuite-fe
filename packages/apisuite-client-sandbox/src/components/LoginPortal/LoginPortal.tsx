@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { LoginPortalProps } from './types'
 import FormCard from 'components/FormCard'
 import TextField from '@material-ui/core/TextField'
 import useStyles from './styles'
@@ -7,7 +8,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { useTranslation } from 'react-i18next'
 
-const LoginPortal: React.FC<{}> = () => {
+const LoginPortal: React.FC<LoginPortalProps> = ({ login }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -18,8 +19,6 @@ const LoginPortal: React.FC<{}> = () => {
   const [focusedField, setFocusedField] = React.useState('email-field')
   const [filledEmail, setFilledEmail] = React.useState(false)
   const [filledPass, setFilledPass] = React.useState(false)
-  const [csrf, setCsrf] = React.useState('')
-  const [challenge, setChallenge] = React.useState('')
   const [input, setInput] = React.useState({
     email: '',
     password: '',
@@ -92,43 +91,9 @@ const LoginPortal: React.FC<{}> = () => {
     }
   }, [focusedField])
 
-  function fetchCredentials () {
-    const url = 'http://127.0.0.1:3001/auth/apisuite'
-    fetch(url, {
-      method: 'GET',
-      credentials: 'include',
-    })
-      .then((res) => {
-        return res.text()
-      })
-      .then((res) => {
-        console.log(res)
-        const csrfRe = /_csrf"\svalue="([^"]*)"/
-        const csrf = res.match(csrfRe)
-        setCsrf(csrf[1])
-        const challengeRe = /"challenge"\svalue="([^"]*)"/
-        const challenge = res.match(challengeRe)
-        setChallenge(challenge[1])
-      })
-  }
-
-  React.useEffect(() => {
-    fetchCredentials()
-  }, [])
-
   function handleSubmit (e: React.FormEvent<HTMLInputElement>) {
     e.preventDefault()
-    console.log('Submit login form')
-    const url = 'http://127.0.0.1:3001/auth/login'
-    const formData = new FormData()
-    formData.append('_csrf', csrf)
-    formData.append('challenge', challenge)
-    formData.append('email', input.email)
-    formData.append('password', input.password)
-    fetch(url, {
-      method: 'POST',
-      body: formData,
-    })
+    login({ email: input.email, password: input.password })
   }
 
   return (
