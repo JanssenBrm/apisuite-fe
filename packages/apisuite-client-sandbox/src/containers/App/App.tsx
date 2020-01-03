@@ -11,12 +11,13 @@ import routes from './routes'
 import { AppProps } from './types'
 import { initTabs, loginTabs, gobackConfig } from './config'
 
-const App: React.FC<AppProps> = ({ user, login, history }) => {
+const App: React.FC<AppProps> = ({ user, history }) => {
   const [currentTab, setCurrentTab] = React.useState(0)
   const [currentSubTab, setCurrentSubTab] = React.useState(0)
   const [tabs, setTabs] = React.useState(initTabs)
   const [navScrolled, setNavScrolled] = React.useState(false)
   const [gobackLabel, setGobackLabel] = React.useState('')
+  const [subTabs, setSubTabs] = React.useState(tabs[currentTab].subTabs)
 
   React.useEffect(() => {
     const pathname = history.location.pathname
@@ -53,7 +54,13 @@ const App: React.FC<AppProps> = ({ user, login, history }) => {
     history.goBack()
   }
 
-  const subTabs = tabs[currentTab].subTabs
+  React.useEffect(() => {
+    if (user) {
+      setTabs(loginTabs)
+      setCurrentTab(3)
+      setSubTabs(loginTabs[3].subTabs)
+    }
+  }, [user])
 
   return (
     <ThemeProvider theme={theme}>
