@@ -4,6 +4,7 @@ export interface RadioBoxesProps {
   options: RadioBoxesOption[],
   selected: any,
   onChange?: RadioGroupProps['onChange'],
+  disabled: boolean,
 }
 
 export interface RadioBoxesOption {

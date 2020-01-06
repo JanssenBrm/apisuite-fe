@@ -5,9 +5,9 @@ export const selectOptions = [
     value: 'private',
     group: '',
   },
-  {
-    label: 'Public',
-    value: 'public',
-    group: '',
-  },
+  // {
+  //   label: 'Public',
+  //   value: 'public',
+  //   group: '',
+  // },
 ]
