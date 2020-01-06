@@ -12,6 +12,7 @@ function * loginWorker (payload: AuthPayloads['login']) {
     const credentialsUrl = `${API_URL}/auth/apisuite`
     const responseCred = yield call(request, credentialsUrl, {
       method: 'GET',
+      credentials: 'include',
     })
 
     const csrfRe = /_csrf"\svalue="([^"]*)"/
@@ -32,6 +33,7 @@ function * loginWorker (payload: AuthPayloads['login']) {
     yield call(request, loginUrl, {
       method: 'POST',
       body: formData,
+      credentials: 'include',
     })
 
     yield put(authActions.loginSuccess({
