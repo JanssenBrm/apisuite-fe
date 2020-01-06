@@ -24,8 +24,17 @@ const middleware = [sagaMiddleware, routingMiddleware, authMiddleware]
 let composedMiddleware
 
 if (process.env.NODE_ENV === 'development') {
+<<<<<<< HEAD
   const composeEnhancer = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : composeWithDevTools
+=======
+  // TODO: Fix this
+  // @ts-ignore
+  const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+  // TODO: Fix this
+    // @ts-ignore
+    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : composeWithDevTools
+>>>>>>> develop
   middleware.push(createLogger())
   composedMiddleware = composeEnhancer(applyMiddleware(...middleware))
 } else {

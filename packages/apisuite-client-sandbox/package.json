@@ -1,6 +1,6 @@
 {
   "name": "apisuite-client-sandbox",
-  "version": "1.0.0-alpha.0",
+  "version": "1.0.0-alpha.1",
   "description": "APISuite sandbox package",
   "license": "MIT",
   "main": "dist/index.js",
@@ -10,7 +10,7 @@
   "scripts": {
     "dev": "cross-env NODE_ENV=development webpack-dev-server",
     "mock-api": "json-server --watch __mocks__/db.json --port 9004",
-    "prebuild": "rimraf dist",
+    "prebuild": "rimraf dist && yarn lint && yarn check-types",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "pretest": "yarn lint && yarn check-types",
     "test": "start-server-and-test dev http://localhost:9001 cy:run",
@@ -26,6 +26,7 @@
   "dependencies": {
     "@material-ui/core": "4.7.1",
     "@material-ui/lab": "4.0.0-alpha.34",
+    "@material-ui/icons": "^4.5.1",
     "@types/redux-logger": "3.0.7",
     "clsx": "1.0.4",
     "connected-react-router": "6.6.1",

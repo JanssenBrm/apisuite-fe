@@ -8,6 +8,7 @@
   "private": true,
   "workspaces": ["packages/*"],
   "scripts": {
-    "sandbox-dev": "yarn workspace apisuite-client-sandbox dev"
+    "sandbox-dev": "yarn workspace apisuite-client-sandbox dev",
+    "sandbox-build": "yarn workspace apisuite-client-sandbox build"
   }
 }

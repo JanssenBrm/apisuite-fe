@@ -25,6 +25,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ login }) => {
   })
 
   const emailFieldId = 'email-field'
+  const containerId = null
   const passFieldId = 'pass-field'
   const closeRoute = '/'
   const containerId = 'container'
