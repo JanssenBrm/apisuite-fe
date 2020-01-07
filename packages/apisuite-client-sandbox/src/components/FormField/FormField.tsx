@@ -20,13 +20,15 @@ const FormField: React.FC<FormFieldProps> = (props) => {
 
   function handleOnFocus (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setLabelFocus(true)
-
+    // TODO: Fix this
+    // @ts-ignore
     onFocus && onFocus(event)
   }
 
   function handleOnBlur (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setLabelFocus(false)
-
+    // TODO: Fix this
+    // @ts-ignore
     onBlur && onBlur(event)
   }
 

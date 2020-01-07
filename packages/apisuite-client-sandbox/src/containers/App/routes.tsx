@@ -10,6 +10,8 @@ import ListApps from 'containers/Applications/ListApps'
 import CreateApp from 'containers/Applications/CreateApp'
 import AppDetail from 'containers/Applications/AppDetail'
 import Console from 'containers/Console'
+import Login from 'containers/Login'
+import Register from 'containers/Register'
 
 import { AppRouteProps } from './types'
 
@@ -22,6 +24,8 @@ export const routesConfig: AppRouteProps[] = [
   // #conditional-loader-start: console
   { path: '/dashboard/console', component: Console },
   // #conditional-loader-end
+  { path: '/login', component: Login },
+  { path: '/register', component: Register },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
   { render: () => <NotFound /> },
