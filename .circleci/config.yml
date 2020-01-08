@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test_apisuite:
+  test:
       working_directory: ~/apisuite
       docker:
         - image: circleci/node:12.13.1
@@ -14,7 +14,7 @@ jobs:
               chmod +x run_tests.sh
               ./run_tests.sh
 
-  build_apisuite:
+  build:
       working_directory: ~/apisuite
       docker:
         - image: circleci/node:12.13.1
@@ -28,12 +28,12 @@ jobs:
               chmod +x build_push_docker.sh
               ./build_push_docker.sh
 
-  deploy_apisuite:
+  deploy:
       machine:
         image: "true"
       steps:
         - run:
-            name: Fix ssh could not resolve hotname
+            name: Fix ssh could not resolve hostname
             command: |
               ssh-keyscan 206.189.118.141 >> ~/.ssh/known_hosts
         - add_ssh_keys:
@@ -47,18 +47,18 @@ workflows:
   version: 2
   build:
     jobs:
-        - test_apisuite
-        - build_apisuite:
+        - test
+        - build:
             filters:
                 branches:
                   only:
                     - develop
             requires:
-                - test_apisuite
-        - deploy_apisuite:
+                - test
+        - deploy:
             filters:
                 branches:
                   only:
                     - develop
             requires:
-                - build_apisuite
+                - build

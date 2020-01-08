@@ -6,7 +6,7 @@
 #               identify the services to build (monorepo) and call docker compose to \
 #               build and push for those services
 # Args        : -
-# Author      : Délio Amaral
+# Author      : Délio Amaral (C) 2019 - cloudoki
 # Email       : delio@cloudoki.com
 ###################################################################
 

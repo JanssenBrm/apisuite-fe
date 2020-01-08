@@ -4,7 +4,7 @@
 # Script Name : common.sh
 # Description	: Has common code that is used by multiple scripts
 # Args        : -
-# Author      : Délio Amaral
+# Author      : Délio Amaral (C) 2019 - cloudoki
 # Email       : delio@cloudoki.com
 ###################################################################
 
