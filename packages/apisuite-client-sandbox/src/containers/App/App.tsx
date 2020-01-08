@@ -64,6 +64,8 @@ const App: React.FC<AppProps> = ({ user, history }) => {
 
   return (
     <ThemeProvider theme={theme}>
+      {console.log(process.env.API_URL)}
+      {console.log(process.env.NODE_ENV)}
       <Navigation
         key='app-navigation'
         tabs={tabs.map((tab) => tab.label)}
