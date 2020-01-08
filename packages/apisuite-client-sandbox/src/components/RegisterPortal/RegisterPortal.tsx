@@ -142,8 +142,8 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser }) => {
     registerUser({
       'first_name': input.name,
       'last_name': '',
-      'email': input.email,
-      'password': input.password,
+      email: input.email,
+      password: input.password,
     })
   }
 
