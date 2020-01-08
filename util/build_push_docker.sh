@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 ###################################################################
 # Script Name : build_push_docker.sh
 # Description	: Will create the necessary environment variables, \
@@ -17,7 +19,7 @@ function yaml2json()
 }
 
 # Remove .env if exits
-rm .env
+rm .env || true
 
 # Login into docker hub
 echo ${DOCKER_USER_PASS} | docker login --username ${DOCKER_USER_NAME} --password-stdin
@@ -63,9 +65,9 @@ done
 echo "Services to build: $DOCKER_SERVICES"
 
 # Build and push to docker registry
-# docker-compose config
+docker-compose config
 docker-compose build $DOCKER_SERVICES
-docker-compose push $DOCKER_SERVICES
+# docker-compose push $DOCKER_SERVICES
 
 # Logout from docker
-docker logout
+# docker logout

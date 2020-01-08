@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 ###################################################################
 # Script Name : common.sh
 # Description	: Has common code that is used by multiple scripts
