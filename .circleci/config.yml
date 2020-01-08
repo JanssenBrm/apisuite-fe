@@ -21,6 +21,7 @@ jobs:
         - image: circleci/buildpack-deps:stretch
       steps:
         - checkout
+        - setup_remote_docker
         - run:
             name: Build packages with docker-compose and push to registry
             command: |
@@ -45,6 +46,7 @@ jobs:
             name: Deploy Over SSH
             command: |
               ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd /apps/APISuite/util && docker-compose pull && docker-compose up -d && docker image prune --force"
+
 workflows:
   version: 2
   build:
