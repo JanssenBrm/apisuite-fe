@@ -9,6 +9,7 @@ jobs:
         - run:
             name: Build packages with docker-compose and push to registry
             command: |
+              sudo apt-get install jq
               cd util
               chmod +x common.sh
               chmod +x run_tests.sh
@@ -29,20 +30,21 @@ jobs:
               ./build_push_docker.sh
 
   deploy:
-      machine:
-        image: "true"
+      working_directory: ~/apisuite
+      docker:
+        - image: circleci/node:12.13.1
       steps:
         - run:
             name: Fix ssh could not resolve hostname
             command: |
-              ssh-keyscan 206.189.118.141 >> ~/.ssh/known_hosts
+              ssh-keyscan $DROPLET_IP >> ~/.ssh/known_hosts
         - add_ssh_keys:
             fingerprints:
               - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
         - run:
             name: Deploy Over SSH
             command: |
-              ssh -o StrictHostKeyChecking=no root@206.189.118.141 "cd /apps/APISuite/util && docker-compose pull && docker-compose up -d && docker image prune --force"
+              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd /apps/APISuite/util && docker-compose pull && docker-compose up -d && docker image prune --force"
 workflows:
   version: 2
   build:
