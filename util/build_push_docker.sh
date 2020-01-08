@@ -62,12 +62,17 @@ for project in ${PROJECTS}; do
   fi
 done
 
-echo "Services to build: $DOCKER_SERVICES"
-
 # Build and push to docker registry
-docker-compose config
-docker-compose build $DOCKER_SERVICES
-# docker-compose push $DOCKER_SERVICES
+# docker-compose config
+if [[ -n ${DOCKER_SERVICES// } ]]; then
+  echo "Services to build: $DOCKER_SERVICES"
+  docker-compose build $DOCKER_SERVICES
+  docker-compose push $DOCKER_SERVICES
+else
+  echo "No services listed will not build and push"
+  # docker-compose build $DOCKER_SERVICES
+  # docker-compose push $DOCKER_SERVICES
+fi
 
 # Logout from docker
-# docker logout
+docker logout
