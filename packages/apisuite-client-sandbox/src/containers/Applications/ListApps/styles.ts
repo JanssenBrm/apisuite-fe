@@ -21,10 +21,10 @@ export default makeStyles({
     flexDirection: 'row',
   },
   doc: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: 270,
-    height: 460,
+    'display': 'flex',
+    'flexDirection': 'column',
+    'width': 270,
+    'height': 460,
     '& > h1': {
       margin: 16,
       fontSize: '18px',

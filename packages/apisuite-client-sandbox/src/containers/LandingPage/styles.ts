@@ -21,12 +21,12 @@ export default makeStyles({
     flexDirection: 'row',
   },
   step: {
-    position: 'relative',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: 260,
-    padding: 16,
+    'position': 'relative',
+    'display': 'flex',
+    'flexDirection': 'column',
+    'alignItems': 'center',
+    'width': 260,
+    'padding': 16,
     '& > h1': {
       width: 100,
       height: 100,
@@ -68,12 +68,12 @@ export default makeStyles({
     width: 600,
   },
   cardItem: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 300,
-    height: 200,
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'center',
+    'alignItems': 'center',
+    'width': 300,
+    'height': 200,
     '& > p': {
       color: '#E3E3E3',
       textAlign: 'center',
@@ -82,7 +82,7 @@ export default makeStyles({
     },
   },
   cardSide: {
-    marginLeft: 40,
+    'marginLeft': 40,
     '& > h1': {
       fontSize: '26px',
       fontWeight: 300,

@@ -113,11 +113,11 @@ export default makeStyles({
     borderRight: '1px solid #E3E3E3',
   },
   cardInfo: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    padding: 24,
-    paddingLeft: 48,
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'center',
+    'padding': 24,
+    'paddingLeft': 48,
     '& > h1': {
       fontSize: 26,
       fontWeight: 100,
@@ -129,7 +129,7 @@ export default makeStyles({
     },
   },
   greenColor: {
-    color: '#14BC7D',
+    'color': '#14BC7D',
     '& > a': {
       textDecoration: 'underline',
     },

@@ -8,14 +8,13 @@ import { RegisterAction } from './types'
 import { API_URL } from 'constants/endpoints'
 import request from 'util/request'
 
-function * registerUser (action: RegisterAction) {
+export function * registerUser (action: RegisterAction) {
   const requestUrl = `${API_URL}/auth/signup`
-  const response = yield call(request, requestUrl, {
+  yield call(request, requestUrl, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(action.userData),
   })
-  console.log(response)
 }
 
 function * rootSaga () {

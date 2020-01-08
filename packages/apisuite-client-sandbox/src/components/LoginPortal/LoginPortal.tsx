@@ -28,7 +28,6 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ login }) => {
   const containerId = null
   const passFieldId = 'pass-field'
   const closeRoute = '/'
-  const containerId = 'container'
 
   function isValidEmail (email: string) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -92,7 +91,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ login }) => {
     }
   }, [focusedField])
 
-  function handleSubmit (e: React.FormEvent<HTMLInputElement>) {
+  function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     login({ email: input.email, password: input.password })
   }

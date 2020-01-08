@@ -133,11 +133,11 @@ export default makeStyles({
     flexDirection: 'row',
   },
   step: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    width: 200,
-    padding: 16,
+    'display': 'flex',
+    'flexDirection': 'column',
+    'alignItems': 'center',
+    'width': 200,
+    'padding': 16,
     '& > h1': {
       width: 100,
       height: 100,
@@ -167,7 +167,7 @@ export default makeStyles({
     borderRight: '1px solid #EAEAEA',
   },
   stepSide: {
-    marginLeft: 40,
+    'marginLeft': 40,
     '& > h1': {
       fontSize: '26px',
       fontWeight: 300,
@@ -195,12 +195,12 @@ export default makeStyles({
     borderRight: '1px solid #4A4A4A',
   },
   emailContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'center',
-    padding: 24,
-    paddingLeft: 48,
-    color: 'white',
+    'display': 'flex',
+    'flexDirection': 'column',
+    'justifyContent': 'center',
+    'padding': 24,
+    'paddingLeft': 48,
+    'color': 'white',
     '& > h1': {
       fontSize: '26px',
       fontWeight: 300,
@@ -221,8 +221,8 @@ export default makeStyles({
     color: '#ACACAC',
   },
   checkBoxLabel: {
-    fontSize: '14px',
-    fontWeight: 300,
+    'fontSize': '14px',
+    'fontWeight': 300,
     '& > a': {
       color: '#409CB0',
     },

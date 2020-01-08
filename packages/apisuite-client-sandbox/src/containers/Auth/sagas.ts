@@ -1,13 +1,13 @@
 import { put, call, takeLatest } from 'redux-saga/effects'
 import request from 'util/request'
 import { authActions, LOGIN } from './ducks'
-import { AuthPayloads } from './types'
 import { API_URL } from 'constants/endpoints'
 
 // mock avatar
 import requireImage from 'util/requireImage'
+import { AnyAction } from 'redux'
 
-function * loginWorker (payload: AuthPayloads['login']) {
+function * loginWorker (payload: AnyAction) {
   try {
     const credentialsUrl = `${API_URL}/auth/apisuite`
     const responseCred = yield call(request, credentialsUrl, {
@@ -19,10 +19,6 @@ function * loginWorker (payload: AuthPayloads['login']) {
     const challengeRe = /"challenge"\svalue="([^"]*)"/
     const csrf = responseCred.match(csrfRe)[1]
     const challenge = responseCred.match(challengeRe)[1]
-
-    console.log(csrf)
-    console.log(challenge)
-
     const loginUrl = `${API_URL}/auth/login`
     const formData = new FormData()
     formData.append('_csrf', csrf)

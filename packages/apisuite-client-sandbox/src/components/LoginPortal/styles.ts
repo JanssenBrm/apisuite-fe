@@ -79,9 +79,9 @@ const useStyles = makeStyles({
     paddingRight: 6,
   },
   option: {
-    color: 'white',
-    fontSize: '13px',
-    textDecoration: 'none',
+    'color': 'white',
+    'fontSize': '13px',
+    'textDecoration': 'none',
     '& > a': {
       textDecoration: 'none',
     },
