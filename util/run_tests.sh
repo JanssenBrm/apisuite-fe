@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -e
+
 ###################################################################
 # Script Name : run_test.sh
 # Description	: Will run the projects tests

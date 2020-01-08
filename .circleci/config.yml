@@ -1,4 +1,4 @@
-version: 2.1
+version: 2
 jobs:
   test:
       working_directory: ~/apisuite
@@ -18,7 +18,7 @@ jobs:
   build:
       working_directory: ~/apisuite
       docker:
-        - image: circleci/node:12.13.1
+        - image: circleci/buildpack-deps:stretch
       steps:
         - checkout
         - run:
@@ -57,10 +57,10 @@ workflows:
                     - develop
             requires:
                 - test
-        - deploy:
-            filters:
-                branches:
-                  only:
-                    - develop
-            requires:
-                - build
+        # - deploy:
+        #     filters:
+        #         branches:
+        #           only:
+        #             - develop
+        #     requires:
+        #         - build
