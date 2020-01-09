@@ -1,107 +1,68 @@
-version: 2.1
-executors:
-  publisher:
-    environment:
-      IMAGE_NAME: erettozi/apisuite-client-sandbox:dev
-    docker:
-      - image: circleci/buildpack-deps:stretch
-
+version: 2
 jobs:
   test:
-    working_directory: ~/api-suite
-    docker:
-      - image: circleci/node:12.13.1
-    steps:
-      - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
-      - run: 
-          name: Install dependencies
-          command: yarn install
-      - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
-          paths:
-            - ./node_modules
-      - run:
-          name: Build Project
-          command: yarn sandbox-build
-      - persist_to_workspace:
-          root: .
-          paths: ./packages/apisuite-client-sandbox/dist
+      working_directory: ~/apisuite
+      docker:
+        - image: circleci/node:12.13.1
+      steps:
+        - checkout
+        - run:
+            name: Build packages with docker-compose and push to registry
+            command: |
+              sudo apt-get install jq
+              cd util
+              chmod +x common.sh
+              chmod +x run_tests.sh
+              ./run_tests.sh
 
   build:
-    executor: publisher
-    steps:
-      - checkout
-      - setup_remote_docker
-      - run: ls -la
-      - attach_workspace:
-          at: .
-      - run:
-          name: Build Docker Image
-          command: docker build -t $IMAGE_NAME .
-      - run:
-          name: Archive Docker Image
-          command: docker save -o image.tar $IMAGE_NAME
-      - persist_to_workspace:
-          root: .
-          paths:
-            - ./image.tar
-
-  publish:
-    executor: publisher
-    steps:
-      - run: ls -la
-      - attach_workspace:
-          at: .
-      - setup_remote_docker
-      - run:
-          name: Load Archived Docker Image
-          command: docker load -i image.tar
-      - run:
-          name: Publish Docker Image to Docker Hub
-          command: |
-            echo "$DOCKER_PASSORD" | docker login -u "$DOCKER_USER" --password-stdin
-            docker push $IMAGE_NAME
+      working_directory: ~/apisuite
+      docker:
+        - image: circleci/buildpack-deps:stretch
+      steps:
+        - checkout
+        - setup_remote_docker
+        - run:
+            name: Build packages with docker-compose and push to registry
+            command: |
+              sudo apt-get install ruby-full jq
+              cd util
+              chmod +x build_push_docker.sh
+              ./build_push_docker.sh
 
   deploy:
-    machine: true
-    steps:
-      - run:
-          name: Fix ssh could not resolve hotname
-          command: |
-            ssh-keyscan 206.189.118.141 >> ~/.ssh/known_hosts
-      - add_ssh_keys:
-          fingerprints:
-            - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
-      - run:
-          name: Deploy Over SSH
-          command: |
-            ssh -o StrictHostKeyChecking=no root@206.189.118.141 "cd /apps/APISuite && docker-compose stop sandbox-client-dev && docker-compose up -d sandbox-client-dev"        
+      working_directory: ~/apisuite
+      docker:
+        - image: circleci/node:12.13.1
+      steps:
+        - run:
+            name: Fix ssh could not resolve hostname
+            command: |
+              ssh-keyscan $DROPLET_IP >> ~/.ssh/known_hosts
+        - add_ssh_keys:
+            fingerprints:
+              - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
+        - run:
+            name: Deploy Over SSH
+            command: |
+              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd /apps/APISuite/util && docker-compose pull && docker-compose up -d && docker image prune --force"
 
 workflows:
- version: 2
- build_deploy:
-   jobs:
-     - test
-     - build:
-        filters:
-          branches:
-            only:
-              - develop
-        requires:
-          - test
-     - publish:
-        filters:
-          branches:
-            only:
-              - develop
-        requires:
-          - build
-     - deploy:
-        filters:
-          branches:
-            only:
-              - develop
-        requires:
-          - publish
+  version: 2
+  build:
+    jobs:
+        - test
+        - build:
+            filters:
+                branches:
+                  only:
+                    - develop
+            requires:
+                - test
+        # - deploy:
+        #     filters:
+        #         branches:
+        #           only:
+        #             - develop
+        #     requires:
+        #         - build

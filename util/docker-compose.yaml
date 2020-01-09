@@ -1,0 +1,32 @@
+version: '3.2'
+services:
+  portal-client:
+    build: '../packages/apisuite-client-portal'
+    image: ${DOCKER_REPO}:${APISUITE_CLIENT_PORTAL_TAG}
+    container_name: apisuite-client-portal
+    ports:
+      - "3004:8080"
+  sandbox-client:
+    build: '../packages/apisuite-client-sandbox'
+    image: ${DOCKER_REPO}:${APISUITE_CLIENT_SANDBOX_TAG}
+    container_name: apisuite-client-sandbox
+    ports:
+      - "3001:8080"
+  marketplace-client:
+    build: '../packages/apisuite-client-marketplace'
+    image: ${DOCKER_REPO}:${APISUITE_CLIENT_MARKETPLACE_TAG}
+    container_name: apisuite-client-marketplace
+    ports:
+      - "3002:8080"
+  sso-client:
+    build: '../packages/apisuite-client-sso'
+    image: ${DOCKER_REPO}:${APISUITE_CLIENT_SSO_TAG}
+    container_name: apisuite-client-sso
+    ports:
+      - "3003:8080"
+  platform-client:
+    build: '../packages/apisuite-platform'
+    image: ${DOCKER_REPO}:${APISUITE_PLATFORM_TAG}
+    container_name: apisuite-platform
+    ports:
+      - "3005:8080"
