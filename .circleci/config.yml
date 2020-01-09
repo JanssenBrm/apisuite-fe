@@ -2,6 +2,8 @@ version: 2.1
 
 executors:
   apisuite-executor:
+    environment:
+      SHOULD_TEST: "false"
     docker:
       - image: circleci/node:12.13.1
     working_directory: ~/apisuite
@@ -14,11 +16,11 @@ jobs:
         - run:
             name: Run tests
             command: |
-              sudo apt-get install jq
               cd util
               chmod +x common.sh
               chmod +x run_tests.sh
-              ./run_tests.sh
+              chmod +x install_dependencies.sh
+              [[ $SHOULD_TEST == "false" ]] && ./install_dependencies.sh && ./run_tests.sh || echo "Bypass tests"
 
   build:
       executor: apisuite-executor
