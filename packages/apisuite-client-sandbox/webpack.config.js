@@ -33,5 +33,5 @@ function uniquePlugins (conf) {
 }
 
 module.exports = uniquePlugins(
-  merge.smart(commonConfig, __PROD__ ? prodConfig : devConfig)
+  merge.smart(commonConfig, __PROD__ ? prodConfig : devConfig),
 )

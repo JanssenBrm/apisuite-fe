@@ -9,7 +9,14 @@ const iconStyle = {
   width: '42px',
 }
 
-const FormCard: React.FC<FormCardProps> = ({ title, buttonLabel, closeRoute, buttonDisabled, children }) => {
+const FormCard: React.FC<FormCardProps> = ({
+  title,
+  buttonLabel,
+  closeRoute,
+  buttonDisabled,
+  handleSubmit,
+  children,
+}) => {
   const classes = useStyles()
 
   return (
@@ -21,8 +28,17 @@ const FormCard: React.FC<FormCardProps> = ({ title, buttonLabel, closeRoute, but
         />
       </a>
       <h2 className={classes.formTitle}>{title}</h2>
-      {children}
-      <Button variant='outlined' disabled={buttonDisabled} className={classes.submitBtn}>{buttonLabel}</Button>
+      <form onSubmit={handleSubmit}>
+        {children}
+        <Button
+          type='submit'
+          variant='outlined'
+          disabled={buttonDisabled}
+          className={classes.submitBtn}
+        >
+          {buttonLabel}
+        </Button>
+      </form>
     </div>
   )
 }

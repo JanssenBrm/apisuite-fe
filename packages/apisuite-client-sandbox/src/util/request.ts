@@ -14,11 +14,12 @@ export interface ErrorReason {
 
 async function checkStatus (response: Response) {
   if (response.ok) {
-    const contentType = response.headers.get('Content-Type')
+    // TODO add this back when API changes
+    // const contentType = response.headers.get('Content-Type')
 
-    if (contentType && /application\/json/.test(contentType)) {
-      return Promise.resolve(response.json())
-    }
+    // if (contentType && /application\/json/.test(contentType)) {
+    //   return Promise.resolve(response.json())
+    // }
 
     return Promise.resolve(response.text())
   }

@@ -8,6 +8,7 @@ import { routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
 import { createLogger } from 'redux-logger'
 import { composeWithDevTools } from 'redux-devtools-extension'
+import { createAuthMiddleware } from 'containers/Auth/ducks'
 
 import combinedReducers from './combinedReducers'
 import combinedSagas from './combinedSagas'
@@ -15,22 +16,16 @@ import combinedSagas from './combinedSagas'
 export const history = createBrowserHistory()
 
 const sagaMiddleware = createSagaMiddleware()
-
 const routingMiddleware = routerMiddleware(history)
+const authMiddleware = createAuthMiddleware(history)
 
-const middleware = [sagaMiddleware, routingMiddleware]
+const middleware = [sagaMiddleware, routingMiddleware, authMiddleware]
 
 let composedMiddleware
 
 if (process.env.NODE_ENV === 'development') {
-  // TODO: Fix this
-  // @ts-ignore
-  const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-  // TODO: Fix this
-    // @ts-ignore
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : composeWithDevTools
   middleware.push(createLogger())
-  composedMiddleware = composeEnhancer(applyMiddleware(...middleware))
+  composedMiddleware = composeWithDevTools(applyMiddleware(...middleware))
 } else {
   composedMiddleware = applyMiddleware(...middleware)
 }
