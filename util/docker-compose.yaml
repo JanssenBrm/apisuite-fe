@@ -1,12 +1,12 @@
 version: '3.2'
 services:
-  portal-client:
-    build: '../packages/apisuite-client-portal'
-    image: ${DOCKER_REPO}:${APISUITE_CLIENT_PORTAL_TAG}
-    container_name: apisuite-client-portal
-    restart: on-failure
-    ports:
-      - "3000:8080"
+  # portal-client:
+  #   build: '../packages/apisuite-client-portal'
+  #   image: ${DOCKER_REPO}:${APISUITE_CLIENT_PORTAL_TAG}
+  #   container_name: apisuite-client-portal
+  #   restart: on-failure
+  #   ports:
+  #     - "3000:8080"
   # sandbox-client:
   #   build: '../packages/apisuite-client-sandbox'
   #   image: ${DOCKER_REPO}:${APISUITE_CLIENT_SANDBOX_TAG}
@@ -14,20 +14,20 @@ services:
   #   restart: on-failure
   #   ports:
   #     - "3001:8080"
-  marketplace-client:
-    build: '../packages/apisuite-client-marketplace'
-    image: ${DOCKER_REPO}:${APISUITE_CLIENT_MARKETPLACE_TAG}
-    container_name: apisuite-client-marketplace
-    restart: on-failure
-    ports:
-      - "3002:8080"
-  sso-client:
-    build: '../packages/apisuite-client-sso'
-    image: ${DOCKER_REPO}:${APISUITE_CLIENT_SSO_TAG}
-    container_name: apisuite-client-sso
-    restart: on-failure
-    ports:
-      - "3003:8080"
+  # marketplace-client:
+  #   build: '../packages/apisuite-client-marketplace'
+  #   image: ${DOCKER_REPO}:${APISUITE_CLIENT_MARKETPLACE_TAG}
+  #   container_name: apisuite-client-marketplace
+  #   restart: on-failure
+  #   ports:
+  #     - "3002:8080"
+  # sso-client:
+  #   build: '../packages/apisuite-client-sso'
+  #   image: ${DOCKER_REPO}:${APISUITE_CLIENT_SSO_TAG}
+  #   container_name: apisuite-client-sso
+  #   restart: on-failure
+  #   ports:
+  #     - "3003:8080"
   sandbox-client-dev:
     build: '../packages/apisuite-client-sandbox'
     image: ${DOCKER_REPO}:${APISUITE_CLIENT_SANDBOX_TAG}
