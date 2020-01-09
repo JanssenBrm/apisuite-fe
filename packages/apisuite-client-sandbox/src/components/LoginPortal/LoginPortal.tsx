@@ -23,6 +23,7 @@ const LoginPortal: React.FC<{}> = () => {
   })
 
   const emailFieldId = 'email-field'
+  const containerId = null
   const passFieldId = 'pass-field'
   const loginTitle = 'Login'
   const loginButtonLabel = 'Login'

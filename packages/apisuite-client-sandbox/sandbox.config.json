@@ -1,0 +1,20 @@
+{
+    "includes": {
+      "alert": false,
+      "other": true,
+      "partners": true,
+      "console": false
+    },
+    "navbar": {
+      "name": "CLOUDOKI",
+      "logoUrl": "api-logo.png"
+    },
+    "footer": {
+      "copyright": "© Cloudoki 2019.\nAll rights reserved.\nProudly made in Europe.",
+      "logoUrl": "logo-blue.png"
+    },
+    "i18n": [
+      { "locale": "en-US", "label": "We speak English" },
+      { "locale": "pt-PT", "label": "Nós falamos Português" }
+    ]
+}
