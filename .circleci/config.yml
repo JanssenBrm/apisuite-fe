@@ -20,7 +20,7 @@ jobs:
               chmod +x common.sh
               chmod +x run_tests.sh
               chmod +x install_dependencies.sh
-              [[ $SHOULD_TEST == "false" ]] && ./install_dependencies.sh && ./run_tests.sh || echo "Bypass tests"
+              [[ $SHOULD_TEST == "false" ]] && echo "Bypass tests" || (./install_dependencies.sh && ./run_tests.sh)
 
   build:
       executor: apisuite-executor
