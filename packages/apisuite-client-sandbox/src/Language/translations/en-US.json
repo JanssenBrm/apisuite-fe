@@ -105,5 +105,35 @@
         }
       }
     }
+  },
+  "loginPortal": {
+    "title": "Login",
+    "button": "Login",
+    "warnings": {
+      "email": "Please enter a valid email address.",
+      "password": "Please fill in your pass phrase."
+    },
+    "fields": {
+      "email": "E-mail address",
+      "password": "Pass Phrase"
+    }
+  },
+  "registerPortal": {
+    "warnings": {
+      "name": "Your name must be at least one character long.",
+      "email": "Please enter a valid email address.",
+      "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long"
+    }
+  },
+  "listApps": {
+    "overview": {
+      "title": "Apps overview"
+    },
+    "description": {
+      "title": "Knowledge base"
+    },
+    "buttons": {
+      "readMore": "Read more"
+    }
   }
 }

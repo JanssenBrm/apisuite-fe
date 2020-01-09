@@ -1,5 +1,6 @@
 
 import * as React from 'react'
+import { RegisterPortalProps } from './types'
 import FormCard from 'components/FormCard'
 import TextField from '@material-ui/core/TextField'
 import useStyles from './styles'
@@ -8,9 +9,11 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import Shuffle from '@material-ui/icons/Shuffle'
 import generator from 'generate-password'
+import { useTranslation } from 'react-i18next'
 
-const RegisterPortal: React.FC<{}> = () => {
+const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser }) => {
   const classes = useStyles()
+  const [t] = useTranslation()
 
   const [showPassword, setShowPassword] = React.useState(false)
   const [emailError, setEmailError] = React.useState(false)
@@ -134,15 +137,25 @@ const RegisterPortal: React.FC<{}> = () => {
     }
   }, [focusedField])
 
+  function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    registerUser({
+      'first_name': input.name,
+      'last_name': '',
+      email: input.email,
+      password: input.password,
+    })
+  }
+
   return (
     <div className={classes.registerContainer}>
-      {console.log(focusedField)}
       <div className={classes.content}>
         <FormCard
           title={registerTitle}
           buttonLabel={registerButtonLabel}
           buttonDisabled={buttonDisabled}
           closeRoute={closeRoute}
+          handleSubmit={handleSubmit}
         >
           <div className={classes.fieldContainer}>
             <h5 className={classes.fieldTitle}>GDPR protected</h5>
@@ -163,7 +176,7 @@ const RegisterPortal: React.FC<{}> = () => {
                 classes: { input: classes.emailTextfield },
               }}
             />
-            {nameError && <div className={classes.alert}>Your name must be at least one caracter long.</div>}
+            {nameError && <div className={classes.alert}>{t('registerPortal.warnings.name')}</div>}
           </div>
           <div className={classes.fieldContainer}>
             <h5 className={classes.fieldTitle}>E-mail address</h5>
@@ -183,7 +196,7 @@ const RegisterPortal: React.FC<{}> = () => {
                 classes: { input: classes.emailTextfield },
               }}
             />
-            {emailError && <div className={classes.alert}>Please enter a valid email address.</div>}
+            {emailError && <div className={classes.alert}>{t('registerPortal.warnings.email')}</div>}
           </div>
           <div className={classes.fieldContainer}>
             <h5 className={classes.fieldTitle}>Pass Phrase</h5>
@@ -219,9 +232,7 @@ const RegisterPortal: React.FC<{}> = () => {
               </div>
             </div>
             {passError &&
-              <div className={classes.bigAlert}>
-                Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long
-              </div>}
+              <div className={classes.bigAlert}>{t('registerPortal.warnings.password')}</div>}
           </div>
         </FormCard>
       </div>
