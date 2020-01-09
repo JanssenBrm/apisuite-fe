@@ -36,8 +36,8 @@ export default makeStyles({
     alignItems: 'flex-end',
   },
   info: {
-    'fontSize': 12,
-    'lineHeight': '14px',
+    fontSize: 12,
+    lineHeight: '14px',
     '& a': {
       display: 'block',
       color: '#2DB7B9',
