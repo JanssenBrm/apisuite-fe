@@ -17,7 +17,6 @@ const CreateApp: React.FC<CreateAppProps> = ({ history }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [visibility, setVisibility] = React.useState('private')
-  const disableVisibility = true
 
   function handleVisibilityChange (_: any, value: string) {
     setVisibility(value)
@@ -86,7 +85,6 @@ const CreateApp: React.FC<CreateAppProps> = ({ history }) => {
             options={radioOptions}
             selected={visibility}
             onChange={handleVisibilityChange}
-            disabled={disableVisibility}
           />
 
           <br />

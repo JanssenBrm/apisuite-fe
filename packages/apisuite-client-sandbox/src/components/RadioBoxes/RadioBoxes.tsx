@@ -10,7 +10,7 @@ import clsx from 'clsx'
 
 const WhiteRadio = withStyles({ root: { color: 'white' } })((props: RadioProps) => <Radio {...props} />)
 
-const RadioBoxes: React.FC<RadioBoxesProps> = ({ options, selected, onChange, disabled }) => {
+const RadioBoxes: React.FC<RadioBoxesProps> = ({ options, selected, onChange }) => {
   const classes = useStyles()
 
   const handleOptionClick = (value: any) => (event: any) => {
@@ -19,7 +19,7 @@ const RadioBoxes: React.FC<RadioBoxesProps> = ({ options, selected, onChange, di
 
   return (
     <RadioGroup className={classes.radioGroup} value={selected} onChange={onChange}>
-      {options.map(({ value, label, desc }) => (
+      {options.map(({ value, label, desc, disabled, checked }) => (
         <div
           key={value}
           className={clsx(classes.controlWrapper, { [classes.unselected]: value !== selected })}
@@ -31,6 +31,7 @@ const RadioBoxes: React.FC<RadioBoxesProps> = ({ options, selected, onChange, di
             value={value}
             control={<WhiteRadio color='primary' />}
             disabled={disabled}
+            checked={checked}
           />
 
           <p className={classes.desc}>{desc}</p>
