@@ -1,24 +1,29 @@
-version: 2
+version: 2.1
+
+executors:
+  apisuite-executor:
+    environment:
+      SHOULD_TEST: "false"
+    docker:
+      - image: circleci/node:12.13.1
+    working_directory: ~/apisuite
+
 jobs:
   test:
-      working_directory: ~/apisuite
-      docker:
-        - image: circleci/node:12.13.1
+      executor: apisuite-executor
       steps:
         - checkout
         - run:
-            name: Build packages with docker-compose and push to registry
+            name: Run tests
             command: |
-              sudo apt-get install jq
               cd util
               chmod +x common.sh
               chmod +x run_tests.sh
-              ./run_tests.sh
+              chmod +x install_dependencies.sh
+              [[ $SHOULD_TEST == "false" ]] && echo "Bypass tests" || (./install_dependencies.sh && ./run_tests.sh)
 
   build:
-      working_directory: ~/apisuite
-      docker:
-        - image: circleci/buildpack-deps:stretch
+      executor: apisuite-executor
       steps:
         - checkout
         - setup_remote_docker
@@ -29,13 +34,17 @@ jobs:
               cd util
               chmod +x build_push_docker.sh
               ./build_push_docker.sh
+        - persist_to_workspace:
+              root: ./util
+              paths:
+                - .env
 
   deploy:
-      working_directory: ~/apisuite
-      docker:
-        - image: circleci/node:12.13.1
+      executor: apisuite-executor
       steps:
         - checkout
+        - attach_workspace:
+            at: ./util
         - run:
             name: Fix ssh could not resolve hostname
             command: |
@@ -46,7 +55,7 @@ jobs:
         - run:
             name: Deploy Over SSH
             command: |
-              scp -o StrictHostKeyChecking=no ./util/docker-compose.yaml $DROPLET_USER@$DROPLET_IP:/apps/APISuite/
+              scp -o StrictHostKeyChecking=no ./util/.env ./util/docker-compose.yaml $DROPLET_USER@$DROPLET_IP:/apps/APISuite/
               ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd /apps/APISuite/ && docker-compose pull && docker-compose up -d && docker image prune --force"
 
 workflows:
