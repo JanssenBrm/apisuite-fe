@@ -57,8 +57,8 @@ jobs:
             command: |
               chmod +x ./util/clean_compose.sh
               (cd ./util && ./clean_compose.sh)
-              scp -o StrictHostKeyChecking=no ./util/.env ./util/docker-compose.yml $DROPLET_USER@$DROPLET_IP:/apps/APISuite/
-              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd /apps/APISuite/ && docker-compose pull && docker-compose up -d && docker image prune --force"
+              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml $DROPLET_USER@$DROPLET_IP:/apps/APISuite/
+              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd /apps/APISuite/ && . ./environment && echo "\n" | cat - .$APISUITE_ENVIRONMENT.env >> .env && docker-compose pull && docker-compose up -d && docker image prune --force"
 
 workflows:
   version: 2
