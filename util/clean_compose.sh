@@ -33,7 +33,7 @@ APISUITE_ENVIRONMENT=dev
 
 if [[ $CIRCLE_BRANCH =~ develop$ ]]; then
   APISUITE_ENVIRONMENT="dev";
-elif [[ $CIRCLE_BRANCH =~ -rc.*[0-9]$ ]]; then
+elif [[ $CIRCLE_BRANCH =~ [-]*rc[0-9]*$ ]]; then
   APISUITE_ENVIRONMENT="stg";
 elif [[ $CIRCLE_BRANCH =~ master$ ]]; then
   APISUITE_ENVIRONMENT="prod";
