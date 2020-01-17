@@ -72,7 +72,7 @@ jobs:
               ssh-keyscan $DROPLET_IP_STG >> ~/.ssh/known_hosts
         - add_ssh_keys:
             fingerprints:
-              - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
+              - "5d:31:e4:99:b3:31:14:d9:2e:50:b7:1f:8f:b8:f3:ab"
         - run:
             name: Deploy Over SSH
             command: |
