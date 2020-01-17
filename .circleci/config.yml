@@ -39,7 +39,7 @@ jobs:
               paths:
                 - .env
 
-  deploy:
+  deploy-dev:
       executor: apisuite-executor
       steps:
         - checkout
@@ -48,7 +48,7 @@ jobs:
         - run:
             name: Fix ssh could not resolve hostname
             command: |
-              ssh-keyscan $DROPLET_IP >> ~/.ssh/known_hosts
+              ssh-keyscan $DROPLET_IP_DEV >> ~/.ssh/known_hosts
         - add_ssh_keys:
             fingerprints:
               - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
@@ -57,8 +57,29 @@ jobs:
             command: |
               chmod +x ./util/clean_compose.sh
               (cd ./util && ./clean_compose.sh)
-              scp -o StrictHostKeyChecking=no ./util/.env ./util/docker-compose.yml $DROPLET_USER@$DROPLET_IP:/apps/APISuite/
-              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP "cd /apps/APISuite/ && docker-compose pull && docker-compose up -d && docker image prune --force"
+              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml $DROPLET_USER@$DROPLET_IP_DEV:/apps/APISuite/
+              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_DEV "cd /apps/APISuite/ && . ./environment && echo "\n" | cat - .$APISUITE_ENVIRONMENT.env >> .env && docker-compose pull && docker-compose up -d && docker image prune --force"
+
+  deploy-stg:
+      executor: apisuite-executor
+      steps:
+        - checkout
+        - attach_workspace:
+            at: ./util
+        - run:
+            name: Fix ssh could not resolve hostname
+            command: |
+              ssh-keyscan $DROPLET_IP_STG >> ~/.ssh/known_hosts
+        - add_ssh_keys:
+            fingerprints:
+              - "5d:31:e4:99:b3:31:14:d9:2e:50:b7:1f:8f:b8:f3:ab"
+        - run:
+            name: Deploy Over SSH
+            command: |
+              chmod +x ./util/clean_compose.sh
+              (cd ./util && ./clean_compose.sh)
+              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml $DROPLET_USER@$DROPLET_IP_STG:/apps/APISuite/
+              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_STG "cd /apps/APISuite/ && . ./environment && echo "\n" | cat - .$APISUITE_ENVIRONMENT.env >> .env && docker-compose pull && docker-compose up -d && docker image prune --force"
 
 workflows:
   version: 2
@@ -70,12 +91,20 @@ workflows:
                 branches:
                   only:
                     - develop
+                    - rc
             requires:
                 - test
-        - deploy:
+        - deploy-dev:
             filters:
                 branches:
                   only:
                     - develop
+            requires:
+                - build
+        - deploy-stg:
+            filters:
+                branches:
+                  only:
+                    - rc
             requires:
                 - build
