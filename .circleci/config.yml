@@ -57,8 +57,9 @@ jobs:
             command: |
               chmod +x ./util/clean_compose.sh
               (cd ./util && ./clean_compose.sh)
-              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml $DROPLET_USER@$DROPLET_IP_DEV:/apps/APISuite/
-              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_DEV "cd /apps/APISuite/ && source ./environment && cat .$APISUITE_ENVIRONMENT.env >> .env && docker-compose pull && docker-compose up -d && docker image prune --force"
+              chmod +x ./util/merge_env.sh
+              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_DEV:/apps/APISuite/
+              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_DEV "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
 
   deploy-stg:
       executor: apisuite-executor
@@ -78,8 +79,9 @@ jobs:
             command: |
               chmod +x ./util/clean_compose.sh
               (cd ./util && ./clean_compose.sh)
-              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml $DROPLET_USER@$DROPLET_IP_STG:/apps/APISuite/
-              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_STG "cd /apps/APISuite/ && source ./environment && cat .$APISUITE_ENVIRONMENT.env >> .env && docker-compose pull && docker-compose up -d && docker image prune --force"
+              chmod +x ./util/merge_env.sh
+              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_STG:/apps/APISuite/
+              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_STG "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
 
 workflows:
   version: 2
