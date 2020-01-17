@@ -5,10 +5,8 @@ import { Dispatch } from 'redux'
 import { LoginPortalProps } from './types'
 import { AuthPayloads } from 'containers/Auth/types'
 
-const mapStateToProps = () => ({})
-
 const mapDispatchToProps: MapDispatchToPropsFunction<LoginPortalProps, any> = (dispatch: Dispatch) => ({
   login: (loginData: AuthPayloads['login']) => dispatch(authActions.login(loginData)),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginPortal)
+export default connect(null, mapDispatchToProps)(LoginPortal)
