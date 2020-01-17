@@ -44,4 +44,4 @@ echo "Set environment to $APISUITE_ENVIRONMENT"
 # Write api environment to file so it can be exported in the server
 rm environment || true
 touch environment
-echo "export APISUITE_ENVIRONMENT=$APISUITE_ENVIRONMENT" > environment
+echo "APISUITE_ENVIRONMENT=$APISUITE_ENVIRONMENT" > environment
