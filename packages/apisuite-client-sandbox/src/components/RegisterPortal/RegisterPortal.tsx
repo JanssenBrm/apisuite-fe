@@ -140,8 +140,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser }) => {
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     registerUser({
-      'first_name': input.name,
-      'last_name': '',
+      name: input.name,
       email: input.email,
       password: input.password,
     })

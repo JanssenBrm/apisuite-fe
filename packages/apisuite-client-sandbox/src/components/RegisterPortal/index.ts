@@ -8,4 +8,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   registerUser: (userData: UserData) => dispatch(registerUser(userData)),
 })
 
-export default connect(mapDispatchToProps)(RegisterPortal)
+export default connect(null, mapDispatchToProps)(RegisterPortal)
