@@ -33,6 +33,14 @@ services:
     image: ${DOCKER_REPO}:${APISUITE_CLIENT_SANDBOX_TAG}
     container_name: apisuite-client-sandbox-${APISUITE_ENVIRONMENT}
     restart: on-failure
+    environment:
+      - API_URL=${API_URL}
+      - APP_URL=${APP_URL}
+      - SUPPORT_URL=${SUPPORT_URL}
+      - LOGIN_PORT=${LOGIN_PORT}
+      - SIGNUP_ROUTE=${SIGNUP_ROUTE}
+      - LOGIN_ROUTE=${LOGIN_ROUTE}
+      - AUTH_ROUTE=${AUTH_ROUTE}
     ports:
       - ${APISUITE_SANDBOX_PORTS}
   # platform-client:
