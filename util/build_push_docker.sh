@@ -72,6 +72,8 @@ done
 # docker-compose config
 if [[ -n ${DOCKER_SERVICES// } ]]; then
   echo "Services to build: $DOCKER_SERVICES"
+  # generate the env files for the packages
+  . ./generate_packages_envfile.sh
   docker-compose build $DOCKER_SERVICES
   docker-compose push $DOCKER_SERVICES
 else

@@ -1,7 +1,7 @@
 import { put, call, takeLatest } from 'redux-saga/effects'
 import request from 'util/request'
 import { authActions, LOGIN } from './ducks'
-import { API_URL, LOGIN_PORT } from 'constants/endpoints'
+import { AUTH_URL, LOGIN_PORT } from 'constants/endpoints'
 import qs from 'qs'
 
 // mock avatar
@@ -10,13 +10,13 @@ import { AnyAction } from 'redux'
 
 function * loginWorker (action: AnyAction) {
   try {
-    const credentialsUrl = `${API_URL}${LOGIN_PORT}/auth/apisuite`
+    const credentialsUrl = `${AUTH_URL}${LOGIN_PORT}/auth/apisuite`
     const responseCred = yield call(request, credentialsUrl, {
       method: 'GET',
     })
 
     const challenge = JSON.parse(responseCred).challenge
-    const loginUrl = `${API_URL}/auth/login`
+    const loginUrl = `${AUTH_URL}/auth/login`
 
     const data = {
       challenge: challenge,
