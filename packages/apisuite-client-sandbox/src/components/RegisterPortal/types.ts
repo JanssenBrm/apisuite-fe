@@ -5,10 +5,9 @@ export interface RegisterPortalProps extends React.HTMLAttributes<HTMLDivElement
 }
 
 export interface UserData {
-  'first_name': string,
-  'last_name': string,
-  'email': string,
-  'password': string,
+  name: string,
+  email: string,
+  password: string,
 }
 
 export interface RegisterAction extends Action {

@@ -1,35 +1,35 @@
 import { put, call, takeLatest } from 'redux-saga/effects'
 import request from 'util/request'
 import { authActions, LOGIN } from './ducks'
-import { API_URL } from 'constants/endpoints'
+import { API_URL, LOGIN_PORT } from 'constants/endpoints'
+import qs from 'qs'
 
 // mock avatar
 import requireImage from 'util/requireImage'
 import { AnyAction } from 'redux'
 
-function * loginWorker (payload: AnyAction) {
+function * loginWorker (action: AnyAction) {
   try {
-    const credentialsUrl = `${API_URL}/auth/apisuite`
+    const credentialsUrl = `${API_URL}${LOGIN_PORT}/auth/apisuite`
     const responseCred = yield call(request, credentialsUrl, {
       method: 'GET',
-      credentials: 'include',
     })
 
-    const csrfRe = /_csrf"\svalue="([^"]*)"/
-    const challengeRe = /"challenge"\svalue="([^"]*)"/
-    const csrf = responseCred.match(csrfRe)[1]
-    const challenge = responseCred.match(challengeRe)[1]
+    const challenge = JSON.parse(responseCred).challenge
     const loginUrl = `${API_URL}/auth/login`
-    const formData = new FormData()
-    formData.append('_csrf', csrf)
-    formData.append('challenge', challenge)
-    formData.append('email', payload.email)
-    formData.append('password', payload.password)
+
+    const data = {
+      challenge: challenge,
+      email: action.payload.email,
+      password: action.payload.password,
+    }
 
     yield call(request, loginUrl, {
       method: 'POST',
-      body: formData,
-      credentials: 'include',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      body: qs.stringify(data),
     })
 
     yield put(authActions.loginSuccess({
