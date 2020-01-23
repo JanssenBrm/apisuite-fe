@@ -1,6 +1,7 @@
 import update from 'immutability-helper'
-import { AuthStore, AuthStoreActionCreators, AuthStoreActionTypes } from './types'
-import { Reducer, AnyAction } from 'redux'
+import { AuthStore, AuthStoreActionTypes, AuthPayloads } from './types'
+import { Reducer, AnyAction, Dispatch } from 'redux'
+import { History } from 'history'
 
 export const LOGIN = 'auth/LOGIN'
 const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS'
@@ -44,11 +45,18 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
   }
 }
 
-export default reducer
-
-export const authActions: AuthStoreActionCreators = {
-  login: (payload) => ({ type: LOGIN, payload }),
-  loginSuccess: (payload) => ({ type: LOGIN_SUCCESS, payload }),
-  loginError: (error) => ({ type: LOGIN_ERROR, error }),
+export const authActions = {
+  login: (payload: AuthPayloads['login']) => ({ type: LOGIN, payload }),
+  loginSuccess: (payload: AuthPayloads['loginSuccess']) => ({ type: LOGIN_SUCCESS, payload }),
+  loginError: (error: AuthPayloads['loginError']) => ({ type: LOGIN_ERROR, error }),
   logout: () => ({ type: LOGOUT }),
 }
+
+export const createAuthMiddleware = (history: History) => () => (next: Dispatch) => (action: AnyAction) => {
+  if (action.type === LOGIN_SUCCESS) {
+    history.replace('/dashboard')
+  }
+  next(action)
+}
+
+export default reducer

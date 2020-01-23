@@ -14,7 +14,7 @@ export const initTabs: TabOpt[] = [
   },
   {
     label: 'Contact',
-    route: '/contact',
+    route: '/',
   },
   {
     label: 'Log in',
@@ -22,7 +22,7 @@ export const initTabs: TabOpt[] = [
   },
   {
     label: 'Demo',
-    route: '/demo',
+    route: '/',
   },
 ]
 
@@ -44,11 +44,11 @@ export const loginTabs: TabOpt[] = [
   },
   {
     label: 'Documentation',
-    route: '/docs',
+    route: '',
   },
   {
     label: 'Contact',
-    route: '/contact',
+    route: '',
   },
   {
     label: 'Dashboard',
@@ -60,7 +60,7 @@ export const loginTabs: TabOpt[] = [
       },
       {
         label: 'Subscriptions',
-        route: '/dashboard/subscriptions',
+        route: '',
       },
       {
         label: 'Client Aplications',
@@ -68,7 +68,7 @@ export const loginTabs: TabOpt[] = [
       },
       {
         label: 'Test Data',
-        route: '/dashboard/testdata',
+        route: '',
       },
       // #conditional-loader-start: console
       {

@@ -6,9 +6,11 @@ import { combineReducers } from 'redux'
 import { connectRouter } from 'connected-react-router'
 import { History } from 'history'
 
+import register from 'components/RegisterPortal/ducks'
 import auth from 'containers/Auth/ducks'
 
 export default (history: History<any>) => combineReducers({
   router: connectRouter(history),
   auth,
+  register,
 })

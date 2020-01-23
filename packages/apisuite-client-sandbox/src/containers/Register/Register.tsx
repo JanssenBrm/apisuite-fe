@@ -1,7 +1,7 @@
 import * as React from 'react'
 import ReactDom from 'react-dom'
 import { Redirect } from 'react-router'
-import RegisterPortal from 'components/RegisterPortal/RegisterPortal'
+import RegisterPortal from 'components/RegisterPortal'
 import { useKeyPress } from 'util/useKeyPress'
 
 const portalRoot = document.getElementById('root')
