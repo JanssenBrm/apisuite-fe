@@ -13,7 +13,7 @@ import useStyles from './styles'
 import { CreateAppProps } from './types'
 import clsx from 'clsx'
 
-const CreateApp: React.FC<CreateAppProps> = ({ history }) => {
+const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [visibility, setVisibility] = React.useState('private')
@@ -24,6 +24,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history }) => {
 
   function handleCancelClick () {
     history.goBack()
+  }
+
+  function handleSubmit () {
+    createApp()
   }
 
   return (
@@ -95,7 +99,13 @@ const CreateApp: React.FC<CreateAppProps> = ({ history }) => {
           <br /><br />
 
           <div className={classes.marginBottom}>
-            <div role='button' className={classes.btn}>Add Application</div>
+            <div
+              role='button'
+              className={classes.btn}
+              onClick={handleSubmit}
+            >
+              Add Application
+            </div>
             <div
               role='button'
               className={clsx(classes.btn, classes.btn2)}
