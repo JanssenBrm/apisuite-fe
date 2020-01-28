@@ -43,8 +43,6 @@ async function checkStatus (response: AxiosResponse) {
     return Promise.resolve(response.data)
   }
 
-  // const json = await response.json()
-
   const reason: ErrorReason = {
     status: response.status,
     statusText: response.statusText,
