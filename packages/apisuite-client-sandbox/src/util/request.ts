@@ -3,7 +3,7 @@
  * fetch wrapper
  */
 
-import axios, { AxiosResponse, AxiosRequestConfig } from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
 
 export interface ErrorReason {
   /** response status */
@@ -14,14 +14,14 @@ export interface ErrorReason {
   message: string,
 }
 
-function checkToken(response: AxiosResponse) {
+function checkToken (response: AxiosResponse) {
   const search = response.request.responseURL.split('?')[1]
   const urlParams = new URLSearchParams(search)
   const token = urlParams.get('token')
 
   return {
-    hasToken: token ? true : false,
-    token
+    hasToken: !!token,
+    token,
   }
 }
 
