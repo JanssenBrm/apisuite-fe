@@ -11,12 +11,15 @@ import { AnyAction } from 'redux'
 function * loginWorker (action: AnyAction) {
   try {
     const credentialsUrl = `${AUTH_URL}${LOGIN_PORT}/auth/apisuite`
-    const responseCred = yield call(request, credentialsUrl, {
+    const loginUrl = `${AUTH_URL}/auth/login`
+    const userInfoUrl = `${AUTH_URL}/userinfo`
+
+    const responseCred = yield call(request, {
+      url: credentialsUrl,
       method: 'GET',
     })
 
-    const challenge = JSON.parse(responseCred).challenge
-    const loginUrl = `${AUTH_URL}/auth/login`
+    const challenge = responseCred.challenge
 
     const data = {
       challenge: challenge,
@@ -24,17 +27,28 @@ function * loginWorker (action: AnyAction) {
       password: action.payload.password,
     }
 
-    yield call(request, loginUrl, {
+    const { token } = yield call(request, {
+      url: loginUrl,
       method: 'POST',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
       },
-      body: qs.stringify(data),
+      data: qs.stringify(data),
     })
 
+    const userinfo = yield call(request, {
+      url: userInfoUrl,
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    })
+
+    const user = userinfo.userinfo
+    const user_name = user.name.split(' ')
     yield put(authActions.loginSuccess({
-      token: 'mock_token',
-      user: { fName: 'Quentin', lName: 'Felice', avatar: requireImage('goncalo-avatar.jpg') },
+      token,
+      user: { fName: user_name[0], lName: user_name[user_name.length - 1], avatar: requireImage('goncalo-avatar.jpg') },
     }))
   } catch (error) {
     yield put(authActions.loginError(error))
