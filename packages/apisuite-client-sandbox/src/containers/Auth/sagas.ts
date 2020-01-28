@@ -45,10 +45,10 @@ function * loginWorker (action: AnyAction) {
     })
 
     const user = userinfo.userinfo
-    const user_name = user.name.split(' ')
+    const userName = user.name.split(' ')
     yield put(authActions.loginSuccess({
       token,
-      user: { fName: user_name[0], lName: user_name[user_name.length - 1], avatar: requireImage('goncalo-avatar.jpg') },
+      user: { fName: userName[0], lName: userName[userName.length - 1], avatar: requireImage('goncalo-avatar.jpg') },
     }))
   } catch (error) {
     yield put(authActions.loginError(error))
