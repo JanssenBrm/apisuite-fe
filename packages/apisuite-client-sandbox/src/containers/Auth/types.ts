@@ -1,5 +1,7 @@
 import { ErrorReason } from 'util/request'
 import { AnyAction } from 'redux'
+import { ReactType } from 'react'
+import { Store } from 'store/types'
 
 export interface AuthStore {
   user?: User,
@@ -37,4 +39,9 @@ export interface AuthStoreActionCreators {
   loginSuccess: (payload: AuthPayloads['loginSuccess']) => AuthStoreActionTypes['loginSuccess'],
   loginError: (error: AuthPayloads['loginError']) => AuthStoreActionTypes['loginError'],
   logout: () => AuthStoreActionTypes['logout'],
+}
+
+export interface RequireAuthProps {
+  component: ReactType,
+  user: Store['auth']['user'],
 }
