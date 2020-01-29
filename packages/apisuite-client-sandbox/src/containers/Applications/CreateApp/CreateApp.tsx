@@ -17,6 +17,14 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [visibility, setVisibility] = React.useState('private')
+  const [input, setInput] = React.useState({
+    name: '',
+    description: '',
+    redirectUrl: '',
+    logo: '',
+    userId: '',
+    sandboxId: '',
+  })
 
   function handleVisibilityChange (_: any, value: string) {
     setVisibility(value)
@@ -26,17 +34,40 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
     history.goBack()
   }
 
-  function handleSubmit () {
-    createApp()
+  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    createApp({
+      name: input.name,
+      description: input.description,
+      redirectUrl: input.redirectUrl,
+      logo: input.logo,
+      userId: input.userId,
+      sandboxId: input.sandboxId,
+    })
   }
 
   return (
     <div className={classes.container}>
       <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
-        <form noValidate autoComplete='off' className={classes.left}>
+        <form
+          noValidate autoComplete='off'
+          className={classes.left}
+          onSubmit={handleSubmit}
+        >
           <FormField
             label='Application name'
             placeholder='Name your app'
+            name='name'
+            type='text'
+            value={input.name}
+            onChange={handleInputs}
           />
 
           <br /><br />
@@ -44,6 +75,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
           <FormField
             label='Description'
             placeholder='Describe your app'
+            name='description'
+            type='text'
+            value={input.description}
+            onChange={handleInputs}
             multiline
             rows={5}
           />
@@ -54,6 +89,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
             <FormField
               label='Redirect URL'
               placeholder='https://localhost'
+              name='redirectUrl'
+              type='text'
+              value={input.redirectUrl}
+              onChange={handleInputs}
             />
 
             <Button variant='outlined' className={classes.iconBtn}>
@@ -99,13 +138,12 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
           <br /><br />
 
           <div className={classes.marginBottom}>
-            <div
-              role='button'
+            <Button
+              type='submit'
               className={classes.btn}
-              onClick={handleSubmit}
             >
               Add Application
-            </div>
+            </Button>
             <div
               role='button'
               className={clsx(classes.btn, classes.btn2)}
