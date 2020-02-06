@@ -45,6 +45,11 @@ services:
       - ${APISUITE_SANDBOX_PORTS}
     networks:
       - apisuite-network
+    # environment:
+    #   - VIRTUAL_HOST=${VIRTUAL_HOST_SANDBOX}
+    #   - VIRTUAL_PORT=${VIRTUAL_PORT_SANDBOX}
+    #   - LETSENCRYPT_HOST=${LETSENCRYPT_HOST_SANDBOX}
+    #   - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL_SANDBOX}
   # platform-client:
   #   build: '../packages/apisuite-platform'
   #   image: ${DOCKER_REPO}:${APISUITE_PLATFORM_TAG}
@@ -57,4 +62,5 @@ services:
 
 networks:
   apisuite-network:
-    driver: bridge
+    external:
+      name: apisuite-network
