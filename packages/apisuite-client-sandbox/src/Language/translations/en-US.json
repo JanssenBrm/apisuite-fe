@@ -135,5 +135,9 @@
     "buttons": {
       "readMore": "Read more"
     }
+  },
+  "appDetail": {
+    "buttonEnabled": "Save",
+    "buttonDisabled": "Nothing to save"
   }
 }
