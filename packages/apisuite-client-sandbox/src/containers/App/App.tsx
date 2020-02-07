@@ -11,7 +11,7 @@ import routes from './routes'
 import { AppProps } from './types'
 import { initTabs, loginTabs, gobackConfig } from './config'
 
-const App: React.FC<AppProps> = ({ user, history }) => {
+const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   const [currentTab, setCurrentTab] = React.useState(0)
   const [currentSubTab, setCurrentSubTab] = React.useState(0)
   const [tabs, setTabs] = React.useState(initTabs)
@@ -21,6 +21,11 @@ const App: React.FC<AppProps> = ({ user, history }) => {
 
   React.useEffect(() => {
     const pathname = history.location.pathname
+
+    if (auth.authToken !== '' && !auth.user) {
+      loginUser({ token: auth.authToken })
+    }
+
     if (pathname.startsWith('/dashboard/apps')) {
       setNavScrolled(true)
     } else {
@@ -55,12 +60,12 @@ const App: React.FC<AppProps> = ({ user, history }) => {
   }
 
   React.useEffect(() => {
-    if (user) {
+    if (auth.user) {
       setTabs(loginTabs)
       setCurrentTab(3)
       setSubTabs(loginTabs[3].subTabs)
     }
-  }, [user])
+  }, [auth.user])
 
   return (
     <ThemeProvider theme={theme}>
@@ -74,11 +79,12 @@ const App: React.FC<AppProps> = ({ user, history }) => {
         onSubTabChange={handleOnSubTabChange}
         name={config.navbar.name}
         logoSrc={requireImage(config.navbar.logoUrl)}
-        user={user}
+        user={auth.user}
         forceScrolled={navScrolled}
         showBackButton={gobackLabel.length > 0}
         backButtonLabel={gobackLabel}
         onGoBackCLick={handleGobackClick}
+        logout={logout}
       />
 
       {routes()}

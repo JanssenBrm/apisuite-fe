@@ -1,12 +1,17 @@
 import { connect, MapDispatchToPropsFunction } from 'react-redux'
 import { authActions } from 'containers/Auth/ducks'
+import { Store } from 'store/types'
 import LoginPortal from './LoginPortal'
 import { Dispatch } from 'redux'
-import { LoginPortalProps } from './types'
+import { LoginDispatchToProps } from './types'
 import { AuthPayloads } from 'containers/Auth/types'
 
-const mapDispatchToProps: MapDispatchToPropsFunction<LoginPortalProps, any> = (dispatch: Dispatch) => ({
+const mapDispatchToProps: MapDispatchToPropsFunction<LoginDispatchToProps, any> = (dispatch: Dispatch) => ({
   login: (loginData: AuthPayloads['login']) => dispatch(authActions.login(loginData)),
 })
 
-export default connect(null, mapDispatchToProps)(LoginPortal)
+const mapStateToProps = ({ auth }: Store) => ({
+  auth: auth,
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPortal)

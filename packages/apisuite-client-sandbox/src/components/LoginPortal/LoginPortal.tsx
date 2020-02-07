@@ -8,7 +8,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import { useTranslation } from 'react-i18next'
 
-const LoginPortal: React.FC<LoginPortalProps> = ({ login }) => {
+const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -103,6 +103,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ login }) => {
           title={t('loginPortal.title')}
           buttonLabel={t('loginPortal.button')}
           buttonDisabled={buttonDisabled}
+          loading={auth.isAuthorizing}
           closeRoute={closeRoute}
           handleSubmit={handleSubmit}
         >

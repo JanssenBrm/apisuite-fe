@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { Store } from 'store/types'
 
-const userSelector = ({ auth }: Store) => auth.user
+const authSelector = ({ auth }: Store) => auth
 
-export default createSelector(userSelector, (user) => ({ user }))
+export default createSelector(authSelector, (auth) => ({ auth }))
