@@ -13,7 +13,7 @@ import useStyles from './styles'
 import { CreateAppProps } from './types'
 import clsx from 'clsx'
 
-const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user }) => {
+const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [visibility, setVisibility] = React.useState('private')
@@ -57,7 +57,6 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user }) => {
 
   return (
     <div className={classes.container}>
-      {console.log(user)}
       <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
         <form
           noValidate autoComplete='off'

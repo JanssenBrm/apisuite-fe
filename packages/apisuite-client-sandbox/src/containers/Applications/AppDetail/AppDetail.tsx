@@ -232,6 +232,7 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
 
               <br />
 
+              // TODO these need to be fetched from the BE
               <InputLabel shrink className={classes.marginBottom}>Application scopes</InputLabel>
               <div>
                 <span className={classes.tag}>aisp</span>
