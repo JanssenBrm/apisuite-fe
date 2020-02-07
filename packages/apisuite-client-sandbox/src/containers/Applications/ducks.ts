@@ -4,6 +4,7 @@ import { AppData } from './types'
 
 export const CREATE_APP = 'Applications/CREATE_APP'
 export const UPDATE_APP = 'Applications/UPDATE_APP'
+export const DELETE_APP = 'Applications/DELETE_APP'
 export const GET_APP_DETAILS = 'Applications/GET_APP_DETAILS'
 export const GET_APP_DETAILS_SUCCESS = 'Applications/GET_APP_DETAILS_SUCCESS'
 
@@ -15,6 +16,7 @@ const initialState = {
     logo: '',
     userId: '',
     sandboxId: '',
+    pubUrls: '',
   },
 }
 
@@ -29,6 +31,9 @@ export default function reducer (state = initialState, action: AnyAction) {
     case GET_APP_DETAILS: {
       return state
     }
+    case DELETE_APP: {
+      return state
+    }
     case GET_APP_DETAILS_SUCCESS: {
       return update(state, {
         currentApp: {
@@ -38,6 +43,7 @@ export default function reducer (state = initialState, action: AnyAction) {
           logo: { $set: action.appData.logo },
           userId: { $set: action.appData.userId },
           sandboxId: { $set: action.appData.sandboxId },
+          pubUrls: { $set: action.appData.pubUrls },
         },
       })
     }
@@ -50,8 +56,12 @@ export function createApp (appData: AppData) {
   return { type: CREATE_APP, appData }
 }
 
-export function updateApp (appData: AppData) {
-  return { type: UPDATE_APP, appData }
+export function updateApp (appData: AppData, appId: string) {
+  return { type: UPDATE_APP, appData, appId }
+}
+
+export function deleteApp (appId: string) {
+  return { type: DELETE_APP, appId }
 }
 
 export function getAppDetails () {

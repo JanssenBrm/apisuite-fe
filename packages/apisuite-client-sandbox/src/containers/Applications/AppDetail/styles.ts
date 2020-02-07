@@ -85,6 +85,7 @@ export default makeStyles({
   link: {
     color: '#2DB7BA',
     textDecoration: 'underline',
+    cursor: 'pointer',
   },
   disabled: {
     opacity: 0.5,

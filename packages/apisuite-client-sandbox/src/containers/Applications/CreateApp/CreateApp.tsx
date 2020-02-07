@@ -13,7 +13,7 @@ import useStyles from './styles'
 import { CreateAppProps } from './types'
 import clsx from 'clsx'
 
-const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
+const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [visibility, setVisibility] = React.useState('private')
@@ -24,6 +24,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
     logo: '',
     userId: '',
     sandboxId: '',
+    pubUrls: '',
   })
 
   function handleVisibilityChange (_: any, value: string) {
@@ -50,11 +51,13 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
       logo: input.logo,
       userId: input.userId,
       sandboxId: input.sandboxId,
+      pubUrls: input.pubUrls,
     })
   }
 
   return (
     <div className={classes.container}>
+      {console.log(user)}
       <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
         <form
           noValidate autoComplete='off'
@@ -114,6 +117,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
             <FormField
               label={'Public URL\'s (optional)'}
               placeholder='Client URL'
+              name='pubUrls'
+              type='text'
+              value={input.pubUrls}
+              onChange={handleInputs}
             />
 
             <Button variant='outlined' className={classes.iconBtn}>

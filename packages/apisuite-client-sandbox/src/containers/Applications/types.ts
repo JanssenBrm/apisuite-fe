@@ -12,6 +12,7 @@ export interface AppData {
   logo: string,
   userId: string,
   sandboxId: string,
+  pubUrls: string,
 }
 
 export interface ApplicationsStore {
@@ -26,4 +27,10 @@ export interface CreateAppAction extends Action {
 export interface UpdateAppAction extends Action {
   type: 'UPDATE_APP',
   appData: AppData,
+  appId: string,
+}
+
+export interface DeleteAppAction extends Action {
+  type: 'DELETE_APP',
+  appId: string,
 }

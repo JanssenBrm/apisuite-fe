@@ -17,7 +17,7 @@ import { AppDetailProps } from './types'
 import { AppData } from '../types'
 import { Link } from '@material-ui/core'
 
-const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, currentApp }) => {
+const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, currentApp, deleteApp }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
@@ -30,6 +30,7 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
     logo: currentApp.logo,
     userId: currentApp.userId,
     sandboxId: currentApp.sandboxId,
+    pubUrls: currentApp.pubUrls,
   })
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
@@ -41,7 +42,14 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
       logo: input.logo,
       userId: input.userId,
       sandboxId: input.sandboxId,
-    })
+      pubUrls: input.pubUrls,
+      // TODO change after adding the fetch of the list of apps
+    }, '1')
+  }
+
+  function handleDeleteApp () {
+    // TODO change after adding the fetch of the list of apps
+    deleteApp('1')
   }
 
   function compareAppData (newAppData: AppData) {
@@ -235,7 +243,12 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
 
               <InputLabel shrink>Additional actions</InputLabel>
               <div className={classes.link}>Activity monitoring</div>
-              <div className={classes.link}>Delete application</div>
+              <div
+                className={classes.link}
+                onClick={handleDeleteApp}
+              >
+                Delete application
+              </div>
             </form>
           </aside>
         </section>

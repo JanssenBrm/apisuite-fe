@@ -1,15 +1,80 @@
-import { CREATE_APP, UPDATE_APP, GET_APP_DETAILS, getAppDetailsSuccess } from './ducks'
-import { takeLatest, put } from 'redux-saga/effects'
-import { CreateAppAction, UpdateAppAction } from './types'
+import { CREATE_APP, UPDATE_APP, DELETE_APP, GET_APP_DETAILS, getAppDetailsSuccess } from './ducks'
+import { takeLatest, call, put } from 'redux-saga/effects'
+import { CreateAppAction, UpdateAppAction, DeleteAppAction } from './types'
+import { API_URL } from 'constants/endpoints'
+import request from 'util/request'
+import qs from 'qs'
 
 export function * createApp (action: CreateAppAction) {
-  console.log(action)
-  console.log(action.appData)
+  try {
+    const data = {
+      name: action.appData.name,
+      description: action.appData.description,
+      'redirect_url': action.appData.redirectUrl,
+      logo: action.appData.logo,
+      // TODO: get user_id and sandbox_id after BE changes
+      'user_id': '1',
+      'sandbox_id': '1',
+      'pub_urls': [action.appData.pubUrls],
+    }
+
+    const createAppUrl = `${API_URL}:6001/app/create`
+    yield call(request, {
+      url: createAppUrl,
+      method: 'POST',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'X-Host-Override': 'host-apisuite-middleware-local',
+      },
+      data: qs.stringify(data),
+    })
+  } catch (error) {
+    console.log('Error creating App')
+  }
 }
 
 export function * updateApp (action: UpdateAppAction) {
-  console.log(action)
-  console.log(action.appData)
+  try {
+    const data = {
+      name: action.appData.name,
+      description: action.appData.description,
+      'redirect_url': action.appData.redirectUrl,
+      logo: action.appData.logo,
+      // TODO: get user_id, sandbox_id, id after BE changes
+      'user_id': '1',
+      'sandbox_id': '1',
+      'pub_urls': [action.appData.pubUrls],
+    }
+
+    const updateAppUrl = `${API_URL}:6001/app/update/${action.appId}`
+    yield call(request, {
+      url: updateAppUrl,
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'X-Host-Override': 'host-apisuite-middleware-local',
+      },
+      data: qs.stringify(data),
+    })
+  } catch (error) {
+    console.log('Error updating App')
+  }
+}
+
+export function * deleteApp (action: DeleteAppAction) {
+  try {
+    const deleteAppUrl = `${API_URL}:6001/app/delete/${action.appId}`
+    yield call(request, {
+      url: deleteAppUrl,
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'X-Host-Override': 'host-apisuite-middleware-local',
+      },
+    })
+  } catch (error) {
+    console.log('Error deleting App')
+  }
 }
 
 export function * getAppDetails () {
@@ -21,12 +86,14 @@ export function * getAppDetails () {
     logo: 'logo',
     userId: '111',
     sandboxId: '999',
+    pubUrls: '',
   }))
 }
 
 function * rootSaga () {
   yield takeLatest(CREATE_APP, createApp)
   yield takeLatest(UPDATE_APP, updateApp)
+  yield takeLatest(DELETE_APP, deleteApp)
   yield takeLatest(GET_APP_DETAILS, getAppDetails)
 }
 
