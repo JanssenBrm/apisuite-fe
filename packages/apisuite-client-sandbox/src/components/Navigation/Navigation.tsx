@@ -1,7 +1,6 @@
 import * as React from 'react'
 import clsx from 'clsx'
 import Avatar from '@material-ui/core/Avatar'
-import { makeStyles } from '@material-ui/core/styles'
 import SvgIcon from 'components/SvgIcon'
 import './styles.scss'
 import { NavigationProps } from './types'
@@ -19,14 +18,6 @@ function getBarValues (parent: React.RefObject<HTMLDivElement>, target: React.Re
 
   return values
 }
-
-const useStyles = makeStyles({
-  avatar: {
-    width: 28,
-    height: 28,
-    border: '2px solid white',
-  },
-})
 
 const tabsRange = Array.from(Array(10).keys())
 
@@ -47,9 +38,10 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     showBackButton,
     backButtonLabel,
     onGoBackCLick,
+    logout,
     ...rest
   } = props
-  const classes = useStyles()
+
   const [scrollPos, setScrollPos] = React.useState(0)
   const [barValues, setBarValues] = React.useState({ left: 0, width: 0 })
   const [subBarValues, setSubBarValues] = React.useState({ left: 0, width: 0 })
@@ -130,7 +122,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
         {user && (
           <div className='avatar-container'>
             {!(scrolled || forceScrolled) && <span>{user.fName}</span>}
-            <Avatar src={user.avatar} className={classes.avatar} />
+            <Avatar src={user.avatar} className='avatar' onClick={logout} />
           </div>
         )}
       </header>

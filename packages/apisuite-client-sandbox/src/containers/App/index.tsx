@@ -5,7 +5,8 @@ import { AppDispatchToProps } from './types'
 import { authActions } from 'containers/Auth/ducks'
 
 const mapDispatchToProps: MapDispatchToPropsFunction<AppDispatchToProps, any> = (dispatch) => ({
-  login: (...args) => dispatch(authActions.login(...args)),
+  loginUser: (...args) => dispatch(authActions.loginUser(...args)),
+  logout: () => dispatch(authActions.logout()),
 })
 
 export default connect(selector, mapDispatchToProps)(App)

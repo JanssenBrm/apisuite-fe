@@ -15,15 +15,15 @@ import Register from 'containers/Register'
 
 import { AppRouteProps } from './types'
 import RequireAuth from 'containers/Auth'
-import { User } from 'containers/Auth/types'
+import { AuthStore } from 'containers/Auth/types'
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
-  { path: '/dashboard', exact: true, component: (user: User) => <RequireAuth user={user} component={LandingPage} /> },
-  { path: '/dashboard/apps', exact: true, component: (user: User) => <RequireAuth user={user} component={ListApps} /> },
-  { path: '/dashboard/apps/create', exact: true, component: (user: User) => <RequireAuth user={user} component={CreateApp} /> },
-  { path: '/dashboard/apps/detail', exact: true, component: (user: User) => <RequireAuth user={user} component={AppDetail} /> },
-  { path: '/dashboard/console', component: (user: User) => <RequireAuth user={user} component={Console} /> },
+  { path: '/dashboard', exact: true, component: (auth: AuthStore) => <RequireAuth auth={auth} component={LandingPage} /> },
+  { path: '/dashboard/apps', exact: true, component: (auth: AuthStore) => <RequireAuth auth={auth} component={ListApps} /> },
+  { path: '/dashboard/apps/create', exact: true, component: (auth: AuthStore) => <RequireAuth auth={auth} component={CreateApp} /> },
+  { path: '/dashboard/apps/detail', exact: true, component: (auth: AuthStore) => <RequireAuth auth={auth} component={AppDetail} /> },
+  { path: '/dashboard/console', component: (auth: AuthStore) => <RequireAuth auth={auth} component={Console} /> },
   // #conditional-loader-start: console
   // #conditional-loader-end
   { path: '/login', component: Login },

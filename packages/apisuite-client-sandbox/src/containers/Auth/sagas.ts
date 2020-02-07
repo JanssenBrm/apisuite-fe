@@ -1,6 +1,6 @@
 import { put, call, takeLatest } from 'redux-saga/effects'
 import request from 'util/request'
-import { authActions, LOGIN } from './ducks'
+import { authActions, LOGIN, LOGIN_USER, LOGIN_SUCCESS } from './ducks'
 import { AUTH_URL, LOGIN_PORT } from 'constants/endpoints'
 import qs from 'qs'
 
@@ -12,7 +12,6 @@ function * loginWorker (action: AnyAction) {
   try {
     const credentialsUrl = `${AUTH_URL}${LOGIN_PORT}/auth/apisuite`
     const loginUrl = `${AUTH_URL}/auth/login`
-    const userInfoUrl = `${AUTH_URL}/userinfo`
 
     const responseCred = yield call(request, {
       url: credentialsUrl,
@@ -36,27 +35,38 @@ function * loginWorker (action: AnyAction) {
       data: qs.stringify(data),
     })
 
-    const userinfo = yield call(request, {
-      url: userInfoUrl,
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    })
-
-    const user = userinfo.userinfo
-    const userName = user.name.split(' ')
     yield put(authActions.loginSuccess({
       token,
-      user: { fName: userName[0], lName: userName[userName.length - 1], avatar: requireImage('goncalo-avatar.jpg') },
     }))
   } catch (error) {
     yield put(authActions.loginError(error))
   }
 }
 
-function * rootSaga () {
-  yield takeLatest(LOGIN, loginWorker)
+function * loginUWorker (action: AnyAction) {
+  try {
+    const userInfoUrl = `${AUTH_URL}/userinfo`
+    const userinfo = yield call(request, {
+      url: userInfoUrl,
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${action.payload.token}`,
+      },
+    })
+
+    const user = userinfo.userinfo
+    const userName = user.name.split(' ')
+
+    yield put(authActions.loginUserSuccess({
+      user: { fName: userName[0], lName: userName[userName.length - 1], avatar: requireImage('goncalo-avatar.jpg') },
+    }))
+  } catch (error) {
+    yield put(authActions.loginUserError(error))
+  }
 }
 
+export function * rootSaga () {
+  yield takeLatest(LOGIN, loginWorker)
+  yield takeLatest([LOGIN_SUCCESS, LOGIN_USER], loginUWorker)
+}
 export default rootSaga

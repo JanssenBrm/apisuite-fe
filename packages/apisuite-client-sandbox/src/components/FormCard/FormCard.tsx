@@ -3,6 +3,7 @@ import { FormCardProps } from './types'
 import useStyles from './styles'
 import CloseIcon from '@material-ui/icons/Close'
 import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const iconStyle = {
   height: '42px',
@@ -15,6 +16,7 @@ const FormCard: React.FC<FormCardProps> = ({
   closeRoute,
   buttonDisabled,
   handleSubmit,
+  loading,
   children,
 }) => {
   const classes = useStyles()
@@ -33,10 +35,11 @@ const FormCard: React.FC<FormCardProps> = ({
         <Button
           type='submit'
           variant='outlined'
-          disabled={buttonDisabled}
+          disabled={buttonDisabled || loading}
           className={classes.submitBtn}
         >
           {buttonLabel}
+          {loading && <CircularProgress size={24} className={classes.loading} />}
         </Button>
       </form>
     </div>

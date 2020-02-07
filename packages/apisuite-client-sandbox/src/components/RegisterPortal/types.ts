@@ -1,7 +1,12 @@
 import { Action } from 'redux'
+import { AuthStore } from 'containers/Auth/types'
 
-export interface RegisterPortalProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface RegisterDispatchToProps {
   registerUser: (userData: UserData) => void,
+}
+
+export interface RegisterPortalProps extends RegisterDispatchToProps {
+  auth: AuthStore,
 }
 
 export interface UserData {

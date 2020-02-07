@@ -22,15 +22,23 @@ export interface AuthPayloads {
   },
   loginSuccess: {
     token: string,
-    user: User,
   },
   loginError: ErrorReason,
+  loginUser: {
+    token?: string,
+  },
+  loginUserSuccess: {
+    user: User,
+  },
+  loginUserError: ErrorReason,
 }
 
 export interface AuthStoreActionTypes {
   login: AnyAction & { payload: AuthPayloads['login'] },
   loginSuccess: AnyAction & { payload: AuthPayloads['loginSuccess'] },
   loginError: AnyAction & { error: AuthPayloads['loginError'] },
+  loginUserSuccess: AnyAction & { payload: AuthPayloads['loginUserSuccess'] },
+  loginUserError: AnyAction & { error: AuthPayloads['loginUserError'] },
   logout: AnyAction,
 }
 
@@ -43,5 +51,5 @@ export interface AuthStoreActionCreators {
 
 export interface RequireAuthProps {
   component: ReactType,
-  user: Store['auth']['user'],
+  auth: Store['auth'],
 }
