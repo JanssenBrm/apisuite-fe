@@ -1,7 +1,7 @@
 import { CREATE_APP, UPDATE_APP, DELETE_APP, GET_APP_DETAILS, getAppDetailsSuccess } from './ducks'
 import { takeLatest, call, put } from 'redux-saga/effects'
 import { CreateAppAction, UpdateAppAction, DeleteAppAction } from './types'
-import { API_URL } from 'constants/endpoints'
+import { API_URL, SIGNUP_PORT } from 'constants/endpoints'
 import request from 'util/request'
 import qs from 'qs'
 
@@ -18,13 +18,12 @@ export function * createApp (action: CreateAppAction) {
       'pub_urls': [action.appData.pubUrls],
     }
 
-    const createAppUrl = `${API_URL}:6001/app/create`
+    const createAppUrl = `${API_URL}${SIGNUP_PORT}/app/create`
     yield call(request, {
       url: createAppUrl,
       method: 'POST',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'X-Host-Override': 'host-apisuite-middleware-local',
       },
       data: qs.stringify(data),
     })
@@ -46,13 +45,12 @@ export function * updateApp (action: UpdateAppAction) {
       'pub_urls': [action.appData.pubUrls],
     }
 
-    const updateAppUrl = `${API_URL}:6001/app/update/${action.appId}`
+    const updateAppUrl = `${API_URL}${SIGNUP_PORT}/app/update/${action.appId}`
     yield call(request, {
       url: updateAppUrl,
       method: 'PUT',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'X-Host-Override': 'host-apisuite-middleware-local',
       },
       data: qs.stringify(data),
     })
@@ -63,13 +61,12 @@ export function * updateApp (action: UpdateAppAction) {
 
 export function * deleteApp (action: DeleteAppAction) {
   try {
-    const deleteAppUrl = `${API_URL}:6001/app/delete/${action.appId}`
+    const deleteAppUrl = `${API_URL}${SIGNUP_PORT}/app/delete/${action.appId}`
     yield call(request, {
       url: deleteAppUrl,
       method: 'DELETE',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'X-Host-Override': 'host-apisuite-middleware-local',
       },
     })
   } catch (error) {
