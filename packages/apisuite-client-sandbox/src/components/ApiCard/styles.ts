@@ -3,42 +3,31 @@ import { makeStyles } from '@material-ui/styles'
 export default makeStyles({
   cardContainer: {
     display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: 'column',
     justifyContent: 'space-between',
-    width: '100%',
-    height: 42,
+    height: 438,
+    width: 289,
     backgroundColor: 'white',
-    paddingLeft: 10,
-    borderBottomWidth: 0,
-    borderTopWidth: 1,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderColor: '#D1D1D1',
+    borderRadius: 4,
     borderStyle: 'solid',
+    borderColor: '#D1D1D1',
+    borderWidth: 1,
+    overflow: 'hidden',
   },
-  options: {
+  apiDetail: {
+    height: '100%',
+    padding: 15,
+  },
+  cardTitle: {
+    fontSize: 22,
+    margin: 0,
+  },
+  description: {
+    fontSize: 16,
+  },
+  appsContainer: {
     display: 'flex',
     flexDirection: 'row',
-    width: '100%',
-  },
-  apiName: {
-    width: '50%',
-  },
-  apiVersion: {
-    width: '25%',
-  },
-  apiApps: {
-    display: 'flex',
-    flexDirection: 'row',
-    width: '25%',
-  },
-  icons: {
-    display: 'flex',
-    alignItems: 'center',
-    width: 42,
-    height: 42,
-    color: '#646464',
   },
   avatarContainer: {
     width: 35,
@@ -52,5 +41,21 @@ export default makeStyles({
     background: 'linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)',
     width: 28,
     height: 28,
+  },
+  apiCard: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    height: 36,
+    padding: 15,
+    backgroundColor: '#EEEEEE',
+    borderTopWidth: 1,
+    borderBottomWidth: 0,
+    borderLeftWidth: 0,
+    borderRightWidth: 0,
+    borderStyle: 'solid',
+    borderColor: '#D1D1D1',
   },
 })

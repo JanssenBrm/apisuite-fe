@@ -1,5 +1,9 @@
-export interface ApiCardProps {
-  name: string,
-  apps: Array<string>,
-  version: string,
+export interface APIVersion {
+  vName: string,
+  vNumber: string,
+}
+
+export interface APICardProps {
+  APIname: string,
+  APIversions: Array<APIVersion>,
 }

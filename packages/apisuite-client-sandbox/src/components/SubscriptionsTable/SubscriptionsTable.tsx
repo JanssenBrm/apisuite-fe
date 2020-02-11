@@ -1,69 +1,103 @@
 import * as React from 'react'
 import useStyles from './styles'
-import ApiCard from 'components/ApiCard'
-import { SubscriptionsTableProps } from './types'
-import ApiCategoryCard from 'components/ApiCategoryCard/ApiCategoryCard'
+import APIVersionCard from 'components/APIVersionCard'
+import { SubscriptionsTableProps, APIversion, APIsubbed } from './types'
+import { APIVersion } from 'components/APICard/types'
+import APICard from 'components/APICard'
+import Grid from '@material-ui/core/Grid'
+import Avatar from '@material-ui/core/Avatar'
+import CodeIcon from '@material-ui/icons/Code'
 
 const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ view }) => {
   const classes = useStyles()
 
-  const subscriptions = [
+  const availableAPIs: Array<APIversion> = [
     {
-      category: 'PSD2 Payment Initiations',
-      api: 'api1',
-      apps: ['TA1', 'TA2'],
-      version: 'v1.03.2',
+      API: 'PSD2 Payment Initiation',
+      vName: 'Payment Initiation API v1',
+      vNumber: 'v 1.04.3.2',
     },
     {
-      category: 'PSD2 Payment Initiations',
-      api: 'api2',
-      apps: ['TA1', 'TA2'],
-      version: 'v2.08',
+      API: 'PSD2 Payment Initiation',
+      vName: 'Payment Initiation API v2',
+      vNumber: 'v 2.01.0',
     },
     {
-      category: 'PSD2 Payment Initiations',
-      api: 'api3',
-      apps: [],
-      version: 'v4.5.1',
+      API: 'Petstore',
+      vName: 'Petstore API v1',
+      vNumber: 'v 1.2.34',
     },
     {
-      category: 'Petstore',
-      api: 'api4',
-      apps: ['A2'],
-      version: 'v8.2',
-    },
-    {
-      category: 'Starwars',
-      api: 'api5',
-      apps: ['TF4', 'TF5'],
-      version: 'v3.02.1',
-    },
-    {
-      category: 'Starwars',
-      api: 'api6',
-      apps: [],
-      version: 'v2.2',
+      API: 'PSD2 Account Information',
+      vName: 'AIS STET API v1',
+      vNumber: 'v 1.06',
     },
   ]
 
-  const apis = subscriptions.reduce((acc: any, api: any) => {
-    const { category, ...rest } = api
-    return { ...acc, [category]: [...(acc[category] || []), rest] }
-  }, {})
+  const subscribedAPIs: Array<APIsubbed> = [
+    {
+      API: 'PSD2 Payment Initiation',
+      apps: ['TA', 'T2'],
+    },
+    {
+      API: 'Petstore',
+      apps: ['TA'],
+    },
+  ]
 
-  function appsView () {
+  function orderAPIs (list) {
+    return list.reduce((acc, APIv) => {
+      const { API, ...rest } = APIv
+      return { ...acc, [API]: [...(acc[API] || []), rest] }
+    }, {})
+  }
+
+  function appsList (API: string) {
+    const apps = orderAPIs(subscribedAPIs)[API]
+
+    if (apps) {
+      return (
+        <div className={classes.appsList}>
+          {apps[0].apps.map((app: string, indx: number) => (
+            <div key={indx} className={classes.avatarContainer}>
+              <Avatar className={classes.avatar}>{app}</Avatar>
+            </div>
+          ))}
+        </div>
+      )
+    } else {
+      return null
+    }
+  }
+
+  function subscriptionsView () {
     if (view === 'list') {
       return (
         <div className={classes.table}>
-          {Object.keys(apis).map((category, indx) => (
+          {Object.keys(orderAPIs(availableAPIs)).map((API, indx) => (
             <div key={indx} className={classes.apiCategoryContainer}>
-              <div className={classes.apiTitle}>
-                {category}
+              <div className={classes.apiCard}>
+                <div className={classes.apiTitle}>
+                  {API}
+                </div>
+                <div className={classes.appsListContainer}>
+                  {appsList(API)}
+                </div>
+                <div className={classes.icons}>
+                  <CodeIcon />
+                </div>
               </div>
               <div>
-                {apis[category].map(({ api, apps, version }, indx) => (
-                  <ApiCard key={indx} name={api} apps={apps} version={version} />
-                ))}
+                {orderAPIs(availableAPIs)[API].map((APIcard: APIVersion, indx: number) => {
+                  const { vName, vNumber } = APIcard
+                  return (
+                    <APIVersionCard
+                      key={indx}
+                      vName={vName}
+                      vNumber={vNumber}
+                    />
+                  )
+                })}
               </div>
             </div>
           ))}
@@ -72,21 +106,26 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ view }) => {
     } else if (view === 'cards') {
       return (
         <div className={classes.cards}>
-          {Object.keys(apis).map((category, indx) => (
-            <div key={indx} className={classes.apiCategoryContainer}>
-              {apis[category].map(({ api, apps, version }, indx) => (
-                <ApiCategoryCard key={indx} name={api} apps={apps} version={version} />
-              ))}
-            </div>
-          ))}
+          <Grid container spacing={3}>
+            {Object.keys(orderAPIs(availableAPIs)).map((API, indx) => (
+              <Grid key={indx} item xs={12} sm={4}>
+                <div className={classes.apiCategoryContainer}>
+                  <APICard
+                    APIname={API}
+                    APIversions={orderAPIs(availableAPIs)[API]}
+                  />
+                </div>
+              </Grid>
+            ))}
+          </Grid>
         </div>
       )
     } else {
-      return <div>Something went wrong.</div>
+      return <div>Something went wrong!</div>
     }
   }
 
-  return appsView()
+  return subscriptionsView()
 }
 
 export default SubscriptionsTable

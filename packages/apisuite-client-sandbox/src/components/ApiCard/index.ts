@@ -1,1 +1,1 @@
-export { default } from './ApiCard'
+export { default } from './APICard'
