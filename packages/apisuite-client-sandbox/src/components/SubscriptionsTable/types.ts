@@ -14,3 +14,7 @@ export interface APIsubbed {
   API: string,
   apps: Array<string>,
 }
+
+export interface App {
+  title: string,
+}

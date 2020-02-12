@@ -1,16 +1,14 @@
 import * as React from 'react'
 import useStyles from './styles'
 import APIVersionCard from 'components/APIVersionCard'
-import { SubscriptionsTableProps, APIversion, APIsubbed } from './types'
+import { SubscriptionsTableProps, APIversion, APIsubbed, App } from './types'
 import { APIVersion } from 'components/APICard/types'
 import APICard from 'components/APICard'
 import Grid from '@material-ui/core/Grid'
-import Avatar from '@material-ui/core/Avatar'
 import CodeIcon from '@material-ui/icons/Code'
+import SubscriptionSelect from 'components/SubscriptionSelect'
 
 const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ view }) => {
-  const classes = useStyles()
-
   const availableAPIs: Array<APIversion> = [
     {
       API: 'PSD2 Payment Initiation',
@@ -43,37 +41,58 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ view }) => {
       API: 'Petstore',
       apps: ['TA'],
     },
+    {
+      API: 'PSD2 Account Information',
+      apps: [],
+    },
   ]
 
-  function orderAPIs (list) {
-    return list.reduce((acc, APIv) => {
+  // const userApps: Array<App> = [
+  //   {
+  //     title: 'TA',
+  //   },
+  //   {
+  //     title: 'T2',
+  //   },
+  //   {
+  //     title: 'B2',
+  //   },
+  //   {
+  //     title: 'RCT',
+  //   },
+  // ]
+
+  function getApps (subscribedAPIs: Array<APIsubbed>) {
+    const appSub: any = []
+    subscribedAPIs.map((api) => {
+      appSub.push(api.apps)
+    })
+    return appSub
+  }
+
+  const classes = useStyles()
+  const [appSub, setAppSub] = React.useState(getApps(subscribedAPIs))
+
+  function orderAPIs (list: any) {
+    return list.reduce((acc: any, APIv: any) => {
       const { API, ...rest } = APIv
       return { ...acc, [API]: [...(acc[API] || []), rest] }
     }, {})
   }
 
-  function appsList (API: string) {
-    const apps = orderAPIs(subscribedAPIs)[API]
+  const handleDelete = (app: App, apiNumber: number) => () => {
+    const indx: number = appSub[apiNumber].indexOf(app)
+    const newAppSub: any = [...appSub]
 
-    if (apps) {
-      return (
-        <div className={classes.appsList}>
-          {apps[0].apps.map((app: string, indx: number) => (
-            <div key={indx} className={classes.avatarContainer}>
-              <Avatar className={classes.avatar}>{app}</Avatar>
-            </div>
-          ))}
-        </div>
-      )
-    } else {
-      return null
-    }
+    newAppSub[apiNumber].splice(indx, 1)
+    setAppSub(newAppSub)
   }
 
   function subscriptionsView () {
     if (view === 'list') {
       return (
         <div className={classes.table}>
+          {console.log(appSub)}
           {Object.keys(orderAPIs(availableAPIs)).map((API, indx) => (
             <div key={indx} className={classes.apiCategoryContainer}>
               <div className={classes.apiCard}>
@@ -81,7 +100,11 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ view }) => {
                   {API}
                 </div>
                 <div className={classes.appsListContainer}>
-                  {appsList(API)}
+                  <SubscriptionSelect
+                    apps={appSub[indx]}
+                    handleDelete={handleDelete}
+                    apiNumber={indx}
+                  />
                 </div>
                 <div className={classes.icons}>
                   <CodeIcon />
