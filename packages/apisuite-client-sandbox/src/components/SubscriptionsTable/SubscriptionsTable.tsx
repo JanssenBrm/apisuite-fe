@@ -1,146 +1,196 @@
 import * as React from 'react'
 import useStyles from './styles'
 import APIVersionCard from 'components/APIVersionCard'
-import { SubscriptionsTableProps, APIversion, APIsubbed, App } from './types'
-import { APIVersion } from 'components/APICard/types'
-import APICard from 'components/APICard'
+import { SubscriptionsTableProps, ViewType } from './types'
+import { API, APIversion } from 'containers/Subscriptions/types'
 import Grid from '@material-ui/core/Grid'
 import CodeIcon from '@material-ui/icons/Code'
 import SubscriptionSelect from 'components/SubscriptionSelect'
+import AmpStoriesOutlinedIcon from '@material-ui/icons/AmpStoriesOutlined'
+import CalendarViewDayOutlinedIcon from '@material-ui/icons/CalendarViewDayOutlined'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import ApiSelect from 'components/ApiSelect'
+import Popover from '@material-ui/core/Popover'
+import MenuItem from '@material-ui/core/MenuItem'
+import { useTranslation } from 'react-i18next'
 
-const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ view }) => {
-  const availableAPIs: Array<APIversion> = [
-    {
-      API: 'PSD2 Payment Initiation',
-      vName: 'Payment Initiation API v1',
-      vNumber: 'v 1.04.3.2',
-    },
-    {
-      API: 'PSD2 Payment Initiation',
-      vName: 'Payment Initiation API v2',
-      vNumber: 'v 2.01.0',
-    },
-    {
-      API: 'Petstore',
-      vName: 'Petstore API v1',
-      vNumber: 'v 1.2.34',
-    },
-    {
-      API: 'PSD2 Account Information',
-      vName: 'AIS STET API v1',
-      vNumber: 'v 1.06',
-    },
-  ]
-
-  const subscribedAPIs: Array<APIsubbed> = [
-    {
-      API: 'PSD2 Payment Initiation',
-      apps: ['TA', 'T2'],
-    },
-    {
-      API: 'Petstore',
-      apps: ['TA'],
-    },
-    {
-      API: 'PSD2 Account Information',
-      apps: [],
-    },
-  ]
-
-  // const userApps: Array<App> = [
-  //   {
-  //     title: 'TA',
-  //   },
-  //   {
-  //     title: 'T2',
-  //   },
-  //   {
-  //     title: 'B2',
-  //   },
-  //   {
-  //     title: 'RCT',
-  //   },
-  // ]
-
-  function getApps (subscribedAPIs: Array<APIsubbed>) {
-    const appSub: any = []
-    subscribedAPIs.map((api) => {
-      appSub.push(api.apps)
-    })
-    return appSub
-  }
-
+const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ subscriptions, deleteAppSub, addAppSub }) => {
   const classes = useStyles()
-  const [appSub, setAppSub] = React.useState(getApps(subscribedAPIs))
+  const [t] = useTranslation()
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [anchorElFilter, setAnchorElFilter] = React.useState(null)
+  const [popApiId, setPopApiId] = React.useState(0)
+  const [filter, setFilter] = React.useState('')
+  const [view, setView] = React.useState<ViewType>('list')
+  const open = Boolean(anchorEl)
+  const filterOpen = Boolean(anchorElFilter)
 
-  function orderAPIs (list: any) {
-    return list.reduce((acc: any, APIv: any) => {
-      const { API, ...rest } = APIv
-      return { ...acc, [API]: [...(acc[API] || []), rest] }
-    }, {})
+  function changeView () {
+    if (view === 'list') {
+      setView('cards')
+    } else {
+      setView('list')
+    }
   }
 
-  const handleDelete = (app: App, apiNumber: number) => () => {
-    const indx: number = appSub[apiNumber].indexOf(app)
-    const newAppSub: any = [...appSub]
+  const handleDelete = (id: number, idApp: number) => () => {
+    deleteAppSub(id, idApp)
+  }
 
-    newAppSub[apiNumber].splice(indx, 1)
-    setAppSub(newAppSub)
+  const handleAdd = (APIid: number, appName: string) => () => {
+    const newAppNumber = subscriptions.subscribedAPIs[APIid].apps.length
+    addAppSub(APIid, appName, newAppNumber)
+  }
+
+  const handleClick = (APIid: number) => (event: any) => {
+    setAnchorEl(event.currentTarget)
+    setPopApiId(APIid)
+  }
+
+  const handleClickFilter = (event: any) => {
+    setAnchorElFilter(event.currentTarget)
+  }
+
+  const handleClose = () => {
+    setAnchorEl(null)
+  }
+
+  const handleCloseFilter = () => {
+    setAnchorElFilter(null)
+  }
+
+  const handleFilterClick = (apiName: string) => () => {
+    setFilter(apiName)
+  }
+
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement |
+  HTMLTextAreaElement>) => {
+    setFilter(event.target.value)
   }
 
   function subscriptionsView () {
     if (view === 'list') {
       return (
         <div className={classes.table}>
-          {console.log(appSub)}
-          {Object.keys(orderAPIs(availableAPIs)).map((API, indx) => (
-            <div key={indx} className={classes.apiCategoryContainer}>
-              <div className={classes.apiCard}>
-                <div className={classes.apiTitle}>
-                  {API}
-                </div>
-                <div className={classes.appsListContainer}>
-                  <SubscriptionSelect
-                    apps={appSub[indx]}
-                    handleDelete={handleDelete}
-                    apiNumber={indx}
-                  />
-                </div>
-                <div className={classes.icons}>
-                  <CodeIcon />
-                </div>
-              </div>
-              <div>
-                {orderAPIs(availableAPIs)[API].map((APIcard: APIVersion, indx: number) => {
-                  const { vName, vNumber } = APIcard
-                  return (
-                    <APIVersionCard
-                      key={indx}
-                      vName={vName}
-                      vNumber={vNumber}
+          <div className={classes.header}>
+            <div>{t('subscriptionsTable.header')}</div>
+            <div className={classes.actions}>{t('subscriptionsTable.actions')}</div>
+          </div>
+          {subscriptions.subscribedAPIs.filter(api => api.name.toLowerCase().includes(filter.toLowerCase()))
+            .map((api: API, indx: number) => (
+              <div key={indx} className={classes.apiContainer}>
+                <div className={classes.apiCard}>
+                  <div className={classes.apiTitle}>
+                    {api.name}
+                  </div>
+                  <div className={classes.appsListContainer}>
+                    <SubscriptionSelect
+                      apps={api.apps}
+                      handleDelete={handleDelete}
+                      apiNumber={indx}
+                      handleClick={handleClick(indx)}
                     />
-                  )
-                })}
+                  </div>
+
+                  <div className={classes.icons}>
+                    <CodeIcon />
+                  </div>
+                </div>
+                <div>
+                  {api.versions.map((APIcard: APIversion, indx: number) => {
+                    const { vName, vNumber } = APIcard
+                    return (
+                      <APIVersionCard
+                        key={indx}
+                        vName={vName}
+                        vNumber={vNumber}
+                      />
+                    )
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+
+          <Popover
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            <ApiSelect
+              userApps={subscriptions.userApps}
+              handleAdd={handleAdd}
+              APIid={popApiId}
+            />
+          </Popover>
+
         </div>
       )
     } else if (view === 'cards') {
       return (
         <div className={classes.cards}>
           <Grid container spacing={3}>
-            {Object.keys(orderAPIs(availableAPIs)).map((API, indx) => (
-              <Grid key={indx} item xs={12} sm={4}>
-                <div className={classes.apiCategoryContainer}>
-                  <APICard
-                    APIname={API}
-                    APIversions={orderAPIs(availableAPIs)[API]}
-                  />
-                </div>
-              </Grid>
-            ))}
+            {subscriptions.subscribedAPIs.filter(api => api.name.toLowerCase().includes(filter.toLowerCase()))
+              .map((api: API, indx: number) => (
+                <Grid key={indx} item xs={12} sm={4}>
+                  <div className={classes.cardContainer}>
+                    <div className={classes.apiDetail}>
+                      <h4 className={classes.cardTitle}>{api.name}</h4>
+
+                      <p className={classes.description}>
+                        {api.description}
+                      </p>
+
+                      <div className={classes.appsListCardContainer}>
+                        <SubscriptionSelect
+                          apps={api.apps}
+                          handleDelete={handleDelete}
+                          apiNumber={indx}
+                          handleClick={handleClick(indx)}
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      {api.versions.map((APIversion, indx) => (
+                        <div key={indx} className={classes.apiVersionCard}>
+                          <div>{APIversion.vName}</div>
+                          <div className={classes.vNumber}>{APIversion.vNumber}</div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </Grid>
+              ))}
           </Grid>
+
+          <Popover
+            open={open}
+            anchorEl={anchorEl}
+            onClose={handleClose}
+            anchorOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+            transformOrigin={{
+              vertical: 'bottom',
+              horizontal: 'left',
+            }}
+          >
+            <ApiSelect
+              userApps={subscriptions.userApps}
+              handleAdd={handleAdd}
+              APIid={popApiId}
+            />
+          </Popover>
+
         </div>
       )
     } else {
@@ -148,7 +198,46 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ view }) => {
     }
   }
 
-  return subscriptionsView()
+  return (
+    <div className={classes.viewContainer}>
+      <div className={classes.viewRow}>
+        <div className={classes.optionsContainer}>
+          <input
+            placeholder='Filter...'
+            name='filter'
+            type='text'
+            value={filter}
+            onChange={handleChange}
+            className={classes.filter}
+          />
+          <ExpandMoreIcon className={classes.icon} onClick={handleClickFilter} />
+          <div className={classes.viewIconContainer} onClick={changeView}>
+            {(view === 'list') ? <AmpStoriesOutlinedIcon /> : <CalendarViewDayOutlinedIcon />}
+          </div>
+        </div>
+      </div>
+
+      <Popover
+        open={filterOpen}
+        anchorEl={anchorElFilter}
+        onClose={handleCloseFilter}
+        anchorOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'bottom',
+          horizontal: 'left',
+        }}
+      >
+        {subscriptions.subscribedAPIs.map((api: API, indx: number) => (
+          <MenuItem onClick={handleFilterClick(api.name)} key={indx}>{api.name}</MenuItem>
+        ))}
+      </Popover>
+
+      {subscriptionsView()}
+    </div>
+  )
 }
 
 export default SubscriptionsTable

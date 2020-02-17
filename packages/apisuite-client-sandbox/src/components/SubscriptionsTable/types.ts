@@ -1,20 +1,10 @@
+import { SubStore } from 'containers/Subscriptions/types'
+
 export type ViewType = 'list' | 'cards'
 
 export interface SubscriptionsTableProps {
   view: ViewType,
-}
-
-export interface APIversion {
-  API: string,
-  vName: string,
-  vNumber: string,
-}
-
-export interface APIsubbed {
-  API: string,
-  apps: Array<string>,
-}
-
-export interface App {
-  title: string,
+  subscriptions: SubStore,
+  deleteAppSub: (APIid: number, appNumber: number) => void,
+  addAppSub: (APIid: number, appName: string, newAppNumber: number) => void,
 }

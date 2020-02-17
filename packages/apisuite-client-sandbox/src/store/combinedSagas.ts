@@ -5,11 +5,13 @@
 import auth from 'containers/Auth/sagas'
 import register from 'components/RegisterPortal/sagas'
 import applications from 'containers/Applications/sagas'
+import subscriptions from 'containers/Subscriptions/sagas'
 
 const sagas = [
   auth,
   register,
   applications,
+  subscriptions,
 ]
 
 export default sagas

@@ -21,6 +21,7 @@ export default makeStyles({
     display: 'flex',
     flexDirection: 'row',
     width: '100%',
+    fontSize: 14,
   },
   apiName: {
     width: '35%',
@@ -33,18 +34,5 @@ export default makeStyles({
     display: 'flex',
     flexDirection: 'row',
     width: '25%',
-  },
-  avatarContainer: {
-    width: 35,
-    display: 'flex',
-    flexDirection: 'row',
-    height: '100%',
-  },
-  avatar: {
-    fontSize: 12,
-    fontWeight: 300,
-    background: 'linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)',
-    width: 28,
-    height: 28,
   },
 })

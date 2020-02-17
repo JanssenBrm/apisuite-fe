@@ -3,11 +3,17 @@ import { makeStyles } from '@material-ui/styles'
 export default makeStyles({
   subSelect: {
     display: 'flex',
-    justifyContent: 'space-between',
     width: '100%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    color: '#ACACAC',
   },
-  endAdornment: {
+  dropdown: {
     display: 'flex',
+    width: '100%',
+    fontSize: 14,
+    margin: 4,
+    cursor: 'pointer',
   },
   chip: {
     display: 'flex',
@@ -18,9 +24,13 @@ export default makeStyles({
   chips: {
     display: 'flex',
     flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   loading: {
     color: 'white',
     opacity: 0.5,
+  },
+  icon: {
+    cursor: 'pointer',
   },
 })
