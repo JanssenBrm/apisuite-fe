@@ -95,7 +95,7 @@ export default makeStyles({
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
-    height: 438,
+    minHeight: 438,
     width: 289,
     backgroundColor: 'white',
     borderRadius: 4,
