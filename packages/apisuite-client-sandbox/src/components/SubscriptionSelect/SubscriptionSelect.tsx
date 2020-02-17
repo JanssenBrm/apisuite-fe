@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
 
-const SubscriptionSelect: React.FC<SubscriptionSelectProps> = ({ apps, handleDelete, apiNumber, handleClick }) => {
+const SubscriptionSelect: React.FC<SubscriptionSelectProps> = ({ apps, handleDelete, APIid, handleClick }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -25,7 +25,7 @@ const SubscriptionSelect: React.FC<SubscriptionSelectProps> = ({ apps, handleDel
           key={indx}
           label={app.name}
           className={classes.chip}
-          onDelete={handleDelete(apiNumber, indx)}
+          onDelete={handleDelete(APIid, indx)}
           {...chooseIcon(app.isLoading)}
         />
       ))}
@@ -35,9 +35,10 @@ const SubscriptionSelect: React.FC<SubscriptionSelectProps> = ({ apps, handleDel
   return (
     <div className={classes.subSelect}>
       {apps.length === 0
-        ? <div className={classes.dropdown} onClick={handleClick}>{t('subscriptionSelect.addApplication')}</div>
+        ? <div className={classes.dropdown} onClick={handleClick(APIid)}>{t('subscriptionSelect.addApplication')}</div>
         : chips()}
-      <ExpandMoreIcon className={classes.icon} onClick={handleClick} />
+      <ExpandMoreIcon className={classes.icon} onClick={handleClick(APIid)} />
+      {console.log(APIid)}
     </div>
   )
 }

@@ -11,6 +11,7 @@ const initialState: SubStore = {
   subscribedAPIs:
     [
       {
+        id: 42,
         name: 'PSD2 Payment Initiation',
         versions: [
           {
@@ -35,6 +36,7 @@ const initialState: SubStore = {
         description: 'With PSD2 the European Commission has published a new directive on payment services in the EEA internal market. Among others PSD2 contains regulations of new services to be operated by…',
       },
       {
+        id: 13,
         name: 'Petstore',
         versions: [
           {
@@ -51,6 +53,7 @@ const initialState: SubStore = {
         description: 'This Petstore API is amazing. I love dogs!',
       },
       {
+        id: 1000,
         name: 'PSD2 Account Information',
         versions: [
           {
@@ -88,11 +91,28 @@ const initialState: SubStore = {
 }
 
 const reducer: Reducer<SubStore, AnyAction> = (state = initialState, action) => {
+  const indx = state.subscribedAPIs.map(api => api.id).indexOf(action.APIid)
+  console.log('im here')
+  console.log(indx)
+  console.log(action.APIid)
   switch (action.type) {
+    // case DELETE_APP_SUB: {
+    //   return update(state, {
+    //     subscribedAPIs: {
+    //       [action.APIid]: {
+    //         apps: {
+    //           [action.appNumber]: {
+    //             isLoading: { $set: true },
+    //           },
+    //         },
+    //       },
+    //     },
+    //   })
+    // }
     case DELETE_APP_SUB: {
       return update(state, {
         subscribedAPIs: {
-          [action.APIid]: {
+          [indx]: {
             apps: {
               [action.appNumber]: {
                 isLoading: { $set: true },
@@ -106,7 +126,7 @@ const reducer: Reducer<SubStore, AnyAction> = (state = initialState, action) => 
     case DELETE_APP_SUB_SUCCESS: {
       return update(state, {
         subscribedAPIs: {
-          [action.APIid]: {
+          [indx]: {
             apps: { $splice: [[action.appNumber, 1]] },
           },
         },
@@ -116,7 +136,7 @@ const reducer: Reducer<SubStore, AnyAction> = (state = initialState, action) => 
     case ADD_APP_SUB: {
       return update(state, {
         subscribedAPIs: {
-          [action.APIid]: {
+          [indx]: {
             apps: {
               $push: [{
                 name: action.appName,
@@ -131,7 +151,7 @@ const reducer: Reducer<SubStore, AnyAction> = (state = initialState, action) => 
     case ADD_APP_SUB_SUCCESS: {
       return update(state, {
         subscribedAPIs: {
-          [action.APIid]: {
+          [indx]: {
             apps: {
               [action.newAppNumber]: {
                 isLoading: { $set: false },

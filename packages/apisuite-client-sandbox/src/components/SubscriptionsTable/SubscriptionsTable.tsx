@@ -38,7 +38,8 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ subscriptions, 
   }
 
   const handleAdd = (APIid: number, appName: string) => () => {
-    const newAppNumber = subscriptions.subscribedAPIs[APIid].apps.length
+    const indx = subscriptions.subscribedAPIs.map(api => api.id).indexOf(APIid)
+    const newAppNumber = subscriptions.subscribedAPIs[indx].apps.length
     addAppSub(APIid, appName, newAppNumber)
   }
 
@@ -87,8 +88,8 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ subscriptions, 
                     <SubscriptionSelect
                       apps={api.apps}
                       handleDelete={handleDelete}
-                      apiNumber={indx}
-                      handleClick={handleClick(indx)}
+                      APIid={api.id}
+                      handleClick={handleClick}
                     />
                   </div>
 
@@ -152,8 +153,8 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({ subscriptions, 
                         <SubscriptionSelect
                           apps={api.apps}
                           handleDelete={handleDelete}
-                          apiNumber={indx}
-                          handleClick={handleClick(indx)}
+                          APIid={api.id}
+                          handleClick={handleClick}
                         />
                       </div>
                     </div>

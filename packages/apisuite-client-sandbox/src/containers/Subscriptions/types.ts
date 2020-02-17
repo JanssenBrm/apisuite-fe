@@ -9,6 +9,7 @@ export interface App {
 }
 
 export interface API {
+  id: number,
   name: string,
   versions: Array<APIversion>,
   apps: Array<App>,
