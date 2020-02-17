@@ -92,23 +92,8 @@ const initialState: SubStore = {
 
 const reducer: Reducer<SubStore, AnyAction> = (state = initialState, action) => {
   const indx = state.subscribedAPIs.map(api => api.id).indexOf(action.APIid)
-  console.log('im here')
-  console.log(indx)
-  console.log(action.APIid)
+
   switch (action.type) {
-    // case DELETE_APP_SUB: {
-    //   return update(state, {
-    //     subscribedAPIs: {
-    //       [action.APIid]: {
-    //         apps: {
-    //           [action.appNumber]: {
-    //             isLoading: { $set: true },
-    //           },
-    //         },
-    //       },
-    //     },
-    //   })
-    // }
     case DELETE_APP_SUB: {
       return update(state, {
         subscribedAPIs: {
