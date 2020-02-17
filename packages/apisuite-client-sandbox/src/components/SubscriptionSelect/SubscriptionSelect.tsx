@@ -38,7 +38,6 @@ const SubscriptionSelect: React.FC<SubscriptionSelectProps> = ({ apps, handleDel
         ? <div className={classes.dropdown} onClick={handleClick(APIid)}>{t('subscriptionSelect.addApplication')}</div>
         : chips()}
       <ExpandMoreIcon className={classes.icon} onClick={handleClick(APIid)} />
-      {console.log(APIid)}
     </div>
   )
 }
