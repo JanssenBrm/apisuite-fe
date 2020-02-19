@@ -230,4 +230,11 @@ export default makeStyles({
   checkbox: {
     color: 'white',
   },
+  stepsideHeading: {
+    display: 'flex',
+    textAlign: 'left',
+  },
+  buttonLink: {
+    textDecoration: 'none',
+  },
 })

@@ -62,7 +62,7 @@ const Sandbox: React.FC<{}> = () => {
                     [classes.btn3]: slide.btn === 3,
                   })}
                 >
-                  <a href={slide.linkTo}>
+                  <a href={slide.linkTo} className={classes.buttonLink}>
                     {t(slide.btnStr)}
                   </a>
                 </div>
@@ -212,7 +212,7 @@ const Sandbox: React.FC<{}> = () => {
         </Panel>
 
         <aside className={classes.stepSide}>
-          <h1>Dive into the Sandbox</h1>
+          <h1 className={classes.stepsideHeading}>Dive into the Sandbox</h1>
           <p>
             Our example API Products let you use emulated customer
              data to test and enhance your digital products against.
@@ -228,7 +228,7 @@ const Sandbox: React.FC<{}> = () => {
             className={classes.btn}
             style={{ backgroundColor: '#333333', color: 'white', marginTop: 16 }}
           >
-            Register
+            <a className={classes.buttonLink} href='/register'>Register</a>
           </div>
         </aside>
       </section>
