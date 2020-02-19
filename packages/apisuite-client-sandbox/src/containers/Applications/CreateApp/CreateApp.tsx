@@ -130,7 +130,11 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
           <br />
 
           <InputLabel shrink>Application visibility</InputLabel>
-          <RadioBoxes options={radioOptions} selected={visibility} onChange={handleVisibilityChange} />
+          <RadioBoxes
+            options={radioOptions}
+            selected={visibility}
+            onChange={handleVisibilityChange}
+          />
 
           <br />
 
