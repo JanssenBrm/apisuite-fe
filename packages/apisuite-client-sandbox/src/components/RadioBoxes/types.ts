@@ -10,4 +10,6 @@ export interface RadioBoxesOption {
   label: string,
   desc: string,
   value: any,
+  disabled: boolean,
+  checked: boolean,
 }

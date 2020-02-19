@@ -19,7 +19,7 @@ const RadioBoxes: React.FC<RadioBoxesProps> = ({ options, selected, onChange }) 
 
   return (
     <RadioGroup className={classes.radioGroup} value={selected} onChange={onChange}>
-      {options.map(({ value, label, desc }) => (
+      {options.map(({ value, label, desc, disabled, checked }) => (
         <div
           key={value}
           className={clsx(classes.controlWrapper, { [classes.unselected]: value !== selected })}
@@ -30,6 +30,8 @@ const RadioBoxes: React.FC<RadioBoxesProps> = ({ options, selected, onChange }) 
             label={label}
             value={value}
             control={<WhiteRadio color='primary' />}
+            disabled={disabled}
+            checked={checked}
           />
 
           <p className={classes.desc}>{desc}</p>
