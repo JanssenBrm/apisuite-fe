@@ -14,4 +14,5 @@ export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
   showBackButton?: boolean,
   backButtonLabel?: string,
   onGoBackCLick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
+  logout: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
 }

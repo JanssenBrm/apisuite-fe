@@ -1,5 +1,7 @@
 import { ErrorReason } from 'util/request'
 import { AnyAction } from 'redux'
+import { ReactType } from 'react'
+import { Store } from 'store/types'
 
 export interface AuthStore {
   user?: User,
@@ -20,15 +22,23 @@ export interface AuthPayloads {
   },
   loginSuccess: {
     token: string,
-    user: User,
   },
   loginError: ErrorReason,
+  loginUser: {
+    token?: string,
+  },
+  loginUserSuccess: {
+    user: User,
+  },
+  loginUserError: ErrorReason,
 }
 
 export interface AuthStoreActionTypes {
   login: AnyAction & { payload: AuthPayloads['login'] },
   loginSuccess: AnyAction & { payload: AuthPayloads['loginSuccess'] },
   loginError: AnyAction & { error: AuthPayloads['loginError'] },
+  loginUserSuccess: AnyAction & { payload: AuthPayloads['loginUserSuccess'] },
+  loginUserError: AnyAction & { error: AuthPayloads['loginUserError'] },
   logout: AnyAction,
 }
 
@@ -37,4 +47,9 @@ export interface AuthStoreActionCreators {
   loginSuccess: (payload: AuthPayloads['loginSuccess']) => AuthStoreActionTypes['loginSuccess'],
   loginError: (error: AuthPayloads['loginError']) => AuthStoreActionTypes['loginError'],
   logout: () => AuthStoreActionTypes['logout'],
+}
+
+export interface RequireAuthProps {
+  component: ReactType,
+  auth: Store['auth'],
 }

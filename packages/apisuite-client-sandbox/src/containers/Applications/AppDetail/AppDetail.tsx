@@ -8,24 +8,87 @@ import Avatar from '@material-ui/core/Avatar'
 import Select from 'components/Select'
 import Panel from 'components/Panel'
 import Wheel from 'components/ApiSuiteWheel'
+import { useTranslation } from 'react-i18next'
 
 import { selectOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { AppDetailProps } from './types'
+import { AppData } from '../types'
 import { Link } from '@material-ui/core'
 
-const AppDetail: React.FC<AppDetailProps> = () => {
+const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, currentApp, deleteApp }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
+  const [t] = useTranslation()
+
+  const [buttonDisabled, setButtonDisabled] = React.useState(true)
+  const [input, setInput] = React.useState({
+    name: currentApp.name,
+    description: currentApp.description,
+    redirectUrl: currentApp.redirectUrl,
+    logo: currentApp.logo,
+    userId: currentApp.userId,
+    sandboxId: currentApp.sandboxId,
+    pubUrls: currentApp.pubUrls,
+  })
+
+  function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    updateApp({
+      name: input.name,
+      description: input.description,
+      redirectUrl: input.redirectUrl,
+      logo: input.logo,
+      userId: input.userId,
+      sandboxId: input.sandboxId,
+      pubUrls: input.pubUrls,
+      // TODO change after adding the fetch of the list of apps
+    }, '1')
+  }
+
+  function handleDeleteApp () {
+    // TODO change after adding the fetch of the list of apps
+    deleteApp('1')
+  }
+
+  function compareAppData (newAppData: AppData) {
+    if (JSON.stringify(newAppData) === JSON.stringify(currentApp)) {
+      setButtonDisabled(true)
+    } else {
+      setButtonDisabled(false)
+    }
+  }
+
+  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+    compareAppData({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+  }
+
+  React.useEffect(() => {
+    getAppDetails()
+    setInput({ ...currentApp })
+  }, [currentApp])
 
   return (
     <>
       <div className={classes.container}>
         <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
           <form noValidate autoComplete='off' className={classes.left}>
-            <InputLabel shrink>Application name</InputLabel>
-            <h1 className={classes.appName}>My Application</h1>
+            <FormField
+              label='Application Name'
+              placeholder='Your App name'
+              name='name'
+              type='text'
+              value={input.name}
+              onChange={handleInputs}
+            />
 
             <br />
 
@@ -34,7 +97,8 @@ const AppDetail: React.FC<AppDetailProps> = () => {
               placeholder='Describe your app'
               multiline
               rows={5}
-              value='Sed posuere consectetur est at lob ortis. Aenean eu leo quam. Pellentesque ornare sem lacinia quam. Posuere consectetur est at lob ortis. Aenean eu public.'
+              value={input.description}
+              onChange={handleInputs}
             />
 
             <br />
@@ -103,7 +167,10 @@ const AppDetail: React.FC<AppDetailProps> = () => {
             <div className={classes.fieldWrapper}>
               <FormField
                 label='Redirect URL'
-                value='https://localhost'
+                name='redirectUrl'
+                type='text'
+                value={input.redirectUrl}
+                onChange={handleInputs}
               />
 
               <Button variant='outlined' className={classes.iconBtn}>
@@ -115,65 +182,75 @@ const AppDetail: React.FC<AppDetailProps> = () => {
           </form>
 
           <aside className={classes.right}>
-            <Avatar className={classes.avatar}>MA</Avatar>
+            <form onSubmit={handleSubmit}>
 
-            <br />
+              <Avatar className={classes.avatar}>MA</Avatar>
 
-            <InputLabel shrink>Application Status</InputLabel>
-            <div className={classes.status}>
-              <SvgIcon name='circle' color='#2DB7B9' size={12} style={{ display: 'inline-block' }} />
-            &nbsp;&nbsp;
-              <span>Sandbox Access</span>
-            </div>
+              <br />
 
-            <br />
+              <InputLabel shrink>Application Status</InputLabel>
+              <div className={classes.status}>
+                <SvgIcon name='circle' color='#2DB7B9' size={12} style={{ display: 'inline-block' }} />
+              &nbsp;&nbsp;
+                <span>Sandbox Access</span>
+              </div>
 
-            <InputLabel shrink className={classes.marginBottom}>Application visibility</InputLabel>
+              <br />
 
-            <Select options={selectOptions} selected={selectOptions[0]} />
+              <InputLabel shrink className={classes.marginBottom}>Application visibility</InputLabel>
 
-            <br />
+              <Select options={selectOptions} selected={selectOptions[0]} />
 
-            <InputLabel shrink>Author</InputLabel>
-            <div className={classes.link}>Finish your team info</div>
+              <br />
 
-            <br />
+              <InputLabel shrink>Author</InputLabel>
+              <div className={classes.link}>Finish your team info</div>
 
-            <InputLabel shrink>Registration date</InputLabel>
-            <div>June 24th, 2019</div>
+              <br />
 
-            <br />
+              <InputLabel shrink>Registration date</InputLabel>
+              <div>June 24th, 2019</div>
 
-            <div
-              role='button'
-              className={clsx(classes.btn, classes.btn2, classes.disabled)}
-            >
-              Nothing to save
-            </div>
+              <br />
 
-            <br /><br /><br />
+              <Button
+                type='submit'
+                disabled={buttonDisabled}
+                className={clsx(classes.btn, classes.btn2, (buttonDisabled && classes.disabled))}
+              >
+                {buttonDisabled ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
+              </Button>
 
-            <div className={classes.divider} />
+              <br /><br /><br />
 
-            <br />
+              <div className={classes.divider} />
 
-            <InputLabel shrink>API subscriptions</InputLabel>
-            <div className={classes.link}>Manage API subscriptions</div>
+              <br />
 
-            <br />
+              <InputLabel shrink>API subscriptions</InputLabel>
+              <div className={classes.link}>Manage API subscriptions</div>
 
-            <InputLabel shrink className={classes.marginBottom}>Application scopes</InputLabel>
-            <div>
-              <span className={classes.tag}>aisp</span>
-              <span className={classes.tag}>piisp</span>
-              <span className={classes.tag}>pisp</span>
-            </div>
+              <br />
 
-            <br />
+              // TODO these need to be fetched from the BE
+              <InputLabel shrink className={classes.marginBottom}>Application scopes</InputLabel>
+              <div>
+                <span className={classes.tag}>aisp</span>
+                <span className={classes.tag}>piisp</span>
+                <span className={classes.tag}>pisp</span>
+              </div>
 
-            <InputLabel shrink>Additional actions</InputLabel>
-            <div className={classes.link}>Activity monitoring</div>
-            <div className={classes.link}>Delete application</div>
+              <br />
+
+              <InputLabel shrink>Additional actions</InputLabel>
+              <div className={classes.link}>Activity monitoring</div>
+              <div
+                className={classes.link}
+                onClick={handleDeleteApp}
+              >
+                Delete application
+              </div>
+            </form>
           </aside>
         </section>
       </div>

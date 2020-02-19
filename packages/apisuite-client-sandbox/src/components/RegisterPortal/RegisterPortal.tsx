@@ -11,7 +11,7 @@ import Shuffle from '@material-ui/icons/Shuffle'
 import generator from 'generate-password'
 import { useTranslation } from 'react-i18next'
 
-const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser }) => {
+const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -153,6 +153,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ registerUser }) => {
           title={registerTitle}
           buttonLabel={registerButtonLabel}
           buttonDisabled={buttonDisabled}
+          loading={auth.isAuthorizing}
           closeRoute={closeRoute}
           handleSubmit={handleSubmit}
         >

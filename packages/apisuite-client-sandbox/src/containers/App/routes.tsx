@@ -14,15 +14,17 @@ import Login from 'containers/Login'
 import Register from 'containers/Register'
 
 import { AppRouteProps } from './types'
+import RequireAuth from 'containers/Auth'
+import { AuthStore } from 'containers/Auth/types'
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
-  { path: '/dashboard', exact: true, component: LandingPage },
-  { path: '/dashboard/apps', exact: true, component: ListApps },
-  { path: '/dashboard/apps/create', exact: true, component: CreateApp },
-  { path: '/dashboard/apps/detail', exact: true, component: AppDetail },
+  { path: '/dashboard', exact: true, component: (auth: AuthStore) => <RequireAuth auth={auth} component={LandingPage} /> },
+  { path: '/dashboard/apps', exact: true, component: (auth: AuthStore) => <RequireAuth auth={auth} component={ListApps} /> },
+  { path: '/dashboard/apps/create', exact: true, component: (auth: AuthStore) => <RequireAuth auth={auth} component={CreateApp} /> },
+  { path: '/dashboard/apps/detail', exact: true, component: (auth: AuthStore) => <RequireAuth auth={auth} component={AppDetail} /> },
+  { path: '/dashboard/console', component: (auth: AuthStore) => <RequireAuth auth={auth} component={Console} /> },
   // #conditional-loader-start: console
-  { path: '/dashboard/console', component: Console },
   // #conditional-loader-end
   { path: '/login', component: Login },
   { path: '/register', component: Register },
@@ -33,6 +35,13 @@ export const routesConfig: AppRouteProps[] = [
 
 export default () => (
   <Switch key='routes'>
-    {routesConfig.map((options, indx) => <Route key={`routes-${indx}`} {...options} />)}
+    {routesConfig.map((route, indx) =>
+      <Route
+        key={`routes-${indx}`}
+        path={route.path}
+        exact={route.exact}
+        component={route.component}
+      />,
+    )}
   </Switch>
 )

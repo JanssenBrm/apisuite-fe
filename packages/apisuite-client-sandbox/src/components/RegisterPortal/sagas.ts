@@ -10,10 +10,11 @@ import request from 'util/request'
 
 export function * registerUser (action: RegisterAction) {
   const requestUrl = `${API_URL}${SIGNUP_PORT}/users/register`
-  yield call(request, requestUrl, {
+  yield call(request, {
+    url: requestUrl,
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(action.userData),
+    data: JSON.stringify(action.userData),
   })
 }
 

@@ -8,9 +8,11 @@ import { History } from 'history'
 
 import register from 'components/RegisterPortal/ducks'
 import auth from 'containers/Auth/ducks'
+import applications from 'containers/Applications/ducks'
 
 export default (history: History<any>) => combineReducers({
   router: connectRouter(history),
   auth,
   register,
+  applications,
 })

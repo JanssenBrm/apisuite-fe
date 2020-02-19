@@ -53,6 +53,16 @@ $header-space: 50px;
       display: flex;
       justify-content: flex-end;
 
+      .avatar {
+        width: 28px;
+        height: 28px;
+        border: 2px solid white;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
       & span {
         margin-right: 16px;
       }

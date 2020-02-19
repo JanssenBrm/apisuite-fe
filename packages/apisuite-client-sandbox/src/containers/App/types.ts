@@ -1,14 +1,15 @@
 import { RouteProps } from 'react-router-dom'
-import { AuthPayloads, User } from 'containers/Auth/types'
+import { AuthPayloads, AuthStore } from 'containers/Auth/types'
 import { History } from 'history'
 
 export interface AppProps extends AppDispatchToProps {
   history: History<any>,
-  user?: User,
+  auth: AuthStore,
+  logout: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
 }
 
 export interface AppDispatchToProps {
-  login: (payload: AuthPayloads['login']) => void,
+  loginUser: (payload: AuthPayloads['loginUser']) => void,
 }
 
 export type AppRouteProps = RouteProps

@@ -29,6 +29,15 @@ const useStyles = makeStyles({
     border: '1px solid white',
     borderRadius: 4,
   },
+  loading: {
+    position: 'absolute',
+    top: '50%',
+    right: 15,
+    marginTop: -12,
+    marginLeft: -12,
+    color: 'white',
+    opacity: 0.5,
+  },
 })
 
 export default useStyles
