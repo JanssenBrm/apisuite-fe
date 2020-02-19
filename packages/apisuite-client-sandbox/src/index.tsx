@@ -2,7 +2,7 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route } from 'react-router'
 import { ConnectedRouter } from 'connected-react-router'
 import store, { history } from 'store'
 

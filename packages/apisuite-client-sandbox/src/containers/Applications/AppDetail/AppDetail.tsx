@@ -96,6 +96,7 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
               label='Description'
               placeholder='Describe your app'
               multiline
+              name='description'
               rows={5}
               value={input.description}
               onChange={handleInputs}
@@ -106,7 +107,9 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
             <FormField
               label='Client URL'
               placeholder='https://localhost'
-              value='https://cloudoki.com'
+              name='pubUrls'
+              value={input.pubUrls}
+              onChange={handleInputs}
             />
 
             <br />
@@ -232,7 +235,6 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
 
               <br />
 
-              // TODO these need to be fetched from the BE
               <InputLabel shrink className={classes.marginBottom}>Application scopes</InputLabel>
               <div>
                 <span className={classes.tag}>aisp</span>

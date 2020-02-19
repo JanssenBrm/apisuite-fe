@@ -1,7 +1,6 @@
 import { ErrorReason } from 'util/request'
 import { AnyAction } from 'redux'
 import { ReactType } from 'react'
-import { Store } from 'store/types'
 
 export interface AuthStore {
   user?: User,
@@ -51,5 +50,5 @@ export interface AuthStoreActionCreators {
 
 export interface RequireAuthProps {
   component: ReactType,
-  auth: Store['auth'],
+  auth?: AuthStore,
 }
