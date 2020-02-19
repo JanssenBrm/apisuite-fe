@@ -1,4 +1,4 @@
-import { RouteProps } from 'react-router-dom'
+import { RouteProps } from 'react-router'
 import { AuthPayloads, AuthStore } from 'containers/Auth/types'
 import { History } from 'history'
 
