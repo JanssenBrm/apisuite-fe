@@ -11,7 +11,7 @@ const mapDispatchToProps: MapDispatchToPropsFunction<LoginDispatchToProps, any> 
 })
 
 const mapStateToProps = ({ auth }: Store) => ({
-  auth: auth,
+  auth: auth
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(LoginPortal)

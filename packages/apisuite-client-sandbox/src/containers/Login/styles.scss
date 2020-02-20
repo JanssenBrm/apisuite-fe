@@ -79,6 +79,15 @@
 
         .auth-form {
           padding-top: 10px;
+
+          .user-created-feedback {
+            border: 1px solid $primary-product-color;
+            color: $primary-product-color;
+            text-align: center;
+            padding: 12px 25px;
+            border-radius: 5px;
+            min-width: 50px;
+          }
         }
       }
     }

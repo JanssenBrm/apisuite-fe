@@ -47,6 +47,7 @@ const FormCard: React.FC<FormCardProps> = ({
           onClick={handleSubmit}
           fullWidth
           loading={loading}
+          disabled={buttonDisabled}
         />
       </form>
       <div className={classes.errorPlaceholder}>

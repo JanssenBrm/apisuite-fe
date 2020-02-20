@@ -8,12 +8,21 @@ import womanLogin from 'assets/woman_login.svg'
 
 const portalRoot = document.getElementById('root')
 
-const Login: React.FC<{}> = () => {
+const Login: React.FC<{}> = ({ register }) => {
 
   const [authView, setAuthView] = React.useState('login')
+  const [justRegistered, setJustRegistered] = React.useState(false)
+
+  React.useEffect(() => {
+    if (register.isRegistered) {
+      handleViewChange('login')
+      setJustRegistered(true)
+    }
+  }, [register.isRegistered])
 
   function handleViewChange (view) {
     setAuthView(view)
+    setJustRegistered(false)
   }
 
   return (
@@ -37,6 +46,7 @@ const Login: React.FC<{}> = () => {
                 {authView === 'register' &&
                   <RegisterPortal />
                 }
+                {justRegistered && <div className='user-created-feedback'>Your account is created, {register.user}!</div>}
               </div>
             </div>
           </div>

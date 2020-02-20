@@ -29,6 +29,7 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
     case LOGIN: {
       return update(state, {
         isAuthorizing: { $set: true },
+        error: { $set: undefined },
       })
     }
 
@@ -42,6 +43,7 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
       const { payload: { token } } = action as AuthStoreActionTypes['loginSuccess']
       return update(state, {
         authToken: { $set: token },
+        error: { $set: undefined },
       })
     }
 
@@ -98,8 +100,9 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
       // let nextPath = location.state && location.state.onSuccess ? location.state.onSuccess : '/'
       history.replace('/dashboard')
     }
-  } else if (action.type === LOGIN_ERROR) {
+  } else if (action.type === LOGIN_ERROR || action.type === LOGIN_USER_ERROR) {
     cookie.remove(TOKEN_KEY, { path: '/' })
+    history.replace('/auth')
   } else if (action.type === LOGOUT) {
     cookie.remove(TOKEN_KEY, { path: '/' })
     history.replace('/auth')
