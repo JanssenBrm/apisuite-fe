@@ -1,12 +1,12 @@
 import { put, takeLatest } from 'redux-saga/effects'
-import { AnyAction } from 'redux'
 import { deleteAppSubSuccess, addAppSubSuccess, DELETE_APP_SUB, ADD_APP_SUB } from './ducks'
+import { DeleteAppSubAction, AddAppSubAction } from './types'
 
-function * deleteAppSub (action: AnyAction) {
+function * deleteAppSub (action: DeleteAppSubAction) {
   yield put(deleteAppSubSuccess(action.APIid, action.appNumber))
 }
 
-function * addAppSub (action: AnyAction) {
+function * addAppSub (action: AddAppSubAction) {
   yield put(addAppSubSuccess(action.APIid, action.newAppNumber))
 }
 

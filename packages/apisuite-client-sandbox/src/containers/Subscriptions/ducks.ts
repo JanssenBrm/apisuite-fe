@@ -1,6 +1,6 @@
 import update from 'immutability-helper'
-import { SubStore } from './types'
-import { Reducer, AnyAction } from 'redux'
+import { SubStore, AppSubActions } from './types'
+import { Reducer } from 'redux'
 
 export const DELETE_APP_SUB = 'subscriptions/DELETE_APP_SUB'
 export const DELETE_APP_SUB_SUCCESS = 'subscriptions/DELETE_APP_SUB_SUCCESS'
@@ -90,8 +90,8 @@ const initialState: SubStore = {
     ],
 }
 
-const reducer: Reducer<SubStore, AnyAction> = (state = initialState, action) => {
-  const indx = state.subscribedAPIs.map(api => api.id).indexOf(action.APIid)
+const reducer: Reducer<SubStore, AppSubActions> = (state = initialState, action) => {
+  const indx = state.subscribedAPIs.findIndex(api => api.id === action.APIid)
 
   switch (action.type) {
     case DELETE_APP_SUB: {
