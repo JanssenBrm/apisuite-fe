@@ -5,6 +5,7 @@ import SvgIcon from 'components/SvgIcon'
 import InformDialog from 'components/InformDialog'
 import './styles.scss'
 import { NavigationProps } from './types'
+import { InformTarget } from 'containers/App/types'
 
 function getBarValues (parent: React.RefObject<HTMLDivElement>, target: React.RefObject<HTMLDivElement>) {
   const values = { left: 0, width: 0 }
@@ -40,6 +41,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     backButtonLabel,
     onGoBackCLick,
     logout,
+    inform,
     ...rest
   } = props
 
@@ -51,6 +53,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   const [openDialog, setOpenDialog] = React.useState(false)
   const [textTarget, setTextTarget] = React.useState('')
   const [titleTarget, setTitleTarget] = React.useState('')
+  const [informTarget, setInformTarget] = React.useState<InformTarget>('portal')
 
   // TODO: this needs another look into it, right now tabs and sub tabs are limit to 10 each.
   const refs = tabsRange.map(() => React.useRef(null))
@@ -69,12 +72,14 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 
       switch (tabIndex) {
         case 1:
-          setTextTarget('Contact blablabla')
           setTitleTarget('Contact Us')
+          setTextTarget('Contact Text')
+          setInformTarget('portal')
           break
         case 3:
-          setTextTarget('Demo blablabla')
-          setTitleTarget('Demo Title')
+          setTitleTarget('Demo')
+          setTextTarget('Demo Text')
+          setInformTarget('portal')
           break
         default:
           setTextTarget('')
@@ -111,8 +116,11 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 
   const scrolled = scrollPos >= 10
 
-  function handleConfirm () {
-    console.log('inform!!!!!')
+  function handleConfirm (email: string) {
+    inform({
+      email: email,
+      target: informTarget,
+    })
   }
 
   function handleCancel () {

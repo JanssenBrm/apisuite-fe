@@ -1,4 +1,5 @@
 import { User } from 'containers/Auth/types'
+import { AppStorePayloads } from 'containers/App/types'
 
 export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
   tabs: React.ReactNode[],
@@ -7,6 +8,7 @@ export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
   subTabIndex: number,
   name: string,
   logoSrc: string,
+  inform: (informData: AppStorePayloads['inform']) => void,
   onTabChange: (index: number) => void,
   onSubTabChange: (index: number) => void,
   user?: User,

@@ -57,3 +57,9 @@ export default async function request (init: AxiosRequestConfig) {
 
   return checkStatus(response)
 }
+
+export async function requestInform (init: AxiosRequestConfig) {
+  const response = await axios({ ...init, withCredentials: false })
+
+  return checkStatus(response)
+}
