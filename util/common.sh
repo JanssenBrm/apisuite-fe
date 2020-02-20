@@ -19,7 +19,7 @@ PROJECTS_LIST=$(ls -d ../${ROOT_PROJECTS_FOLDER}/*/ | cut -f3 -d/)
 # Identify modified directories
 ## Get latest succesful build/commit
 LAST_SUCCESSFUL_BUILD_URL="https://circleci.com/api/v1.1/project/github/$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH?filter=completed&limit=10&shallow=true"
-LAST_SUCCESSFUL_COMMIT=`curl -Ss -u "$CIRCLE_TOKEN:" $LAST_SUCCESSFUL_BUILD_URL | jq -r 'map(select (.workflows.job_name | startswith("deploy"))) | sort_by(.author_date|fromdate)|[last][0]["vcs_revision"]'`
+LAST_SUCCESSFUL_COMMIT=`curl -Ss -u "$CIRCLE_TOKEN:" $LAST_SUCCESSFUL_BUILD_URL | jq -r 'map(select (.workflows.job_name | startswith("deploy"))) | sort_by(.author_date|split("Z")[0]|split(".")[0]+"Z"|fromdate)|[last][0]["vcs_revision"]'`
 
 ## First commit in a branch
 if [[ ${LAST_SUCCESSFUL_COMMIT} == "null" ]]; then
