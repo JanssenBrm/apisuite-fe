@@ -2,6 +2,7 @@ import * as React from 'react'
 import clsx from 'clsx'
 import Avatar from '@material-ui/core/Avatar'
 import SvgIcon from 'components/SvgIcon'
+import InformDialog from 'components/InformDialog'
 import './styles.scss'
 import { NavigationProps } from './types'
 
@@ -47,6 +48,9 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   const [subBarValues, setSubBarValues] = React.useState({ left: 0, width: 0 })
   const tabsRef = React.useRef(null)
   const subTabsRef = React.useRef(null)
+  const [openDialog, setOpenDialog] = React.useState(false)
+  const [textTarget, setTextTarget] = React.useState('')
+  const [titleTarget, setTitleTarget] = React.useState('')
 
   // TODO: this needs another look into it, right now tabs and sub tabs are limit to 10 each.
   const refs = tabsRange.map(() => React.useRef(null))
@@ -58,6 +62,24 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 
   function handleTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
     const tabIndex = Number(currentTarget.dataset.tab) || 0
+
+    // TODO delete once these pages are created
+    if (tabIndex === 1 || tabIndex === 3) {
+      setOpenDialog(true)
+
+      switch (tabIndex) {
+        case 1:
+          setTextTarget('Contact blablabla')
+          setTitleTarget('Contact Us')
+          break
+        case 3:
+          setTextTarget('Demo blablabla')
+          setTitleTarget('Demo Title')
+          break
+        default:
+          setTextTarget('')
+      }
+    }
 
     if (tabIndex < tabs.length) {
       onTabChange(tabIndex)
@@ -88,6 +110,14 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   }, [subTabIndex, subTabs])
 
   const scrolled = scrollPos >= 10
+
+  function handleConfirm () {
+    console.log('inform!!!!!')
+  }
+
+  function handleCancel () {
+    setOpenDialog(false)
+  }
 
   return (
     <div className={clsx('navigation', className, { scrolled: scrolled || forceScrolled })} {...rest}>
@@ -157,6 +187,15 @@ const Navigation: React.FC<NavigationProps> = (props) => {
           </div>
         </div>
       )}
+
+      <InformDialog
+        textTarget={textTarget}
+        titleTarget={titleTarget}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+        open={openDialog}
+      />
+
     </div>
   )
 }
