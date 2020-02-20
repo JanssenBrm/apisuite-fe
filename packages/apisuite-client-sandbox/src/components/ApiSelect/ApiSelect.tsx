@@ -5,11 +5,11 @@ import MenuItem from '@material-ui/core/MenuItem'
 
 const ApiSelect: React.FC<ApiSelectProps> = ({ userApps, handleAdd, APIid }) => {
   return (
-    <div>
+    <>
       {userApps.map((app: App, indx: number) => (
         <MenuItem onClick={handleAdd(APIid, app.name)} key={indx}>{app.name}</MenuItem>
       ))}
-    </div>
+    </>
   )
 }
 
