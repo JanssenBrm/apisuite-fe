@@ -6,6 +6,7 @@ export interface AuthStore {
   user?: User,
   authToken?: string,
   isAuthorizing: boolean,
+  error?: string
 }
 
 export interface User {

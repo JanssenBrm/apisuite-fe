@@ -7,6 +7,7 @@ import useStyles from './styles'
 import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Shuffle from '@material-ui/icons/Shuffle'
 import generator from 'generate-password'
 import { useTranslation } from 'react-i18next'
@@ -34,7 +35,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
   const emailFieldId = 'email-field'
   const passFieldId = 'pass-field'
   const registerTitle = 'Registration'
-  const registerButtonLabel = 'Confirm'
+  const registerButtonLabel = 'CREATE ACCOUNT'
   const closeRoute = '/'
   const passMinLength = 12
 
@@ -150,7 +151,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
     <div className={classes.registerContainer}>
       <div className={classes.content}>
         <FormCard
-          title={registerTitle}
+          // title={registerTitle}
           buttonLabel={registerButtonLabel}
           buttonDisabled={buttonDisabled}
           loading={auth.isAuthorizing}
@@ -158,10 +159,10 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
           handleSubmit={handleSubmit}
         >
           <div className={classes.fieldContainer}>
-            <h5 className={classes.fieldTitle}>GDPR protected</h5>
+            {/* <h5 className={classes.fieldTitle}>GDPR protected</h5> */}
             <TextField
               id={nameFieldId}
-              placeholder='Your name'
+              label='Your name'
               variant='outlined'
               margin='none'
               type='text'
@@ -179,10 +180,10 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
             {nameError && <div className={classes.alert}>{t('registerPortal.warnings.name')}</div>}
           </div>
           <div className={classes.fieldContainer}>
-            <h5 className={classes.fieldTitle}>E-mail address</h5>
+            {/* <h5 className={classes.fieldTitle}>E-mail address</h5> */}
             <TextField
               id={emailFieldId}
-              placeholder='example@cloudoki.com'
+              label='E-mail'
               variant='outlined'
               margin='none'
               type='email'
@@ -199,10 +200,11 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
             {emailError && <div className={classes.alert}>{t('registerPortal.warnings.email')}</div>}
           </div>
           <div className={classes.fieldContainer}>
-            <h5 className={classes.fieldTitle}>Pass Phrase</h5>
+            {/* <h5 className={classes.fieldTitle}>Pass Phrase</h5> */}
             <div className={classes.passPhraseContainer}>
               <TextField
                 id={passFieldId}
+                label='Password'
                 variant='outlined'
                 margin='none'
                 type={showPassword ? 'text' : 'password'}
@@ -214,9 +216,18 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
                 error={passError}
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
+                  endAdornment: <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
                 }}
               />
-              <div className={classes.btnsContainer}>
+              {/* <div className={classes.btnsContainer}>
                 <IconButton
                   onClick={handleClickShowPassword}
                 >
@@ -229,7 +240,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
                 >
                   <Shuffle id='shuffle-button' className={classes.shuffleIcon} />
                 </IconButton>
-              </div>
+              </div> */}
             </div>
             {passError &&
               <div className={classes.bigAlert}>{t('registerPortal.warnings.password')}</div>}

@@ -88,7 +88,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       />
 
       {routes()}
-      <Footer />
+      {/* <Footer /> */}
     </ThemeProvider>
   )
 }

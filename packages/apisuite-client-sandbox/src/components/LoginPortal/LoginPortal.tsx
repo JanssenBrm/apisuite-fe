@@ -6,6 +6,7 @@ import useStyles from './styles'
 import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import InputAdornment from '@material-ui/core/InputAdornment';
 import { useTranslation } from 'react-i18next'
 
 const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
@@ -100,18 +101,20 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
     <div className={classes.loginContainer}>
       <div className={classes.content}>
         <FormCard
-          title={t('loginPortal.title')}
+          // title={t('loginPortal.title')}
           buttonLabel={t('loginPortal.button')}
           buttonDisabled={buttonDisabled}
           loading={auth.isAuthorizing}
+          error={auth.error}
           closeRoute={closeRoute}
           handleSubmit={handleSubmit}
         >
           <div className={classes.fieldContainer}>
-            <h5 className={classes.fieldTitle}>{t('loginPortal.fields.email')}</h5>
+            {/* <h5 className={classes.fieldTitle}>{t('loginPortal.fields.email')}</h5> */}
             <TextField
               id={emailFieldId}
-              placeholder='example@cloudoki.com'
+              label='E-mail'
+              defaultValue="small"
               variant='outlined'
               margin='none'
               type='email'
@@ -129,10 +132,11 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
             {emailError && <div className={classes.alert}>{t('loginPortal.warnings.email')}.</div>}
           </div>
           <div className={classes.fieldContainer}>
-            <h5 className={classes.fieldTitle}>{t('loginPortal.fields.password')}</h5>
+            {/* <h5 className={classes.fieldTitle}>{t('loginPortal.fields.password')}</h5> */}
             <div className={classes.passPhraseContainer}>
               <TextField
                 id={passFieldId}
+                label='Password'
                 variant='outlined'
                 margin='none'
                 type={showPassword ? 'text' : 'password'}
@@ -144,9 +148,18 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
                 fullWidth
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
+                  endAdornment: <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      edge="end"
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
                 }}
               />
-              <div className={classes.btnsContainer}>
+              {/* <div className={classes.btnsContainer}>
                 <IconButton
                   onClick={handleClickShowPassword}
                 >
@@ -154,12 +167,12 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
                     ? <VisibilityOff className={classes.visibilityIcon} />
                     : <Visibility className={classes.visibilityIcon} />}
                 </IconButton>
-              </div>
+              </div> */}
             </div>
             {passError && <div className={classes.alert}>{t('loginPortal.warnings.password')}</div>}
             <div className={classes.optionsContainer}>
-              <a className={classes.option} href='/'>Forgot your pass phrase?</a>
-              <a className={classes.option} href='/register'>Not registered yet? Sign up.</a>
+              {/* <a className={classes.option} href='/'>Forgot your pass phrase?</a> */}
+              {/* <a className={classes.option} href='/register'>Not registered yet? Sign up.</a> */}
             </div>
           </div>
         </FormCard>
