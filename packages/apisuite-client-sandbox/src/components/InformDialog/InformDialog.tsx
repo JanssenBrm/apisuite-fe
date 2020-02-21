@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { createMuiTheme } from '@material-ui/core/styles'
-import { ThemeProvider, makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@material-ui/styles'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
@@ -8,17 +7,13 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
+import Checkbox from '@material-ui/core/Checkbox'
+import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { InformDialogProps } from './types'
-
-const theme = createMuiTheme({
-  palette: {
-    primary: { main: '#2DB7BA' },
-    secondary: { main: '#035E86' },
-  },
-  spacing: (factor: number) => 8 * factor,
-})
 
 const useStyles = makeStyles({
   textField: {
@@ -28,7 +23,7 @@ const useStyles = makeStyles({
     paddingLeft: 8,
   },
   confirmWrapper: {
-    margin: theme.spacing(1),
+    // margin: theme.spacing(1),
     position: 'relative',
   },
   progress: {
@@ -42,7 +37,7 @@ const useStyles = makeStyles({
 
 const defaultValues = {
   email: '',
-  terms: true,
+  terms: false,
   valid: false,
   errorHelper: '',
 }
@@ -56,7 +51,7 @@ const getEmailError = (value: string) => {
 }
 
 const InformDialog: React.FC<InformDialogProps> = (
-  { open, textTarget, onCancel, onConfirm, showLoading, error, ...props },
+  { open, textTarget, titleTarget, onCancel, onConfirm, showLoading, error, ...props },
 ) => {
   const classes = useStyles()
   const [values, setValues] = React.useState(defaultValues)
@@ -79,13 +74,13 @@ const InformDialog: React.FC<InformDialogProps> = (
     setValues(newValues)
   }
 
-  // const handleCheck = (name: 'terms') => ({ target: { checked } }: any) => {
-  //   const newValues = { ...values, [name]: checked }
+  const handleCheck = (name: 'terms') => ({ target: { checked } }: any) => {
+    const newValues = { ...values, [name]: checked }
 
-  //   newValues.valid = newValues.terms && !!newValues.email && !newValues.errorHelper
+    newValues.valid = newValues.terms && !!newValues.email && !newValues.errorHelper
 
-  //   setValues(newValues)
-  // }
+    setValues(newValues)
+  }
 
   function handleConfirm () {
     if (values.valid) {
@@ -98,80 +93,75 @@ const InformDialog: React.FC<InformDialogProps> = (
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <Dialog data-testid='inform-dialog' open={open} {...props}>
-        <DialogTitle>Keep me posted</DialogTitle>
-        <DialogContent>
-          <DialogContentText data-testid='inform-dialog-text'>
-            Whoah! We're not quite there yet but we promise to let you know
-            the minute we launch the full product version!
-            <br /><br />
-            Let us know where to send updates to.
-          </DialogContentText>
+    <Dialog data-testid='inform-dialog' open={open} {...props}>
+      <DialogTitle>{titleTarget}</DialogTitle>
+      <DialogContent>
+        <DialogContentText data-testid='inform-dialog-text'>
+          {textTarget}
+        </DialogContentText>
 
-          <form noValidate autoComplete='off' onSubmit={preventDefault}>
-            <TextField
-              data-testid='inform-dialog-email'
-              className={classes.textField}
-              label='Email Address'
-              value={values.email}
-              error={!!values.errorHelper || !!error}
-              helperText={values.errorHelper || error}
-              onChange={handleChange('email')}
-              margin='dense'
-              type='email'
-              variant='outlined'
-              fullWidth
-              autoFocus
-              disabled={showLoading}
-            />
-
-            {/* <FormGroup row className={classes.formGroup}>
-              <FormControlLabel
-                label={
-                  <>
-                    * I accept the <Link target='_blank' href='/terms'>terms & conditions</Link>
-                  </>
-                }
-                control={
-                  <Checkbox
-                    data-testid='inform-dialog-terms'
-                    checked={values.terms}
-                    onChange={handleCheck('terms')}
-                    color='primary'
-                    disabled={showLoading}
-                  />
-                }
-              />
-            </FormGroup> */}
-          </form>
-        </DialogContent>
-
-        <DialogActions>
-          <Button
-            data-testid='inform-dialog-cancel'
-            color='primary'
-            onClick={onCancel}
+        <form noValidate autoComplete='off' onSubmit={preventDefault}>
+          <TextField
+            data-testid='inform-dialog-email'
+            className={classes.textField}
+            label='Email Address'
+            value={values.email}
+            error={!!values.errorHelper || !!error}
+            helperText={values.errorHelper || error}
+            onChange={handleChange('email')}
+            margin='dense'
+            type='email'
+            variant='outlined'
+            fullWidth
+            autoFocus
             disabled={showLoading}
-          >
+          />
+
+          <FormGroup row className={classes.formGroup}>
+            <FormControlLabel
+              label={
+                <>
+                  * I accept the <Link target='_blank' href='/terms'>terms & conditions</Link>
+                </>
+              }
+              control={
+                <Checkbox
+                  data-testid='inform-dialog-terms'
+                  checked={values.terms}
+                  onChange={handleCheck('terms')}
+                  color='primary'
+                  disabled={showLoading}
+                />
+              }
+            />
+          </FormGroup>
+        </form>
+      </DialogContent>
+
+      <DialogActions>
+        <Button
+          data-testid='inform-dialog-cancel'
+          color='primary'
+          onClick={onCancel}
+          disabled={showLoading}
+        >
             Cancel
+        </Button>
+
+        <div className={classes.confirmWrapper}>
+          <Button
+            data-testid='inform-dialog-submit'
+            color='primary'
+            onClick={handleConfirm}
+            disabled={!values.valid || showLoading}
+          >
+              Submit
           </Button>
 
-          <div className={classes.confirmWrapper}>
-            <Button
-              data-testid='inform-dialog-submit'
-              color='primary'
-              onClick={handleConfirm}
-              disabled={!values.valid || showLoading}
-            >
-              Submit
-            </Button>
-
-            {showLoading && <CircularProgress size={24} className={classes.progress} />}
-          </div>
-        </DialogActions>
-      </Dialog>
-    </ThemeProvider>
+          {showLoading && <CircularProgress size={24} className={classes.progress} />}
+        </div>
+      </DialogActions>
+    </Dialog>
   )
 }
 

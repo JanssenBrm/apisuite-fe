@@ -26,10 +26,15 @@ import partnersUrl from 'assets/partners.png'
 const Sandbox: React.FC<{}> = () => {
   const classes = useStyles()
   const [t] = useTranslation()
+  const [termsCheck, setTermsCheck] = React.useState(false)
 
   // #conditional-loader-start: alert
   window.alert(config.navbar.name)
   // #conditional-loader-end
+
+  function handleCheckboxClick () {
+    setTermsCheck(!termsCheck)
+  }
 
   return (
     <main className={classes.root}>
@@ -62,7 +67,7 @@ const Sandbox: React.FC<{}> = () => {
                     [classes.btn3]: slide.btn === 3,
                   })}
                 >
-                  <a href={slide.linkTo}>
+                  <a href={slide.linkTo} className={classes.buttonLink}>
                     {t(slide.btnStr)}
                   </a>
                 </div>
@@ -212,7 +217,7 @@ const Sandbox: React.FC<{}> = () => {
         </Panel>
 
         <aside className={classes.stepSide}>
-          <h1>Dive into the Sandbox</h1>
+          <h1 className={classes.stepsideHeading}>Dive into the Sandbox</h1>
           <p>
             Our example API Products let you use emulated customer
              data to test and enhance your digital products against.
@@ -228,7 +233,7 @@ const Sandbox: React.FC<{}> = () => {
             className={classes.btn}
             style={{ backgroundColor: '#333333', color: 'white', marginTop: 16 }}
           >
-            Register
+            <a className={classes.buttonLink} href='/register'>Register</a>
           </div>
         </aside>
       </section>
@@ -264,19 +269,18 @@ const Sandbox: React.FC<{}> = () => {
                 margin='dense'
                 type='email'
                 fullWidth
-                InputProps={{
-                  classes: { input: classes.emailTextfield },
-                }}
+                className={classes.emailTextfield}
               />
 
-              <div
-                role='button'
+              <Button
                 arial-label='register'
-                className={classes.btn}
-                style={{ backgroundColor: '#2DB7BA', color: '#333333', marginLeft: 12, maxHeight: 40 }}
+                type='submit'
+                disabled={!termsCheck}
+                className={classes.btn4}
+                // style={{ backgroundColor: '#2DB7BA', color: '#333333', marginLeft: 12, maxHeight: 40 }}
               >
                 Subscribe
-              </div>
+              </Button>
             </div>
 
             <br />
@@ -284,7 +288,6 @@ const Sandbox: React.FC<{}> = () => {
             <FormGroup row>
               <FormControlLabel
                 classes={{ label: classes.checkBoxLabel }}
-
                 label={
                   <>
                     I agree that Cloudoki sends me newsletters about API related news. I can withdraw my consent at any
@@ -294,9 +297,10 @@ const Sandbox: React.FC<{}> = () => {
                 }
                 control={
                   <Checkbox
-                    checked={false}
+                    checked={termsCheck}
                     color='primary'
                     classes={{ root: classes.checkbox }}
+                    onClick={handleCheckboxClick}
                   />
                 }
               />
