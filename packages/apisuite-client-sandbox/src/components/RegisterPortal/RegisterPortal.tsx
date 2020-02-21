@@ -12,7 +12,7 @@ import Shuffle from '@material-ui/icons/Shuffle'
 import generator from 'generate-password'
 import { useTranslation } from 'react-i18next'
 
-const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser }) => {
+const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser, defaultEmail }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -25,6 +25,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
   const [filledEmail, setFilledEmail] = React.useState(false)
   const [filledPass, setFilledPass] = React.useState(false)
   const [buttonDisabled, setButtonDisabled] = React.useState(true)
+  const [formEdited, setFormEdited] = React.useState(false)
   const [input, setInput] = React.useState({
     name: '',
     email: '',
@@ -84,6 +85,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
       }
       isFormValid(input.name, input.email, e.target.value)
     }
+    setFormEdited(true)
   }
 
   function handleClickShowPassword () {
@@ -136,7 +138,11 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
         setNameError(!isValidName(input.name))
       }
     }
-  }, [focusedField])
+
+    if (defaultEmail && !formEdited) {
+      setInput({email: atob(defaultEmail)})
+    }
+  }, [focusedField, defaultEmail])
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
