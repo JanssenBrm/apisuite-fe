@@ -96,7 +96,7 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
   } else if (action.type === LOGIN_USER_SUCCESS) {
     const location = history.location
 
-    if (location.pathname === '/auth') {
+    if (location.pathname.startsWith('/auth')) {
       // let nextPath = location.state && location.state.onSuccess ? location.state.onSuccess : '/'
       history.replace('/dashboard')
     }

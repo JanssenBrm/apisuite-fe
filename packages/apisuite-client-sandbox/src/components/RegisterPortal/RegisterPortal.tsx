@@ -38,10 +38,10 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
   const registerTitle = 'Registration'
   const registerButtonLabel = 'CREATE ACCOUNT'
   const closeRoute = '/'
-  const passMinLength = 12
+  const passMinLength = 6
 
   function isValidName (name: string) {
-    return (name.length > 0)
+    return (name && name.length > 0)
   }
 
   function isValidEmail (email: string) {
@@ -50,11 +50,11 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
   }
 
   function isValidPass (pass: string) {
-    const uppercase = /[A-Z]/
-    const lowercase = /[a-z]/
-    const symbol = /[\W]{1,}/
+    // const uppercase = /[A-Z]/
+    // const lowercase = /[a-z]/
+    // const symbol = /[\W]{1,}/
     const passLength = (pass.length >= passMinLength)
-    return (uppercase.test(pass) && lowercase.test(pass) && symbol.test(pass) && passLength)
+    return (passLength)
   }
 
   function isFormValid (name: string, email: string, pass: string) {

@@ -23,7 +23,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   React.useEffect(() => {
     const pathname = history.location.pathname
 
-    if (auth.authToken !== '' && !auth.user) {
+    if (auth.authToken && !auth.user) {
       loginUser({ token: auth.authToken })
     }
 
@@ -35,6 +35,8 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
     if (pathname.startsWith('/auth')) {
       setNavigations(false)
+    } else {
+      setNavigations(true)
     }
 
     const gb = gobackConfig.find((item) => item.path === pathname)
