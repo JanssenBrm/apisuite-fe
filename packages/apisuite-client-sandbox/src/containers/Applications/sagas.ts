@@ -79,11 +79,11 @@ export function * getAppDetails () {
   yield put(getAppDetailsSuccess({
     name: 'My Application Name',
     description: 'Application description',
-    redirectUrl: 'redirectUrl',
+    redirectUrl: 'redirect url',
     logo: 'logo',
     userId: '111',
     sandboxId: '999',
-    pubUrls: '',
+    pubUrls: 'https://cloudoki.com',
   }))
 }
 
