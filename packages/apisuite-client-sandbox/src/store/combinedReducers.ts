@@ -9,6 +9,7 @@ import { History } from 'history'
 import register from 'components/RegisterPortal/ducks'
 import auth from 'containers/Auth/ducks'
 import applications from 'containers/Applications/ducks'
+import app from 'containers/App/ducks'
 import subscriptions from 'containers/Subscriptions/ducks'
 
 export default (history: History<any>) => combineReducers({
@@ -16,5 +17,6 @@ export default (history: History<any>) => combineReducers({
   auth,
   register,
   applications,
+  app,
   subscriptions,
 })

@@ -64,6 +64,20 @@ export default makeStyles({
     color: 'white',
     border: '1px solid white',
   },
+  btn4: {
+    display: 'flex',
+    color: '#333333',
+    backgroundColor: '#2DB7BA',
+    padding: '8px 24px',
+    borderRadius: 4,
+    marginLeft: 12,
+    cursor: 'pointer',
+    fontWeight: 500,
+    '&:hover': {
+      color: '#FFF',
+      backgroundColor: '#2DB7BA',
+    },
+  },
   cardContent: {
     display: 'flex',
     flexDirection: 'column',
@@ -216,9 +230,9 @@ export default makeStyles({
   },
   emailTextfield: {
     backgroundColor: '#646464',
-    border: '1px solid #7C7C7C',
     borderRadius: 4,
     color: '#ACACAC',
+    margin: 0,
   },
   checkBoxLabel: {
     fontSize: '14px',
@@ -229,5 +243,12 @@ export default makeStyles({
   },
   checkbox: {
     color: 'white',
+  },
+  stepsideHeading: {
+    display: 'flex',
+    textAlign: 'left',
+  },
+  buttonLink: {
+    textDecoration: 'none',
   },
 })

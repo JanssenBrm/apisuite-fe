@@ -51,7 +51,7 @@ const getEmailError = (value: string) => {
 }
 
 const InformDialog: React.FC<InformDialogProps> = (
-  { open, textTarget, onCancel, onConfirm, showLoading, error, ...props },
+  { open, textTarget, titleTarget, onCancel, onConfirm, showLoading, error, ...props },
 ) => {
   const classes = useStyles()
   const [values, setValues] = React.useState(defaultValues)
@@ -94,11 +94,10 @@ const InformDialog: React.FC<InformDialogProps> = (
 
   return (
     <Dialog data-testid='inform-dialog' open={open} {...props}>
-      <DialogTitle>Inform me</DialogTitle>
+      <DialogTitle>{titleTarget}</DialogTitle>
       <DialogContent>
         <DialogContentText data-testid='inform-dialog-text'>
-            To subscribe to the {textTarget} demo, please enter your email address here. We will send updates
-            occasionally.
+          {textTarget}
         </DialogContentText>
 
         <form noValidate autoComplete='off' onSubmit={preventDefault}>
