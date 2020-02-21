@@ -2,7 +2,7 @@
  * @module RegisterPortal/sagas
  */
 
-import { REGISTER_USER, REGISTER_USER_SUCCESS, REGISTER_USER_ERROR, registerActions } from './ducks'
+import { REGISTER_USER, registerActions } from './ducks'
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { RegisterAction } from './types'
 import { API_URL, SIGNUP_PORT } from 'constants/endpoints'

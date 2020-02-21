@@ -5,5 +5,6 @@ import { ApplicationsStore } from 'containers/Applications/types'
 export interface Store {
   router: RouterState,
   auth: AuthStore,
+  register: any,
   applications: ApplicationsStore,
 }

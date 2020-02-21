@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider, makeStyles } from '@material-ui/styles'
-import { blue, amber } from '@material-ui/core/colors'
 import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
@@ -9,10 +8,6 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { InformDialogProps } from './types'
@@ -61,7 +56,7 @@ const getEmailError = (value: string) => {
 }
 
 const InformDialog: React.FC<InformDialogProps> = (
-  { open, textTarget, onCancel, onConfirm, showLoading, error, ...props }
+  { open, textTarget, onCancel, onConfirm, showLoading, error, ...props },
 ) => {
   const classes = useStyles()
   const [values, setValues] = React.useState(defaultValues)
@@ -108,8 +103,9 @@ const InformDialog: React.FC<InformDialogProps> = (
         <DialogTitle>Keep me posted</DialogTitle>
         <DialogContent>
           <DialogContentText data-testid='inform-dialog-text'>
-            Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!
-            <br/><br/>
+            Whoah! We're not quite there yet but we promise to let you know
+            the minute we launch the full product version!
+            <br /><br />
             Let us know where to send updates to.
           </DialogContentText>
 

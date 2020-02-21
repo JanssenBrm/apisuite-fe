@@ -76,26 +76,27 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      {navigations && <Navigation
-        key='app-navigation'
-        tabs={tabs.map((tab) => tab.label)}
-        subTabs={Array.isArray(subTabs) ? subTabs.map((tab) => tab.label) : undefined}
-        tabIndex={currentTab}
-        subTabIndex={currentSubTab}
-        onTabChange={handleOnTabChange}
-        onSubTabChange={handleOnSubTabChange}
-        name={config.navbar.name}
-        logoSrc={requireImage(config.navbar.logoUrl)}
-        user={auth.user}
-        forceScrolled={navScrolled}
-        showBackButton={gobackLabel.length > 0}
-        backButtonLabel={gobackLabel}
-        onGoBackCLick={handleGobackClick}
-        logout={logout}
-      />}
+      {navigations &&
+        <Navigation
+          key='app-navigation'
+          tabs={tabs.map((tab) => tab.label)}
+          subTabs={Array.isArray(subTabs) ? subTabs.map((tab) => tab.label) : undefined}
+          tabIndex={currentTab}
+          subTabIndex={currentSubTab}
+          onTabChange={handleOnTabChange}
+          onSubTabChange={handleOnSubTabChange}
+          name={config.navbar.name}
+          logoSrc={requireImage(config.navbar.logoUrl)}
+          user={auth.user}
+          forceScrolled={navScrolled}
+          showBackButton={gobackLabel.length > 0}
+          backButtonLabel={gobackLabel}
+          onGoBackCLick={handleGobackClick}
+          logout={logout}
+        />}
 
       {routes()}
-      
+
       {navigations && <Footer />}
     </ThemeProvider>
   )

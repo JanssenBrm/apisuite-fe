@@ -37,7 +37,7 @@ const useStyles = makeStyles({
   },
   errorPlaceholder: {
     minHeight: 50,
-    marginTop: 30
+    marginTop: 30,
   },
   errorAlert: {
     backgroundColor: '#FF1515',
@@ -45,7 +45,7 @@ const useStyles = makeStyles({
     padding: '12px 25px',
     borderRadius: 5,
     minHeight: 50,
-  }
+  },
 })
 
 export default useStyles

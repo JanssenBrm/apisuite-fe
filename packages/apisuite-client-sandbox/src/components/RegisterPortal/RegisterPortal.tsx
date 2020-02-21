@@ -7,9 +7,7 @@ import useStyles from './styles'
 import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import InputAdornment from '@material-ui/core/InputAdornment';
-import Shuffle from '@material-ui/icons/Shuffle'
-import generator from 'generate-password'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 
 const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser, defaultEmail }) => {
@@ -35,7 +33,6 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
   const nameFieldId = 'name-field'
   const emailFieldId = 'email-field'
   const passFieldId = 'pass-field'
-  const registerTitle = 'Registration'
   const registerButtonLabel = 'CREATE ACCOUNT'
   const closeRoute = '/'
   const passMinLength = 6
@@ -97,21 +94,6 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
     setFocusedField(e.target.id)
   }
 
-  function generatePass () {
-    const pass = generator.generate({
-      length: 20,
-      numbers: true,
-      uppercase: true,
-      symbols: true,
-    })
-    setInput({
-      ...input,
-      password: pass,
-    })
-    isFormValid(input.name, input.email, pass)
-    setPassError(!isValidPass(pass))
-  }
-
   React.useEffect(() => {
     if (focusedField === nameFieldId) {
       setFilledName(true)
@@ -140,7 +122,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
     }
 
     if (defaultEmail && !formEdited) {
-      setInput({email: atob(defaultEmail)})
+      setInput({ name: '', email: atob(defaultEmail), password: '' })
     }
   }, [focusedField, defaultEmail])
 
@@ -157,7 +139,6 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
     <div className={classes.registerContainer}>
       <div className={classes.content}>
         <FormCard
-          // title={registerTitle}
           buttonLabel={registerButtonLabel}
           buttonDisabled={buttonDisabled}
           loading={register.isRegistering}
@@ -223,15 +204,16 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
                 error={passError}
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
-                  endAdornment: <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
+                  endAdornment:
+  <InputAdornment position='end'>
+    <IconButton
+      aria-label='toggle password visibility'
+      onClick={handleClickShowPassword}
+      edge='end'
+    >
+      {showPassword ? <Visibility /> : <VisibilityOff />}
+    </IconButton>
+  </InputAdornment>,
                 }}
               />
               {/* <div className={classes.btnsContainer}>

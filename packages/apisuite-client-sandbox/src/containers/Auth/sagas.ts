@@ -4,8 +4,6 @@ import { authActions, LOGIN, LOGIN_USER, LOGIN_SUCCESS } from './ducks'
 import { AUTH_URL, LOGIN_PORT } from 'constants/endpoints'
 import qs from 'qs'
 
-// mock avatar
-import requireImage from 'util/requireImage'
 import { AnyAction } from 'redux'
 
 function * loginWorker (action: AnyAction) {

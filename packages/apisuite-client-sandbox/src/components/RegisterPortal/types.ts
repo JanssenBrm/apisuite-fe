@@ -1,12 +1,12 @@
 import { Action } from 'redux'
-import { AuthStore } from 'containers/Auth/types'
 
 export interface RegisterDispatchToProps {
   registerUser: (userData: UserData) => void,
 }
 
 export interface RegisterPortalProps extends RegisterDispatchToProps {
-  auth: AuthStore,
+  register: any,
+  defaultEmail?: string,
 }
 
 export interface UserData {

@@ -21,7 +21,7 @@ const initialState: AuthStore = {
   authToken,
   user: undefined,
   isAuthorizing: false,
-  error: undefined
+  error: undefined,
 }
 
 const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) => {
@@ -58,11 +58,11 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
     case LOGIN_ERROR:
     case LOGIN_USER_ERROR: {
       return update(state, {
-        error: { $set: action.error && action.error.message ? action.error.message : "Ops, somethign went wrong..."},
+        error: { $set: action.error && action.error.message ? action.error.message : 'Ops, somethign went wrong...' },
         isAuthorizing: { $set: false },
       })
     }
-      
+
     case LOGOUT: {
       return update(state, {
         user: { $set: undefined },

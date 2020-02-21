@@ -2,8 +2,6 @@
  * @module Register/ducks
  */
 import update from 'immutability-helper'
-import { Action } from 'redux'
-import { UserData } from './types'
 
 export const REGISTER_USER = 'Register/REGISTER_USER'
 export const REGISTER_USER_SUCCESS = 'Register/REGISTER_USER_SUCCESS'
@@ -13,10 +11,10 @@ const initialState = {
   user: undefined,
   isRegistering: false,
   isRegistered: false,
-  error: undefined
+  error: undefined,
 }
 
-export default function reducer (state = initialState, action: Action) {
+export default function reducer (state = initialState, action: any) {
   switch (action.type) {
     case REGISTER_USER: {
       return update(state, {
@@ -26,7 +24,7 @@ export default function reducer (state = initialState, action: Action) {
         error: { $set: undefined },
       })
     }
-    
+
     case REGISTER_USER_SUCCESS: {
       return update(state, {
         isRegistering: { $set: false },
@@ -39,7 +37,7 @@ export default function reducer (state = initialState, action: Action) {
       return update(state, {
         isRegistering: { $set: false },
         user: { $set: undefined },
-        error: { $set: action.error && action.error.message ? action.error.messate : "Ops, somethign went wrong..." },
+        error: { $set: action.error && action.error.message ? action.error.messate : 'Ops, somethign went wrong...' },
       })
     }
     default:
@@ -52,7 +50,7 @@ export default function reducer (state = initialState, action: Action) {
 // }
 
 export const registerActions = {
-  registerUser: (userData) => ({ type: REGISTER_USER, userData }),
-  registerUserSuccess: (payload) => ({ type: REGISTER_USER_SUCCESS, payload }),
-  registerUserError: (error) => ({ type: REGISTER_USER_ERROR, error }),
+  registerUser: (userData: any) => ({ type: REGISTER_USER, userData }),
+  registerUserSuccess: (payload: any) => ({ type: REGISTER_USER_SUCCESS, payload }),
+  registerUserError: (error: any) => ({ type: REGISTER_USER_ERROR, error }),
 }

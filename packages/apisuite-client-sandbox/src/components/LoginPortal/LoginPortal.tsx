@@ -6,7 +6,7 @@ import useStyles from './styles'
 import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import InputAdornment from '@material-ui/core/InputAdornment';
+import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 
 const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
@@ -114,7 +114,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
             <TextField
               id={emailFieldId}
               label='E-mail'
-              defaultValue="small"
+              defaultValue='small'
               variant='outlined'
               margin='none'
               type='email'
@@ -148,15 +148,16 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
                 fullWidth
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
-                  endAdornment: <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
-                      edge="end"
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>
+                  endAdornment:
+  <InputAdornment position='end'>
+    <IconButton
+      aria-label='toggle password visibility'
+      onClick={handleClickShowPassword}
+      edge='end'
+    >
+      {showPassword ? <Visibility /> : <VisibilityOff />}
+    </IconButton>
+  </InputAdornment>,
                 }}
               />
               {/* <div className={classes.btnsContainer}>
