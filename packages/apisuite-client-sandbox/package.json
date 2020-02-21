@@ -32,6 +32,7 @@
     "@types/qs": "6.9.0",
     "@types/redux-logger": "3.0.7",
     "axios": "0.19.2",
+    "classnames": "^2.2.6",
     "clsx": "1.0.4",
     "connected-react-router": "6.6.1",
     "generate-password": "1.4.2",
