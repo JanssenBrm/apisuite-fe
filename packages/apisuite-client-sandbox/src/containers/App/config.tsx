@@ -18,7 +18,7 @@ export const initTabs: TabOpt[] = [
   },
   {
     label: 'Log in',
-    route: '/login',
+    route: '/auth',
   },
   {
     label: 'Demo',

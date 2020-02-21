@@ -7,7 +7,7 @@ export const RequireAuth: React.FC<RequireAuthProps> = ({ auth, component: Compo
     if (auth.user && !auth.isAuthorizing) {
       return <Component {...rest} />
     } else if (!auth.authToken) {
-      return <Redirect to='/login' />
+      return <Redirect to='/auth' />
     } else {
       return null
     }

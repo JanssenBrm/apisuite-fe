@@ -7,6 +7,7 @@ import { SubStore } from 'containers/Subscriptions/types'
 export interface Store {
   router: RouterState,
   auth: AuthStore,
+  register: any,
   applications: ApplicationsStore,
   app: AppStoreState,
   subscriptions: SubStore,

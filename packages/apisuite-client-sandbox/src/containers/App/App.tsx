@@ -18,11 +18,12 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   const [navScrolled, setNavScrolled] = React.useState(false)
   const [gobackLabel, setGobackLabel] = React.useState('')
   const [subTabs, setSubTabs] = React.useState(tabs[currentTab].subTabs)
+  const [navigations, setNavigations] = React.useState(true)
 
   React.useEffect(() => {
     const pathname = history.location.pathname
 
-    if (auth.authToken !== '' && !auth.user) {
+    if (auth.authToken && !auth.user) {
       loginUser({ token: auth.authToken })
     }
 
@@ -30,6 +31,12 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       setNavScrolled(true)
     } else {
       setNavScrolled(false)
+    }
+
+    if (pathname.startsWith('/auth')) {
+      setNavigations(false)
+    } else {
+      setNavigations(true)
     }
 
     const gb = gobackConfig.find((item) => item.path === pathname)
@@ -69,26 +76,28 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Navigation
-        key='app-navigation'
-        tabs={tabs.map((tab) => tab.label)}
-        subTabs={Array.isArray(subTabs) ? subTabs.map((tab) => tab.label) : undefined}
-        tabIndex={currentTab}
-        subTabIndex={currentSubTab}
-        onTabChange={handleOnTabChange}
-        onSubTabChange={handleOnSubTabChange}
-        name={config.navbar.name}
-        logoSrc={requireImage(config.navbar.logoUrl)}
-        user={auth.user}
-        forceScrolled={navScrolled}
-        showBackButton={gobackLabel.length > 0}
-        backButtonLabel={gobackLabel}
-        onGoBackCLick={handleGobackClick}
-        logout={logout}
-      />
+      {navigations &&
+        <Navigation
+          key='app-navigation'
+          tabs={tabs.map((tab) => tab.label)}
+          subTabs={Array.isArray(subTabs) ? subTabs.map((tab) => tab.label) : undefined}
+          tabIndex={currentTab}
+          subTabIndex={currentSubTab}
+          onTabChange={handleOnTabChange}
+          onSubTabChange={handleOnSubTabChange}
+          name={config.navbar.name}
+          logoSrc={requireImage(config.navbar.logoUrl)}
+          user={auth.user}
+          forceScrolled={navScrolled}
+          showBackButton={gobackLabel.length > 0}
+          backButtonLabel={gobackLabel}
+          onGoBackCLick={handleGobackClick}
+          logout={logout}
+        />}
 
       {routes()}
-      <Footer />
+
+      {navigations && <Footer />}
     </ThemeProvider>
   )
 }

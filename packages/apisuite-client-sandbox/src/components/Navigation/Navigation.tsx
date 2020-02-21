@@ -160,7 +160,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
         {user && (
           <div className='avatar-container'>
             {!(scrolled || forceScrolled) && <span>{user.fName}</span>}
-            <Avatar src={user.avatar} className='avatar' onClick={logout} />
+            <Avatar className='avatar' onClick={logout}><SvgIcon name='logout' size={20} /></Avatar>
           </div>
         )}
       </header>

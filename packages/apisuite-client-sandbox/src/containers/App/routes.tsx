@@ -11,7 +11,7 @@ import AppDetail from 'containers/Applications/AppDetail'
 import Subscriptions from 'containers/Subscriptions'
 import Console from 'containers/Console'
 import Login from 'containers/Login'
-import Register from 'containers/Register'
+// import Register from 'containers/Register'
 import { AppRouteProps } from './types'
 import RequireAuth from 'containers/Auth'
 
@@ -25,8 +25,9 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/dashboard/console', render: (props) => <RequireAuth component={Console} {...props} /> },
   // #conditional-loader-start: console
   // #conditional-loader-end
-  { path: '/login', component: Login },
-  { path: '/register', component: Register },
+  { path: '/auth', exact: true, component: Login },
+  { path: '/auth/:email', exact: true, component: Login },
+  // { path: '/register', component: Register },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
   { render: () => <NotFound /> },

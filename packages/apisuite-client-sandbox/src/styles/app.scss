@@ -25,7 +25,7 @@ body,
 body {
   font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   line-height: 1.7rem;
-  color: #333333;
+  color: #424242;
   margin: 0;
   padding: 0;
   font-weight: 300;
@@ -41,3 +41,32 @@ a:active {
 input:read-only {
   background-color: #EEEEEE;
 }
+
+h1 {
+  font-size: 43px;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+}
+
+.subtitle {
+  font-size: 20px;
+  font-weight: 300;
+  color: #6F6F6F;
+}
+
+img {
+  max-width: 100%;
+}
+
+@import 'styles/variables';
+
+.content-wrapper {
+  max-width: $container-width;
+  margin: 0 auto;
+}
+
+@import 'containers/Login/styles.scss'
