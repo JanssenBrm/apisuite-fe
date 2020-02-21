@@ -10,6 +10,7 @@ import register from 'components/RegisterPortal/ducks'
 import auth from 'containers/Auth/ducks'
 import applications from 'containers/Applications/ducks'
 import app from 'containers/App/ducks'
+import subscriptions from 'containers/Subscriptions/ducks'
 
 export default (history: History<any>) => combineReducers({
   router: connectRouter(history),
@@ -17,4 +18,5 @@ export default (history: History<any>) => combineReducers({
   register,
   applications,
   app,
+  subscriptions,
 })
