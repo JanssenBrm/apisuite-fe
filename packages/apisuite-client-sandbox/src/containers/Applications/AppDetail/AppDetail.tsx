@@ -14,16 +14,19 @@ import { selectOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { AppDetailProps } from './types'
-import { AppData } from '../types'
+import { AppData, RouteParams } from '../types'
 import { Link } from '@material-ui/core'
+import { useParams } from 'react-router'
 
-const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, currentApp, deleteApp }) => {
+const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, currentApp, deleteApp, user }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
+  const appId = parseInt(useParams<RouteParams>().id)
 
   const [buttonDisabled, setButtonDisabled] = React.useState(true)
   const [input, setInput] = React.useState({
+    appId: currentApp.appId,
     name: currentApp.name,
     description: currentApp.description,
     redirectUrl: currentApp.redirectUrl,
@@ -31,11 +34,13 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
     userId: currentApp.userId,
     sandboxId: currentApp.sandboxId,
     pubUrls: currentApp.pubUrls,
+    enable: true,
   })
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     updateApp({
+      appId: appId,
       name: input.name,
       description: input.description,
       redirectUrl: input.redirectUrl,
@@ -43,13 +48,12 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
       userId: input.userId,
       sandboxId: input.sandboxId,
       pubUrls: input.pubUrls,
-      // TODO change after adding the fetch of the list of apps
-    }, '1')
+      enable: true,
+    })
   }
 
   function handleDeleteApp () {
-    // TODO change after adding the fetch of the list of apps
-    deleteApp('1')
+    deleteApp(appId)
   }
 
   function compareAppData (newAppData: AppData) {
@@ -72,7 +76,9 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
   }
 
   React.useEffect(() => {
-    getAppDetails()
+    if (user) {
+      getAppDetails(appId, user.id)
+    }
     setInput({ ...currentApp })
   }, [currentApp])
 

@@ -13,7 +13,7 @@ import useStyles from './styles'
 import { CreateAppProps } from './types'
 import clsx from 'clsx'
 
-const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
+const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [visibility, setVisibility] = React.useState('private')
@@ -22,7 +22,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
     description: '',
     redirectUrl: '',
     logo: '',
-    userId: '',
+    userId: 0,
     sandboxId: '',
     pubUrls: '',
   })
@@ -43,15 +43,23 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
   }
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
+    let userId = 0
+
+    if (user) {
+      userId = user.id
+    }
+
     e.preventDefault()
     createApp({
+      appId: 0,
       name: input.name,
       description: input.description,
       redirectUrl: input.redirectUrl,
       logo: input.logo,
-      userId: input.userId,
+      userId: userId,
       sandboxId: input.sandboxId,
       pubUrls: input.pubUrls,
+      enable: true,
     })
   }
 

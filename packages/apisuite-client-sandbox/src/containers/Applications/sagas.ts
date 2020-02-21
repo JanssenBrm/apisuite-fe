@@ -1,6 +1,6 @@
-import { CREATE_APP, UPDATE_APP, DELETE_APP, GET_APP_DETAILS, getAppDetailsSuccess, GET_USER_APPS } from './ducks'
+import { CREATE_APP, UPDATE_APP, DELETE_APP, GET_APP_DETAILS, getAppDetailsSuccess, getUserAppsSuccess, GET_USER_APPS } from './ducks'
 import { takeLatest, call, put } from 'redux-saga/effects'
-import { CreateAppAction, UpdateAppAction, DeleteAppAction, GetUserAppsAction } from './types'
+import { CreateAppAction, UpdateAppAction, DeleteAppAction, GetUserAppsAction, GetAppDetails, AppData } from './types'
 import { API_URL, SIGNUP_PORT } from 'constants/endpoints'
 import request from 'util/request'
 import qs from 'qs'
@@ -12,8 +12,7 @@ export function * createApp (action: CreateAppAction) {
       description: action.appData.description,
       'redirect_url': action.appData.redirectUrl,
       logo: action.appData.logo,
-      // TODO: get user_id and sandbox_id after BE changes
-      'user_id': '1',
+      'user_id': action.appData.userId,
       'sandbox_id': '1',
       'pub_urls': [action.appData.pubUrls],
     }
@@ -39,13 +38,12 @@ export function * updateApp (action: UpdateAppAction) {
       description: action.appData.description,
       'redirect_url': action.appData.redirectUrl,
       logo: action.appData.logo,
-      // TODO: get user_id, sandbox_id, id after BE changes
-      'user_id': '1',
+      'user_id': action.appData.userId,
       'sandbox_id': '1',
       'pub_urls': [action.appData.pubUrls],
     }
 
-    const updateAppUrl = `${API_URL}${SIGNUP_PORT}/app/update/${action.appId}`
+    const updateAppUrl = `${API_URL}${SIGNUP_PORT}/app/update/${action.appData.appId}`
     yield call(request, {
       url: updateAppUrl,
       method: 'PUT',
@@ -76,7 +74,6 @@ export function * deleteApp (action: DeleteAppAction) {
 
 export function * getUserApps (action: GetUserAppsAction) {
   try {
-    console.log(action.userId)
     const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
 
     const response = yield call(request, {
@@ -87,23 +84,51 @@ export function * getUserApps (action: GetUserAppsAction) {
       },
     })
 
-    console.log(response)
+    const userApps = response.map((userApp: any) => (
+      {
+        appId: userApp.id,
+        name: userApp.name,
+        description: userApp.description,
+        redirectUrl: userApp.redirect_url,
+        logo: userApp.logo,
+        userId: userApp.userId,
+        sandboxId: userApp.sandboxId,
+        pubUrls: '',
+        enable: userApp.enable,
+      }
+    ))
+    yield put(getUserAppsSuccess(userApps))
   } catch (error) {
     console.log('Error fecthing user apps')
   }
 }
 
-export function * getAppDetails () {
-  // TODO fetch app data
-  yield put(getAppDetailsSuccess({
-    name: 'My Application Name',
-    description: 'Application description',
-    redirectUrl: 'redirect url',
-    logo: 'logo',
-    userId: '111',
-    sandboxId: '999',
-    pubUrls: 'https://cloudoki.com',
-  }))
+export function * getAppDetails (action: GetAppDetails) {
+  const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
+
+  const response = yield call(request, {
+    url: getUserAppsUrl,
+    method: 'GET',
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+    },
+  })
+
+  const userApps = response.map((userApp: any) => (
+    {
+      appId: userApp.id,
+      name: userApp.name,
+      description: userApp.description,
+      redirectUrl: userApp.redirect_url,
+      logo: userApp.logo,
+      userId: userApp.userId,
+      sandboxId: userApp.sandboxId,
+      pubUrls: '',
+    }
+  ))
+
+  const appIndx = userApps.findIndex((app: AppData) => app.appId === action.appId)
+  yield put(getAppDetailsSuccess(userApps[appIndx]))
 }
 
 function * rootSaga () {

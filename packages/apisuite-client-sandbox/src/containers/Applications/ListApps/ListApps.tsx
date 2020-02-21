@@ -11,13 +11,13 @@ import SvgIcon from 'components/SvgIcon'
 
 import { useTranslation } from 'react-i18next'
 
-const ListApps: React.FC<ListAppsProps> = ({ history, user, getUserApps }) => {
+const ListApps: React.FC<ListAppsProps> = ({ history, user, userApps, getUserApps }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
 
-  function handleAppClick () {
-    history.push('/dashboard/apps/detail')
+  function handleAppClick (event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    history.push(`/dashboard/apps/detail/${event.currentTarget.id}`)
   }
 
   function handleCreateClick () {
@@ -36,7 +36,13 @@ const ListApps: React.FC<ListAppsProps> = ({ history, user, getUserApps }) => {
         <h1 className={classes.title}>{t('listApps.overview.title')}</h1>
 
         <div className={classes.appsContainer}>
-          <AppCard name='Example app' onClick={handleAppClick} />
+          {userApps.map((userApp, indx) => {
+            if (userApp.enable) {
+              return <AppCard key={indx} id={userApp.appId.toString()} name={userApp.name} onClick={handleAppClick} />
+            } else {
+              return null
+            }
+          })}
           <AppCard name='' addVariant onClick={handleCreateClick} />
         </div>
       </section>
