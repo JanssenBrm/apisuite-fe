@@ -1,6 +1,6 @@
-import { CREATE_APP, UPDATE_APP, DELETE_APP, GET_APP_DETAILS, getAppDetailsSuccess } from './ducks'
+import { CREATE_APP, UPDATE_APP, DELETE_APP, GET_APP_DETAILS, getAppDetailsSuccess, GET_USER_APPS } from './ducks'
 import { takeLatest, call, put } from 'redux-saga/effects'
-import { CreateAppAction, UpdateAppAction, DeleteAppAction } from './types'
+import { CreateAppAction, UpdateAppAction, DeleteAppAction, GetUserAppsAction } from './types'
 import { API_URL, SIGNUP_PORT } from 'constants/endpoints'
 import request from 'util/request'
 import qs from 'qs'
@@ -74,6 +74,25 @@ export function * deleteApp (action: DeleteAppAction) {
   }
 }
 
+export function * getUserApps (action: GetUserAppsAction) {
+  try {
+    console.log(action.userId)
+    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
+
+    const response = yield call(request, {
+      url: getUserAppsUrl,
+      method: 'GET',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+    })
+
+    console.log(response)
+  } catch (error) {
+    console.log('Error fecthing user apps')
+  }
+}
+
 export function * getAppDetails () {
   // TODO fetch app data
   yield put(getAppDetailsSuccess({
@@ -92,6 +111,7 @@ function * rootSaga () {
   yield takeLatest(UPDATE_APP, updateApp)
   yield takeLatest(DELETE_APP, deleteApp)
   yield takeLatest(GET_APP_DETAILS, getAppDetails)
+  yield takeLatest(GET_USER_APPS, getUserApps)
 }
 
 export default rootSaga

@@ -1,14 +1,16 @@
 import update from 'immutability-helper'
-import { AnyAction } from 'redux'
-import { AppData } from './types'
+import { Reducer } from 'redux'
+import { AppData, ApplicationsStore, ApplicationsActions } from './types'
 
 export const CREATE_APP = 'Applications/CREATE_APP'
 export const UPDATE_APP = 'Applications/UPDATE_APP'
 export const DELETE_APP = 'Applications/DELETE_APP'
 export const GET_APP_DETAILS = 'Applications/GET_APP_DETAILS'
 export const GET_APP_DETAILS_SUCCESS = 'Applications/GET_APP_DETAILS_SUCCESS'
+export const GET_USER_APPS = 'Applications/GET_USER_APPS'
+export const GET_USER_APPS_SUCCESS = 'Applications/GET_USER_APPS_SUCCESS'
 
-const initialState = {
+const initialState: ApplicationsStore = {
   currentApp: {
     name: '',
     description: '',
@@ -18,9 +20,10 @@ const initialState = {
     sandboxId: '',
     pubUrls: '',
   },
+  userApps: [],
 }
 
-export default function reducer (state = initialState, action: AnyAction) {
+const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_APP: {
       return state
@@ -47,6 +50,12 @@ export default function reducer (state = initialState, action: AnyAction) {
         },
       })
     }
+    case GET_USER_APPS: {
+      return state
+    }
+    case GET_USER_APPS_SUCCESS: {
+      return state
+    }
     default:
       return state
   }
@@ -71,3 +80,13 @@ export function getAppDetails () {
 export function getAppDetailsSuccess (appData: AppData) {
   return { type: GET_APP_DETAILS_SUCCESS, appData }
 }
+
+export function getUserApps (userId: number) {
+  return { type: GET_USER_APPS, userId }
+}
+
+export function getUserAppsSuccess (userApps: AppData[]) {
+  return { type: GET_USER_APPS_SUCCESS, userApps }
+}
+
+export default reducer

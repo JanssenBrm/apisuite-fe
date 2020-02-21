@@ -11,7 +11,7 @@ import SvgIcon from 'components/SvgIcon'
 
 import { useTranslation } from 'react-i18next'
 
-const ListApps: React.FC<ListAppsProps> = ({ history }) => {
+const ListApps: React.FC<ListAppsProps> = ({ history, user, getUserApps }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
@@ -23,6 +23,12 @@ const ListApps: React.FC<ListAppsProps> = ({ history }) => {
   function handleCreateClick () {
     history.push('/dashboard/apps/create')
   }
+
+  React.useEffect(() => {
+    if (user) {
+      getUserApps(user.id)
+    }
+  }, [])
 
   return (
     <div className={commonClasses.root}>
