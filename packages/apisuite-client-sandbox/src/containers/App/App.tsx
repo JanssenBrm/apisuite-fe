@@ -32,7 +32,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       setNavScrolled(false)
     }
 
-    const gb = gobackConfig.find((item) => item.path === pathname)
+    const gb = gobackConfig.find((item) => pathname.includes(item.path))
 
     if (gb) {
       setGobackLabel(gb.label)
