@@ -42,7 +42,15 @@ const ListApps: React.FC<ListAppsProps> = ({ history, user, userApps, getUserApp
               if (userApp.enable) {
                 return (
                   <Grid item xs={12} sm={3}>
-                    <AppCard key={indx} id={userApp.appId.toString()} name={userApp.name} onClick={handleAppClick} />
+                    <AppCard
+                      key={indx}
+                      id={userApp.appId.toString()}
+                      name={userApp.name}
+                      onClick={handleAppClick}
+                      appId={userApp.appId}
+                      userId={user ? user.id : undefined}
+                      history={history}
+                    />
                   </Grid>
                 )
               } else {
@@ -50,7 +58,11 @@ const ListApps: React.FC<ListAppsProps> = ({ history, user, userApps, getUserApp
               }
             })}
             <Grid item xs={12} sm={3}>
-              <AppCard name='' addVariant onClick={handleCreateClick} />
+              <AppCard
+                name=''
+                addVariant
+                onClick={handleCreateClick}
+              />
             </Grid>
           </Grid>
         </div>

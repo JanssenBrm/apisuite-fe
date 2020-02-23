@@ -68,6 +68,7 @@ export interface UpdateAppErrorAction extends Action {
 export interface DeleteAppAction extends Action {
   type: typeof DELETE_APP,
   appId: number,
+  userId?: number,
 }
 
 export interface DeleteAppSuccessAction extends Action {

@@ -20,7 +20,7 @@ import { Link } from '@material-ui/core'
 import { useParams } from 'react-router'
 
 const AppDetail: React.FC<AppDetailProps> = (
-  { history, updateApp, getAppDetails, currentApp, deleteApp, user, resUpdate, resDelete }) => {
+  { updateApp, getAppDetails, currentApp, deleteApp, user, resUpdate, resDelete }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
@@ -56,11 +56,6 @@ const AppDetail: React.FC<AppDetailProps> = (
 
   function handleDeleteApp () {
     deleteApp(appId)
-
-    // TODO move to saga
-    if (resDelete.isSuccess) {
-      history.replace('/dasboard/apps')
-    }
   }
 
   function compareAppData (newAppData: AppData) {

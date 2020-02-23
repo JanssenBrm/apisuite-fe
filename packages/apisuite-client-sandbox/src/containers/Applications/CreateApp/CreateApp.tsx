@@ -63,11 +63,6 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
       pubUrls: input.pubUrls,
       enable: true,
     })
-
-    // TODO move to saga
-    if (resCreate.isSuccess) {
-      history.replace('/dashboard/apps')
-    }
   }
 
   return (

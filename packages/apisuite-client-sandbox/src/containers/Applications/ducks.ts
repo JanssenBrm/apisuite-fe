@@ -187,8 +187,8 @@ export function updateAppError () {
   return { type: UPDATE_APP_ERROR }
 }
 
-export function deleteApp (appId: number) {
-  return { type: DELETE_APP, appId }
+export function deleteApp (appId: number, userId?: number) {
+  return { type: DELETE_APP, appId, userId }
 }
 
 export function deleteAppSuccess () {
