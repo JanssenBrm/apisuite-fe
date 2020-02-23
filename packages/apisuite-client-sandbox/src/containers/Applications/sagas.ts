@@ -110,7 +110,7 @@ export function * getUserApps (action: GetUserAppsAction) {
         enable: userApp.enable,
       }
     ))
-    yield put(getUserAppsSuccess(userApps))
+    yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
   } catch (error) {
     console.log('Error fecthing user apps')
   }

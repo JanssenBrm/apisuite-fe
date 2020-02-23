@@ -5,6 +5,7 @@ import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { ListAppsProps } from './types'
 import AppCard from 'components/AppCard'
+import Grid from '@material-ui/core/Grid'
 
 import { docs } from './config'
 import SvgIcon from 'components/SvgIcon'
@@ -36,14 +37,22 @@ const ListApps: React.FC<ListAppsProps> = ({ history, user, userApps, getUserApp
         <h1 className={classes.title}>{t('listApps.overview.title')}</h1>
 
         <div className={classes.appsContainer}>
-          {userApps.map((userApp, indx) => {
-            if (userApp.enable) {
-              return <AppCard key={indx} id={userApp.appId.toString()} name={userApp.name} onClick={handleAppClick} />
-            } else {
-              return null
-            }
-          })}
-          <AppCard name='' addVariant onClick={handleCreateClick} />
+          <Grid container spacing={3}>
+            {userApps.map((userApp, indx) => {
+              if (userApp.enable) {
+                return (
+                  <Grid item xs={12} sm={3}>
+                    <AppCard key={indx} id={userApp.appId.toString()} name={userApp.name} onClick={handleAppClick} />
+                  </Grid>
+                )
+              } else {
+                return null
+              }
+            })}
+            <Grid item xs={12} sm={3}>
+              <AppCard name='' addVariant onClick={handleCreateClick} />
+            </Grid>
+          </Grid>
         </div>
       </section>
 
