@@ -1,14 +1,23 @@
 import { History } from 'history'
 import { Action } from 'redux'
-import { CREATE_APP, UPDATE_APP, GET_APP_DETAILS, DELETE_APP, GET_APP_DETAILS_SUCCESS, GET_USER_APPS, GET_USER_APPS_SUCCESS, CREATE_APP_SUCCESS, UPDATE_APP_SUCCESS, DELETE_APP_SUCCESS } from './ducks'
+import { CREATE_APP, UPDATE_APP, GET_APP_DETAILS, DELETE_APP, GET_APP_DETAILS_SUCCESS, GET_USER_APPS, GET_USER_APPS_SUCCESS, CREATE_APP_SUCCESS, UPDATE_APP_SUCCESS, DELETE_APP_SUCCESS, CREATE_APP_ERROR, UPDATE_APP_ERROR, DELETE_APP_ERROR } from './ducks'
 
 export interface ApplicationRouteProps {
-  history: History<any>,
+  history: History,
+}
+
+export interface Response {
+  isRequesting: boolean,
+  isSuccess: boolean,
+  isError: boolean,
 }
 
 export interface ApplicationsStore {
   currentApp: AppData,
   userApps: AppData[],
+  resCreate: Response,
+  resUpdate: Response,
+  resDelete: Response,
 }
 
 export interface RouteParams {
@@ -33,8 +42,12 @@ export interface CreateAppAction extends Action {
   userId: number,
 }
 
-export interface CreateAppActionSuccess extends Action {
+export interface CreateAppSuccessAction extends Action {
   type: typeof CREATE_APP_SUCCESS,
+}
+
+export interface CreateAppErrorAction extends Action {
+  type: typeof CREATE_APP_ERROR,
 }
 
 export interface UpdateAppAction extends Action {
@@ -43,8 +56,13 @@ export interface UpdateAppAction extends Action {
   appId: number,
 }
 
-export interface UpdateAppActionSuccess extends Action {
+export interface UpdateAppSuccessAction extends Action {
   type: typeof UPDATE_APP_SUCCESS,
+  appData: AppData,
+}
+
+export interface UpdateAppErrorAction extends Action {
+  type: typeof UPDATE_APP_ERROR,
 }
 
 export interface DeleteAppAction extends Action {
@@ -52,8 +70,12 @@ export interface DeleteAppAction extends Action {
   appId: number,
 }
 
-export interface DeleteAppActionSuccess extends Action {
+export interface DeleteAppSuccessAction extends Action {
   type: typeof DELETE_APP_SUCCESS,
+}
+
+export interface DeleteAppErrorAction extends Action {
+  type: typeof DELETE_APP_ERROR,
 }
 
 export interface GetAppDetails extends Action {
@@ -78,4 +100,6 @@ export interface GetUserAppsActionSuccess extends Action {
 }
 
 export type ApplicationsActions = CreateAppAction | UpdateAppAction | DeleteAppAction | GetAppDetails
-| GetAppDetailsSuccess | GetUserAppsAction | GetUserAppsActionSuccess
+| GetAppDetailsSuccess | GetUserAppsAction | GetUserAppsActionSuccess | CreateAppErrorAction
+| UpdateAppErrorAction | DeleteAppErrorAction | CreateAppSuccessAction | UpdateAppSuccessAction
+| DeleteAppSuccessAction

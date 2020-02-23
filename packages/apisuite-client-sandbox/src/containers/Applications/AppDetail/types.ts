@@ -1,4 +1,4 @@
-import { AppData, ApplicationRouteProps } from '../types'
+import { AppData, ApplicationRouteProps, Response } from '../types'
 import { User } from 'containers/Auth/types'
 
 export type AppDetailProps = ApplicationRouteProps & {
@@ -7,4 +7,6 @@ export type AppDetailProps = ApplicationRouteProps & {
   getAppDetails: (appId: number, userId: number) => void,
   deleteApp: (appId: number) => void,
   currentApp: AppData,
+  resUpdate: Response,
+  resDelete: Response,
 }

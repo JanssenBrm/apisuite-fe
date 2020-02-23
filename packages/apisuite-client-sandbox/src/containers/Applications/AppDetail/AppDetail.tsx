@@ -8,6 +8,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Select from 'components/Select'
 import Panel from 'components/Panel'
 import Wheel from 'components/ApiSuiteWheel'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
 
 import { selectOptions } from './config'
@@ -18,7 +19,8 @@ import { AppData, RouteParams } from '../types'
 import { Link } from '@material-ui/core'
 import { useParams } from 'react-router'
 
-const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, currentApp, deleteApp, user }) => {
+const AppDetail: React.FC<AppDetailProps> = (
+  { history, updateApp, getAppDetails, currentApp, deleteApp, user, resUpdate, resDelete }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
@@ -54,6 +56,11 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
 
   function handleDeleteApp () {
     deleteApp(appId)
+
+    // TODO move to saga
+    if (resDelete.isSuccess) {
+      history.replace('/dasboard/apps')
+    }
   }
 
   function compareAppData (newAppData: AppData) {
@@ -80,6 +87,7 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
       getAppDetails(appId, user.id)
     }
     setInput({ ...currentApp })
+    compareAppData({ ...currentApp })
   }, [currentApp])
 
   return (
@@ -227,8 +235,13 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
                 disabled={buttonDisabled}
                 className={clsx(classes.btn, classes.btn2, (buttonDisabled && classes.disabled))}
               >
-                {buttonDisabled ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
+                {resUpdate.isRequesting ? <CircularProgress size={20} /> : buttonDisabled ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
               </Button>
+
+              {resUpdate.isError &&
+                <div className={classes.errorPlaceholder}>
+                  <div className={classes.errorAlert}>Error updating app</div>
+                </div>}
 
               <br /><br /><br />
 
@@ -258,6 +271,12 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
               >
                 Delete application
               </div>
+
+              {resDelete.isError &&
+                <div className={classes.errorPlaceholder}>
+                  <div className={classes.errorAlert}>Error deleting app</div>
+                </div>}
+
             </form>
           </aside>
         </section>

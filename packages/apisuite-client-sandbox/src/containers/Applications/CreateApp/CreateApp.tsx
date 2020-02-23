@@ -6,6 +6,7 @@ import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
 import RadioBoxes from 'components/RadioBoxes/RadioBoxes'
 import Select from 'components/Select'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { radioOptions, selectOptions } from './config'
 import useCommonStyles from '../styles'
@@ -13,7 +14,7 @@ import useStyles from './styles'
 import { CreateAppProps } from './types'
 import clsx from 'clsx'
 
-const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user }) => {
+const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCreate }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [visibility, setVisibility] = React.useState('private')
@@ -43,13 +44,14 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user }) => {
   }
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+
     let userId = 0
 
     if (user) {
       userId = user.id
     }
 
-    e.preventDefault()
     createApp({
       appId: 0,
       name: input.name,
@@ -61,6 +63,11 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user }) => {
       pubUrls: input.pubUrls,
       enable: true,
     })
+
+    // TODO move to saga
+    if (resCreate.isSuccess) {
+      history.replace('/dashboard/apps')
+    }
   }
 
   return (
@@ -158,9 +165,9 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user }) => {
           <div className={classes.marginBottom}>
             <Button
               type='submit'
-              className={classes.btn}
+              className={clsx(classes.btn, classes.btn3)}
             >
-              Add Application
+              {resCreate.isRequesting ? <CircularProgress size={20} /> : 'Add Application'}
             </Button>
             <div
               role='button'
@@ -170,6 +177,11 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user }) => {
               Cancel
             </div>
           </div>
+
+          {resCreate.isError &&
+            <div className={classes.errorPlaceholder}>
+              <div className={classes.errorAlert}>Error creating app</div>
+            </div>}
 
           <p className={classes.info}>
             Not sure if you’re doing it right?

@@ -1,4 +1,4 @@
-import { CREATE_APP, UPDATE_APP, DELETE_APP, GET_APP_DETAILS, getAppDetailsSuccess, getUserAppsSuccess, GET_USER_APPS } from './ducks'
+import { CREATE_APP, UPDATE_APP, DELETE_APP, GET_APP_DETAILS, getAppDetailsSuccess, getUserAppsSuccess, GET_USER_APPS, createAppError, updateAppError, deleteAppError, deleteAppSuccess, updateAppSuccess, createAppSuccess } from './ducks'
 import { takeLatest, call, put } from 'redux-saga/effects'
 import { CreateAppAction, UpdateAppAction, DeleteAppAction, GetUserAppsAction, GetAppDetails, AppData } from './types'
 import { API_URL, SIGNUP_PORT } from 'constants/endpoints'
@@ -26,8 +26,9 @@ export function * createApp (action: CreateAppAction) {
       },
       data: qs.stringify(data),
     })
+    yield put(createAppSuccess())
   } catch (error) {
-    console.log('Error creating App')
+    yield put(createAppError())
   }
 }
 
@@ -52,8 +53,19 @@ export function * updateApp (action: UpdateAppAction) {
       },
       data: qs.stringify(data),
     })
+    yield put(updateAppSuccess({
+      appId: action.appData.appId,
+      name: action.appData.description,
+      description: action.appData.description,
+      redirectUrl: action.appData.redirectUrl,
+      logo: action.appData.logo,
+      userId: action.appData.userId,
+      sandboxId: '1',
+      pubUrls: action.appData.pubUrls,
+      enable: action.appData.enable,
+    }))
   } catch (error) {
-    console.log('Error updating App')
+    yield put(updateAppError())
   }
 }
 
@@ -67,8 +79,9 @@ export function * deleteApp (action: DeleteAppAction) {
         'content-type': 'application/x-www-form-urlencoded',
       },
     })
+    yield put(deleteAppSuccess())
   } catch (error) {
-    console.log('Error deleting App')
+    yield put(deleteAppError())
   }
 }
 

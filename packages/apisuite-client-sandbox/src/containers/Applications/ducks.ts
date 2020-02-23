@@ -4,10 +4,13 @@ import { AppData, ApplicationsStore, ApplicationsActions } from './types'
 
 export const CREATE_APP = 'Applications/CREATE_APP'
 export const CREATE_APP_SUCCESS = 'Applications/CREATE_APP_SUCCESS'
+export const CREATE_APP_ERROR = 'Applications/CREATE_APP_ERROR'
 export const UPDATE_APP = 'Applications/UPDATE_APP'
-export const UPDATE_APP_SUCCESS = 'Applications/APP_APP_SUCCESS'
+export const UPDATE_APP_SUCCESS = 'Applications/UPDATE_APP_SUCCESS'
+export const UPDATE_APP_ERROR = 'Applications/UPDATE_APP_ERROR'
 export const DELETE_APP = 'Applications/DELETE_APP'
 export const DELETE_APP_SUCCESS = 'Applications/DELETE_APP_SUCCESS'
+export const DELETE_APP_ERROR = 'Applications/DELETE_APP_ERROR'
 export const GET_APP_DETAILS = 'Applications/GET_APP_DETAILS'
 export const GET_APP_DETAILS_SUCCESS = 'Applications/GET_APP_DETAILS_SUCCESS'
 export const GET_USER_APPS = 'Applications/GET_USER_APPS'
@@ -23,21 +26,112 @@ const initialState: ApplicationsStore = {
     userId: 0,
     sandboxId: '',
     pubUrls: '',
-    enable: false,
+    enable: true,
   },
   userApps: [],
+  resCreate: {
+    isRequesting: false,
+    isSuccess: false,
+    isError: false,
+  },
+  resUpdate: {
+    isRequesting: false,
+    isSuccess: false,
+    isError: false,
+  },
+  resDelete: {
+    isRequesting: false,
+    isSuccess: false,
+    isError: false,
+  },
 }
 
 const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initialState, action) => {
   switch (action.type) {
     case CREATE_APP: {
-      return state
+      return update(state, {
+        resCreate: {
+          isRequesting: { $set: true },
+          isSuccess: { $set: false },
+          isError: { $set: false },
+        },
+      })
+    }
+    case CREATE_APP_SUCCESS: {
+      return update(state, {
+        resCreate: {
+          isRequesting: { $set: false },
+          isSuccess: { $set: true },
+        },
+      })
+    }
+    case CREATE_APP_ERROR: {
+      return update(state, {
+        resCreate: {
+          isRequesting: { $set: false },
+          isError: { $set: true },
+        },
+      })
     }
     case UPDATE_APP: {
-      return state
+      return update(state, {
+        resUpdate: {
+          isRequesting: { $set: true },
+          isSuccess: { $set: false },
+          isError: { $set: false },
+        },
+      })
+    }
+    case UPDATE_APP_SUCCESS: {
+      return update(state, {
+        resUpdate: {
+          isRequesting: { $set: false },
+          isSuccess: { $set: true },
+        },
+        currentApp: {
+          appId: { $set: action.appData.appId },
+          name: { $set: action.appData.description },
+          description: { $set: action.appData.description },
+          redirectUrl: { $set: action.appData.redirectUrl },
+          logo: { $set: action.appData.logo },
+          userId: { $set: action.appData.userId },
+          pubUrls: { $set: action.appData.pubUrls },
+          enable: { $set: action.appData.enable },
+        },
+      })
+    }
+    case UPDATE_APP_ERROR: {
+      return update(state, {
+        resUpdate: {
+          isRequesting: { $set: false },
+          isError: { $set: true },
+        },
+      })
     }
     case DELETE_APP: {
-      return state
+      return update(state, {
+        resDelete: {
+          isRequesting: { $set: true },
+          isSuccess: { $set: false },
+          isError: { $set: false },
+        },
+      })
+    }
+    case DELETE_APP_SUCCESS: {
+      return update(state, {
+        resDelete: {
+          isRequesting: { $set: false },
+          isSuccess: { $set: true },
+        },
+      })
+    }
+    case DELETE_APP_ERROR: {
+      return update(state, {
+        resDelete: {
+          isRequesting: { $set: false },
+          isError: { $set: true },
+        },
+      })
     }
     case GET_APP_DETAILS: {
       return state
@@ -77,12 +171,20 @@ export function createAppSuccess () {
   return { type: CREATE_APP_SUCCESS }
 }
 
+export function createAppError () {
+  return { type: CREATE_APP_ERROR }
+}
+
 export function updateApp (appData: AppData) {
   return { type: UPDATE_APP, appData }
 }
 
-export function updateAppSuccess () {
-  return { type: UPDATE_APP_SUCCESS }
+export function updateAppSuccess (appData: AppData) {
+  return { type: UPDATE_APP_SUCCESS, appData }
+}
+
+export function updateAppError () {
+  return { type: UPDATE_APP_ERROR }
 }
 
 export function deleteApp (appId: number) {
@@ -91,6 +193,10 @@ export function deleteApp (appId: number) {
 
 export function deleteAppSuccess () {
   return { type: DELETE_APP_SUCCESS }
+}
+
+export function deleteAppError () {
+  return { type: DELETE_APP_ERROR }
 }
 
 export function getAppDetails (appId: number, userId: number) {

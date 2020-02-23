@@ -66,6 +66,9 @@ export default makeStyles({
     color: '#646464',
     border: '1px solid #646464',
   },
+  btn3: {
+    minWidth: 175,
+  },
   upload: {
     display: 'flex',
     justifyContent: 'center',
@@ -99,5 +102,20 @@ export default makeStyles({
     background: `url("${requireImage('create-app-1.png')}") no-repeat`,
     backgroundPosition: 'center',
     backgroundSize: '140% 140%',
+  },
+  errorPlaceholder: {
+    display: 'flex',
+    marginTop: 10,
+  },
+  errorAlert: {
+    backgroundColor: '#F5A623',
+    border: 'solid',
+    borderWidth: 1,
+    borderColor: '#F59523',
+    fontSize: 13,
+    color: '#FFF',
+    padding: '2px 15px',
+    borderRadius: 5,
+    minHeight: 20,
   },
 })

@@ -8,6 +8,8 @@ import { updateApp, getAppDetails, deleteApp } from '../ducks'
 const mapStateToProps = ({ applications, auth }: Store) => ({
   currentApp: applications.currentApp,
   user: auth.user,
+  resUpdate: applications.resUpdate,
+  resDelete: applications.resDelete,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
