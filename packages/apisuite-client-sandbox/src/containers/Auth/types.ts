@@ -6,13 +6,13 @@ export interface AuthStore {
   user?: User,
   authToken?: string,
   isAuthorizing: boolean,
+  error?: string,
 }
 
 export interface User {
   fName: string,
   lName: string,
   id: number,
-  avatar: string,
 }
 
 export interface AuthPayloads {

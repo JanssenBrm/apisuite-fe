@@ -7,11 +7,10 @@ import useStyles from './styles'
 import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
-import Shuffle from '@material-ui/icons/Shuffle'
-import generator from 'generate-password'
+import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 
-const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) => {
+const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser, defaultEmail }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -24,6 +23,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
   const [filledEmail, setFilledEmail] = React.useState(false)
   const [filledPass, setFilledPass] = React.useState(false)
   const [buttonDisabled, setButtonDisabled] = React.useState(true)
+  const [formEdited, setFormEdited] = React.useState(false)
   const [input, setInput] = React.useState({
     name: '',
     email: '',
@@ -33,13 +33,12 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
   const nameFieldId = 'name-field'
   const emailFieldId = 'email-field'
   const passFieldId = 'pass-field'
-  const registerTitle = 'Registration'
-  const registerButtonLabel = 'Confirm'
+  const registerButtonLabel = 'CREATE ACCOUNT'
   const closeRoute = '/'
-  const passMinLength = 12
+  const passMinLength = 6
 
   function isValidName (name: string) {
-    return (name.length > 0)
+    return (name && name.length > 0)
   }
 
   function isValidEmail (email: string) {
@@ -48,11 +47,11 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
   }
 
   function isValidPass (pass: string) {
-    const uppercase = /[A-Z]/
-    const lowercase = /[a-z]/
-    const symbol = /[\W]{1,}/
+    // const uppercase = /[A-Z]/
+    // const lowercase = /[a-z]/
+    // const symbol = /[\W]{1,}/
     const passLength = (pass.length >= passMinLength)
-    return (uppercase.test(pass) && lowercase.test(pass) && symbol.test(pass) && passLength)
+    return (passLength)
   }
 
   function isFormValid (name: string, email: string, pass: string) {
@@ -83,6 +82,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
       }
       isFormValid(input.name, input.email, e.target.value)
     }
+    setFormEdited(true)
   }
 
   function handleClickShowPassword () {
@@ -92,21 +92,6 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
   function handleInputFocus (e: React.ChangeEvent<HTMLInputElement |
   HTMLTextAreaElement> | React.FocusEvent<HTMLDivElement>) {
     setFocusedField(e.target.id)
-  }
-
-  function generatePass () {
-    const pass = generator.generate({
-      length: 20,
-      numbers: true,
-      uppercase: true,
-      symbols: true,
-    })
-    setInput({
-      ...input,
-      password: pass,
-    })
-    isFormValid(input.name, input.email, pass)
-    setPassError(!isValidPass(pass))
   }
 
   React.useEffect(() => {
@@ -135,7 +120,11 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
         setNameError(!isValidName(input.name))
       }
     }
-  }, [focusedField])
+
+    if (defaultEmail && !formEdited) {
+      setInput({ name: '', email: atob(defaultEmail), password: '' })
+    }
+  }, [focusedField, defaultEmail])
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -150,18 +139,18 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
     <div className={classes.registerContainer}>
       <div className={classes.content}>
         <FormCard
-          title={registerTitle}
           buttonLabel={registerButtonLabel}
           buttonDisabled={buttonDisabled}
-          loading={auth.isAuthorizing}
+          loading={register.isRegistering}
+          error={register.error}
           closeRoute={closeRoute}
           handleSubmit={handleSubmit}
         >
           <div className={classes.fieldContainer}>
-            <h5 className={classes.fieldTitle}>GDPR protected</h5>
+            {/* <h5 className={classes.fieldTitle}>GDPR protected</h5> */}
             <TextField
               id={nameFieldId}
-              placeholder='Your name'
+              label='Your name'
               variant='outlined'
               margin='none'
               type='text'
@@ -179,10 +168,10 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
             {nameError && <div className={classes.alert}>{t('registerPortal.warnings.name')}</div>}
           </div>
           <div className={classes.fieldContainer}>
-            <h5 className={classes.fieldTitle}>E-mail address</h5>
+            {/* <h5 className={classes.fieldTitle}>E-mail address</h5> */}
             <TextField
               id={emailFieldId}
-              placeholder='example@cloudoki.com'
+              label='E-mail'
               variant='outlined'
               margin='none'
               type='email'
@@ -199,10 +188,11 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
             {emailError && <div className={classes.alert}>{t('registerPortal.warnings.email')}</div>}
           </div>
           <div className={classes.fieldContainer}>
-            <h5 className={classes.fieldTitle}>Pass Phrase</h5>
+            {/* <h5 className={classes.fieldTitle}>Pass Phrase</h5> */}
             <div className={classes.passPhraseContainer}>
               <TextField
                 id={passFieldId}
+                label='Password'
                 variant='outlined'
                 margin='none'
                 type={showPassword ? 'text' : 'password'}
@@ -214,9 +204,19 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
                 error={passError}
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
+                  endAdornment:
+  <InputAdornment position='end'>
+    <IconButton
+      aria-label='toggle password visibility'
+      onClick={handleClickShowPassword}
+      edge='end'
+    >
+      {showPassword ? <Visibility /> : <VisibilityOff />}
+    </IconButton>
+  </InputAdornment>,
                 }}
               />
-              <div className={classes.btnsContainer}>
+              {/* <div className={classes.btnsContainer}>
                 <IconButton
                   onClick={handleClickShowPassword}
                 >
@@ -229,7 +229,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ auth, registerUser }) =
                 >
                   <Shuffle id='shuffle-button' className={classes.shuffleIcon} />
                 </IconButton>
-              </div>
+              </div> */}
             </div>
             {passError &&
               <div className={classes.bigAlert}>{t('registerPortal.warnings.password')}</div>}

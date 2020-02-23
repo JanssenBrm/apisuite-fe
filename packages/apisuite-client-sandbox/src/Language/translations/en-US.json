@@ -108,7 +108,7 @@
   },
   "loginPortal": {
     "title": "Login",
-    "button": "Login",
+    "button": "LOG IN",
     "warnings": {
       "email": "Please enter a valid email address.",
       "password": "Please fill in your pass phrase."
@@ -122,7 +122,7 @@
     "warnings": {
       "name": "Your name must be at least one character long.",
       "email": "Please enter a valid email address.",
-      "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long"
+      "password": "Please fill in your pass phrase."
     }
   },
   "listApps": {
@@ -139,5 +139,16 @@
   "appDetail": {
     "buttonEnabled": "Save",
     "buttonDisabled": "Nothing to save"
+  },
+  "subscriptions": {
+    "title": "Subscriptions",
+    "description": "The Cloudoki Sandbox can hold an unlimited amount of API Products and API versions. The former defines the business side of an API, the latter is the technical entry, defined by OpenAPI contracts. This view enables you to automate deprecation control and give better insight in how the API’s and applications are linked together."
+  },
+  "subscriptionSelect": {
+    "addApplication": "Subscribe applications..."
+  },
+  "subscriptionsTable": {
+    "header": "Available API's",
+    "actions": "actions"
   }
 }

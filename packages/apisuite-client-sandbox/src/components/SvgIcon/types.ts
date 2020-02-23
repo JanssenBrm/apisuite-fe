@@ -3,7 +3,7 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   size?: number | string,
   /** The icon path name */
   name:
-  | 'chevron-right'
+  | 'autorenew'
   | 'chevron-up'
   | 'chevron-left-circle'
   | 'chevron-right-circle'
@@ -34,7 +34,7 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   | 'cloud-upload'
   | 'code'
   | 'content-copy'
-  | 'autorenew',
+  | 'logout',
   /** The fill to be applied to the vector */
   color?: string,
 }

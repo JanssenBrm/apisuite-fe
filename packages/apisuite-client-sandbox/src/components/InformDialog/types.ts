@@ -6,6 +6,7 @@ export interface InformDialogProps extends DialogProps {
   onCancel: ButtonProps['onClick'],
   onConfirm: (email: string) => void,
   textTarget: React.ReactNode,
+  titleTarget: React.ReactNode,
   showLoading?: boolean,
   error?: string,
 }

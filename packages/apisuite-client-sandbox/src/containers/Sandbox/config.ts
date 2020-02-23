@@ -14,7 +14,7 @@ export const slidesConfig: SlideConfig[] = [
     p1: 'sandboxPage.slides.one.p1',
     p2: 'sandboxPage.slides.one.p2',
     btnStr: 'sandboxPage.slides.one.btnStr',
-    linkTo: '/register',
+    linkTo: '/auth',
     btn: 1,
     imgUrl: slideOvalUrl,
   },

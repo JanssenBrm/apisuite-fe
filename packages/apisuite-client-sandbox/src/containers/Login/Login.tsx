@@ -1,22 +1,60 @@
 import * as React from 'react'
-import ReactDom from 'react-dom'
-import { Redirect } from 'react-router'
 import LoginPortal from 'components/LoginPortal'
-import { useKeyPress } from 'util/useKeyPress'
+import RegisterPortal from 'components/RegisterPortal'
+import classnames from 'classnames'
+import requireImage from 'util/requireImage'
 
-const portalRoot = document.getElementById('root')
+const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
+  const [authView, setAuthView] = React.useState('login')
+  const [justRegistered, setJustRegistered] = React.useState(false)
 
-const Login: React.FC<{}> = () => {
-  const closeRoute = '/'
-  const escapeKeyPress = useKeyPress('Escape')
-
-  if (portalRoot !== null) {
-    return ReactDom.createPortal(
-      escapeKeyPress ? <Redirect to={closeRoute} /> : <LoginPortal />,
-      portalRoot)
-  } else {
-    return <Redirect to={closeRoute} />
+  function handleViewChange (view: string) {
+    setAuthView(view)
+    setJustRegistered(false)
   }
+
+  React.useEffect(() => {
+    if (register.isRegistered) {
+      handleViewChange('login')
+      setJustRegistered(true)
+    }
+
+    if (match.params.email) {
+      handleViewChange('register')
+    }
+  }, [register.isRegistered])
+
+  return (
+    <div className='auth-page'>
+      <div className='auth-left-wrapper' />
+      <div className='content-wrapper'>
+        <div className='auth-content-left'>
+          <div className='auth-content-stripe' />
+          <div className='auth-forms-wrapper'>
+            <h1>Welcome</h1>
+            <div className='subtitle'>Please feel free to login or register, it's completely free!</div>
+            <div className='auth-block'>
+              <div className='auth-selector'>
+                <div className={classnames({ selected: authView === 'login' })} onClick={() => handleViewChange('login')}>Login</div>
+                <div className={classnames({ selected: authView === 'register' })} onClick={() => handleViewChange('register')}>Register</div>
+              </div>
+              <div className='auth-form'>
+                {authView === 'login' &&
+                  <LoginPortal />}
+                {authView === 'register' &&
+                  <RegisterPortal defaultEmail={match.params.email} />}
+                {justRegistered && <div className='user-created-feedback'>Your account is created, {register.user}!</div>}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='auth-content-right'>
+          <img src={requireImage('woman_login.svg')} />
+        </div>
+      </div>
+      <div className='auth-right-wrapper' />
+    </div>
+  )
 }
 
 export default Login

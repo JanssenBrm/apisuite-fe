@@ -4,8 +4,6 @@ import { authActions, LOGIN, LOGIN_USER, LOGIN_SUCCESS } from './ducks'
 import { AUTH_URL, LOGIN_PORT } from 'constants/endpoints'
 import qs from 'qs'
 
-// mock avatar
-import requireImage from 'util/requireImage'
 import { AnyAction } from 'redux'
 
 function * loginWorker (action: AnyAction) {
@@ -59,7 +57,7 @@ function * loginUWorker (action: AnyAction) {
     const userId = user.id
 
     yield put(authActions.loginUserSuccess({
-      user: { fName: userName[0], lName: userName[userName.length - 1], id: userId, avatar: requireImage('goncalo-avatar.jpg') },
+      user: { fName: userName[0], lName: userName[userName.length - 1], id: userId },
     }))
   } catch (error) {
     yield put(authActions.loginUserError(error))

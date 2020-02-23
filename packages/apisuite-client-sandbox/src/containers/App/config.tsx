@@ -18,7 +18,7 @@ export const initTabs: TabOpt[] = [
   },
   {
     label: 'Log in',
-    route: '/login',
+    route: '/auth',
   },
   {
     label: 'Demo',
@@ -60,7 +60,7 @@ export const loginTabs: TabOpt[] = [
       },
       {
         label: 'Subscriptions',
-        route: '',
+        route: '/dashboard/subscriptions',
       },
       {
         label: 'Client Aplications',
