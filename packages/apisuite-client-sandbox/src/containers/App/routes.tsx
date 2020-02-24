@@ -11,6 +11,7 @@ import AppDetail from 'containers/Applications/AppDetail'
 import Subscriptions from 'containers/Subscriptions'
 import Console from 'containers/Console'
 import Login from 'containers/Login'
+import TestData from 'containers/TestData'
 // import Register from 'containers/Register'
 import { AppRouteProps } from './types'
 import RequireAuth from 'containers/Auth'
@@ -22,6 +23,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/dashboard/apps/create', exact: true, render: (props) => <RequireAuth component={CreateApp} {...props} /> },
   { path: '/dashboard/apps/detail', exact: true, render: (props) => <RequireAuth component={AppDetail} {...props} /> },
   { path: '/dashboard/subscriptions', exact: true, render: (props) => <RequireAuth component={Subscriptions} {...props} /> },
+  { path: '/dashboard/test', exact: true, render: (props) => <RequireAuth component={TestData} {...props} /> },
   { path: '/dashboard/console', render: (props) => <RequireAuth component={Console} {...props} /> },
   // #conditional-loader-start: console
   // #conditional-loader-end
