@@ -2,10 +2,8 @@ import * as React from 'react'
 import clsx from 'clsx'
 import Avatar from '@material-ui/core/Avatar'
 import SvgIcon from 'components/SvgIcon'
-import InformDialog from 'components/InformDialog'
 import './styles.scss'
 import { NavigationProps } from './types'
-import { InformTarget } from 'containers/App/types'
 
 function getBarValues (parent: React.RefObject<HTMLDivElement>, target: React.RefObject<HTMLDivElement>) {
   const values = { left: 0, width: 0 }
@@ -41,7 +39,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     backButtonLabel,
     onGoBackCLick,
     logout,
-    inform,
+    toggleInform,
     ...rest
   } = props
 
@@ -50,14 +48,11 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   const [subBarValues, setSubBarValues] = React.useState({ left: 0, width: 0 })
   const tabsRef = React.useRef(null)
   const subTabsRef = React.useRef(null)
-  const [openDialog, setOpenDialog] = React.useState(false)
-  const [textTarget, setTextTarget] = React.useState('')
-  const [titleTarget, setTitleTarget] = React.useState('')
-  const [informTarget, setInformTarget] = React.useState<InformTarget>('portal')
 
   // TODO: this needs another look into it, right now tabs and sub tabs are limit to 10 each.
   const refs = tabsRange.map(() => React.useRef(null))
   const subRefs = tabsRange.map(() => React.useRef(null))
+  const scrolled = scrollPos >= 10
 
   function scrollHandler () {
     setScrollPos(window.scrollY)
@@ -68,13 +63,8 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     const tabIndex = Number(tab) || 0
 
     if (disabled) {
-      setOpenDialog(true)
-      setTitleTarget('Keep me posted')
-      setTextTarget("Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!")
-      setInformTarget('portal')
-    }
-
-    if (tabIndex < tabs.length) {
+      toggleInform()
+    } else if (tabIndex < tabs.length) {
       onTabChange(tabIndex)
     }
   }
@@ -84,13 +74,8 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     const tabIndex = Number(tab) || 0
 
     if (disabled) {
-      setOpenDialog(true)
-      setTitleTarget('Keep me posted')
-      setTextTarget("Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!")
-      setInformTarget('portal')
-    }
-
-    if (tabIndex < subTabs!.length) {
+      toggleInform()
+    } else if (tabIndex < subTabs!.length) {
       onSubTabChange(tabIndex)
     }
   }
@@ -109,19 +94,6 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   React.useEffect(() => {
     setSubBarValues(getBarValues(subTabsRef, subRefs[subTabIndex]))
   }, [subTabIndex, subTabs])
-
-  const scrolled = scrollPos >= 10
-
-  function handleConfirm (email: string) {
-    inform({
-      email: email,
-      target: informTarget,
-    })
-  }
-
-  function handleCancel () {
-    setOpenDialog(false)
-  }
 
   return (
     <div className={clsx('navigation', className, { scrolled: scrolled || forceScrolled })} {...rest}>
@@ -194,15 +166,6 @@ const Navigation: React.FC<NavigationProps> = (props) => {
           </div>
         </div>
       )}
-
-      <InformDialog
-        textTarget={textTarget}
-        titleTarget={titleTarget}
-        onConfirm={handleConfirm}
-        onCancel={handleCancel}
-        open={openDialog}
-      />
-
     </div>
   )
 }

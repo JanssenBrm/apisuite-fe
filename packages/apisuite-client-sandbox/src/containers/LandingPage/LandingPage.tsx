@@ -79,14 +79,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
 
           <p>Don’t find what you’re looking for? Let us know, we’re happy to accomodate!</p>
 
-          <div
+          {/* <div
             role='button'
             arial-label='register'
             className={classes.btn}
             style={{ backgroundColor: '#333333', color: 'white', marginTop: 16 }}
           >
             Propose Feature
-          </div>
+          </div> */}
         </aside>
       </section>
 
