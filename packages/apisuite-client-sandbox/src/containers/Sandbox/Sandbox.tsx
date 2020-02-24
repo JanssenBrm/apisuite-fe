@@ -15,18 +15,24 @@ import Checkbox from '@material-ui/core/Checkbox'
 import Link from '@material-ui/core/Link'
 import Carousel from 'components/Carousel'
 import Wheel from 'components/ApiSuiteWheel'
+import InformDialog from 'components/InformDialog'
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
 import { config } from 'constants/global'
+import { InformTarget } from 'containers/App/types'
 
 import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
 import partnersUrl from 'assets/partners.png'
 
-const Sandbox: React.FC<{}> = () => {
+const Sandbox: React.FC<{inform: any; requesting: any; requestError: any}> = ({ inform, requesting, requestError }) => {
   const classes = useStyles()
   const [t] = useTranslation()
   const [termsCheck, setTermsCheck] = React.useState(false)
+  const [openDialog, setOpenDialog] = React.useState(false)
+  const [textTarget, setTextTarget] = React.useState('')
+  const [titleTarget, setTitleTarget] = React.useState('')
+  const [informTarget, setInformTarget] = React.useState<InformTarget>('portal')
 
   // #conditional-loader-start: alert
   window.alert(config.navbar.name)
@@ -35,6 +41,36 @@ const Sandbox: React.FC<{}> = () => {
   function handleCheckboxClick () {
     setTermsCheck(!termsCheck)
   }
+
+  function handleDialog () {
+    setOpenDialog(true)
+    setTitleTarget('Keep me posted')
+    setTextTarget("Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!")
+    setInformTarget('portal')
+  }
+
+  function handleConfirm (email: string) {
+    inform({
+      email: email,
+      target: informTarget,
+    })
+  }
+
+  function handleCancel () {
+    setOpenDialog(false)
+  }
+
+  function closeDialog () {
+    if (!requesting) {
+      setOpenDialog(false)
+    }
+  }
+
+  React.useEffect(() => {
+    if (!requesting && !requestError) {
+      closeDialog()
+    }
+  }, [requesting])
 
   return (
     <main className={classes.root}>
@@ -66,10 +102,14 @@ const Sandbox: React.FC<{}> = () => {
                     [classes.btn2]: slide.btn === 2,
                     [classes.btn3]: slide.btn === 3,
                   })}
+                  onClick={slide.disabled ? handleDialog : undefined}
                 >
-                  <a href={slide.linkTo} className={classes.buttonLink}>
-                    {t(slide.btnStr)}
-                  </a>
+                  {!slide.disabled &&
+                    <a href={slide.linkTo} className={classes.buttonLink}>
+                      {t(slide.btnStr)}
+                    </a>}
+                  {slide.disabled &&
+                    <div>{t(slide.btnStr)}</div>}
                 </div>
               </section>
             </div>
@@ -308,6 +348,13 @@ const Sandbox: React.FC<{}> = () => {
           </form>
         </div>
       </section>
+      <InformDialog
+        textTarget={textTarget}
+        titleTarget={titleTarget}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+        open={openDialog}
+      />
     </main>
   )
 }

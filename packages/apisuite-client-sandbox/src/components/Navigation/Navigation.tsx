@@ -42,6 +42,8 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     onGoBackCLick,
     logout,
     inform,
+    requesting,
+    requestError,
     ...rest
   } = props
 
@@ -58,6 +60,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   // TODO: this needs another look into it, right now tabs and sub tabs are limit to 10 each.
   const refs = tabsRange.map(() => React.useRef(null))
   const subRefs = tabsRange.map(() => React.useRef(null))
+  const scrolled = scrollPos >= 10
 
   function scrollHandler () {
     setScrollPos(window.scrollY)
@@ -72,9 +75,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
       setTitleTarget('Keep me posted')
       setTextTarget("Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!")
       setInformTarget('portal')
-    }
-
-    if (tabIndex < tabs.length) {
+    } else if (tabIndex < tabs.length) {
       onTabChange(tabIndex)
     }
   }
@@ -88,11 +89,26 @@ const Navigation: React.FC<NavigationProps> = (props) => {
       setTitleTarget('Keep me posted')
       setTextTarget("Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!")
       setInformTarget('portal')
-    }
-
-    if (tabIndex < subTabs!.length) {
+    } else if (tabIndex < subTabs!.length) {
       onSubTabChange(tabIndex)
     }
+  }
+
+  function handleConfirm (email: string) {
+    inform({
+      email: email,
+      target: informTarget,
+    })
+  }
+
+  function closeDialog () {
+    if (!requesting) {
+      setOpenDialog(false)
+    }
+  }
+
+  function handleCancel () {
+    setOpenDialog(false)
   }
 
   React.useEffect(() => {
@@ -110,18 +126,11 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     setSubBarValues(getBarValues(subTabsRef, subRefs[subTabIndex]))
   }, [subTabIndex, subTabs])
 
-  const scrolled = scrollPos >= 10
-
-  function handleConfirm (email: string) {
-    inform({
-      email: email,
-      target: informTarget,
-    })
-  }
-
-  function handleCancel () {
-    setOpenDialog(false)
-  }
+  React.useEffect(() => {
+    if (!requesting && !requestError) {
+      closeDialog()
+    }
+  }, [requesting])
 
   return (
     <div className={clsx('navigation', className, { scrolled: scrolled || forceScrolled })} {...rest}>
