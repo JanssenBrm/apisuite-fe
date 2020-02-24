@@ -41,9 +41,8 @@ const ListApps: React.FC<ListAppsProps> = ({ history, user, userApps, getUserApp
             {userApps.map((userApp, indx) => {
               if (userApp.enable) {
                 return (
-                  <Grid item xs={12} sm={3}>
+                  <Grid item key={indx} xs={12} sm={3}>
                     <AppCard
-                      key={indx}
                       id={userApp.appId.toString()}
                       name={userApp.name}
                       onClick={handleAppClick}

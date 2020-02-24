@@ -8,7 +8,6 @@ export interface ApplicationRouteProps {
 
 export interface Response {
   isRequesting: boolean,
-  isSuccess: boolean,
   isError: boolean,
 }
 

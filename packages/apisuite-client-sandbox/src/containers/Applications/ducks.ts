@@ -31,17 +31,14 @@ const initialState: ApplicationsStore = {
   userApps: [],
   resCreate: {
     isRequesting: false,
-    isSuccess: false,
     isError: false,
   },
   resUpdate: {
     isRequesting: false,
-    isSuccess: false,
     isError: false,
   },
   resDelete: {
     isRequesting: false,
-    isSuccess: false,
     isError: false,
   },
 }
@@ -52,7 +49,6 @@ const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initia
       return update(state, {
         resCreate: {
           isRequesting: { $set: true },
-          isSuccess: { $set: false },
           isError: { $set: false },
         },
       })
@@ -61,7 +57,6 @@ const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initia
       return update(state, {
         resCreate: {
           isRequesting: { $set: false },
-          isSuccess: { $set: true },
         },
       })
     }
@@ -77,7 +72,6 @@ const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initia
       return update(state, {
         resUpdate: {
           isRequesting: { $set: true },
-          isSuccess: { $set: false },
           isError: { $set: false },
         },
       })
@@ -86,7 +80,6 @@ const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initia
       return update(state, {
         resUpdate: {
           isRequesting: { $set: false },
-          isSuccess: { $set: true },
         },
         currentApp: {
           appId: { $set: action.appData.appId },
@@ -112,7 +105,6 @@ const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initia
       return update(state, {
         resDelete: {
           isRequesting: { $set: true },
-          isSuccess: { $set: false },
           isError: { $set: false },
         },
       })
@@ -121,7 +113,6 @@ const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initia
       return update(state, {
         resDelete: {
           isRequesting: { $set: false },
-          isSuccess: { $set: true },
         },
       })
     }

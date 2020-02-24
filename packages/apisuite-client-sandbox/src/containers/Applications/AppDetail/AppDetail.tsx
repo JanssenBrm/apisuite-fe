@@ -81,7 +81,7 @@ const AppDetail: React.FC<AppDetailProps> = (
     if (user) {
       getAppDetails(appId, user.id)
     }
-    setInput({ ...currentApp })
+    // setInput({ ...currentApp })
     compareAppData({ ...currentApp })
   }, [currentApp])
 
