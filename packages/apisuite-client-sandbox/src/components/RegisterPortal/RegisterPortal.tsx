@@ -47,11 +47,11 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
   }
 
   function isValidPass (pass: string) {
-    // const uppercase = /[A-Z]/
-    // const lowercase = /[a-z]/
-    // const symbol = /[\W]{1,}/
+    const uppercase = /[A-Z]/
+    const lowercase = /[a-z]/
+    const symbol = /[\W]{1,}/
     const passLength = (pass.length >= passMinLength)
-    return (passLength)
+    return (uppercase.test(pass) && lowercase.test(pass) && symbol.test(pass) && passLength)
   }
 
   function isFormValid (name: string, email: string, pass: string) {
@@ -205,15 +205,15 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
                   endAdornment:
-  <InputAdornment position='end'>
-    <IconButton
-      aria-label='toggle password visibility'
-      onClick={handleClickShowPassword}
-      edge='end'
-    >
-      {showPassword ? <Visibility /> : <VisibilityOff />}
-    </IconButton>
-  </InputAdornment>,
+                    <InputAdornment position='end'>
+                      <IconButton
+                        aria-label='toggle password visibility'
+                        onClick={handleClickShowPassword}
+                        edge='end'
+                      >
+                        {showPassword ? <Visibility /> : <VisibilityOff />}
+                      </IconButton>
+                    </InputAdornment>,
                 }}
               />
               {/* <div className={classes.btnsContainer}>

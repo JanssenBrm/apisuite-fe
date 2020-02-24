@@ -1,4 +1,4 @@
-import requestInform from 'util/request'
+import request from 'util/requesting'
 import { takeLatest, call, put } from 'redux-saga/effects'
 import { SUPPORT_URL } from 'constants/endpoints'
 import { INFORM, appStoreActionCreators } from './ducks'
@@ -9,12 +9,10 @@ function * inform ({ payload }: AppStoreActionTypes['inform']) {
     const headers = { 'Content-Type': 'application/json' }
     const body = JSON.stringify(payload)
 
-    console.log(payload)
-    yield call(requestInform, {
-      url: SUPPORT_URL,
+    yield call(request, SUPPORT_URL as string, {
       method: 'POST',
       headers,
-      data: body,
+      body,
     })
 
     yield put(appStoreActionCreators.informSuccess())
@@ -32,3 +30,4 @@ export function * rootSaga () {
 }
 
 export default rootSaga
+

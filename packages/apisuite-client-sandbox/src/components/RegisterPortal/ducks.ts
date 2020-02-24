@@ -37,7 +37,7 @@ export default function reducer (state = initialState, action: any) {
       return update(state, {
         isRegistering: { $set: false },
         user: { $set: undefined },
-        error: { $set: action.error && action.error.message ? action.error.messate : 'Ops, somethign went wrong...' },
+        error: { $set: action.error && action.error.message ? action.error.message : 'Ops, somethign went wrong...' },
       })
     }
     default:
