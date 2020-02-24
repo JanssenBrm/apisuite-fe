@@ -1,9 +1,7 @@
 import * as React from 'react'
-import { config } from 'constants/global'
-import requireImage from 'util/requireImage'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
-import LocaleSelect from 'Language/LocaleSelect'
+import apisuite_logo from 'assets/apisuite_logo_white.svg'
 
 import './styles.scss'
 
@@ -16,8 +14,8 @@ const Footer = () => {
     <footer className='footer'>
       <div className='container'>
         <div className='logo-container'>
-          <img src={requireImage(config.footer.logoUrl)} alt='logo' className='logo' />
-          <p>{config.footer.copyright}</p>
+          <img src={apisuite_logo} alt='logo' className='logo' />
+          <p>{`© 2020 APISuite\nAll rights reserved.\nProudly made in Europe.`}</p>
 
           <div className='icons-container'>
             <a href='https://cloudoki.com' target='_blank' rel='noopener noreferrer'>
@@ -34,7 +32,7 @@ const Footer = () => {
             </a>
           </div>
 
-          <LocaleSelect />
+          {/* <LocaleSelect /> */}
         </div>
 
         <div className='sections-container'>
