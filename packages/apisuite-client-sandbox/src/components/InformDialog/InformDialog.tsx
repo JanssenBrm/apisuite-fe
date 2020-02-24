@@ -7,10 +7,10 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Link from '@material-ui/core/Link'
+// import FormGroup from '@material-ui/core/FormGroup'
+// import FormControlLabel from '@material-ui/core/FormControlLabel'
+// import Checkbox from '@material-ui/core/Checkbox'
+// import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { InformDialogProps } from './types'
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 
 const defaultValues = {
   email: '',
-  terms: false,
+  // terms: false,
   valid: false,
   errorHelper: '',
 }
@@ -69,18 +69,18 @@ const InformDialog: React.FC<InformDialogProps> = (
       newValues.errorHelper = getEmailError(value)
     }
 
-    newValues.valid = newValues.terms && !!newValues.email && !newValues.errorHelper
+    newValues.valid = !!newValues.email && !newValues.errorHelper
 
     setValues(newValues)
   }
 
-  const handleCheck = (name: 'terms') => ({ target: { checked } }: any) => {
-    const newValues = { ...values, [name]: checked }
+  // const handleCheck = (name: 'terms') => ({ target: { checked } }: any) => {
+  //   const newValues = { ...values, [name]: checked }
 
-    newValues.valid = newValues.terms && !!newValues.email && !newValues.errorHelper
+  //   newValues.valid = newValues.terms && !!newValues.email && !newValues.errorHelper
 
-    setValues(newValues)
-  }
+  //   setValues(newValues)
+  // }
 
   function handleConfirm () {
     if (values.valid) {
@@ -117,7 +117,7 @@ const InformDialog: React.FC<InformDialogProps> = (
             disabled={showLoading}
           />
 
-          <FormGroup row className={classes.formGroup}>
+          {/* <FormGroup row className={classes.formGroup}>
             <FormControlLabel
               label={
                 <>
@@ -134,7 +134,7 @@ const InformDialog: React.FC<InformDialogProps> = (
                 />
               }
             />
-          </FormGroup>
+          </FormGroup> */}
         </form>
       </DialogContent>
 

@@ -50,6 +50,9 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
   function handleOnTabChange (index: number) {
     setCurrentTab(index)
+    setSubTabs(tabs[index].subTabs)
+    setCurrentSubTab(0)
+
     history.push(tabs[index].route)
   }
 
@@ -79,8 +82,8 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       {navigations &&
         <Navigation
           key='app-navigation'
-          tabs={tabs.map((tab) => tab.label)}
-          subTabs={Array.isArray(subTabs) ? subTabs.map((tab) => tab.label) : undefined}
+          tabs={tabs}
+          subTabs={Array.isArray(subTabs) ? subTabs : undefined}
           tabIndex={currentTab}
           subTabIndex={currentSubTab}
           onTabChange={handleOnTabChange}

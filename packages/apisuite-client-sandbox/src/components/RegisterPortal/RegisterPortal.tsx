@@ -205,15 +205,15 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
                   endAdornment:
-                    <InputAdornment position='end'>
-                      <IconButton
-                        aria-label='toggle password visibility'
-                        onClick={handleClickShowPassword}
-                        edge='end'
-                      >
-                        {showPassword ? <Visibility /> : <VisibilityOff />}
-                      </IconButton>
-                    </InputAdornment>,
+  <InputAdornment position='end'>
+    <IconButton
+      aria-label='toggle password visibility'
+      onClick={handleClickShowPassword}
+      edge='end'
+    >
+      {showPassword ? <Visibility /> : <VisibilityOff />}
+    </IconButton>
+  </InputAdornment>,
                 }}
               />
               {/* <div className={classes.btnsContainer}>
