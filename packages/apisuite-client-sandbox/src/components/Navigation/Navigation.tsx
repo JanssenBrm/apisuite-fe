@@ -64,26 +64,14 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   }
 
   function handleTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
-    const tabIndex = Number(currentTarget.dataset.tab) || 0
+    const { tab, disabled } = currentTarget.dataset
+    const tabIndex = Number(tab) || 0
 
-    // TODO delete once these pages are created
-    if (tabIndex === 1 || tabIndex === 3) {
+    if (disabled) {
       setOpenDialog(true)
-
-      switch (tabIndex) {
-        case 1:
-          setTitleTarget('Contact Us')
-          setTextTarget('Contact Text')
-          setInformTarget('portal')
-          break
-        case 3:
-          setTitleTarget('Demo')
-          setTextTarget('Demo Text')
-          setInformTarget('portal')
-          break
-        default:
-          setTextTarget('')
-      }
+      setTitleTarget('Keep me posted')
+      setTextTarget("Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!")
+      setInformTarget('portal')
     }
 
     if (tabIndex < tabs.length) {
@@ -92,7 +80,15 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   }
 
   function handleSubTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
-    const tabIndex = Number(currentTarget.dataset.tab) || 0
+    const { tab, disabled } = currentTarget.dataset
+    const tabIndex = Number(tab) || 0
+
+    if (disabled) {
+      setOpenDialog(true)
+      setTitleTarget('Keep me posted')
+      setTextTarget("Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!")
+      setInformTarget('portal')
+    }
 
     if (tabIndex < subTabs!.length) {
       onSubTabChange(tabIndex)
@@ -144,10 +140,12 @@ const Navigation: React.FC<NavigationProps> = (props) => {
                 key={`nav-tab-${idx}`}
                 ref={refs[idx]}
                 data-tab={idx}
+                data-label={tab.label}
                 onClick={handleTabClick}
                 className={clsx('tab', { selected: idx === tabIndex })}
+                data-disabled={tab.disabled}
               >
-                {tab}
+                {tab.label}
               </div>
             ))}
 
@@ -184,8 +182,9 @@ const Navigation: React.FC<NavigationProps> = (props) => {
                 data-tab={idx}
                 onClick={handleSubTabClick}
                 className={clsx('tab', 'sub-tab', { selected: idx === subTabIndex })}
+                data-disabled={subTab.disabled}
               >
-                {subTab}
+                {subTab.label}
               </div>
             ))}
 
