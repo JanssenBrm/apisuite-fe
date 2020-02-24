@@ -80,7 +80,15 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   }
 
   function handleSubTabClick ({ currentTarget }: React.MouseEvent<HTMLDivElement>) {
-    const tabIndex = Number(currentTarget.dataset.tab) || 0
+    const { tab, disabled } = currentTarget.dataset
+    const tabIndex = Number(tab) || 0
+
+    if (disabled) {
+      setOpenDialog(true)
+      setTitleTarget('Keep me posted')
+      setTextTarget("Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!")
+      setInformTarget('portal')
+    }
 
     if (tabIndex < subTabs!.length) {
       onSubTabChange(tabIndex)
