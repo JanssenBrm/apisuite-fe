@@ -157,8 +157,8 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
               name='name'
               value={input.name}
               onChange={handleInputs}
-              autoFocus
               onFocus={handleInputFocus}
+              autoFocus
               error={nameError}
               fullWidth
               InputProps={{
