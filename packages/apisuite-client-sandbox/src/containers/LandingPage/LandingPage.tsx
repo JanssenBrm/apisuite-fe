@@ -71,7 +71,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
         </Panel>
 
         <aside className={classes.cardSide}>
-          <h1>Hi, {fname} {lname}</h1>
+          <h1>Hi, {fname}</h1>
           <p>
           You’re at the right place if you want to set up a new app,
            get insights through analytics or follow up API subscriptions.

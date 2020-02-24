@@ -8,7 +8,7 @@ export default makeStyles({
     width: '100%',
     minHeight: '100%',
     background: `url("${requireImage('landing-bg.png')}") no-repeat`,
-    backgroundSize: '100% 100%',
+    backgroundSize: '110% 110%',
     paddingTop: 300,
     paddingBottom: 45,
   },
