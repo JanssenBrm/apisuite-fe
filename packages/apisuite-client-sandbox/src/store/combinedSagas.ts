@@ -4,16 +4,16 @@
 
 import auth from 'containers/Auth/sagas'
 import register from 'components/RegisterPortal/sagas'
+import informDialog from 'components/InformDialog/sagas'
 import applications from 'containers/Applications/sagas'
-import app from 'containers/App/sagas'
 import subscriptions from 'containers/Subscriptions/sagas'
 
 const sagas = [
   auth,
   register,
   applications,
-  app,
   subscriptions,
+  informDialog,
 ]
 
 export default sagas

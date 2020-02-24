@@ -5,6 +5,7 @@ import requireImage from 'util/requireImage'
 import { config } from 'constants/global'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
+import InformDialog from 'components/InformDialog'
 
 import theme from './theme'
 import routes from './routes'
@@ -101,6 +102,8 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       {routes()}
 
       {navigations && <Footer />}
+
+      <InformDialog />
     </ThemeProvider>
   )
 }

@@ -17,7 +17,8 @@ import RequireAuth from 'containers/Auth'
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
-  { path: '/dashboard', exact: true, render: (props) => <RequireAuth component={LandingPage} {...props} /> },
+  { path: '/dashboard', exact: true, component: LandingPage },
+  // { path: '/dashboard', exact: true, render: (props) => <RequireAuth component={LandingPage} {...props} /> },
   { path: '/dashboard/apps', exact: true, render: (props) => <RequireAuth component={ListApps} {...props} /> },
   { path: '/dashboard/apps/create', exact: true, render: (props) => <RequireAuth component={CreateApp} {...props} /> },
   { path: '/dashboard/apps/detail', exact: true, render: (props) => <RequireAuth component={AppDetail} {...props} /> },

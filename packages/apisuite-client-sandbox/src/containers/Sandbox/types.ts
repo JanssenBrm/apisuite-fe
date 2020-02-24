@@ -1,5 +1,5 @@
 import { SvgIconProps } from 'components/SvgIcon/types'
-import { AppStorePayloads } from 'containers/App/types'
+import { InformStorePayloads } from 'components/InformDialog/types'
 import { AnyAction } from 'redux'
 
 export interface SlideConfig {
@@ -24,7 +24,7 @@ export interface ListConfig {
 }
 
 export interface SandboxProps {
-  inform: AnyAction & { payload: AppStorePayloads['inform'] },
+  inform: AnyAction & { payload: InformStorePayloads['inform'] },
   requesting: boolean,
   requestError: any,
 }

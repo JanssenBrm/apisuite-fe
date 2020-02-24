@@ -1,18 +1,10 @@
 import { connect } from 'react-redux'
-import { appStoreActionCreators } from 'containers/App/ducks'
-import { AppStorePayloads } from 'containers/App/types'
+import { appStoreActionCreators } from 'components/InformDialog/ducks'
 import Navigation from './Navigation'
 import { Dispatch } from 'redux'
-import { Store } from 'store/types'
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  inform: (informData: AppStorePayloads['inform']) => dispatch(appStoreActionCreators.inform(informData)),
+  toggleInform: () => dispatch(appStoreActionCreators.informOpen()),
 })
 
-export default connect(
-  ({ app }: Store) => ({
-    requesting: app.requestingInform,
-    requestError: app.requestInformErrorMessage,
-  }),
-  mapDispatchToProps,
-)(Navigation)
+export default connect(null, mapDispatchToProps)(Navigation)

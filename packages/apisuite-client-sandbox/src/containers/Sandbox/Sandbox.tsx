@@ -15,24 +15,18 @@ import Checkbox from '@material-ui/core/Checkbox'
 import Link from '@material-ui/core/Link'
 import Carousel from 'components/Carousel'
 import Wheel from 'components/ApiSuiteWheel'
-import InformDialog from 'components/InformDialog'
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
 import { config } from 'constants/global'
-import { InformTarget } from 'containers/App/types'
 
 import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
 import partnersUrl from 'assets/partners.png'
 
-const Sandbox: React.FC<{inform: any; requesting: any; requestError: any}> = ({ inform, requesting, requestError }) => {
+const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
   const classes = useStyles()
   const [t] = useTranslation()
   const [termsCheck, setTermsCheck] = React.useState(false)
-  const [openDialog, setOpenDialog] = React.useState(false)
-  const [textTarget, setTextTarget] = React.useState('')
-  const [titleTarget, setTitleTarget] = React.useState('')
-  const [informTarget, setInformTarget] = React.useState<InformTarget>('portal')
 
   // #conditional-loader-start: alert
   window.alert(config.navbar.name)
@@ -42,35 +36,9 @@ const Sandbox: React.FC<{inform: any; requesting: any; requestError: any}> = ({ 
     setTermsCheck(!termsCheck)
   }
 
-  function handleDialog () {
-    setOpenDialog(true)
-    setTitleTarget('Keep me posted')
-    setTextTarget("Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!")
-    setInformTarget('portal')
+  function handleTrigger () {
+    toggleInform()
   }
-
-  function handleConfirm (email: string) {
-    inform({
-      email: email,
-      target: informTarget,
-    })
-  }
-
-  function handleCancel () {
-    setOpenDialog(false)
-  }
-
-  function closeDialog () {
-    if (!requesting) {
-      setOpenDialog(false)
-    }
-  }
-
-  React.useEffect(() => {
-    if (!requesting && !requestError) {
-      closeDialog()
-    }
-  }, [requesting])
 
   return (
     <main className={classes.root}>
@@ -102,7 +70,7 @@ const Sandbox: React.FC<{inform: any; requesting: any; requestError: any}> = ({ 
                     [classes.btn2]: slide.btn === 2,
                     [classes.btn3]: slide.btn === 3,
                   })}
-                  onClick={slide.disabled ? handleDialog : undefined}
+                  onClick={slide.disabled ? handleTrigger : undefined}
                 >
                   {!slide.disabled &&
                     <a href={slide.linkTo} className={classes.buttonLink}>
@@ -273,7 +241,7 @@ const Sandbox: React.FC<{inform: any; requesting: any; requestError: any}> = ({ 
             className={classes.btn}
             style={{ backgroundColor: '#333333', color: 'white', marginTop: 16 }}
           >
-            <a className={classes.buttonLink} href='/register'>Register</a>
+            <a className={classes.buttonLink} href='/auth'>Register</a>
           </div>
         </aside>
       </section>
@@ -313,10 +281,11 @@ const Sandbox: React.FC<{inform: any; requesting: any; requestError: any}> = ({ 
               />
 
               <Button
-                arial-label='register'
-                type='submit'
+                // arial-label='register'
+                // type='submit'
                 disabled={!termsCheck}
                 className={classes.btn4}
+                // onClick={inform}
                 // style={{ backgroundColor: '#2DB7BA', color: '#333333', marginLeft: 12, maxHeight: 40 }}
               >
                 Subscribe
@@ -331,11 +300,9 @@ const Sandbox: React.FC<{inform: any; requesting: any; requestError: any}> = ({ 
                 label={
                   <>
                     I agree that Cloudoki sends me newsletters about API related news. I can withdraw my consent at any
-                     time by sending an e-mail to <Link href='#'>unsubscribe@cloudoki.com</Link>.
-                      For further information please see out <Link href='#'>Data Privacy Notice.</Link>
+                     time by sending an e-mail to <Link href='#'>unsubscribe@cloudoki.com</Link>
                   </>
-                }
-                control={
+                } control={
                   <Checkbox
                     checked={termsCheck}
                     color='primary'
@@ -348,13 +315,6 @@ const Sandbox: React.FC<{inform: any; requesting: any; requestError: any}> = ({ 
           </form>
         </div>
       </section>
-      <InformDialog
-        textTarget={textTarget}
-        titleTarget={titleTarget}
-        onConfirm={handleConfirm}
-        onCancel={handleCancel}
-        open={openDialog}
-      />
     </main>
   )
 }

@@ -7,7 +7,6 @@ import { ListAppsProps } from './types'
 import AppCard from 'components/AppCard'
 
 import { docs } from './config'
-import SvgIcon from 'components/SvgIcon'
 
 import { useTranslation } from 'react-i18next'
 
@@ -51,12 +50,6 @@ const ListApps: React.FC<ListAppsProps> = ({ history }) => {
                 <h1>{doc.title}</h1>
 
                 <p>{doc.content}</p>
-
-                <div className={classes.spacer} />
-
-                <div className={classes.readMore}>
-                  <SvgIcon name='chevron-right-circle' size={28} /> &nbsp;&nbsp; <span>{t('listApps.buttons.readMore')}</span>
-                </div>
               </div>
             ))}
           </div>
