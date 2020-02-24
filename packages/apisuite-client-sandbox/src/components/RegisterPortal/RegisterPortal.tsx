@@ -47,11 +47,11 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
   }
 
   function isValidPass (pass: string) {
-    // const uppercase = /[A-Z]/
-    // const lowercase = /[a-z]/
-    // const symbol = /[\W]{1,}/
+    const uppercase = /[A-Z]/
+    const lowercase = /[a-z]/
+    const symbol = /[\W]{1,}/
     const passLength = (pass.length >= passMinLength)
-    return (passLength)
+    return (uppercase.test(pass) && lowercase.test(pass) && symbol.test(pass) && passLength)
   }
 
   function isFormValid (name: string, email: string, pass: string) {
