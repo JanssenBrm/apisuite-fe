@@ -133,6 +133,7 @@ export function * getAppDetails (action: GetAppDetails) {
     },
   })
 
+  // TODO change request when BE allows to fetch a specific app
   const userApps = response.map((userApp: any) => (
     {
       appId: userApp.id,
