@@ -19,9 +19,9 @@ const RadioBoxes: React.FC<RadioBoxesProps> = ({ options, selected, onChange }) 
 
   return (
     <RadioGroup className={classes.radioGroup} value={selected} onChange={onChange}>
-      {options.map(({ value, label, desc, disabled, checked }) => (
+      {options.map(({ value, label, desc, disabled, checked }, indx) => (
         <div
-          key={value}
+          key={indx}
           className={clsx(classes.controlWrapper, { [classes.unselected]: value !== selected })}
           onClick={handleOptionClick(value)}
         >

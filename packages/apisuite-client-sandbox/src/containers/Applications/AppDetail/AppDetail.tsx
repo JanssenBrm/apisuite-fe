@@ -8,22 +8,27 @@ import Avatar from '@material-ui/core/Avatar'
 import Select from 'components/Select'
 import Panel from 'components/Panel'
 import Wheel from 'components/ApiSuiteWheel'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
 
 import { selectOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { AppDetailProps } from './types'
-import { AppData } from '../types'
+import { AppData, RouteParams } from '../types'
 import { Link } from '@material-ui/core'
+import { useParams } from 'react-router'
 
-const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, currentApp, deleteApp }) => {
+const AppDetail: React.FC<AppDetailProps> = (
+  { updateApp, getAppDetails, currentApp, deleteApp, user, resUpdate, resDelete }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
+  const appId = parseInt(useParams<RouteParams>().id)
 
   const [buttonDisabled, setButtonDisabled] = React.useState(true)
   const [input, setInput] = React.useState({
+    appId: currentApp.appId,
     name: currentApp.name,
     description: currentApp.description,
     redirectUrl: currentApp.redirectUrl,
@@ -31,11 +36,13 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
     userId: currentApp.userId,
     sandboxId: currentApp.sandboxId,
     pubUrls: currentApp.pubUrls,
+    enable: true,
   })
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     updateApp({
+      appId: appId,
       name: input.name,
       description: input.description,
       redirectUrl: input.redirectUrl,
@@ -43,13 +50,12 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
       userId: input.userId,
       sandboxId: input.sandboxId,
       pubUrls: input.pubUrls,
-      // TODO change after adding the fetch of the list of apps
-    }, '1')
+      enable: true,
+    })
   }
 
   function handleDeleteApp () {
-    // TODO change after adding the fetch of the list of apps
-    deleteApp('1')
+    deleteApp(appId)
   }
 
   function compareAppData (newAppData: AppData) {
@@ -72,8 +78,11 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
   }
 
   React.useEffect(() => {
-    getAppDetails()
+    if (user) {
+      getAppDetails(appId, user.id)
+    }
     setInput({ ...currentApp })
+    compareAppData({ ...currentApp })
   }, [currentApp])
 
   return (
@@ -221,8 +230,13 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
                 disabled={buttonDisabled}
                 className={clsx(classes.btn, classes.btn2, (buttonDisabled && classes.disabled))}
               >
-                {buttonDisabled ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
+                {resUpdate.isRequesting ? <CircularProgress size={20} /> : buttonDisabled ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
               </Button>
+
+              {resUpdate.isError &&
+                <div className={classes.errorPlaceholder}>
+                  <div className={classes.errorAlert}>Error updating app</div>
+                </div>}
 
               <br /><br /><br />
 
@@ -252,6 +266,12 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
               >
                 Delete application
               </div>
+
+              {resDelete.isError &&
+                <div className={classes.errorPlaceholder}>
+                  <div className={classes.errorAlert}>Error deleting app</div>
+                </div>}
+
             </form>
           </aside>
         </section>
