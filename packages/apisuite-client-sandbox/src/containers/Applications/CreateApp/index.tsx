@@ -5,8 +5,9 @@ import { AppData } from '../types'
 import { Dispatch } from 'redux'
 import { Store } from 'store/types'
 
-const mapStateToProps = ({ auth }: Store) => ({
+const mapStateToProps = ({ auth, applications }: Store) => ({
   user: auth.user,
+  resCreate: applications.resCreate,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

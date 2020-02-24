@@ -34,13 +34,13 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       setNavScrolled(false)
     }
 
+    const gb = gobackConfig.find((item) => pathname.includes(item.path))
+
     if (pathname.startsWith('/auth')) {
       setNavigations(false)
     } else {
       setNavigations(true)
     }
-
-    const gb = gobackConfig.find((item) => item.path === pathname)
 
     if (gb) {
       setGobackLabel(gb.label)

@@ -54,9 +54,10 @@ function * loginUWorker (action: AnyAction) {
 
     const user = userinfo.userinfo
     const userName = user.name.split(' ')
+    const userId = user.id
 
     yield put(authActions.loginUserSuccess({
-      user: { fName: userName[0], lName: userName[userName.length - 1] },
+      user: { fName: userName[0], lName: userName[userName.length - 1], id: userId },
     }))
   } catch (error) {
     yield put(authActions.loginUserError(error))

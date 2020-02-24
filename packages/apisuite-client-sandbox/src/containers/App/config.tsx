@@ -62,7 +62,7 @@ export const loginTabs: TabProps[] = [
         route: '/dashboard/subscriptions',
       },
       {
-        label: 'Client Aplications',
+        label: 'Client Applications',
         route: '/dashboard/apps',
       },
       {

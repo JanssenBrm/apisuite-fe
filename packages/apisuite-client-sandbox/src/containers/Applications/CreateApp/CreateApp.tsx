@@ -6,6 +6,7 @@ import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
 import RadioBoxes from 'components/RadioBoxes/RadioBoxes'
 import Select from 'components/Select'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { radioOptions, selectOptions } from './config'
 import useCommonStyles from '../styles'
@@ -13,7 +14,7 @@ import useStyles from './styles'
 import { CreateAppProps } from './types'
 import clsx from 'clsx'
 
-const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
+const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCreate }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [visibility, setVisibility] = React.useState('private')
@@ -22,7 +23,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
     description: '',
     redirectUrl: '',
     logo: '',
-    userId: '',
+    userId: 0,
     sandboxId: '',
     pubUrls: '',
   })
@@ -44,14 +45,23 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+
+    let userId = 0
+
+    if (user) {
+      userId = user.id
+    }
+
     createApp({
+      appId: 0,
       name: input.name,
       description: input.description,
       redirectUrl: input.redirectUrl,
       logo: input.logo,
-      userId: input.userId,
+      userId: userId,
       sandboxId: input.sandboxId,
       pubUrls: input.pubUrls,
+      enable: true,
     })
   }
 
@@ -150,9 +160,9 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
           <div className={classes.marginBottom}>
             <Button
               type='submit'
-              className={classes.btn}
+              className={clsx(classes.btn, classes.btn3)}
             >
-              Add Application
+              {resCreate.isRequesting ? <CircularProgress size={20} /> : 'Add Application'}
             </Button>
             <div
               role='button'
@@ -162,6 +172,11 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
               Cancel
             </div>
           </div>
+
+          {resCreate.isError &&
+            <div className={classes.errorPlaceholder}>
+              <div className={classes.errorAlert}>Error creating app</div>
+            </div>}
 
           <p className={classes.info}>
             Not sure if you’re doing it right?
