@@ -1,7 +1,7 @@
 import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
-import apisuite_logo from 'assets/apisuite_logo_white.svg'
+import requireImage from 'util/requireImage'
 
 import './styles.scss'
 
@@ -14,8 +14,8 @@ const Footer = () => {
     <footer className='footer'>
       <div className='container'>
         <div className='logo-container'>
-          <img src={apisuite_logo} alt='logo' className='logo' />
-          <p>{`© 2020 APISuite\nAll rights reserved.\nProudly made in Europe.`}</p>
+          <img src={requireImage('apisuite_logo_white.svg')} alt='logo' className='logo' />
+          <p>{'© 2020 APISuite\nAll rights reserved.\nProudly made in Europe.'}</p>
 
           <div className='icons-container'>
             <a href='https://cloudoki.com' target='_blank' rel='noopener noreferrer'>
