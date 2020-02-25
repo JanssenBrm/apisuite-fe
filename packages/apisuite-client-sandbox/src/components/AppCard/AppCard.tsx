@@ -83,11 +83,10 @@ const AppCard: React.FC<AppCardProps> = (
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleClose}
-          onClick={handleVoid}
         >
           <MenuItem onClick={handleOpen}>App details</MenuItem>
-          <MenuItem disabled>Open in console</MenuItem>
-          <MenuItem disabled>View activity</MenuItem>
+          <MenuItem onClick={handleVoid} className={classes.disabled}>Open in console</MenuItem>
+          <MenuItem onClick={handleVoid} className={classes.disabled}>View activity</MenuItem>
           <MenuItem onClick={handleDelete}>Remove</MenuItem>
         </Menu>
       </div>
