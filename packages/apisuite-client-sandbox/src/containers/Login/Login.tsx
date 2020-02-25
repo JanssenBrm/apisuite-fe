@@ -49,7 +49,10 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
           </div>
         </div>
         <div className='auth-content-right'>
-          <img src={requireImage('woman_login.svg')} />
+          {authView === 'login' &&
+            <img src={requireImage('woman_login.svg')} />}
+          {authView === 'register' &&
+            <img src={requireImage('woman_register.svg')} />}          
         </div>
       </div>
       <div className='auth-right-wrapper' />
