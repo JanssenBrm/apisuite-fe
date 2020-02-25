@@ -6,21 +6,19 @@ import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
 import Avatar from '@material-ui/core/Avatar'
 import Select from 'components/Select'
-import Panel from 'components/Panel'
-import Wheel from 'components/ApiSuiteWheel'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
+import moment from 'moment'
 
 import { selectOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { AppDetailProps } from './types'
 import { AppData, RouteParams } from '../types'
-import { Link } from '@material-ui/core'
 import { useParams } from 'react-router'
 
 const AppDetail: React.FC<AppDetailProps> = (
-  { updateApp, getAppDetails, currentApp, deleteApp, user, resUpdate, resDelete }) => {
+  { history, updateApp, getAppDetails, currentApp, deleteApp, user, resUpdate, resDelete, toggleInform }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
@@ -77,6 +75,10 @@ const AppDetail: React.FC<AppDetailProps> = (
     })
   }
 
+  function navigate (route: any) {
+    history.push(route)
+  }
+
   React.useEffect(() => {
     if (user) {
       getAppDetails(appId, user.id)
@@ -129,9 +131,9 @@ const AppDetail: React.FC<AppDetailProps> = (
                 value='https://cloudoki.com/tos'
               />
 
-              <Button variant='outlined' className={classes.iconBtn}>
+              {/* <Button variant='outlined' className={classes.iconBtn}>
                 <SvgIcon name='plus' size='24' />
-              </Button>
+              </Button> */}
             </div>
 
             <br /><br /><br /><br /><br />
@@ -151,9 +153,9 @@ const AppDetail: React.FC<AppDetailProps> = (
                 inputProps={{ readOnly: true }}
               />
 
-              <Button variant='outlined' className={classes.iconBtn}>
+              {/* <Button variant='outlined' className={classes.iconBtn}>
                 <SvgIcon name='content-copy' size='24' />
-              </Button>
+              </Button> */}
             </div>
 
             <br />
@@ -165,13 +167,13 @@ const AppDetail: React.FC<AppDetailProps> = (
                 inputProps={{ readOnly: true }}
               />
 
-              <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnLeft)}>
+              {/* <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnLeft)}>
                 <SvgIcon name='autorenew' size='24' />
               </Button>
 
               <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnRight)}>
                 <SvgIcon name='content-copy' size='24' />
-              </Button>
+              </Button> */}
             </div>
 
             <br />
@@ -185,9 +187,9 @@ const AppDetail: React.FC<AppDetailProps> = (
                 onChange={handleInputs}
               />
 
-              <Button variant='outlined' className={classes.iconBtn}>
+              {/* <Button variant='outlined' className={classes.iconBtn}>
                 <SvgIcon name='plus' size='24' />
-              </Button>
+              </Button> */}
             </div>
 
             <br />
@@ -215,14 +217,16 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <br />
 
-              <InputLabel shrink>Author</InputLabel>
+              {/* <InputLabel shrink>Author</InputLabel>
               <div className={classes.link}>Finish your team info</div>
-
-              <br />
+              <br /> */}
 
               <InputLabel shrink>Registration date</InputLabel>
-              <div>June 24th, 2019</div>
+              <div>{moment(currentApp.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
+              <br />
 
+              <InputLabel shrink>Last update</InputLabel>
+              <div>{moment(currentApp.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
               <br />
 
               <Button
@@ -245,21 +249,18 @@ const AppDetail: React.FC<AppDetailProps> = (
               <br />
 
               <InputLabel shrink>API subscriptions</InputLabel>
-              <div className={classes.link}>Manage API subscriptions</div>
-
+              <div className={classes.link} onClick={() => navigate('/dashboard/subscriptions')}>Manage API subscriptions</div>
               <br />
 
               <InputLabel shrink className={classes.marginBottom}>Application scopes</InputLabel>
               <div>
-                <span className={classes.tag}>aisp</span>
-                <span className={classes.tag}>piisp</span>
-                <span className={classes.tag}>pisp</span>
+                <span className={classes.tag}>default</span>
               </div>
 
               <br />
 
               <InputLabel shrink>Additional actions</InputLabel>
-              <div className={classes.link}>Activity monitoring</div>
+              <div className={classes.link} onClick={() => toggleInform()}>Activity monitoring</div>
               <div
                 className={classes.link}
                 onClick={handleDeleteApp}
@@ -274,31 +275,6 @@ const AppDetail: React.FC<AppDetailProps> = (
 
             </form>
           </aside>
-        </section>
-      </div>
-
-      <div className={classes.cardContainer}>
-        <section className={commonClasses.contentContainer}>
-          <Panel className={classes.panel}>
-            <div className={classes.wheelContainer}>
-              <Wheel selected={['tr', 'bl']} />
-            </div>
-
-            <div className={classes.cardInfo}>
-              <h1>API Suite functionality</h1>
-
-              <p>The <b>Cloudoki Sandbox</b> demo limits the scope of applications to private consumers of sandboxed
-               API’s. We got more… *
-              </p>
-              <p className={classes.greenColor}>View added functionality on <Link href='#'>cloudoki.com/portal</Link></p>
-
-              <br />
-
-              <p className={classes.cardInfoItalic}>
-                * Public applications in Marketplace, production API’s onboarding in Portal.
-              </p>
-            </div>
-          </Panel>
         </section>
       </div>
     </>

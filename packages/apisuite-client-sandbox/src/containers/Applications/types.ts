@@ -33,6 +33,8 @@ export interface AppData {
   sandboxId: string,
   pubUrls: string,
   enable: boolean,
+  updatedAt?: string,
+  createdAt?: string,
 }
 
 export interface CreateAppAction extends Action {
