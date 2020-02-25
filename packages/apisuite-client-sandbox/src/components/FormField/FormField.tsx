@@ -55,7 +55,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
     <div style={{ width: fullWidth ? '100%' : undefined }}>
       {label && (
         <InputLabel
-          error={errors.length > 0}
+          error={errors && errors.length > 0}
           shrink
           focused={labelFocus}
           {...InputLabelProps}
@@ -65,7 +65,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       )}
 
       <TextField
-        error={errors.length > 0}
+        error={errors && errors.length > 0}
         variant={variant}
         margin={margin}
         fullWidth={fullWidth}
@@ -73,7 +73,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         onBlur={handleOnBlur}
         {...rest}
       />
-      {errors.map((e: any) => e.message)}
+      {errors && errors.map((e: any) => e.message)}
     </div>
   )
 }
