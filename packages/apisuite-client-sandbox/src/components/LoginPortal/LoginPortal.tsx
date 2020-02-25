@@ -2,6 +2,7 @@ import * as React from 'react'
 import { LoginPortalProps } from './types'
 import FormCard from 'components/FormCard'
 import TextField from '@material-ui/core/TextField'
+import FormField from 'components/FormField'
 import useStyles from './styles'
 import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
@@ -43,7 +44,8 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
     setButtonDisabled(!(filledEmail && filledPass && isValidEmail(email) && isValidPass(pass)))
   }
 
-  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, errors) => {
+    console.log("triggered", errors)
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -110,31 +112,28 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
           handleSubmit={handleSubmit}
         >
           <div className={classes.fieldContainer}>
-            {/* <h5 className={classes.fieldTitle}>{t('loginPortal.fields.email')}</h5> */}
-            <TextField
+            <FormField
               id={emailFieldId}
               label='E-mail'
-              defaultValue='small'
               variant='outlined'
               margin='none'
               type='email'
               name='email'
               value={input.email}
               onChange={handleInputs}
-              onFocus={handleInputFocus}
-              error={emailError}
               autoFocus
               fullWidth
               InputProps={{
                 classes: { input: classes.emailTextfield },
               }}
+              rules={[
+                { rule: input.email.length > 10, message: t('loginPortal.warnings.email') }
+              ]}
             />
-            {emailError && <div className={classes.alert}>{t('loginPortal.warnings.email')}.</div>}
           </div>
           <div className={classes.fieldContainer}>
-            {/* <h5 className={classes.fieldTitle}>{t('loginPortal.fields.password')}</h5> */}
             <div className={classes.passPhraseContainer}>
-              <TextField
+              <FormField
                 id={passFieldId}
                 label='Password'
                 variant='outlined'
@@ -143,8 +142,6 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
                 name='password'
                 value={input.password}
                 onChange={handleInputs}
-                onFocus={handleInputFocus}
-                error={passError}
                 fullWidth
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
@@ -159,18 +156,11 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
     </IconButton>
   </InputAdornment>,
                 }}
+                rules={[
+                  { rule: input.password.length > 10, message: t('loginPortal.warnings.password') }
+                ]}
               />
-              {/* <div className={classes.btnsContainer}>
-                <IconButton
-                  onClick={handleClickShowPassword}
-                >
-                  {showPassword
-                    ? <VisibilityOff className={classes.visibilityIcon} />
-                    : <Visibility className={classes.visibilityIcon} />}
-                </IconButton>
-              </div> */}
             </div>
-            {passError && <div className={classes.alert}>{t('loginPortal.warnings.password')}</div>}
             <div className={classes.optionsContainer}>
               {/* <a className={classes.option} href='/'>Forgot your pass phrase?</a> */}
               {/* <a className={classes.option} href='/register'>Not registered yet? Sign up.</a> */}

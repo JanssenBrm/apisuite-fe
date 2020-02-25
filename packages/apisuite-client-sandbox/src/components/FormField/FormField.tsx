@@ -13,10 +13,13 @@ const FormField: React.FC<FormFieldProps> = (props) => {
     variant = 'outlined' as any,
     margin = 'dense',
     fullWidth = true,
+    value,
     ...rest
   } = props
 
   const [labelFocus, setLabelFocus] = React.useState(false)
+  const [errors, setErrors] = React.useState([])
+  const [changed, setChanged] = React.useState(false)
 
   function handleOnFocus (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setLabelFocus(true)
@@ -27,15 +30,33 @@ const FormField: React.FC<FormFieldProps> = (props) => {
 
   function handleOnBlur (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setLabelFocus(false)
+    setChanged(true)
+
     // TODO: Fix this
     // @ts-ignore
     onBlur && onBlur(event)
   }
 
+  React.useEffect(() => {
+    console.log(props.showErrors)
+    const err = props.rules && props.rules.filter(r => (props.showErrors ? !r.rule : changed && !r.rule))
+    const messages = err && err.map(e => e.message).join(', ')
+
+    props.onChange({
+      target: {
+        name: props.name,
+        value: value,
+      }
+    }, err)
+    setErrors(err)
+    // setChanged(true)
+  }, [value, changed])
+
   return (
     <div style={{ width: fullWidth ? '100%' : undefined }}>
       {label && (
         <InputLabel
+          error={errors.length}
           shrink
           focused={labelFocus}
           {...InputLabelProps}
@@ -45,6 +66,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       )}
 
       <TextField
+        error={errors.length}
         variant={variant}
         margin={margin}
         fullWidth={fullWidth}
@@ -52,6 +74,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         onBlur={handleOnBlur}
         {...rest}
       />
+      {errors.map(e => e.message)}
     </div>
   )
 }
