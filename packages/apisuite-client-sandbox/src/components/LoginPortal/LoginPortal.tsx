@@ -117,11 +117,12 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
               onChange={handleInputs}
               autoFocus
               fullWidth
+              errorPlacing='right'
               InputProps={{
                 classes: { input: classes.emailTextfield },
               }}
               rules={[
-                { rule: input.email.length > 10, message: t('loginPortal.warnings.email') },
+                { rule: isValidEmail(input.email), message: t('loginPortal.warnings.email') },
               ]}
             />
           </div>
@@ -137,6 +138,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
                 value={input.password}
                 onChange={handleInputs}
                 fullWidth
+                errorPlacing='right'
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
                   endAdornment:

@@ -1,6 +1,6 @@
 import * as React from 'react'
 import TextField from '@material-ui/core/TextField'
-import InputLabel from '@material-ui/core/InputLabel'
+import classnames from 'classnames'
 
 import { FormFieldProps } from './types'
 
@@ -14,22 +14,20 @@ const FormField: React.FC<FormFieldProps> = (props) => {
     margin = 'dense',
     fullWidth = true,
     value,
+    errorPlacing,
     ...rest
   } = props
 
-  const [labelFocus, setLabelFocus] = React.useState(false)
   const [errors, setErrors] = React.useState()
   const [changed, setChanged] = React.useState(false)
 
   function handleOnFocus (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    setLabelFocus(true)
     // TODO: Fix this
     // @ts-ignore
     onFocus && onFocus(event)
   }
 
   function handleOnBlur (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    setLabelFocus(false)
     setChanged(true)
 
     // TODO: Fix this
@@ -52,19 +50,13 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   }, [value, changed])
 
   return (
-    <div style={{ width: fullWidth ? '100%' : undefined }}>
-      {label && (
-        <InputLabel
-          error={errors && errors.length > 0}
-          shrink
-          focused={labelFocus}
-          {...InputLabelProps}
-        >
-          {label}
-        </InputLabel>
-      )}
-
+    <div
+      style={{ width: fullWidth ? '100%' : undefined }}
+      className='formfield-wrapper'
+    >
       <TextField
+        className='formfield'
+        label={label}
         error={errors && errors.length > 0}
         variant={variant}
         margin={margin}
@@ -73,7 +65,10 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         onBlur={handleOnBlur}
         {...rest}
       />
-      {errors && errors.map((e: any) => e.message)}
+      {errors && errors.length > 0 &&
+        <div className={classnames('formfield-errors', errorPlacing)}>
+          {errors && errors.length > 0 && errors.map((e: any) => e.message)}
+        </div>}
     </div>
   )
 }

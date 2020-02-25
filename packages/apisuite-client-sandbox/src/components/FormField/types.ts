@@ -9,6 +9,7 @@ export interface FormFieldProps extends StandardTextFieldProps {
   onChange?: any,
   showErrors?: boolean,
   rules?: Rule[],
+  errorPlacing?: 'bottom' | 'top' | 'left' | 'right',
 }
 
 export type Rule = {

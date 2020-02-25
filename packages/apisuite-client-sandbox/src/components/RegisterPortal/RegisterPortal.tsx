@@ -188,7 +188,6 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
             {emailError && <div className={classes.alert}>{t('registerPortal.warnings.email')}</div>}
           </div>
           <div className={classes.fieldContainer}>
-            {/* <h5 className={classes.fieldTitle}>Pass Phrase</h5> */}
             <div className={classes.passPhraseContainer}>
               <TextField
                 id={passFieldId}
