@@ -79,11 +79,13 @@ export default makeStyles({
     backgroundColor: '#E3E3E3',
     borderRadius: '50%',
     margin: '4px 0',
+    opacity: 0.5,
   },
   uploadDesc: {
     width: 160,
     margin: 0,
     textAlign: 'center',
+    opacity: 0.5,
   },
   space: {
     height: 485,

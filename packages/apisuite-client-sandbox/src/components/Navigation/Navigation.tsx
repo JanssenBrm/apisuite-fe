@@ -100,7 +100,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
       <header className={clsx({ scrolled: scrolled || forceScrolled })}>
         <img src={logoSrc} alt='logo' className='img' />
 
-        <h1>{name} <b>SANDBOX</b></h1>
+        <h1>{name} <b>PORTAL</b></h1>
 
         <nav className={clsx('container', { scrolled: scrolled || forceScrolled })}>
           <div ref={tabsRef} className='tabs'>

@@ -9,4 +9,5 @@ export type AppDetailProps = ApplicationRouteProps & {
   currentApp: AppData,
   resUpdate: Response,
   resDelete: Response,
+  toggleInform: any,
 }

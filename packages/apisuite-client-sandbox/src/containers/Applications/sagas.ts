@@ -94,6 +94,8 @@ export function * getUsersApps (action: GetUserAppsAction) {
         sandboxId: userApp.sandboxId,
         pubUrls: '',
         enable: userApp.enable,
+        createdAt: userApp.createdAt,
+        updatedAt: userApp.updatedAt,
       }
     ))
     yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
@@ -144,6 +146,9 @@ export function * getAppDetails (action: GetAppDetails) {
       userId: userApp.userId,
       sandboxId: userApp.sandboxId,
       pubUrls: '',
+      enable: userApp.enable,
+      createdAt: userApp.createdAt,
+      updatedAt: userApp.updatedAt,
     }
   ))
 

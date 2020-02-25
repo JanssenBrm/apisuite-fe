@@ -138,6 +138,8 @@ const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initia
           userId: { $set: action.appData.userId },
           sandboxId: { $set: action.appData.sandboxId },
           pubUrls: { $set: action.appData.pubUrls },
+          createdAt: { $set: action.appData.createdAt },
+          updatedAt: { $set: action.appData.updatedAt },
         },
       })
     }
