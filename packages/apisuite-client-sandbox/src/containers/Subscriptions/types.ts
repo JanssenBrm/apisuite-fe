@@ -1,5 +1,6 @@
 import { Action } from 'redux'
 import { DELETE_APP_SUB, DELETE_APP_SUB_SUCCESS, ADD_APP_SUB, ADD_APP_SUB_SUCCESS } from './ducks'
+import { GetUserAppsActionSuccess } from 'containers/Applications/types'
 
 export interface APIversion {
   vName: string,
@@ -49,4 +50,5 @@ export interface AddAppSubSuccessAction extends Action {
   newAppNumber: number,
 }
 
-export type AppSubActions = DeleteAppSubAction | DeleteAppSubSuccessAction | AddAppSubAction | AddAppSubSuccessAction
+export type AppSubActions = DeleteAppSubAction | DeleteAppSubSuccessAction | AddAppSubAction
+| AddAppSubSuccessAction | GetUserAppsActionSuccess

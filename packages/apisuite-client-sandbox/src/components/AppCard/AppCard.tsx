@@ -39,6 +39,10 @@ const AppCard: React.FC<AppCardProps> = (
     setAnchorEl(null)
   }
 
+  function handleVoid (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    event.stopPropagation()
+  }
+
   function handleDelete (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
     event.stopPropagation(
 
@@ -79,10 +83,11 @@ const AppCard: React.FC<AppCardProps> = (
           anchorEl={anchorEl}
           open={Boolean(anchorEl)}
           onClose={handleClose}
+          onClick={handleVoid}
         >
           <MenuItem onClick={handleOpen}>App details</MenuItem>
-          <MenuItem onClick={handleClose}>Open in console</MenuItem>
-          <MenuItem onClick={handleClose}>View activity</MenuItem>
+          <MenuItem disabled>Open in console</MenuItem>
+          <MenuItem disabled>View activity</MenuItem>
           <MenuItem onClick={handleDelete}>Remove</MenuItem>
         </Menu>
       </div>

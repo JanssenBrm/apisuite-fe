@@ -85,7 +85,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
           <br /><br />
 
           <FormField
-            label='Description'
+            label='Description (optional)'
             placeholder='Describe your app'
             name='description'
             type='text'
@@ -99,7 +99,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
 
           <div className={classes.fieldWrapper}>
             <FormField
-              label='Redirect URL'
+              label='Redirect URL (optional)'
               placeholder='https://localhost'
               name='redirectUrl'
               type='text'
@@ -190,7 +190,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
         </form>
 
         <aside className={classes.right}>
-          <InputLabel shrink>Image upload</InputLabel>
+          {/* <InputLabel shrink>Image upload</InputLabel> */}
 
           <div>
             <div className={classes.upload}>

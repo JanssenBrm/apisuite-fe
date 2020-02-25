@@ -11,7 +11,6 @@ const borderStyle = '1px solid #EAEAEA'
 const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
   const classes = useStyles()
   const fname = user ? user.fName : ''
-  const lname = user ? user.lName : ''
 
   return (
     <main className={classes.root}>
