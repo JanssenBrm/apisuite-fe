@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { LoginPortalProps } from './types'
 import FormCard from 'components/FormCard'
-import TextField from '@material-ui/core/TextField'
 import FormField from 'components/FormField'
 import useStyles from './styles'
 import IconButton from '@material-ui/core/IconButton'
@@ -18,7 +17,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
   const [buttonDisabled, setButtonDisabled] = React.useState(true)
   const [emailError, setEmailError] = React.useState(false)
   const [passError, setPassError] = React.useState(false)
-  const [focusedField, setFocusedField] = React.useState('email-field')
+  const [focusedField] = React.useState('email-field')
   const [filledEmail, setFilledEmail] = React.useState(false)
   const [filledPass, setFilledPass] = React.useState(false)
   const [input, setInput] = React.useState({
@@ -44,8 +43,8 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
     setButtonDisabled(!(filledEmail && filledPass && isValidEmail(email) && isValidPass(pass)))
   }
 
-  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, errors) => {
-    console.log("triggered", errors)
+  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, errors: any) => {
+    console.log(errors)
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -66,11 +65,6 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
 
   function handleClickShowPassword () {
     setShowPassword(!showPassword)
-  }
-
-  function handleInputFocus (e: React.ChangeEvent<HTMLInputElement |
-  HTMLTextAreaElement>) {
-    setFocusedField(e.target.id)
   }
 
   React.useEffect(() => {
@@ -127,7 +121,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
                 classes: { input: classes.emailTextfield },
               }}
               rules={[
-                { rule: input.email.length > 10, message: t('loginPortal.warnings.email') }
+                { rule: input.email.length > 10, message: t('loginPortal.warnings.email') },
               ]}
             />
           </div>
@@ -157,7 +151,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
   </InputAdornment>,
                 }}
                 rules={[
-                  { rule: input.password.length > 10, message: t('loginPortal.warnings.password') }
+                  { rule: input.password.length > 10, message: t('loginPortal.warnings.password') },
                 ]}
               />
             </div>
