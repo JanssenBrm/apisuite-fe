@@ -1,5 +1,5 @@
 import * as React from 'react'
-import FormField from 'components/FormField/FormField'
+import FormField, { parseErrors } from 'components/FormField'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import SvgIcon from 'components/SvgIcon'
@@ -18,6 +18,8 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [visibility, setVisibility] = React.useState('private')
+  const [isFormValid, setFormValid] = React.useState(false)
+  const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState({
     name: '',
     description: '',
@@ -36,11 +38,12 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
     history.goBack()
   }
 
-  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
+    setErrors((old: any) => parseErrors(e.target, err, old || []))
   }
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
@@ -65,6 +68,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
     })
   }
 
+  React.useEffect(() => {
+    setFormValid(errors && errors.length === 0)
+  }, [errors])
+
   return (
     <div className={classes.container}>
       <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
@@ -80,6 +87,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
             type='text'
             value={input.name}
             onChange={handleInputs}
+            errorPlacing='bottom'
+            rules={[
+              { rule: input.name.length > 0, message: 'Please provide a valid name' },
+            ]}
           />
 
           <br /><br />
@@ -161,6 +172,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
             <Button
               type='submit'
               className={clsx(classes.btn, classes.btn3)}
+              disabled={!isFormValid}
             >
               {resCreate.isRequesting ? <CircularProgress size={20} /> : 'Add Application'}
             </Button>

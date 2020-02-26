@@ -57,14 +57,14 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
               id='email-field'
               label='E-mail'
               variant='outlined'
-              margin='none'
               type='email'
+              placeholder='test'
               name='email'
               value={input.email}
               onChange={handleInputs}
               autoFocus
               fullWidth
-              errorPlacing='right'
+              errorPlacing='bottom'
               InputProps={{
                 classes: { input: classes.emailTextfield },
               }}
@@ -79,13 +79,12 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
                 id='pass-field'
                 label='Password'
                 variant='outlined'
-                margin='none'
                 type={showPassword ? 'text' : 'password'}
                 name='password'
                 value={input.password}
                 onChange={handleInputs}
                 fullWidth
-                errorPlacing='right'
+                errorPlacing='bottom'
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
                   endAdornment:

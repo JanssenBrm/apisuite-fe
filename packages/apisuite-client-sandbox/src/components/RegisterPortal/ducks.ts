@@ -6,6 +6,8 @@ import update from 'immutability-helper'
 export const REGISTER_USER = 'Register/REGISTER_USER'
 export const REGISTER_USER_SUCCESS = 'Register/REGISTER_USER_SUCCESS'
 export const REGISTER_USER_ERROR = 'Register/REGISTER_USER_ERROR'
+const LOGIN = 'auth/LOGIN'
+const LOGOUT = 'auth/LOGOUT'
 
 const initialState = {
   user: undefined,
@@ -37,9 +39,20 @@ export default function reducer (state = initialState, action: any) {
       return update(state, {
         isRegistering: { $set: false },
         user: { $set: undefined },
-        error: { $set: action.error && action.error.message ? action.error.message : 'Whoops, something went wrong...' },
+        error: { $set: action.error || 'Whoops, something went wrong...' },
       })
     }
+
+    case LOGOUT:
+    case LOGIN: {
+      return update(state, {
+        isRegistering: { $set: false },
+        isRegistered: { $set: false },
+        user: { $set: undefined },
+        error: { $set: undefined },
+      })
+    }
+
     default:
       return state
   }

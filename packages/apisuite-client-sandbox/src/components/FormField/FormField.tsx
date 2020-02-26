@@ -40,13 +40,15 @@ const FormField: React.FC<FormFieldProps> = (props) => {
     const err = props.rules && props.rules.filter(r => (props.showErrors ? !r.rule : changed && !r.rule))
     // const messages = err && err.map(e => e.message).join(', ')
 
-    props.onChange({
-      target: {
-        name: props.name,
-        value: value,
-      },
-    }, err)
-    // console.log("debug Form: ", props.name, err)
+    if (props.onChange) {
+      props.onChange({
+        target: {
+          name: props.name,
+          value: value,
+        },
+      }, err)
+    }
+
     setErrors(err)
     setChanged(true)
   }, [value, changed])
@@ -56,6 +58,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       style={{ width: fullWidth ? '100%' : undefined }}
       className='formfield-wrapper'
     >
+
       <TextField
         className='formfield'
         label={label}
@@ -65,6 +68,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         fullWidth={fullWidth}
         onFocus={handleOnFocus}
         onBlur={handleOnBlur}
+        value={value}
         {...rest}
       />
       {blured && errors && errors.length > 0 &&

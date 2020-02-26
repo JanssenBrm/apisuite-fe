@@ -20,7 +20,8 @@ export function * registerUser (action: RegisterAction) {
 
     yield put(registerActions.registerUserSuccess(response))
   } catch (error) {
-    yield put(registerActions.registerUserError(error))
+    const errors = error.response.data.errors
+    yield put(registerActions.registerUserError(errors[0]))
   }
 }
 

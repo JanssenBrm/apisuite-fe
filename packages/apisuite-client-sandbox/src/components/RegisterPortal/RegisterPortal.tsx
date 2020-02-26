@@ -30,7 +30,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
       ...input,
       [e.target.name]: e.target.value,
     })
-    setErrors(parseErrors(e.target, err, errors || []))
+    setErrors((old: any) => parseErrors(e.target, err, old || []))
   }
 
   function handleClickShowPassword () {
@@ -52,6 +52,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
 
   return (
     <div className={classes.registerContainer}>
+      {console.log(isFormValid, errors)}
       <div className={classes.content}>
         <FormCard
           buttonLabel={registerButtonLabel}
@@ -65,14 +66,13 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
               id='name-field'
               label='Your name'
               variant='outlined'
-              margin='none'
               type='text'
               name='name'
               value={input.name}
               onChange={handleInputs}
               autoFocus
               fullWidth
-              errorPlacing='right'
+              errorPlacing='bottom'
               InputProps={{
                 classes: { input: classes.emailTextfield },
               }}
@@ -86,13 +86,12 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
               id='email-field'
               label='E-mail'
               variant='outlined'
-              margin='none'
               type='email'
               name='email'
               value={input.email}
               onChange={handleInputs}
               fullWidth
-              errorPlacing='right'
+              errorPlacing='bottom'
               InputProps={{
                 classes: { input: classes.emailTextfield },
               }}
@@ -107,12 +106,11 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
                 id='pass-field'
                 label='Password'
                 variant='outlined'
-                margin='none'
                 type={showPassword ? 'text' : 'password'}
                 name='password'
                 value={input.password}
                 fullWidth
-                errorPlacing='right'
+                errorPlacing='bottom'
                 onChange={handleInputs}
                 rules={[
                   { rule: isValidPass(input.password), message: t('registerPortal.warnings.password') },

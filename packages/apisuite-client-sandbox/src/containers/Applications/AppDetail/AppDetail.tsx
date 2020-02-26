@@ -1,6 +1,6 @@
 import * as React from 'react'
 import clsx from 'clsx'
-import FormField from 'components/FormField/FormField'
+import FormField, { parseErrors } from 'components/FormField'
 import Button from '@material-ui/core/Button'
 import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -14,7 +14,7 @@ import { selectOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { AppDetailProps } from './types'
-import { AppData, RouteParams } from '../types'
+import { RouteParams } from '../types'
 import { useParams } from 'react-router'
 
 const AppDetail: React.FC<AppDetailProps> = (
@@ -24,7 +24,7 @@ const AppDetail: React.FC<AppDetailProps> = (
   const [t] = useTranslation()
   const appId = parseInt(useParams<RouteParams>().id)
 
-  const [buttonDisabled, setButtonDisabled] = React.useState(true)
+  const [changed, setChanged] = React.useState(false)
   const [input, setInput] = React.useState({
     appId: currentApp.appId,
     name: currentApp.name,
@@ -36,6 +36,8 @@ const AppDetail: React.FC<AppDetailProps> = (
     pubUrls: currentApp.pubUrls,
     enable: true,
   })
+  const [errors, setErrors] = React.useState()
+  const [isFormValid, setFormValid] = React.useState(false)
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -56,23 +58,13 @@ const AppDetail: React.FC<AppDetailProps> = (
     deleteApp(appId)
   }
 
-  function compareAppData (newAppData: AppData) {
-    if (JSON.stringify(newAppData) === JSON.stringify(currentApp)) {
-      setButtonDisabled(true)
-    } else {
-      setButtonDisabled(false)
-    }
-  }
-
-  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
-    compareAppData({
-      ...input,
-      [e.target.name]: e.target.value,
-    })
+    setChanged(true)
+    setErrors((old: any) => parseErrors(e.target, err, old || []))
   }
 
   function navigate (route: any) {
@@ -83,13 +75,16 @@ const AppDetail: React.FC<AppDetailProps> = (
     if (user) {
       getAppDetails(appId, user.id)
     }
-    setInput({ ...currentApp })
-    compareAppData({ ...currentApp })
-  }, [currentApp])
+    if (!input.appId) {
+      setInput({ ...currentApp })
+    }
+    setFormValid(errors && errors.length === 0)
+  }, [currentApp, errors])
 
   return (
     <>
       <div className={classes.container}>
+
         <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
           <form noValidate autoComplete='off' className={classes.left}>
             <FormField
@@ -99,6 +94,10 @@ const AppDetail: React.FC<AppDetailProps> = (
               type='text'
               value={input.name}
               onChange={handleInputs}
+              errorPlacing='bottom'
+              rules={[
+                { rule: input.name.length > 0, message: 'Please provide a valid name' },
+              ]}
             />
 
             <br />
@@ -231,10 +230,10 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <Button
                 type='submit'
-                disabled={buttonDisabled}
-                className={clsx(classes.btn, classes.btn2, (buttonDisabled && classes.disabled))}
+                disabled={!(changed && isFormValid)}
+                className={clsx(classes.btn, classes.btn2, (!changed && classes.disabled))}
               >
-                {resUpdate.isRequesting ? <CircularProgress size={20} /> : buttonDisabled ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
+                {resUpdate.isRequesting ? <CircularProgress size={20} /> : !changed ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
               </Button>
 
               {resUpdate.isError &&
