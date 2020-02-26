@@ -22,6 +22,7 @@ export default makeStyles({
   },
   description: {
     display: 'flex',
+    textAlign: 'justify',
     paddingTop: 10,
     paddingBottom: 10,
   },

@@ -9,18 +9,28 @@ export default makeStyles({
   contentContainer: {
     display: 'flex',
     flexDirection: 'row',
+    justifyContent: 'space-around',
     maxWidth: 900,
     margin: '0 auto',
     transform: 'translateX(-8px)',
   },
-  tableContainer: {
+  mainContainer: {
     display: 'flex',
+    flexDirection: 'column',
     width: 544,
-    height: 674,
   },
   actionsContainer: {
     display: 'flex',
     width: 300,
-    height: 546,
+  },
+  title: {
+    fontSize: 26,
+    fontWeight: 300,
+  },
+  description: {
+    display: 'flex',
+    textAlign: 'justify',
+    paddingTop: 10,
+    paddingBottom: 10,
   },
 })
