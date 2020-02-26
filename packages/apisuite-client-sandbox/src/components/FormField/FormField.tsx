@@ -39,7 +39,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   React.useEffect(() => {
     const err = props.rules && props.rules.filter(r => (props.showErrors ? !r.rule : changed && !r.rule))
     // const messages = err && err.map(e => e.message).join(', ')
-    
+
     if (props.onChange) {
       props.onChange({
         target: {

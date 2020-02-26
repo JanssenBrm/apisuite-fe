@@ -37,7 +37,8 @@ function * loginWorker (action: AnyAction) {
       token,
     }))
   } catch (error) {
-    yield put(authActions.loginError(error))
+    const errorMessage = error.response.data.error
+    yield put(authActions.loginError(errorMessage))
   }
 }
 

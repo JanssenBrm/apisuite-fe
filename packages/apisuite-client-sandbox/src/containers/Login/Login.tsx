@@ -17,6 +17,10 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
     if (register.isRegistered) {
       handleViewChange('login')
       setJustRegistered(true)
+
+      setTimeout(() => {
+        setJustRegistered(false)
+      }, 2000)
     }
 
     if (match.params.email) {
