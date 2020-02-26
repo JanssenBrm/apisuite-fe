@@ -72,7 +72,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
               onChange={handleInputs}
               autoFocus
               fullWidth
-              errorPlacing='right'
+              errorPlacing='bottom'
               InputProps={{
                 classes: { input: classes.emailTextfield },
               }}
@@ -92,7 +92,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
               value={input.email}
               onChange={handleInputs}
               fullWidth
-              errorPlacing='right'
+              errorPlacing='bottom'
               InputProps={{
                 classes: { input: classes.emailTextfield },
               }}
@@ -112,7 +112,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
                 name='password'
                 value={input.password}
                 fullWidth
-                errorPlacing='right'
+                errorPlacing='bottom'
                 onChange={handleInputs}
                 rules={[
                   { rule: isValidPass(input.password), message: t('registerPortal.warnings.password') },

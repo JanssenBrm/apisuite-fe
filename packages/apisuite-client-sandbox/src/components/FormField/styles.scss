@@ -4,17 +4,27 @@
 
   }
   .formfield-errors {
-    background-color: $error-color;
-    padding: 15px 20px;
-    color: #fff;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.15);
+    color: $error-color;
+
+    &.bottom {
+      top: 46px;
+      left: 5px;
+      width: 100%;
+      font-size: 13px;
+      position: absolute;
+      font-weight: 400;
+    }
 
     &.right {
       position: absolute;
       top: 0;
       width: 100%;
       left: 105%;
+      background-color: $error-color;
+      padding: 15px 20px;
+      color: #fff;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px 0 rgba(0,0,0,0.15);
 
       &:before {
         content: '';
