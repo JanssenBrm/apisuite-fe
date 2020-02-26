@@ -20,6 +20,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
 
   const [errors, setErrors] = React.useState()
   const [changed, setChanged] = React.useState(false)
+  const [blured, setBlured] = React.useState(false)
 
   function handleOnFocus (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     // TODO: Fix this
@@ -28,7 +29,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   }
 
   function handleOnBlur (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
-    setChanged(true)
+    setBlured(true)
 
     // TODO: Fix this
     // @ts-ignore
@@ -46,7 +47,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       },
     }, err)
     setErrors(err)
-    // setChanged(true)
+    setChanged(true)
   }, [value, changed])
 
   return (
@@ -57,7 +58,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       <TextField
         className='formfield'
         label={label}
-        error={errors && errors.length > 0}
+        error={blured && errors && errors.length > 0}
         variant={variant}
         margin={margin}
         fullWidth={fullWidth}
@@ -65,7 +66,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         onBlur={handleOnBlur}
         {...rest}
       />
-      {errors && errors.length > 0 &&
+      {blured && errors && errors.length > 0 &&
         <div className={classnames('formfield-errors', errorPlacing)}>
           {errors && errors.length > 0 && errors.map((e: any) => e.message)}
         </div>}

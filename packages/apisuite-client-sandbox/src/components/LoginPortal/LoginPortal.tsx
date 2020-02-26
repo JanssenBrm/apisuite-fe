@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { LoginPortalProps } from './types'
 import FormCard from 'components/FormCard'
-import FormField from 'components/FormField'
+import FormField, { parseErrors, isValidEmail } from 'components/FormField'
 import useStyles from './styles'
 import IconButton from '@material-ui/core/IconButton'
 import Visibility from '@material-ui/icons/Visibility'
@@ -14,100 +14,47 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
   const [t] = useTranslation()
 
   const [showPassword, setShowPassword] = React.useState(false)
-  const [buttonDisabled, setButtonDisabled] = React.useState(true)
-  const [emailError, setEmailError] = React.useState(false)
-  const [passError, setPassError] = React.useState(false)
-  const [focusedField] = React.useState('email-field')
-  const [filledEmail, setFilledEmail] = React.useState(false)
-  const [filledPass, setFilledPass] = React.useState(false)
+  const [isFormValid, setFormValid] = React.useState(false)
+  const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState({
     email: '',
     password: '',
   })
 
-  const emailFieldId = 'email-field'
-  const containerId = null
-  const passFieldId = 'pass-field'
-  const closeRoute = '/'
-
-  function isValidEmail (email: string) {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    return re.test(String(email).toLowerCase())
-  }
-
-  function isValidPass (pass: string) {
-    return (pass.length > 0)
-  }
-
-  function isFormValid (email: string, pass: string) {
-    setButtonDisabled(!(filledEmail && filledPass && isValidEmail(email) && isValidPass(pass)))
-  }
-
-  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, errors: any) => {
-    console.log(errors)
+  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
-    if (e.target.name === 'email') {
-      if (emailError) {
-        setEmailError(!isValidEmail(e.target.value))
-      }
-      isFormValid(e.target.value, input.email)
-    }
-    if (e.target.name === 'password') {
-      if (passError) {
-        setPassError(!isValidPass(e.target.value))
-      }
-      isFormValid(input.email, e.target.value)
-    }
+    setErrors(parseErrors(e.target, err, errors || []))
   }
 
   function handleClickShowPassword () {
     setShowPassword(!showPassword)
   }
 
-  React.useEffect(() => {
-    if (focusedField === emailFieldId) {
-      setFilledEmail(true)
-      if (filledPass) {
-        setPassError(!isValidPass(input.password))
-      }
-    } else if (focusedField === passFieldId) {
-      setFilledPass(true)
-      if (filledEmail) {
-        setEmailError(!isValidEmail(input.email))
-      }
-    } else if (focusedField === containerId) {
-      if (filledEmail) {
-        setEmailError(!isValidEmail(input.email))
-      }
-      if (filledPass) {
-        setPassError(!isValidPass(input.password))
-      }
-    }
-  }, [focusedField])
-
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     login({ email: input.email, password: input.password })
   }
 
+  React.useEffect(() => {
+    setFormValid(errors && errors.length === 0)
+  }, [errors])
+
   return (
     <div className={classes.loginContainer}>
       <div className={classes.content}>
         <FormCard
-          // title={t('loginPortal.title')}
           buttonLabel={t('loginPortal.button')}
-          buttonDisabled={buttonDisabled}
+          buttonDisabled={!isFormValid}
           loading={auth.isAuthorizing}
           error={auth.error}
-          closeRoute={closeRoute}
           handleSubmit={handleSubmit}
         >
           <div className={classes.fieldContainer}>
             <FormField
-              id={emailFieldId}
+              id='email-field'
               label='E-mail'
               variant='outlined'
               margin='none'
@@ -129,7 +76,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
           <div className={classes.fieldContainer}>
             <div className={classes.passPhraseContainer}>
               <FormField
-                id={passFieldId}
+                id='pass-field'
                 label='Password'
                 variant='outlined'
                 margin='none'
@@ -153,7 +100,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
   </InputAdornment>,
                 }}
                 rules={[
-                  { rule: input.password.length > 10, message: t('loginPortal.warnings.password') },
+                  { rule: input.password.length > 0, message: t('loginPortal.warnings.password') },
                 ]}
               />
             </div>
