@@ -32,7 +32,6 @@ export const isValidName = (name: string) => {
 }
 
 export const parseErrors = (target: any, errors: any, stateErrors: any) => {
-  // console.log("debug PARSE: ", target.name, errors, stateErrors)
   const newStateErrors = [...stateErrors]
   if (errors && errors.length) {
     if (newStateErrors.indexOf(target.name) < 0) {
@@ -43,7 +42,6 @@ export const parseErrors = (target: any, errors: any, stateErrors: any) => {
       newStateErrors.splice(newStateErrors.indexOf(target.name), 1)
     }
   }
-  // console.log("debug NEW: ", newStateErrors)
   return newStateErrors
 }
 
