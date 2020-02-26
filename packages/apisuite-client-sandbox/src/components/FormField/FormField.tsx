@@ -46,6 +46,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         value: value,
       },
     }, err)
+    // console.log("debug Form: ", props.name, err)
     setErrors(err)
     setChanged(true)
   }, [value, changed])

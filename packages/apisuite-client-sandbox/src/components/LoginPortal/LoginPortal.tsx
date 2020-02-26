@@ -26,7 +26,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
       ...input,
       [e.target.name]: e.target.value,
     })
-    setErrors(parseErrors(e.target, err, errors || []))
+    setErrors((old: any) => parseErrors(e.target, err, old || []))
   }
 
   function handleClickShowPassword () {
