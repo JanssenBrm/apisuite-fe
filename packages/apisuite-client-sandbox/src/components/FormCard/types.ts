@@ -1,7 +1,7 @@
 
 export interface FormCardProps extends React.HTMLAttributes<HTMLDivElement> {
   buttonLabel: string,
-  closeRoute: string,
+  closeRoute?: string,
   buttonDisabled: boolean,
   loading: boolean,
   error?: string,

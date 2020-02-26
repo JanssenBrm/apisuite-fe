@@ -1,0 +1,32 @@
+.formfield-wrapper {
+  position: relative;
+  .formfield {
+
+  }
+  .formfield-errors {
+    background-color: $error-color;
+    padding: 15px 20px;
+    color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.15);
+
+    &.right {
+      position: absolute;
+      top: 0;
+      width: 100%;
+      left: 105%;
+
+      &:before {
+        content: '';
+        position: absolute;
+        left: -7px;
+        top: 21px;
+        width: 15px;
+        height: 15px;
+        background-color: $error-color;
+        transform: rotate(45deg);
+      }
+    }
+    
+  }
+}

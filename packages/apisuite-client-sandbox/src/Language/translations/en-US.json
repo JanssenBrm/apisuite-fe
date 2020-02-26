@@ -120,7 +120,7 @@
   },
   "registerPortal": {
     "warnings": {
-      "name": "Your name must be at least one character long.",
+      "name": "Please enter your name.",
       "email": "Please enter a valid email address.",
       "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long."
     }
