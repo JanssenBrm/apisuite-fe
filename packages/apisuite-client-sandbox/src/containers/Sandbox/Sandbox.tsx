@@ -277,7 +277,6 @@ const Sandbox: React.FC<{}> = () => {
                 type='submit'
                 disabled={!termsCheck}
                 className={classes.btn4}
-                // style={{ backgroundColor: '#2DB7BA', color: '#333333', marginLeft: 12, maxHeight: 40 }}
               >
                 Subscribe
               </Button>

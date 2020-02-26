@@ -33,4 +33,19 @@ export default makeStyles({
     paddingTop: 10,
     paddingBottom: 10,
   },
+  navigation: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    marginBottom: 50,
+  },
+  btn: {
+    display: 'flex',
+    color: '#FFF',
+    backgroundColor: '#2DB7BA',
+    borderRadius: 4,
+    cursor: 'pointer',
+    '&:hover': {
+      backgroundColor: '#64C5C7',
+    },
+  },
 })

@@ -1,19 +1,26 @@
 import * as React from 'react'
 import useStyles from './styles'
 import Table from 'components/Table'
+import Button from '@material-ui/core/Button'
 import { useTranslation } from 'react-i18next'
+import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
+
+import { HeaderCol } from 'components/Table/types'
 
 const TestData: React.FC<{}> = () => {
   const classes = useStyles()
   const [t] = useTranslation()
 
-  const header = [
+  const header: HeaderCol[] = [
     {
       label: 'Sandbox users',
+      align: 'left',
       xs: 60,
     },
     {
       label: 'View details',
+      align: 'center',
+      icons: [<ArrowForwardIosIcon key={0} fontSize='inherit' />],
       xs: 40,
     },
   ]
@@ -45,6 +52,12 @@ const TestData: React.FC<{}> = () => {
             header={header}
             data={data}
           />
+
+          <div className={classes.navigation}>
+            <Button className={classes.btn}>
+              Create test user
+            </Button>
+          </div>
         </div>
 
         <div className={classes.actionsContainer}>RIGHT</div>
