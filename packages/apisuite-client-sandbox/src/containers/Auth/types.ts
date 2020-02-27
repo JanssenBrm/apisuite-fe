@@ -12,6 +12,7 @@ export interface AuthStore {
 export interface User {
   fName: string,
   lName: string,
+  id: number,
 }
 
 export interface AuthPayloads {

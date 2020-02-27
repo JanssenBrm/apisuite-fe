@@ -23,7 +23,7 @@ import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
 import partnersUrl from 'assets/partners.png'
 
-const Sandbox: React.FC<{}> = () => {
+const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
   const classes = useStyles()
   const [t] = useTranslation()
   const [termsCheck, setTermsCheck] = React.useState(false)
@@ -34,6 +34,10 @@ const Sandbox: React.FC<{}> = () => {
 
   function handleCheckboxClick () {
     setTermsCheck(!termsCheck)
+  }
+
+  function handleTrigger () {
+    toggleInform()
   }
 
   return (
@@ -66,10 +70,14 @@ const Sandbox: React.FC<{}> = () => {
                     [classes.btn2]: slide.btn === 2,
                     [classes.btn3]: slide.btn === 3,
                   })}
+                  onClick={slide.disabled ? handleTrigger : undefined}
                 >
-                  <a href={slide.linkTo} className={classes.buttonLink}>
-                    {t(slide.btnStr)}
-                  </a>
+                  {!slide.disabled &&
+                    <a href={slide.linkTo} className={classes.buttonLink}>
+                      {t(slide.btnStr)}
+                    </a>}
+                  {slide.disabled &&
+                    <div>{t(slide.btnStr)}</div>}
                 </div>
               </section>
             </div>
@@ -233,7 +241,7 @@ const Sandbox: React.FC<{}> = () => {
             className={classes.btn}
             style={{ backgroundColor: '#333333', color: 'white', marginTop: 16 }}
           >
-            <a className={classes.buttonLink} href='/register'>Register</a>
+            <a className={classes.buttonLink} href='/auth'>Register</a>
           </div>
         </aside>
       </section>
@@ -273,8 +281,8 @@ const Sandbox: React.FC<{}> = () => {
               />
 
               <Button
-                arial-label='register'
-                type='submit'
+                // arial-label='register'
+                // type='submit'
                 disabled={!termsCheck}
                 className={classes.btn4}
               >
@@ -290,11 +298,9 @@ const Sandbox: React.FC<{}> = () => {
                 label={
                   <>
                     I agree that Cloudoki sends me newsletters about API related news. I can withdraw my consent at any
-                     time by sending an e-mail to <Link href='#'>unsubscribe@cloudoki.com</Link>.
-                      For further information please see out <Link href='#'>Data Privacy Notice.</Link>
+                     time by sending an e-mail to <Link href='#'>unsubscribe@cloudoki.com</Link>
                   </>
-                }
-                control={
+                } control={
                   <Checkbox
                     checked={termsCheck}
                     color='primary'

@@ -1,13 +1,8 @@
 import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
+import { TabProps } from 'components/Navigation/types'
 
-export type TabOpt = {
-  label: React.ReactNode,
-  route: string,
-  subTabs?: TabOpt[],
-}
-
-export const initTabs: TabOpt[] = [
+export const initTabs: TabProps[] = [
   {
     label: 'Sandbox Features',
     route: '/',
@@ -15,6 +10,7 @@ export const initTabs: TabOpt[] = [
   {
     label: 'Contact',
     route: '/',
+    disabled: true,
   },
   {
     label: 'Log in',
@@ -23,6 +19,7 @@ export const initTabs: TabOpt[] = [
   {
     label: 'Demo',
     route: '/',
+    disabled: true,
   },
 ]
 
@@ -37,7 +34,7 @@ const ConsoleLabel = () => (
   </div>
 )
 
-export const loginTabs: TabOpt[] = [
+export const loginTabs: TabProps[] = [
   {
     label: 'Sandbox Features',
     route: '/',
@@ -45,10 +42,12 @@ export const loginTabs: TabOpt[] = [
   {
     label: 'Documentation',
     route: '',
+    disabled: true,
   },
   {
     label: 'Contact',
     route: '',
+    disabled: true,
   },
   {
     label: 'Dashboard',
@@ -63,7 +62,7 @@ export const loginTabs: TabOpt[] = [
         route: '/dashboard/subscriptions',
       },
       {
-        label: 'Client Aplications',
+        label: 'Client Applications',
         route: '/dashboard/apps',
       },
       {

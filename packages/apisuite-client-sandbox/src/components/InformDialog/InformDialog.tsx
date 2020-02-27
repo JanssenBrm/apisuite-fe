@@ -7,10 +7,10 @@ import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Link from '@material-ui/core/Link'
+// import FormGroup from '@material-ui/core/FormGroup'
+// import FormControlLabel from '@material-ui/core/FormControlLabel'
+// import Checkbox from '@material-ui/core/Checkbox'
+// import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { InformDialogProps } from './types'
@@ -37,7 +37,7 @@ const useStyles = makeStyles({
 
 const defaultValues = {
   email: '',
-  terms: false,
+  // terms: false,
   valid: false,
   errorHelper: '',
 }
@@ -51,10 +51,13 @@ const getEmailError = (value: string) => {
 }
 
 const InformDialog: React.FC<InformDialogProps> = (
-  { open, textTarget, titleTarget, onCancel, onConfirm, showLoading, error, ...props },
+  { open, inform, requesting, closeInform },
 ) => {
   const classes = useStyles()
+  const showLoading = requesting
   const [values, setValues] = React.useState(defaultValues)
+  const textTarget = "Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!"
+  const titleTarget = 'Keep me posted'
 
   React.useEffect(() => {
     if (open) {
@@ -69,23 +72,20 @@ const InformDialog: React.FC<InformDialogProps> = (
       newValues.errorHelper = getEmailError(value)
     }
 
-    newValues.valid = newValues.terms && !!newValues.email && !newValues.errorHelper
-
-    setValues(newValues)
-  }
-
-  const handleCheck = (name: 'terms') => ({ target: { checked } }: any) => {
-    const newValues = { ...values, [name]: checked }
-
-    newValues.valid = newValues.terms && !!newValues.email && !newValues.errorHelper
+    newValues.valid = !!newValues.email && !newValues.errorHelper
 
     setValues(newValues)
   }
 
   function handleConfirm () {
-    if (values.valid) {
-      onConfirm(values.email)
-    }
+    inform({
+      email: values.email,
+      target: 'portal',
+    })
+  }
+
+  function handleClose () {
+    closeInform()
   }
 
   function preventDefault (event: React.FormEvent<HTMLFormElement>) {
@@ -93,7 +93,7 @@ const InformDialog: React.FC<InformDialogProps> = (
   }
 
   return (
-    <Dialog data-testid='inform-dialog' open={open} {...props}>
+    <Dialog data-testid='inform-dialog' open={open}>
       <DialogTitle>{titleTarget}</DialogTitle>
       <DialogContent>
         <DialogContentText data-testid='inform-dialog-text'>
@@ -106,35 +106,16 @@ const InformDialog: React.FC<InformDialogProps> = (
             className={classes.textField}
             label='Email Address'
             value={values.email}
-            error={!!values.errorHelper || !!error}
-            helperText={values.errorHelper || error}
+            error={!!values.errorHelper}
+            helperText={values.errorHelper}
             onChange={handleChange('email')}
             margin='dense'
             type='email'
             variant='outlined'
             fullWidth
             autoFocus
-            disabled={showLoading}
+            // disabled={showLoading}
           />
-
-          <FormGroup row className={classes.formGroup}>
-            <FormControlLabel
-              label={
-                <>
-                  * I accept the <Link target='_blank' href='/terms'>terms & conditions</Link>
-                </>
-              }
-              control={
-                <Checkbox
-                  data-testid='inform-dialog-terms'
-                  checked={values.terms}
-                  onChange={handleCheck('terms')}
-                  color='primary'
-                  disabled={showLoading}
-                />
-              }
-            />
-          </FormGroup>
         </form>
       </DialogContent>
 
@@ -142,7 +123,7 @@ const InformDialog: React.FC<InformDialogProps> = (
         <Button
           data-testid='inform-dialog-cancel'
           color='primary'
-          onClick={onCancel}
+          onClick={handleClose}
           disabled={showLoading}
         >
             Cancel

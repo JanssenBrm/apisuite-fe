@@ -1,29 +1,32 @@
 import * as React from 'react'
 import clsx from 'clsx'
-import FormField from 'components/FormField/FormField'
+import FormField, { parseErrors } from 'components/FormField'
 import Button from '@material-ui/core/Button'
 import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
 import Avatar from '@material-ui/core/Avatar'
 import Select from 'components/Select'
-import Panel from 'components/Panel'
-import Wheel from 'components/ApiSuiteWheel'
+import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
+import moment from 'moment'
 
 import { selectOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { AppDetailProps } from './types'
-import { AppData } from '../types'
-import { Link } from '@material-ui/core'
+import { RouteParams } from '../types'
+import { useParams } from 'react-router'
 
-const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, currentApp, deleteApp }) => {
+const AppDetail: React.FC<AppDetailProps> = (
+  { history, updateApp, getAppDetails, currentApp, deleteApp, user, resUpdate, resDelete, toggleInform }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
+  const appId = parseInt(useParams<RouteParams>().id)
 
-  const [buttonDisabled, setButtonDisabled] = React.useState(true)
+  const [changed, setChanged] = React.useState(false)
   const [input, setInput] = React.useState({
+    appId: currentApp.appId,
     name: currentApp.name,
     description: currentApp.description,
     redirectUrl: currentApp.redirectUrl,
@@ -31,11 +34,15 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
     userId: currentApp.userId,
     sandboxId: currentApp.sandboxId,
     pubUrls: currentApp.pubUrls,
+    enable: true,
   })
+  const [errors, setErrors] = React.useState()
+  const [isFormValid, setFormValid] = React.useState(false)
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
     updateApp({
+      appId: appId,
       name: input.name,
       description: input.description,
       redirectUrl: input.redirectUrl,
@@ -43,42 +50,41 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
       userId: input.userId,
       sandboxId: input.sandboxId,
       pubUrls: input.pubUrls,
-      // TODO change after adding the fetch of the list of apps
-    }, '1')
+      enable: true,
+    })
   }
 
   function handleDeleteApp () {
-    // TODO change after adding the fetch of the list of apps
-    deleteApp('1')
+    deleteApp(appId)
   }
 
-  function compareAppData (newAppData: AppData) {
-    if (JSON.stringify(newAppData) === JSON.stringify(currentApp)) {
-      setButtonDisabled(true)
-    } else {
-      setButtonDisabled(false)
-    }
-  }
-
-  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
-    compareAppData({
-      ...input,
-      [e.target.name]: e.target.value,
-    })
+    setChanged(true)
+    setErrors((old: any) => parseErrors(e.target, err, old || []))
+  }
+
+  function navigate (route: any) {
+    history.push(route)
   }
 
   React.useEffect(() => {
-    getAppDetails()
-    setInput({ ...currentApp })
-  }, [currentApp])
+    if (user) {
+      getAppDetails(appId, user.id)
+    }
+    if (!input.appId) {
+      setInput({ ...currentApp })
+    }
+    setFormValid(errors && errors.length === 0)
+  }, [currentApp, errors])
 
   return (
     <>
       <div className={classes.container}>
+
         <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
           <form noValidate autoComplete='off' className={classes.left}>
             <FormField
@@ -88,6 +94,10 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
               type='text'
               value={input.name}
               onChange={handleInputs}
+              errorPlacing='bottom'
+              rules={[
+                { rule: input.name.length > 0, message: 'Please provide a valid name' },
+              ]}
             />
 
             <br />
@@ -120,9 +130,9 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
                 value='https://cloudoki.com/tos'
               />
 
-              <Button variant='outlined' className={classes.iconBtn}>
+              {/* <Button variant='outlined' className={classes.iconBtn}>
                 <SvgIcon name='plus' size='24' />
-              </Button>
+              </Button> */}
             </div>
 
             <br /><br /><br /><br /><br />
@@ -142,9 +152,9 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
                 inputProps={{ readOnly: true }}
               />
 
-              <Button variant='outlined' className={classes.iconBtn}>
+              {/* <Button variant='outlined' className={classes.iconBtn}>
                 <SvgIcon name='content-copy' size='24' />
-              </Button>
+              </Button> */}
             </div>
 
             <br />
@@ -156,13 +166,13 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
                 inputProps={{ readOnly: true }}
               />
 
-              <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnLeft)}>
+              {/* <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnLeft)}>
                 <SvgIcon name='autorenew' size='24' />
               </Button>
 
               <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnRight)}>
                 <SvgIcon name='content-copy' size='24' />
-              </Button>
+              </Button> */}
             </div>
 
             <br />
@@ -176,9 +186,9 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
                 onChange={handleInputs}
               />
 
-              <Button variant='outlined' className={classes.iconBtn}>
+              {/* <Button variant='outlined' className={classes.iconBtn}>
                 <SvgIcon name='plus' size='24' />
-              </Button>
+              </Button> */}
             </div>
 
             <br />
@@ -206,23 +216,30 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
 
               <br />
 
-              <InputLabel shrink>Author</InputLabel>
+              {/* <InputLabel shrink>Author</InputLabel>
               <div className={classes.link}>Finish your team info</div>
-
-              <br />
+              <br /> */}
 
               <InputLabel shrink>Registration date</InputLabel>
-              <div>June 24th, 2019</div>
+              <div>{moment(currentApp.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
+              <br />
 
+              <InputLabel shrink>Last update</InputLabel>
+              <div>{moment(currentApp.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
               <br />
 
               <Button
                 type='submit'
-                disabled={buttonDisabled}
-                className={clsx(classes.btn, classes.btn2, (buttonDisabled && classes.disabled))}
+                disabled={!(changed && isFormValid)}
+                className={clsx(classes.btn, classes.btn2, (!changed && classes.disabled))}
               >
-                {buttonDisabled ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
+                {resUpdate.isRequesting ? <CircularProgress size={20} /> : !changed ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
               </Button>
+
+              {resUpdate.isError &&
+                <div className={classes.errorPlaceholder}>
+                  <div className={classes.errorAlert}>Error updating app</div>
+                </div>}
 
               <br /><br /><br />
 
@@ -231,54 +248,32 @@ const AppDetail: React.FC<AppDetailProps> = ({ updateApp, getAppDetails, current
               <br />
 
               <InputLabel shrink>API subscriptions</InputLabel>
-              <div className={classes.link}>Manage API subscriptions</div>
-
+              <div className={classes.link} onClick={() => navigate('/dashboard/subscriptions')}>Manage API subscriptions</div>
               <br />
 
               <InputLabel shrink className={classes.marginBottom}>Application scopes</InputLabel>
               <div>
-                <span className={classes.tag}>aisp</span>
-                <span className={classes.tag}>piisp</span>
-                <span className={classes.tag}>pisp</span>
+                <span className={classes.tag}>default</span>
               </div>
 
               <br />
 
               <InputLabel shrink>Additional actions</InputLabel>
-              <div className={classes.link}>Activity monitoring</div>
+              <div className={classes.link} onClick={() => toggleInform()}>Activity monitoring</div>
               <div
                 className={classes.link}
                 onClick={handleDeleteApp}
               >
                 Delete application
               </div>
+
+              {resDelete.isError &&
+                <div className={classes.errorPlaceholder}>
+                  <div className={classes.errorAlert}>Error deleting app</div>
+                </div>}
+
             </form>
           </aside>
-        </section>
-      </div>
-
-      <div className={classes.cardContainer}>
-        <section className={commonClasses.contentContainer}>
-          <Panel className={classes.panel}>
-            <div className={classes.wheelContainer}>
-              <Wheel selected={['tr', 'bl']} />
-            </div>
-
-            <div className={classes.cardInfo}>
-              <h1>API Suite functionality</h1>
-
-              <p>The <b>Cloudoki Sandbox</b> demo limits the scope of applications to private consumers of sandboxed
-               API’s. We got more… *
-              </p>
-              <p className={classes.greenColor}>View added functionality on <Link href='#'>cloudoki.com/portal</Link></p>
-
-              <br />
-
-              <p className={classes.cardInfoItalic}>
-                * Public applications in Marketplace, production API’s onboarding in Portal.
-              </p>
-            </div>
-          </Panel>
         </section>
       </div>
     </>

@@ -139,4 +139,19 @@ export default makeStyles({
     fontSize: 14,
     fontStyle: 'italic',
   },
+  errorPlaceholder: {
+    display: 'flex',
+    marginTop: 10,
+  },
+  errorAlert: {
+    backgroundColor: '#F5A623',
+    border: 'solid',
+    borderWidth: 1,
+    borderColor: '#F59523',
+    fontSize: 13,
+    color: '#FFF',
+    padding: '2px 15px',
+    borderRadius: 5,
+    minHeight: 20,
+  },
 })

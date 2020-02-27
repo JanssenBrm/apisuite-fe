@@ -6,95 +6,32 @@ export const DELETE_APP_SUB = 'subscriptions/DELETE_APP_SUB'
 export const DELETE_APP_SUB_SUCCESS = 'subscriptions/DELETE_APP_SUB_SUCCESS'
 export const ADD_APP_SUB = 'subscriptions/ADD_APP'
 export const ADD_APP_SUB_SUCCESS = 'subscriptions/ADD_APP_SUCCESS'
+export const GET_USER_APPS_SUCCESS = 'Applications/GET_USER_APPS_SUCCESS'
 
 const initialState: SubStore = {
   subscribedAPIs:
     [
-      {
-        id: 42,
-        name: 'PSD2 Payment Initiation',
-        versions: [
-          {
-            vName: 'Payment Initiation API v1',
-            vNumber: 'v 1.04.3.2',
-          },
-          {
-            vName: 'Payment Initiation API v2',
-            vNumber: 'v 2.01.0',
-          },
-        ],
-        apps: [
-          {
-            name: 'TA',
-            isLoading: false,
-          },
-          {
-            name: 'T2',
-            isLoading: false,
-          },
-        ],
-        description: 'With PSD2 the European Commission has published a new directive on payment services in the EEA internal market. Among others PSD2 contains regulations of new services to be operated by…',
-      },
       {
         id: 13,
         name: 'Petstore',
         versions: [
           {
             vName: 'Petstore API v1',
-            vNumber: 'v 1.2.34',
-          },
-        ],
-        apps: [
-          {
-            name: 'TA',
-            isLoading: false,
-          },
-        ],
-        description: 'This Petstore API is amazing. I love dogs!',
-      },
-      {
-        id: 1000,
-        name: 'PSD2 Account Information',
-        versions: [
-          {
-            vName: 'AIS STET API v1',
-            vNumber: 'v 1.06',
+            vNumber: 'v 1.0.0',
           },
         ],
         apps: [],
-        description: 'Offer personalized information to your clients with the PSD2 Account Information API',
+        description: 'This Petstore API is amazing. I love dogs!',
       },
     ],
   userApps:
-    [
-      {
-        name: 'TZ1',
-        isLoading: false,
-      },
-      {
-        name: 'TZ3',
-        isLoading: false,
-      },
-      {
-        name: 'TA',
-        isLoading: false,
-      },
-      {
-        name: 'T2',
-        isLoading: false,
-      },
-      {
-        name: 'PUBB',
-        isLoading: false,
-      },
-    ],
+    [],
 }
 
 const reducer: Reducer<SubStore, AppSubActions> = (state = initialState, action) => {
-  const indx = state.subscribedAPIs.findIndex(api => api.id === action.APIid)
-
   switch (action.type) {
     case DELETE_APP_SUB: {
+      const indx = state.subscribedAPIs.findIndex(api => api.id === action.APIid)
       return update(state, {
         subscribedAPIs: {
           [indx]: {
@@ -109,6 +46,7 @@ const reducer: Reducer<SubStore, AppSubActions> = (state = initialState, action)
     }
 
     case DELETE_APP_SUB_SUCCESS: {
+      const indx = state.subscribedAPIs.findIndex(api => api.id === action.APIid)
       return update(state, {
         subscribedAPIs: {
           [indx]: {
@@ -119,6 +57,7 @@ const reducer: Reducer<SubStore, AppSubActions> = (state = initialState, action)
     }
 
     case ADD_APP_SUB: {
+      const indx = state.subscribedAPIs.findIndex(api => api.id === action.APIid)
       return update(state, {
         subscribedAPIs: {
           [indx]: {
@@ -134,6 +73,7 @@ const reducer: Reducer<SubStore, AppSubActions> = (state = initialState, action)
     }
 
     case ADD_APP_SUB_SUCCESS: {
+      const indx = state.subscribedAPIs.findIndex(api => api.id === action.APIid)
       return update(state, {
         subscribedAPIs: {
           [indx]: {
@@ -142,6 +82,17 @@ const reducer: Reducer<SubStore, AppSubActions> = (state = initialState, action)
                 isLoading: { $set: false },
               },
             },
+          },
+        },
+      })
+    }
+
+    case GET_USER_APPS_SUCCESS: {
+      const userApps = action.userApps
+      return update(state, {
+        subscribedAPIs: {
+          0: {
+            apps: { $set: userApps.filter(app => app.enable).map(app => ({ name: app.name, isLoading: false })) },
           },
         },
       })

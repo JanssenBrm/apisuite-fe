@@ -58,7 +58,7 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
     case LOGIN_ERROR:
     case LOGIN_USER_ERROR: {
       return update(state, {
-        error: { $set: action.error && action.error.message ? action.error.message : 'Ops, somethign went wrong...' },
+        error: { $set: action.error || 'Whoops, something went wrong...' },
         isAuthorizing: { $set: false },
       })
     }

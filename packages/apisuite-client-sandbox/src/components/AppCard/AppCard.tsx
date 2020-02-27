@@ -9,7 +9,8 @@ import SvgIcon from 'components/SvgIcon'
 import useStyles from './styles'
 import { AppCardProps } from './types'
 
-const AppCard: React.FC<AppCardProps> = ({ addVariant = false, name, className, ...rest }) => {
+const AppCard: React.FC<AppCardProps> = (
+  { history, addVariant = false, deleteApp, appId, userId, name, className, ...rest }) => {
   const classes = useStyles()
 
   if (addVariant) {
@@ -32,10 +33,31 @@ const AppCard: React.FC<AppCardProps> = ({ addVariant = false, name, className, 
     setAnchorEl((event as any).currentTarget)
   }
 
-  function handleClose (event: any) {
+  function handleClose (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
     event.stopPropagation()
 
     setAnchorEl(null)
+  }
+
+  function handleVoid (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    event.stopPropagation()
+  }
+
+  function handleDelete (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    event.stopPropagation(
+
+    )
+    if (appId && userId) {
+      deleteApp(appId, userId)
+    }
+  }
+
+  function handleOpen (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    event.stopPropagation()
+
+    if (history) {
+      history.push(`/dashboard/apps/detail/${appId}`)
+    }
   }
 
   return (
@@ -62,10 +84,10 @@ const AppCard: React.FC<AppCardProps> = ({ addVariant = false, name, className, 
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleClose}>App details</MenuItem>
-          <MenuItem onClick={handleClose}>Open in console</MenuItem>
-          <MenuItem onClick={handleClose}>View activity</MenuItem>
-          <MenuItem onClick={handleClose}>Remove</MenuItem>
+          <MenuItem onClick={handleOpen}>App details</MenuItem>
+          <MenuItem onClick={handleVoid} className={classes.disabled}>Open in console</MenuItem>
+          <MenuItem onClick={handleVoid} className={classes.disabled}>View activity</MenuItem>
+          <MenuItem onClick={handleDelete}>Remove</MenuItem>
         </Menu>
       </div>
     </div>

@@ -50,4 +50,7 @@ export default makeStyles({
     color: '#999999',
     marginTop: 4,
   },
+  disabled: {
+    opacity: 0.5,
+  },
 })

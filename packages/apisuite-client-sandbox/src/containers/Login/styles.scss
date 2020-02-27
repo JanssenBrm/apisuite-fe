@@ -93,3 +93,34 @@
     }
   }
 }
+
+@media screen and (max-width: 900px) {
+  .auth-page {
+    .content-wrapper {
+      flex-direction: column-reverse;
+      overflow: auto;      
+
+      .auth-content-right {
+        flex: 2;
+      }
+      .auth-content-left {
+        flex: 1;
+        padding: 20px;
+
+        .auth-forms-wrapper{
+          max-width: 100%;
+          margin: 0 auto;
+        }
+
+        .auth-content-stripe {
+          position: absolute;
+          top: -40px;
+          right: 0;
+          height: 50px;
+          width: 100%;
+          background-image: -webkit-linear-gradient(87deg, #fff 54%, transparent 54.3%);
+        }
+      }
+    }
+  }
+}

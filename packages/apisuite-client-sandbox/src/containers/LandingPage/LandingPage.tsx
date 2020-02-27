@@ -11,7 +11,6 @@ const borderStyle = '1px solid #EAEAEA'
 const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
   const classes = useStyles()
   const fname = user ? user.fName : ''
-  const lname = user ? user.lName : ''
 
   return (
     <main className={classes.root}>
@@ -71,7 +70,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
         </Panel>
 
         <aside className={classes.cardSide}>
-          <h1>Hi, {fname} {lname}</h1>
+          <h1>Hi, {fname}</h1>
           <p>
           You’re at the right place if you want to set up a new app,
            get insights through analytics or follow up API subscriptions.
@@ -79,14 +78,14 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
 
           <p>Don’t find what you’re looking for? Let us know, we’re happy to accomodate!</p>
 
-          <div
+          {/* <div
             role='button'
             arial-label='register'
             className={classes.btn}
             style={{ backgroundColor: '#333333', color: 'white', marginTop: 16 }}
           >
             Propose Feature
-          </div>
+          </div> */}
         </aside>
       </section>
 

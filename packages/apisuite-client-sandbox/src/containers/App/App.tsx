@@ -5,6 +5,7 @@ import requireImage from 'util/requireImage'
 import { config } from 'constants/global'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
+import InformDialog from 'components/InformDialog'
 
 import theme from './theme'
 import routes from './routes'
@@ -33,13 +34,13 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       setNavScrolled(false)
     }
 
+    const gb = gobackConfig.find((item) => pathname.includes(item.path))
+
     if (pathname.startsWith('/auth')) {
       setNavigations(false)
     } else {
       setNavigations(true)
     }
-
-    const gb = gobackConfig.find((item) => item.path === pathname)
 
     if (gb) {
       setGobackLabel(gb.label)
@@ -50,6 +51,9 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
   function handleOnTabChange (index: number) {
     setCurrentTab(index)
+    setSubTabs(tabs[index].subTabs)
+    setCurrentSubTab(0)
+
     history.push(tabs[index].route)
   }
 
@@ -79,8 +83,8 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       {navigations &&
         <Navigation
           key='app-navigation'
-          tabs={tabs.map((tab) => tab.label)}
-          subTabs={Array.isArray(subTabs) ? subTabs.map((tab) => tab.label) : undefined}
+          tabs={tabs}
+          subTabs={Array.isArray(subTabs) ? subTabs : undefined}
           tabIndex={currentTab}
           subTabIndex={currentSubTab}
           onTabChange={handleOnTabChange}
@@ -98,6 +102,8 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       {routes()}
 
       {navigations && <Footer />}
+
+      <InformDialog />
     </ThemeProvider>
   )
 }

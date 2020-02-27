@@ -1,11 +1,12 @@
 import * as React from 'react'
-import FormField from 'components/FormField/FormField'
+import FormField, { parseErrors } from 'components/FormField'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
 import RadioBoxes from 'components/RadioBoxes/RadioBoxes'
 import Select from 'components/Select'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import { radioOptions, selectOptions } from './config'
 import useCommonStyles from '../styles'
@@ -13,16 +14,18 @@ import useStyles from './styles'
 import { CreateAppProps } from './types'
 import clsx from 'clsx'
 
-const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
+const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCreate }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [visibility, setVisibility] = React.useState('private')
+  const [isFormValid, setFormValid] = React.useState(false)
+  const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState({
     name: '',
     description: '',
     redirectUrl: '',
     logo: '',
-    userId: '',
+    userId: 0,
     sandboxId: '',
     pubUrls: '',
   })
@@ -35,25 +38,39 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
     history.goBack()
   }
 
-  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
+    setErrors((old: any) => parseErrors(e.target, err, old || []))
   }
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+
+    let userId = 0
+
+    if (user) {
+      userId = user.id
+    }
+
     createApp({
+      appId: 0,
       name: input.name,
       description: input.description,
       redirectUrl: input.redirectUrl,
       logo: input.logo,
-      userId: input.userId,
+      userId: userId,
       sandboxId: input.sandboxId,
       pubUrls: input.pubUrls,
+      enable: true,
     })
   }
+
+  React.useEffect(() => {
+    setFormValid(errors && errors.length === 0)
+  }, [errors])
 
   return (
     <div className={classes.container}>
@@ -70,12 +87,16 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
             type='text'
             value={input.name}
             onChange={handleInputs}
+            errorPlacing='bottom'
+            rules={[
+              { rule: input.name.length > 0, message: 'Please provide a valid name' },
+            ]}
           />
 
           <br /><br />
 
           <FormField
-            label='Description'
+            label='Description (optional)'
             placeholder='Describe your app'
             name='description'
             type='text'
@@ -89,7 +110,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
 
           <div className={classes.fieldWrapper}>
             <FormField
-              label='Redirect URL'
+              label='Redirect URL (optional)'
               placeholder='https://localhost'
               name='redirectUrl'
               type='text'
@@ -150,9 +171,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
           <div className={classes.marginBottom}>
             <Button
               type='submit'
-              className={classes.btn}
+              className={clsx(classes.btn, classes.btn3)}
+              disabled={!isFormValid}
             >
-              Add Application
+              {resCreate.isRequesting ? <CircularProgress size={20} /> : 'Add Application'}
             </Button>
             <div
               role='button'
@@ -162,6 +184,11 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
               Cancel
             </div>
           </div>
+
+          {resCreate.isError &&
+            <div className={classes.errorPlaceholder}>
+              <div className={classes.errorAlert}>Error creating app</div>
+            </div>}
 
           <p className={classes.info}>
             Not sure if you’re doing it right?
@@ -175,7 +202,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp }) => {
         </form>
 
         <aside className={classes.right}>
-          <InputLabel shrink>Image upload</InputLabel>
+          {/* <InputLabel shrink>Image upload</InputLabel> */}
 
           <div>
             <div className={classes.upload}>
