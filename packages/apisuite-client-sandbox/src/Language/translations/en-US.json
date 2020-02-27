@@ -155,6 +155,10 @@
     "title": "Test Data",
     "description": "This test data is only accessible by you, representing a persistent mini-version of our live environments. The data is defined in two groups: the always present but mutable test users as one and their contents (driven by the API’s you subscribe to) as the other.",
     "header": "Sandbox users",
-    "actions": "View details"
+    "actions": "View details",
+    "resetSandbox": {
+      "title": "Flash sandbox",
+      "description": "Reset the sandbox to factory setting"
+    }
   }
 }

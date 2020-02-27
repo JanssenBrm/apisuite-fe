@@ -21,6 +21,7 @@ export default makeStyles({
   },
   actionsContainer: {
     display: 'flex',
+    flexDirection: 'column',
     width: 300,
   },
   title: {
@@ -35,6 +36,7 @@ export default makeStyles({
   },
   navigation: {
     display: 'flex',
+    alignItems: 'center',
     justifyContent: 'space-between',
     marginBottom: 50,
   },
@@ -47,5 +49,12 @@ export default makeStyles({
     '&:hover': {
       backgroundColor: '#64C5C7',
     },
+  },
+  heading: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
+  p1: {
+    margin: 0,
   },
 })
