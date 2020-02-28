@@ -7,7 +7,7 @@ import RefreshIcon from '@material-ui/icons/Refresh'
 import { useTranslation } from 'react-i18next'
 import ArrowForwardIosIcon from '@material-ui/icons/ArrowForwardIos'
 import UnarchiveOutlinedIcon from '@material-ui/icons/UnarchiveOutlined'
-
+import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
 import { HeaderCol } from 'components/Table/types'
 import TableNavigation from 'components/TableNavigation'
 
@@ -82,6 +82,16 @@ const TestData: React.FC<{}> = () => {
         </div>
 
         <div className={classes.actionsContainer}>
+
+          <div className={classes.sandboxCard}>
+            <h4 className={classes.cardTitle}>Sandbox age</h4>
+            <p className={classes.units}>Days since creation</p>
+            <div className={classes.cardInfo}>
+              <h3 className={classes.unitsDays}>24 days</h3>
+              <InfoOutlinedIcon className={classes.infoIcon} />
+            </div>
+          </div>
+
           <h5 className={classes.heading}>Data Packages</h5>
 
           <p className={classes.p1}>Select one (optional)</p>
@@ -91,6 +101,10 @@ const TestData: React.FC<{}> = () => {
           ))}
 
           <Card title={t('testData.resetSandbox.title')} description={t('testData.resetSandbox.description')} icon={<RefreshIcon />} />
+
+          <h6 className={classes.actions}>Additional actions</h6>
+          <a className={classes.a}>Connect GraphQL source</a>
+
         </div>
       </section>
     </div>
