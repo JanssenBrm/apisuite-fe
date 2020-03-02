@@ -10,4 +10,5 @@ export interface HeaderCol {
 export interface TableProps {
   header: HeaderCol[],
   data: (string | number)[][],
+  onRowClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void,
 }

@@ -2,13 +2,14 @@ import * as React from 'react'
 import { TableProps } from './types'
 import useStyles from './styles'
 import clsx from 'clsx'
+import Button from '@material-ui/core/Button'
 
-const Table: React.FC<TableProps> = ({ header, data }) => {
+const Table: React.FC<TableProps> = ({ header, data, onRowClick }) => {
   const classes = useStyles()
   const xss = header.map(headerCol => headerCol.xs)
   const size = xss.reduce((a, b) => a + b, 0)
   const widths = xss.map(xs => ({ width: `${(xs / size) * 100}%` }))
-  const aligns = header.map(headerCol => ({ 'justify-content': headerCol.align }))
+  const aligns = header.map(headerCol => ({ justifyContent: headerCol.align }))
 
   function placeIcons (indx: number) {
     const icons = header[indx].icons
@@ -30,16 +31,25 @@ const Table: React.FC<TableProps> = ({ header, data }) => {
       </div>
       <div className={classes.dataContainer}>
         {data.map((dataRow, indx) => (
-          <div className={clsx(classes.tableRow, (indx % 2 && classes.gray))} key={indx}>
+          <Button
+            id={indx.toString()}
+            className={clsx(classes.tableRow, (indx % 2 && classes.gray))}
+            key={indx}
+            onClick={onRowClick}
+          >
             {dataRow.map((dataCol, indx) => (
-              <div key={indx} style={widths[indx]} className={classes.dataCol}>
+              <div
+                key={indx}
+                style={widths[indx]}
+                className={classes.dataCol}
+              >
                 {dataCol}
                 <div className={classes.iconsContainer}>
                   {placeIcons(indx)}
                 </div>
               </div>
             ))}
-          </div>
+          </Button>
         ))}
       </div>
     </div>

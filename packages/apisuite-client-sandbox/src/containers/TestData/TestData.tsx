@@ -10,10 +10,17 @@ import UnarchiveOutlinedIcon from '@material-ui/icons/UnarchiveOutlined'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined'
 import { HeaderCol } from 'components/Table/types'
 import TableNavigation from 'components/TableNavigation'
+import { TestDataProps } from './types'
 
-const TestData: React.FC<{}> = () => {
+const TestData: React.FC<TestDataProps> = ({ history }) => {
   const classes = useStyles()
   const [t] = useTranslation()
+  const [tablePage, setTablePage] = React.useState(1)
+  const [disableNav, setDisableNav] = React.useState({
+    previous: false,
+    next: false,
+  })
+  const nrRows = 10
 
   const header: HeaderCol[] = [
     {
@@ -40,6 +47,7 @@ const TestData: React.FC<{}> = () => {
     ['Albert Einstein', 'idle user'],
     ['Nikola Tesla', 'new'],
     ['Pierre-Simon', 'new'],
+    ['Maxwell', 'idle user'],
   ]
 
   const apiPkgs = [
@@ -53,6 +61,30 @@ const TestData: React.FC<{}> = () => {
     },
   ]
 
+  function onPageClick (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    setTablePage(parseInt(event.currentTarget.id))
+  }
+
+  function navigateClick (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    const goTo = parseInt(event.currentTarget.id)
+    setTablePage(tablePage + goTo)
+  }
+
+  function onClickCreate () {
+    history.push('/dashboard/test/create')
+  }
+
+  function onClickUser (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    history.push(`/dashboard/test/data/${event.currentTarget.id}`)
+  }
+
+  React.useEffect(() => {
+    setDisableNav({
+      previous: tablePage - 1 <= 0,
+      next: tablePage + 1 > ((data.length % nrRows) + 1),
+    })
+  }, [tablePage])
+
   return (
     <div className={classes.root}>
       <section className={classes.contentContainer}>
@@ -65,18 +97,23 @@ const TestData: React.FC<{}> = () => {
 
           <Table
             header={header}
-            data={data}
+            data={data.slice((tablePage - 1) * nrRows, (tablePage * nrRows))}
+            onRowClick={onClickUser}
           />
 
           <div className={classes.navigation}>
-            <Button className={classes.btn}>
+            <Button className={classes.btn} onClick={onClickCreate}>
               Create test user
             </Button>
 
             <TableNavigation
               prevLabel='Previous'
               nextLabel='Next'
-              maxPages={3}
+              tablePage={tablePage}
+              maxPages={(data.length % nrRows) + 1}
+              onPageClick={onPageClick}
+              navigateClick={navigateClick}
+              disableNav={disableNav}
             />
           </div>
         </div>

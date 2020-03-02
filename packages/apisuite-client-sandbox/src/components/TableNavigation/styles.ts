@@ -35,4 +35,7 @@ export default makeStyles({
     display: 'flex',
     textTransform: 'none',
   },
+  selected: {
+    backgroundColor: '#EEEEEE',
+  },
 })
