@@ -14,6 +14,10 @@ export default makeStyles({
     borderColor: '#D1D1D1',
     borderWidth: 1,
     borderRadius: 4,
+    '&:hover': {
+      backgroundColor: '#EBEBEB',
+      cursor: 'pointer',
+    },
   },
   top: {
     display: 'flex',
@@ -27,6 +31,7 @@ export default makeStyles({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    color: '#ACACAC',
   },
   description: {
     display: 'flex',

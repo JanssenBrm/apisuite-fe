@@ -63,19 +63,23 @@ const TestData: React.FC<TestDataProps> = ({ history }) => {
 
   function onPageClick (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     setTablePage(parseInt(event.currentTarget.id))
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   function navigateClick (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     const goTo = parseInt(event.currentTarget.id)
     setTablePage(tablePage + goTo)
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   function onClickCreate () {
     history.push('/dashboard/test/create')
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   function onClickUser (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
     history.push(`/dashboard/test/data/${event.currentTarget.id}`)
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   React.useEffect(() => {

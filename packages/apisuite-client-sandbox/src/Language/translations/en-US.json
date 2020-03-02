@@ -160,5 +160,12 @@
       "title": "Flash sandbox",
       "description": "Reset the sandbox to factory setting"
     }
+  },
+  "createData": {
+    "warnings": {
+      "name": "Please enter your name.",
+      "email": "Please enter a valid email address.",
+      "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long."
+    }
   }
 }
