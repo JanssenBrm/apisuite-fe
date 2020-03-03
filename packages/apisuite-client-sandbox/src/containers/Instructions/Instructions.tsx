@@ -91,7 +91,6 @@ const Instructions: React.FC<{}> = () => {
 
                 <div className={classes.iconRow}>
                   <FileCopyOutlinedIcon
-                    id={indx.toString()}
                     className={classes.clipboardIcon}
                     onClick={() => { navigator.clipboard.writeText(step.command) }}
                   />
@@ -110,9 +109,8 @@ const Instructions: React.FC<{}> = () => {
                     </p>
                     <div className={classes.iconRow}>
                       <FileCopyOutlinedIcon
-                        id={indx.toString()}
                         className={classes.clipboardIcon}
-                        onClick={() => { navigator.clipboard.writeText(step.command) }}
+                        onClick={() => { navigator.clipboard.writeText(step.responseCode) }}
                       />
                     </div>
                     <SyntaxHighlighter
