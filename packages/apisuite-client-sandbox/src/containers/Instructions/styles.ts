@@ -17,12 +17,12 @@ export default makeStyles({
   mainContainer: {
     display: 'flex',
     flexDirection: 'row',
+    marginBottom: 100,
     width: '100%',
   },
   content: {
     display: 'flex',
     flexDirection: 'column',
-    marginBottom: 100,
     width: 688,
   },
   navigation: {
@@ -36,6 +36,8 @@ export default makeStyles({
   },
   stepTitle: {
     fontSize: 20,
+    marginTop: -170,
+    paddingTop: 170,
   },
   description: {
     display: 'flex',
@@ -44,14 +46,22 @@ export default makeStyles({
     marginBottom: 20,
     marginTop: 0,
   },
+  stepContainer: {
+    marginTop: 20,
+    marginBottom: 20,
+  },
   codeBlock: {
-    borderRadius: 4,
+    borderTopRightRadius: 0,
+    borderTopLeftRadius: 0,
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
   },
   noteContainer: {
     width: '100%',
     backgroundColor: '#00A7AA',
     borderRadius: 4,
     overflow: 'hidden',
+    marginBottom: 20,
   },
   noteTitle: {
     fontSize: 16,
@@ -67,66 +77,36 @@ export default makeStyles({
     padding: 20,
     marginLeft: 5,
   },
+  iconRow: {
+    display: 'flex',
+    color: 'white',
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    backgroundColor: '#333333',
+    height: 40,
+    marginTop: 0,
+    paddingLeft: 20,
+    paddingRight: 20,
+    borderTopRightRadius: 4,
+    borderTopLeftRadius: 4,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+  },
+  clipboardIcon: {
+    cursor: 'pointer',
+    '&:hover': {
+      color: '#2DB7BA',
+    },
+    zIndex: 1,
+  },
+  sideMenuContainer: {
+    paddingLeft: 40,
+    position: 'sticky',
+    top: 180,
+  },
 })
 
 export const codeStyle = {
-  'hljs-comment': {
-    'color': '#B6B18B',
-  },
-  'hljs-quote': {
-    'color': '#B6B18B',
-  },
-  'hljs-variable': {
-    'color': '#EB3C54',
-  },
-  'hljs-template-variable': {
-    'color': '#EB3C54',
-  },
-  'hljs-tag': {
-    'color': '#EB3C54',
-  },
-  'hljs-name': {
-    'color': '#EB3C54',
-  },
-  'hljs-selector-id': {
-    'color': '#EB3C54',
-  },
-  'hljs-selector-class': {
-    'color': '#EB3C54',
-  },
-  'hljs-regexp': {
-    'color': '#EB3C54',
-  },
-  'hljs-deletion': {
-    'color': '#EB3C54',
-  },
-  'hljs-number': {
-    'color': '#E7CE56',
-  },
-  'hljs-built_in': {
-    'color': '#E7CE56',
-  },
-  'hljs-builtin-name': {
-    'color': '#E7CE56',
-  },
-  'hljs-literal': {
-    'color': '#E7CE56',
-  },
-  'hljs-type': {
-    'color': '#E7CE56',
-  },
-  'hljs-params': {
-    'color': '#E7CE56',
-  },
-  'hljs-meta': {
-    'color': '#E7CE56',
-  },
-  'hljs-link': {
-    'color': '#E7CE56',
-  },
-  'hljs-attribute': {
-    'color': '#EE7C2B',
-  },
   'hljs-string': {
     'color': '#2DB7BA',
   },
@@ -139,18 +119,6 @@ export const codeStyle = {
   'hljs-addition': {
     'color': '#2DB7BA',
   },
-  'hljs-title': {
-    'color': '#78BB65',
-  },
-  'hljs-section': {
-    'color': '#78BB65',
-  },
-  'hljs-keyword': {
-    'color': '#B45EA4',
-  },
-  'hljs-selector-tag': {
-    'color': '#B45EA4',
-  },
   'hljs': {
     'display': 'block',
     'overflowX': 'auto',
@@ -158,7 +126,11 @@ export const codeStyle = {
     'font-family': 'Roboto, sans-serif',
     'font-size': '14px',
     'color': '#D8D8D8',
-    'padding': '20px',
+    'margin-top': '0px',
+    'padding-top': '0px',
+    'padding-bottom': '20px',
+    'padding-right': '20px',
+    'padding-left': '20px',
   },
   'hljs-emphasis': {
     'fontStyle': 'italic',
