@@ -54,11 +54,6 @@ const Instructions: React.FC<{}> = () => {
     https://sandbox-dev.apisuite.cloudoki.com/v3/pets`,
     },
   ]
-  const [menuOption, setOption] = React.useState(0)
-
-  const handleSelect = (indx: number) => () => {
-    setOption(indx)
-  }
 
   return (
     <div className={classes.root}>
@@ -134,8 +129,6 @@ const Instructions: React.FC<{}> = () => {
           <div className={classes.navigation}>
             <div className={classes.sideMenuContainer}>
               <NavMenu
-                selected={menuOption}
-                handleSelect={handleSelect}
                 options={steps.map((step, indx) => (
                   `Step ${indx + 1}: ${step.stepTitle}`
                 ))}
