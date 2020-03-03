@@ -20,5 +20,9 @@ export default makeStyles({
   selected: {
     color: '#2DB7BA',
     borderColor: '#2DB7BA',
+    borderLeftWidth: 3,
+    borderRightWidth: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
   },
 })
