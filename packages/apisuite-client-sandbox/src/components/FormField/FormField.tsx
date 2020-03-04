@@ -51,7 +51,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
 
     setErrors(err)
     setChanged(true)
-  }, [value, changed])
+  }, [value])
 
   return (
     <div
