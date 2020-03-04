@@ -11,7 +11,6 @@ import informDialog from 'components/InformDialog/ducks'
 import auth from 'containers/Auth/ducks'
 import applications from 'containers/Applications/ducks'
 import subscriptions from 'containers/Subscriptions/ducks'
-import testData from 'containers/TestData/ducks'
 
 export default (history: History<any>) => combineReducers({
   router: connectRouter(history),
@@ -20,5 +19,4 @@ export default (history: History<any>) => combineReducers({
   applications,
   subscriptions,
   informDialog,
-  testData,
 })
