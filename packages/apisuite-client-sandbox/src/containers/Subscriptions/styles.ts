@@ -8,6 +8,8 @@ export default makeStyles({
   },
   contentContainer: {
     maxWidth: 900,
+    display: 'flex',
+    flexDirection: 'column',
     margin: '0 auto',
     transform: 'translateX(-8px)',
   },
@@ -22,6 +24,7 @@ export default makeStyles({
   },
   description: {
     display: 'flex',
+    textAlign: 'justify',
     paddingTop: 10,
     paddingBottom: 10,
   },

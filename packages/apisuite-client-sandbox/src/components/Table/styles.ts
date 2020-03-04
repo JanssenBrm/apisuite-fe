@@ -1,0 +1,76 @@
+import { makeStyles } from '@material-ui/styles'
+
+export default makeStyles({
+  table: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '100%',
+    cursor: 'pointer',
+    borderRadius: 4,
+    backgroundColor: 'white',
+    overflow: 'hidden',
+    borderStyle: 'solid',
+    borderColor: '#D1D1D1',
+    border: 1,
+    marginBottom: 20,
+  },
+  header: {
+    display: 'flex',
+    width: '100%',
+    flexDirection: 'row',
+    color: '#8B8B8B',
+    alignItems: 'center',
+    paddingLeft: 25,
+    justifyContent: 'space-between',
+    height: 42,
+  },
+  gray: {
+    backgroundColor: '#F7F7F7',
+  },
+  tableRow: {
+    display: 'flex',
+    paddingLeft: 25,
+    flexDirection: 'row',
+    width: '100%',
+    height: 36,
+    borderLeftWidth: 0,
+    borderTopWidth: 1,
+    borderBottomWidth: 0,
+    borderRightWidth: 0,
+    borderColor: '#D1D1D1',
+    borderStyle: 'solid',
+    borderRadius: 0,
+  },
+  headerCol: {
+    display: 'flex',
+    alignItems: 'center',
+  },
+  dataCol: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+  },
+  dataContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+  },
+  iconsContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  icon: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: 36,
+  },
+  actions: {
+    paddingRight: 30,
+  },
+})

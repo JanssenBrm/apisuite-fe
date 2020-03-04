@@ -150,5 +150,22 @@
   "subscriptionsTable": {
     "header": "Available API's",
     "actions": "actions"
+  },
+  "testData": {
+    "title": "Test Data",
+    "description": "This test data is only accessible by you, representing a persistent mini-version of our live environments. The data is defined in two groups: the always present but mutable test users as one and their contents (driven by the API’s you subscribe to) as the other.",
+    "header": "Sandbox users",
+    "actions": "View details",
+    "resetSandbox": {
+      "title": "Flash sandbox",
+      "description": "Reset the sandbox to factory setting"
+    }
+  },
+  "createData": {
+    "warnings": {
+      "name": "Please enter your name.",
+      "email": "Please enter a valid email address.",
+      "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long."
+    }
   }
 }

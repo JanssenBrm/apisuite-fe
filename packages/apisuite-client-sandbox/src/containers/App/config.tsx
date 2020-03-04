@@ -67,8 +67,7 @@ export const loginTabs: TabProps[] = [
       },
       {
         label: 'Test Data',
-        route: '',
-        disabled: true,
+        route: '/dashboard/test',
       },
       // #conditional-loader-start: console
       {
@@ -87,6 +86,14 @@ export const gobackConfig = [
   },
   {
     path: '/dashboard/apps/detail',
+    label: 'Back to overview',
+  },
+  {
+    path: '/dashboard/test/create',
+    label: 'Cancel',
+  },
+  {
+    path: '/dashboard/test/data',
     label: 'Back to overview',
   },
 ]
