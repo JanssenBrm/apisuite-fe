@@ -35,6 +35,8 @@ export interface AppData {
   enable: boolean,
   updatedAt?: string,
   createdAt?: string,
+  clientId: string,
+  clientSecret: string,
 }
 
 export interface CreateAppAction extends Action {
