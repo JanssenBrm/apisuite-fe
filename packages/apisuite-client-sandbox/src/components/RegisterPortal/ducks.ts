@@ -58,10 +58,6 @@ export default function reducer (state = initialState, action: any) {
   }
 }
 
-// export function registerUser (userData: UserData) {
-//   return { type: REGISTER_USER, userData }
-// }
-
 export const registerActions = {
   registerUser: (userData: any) => ({ type: REGISTER_USER, userData }),
   registerUserSuccess: (payload: any) => ({ type: REGISTER_USER_SUCCESS, payload }),

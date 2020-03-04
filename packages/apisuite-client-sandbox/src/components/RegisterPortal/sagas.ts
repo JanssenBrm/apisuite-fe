@@ -3,6 +3,7 @@
  */
 
 import { REGISTER_USER, registerActions } from './ducks'
+import { authActions } from 'containers/Auth/ducks'
 import { takeLatest, put, call } from 'redux-saga/effects'
 import { RegisterAction } from './types'
 import { API_URL, SIGNUP_PORT } from 'constants/endpoints'
@@ -19,6 +20,7 @@ export function * registerUser (action: RegisterAction) {
     })
 
     yield put(registerActions.registerUserSuccess(response))
+    yield put(authActions.registerLoginRedirect())
   } catch (error) {
     const errors = error.response.data.errors
     yield put(registerActions.registerUserError(errors[0]))
