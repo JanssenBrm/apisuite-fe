@@ -28,7 +28,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       loginUser({ token: auth.authToken })
     }
 
-    if (pathname.startsWith('/dashboard/')) {
+    if (pathname.startsWith('/dashboard/apps') || pathname.startsWith('/dashboard/subscriptions')) {
       setNavScrolled(true)
     } else {
       setNavScrolled(false)

@@ -7,7 +7,6 @@ import register from 'components/RegisterPortal/sagas'
 import informDialog from 'components/InformDialog/sagas'
 import applications from 'containers/Applications/sagas'
 import subscriptions from 'containers/Subscriptions/sagas'
-import testData from 'containers/TestData/sagas'
 
 const sagas = [
   auth,
@@ -15,7 +14,6 @@ const sagas = [
   applications,
   subscriptions,
   informDialog,
-  testData,
 ]
 
 export default sagas
