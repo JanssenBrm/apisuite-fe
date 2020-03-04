@@ -65,6 +65,8 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
       sandboxId: input.sandboxId,
       pubUrls: input.pubUrls,
       enable: true,
+      clientId: '',
+      clientSecret: '',
     })
   }
 

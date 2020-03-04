@@ -27,6 +27,8 @@ const initialState: ApplicationsStore = {
     sandboxId: '',
     pubUrls: '',
     enable: true,
+    clientId: '',
+    clientSecret: '',
   },
   userApps: [],
   resCreate: {
@@ -140,6 +142,8 @@ const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initia
           pubUrls: { $set: action.appData.pubUrls },
           createdAt: { $set: action.appData.createdAt },
           updatedAt: { $set: action.appData.updatedAt },
+          clientId: { $set: action.appData.clientId },
+          clientSecret: { $set: action.appData.clientSecret },
         },
       })
     }

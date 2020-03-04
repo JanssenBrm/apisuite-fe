@@ -65,6 +65,8 @@ export function * updateApp (action: UpdateAppAction) {
       sandboxId: '1',
       pubUrls: action.appData.pubUrls,
       enable: action.appData.enable,
+      clientId: action.appData.clientId,
+      clientSecret: action.appData.clientSecret,
     }))
   } catch (error) {
     yield put(updateAppError())
@@ -96,6 +98,8 @@ export function * getUsersApps (action: GetUserAppsAction) {
         enable: userApp.enable,
         createdAt: userApp.createdAt,
         updatedAt: userApp.updatedAt,
+        clientId: userApp.client_data.client_id,
+        clientSecret: userApp.client_data.client_secret,
       }
     ))
     yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
@@ -149,6 +153,8 @@ export function * getAppDetails (action: GetAppDetails) {
       enable: userApp.enable,
       createdAt: userApp.createdAt,
       updatedAt: userApp.updatedAt,
+      clientId: userApp.client_data.client_id,
+      clientSecret: userApp.client_data.client_secret,
     }
   ))
 

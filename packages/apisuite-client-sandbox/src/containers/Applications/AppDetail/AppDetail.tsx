@@ -35,6 +35,8 @@ const AppDetail: React.FC<AppDetailProps> = (
     sandboxId: currentApp.sandboxId,
     pubUrls: currentApp.pubUrls,
     enable: true,
+    clientId: currentApp.clientId,
+    clientSecret: currentApp.clientSecret,
   })
   const [errors, setErrors] = React.useState()
   const [isFormValid, setFormValid] = React.useState(false)
@@ -51,6 +53,8 @@ const AppDetail: React.FC<AppDetailProps> = (
       sandboxId: input.sandboxId,
       pubUrls: input.pubUrls,
       enable: true,
+      clientId: '',
+      clientSecret: '',
     })
   }
 
@@ -148,7 +152,7 @@ const AppDetail: React.FC<AppDetailProps> = (
             <div className={classes.fieldWrapper}>
               <FormField
                 label='Client ID'
-                value='0ae6d358-d775-4a78-aabc-6d26a0e895fe'
+                value={input.clientId}
                 inputProps={{ readOnly: true }}
               />
 
@@ -162,7 +166,7 @@ const AppDetail: React.FC<AppDetailProps> = (
             <div className={classes.fieldWrapper}>
               <FormField
                 label='Client Secret'
-                value='T63FhXXUy9_jTaODHp9i73MnWyb6MqnxL6kPjq05xA'
+                value={input.clientSecret}
                 inputProps={{ readOnly: true }}
               />
 
