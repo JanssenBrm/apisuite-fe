@@ -67,8 +67,7 @@ export const loginTabs: TabProps[] = [
       },
       {
         label: 'Test Data',
-        route: '',
-        disabled: true,
+        route: '/dashboard/test',
       },
       // #conditional-loader-start: console
       {
