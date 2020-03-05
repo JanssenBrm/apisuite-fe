@@ -9,8 +9,8 @@ const Instructions: React.FC<{}> = () => {
   const steps = [
     {
       stepTitle: 'Get the App\'s token',
-      instruction: 'We begin by retrieving a unique token id. We will use this token in the following requests so that API Suite can verify your identity.',
-      note: '',
+      instruction: 'We begin by retrieving a unique token ID. We will use this token in the following requests so the API can verify your identity. Make a POST request with the parameters as shown below. Replace the variables with the Client ID and Client Secret of one of your Apps.',
+      note: 'Manage and see each of your Apps\' details by navigating to the \'Client Applications\' tab. You can find the Client ID and Client Secret under the "Access Details" section on the App\'s page.',
       command: `curl -X POST \\
     -H "Host: hydraauth-dev.apisuite.cloudoki.com" \\
     -H "Content-Type: application/x-www-form-urlencoded" \\
@@ -20,38 +20,27 @@ const Instructions: React.FC<{}> = () => {
     https://hydraauth-dev.apisuite.cloudoki.com/oauth2/token`,
     },
     {
-      stepTitle: 'Upload your swagger file',
-      instruction: 'Now make a POST request to upload your Swagger file to API Suite so we can customize your Sandbox. This step will take a few minutes.',
-      note: 'Your Swagger file is a YAML or JSON that contains a complete structure of your API. It can be generated manually or automatically. Got to https://swagger.io/tools/open-source/getting-started/ to learn more.',
-      command: `curl -X POST \\
-    -H "Host: sandbox-dev.apisuite.cloudoki.com" \\
-    -H "Content-Type: multipart/form-data" \\
-    -H "Authorization: Bearer {TOKEN}" \\
-    -F "file=@swagger-v3.json" \\
-    https://sandbox-dev.apisuite.cloudoki.com/upload`,
-    },
-    {
       stepTitle: 'Upload data to your Sandbox',
-      instruction: 'Your Sandbox is up and running! We can upload data to the Sanbox by making another post request with a JSON.',
+      instruction: 'Let\'s upload some data to the Sandbox by making another POST request with a JSON containing our Cat\'s Jack data.',
       note: '',
-      command: `url -X POST \\
+      command: `curl -X POST \\
     -H "Accept: application/json" \\
     -H "Content-Type: application/json" \\
     -H "Authorization: Bearer {TOKEN}" \\
     -H "Host: sandbox-dev.apisuite.cloudoki.com" \\
     -d '{"name":"Jack Daniels","desc":"My cat","tag":"cat"}' \\
-    https://sandbox-dev.apisuite.cloudoki.com/v3/pets`,
+    https://sandbox-dev.apisuite.cloudoki.com/v21/pets`,
     },
     {
-      stepTitle: 'Getting data from the Sandbox',
-      instruction: 'Everything is setup. Let\'s test the Sandbox using a simplet GET request.',
+      stepTitle: 'Fetching data from the Sandbox',
+      instruction: 'Now we can test the API using a simplet GET request to retrieve some data.',
       response: 'The response should look like this: ',
       responseCode: '[{\n  "desc":"My cat",\n  "name":"Jack Daniels",\n  "tag":"cat",\n  "id":11582904187752\n}]',
       note: '',
       command: `curl -X GET \\
     -H "Authorization: Bearer {TOKEN}" \\
     -H "Host: sandbox-dev.apisuite.cloudoki.com" \\
-    https://sandbox-dev.apisuite.cloudoki.com/v3/pets`,
+    https://sandbox-dev.apisuite.cloudoki.com/v21/pets`,
     },
   ]
 
@@ -62,7 +51,7 @@ const Instructions: React.FC<{}> = () => {
         <div className={classes.mainContainer}>
           <div className={classes.content}>
             <p className={classes.description}>
-              We are going to make a series of cURL requests to the API Suite so we can setup and test a Sandbox.
+              These are some quick instructions on how you can upload data to your Sandbox and test the API.
             </p>
             {steps.map((step, indx) => (
               <div key={indx} className={classes.stepContainer}>
