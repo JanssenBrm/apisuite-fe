@@ -1,5 +1,6 @@
 import update from 'immutability-helper'
 import { AuthStore, AuthStoreActionTypes, AuthPayloads } from './types'
+import { REGISTER_USER } from 'components/RegisterPortal/ducks'
 import { Reducer, AnyAction, Dispatch } from 'redux'
 import { History } from 'history'
 import cookie from 'js-cookie'
@@ -10,7 +11,6 @@ export const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS'
 const LOGIN_ERROR = 'auth/LOGIN_ERROR'
 const LOGIN_USER_SUCCESS = 'auth/LOGIN_USER_SUCCESS'
 const LOGIN_USER_ERROR = 'auth/LOGIN_USER_ERROR'
-const REGISTER_LOGIN_REDIRECT = 'auth/REGISTER_LOGIN_REDIRECT'
 const LOGOUT = 'auth/LOGOUT'
 
 export const TOKEN_KEY = 'at'
@@ -56,7 +56,7 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
       })
     }
 
-    case REGISTER_LOGIN_REDIRECT: {
+    case REGISTER_USER: {
       return update(state, {
         error: { $set: undefined },
       })
@@ -90,7 +90,6 @@ export const authActions = {
   loginError: (error: AuthPayloads['loginError']) => ({ type: LOGIN_ERROR, error }),
   loginUserSuccess: (payload: AuthPayloads['loginUserSuccess']) => ({ type: LOGIN_USER_SUCCESS, payload }),
   loginUserError: (error: AuthPayloads['loginUserError']) => ({ type: LOGIN_USER_ERROR, error }),
-  registerLoginRedirect: () => ({ type: REGISTER_LOGIN_REDIRECT }),
   logout: () => ({ type: LOGOUT }),
 }
 
