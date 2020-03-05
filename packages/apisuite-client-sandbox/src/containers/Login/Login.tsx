@@ -28,6 +28,14 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
     }
   }, [register.isRegistered])
 
+  const defaultEmail = () => {
+    try {
+      return atob(match.params.email)
+    } catch {
+      return ''
+    }
+  }
+
   return (
     <div className='auth-page'>
       <div className='auth-left-wrapper' />
@@ -46,7 +54,7 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
                 {authView === 'login' &&
                   <LoginPortal />}
                 {authView === 'register' &&
-                  <RegisterPortal defaultEmail={match.params.email} />}
+                  <RegisterPortal defaultEmail={defaultEmail()} />}
                 {justRegistered && <div className='user-created-feedback'>Your account is created, {register.user}!</div>}
               </div>
             </div>

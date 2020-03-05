@@ -58,7 +58,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
               label='E-mail'
               variant='outlined'
               type='email'
-              placeholder='test'
+              placeholder=''
               name='email'
               value={input.email}
               onChange={handleInputs}

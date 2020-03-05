@@ -10,7 +10,7 @@ import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 
-const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser }) => {
+const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser, defaultEmail }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -19,7 +19,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser 
   const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState({
     name: '',
-    email: '',
+    email: defaultEmail || '',
     password: '',
   })
 
