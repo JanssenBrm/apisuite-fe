@@ -1,5 +1,6 @@
 import update from 'immutability-helper'
 import { AuthStore, AuthStoreActionTypes, AuthPayloads } from './types'
+import { REGISTER_USER } from 'components/RegisterPortal/ducks'
 import { Reducer, AnyAction, Dispatch } from 'redux'
 import { History } from 'history'
 import cookie from 'js-cookie'
@@ -52,6 +53,12 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
       return update(state, {
         user: { $set: user },
         isAuthorizing: { $set: false },
+      })
+    }
+
+    case REGISTER_USER: {
+      return update(state, {
+        error: { $set: undefined },
       })
     }
 

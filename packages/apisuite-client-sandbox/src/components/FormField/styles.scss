@@ -1,17 +1,12 @@
 .formfield-wrapper {
   position: relative;
-  .formfield {
-
-  }
   .formfield-errors {
     color: $error-color;
 
     &.bottom {
-      top: 46px;
-      left: 5px;
       width: 100%;
       font-size: 13px;
-      position: absolute;
+      position: relative;
       font-weight: 400;
     }
 
