@@ -18,7 +18,7 @@ import { RouteParams } from '../types'
 import { useParams } from 'react-router'
 
 const AppDetail: React.FC<AppDetailProps> = (
-  { history, updateApp, getAppDetails, currentApp, deleteApp, user, resUpdate, resDelete, toggleInform }) => {
+  { history, updateApp, resetCurrentApp, getAppDetails, currentApp, deleteApp, user, resUpdate, resDelete, toggleInform }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
@@ -40,6 +40,7 @@ const AppDetail: React.FC<AppDetailProps> = (
   })
   const [errors, setErrors] = React.useState()
   const [isFormValid, setFormValid] = React.useState(false)
+  const [fetched, setFetched] = React.useState(false)
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -76,10 +77,19 @@ const AppDetail: React.FC<AppDetailProps> = (
   }
 
   React.useEffect(() => {
-    if (user) {
+    if (user && !currentApp.appId && !fetched) {
       getAppDetails(appId, user.id)
+      setFetched(true)
     }
-    setInput({ ...currentApp })
+
+    if (user && currentApp.appId !== input.appId) {
+      setInput({ ...currentApp })
+    }
+
+    if (!fetched) {
+      resetCurrentApp()
+    }
+
     setFormValid(errors && errors.length === 0)
   }, [currentApp, errors])
 

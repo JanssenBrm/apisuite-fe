@@ -7,6 +7,7 @@ import requireImage from 'util/requireImage'
 const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
   const [authView, setAuthView] = React.useState('login')
   const [justRegistered, setJustRegistered] = React.useState(false)
+  const [isRedirected, setRedirected] = React.useState(false)
 
   function handleViewChange (view: string) {
     setAuthView(view)
@@ -23,8 +24,10 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
       }, 2000)
     }
 
-    if (match.params.email) {
+    if (match.params.email && !isRedirected) {
+
       handleViewChange('register')
+      setRedirected(true)
     }
   }, [register.isRegistered])
 
