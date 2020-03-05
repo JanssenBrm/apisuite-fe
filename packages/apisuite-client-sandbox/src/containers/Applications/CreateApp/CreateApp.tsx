@@ -1,5 +1,5 @@
 import * as React from 'react'
-import FormField, { parseErrors } from 'components/FormField'
+import FormField, { parseErrors, isValidURL } from 'components/FormField'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import SvgIcon from 'components/SvgIcon'
@@ -112,12 +112,16 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
 
           <div className={classes.fieldWrapper}>
             <FormField
-              label='Redirect URL (optional)'
+              label='Redirect URL'
               placeholder='https://localhost'
               name='redirectUrl'
               type='text'
               value={input.redirectUrl}
               onChange={handleInputs}
+              errorPlacing='bottom'
+              rules={[
+                { rule: isValidURL(input.redirectUrl), message: 'Please provide a valid URL' },
+              ]}
             />
 
             <Button variant='outlined' className={classes.iconBtn}>

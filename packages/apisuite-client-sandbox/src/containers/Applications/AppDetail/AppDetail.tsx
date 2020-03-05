@@ -79,9 +79,7 @@ const AppDetail: React.FC<AppDetailProps> = (
     if (user) {
       getAppDetails(appId, user.id)
     }
-    if (!input.appId) {
-      setInput({ ...currentApp })
-    }
+    setInput({ ...currentApp })
     setFormValid(errors && errors.length === 0)
   }, [currentApp, errors])
 
