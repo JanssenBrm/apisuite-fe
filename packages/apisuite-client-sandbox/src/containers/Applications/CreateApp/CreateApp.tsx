@@ -121,6 +121,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
               errorPlacing='bottom'
               rules={[
                 { rule: isValidURL(input.redirectUrl), message: 'Please provide a valid URL' },
+                { rule: input.redirectUrl.length > 0, message: 'Please provide a valid URL' },
               ]}
             />
 
