@@ -241,7 +241,7 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
             className={classes.btn}
             style={{ backgroundColor: '#333333', color: 'white', marginTop: 16 }}
           >
-            <a className={classes.buttonLink} href='/auth'>Register</a>
+            <a className={classes.buttonLink} href='/auth/register'>Register</a>
           </div>
         </aside>
       </section>

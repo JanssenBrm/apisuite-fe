@@ -14,7 +14,7 @@ export const initTabs: TabProps[] = [
   },
   {
     label: 'Log in',
-    route: '/auth',
+    route: '/auth/login',
   },
   {
     label: 'Demo',

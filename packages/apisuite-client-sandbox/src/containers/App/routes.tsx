@@ -28,8 +28,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/dashboard/console', render: (props) => <RequireAuth component={Console} {...props} /> },
   // #conditional-loader-start: console
   // #conditional-loader-end
-  { path: '/auth', exact: true, component: Login },
-  { path: '/auth/:email', exact: true, component: Login },
+  { path: '/auth/:view?/:email?', exact: true, component: Login },
   // { path: '/register', component: Register },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },

@@ -35,7 +35,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
     setShowPassword(!showPassword)
   }
 
-  function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit (e: React.FormEvent<HTMLFormElement> | KeyboardEvent) {
     e.preventDefault()
     login({ email: input.email, password: input.password })
   }
@@ -43,6 +43,23 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
   React.useEffect(() => {
     setFormValid(errors && errors.length === 0)
   }, [errors])
+
+  const submitEnter = (event: KeyboardEvent) => {
+    const { key } = event
+    const inputEl = document.getElementById('pass-field')
+
+    if (key === 'Enter' && document.activeElement === inputEl && isFormValid) {
+      handleSubmit(event)
+    }
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('keydown', submitEnter)
+
+    return () => {
+      window.removeEventListener('keydown', submitEnter)
+    }
+  }, [submitEnter])
 
   return (
     <div className={classes.loginContainer}>

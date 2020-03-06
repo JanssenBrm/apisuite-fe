@@ -43,7 +43,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
     setFormValid(errors && errors.length === 0)
   }, [errors])
 
-  function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
+  function handleSubmit (e: React.FormEvent<HTMLFormElement> | KeyboardEvent) {
     e.preventDefault()
     registerUser({
       name: input.name,
@@ -51,6 +51,23 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
       password: input.password,
     })
   }
+
+  const submitEnter = (event: KeyboardEvent) => {
+    const { key } = event
+    const inputEl = document.getElementById('pass-field')
+
+    if (key === 'Enter' && document.activeElement === inputEl && isFormValid) {
+      handleSubmit(event)
+    }
+  }
+
+  React.useEffect(() => {
+    window.addEventListener('keydown', submitEnter)
+
+    return () => {
+      window.removeEventListener('keydown', submitEnter)
+    }
+  }, [submitEnter])
 
   return (
     <div className={classes.registerContainer}>
