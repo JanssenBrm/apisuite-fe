@@ -7,6 +7,7 @@ import InputLabel from '@material-ui/core/InputLabel'
 import RadioBoxes from 'components/RadioBoxes/RadioBoxes'
 import Select from 'components/Select'
 import CircularProgress from '@material-ui/core/CircularProgress'
+import { FormFieldEvent } from 'components/FormField/types'
 
 import { radioOptions, selectOptions } from './config'
 import useCommonStyles from '../styles'
@@ -36,14 +37,16 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
 
   function handleCancelClick () {
     history.goBack()
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
-  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {
+  function handleInputs (e: FormFieldEvent, err: any) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
-    setErrors((old: any) => parseErrors(e.target, err, old || []))
+    const eventTarget = e.target
+    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {

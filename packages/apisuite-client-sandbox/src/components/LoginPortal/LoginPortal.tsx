@@ -8,6 +8,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
+import { FormFieldEvent } from 'components/FormField/types'
 
 const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
   const classes = useStyles()
@@ -21,12 +22,13 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
     password: '',
   })
 
-  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) => {
+  const handleInputs = (e: FormFieldEvent, err: any) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
-    setErrors((old: any) => parseErrors(e.target, err, old || []))
+    const eventTarget = e.target
+    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
   function handleClickShowPassword () {

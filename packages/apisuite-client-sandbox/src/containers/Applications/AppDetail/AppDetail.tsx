@@ -1,6 +1,6 @@
 import * as React from 'react'
 import clsx from 'clsx'
-import FormField, { parseErrors } from 'components/FormField'
+import FormField, { parseErrors, isValidURL } from 'components/FormField'
 import Button from '@material-ui/core/Button'
 import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -14,14 +14,14 @@ import { selectOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { AppDetailProps } from './types'
-import { RouteParams } from '../types'
+import { RouteParams, AppData } from '../types'
 import { useParams } from 'react-router'
+import { FormFieldEvent } from 'components/FormField/types'
 
 const AppDetail: React.FC<AppDetailProps> = (
   {
     history,
     updateApp,
-    resetCurrentApp,
     getAppDetails,
     currentApp,
     deleteApp,
@@ -36,7 +36,8 @@ const AppDetail: React.FC<AppDetailProps> = (
   const appId = parseInt(useParams<RouteParams>().id)
 
   const [changed, setChanged] = React.useState(false)
-  const [input, setInput] = React.useState({
+  const [changedDetails, setChangedDetails] = React.useState(false)
+  const [input, setInput] = React.useState<AppData>({
     appId: currentApp.appId,
     name: currentApp.name,
     description: currentApp.description,
@@ -51,7 +52,6 @@ const AppDetail: React.FC<AppDetailProps> = (
   })
   const [errors, setErrors] = React.useState()
   const [isFormValid, setFormValid] = React.useState(false)
-  const [fetched, setFetched] = React.useState(false)
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -72,15 +72,18 @@ const AppDetail: React.FC<AppDetailProps> = (
 
   function handleDeleteApp () {
     deleteApp(appId)
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
-  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {
+  function handleInputs (e: FormFieldEvent, err: any) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
     setChanged(true)
-    setErrors((old: any) => parseErrors(e.target, err, old || []))
+    setChangedDetails(!(JSON.stringify(currentApp) === JSON.stringify(input)))
+    const eventTarget = e.target
+    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
   function navigate (route: any) {
@@ -88,26 +91,19 @@ const AppDetail: React.FC<AppDetailProps> = (
   }
 
   React.useEffect(() => {
-    if (user && !currentApp.appId && !fetched) {
-      getAppDetails(appId, user.id)
-      setFetched(true)
-    }
-
-    if (user && currentApp.appId !== input.appId) {
-      setInput({ ...currentApp })
-    }
-
-    if (!fetched) {
-      resetCurrentApp()
-    }
-
     setFormValid(errors && errors.length === 0)
-  }, [currentApp, errors])
+  }, [errors])
+
+  React.useEffect(() => {
+    if (user) {
+      setInput({ ...currentApp })
+      getAppDetails(appId, user.id)
+    }
+  }, [currentApp])
 
   return (
     <>
       <div className={classes.container}>
-
         <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
           <form noValidate autoComplete='off' className={classes.left}>
             <FormField
@@ -207,6 +203,10 @@ const AppDetail: React.FC<AppDetailProps> = (
                 type='text'
                 value={input.redirectUrl}
                 onChange={handleInputs}
+                rules={[
+                  { rule: isValidURL(input.redirectUrl), message: 'Please provide a valid URL' },
+                  { rule: input.redirectUrl.length > 0, message: 'Please provide a valid URL' },
+                ]}
               />
 
               {/* <Button variant='outlined' className={classes.iconBtn}>
@@ -253,10 +253,10 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <Button
                 type='submit'
-                disabled={!(changed && isFormValid)}
+                disabled={!(changed && isFormValid && changedDetails)}
                 className={clsx(classes.btn, classes.btn2, (!changed && classes.disabled))}
               >
-                {resUpdate.isRequesting ? <CircularProgress size={20} /> : !changed ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
+                {resUpdate.isRequesting ? <CircularProgress size={20} /> : !changedDetails ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
               </Button>
 
               {resUpdate.isError &&
