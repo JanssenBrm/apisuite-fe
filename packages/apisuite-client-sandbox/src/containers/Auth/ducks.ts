@@ -109,10 +109,10 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
     }
   } else if (action.type === LOGIN_ERROR || action.type === LOGIN_USER_ERROR) {
     cookie.remove(TOKEN_KEY, { path: '/' })
-    history.replace('/auth')
+    history.replace('/auth/login')
   } else if (action.type === LOGOUT) {
     cookie.remove(TOKEN_KEY, { path: '/' })
-    history.replace('/auth')
+    history.replace('/auth/login')
   }
 }
 

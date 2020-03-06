@@ -3,14 +3,26 @@ import LoginPortal from 'components/LoginPortal'
 import RegisterPortal from 'components/RegisterPortal'
 import classnames from 'classnames'
 import requireImage from 'util/requireImage'
+import { View } from './types'
 
 const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
-  const [authView, setAuthView] = React.useState('login')
+  const view = match.params.view
+  const encodedEmail = match.params.email
+  const [authView, setAuthView] = React.useState<View>(view === 'register' ? 'register' : 'login')
   const [justRegistered, setJustRegistered] = React.useState(false)
   const [isRedirected, setRedirected] = React.useState(false)
 
   function handleViewChange (view: string) {
-    setAuthView(view)
+    switch (view) {
+      case 'login':
+        setAuthView(view)
+        break
+      case 'register':
+        setAuthView(view)
+        break
+      default:
+        setAuthView('login')
+    }
     setJustRegistered(false)
   }
 
@@ -32,7 +44,7 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
 
   const defaultEmail = () => {
     try {
-      return atob(match.params.email)
+      return atob(encodedEmail)
     } catch {
       return ''
     }
