@@ -18,10 +18,12 @@ const ListApps: React.FC<ListAppsProps> = ({ history, user, userApps, getUserApp
 
   function handleAppClick (event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
     history.push(`/dashboard/apps/detail/${event.currentTarget.id}`)
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   function handleCreateClick () {
     history.push('/dashboard/apps/create')
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   React.useEffect(() => {

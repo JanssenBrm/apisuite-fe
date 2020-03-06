@@ -3,7 +3,7 @@ import AppDetail from './AppDetail'
 import { AppData } from '../types'
 import { Dispatch } from 'redux'
 import { Store } from 'store/types'
-import { updateApp, getAppDetails, deleteApp, resetCurrentApp } from '../ducks'
+import { updateApp, getAppDetails, deleteApp } from '../ducks'
 import { appStoreActionCreators } from 'components/InformDialog/ducks'
 
 const mapStateToProps = ({ applications, auth }: Store) => ({
@@ -17,7 +17,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   updateApp: (appData: AppData) => dispatch(updateApp(appData)),
   deleteApp: (appId: number, userId?: number) => dispatch(deleteApp(appId, userId)),
   getAppDetails: (appId: number, userId: number) => dispatch(getAppDetails(appId, userId)),
-  resetCurrentApp: () => dispatch(resetCurrentApp()),
   toggleInform: () => dispatch(appStoreActionCreators.informOpen()),
 })
 

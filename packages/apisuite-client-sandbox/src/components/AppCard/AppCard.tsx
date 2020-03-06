@@ -57,6 +57,7 @@ const AppCard: React.FC<AppCardProps> = (
 
     if (history) {
       history.push(`/dashboard/apps/detail/${appId}`)
+      window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
     }
   }
 

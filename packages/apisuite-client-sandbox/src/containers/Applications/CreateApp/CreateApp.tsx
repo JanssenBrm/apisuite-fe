@@ -36,6 +36,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
 
   function handleCancelClick () {
     history.goBack()
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {

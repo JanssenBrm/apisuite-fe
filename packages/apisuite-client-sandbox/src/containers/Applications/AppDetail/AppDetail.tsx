@@ -1,6 +1,6 @@
 import * as React from 'react'
 import clsx from 'clsx'
-import FormField, { parseErrors } from 'components/FormField'
+import FormField, { parseErrors, isValidURL } from 'components/FormField'
 import Button from '@material-ui/core/Button'
 import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -21,7 +21,6 @@ const AppDetail: React.FC<AppDetailProps> = (
   {
     history,
     updateApp,
-    resetCurrentApp,
     getAppDetails,
     currentApp,
     deleteApp,
@@ -52,7 +51,6 @@ const AppDetail: React.FC<AppDetailProps> = (
   })
   const [errors, setErrors] = React.useState()
   const [isFormValid, setFormValid] = React.useState(false)
-  const [fetched, setFetched] = React.useState(false)
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -73,6 +71,7 @@ const AppDetail: React.FC<AppDetailProps> = (
 
   function handleDeleteApp () {
     deleteApp(appId)
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {
@@ -91,26 +90,19 @@ const AppDetail: React.FC<AppDetailProps> = (
   }
 
   React.useEffect(() => {
-    if (user && !currentApp.appId && !fetched) {
-      getAppDetails(appId, user.id)
-      setFetched(true)
-    }
-
-    if (user && currentApp.appId !== input.appId) {
-      setInput({ ...currentApp })
-    }
-
-    if (!fetched) {
-      resetCurrentApp()
-    }
-
     setFormValid(errors && errors.length === 0)
-  }, [currentApp, errors])
+  }, [errors])
+
+  React.useEffect(() => {
+    if (user) {
+      setInput({ ...currentApp })
+      getAppDetails(appId, user.id)
+    }
+  }, [currentApp])
 
   return (
     <>
       <div className={classes.container}>
-
         <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
           <form noValidate autoComplete='off' className={classes.left}>
             <FormField
@@ -210,6 +202,10 @@ const AppDetail: React.FC<AppDetailProps> = (
                 type='text'
                 value={input.redirectUrl}
                 onChange={handleInputs}
+                rules={[
+                  { rule: isValidURL(input.redirectUrl), message: 'Please provide a valid URL' },
+                  { rule: input.redirectUrl.length > 0, message: 'Please provide a valid URL' },
+                ]}
               />
 
               {/* <Button variant='outlined' className={classes.iconBtn}>

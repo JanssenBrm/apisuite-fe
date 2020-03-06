@@ -156,11 +156,6 @@ const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initia
         userApps: { $set: action.userApps },
       })
     }
-    case RESET_CURRENT_APP: {
-      return update(state, {
-        currentApp: { $set: initialState.currentApp },
-      })
-    }
     default:
       return state
   }
@@ -216,10 +211,6 @@ export function getUserApps (userId: number) {
 
 export function getUserAppsSuccess (userApps: AppData[]) {
   return { type: GET_USER_APPS_SUCCESS, userApps }
-}
-
-export function resetCurrentApp () {
-  return { type: RESET_CURRENT_APP }
 }
 
 export default reducer
