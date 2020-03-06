@@ -16,3 +16,10 @@ export type Rule = {
   message: string,
   rule: boolean,
 }
+
+export interface FormFieldEvent {
+  target: {
+    name: string,
+    value: string,
+  },
+}

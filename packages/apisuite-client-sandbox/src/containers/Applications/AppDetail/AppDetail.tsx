@@ -14,8 +14,9 @@ import { selectOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { AppDetailProps } from './types'
-import { RouteParams } from '../types'
+import { RouteParams, AppData } from '../types'
 import { useParams } from 'react-router'
+import { FormFieldEvent } from 'components/FormField/types'
 
 const AppDetail: React.FC<AppDetailProps> = (
   {
@@ -36,7 +37,7 @@ const AppDetail: React.FC<AppDetailProps> = (
 
   const [changed, setChanged] = React.useState(false)
   const [changedDetails, setChangedDetails] = React.useState(false)
-  const [input, setInput] = React.useState({
+  const [input, setInput] = React.useState<AppData>({
     appId: currentApp.appId,
     name: currentApp.name,
     description: currentApp.description,
@@ -74,7 +75,7 @@ const AppDetail: React.FC<AppDetailProps> = (
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
-  function handleInputs (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) {
+  function handleInputs (e: FormFieldEvent, err: any) {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
@@ -82,7 +83,7 @@ const AppDetail: React.FC<AppDetailProps> = (
     setChanged(true)
     setChangedDetails(!(JSON.stringify(currentApp) === JSON.stringify(input)))
     const eventTarget = e.target
-    setErrors((old: any) => parseErrors(eventTarget, err, old || []))
+    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
   function navigate (route: any) {

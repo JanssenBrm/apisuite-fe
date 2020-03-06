@@ -9,6 +9,7 @@ import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
+import { FormFieldEvent } from 'components/FormField/types'
 
 const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser, defaultEmail }) => {
   const classes = useStyles()
@@ -25,13 +26,13 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
 
   const registerButtonLabel = 'CREATE ACCOUNT'
 
-  const handleInputs = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>, err: any) => {
+  const handleInputs = (e: FormFieldEvent, err: any) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
     const eventTarget = e.target
-    setErrors((old: any) => parseErrors(eventTarget, err, old || []))
+    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
   function handleClickShowPassword () {
