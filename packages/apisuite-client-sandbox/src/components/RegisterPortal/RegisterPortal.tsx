@@ -30,7 +30,8 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
       ...input,
       [e.target.name]: e.target.value,
     })
-    setErrors((old: any) => parseErrors(e.target, err, old || []))
+    const eventTarget = e.target
+    setErrors((old: any) => parseErrors(eventTarget, err, old || []))
   }
 
   function handleClickShowPassword () {

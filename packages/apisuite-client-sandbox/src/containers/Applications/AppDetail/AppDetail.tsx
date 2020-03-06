@@ -36,6 +36,7 @@ const AppDetail: React.FC<AppDetailProps> = (
   const appId = parseInt(useParams<RouteParams>().id)
 
   const [changed, setChanged] = React.useState(false)
+  const [changedDetails, setChangedDetails] = React.useState(false)
   const [input, setInput] = React.useState({
     appId: currentApp.appId,
     name: currentApp.name,
@@ -80,7 +81,9 @@ const AppDetail: React.FC<AppDetailProps> = (
       [e.target.name]: e.target.value,
     })
     setChanged(true)
-    setErrors((old: any) => parseErrors(e.target, err, old || []))
+    setChangedDetails(!(JSON.stringify(currentApp) === JSON.stringify(input)))
+    const eventTarget = e.target
+    setErrors((old: any) => parseErrors(eventTarget, err, old || []))
   }
 
   function navigate (route: any) {
@@ -253,10 +256,10 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <Button
                 type='submit'
-                disabled={!(changed && isFormValid)}
+                disabled={!(changed && isFormValid && changedDetails)}
                 className={clsx(classes.btn, classes.btn2, (!changed && classes.disabled))}
               >
-                {resUpdate.isRequesting ? <CircularProgress size={20} /> : !changed ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
+                {resUpdate.isRequesting ? <CircularProgress size={20} /> : !changedDetails ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
               </Button>
 
               {resUpdate.isError &&
