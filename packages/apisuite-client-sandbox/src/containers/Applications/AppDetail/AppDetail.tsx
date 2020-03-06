@@ -18,7 +18,18 @@ import { RouteParams } from '../types'
 import { useParams } from 'react-router'
 
 const AppDetail: React.FC<AppDetailProps> = (
-  { history, updateApp, resetCurrentApp, getAppDetails, currentApp, deleteApp, user, resUpdate, resDelete, toggleInform }) => {
+  {
+    history,
+    updateApp,
+    resetCurrentApp,
+    getAppDetails,
+    currentApp,
+    deleteApp,
+    user,
+    resUpdate,
+    resDelete,
+    toggleInform,
+  }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   const [t] = useTranslation()
