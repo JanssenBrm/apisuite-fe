@@ -25,7 +25,6 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
     }
 
     if (match.params.email && !isRedirected) {
-
       handleViewChange('register')
       setRedirected(true)
     }

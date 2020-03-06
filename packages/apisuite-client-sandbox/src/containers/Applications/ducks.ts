@@ -15,7 +15,7 @@ export const GET_APP_DETAILS = 'Applications/GET_APP_DETAILS'
 export const GET_APP_DETAILS_SUCCESS = 'Applications/GET_APP_DETAILS_SUCCESS'
 export const GET_USER_APPS = 'Applications/GET_USER_APPS'
 export const GET_USER_APPS_SUCCESS = 'Applications/GET_USER_APPS_SUCCESS'
-const RESET_CURRENT_APP = 'Applications/RESET_CURRENT_APP'
+export const RESET_CURRENT_APP = 'Applications/RESET_CURRENT_APP'
 
 const initialState: ApplicationsStore = {
   currentApp: {
@@ -158,7 +158,7 @@ const reducer: Reducer<ApplicationsStore, ApplicationsActions> = (state = initia
     }
     case RESET_CURRENT_APP: {
       return update(state, {
-        currentApp: { $set: initialState.currentApp }
+        currentApp: { $set: initialState.currentApp },
       })
     }
     default:

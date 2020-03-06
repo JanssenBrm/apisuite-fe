@@ -1,6 +1,6 @@
 import { History } from 'history'
 import { Action } from 'redux'
-import { CREATE_APP, UPDATE_APP, GET_APP_DETAILS, DELETE_APP, GET_APP_DETAILS_SUCCESS, GET_USER_APPS, GET_USER_APPS_SUCCESS, CREATE_APP_SUCCESS, UPDATE_APP_SUCCESS, DELETE_APP_SUCCESS, CREATE_APP_ERROR, UPDATE_APP_ERROR, DELETE_APP_ERROR } from './ducks'
+import { CREATE_APP, UPDATE_APP, GET_APP_DETAILS, DELETE_APP, GET_APP_DETAILS_SUCCESS, GET_USER_APPS, GET_USER_APPS_SUCCESS, CREATE_APP_SUCCESS, UPDATE_APP_SUCCESS, DELETE_APP_SUCCESS, CREATE_APP_ERROR, UPDATE_APP_ERROR, DELETE_APP_ERROR, RESET_CURRENT_APP } from './ducks'
 
 export interface ApplicationRouteProps {
   history: History,
@@ -103,7 +103,11 @@ export interface GetUserAppsActionSuccess extends Action {
   userApps: AppData[],
 }
 
+export interface ResetCurrentApp extends Action {
+  type: typeof RESET_CURRENT_APP,
+}
+
 export type ApplicationsActions = CreateAppAction | UpdateAppAction | DeleteAppAction | GetAppDetails
 | GetAppDetailsSuccess | GetUserAppsAction | GetUserAppsActionSuccess | CreateAppErrorAction
 | UpdateAppErrorAction | DeleteAppErrorAction | CreateAppSuccessAction | UpdateAppSuccessAction
-| DeleteAppSuccessAction
+| DeleteAppSuccessAction | ResetCurrentApp
