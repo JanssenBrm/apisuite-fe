@@ -3,6 +3,7 @@ import { takeLatest, call, put } from 'redux-saga/effects'
 import { SUPPORT_URL } from 'constants/endpoints'
 import { INFORM, appStoreActionCreators } from './ducks'
 import { AppStoreActionTypes } from './types'
+import { openNotification } from 'components/Notification/ducks'
 
 function * inform ({ payload }: AppStoreActionTypes['inform']) {
   try {
@@ -16,6 +17,7 @@ function * inform ({ payload }: AppStoreActionTypes['inform']) {
     })
 
     yield put(appStoreActionCreators.informSuccess())
+    yield put(openNotification('success', 'Email successfully registered.', 3000))
   } catch (error) {
     if (error.status === 503) {
       yield put(appStoreActionCreators.informError({ message: 'Inform is currently unavailable please try again later.' }))
