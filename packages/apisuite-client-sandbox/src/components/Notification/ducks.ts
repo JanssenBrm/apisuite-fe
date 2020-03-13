@@ -25,8 +25,6 @@ const reducer: Reducer<NotificationStore, NotificationActions> = (state = initia
     case CLOSE_NOTIFICATION: {
       return update(state, {
         open: { $set: false },
-        type: { $set: '' },
-        msg: { $set: '' },
       })
     }
 
