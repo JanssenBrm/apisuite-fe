@@ -21,7 +21,7 @@ const InformDialog: React.FC<InformDialogProps> = (
   const [pass, setPass] = React.useState(false)
   const textTarget = 'Whoah! We\'re not quite there yet but we promise to let you know the minute we launch the full product version!'
   const titleTarget = 'Keep me posted'
-  const idleTime = 2000
+  const idleTime = 1000
 
   React.useEffect(() => {
     if (open) {
