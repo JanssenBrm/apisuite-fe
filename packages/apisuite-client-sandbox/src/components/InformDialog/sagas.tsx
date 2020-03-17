@@ -3,7 +3,7 @@ import { takeLatest, call, put } from 'redux-saga/effects'
 import { SUPPORT_URL } from 'constants/endpoints'
 import { INFORM, appStoreActionCreators } from './ducks'
 import { AppStoreActionTypes } from './types'
-import { openNotification } from 'components/Notification/ducks'
+import { openNotification } from 'containers/NotificationStack/ducks'
 
 function * inform ({ payload }: AppStoreActionTypes['inform']) {
   try {

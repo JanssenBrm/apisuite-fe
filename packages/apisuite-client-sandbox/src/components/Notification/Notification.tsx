@@ -1,25 +1,20 @@
 import * as React from 'react'
-import Dialog from '@material-ui/core/Dialog'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import { TransitionProps } from '@material-ui/core/transitions'
-import Slide from '@material-ui/core/Slide'
 import CancelOutlinedIcon from '@material-ui/icons/CancelOutlined'
 import CheckCircleOutlineOutlinedIcon from '@material-ui/icons/CheckCircleOutlineOutlined'
+import Snackbar from '@material-ui/core/Snackbar'
 import { NotificationProps } from './types'
 import useStyles from './styles'
 import clsx from 'clsx'
 
-const Transition = React.forwardRef<unknown, TransitionProps>(function Transition (props, ref) {
-  return <Slide direction='down' ref={ref} {...props} />
-})
-
-const Notification: React.FC<NotificationProps> = ({ open, type, msg, closeNotification, timer }) => {
+const Notification: React.FC<NotificationProps> = ({
+  open,
+  type,
+  msg,
+  notificationNumber,
+  timer,
+  closeNotification,
+}) => {
   const classes = useStyles()
-
-  React.useEffect(() => {
-    if (open) setTimeout(() => closeNotification(), timer)
-  }, [open])
 
   const typeIcon = () => {
     switch (type) {
@@ -32,20 +27,18 @@ const Notification: React.FC<NotificationProps> = ({ open, type, msg, closeNotif
     }
   }
 
+  const handleClose = () => {
+    closeNotification(notificationNumber)
+  }
+
   return (
-    <Dialog
+    <Snackbar
       open={open}
-      TransitionComponent={Transition}
-      classes={{
-        paperScrollPaper: classes.paper,
-      }}
-      BackdropProps={{
-        classes: {
-          root: classes.backDrop,
-        },
-      }}
+      autoHideDuration={timer}
+      onClose={handleClose}
+      className={classes.snackbar}
     >
-      <DialogContent
+      <div
         className={clsx(
           classes.content,
           type === 'success' && classes.success,
@@ -54,16 +47,16 @@ const Notification: React.FC<NotificationProps> = ({ open, type, msg, closeNotif
         <div className={classes.icon}>
           {typeIcon()}
         </div>
-        <DialogContentText
+        <div
           className={clsx(
             classes.text,
             type === 'success' && classes.success,
             type === 'error' && classes.error)}
         >
           {msg}
-        </DialogContentText>
-      </DialogContent>
-    </Dialog>
+        </div>
+      </div>
+    </Snackbar>
   )
 }
 

@@ -1,13 +1,10 @@
 import { makeStyles } from '@material-ui/styles'
 
 export default makeStyles({
-  paper: {
+  snackbar: {
     display: 'flex',
-    position: 'absolute',
-    top: 0,
-  },
-  backDrop: {
-    backgroundColor: 'transparent',
+    position: 'relative',
+    margin: 8,
   },
   content: {
     display: 'flex',
@@ -15,6 +12,7 @@ export default makeStyles({
     alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
+    borderRadius: 4,
   },
   icon: {
     display: 'flex',
