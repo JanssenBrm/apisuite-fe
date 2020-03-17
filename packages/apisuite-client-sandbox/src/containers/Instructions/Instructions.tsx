@@ -29,7 +29,7 @@ const Instructions: React.FC<{}> = () => {
     -H "Authorization: Bearer {TOKEN}" \\
     -H "Host: sandbox-dev.apisuite.cloudoki.com" \\
     -d '{"name":"Jack Daniels","desc":"My cat","tag":"cat"}' \\
-    https://sandbox-dev.apisuite.cloudoki.com/v21/pets`,
+    https://sandbox-dev.apisuite.cloudoki.com/v1/pets`,
     },
     {
       stepTitle: 'Fetching data from the Sandbox',
@@ -40,7 +40,7 @@ const Instructions: React.FC<{}> = () => {
       command: `curl -X GET \\
     -H "Authorization: Bearer {TOKEN}" \\
     -H "Host: sandbox-dev.apisuite.cloudoki.com" \\
-    https://sandbox-dev.apisuite.cloudoki.com/v21/pets`,
+    https://sandbox-dev.apisuite.cloudoki.com/v1/pets`,
     },
   ]
 
