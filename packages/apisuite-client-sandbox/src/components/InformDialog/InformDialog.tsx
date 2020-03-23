@@ -1,85 +1,54 @@
 import * as React from 'react'
-import { makeStyles } from '@material-ui/styles'
+import useStyles from './styles'
 import Button from '@material-ui/core/Button'
+import { isValidEmail } from 'components/FormField'
 import TextField from '@material-ui/core/TextField'
 import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-// import FormGroup from '@material-ui/core/FormGroup'
-// import FormControlLabel from '@material-ui/core/FormControlLabel'
-// import Checkbox from '@material-ui/core/Checkbox'
-// import Link from '@material-ui/core/Link'
 import CircularProgress from '@material-ui/core/CircularProgress'
-
 import { InformDialogProps } from './types'
-
-const useStyles = makeStyles({
-  textField: {
-    marginBottom: 18,
-  },
-  formGroup: {
-    paddingLeft: 8,
-  },
-  confirmWrapper: {
-    // margin: theme.spacing(1),
-    position: 'relative',
-  },
-  progress: {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    marginTop: -12,
-    marginLeft: -12,
-  },
-})
-
-const defaultValues = {
-  email: '',
-  // terms: false,
-  valid: false,
-  errorHelper: '',
-}
-
-const getEmailError = (value: string) => {
-  if (/\S+@\S+\.\S+/.test(value)) {
-    return ''
-  }
-
-  return '* A valid emails must be provided'
-}
 
 const InformDialog: React.FC<InformDialogProps> = (
   { open, inform, requesting, closeInform },
 ) => {
   const classes = useStyles()
   const showLoading = requesting
-  const [values, setValues] = React.useState(defaultValues)
-  const textTarget = "Whoah! We're not quite there yet but we promise to let you know the minute we launch the full product version!"
+  const [email, setEmail] = React.useState('')
+  const [isValid, setIsValid] = React.useState(true)
+  const [pass, setPass] = React.useState(false)
+  const textTarget = 'Whoah! We\'re not quite there yet but we promise to let you know the minute we launch the full product version!'
   const titleTarget = 'Keep me posted'
+  const idleTime = 1000
 
   React.useEffect(() => {
     if (open) {
-      setValues(defaultValues)
+      setEmail('')
+      setIsValid(true)
+      setPass(false)
     }
   }, [open])
 
-  const handleChange = (name: 'email') => ({ target: { value } }: any) => {
-    const newValues = { ...values, [name]: value }
-
-    if (name === 'email') {
-      newValues.errorHelper = getEmailError(value)
-    }
-
-    newValues.valid = !!newValues.email && !newValues.errorHelper
-
-    setValues(newValues)
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(event.target.value)
+    setPass(true)
+    if (isValidEmail(event.target.value)) setIsValid(true)
   }
+
+  React.useEffect(() => {
+    const timer = setInterval((newEmail) => {
+      if (pass) setIsValid(isValidEmail(newEmail))
+    }, idleTime, email)
+    return () => {
+      clearInterval(timer)
+    }
+  }, [email, pass])
 
   function handleConfirm () {
     inform({
-      email: values.email,
+      email: email,
       target: 'portal',
     })
   }
@@ -103,18 +72,16 @@ const InformDialog: React.FC<InformDialogProps> = (
         <form noValidate autoComplete='off' onSubmit={preventDefault}>
           <TextField
             data-testid='inform-dialog-email'
-            className={classes.textField}
             label='Email Address'
-            value={values.email}
-            error={!!values.errorHelper}
-            helperText={values.errorHelper}
-            onChange={handleChange('email')}
+            value={email}
+            error={!isValid}
+            helperText={!isValid && 'Please enter a valid email address.'}
+            onChange={handleChange}
             margin='dense'
             type='email'
             variant='outlined'
             fullWidth
             autoFocus
-            // disabled={showLoading}
           />
         </form>
       </DialogContent>
@@ -134,7 +101,7 @@ const InformDialog: React.FC<InformDialogProps> = (
             data-testid='inform-dialog-submit'
             color='primary'
             onClick={handleConfirm}
-            disabled={!values.valid || showLoading}
+            disabled={!isValidEmail(email) || showLoading}
           >
               Submit
           </Button>
