@@ -11,6 +11,7 @@ import theme from './theme'
 import routes from './routes'
 import { AppProps } from './types'
 import { initTabs, loginTabs, gobackConfig } from './config'
+import NotificationStack from 'containers/NotificationStack'
 
 const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   const [currentTab, setCurrentTab] = React.useState(0)
@@ -104,6 +105,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       {navigations && <Footer />}
 
       <InformDialog />
+      <NotificationStack />
     </ThemeProvider>
   )
 }
