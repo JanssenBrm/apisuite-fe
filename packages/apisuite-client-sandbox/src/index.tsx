@@ -14,7 +14,7 @@ import 'typeface-roboto'
 import 'styles/app.scss'
 
 // Translations
-import 'Language/i18n'
+import 'language/i18n'
 
 function render (Component: any) {
   // @ts-ignore
