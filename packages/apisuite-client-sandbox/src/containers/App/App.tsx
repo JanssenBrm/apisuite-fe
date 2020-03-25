@@ -7,11 +7,12 @@ import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import InformDialog from 'components/InformDialog'
 
-import theme from './theme'
 import routes from './routes'
 import { AppProps } from './types'
 import { initTabs, loginTabs, gobackConfig } from './config'
 import NotificationStack from 'containers/NotificationStack'
+
+const theme = require(`themes/${process.env.THEME || 'default'}`).default
 
 const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   const [currentTab, setCurrentTab] = React.useState(0)
