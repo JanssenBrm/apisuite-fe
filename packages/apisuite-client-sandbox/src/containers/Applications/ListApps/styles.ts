@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   title: {
     fontSize: 26,
     fontWeight: 300,
@@ -30,7 +31,7 @@ export default makeStyles({
       fontSize: '18px',
       fontWeight: 300,
       textAlign: 'center',
-      color: '#2DB7BA',
+      color: theme.palette.primary.main,
     },
     '& > p': {
       margin: 0,
@@ -57,4 +58,4 @@ export default makeStyles({
     marginLeft: 32,
     marginRight: 32,
   },
-})
+}))

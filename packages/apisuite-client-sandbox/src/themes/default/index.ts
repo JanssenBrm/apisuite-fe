@@ -1,4 +1,4 @@
-import dog from './dog.jpg'
+import dog from './images/dog.jpg'
 import { createMuiTheme } from '@material-ui/core/styles'
 import { amber } from '@material-ui/core/colors'
 
