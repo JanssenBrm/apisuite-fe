@@ -33,7 +33,7 @@
             "A700": "#333"
         },
         "background": {
-            "default": "#E3E3E3",
+            "default": "#EEEEEE",
             "paper": "#333"
         },
         "error": {
@@ -53,11 +53,11 @@
         },
         "common": {
             "black": "#333",
-            "white": "#333"
+            "white": "#FFF"
         },
         "text": {
-            "primary": "#333",
-            "secondary": "#333",
+            "primary": "#545454",
+            "secondary": "#2DB7BA",
             "disabled": "#333",
             "hint": "#333"
         },
@@ -142,5 +142,19 @@
     },
     "shape": {
         "borderRadius": 4
+    },
+    "gradients": {
+        "G1": {
+            "begin": ["primary", 300],
+            "end": ["primary", 400]
+        },
+        "G2": {
+            "begin": ["primary", 300],
+            "end": ["primary", 400]
+        },
+        "G3": {
+            "begin": ["primary", 300],
+            "end": ["primary", 400]
+        }
     }
 }

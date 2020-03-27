@@ -94,7 +94,7 @@ export default makeStyles((theme: Theme) => ({
     color: '#333333',
     backgroundColor: 'white',
     padding: '8px 24px',
-    borderRadius: theme.shape,
+    borderRadius: theme.shape.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
   },

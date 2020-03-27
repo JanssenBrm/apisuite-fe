@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/styles'
 import { Theme } from 'themes/types'
+import { colorPicker } from 'util/colorPicker'
 
 export default makeStyles((theme: Theme) => ({
   subSelect: {
@@ -7,7 +8,7 @@ export default makeStyles((theme: Theme) => ({
     width: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    color: '#ACACAC',
+    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
   },
   dropdown: {
     display: 'flex',
@@ -19,7 +20,7 @@ export default makeStyles((theme: Theme) => ({
   chip: {
     display: 'flex',
     margin: 4,
-    borderRadius: theme.shape,
+    borderRadius: theme.shape.borderRadius,
     background: 'linear-gradient(270deg, #2DB7BA 0%, #14DE2D 100%)',
   },
   chips: {

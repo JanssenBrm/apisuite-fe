@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: 'white',
     padding: 8,
     border: '1px solid white',
-    borderRadius: theme.shape,
+    borderRadius: theme.shape.borderRadius,
   },
   loading: {
     position: 'relative',
@@ -41,10 +41,10 @@ const useStyles = makeStyles((theme: Theme) => ({
     marginTop: 30,
   },
   errorAlert: {
-    backgroundColor: '#FF1515',
-    color: '#FFF',
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.common.white,
     padding: '12px 25px',
-    borderRadius: theme.shape,
+    borderRadius: theme.shape.borderRadius,
     minHeight: 50,
   },
 }))

@@ -55,7 +55,7 @@ export default makeStyles((theme: Theme) => ({
     backgroundColor: '#333333',
     color: 'white',
     padding: '8px 24px',
-    borderRadius: theme.shape,
+    borderRadius: theme.shape.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
     marginRight: 16,
@@ -96,7 +96,7 @@ export default makeStyles((theme: Theme) => ({
     backgroundColor: '#333333',
     color: 'white',
     padding: '6px 24px',
-    borderRadius: theme.shape,
+    borderRadius: theme.shape.borderRadius,
     marginRight: 8,
   },
   cardContainer: {
@@ -152,7 +152,7 @@ export default makeStyles((theme: Theme) => ({
     fontSize: 13,
     color: '#FFF',
     padding: '2px 15px',
-    borderRadius: theme.shape,
+    borderRadius: theme.shape.borderRadius,
     minHeight: 20,
   },
 }))

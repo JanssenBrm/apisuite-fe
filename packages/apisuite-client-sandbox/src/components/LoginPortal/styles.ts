@@ -1,5 +1,6 @@
 import { makeStyles } from '@material-ui/styles'
 import { Theme } from 'themes/types'
+import { colorPicker } from 'util/colorPicker'
 
 const useStyles = makeStyles((theme: Theme) => ({
   loginContainer: {
@@ -8,18 +9,18 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   emailTextfield: {
     backgroundColor: 'white',
-    borderRadius: theme.shape,
-    color: '#ACACAC',
+    borderRadius: theme.shape.borderRadius,
+    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
   },
   nameTextfield: {
     backgroundColor: 'white',
-    borderRadius: theme.shape,
-    color: '#ACACAC',
+    borderRadius: theme.shape.borderRadius,
+    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
   },
   passPhrasefield: {
     backgroundColor: 'white',
-    borderRadius: theme.shape,
-    color: '#ACACAC',
+    borderRadius: theme.shape.borderRadius,
+    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
   },
   passPhraseContainer: {
     display: 'flex',
@@ -47,21 +48,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   visibilityIcon: {
     color: 'white',
-  },
-  alert: {
-    display: 'flex',
-    alignItems: 'center',
-    marginTop: '4px',
-    backgroundColor: '#F2DEDE',
-    border: 'solid',
-    height: '25px',
-    borderWidth: '1px',
-    borderRadius: theme.shape,
-    borderColor: '#A94442',
-    color: '#A94442',
-    fontSize: '13px',
-    paddingLeft: 6,
-    paddingRight: 6,
   },
   option: {
     color: 'white',

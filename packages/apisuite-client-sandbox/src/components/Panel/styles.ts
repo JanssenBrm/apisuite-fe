@@ -7,7 +7,7 @@ export default makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'white',
-    borderRadius: theme.shape * 2,
+    borderRadius: theme.shape.borderRadius * 2,
     boxShadow: '-1px -1px 1px 0px rgba(0,0,0,0.03)',
     maxWidth: 900,
     margin: '0 auto',

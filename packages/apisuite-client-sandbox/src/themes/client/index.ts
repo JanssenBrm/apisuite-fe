@@ -35,4 +35,5 @@ export default createMuiTheme({
   spacing: (factor: number) => 8 * factor,
 }, {
   images: {},
+  gradients: themeConfig.gradients,
 })

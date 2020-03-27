@@ -10,11 +10,7 @@
             "600": "#e53935",
             "700": "#d32f2f",
             "800": "#c62828",
-            "900": "#b71c1c",
-            "A100": "#ff8a80",
-            "A200": "#ff5252",
-            "A400": "#ff1744",
-            "A700": "#d50000"
+            "900": "#b71c1c"
         },
         "secondary": {
             "50": "#fce4ec",
@@ -131,6 +127,20 @@
         "format": "ttf"
     },
     "shape": {
-        "borderRadius": 4
+        "borderRadius": 10
+    },
+    "gradients": {
+        "G1": {
+            "begin": ["primary", 300],
+            "end": ["primary", 400]
+        },
+        "G2": {
+            "begin": ["primary", 300],
+            "end": ["primary", 400]
+        },
+        "G3": {
+            "begin": ["primary", 300],
+            "end": ["primary", 400]
+        }
     }
 }
