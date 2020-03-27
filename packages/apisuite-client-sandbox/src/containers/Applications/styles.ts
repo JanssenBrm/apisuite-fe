@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   root: {
     minHeight: '100%',
     paddingTop: 200,
@@ -10,4 +11,4 @@ export default makeStyles({
     maxWidth: 900,
     margin: '0 auto',
   },
-})
+}))

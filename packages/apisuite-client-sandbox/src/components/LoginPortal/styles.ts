@@ -3,39 +3,23 @@ import { Theme } from 'themes/types'
 
 const useStyles = makeStyles((theme: Theme) => ({
   loginContainer: {
-    // zIndex: 1000,
-    // position: 'fixed',
     width: '100%',
     height: '100%',
-    // top: 0,
-    // left: 0,
-    // backgroundColor: '#2DB7BA',
-  },
-  content: {
-    // display: 'flex',
-    // position: 'relative',
-    // justifyContent: 'center',
-    // alignItems: 'center',
-    // width: '100%',
-    // height: '100%',
   },
   emailTextfield: {
     backgroundColor: 'white',
     borderRadius: theme.shape,
     color: '#ACACAC',
-    // height: '5px',
   },
   nameTextfield: {
     backgroundColor: 'white',
     borderRadius: theme.shape,
     color: '#ACACAC',
-    // height: '5px',
   },
   passPhrasefield: {
     backgroundColor: 'white',
     borderRadius: theme.shape,
     color: '#ACACAC',
-    // height: '5px',
   },
   passPhraseContainer: {
     display: 'flex',

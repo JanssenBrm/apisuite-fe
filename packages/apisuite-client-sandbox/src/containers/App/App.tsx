@@ -85,7 +85,6 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-
       {navigations &&
         <Navigation
           key='app-navigation'

@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   menuItem: {
     fontSize: 16,
     '& a': {
@@ -25,4 +26,4 @@ export default makeStyles({
     borderTopWidth: 0,
     borderBottomWidth: 0,
   },
-})
+}))
