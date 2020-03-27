@@ -131,16 +131,12 @@
     },
     "gradients": {
         "G1": {
-            "begin": ["primary", 300],
-            "end": ["primary", 400]
+            "begin": "#f06292",
+            "end": "#d81b60" 
         },
         "G2": {
-            "begin": ["primary", 300],
-            "end": ["primary", 400]
-        },
-        "G3": {
-            "begin": ["primary", 300],
-            "end": ["primary", 400]
+            "begin": "#ef9a9a",
+            "end": "#c62828" 
         }
     }
 }

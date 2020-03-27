@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
 import requireImage from 'util/requireImage'
 import { Theme } from 'themes/types'
+import { colorPicker } from 'util/colorPicker'
 
 export default makeStyles((theme: Theme) => ({
   root: {
@@ -38,7 +39,7 @@ export default makeStyles((theme: Theme) => ({
     padding: '8px 16px',
     margin: 0,
     marginBottom: 8,
-    color: '#2DB7BA',
+    color: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
   },
   slideInfoParagraph: {
     marginBottom: 48,
@@ -56,7 +57,7 @@ export default makeStyles((theme: Theme) => ({
     fontWeight: 500,
   },
   btn2: {
-    backgroundColor: '#2DB7BA',
+    backgroundColor: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
     color: 'white',
     border: '1px solid white',
   },
@@ -68,7 +69,7 @@ export default makeStyles((theme: Theme) => ({
   btn4: {
     display: 'flex',
     color: '#333333',
-    backgroundColor: '#2DB7BA',
+    backgroundColor: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
     padding: '8px 24px',
     borderRadius: theme.shape.borderRadius,
     marginLeft: 12,
@@ -76,7 +77,7 @@ export default makeStyles((theme: Theme) => ({
     fontWeight: 500,
     '&:hover': {
       color: '#FFF',
-      backgroundColor: '#2DB7BA',
+      backgroundColor: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
     },
   },
   cardContent: {
@@ -89,10 +90,10 @@ export default makeStyles((theme: Theme) => ({
     fontSize: 26,
     fontWeight: 100,
     textAlign: 'center',
-    color: '#2DB7BA',
+    color: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
   },
   otherTitle: {
-    color: '#14BC7D',
+    color: colorPicker(theme.palette.primary, 300, '#2DB7BA'),
   },
   featuresDesc: {
     textAlign: 'center',
@@ -111,10 +112,10 @@ export default makeStyles((theme: Theme) => ({
     margin: '0 40px',
   },
   featureAvatar: {
-    background: 'linear-gradient(270deg, #2DB7BA 0%, #14BC7D 100%)',
+    background: `linear-gradient(270deg, ${theme.gradients.G1.begin} 0%, ${theme.gradients.G1.end} 100%)`,
   },
   otherAvatar: {
-    background: 'linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)',
+    background: `linear-gradient(270deg, ${theme.gradients.G2.begin} 0%, ${theme.gradients.G2.end} 100%)`,
   },
   partnersContainer: {
     display: 'felx',
@@ -132,7 +133,7 @@ export default makeStyles((theme: Theme) => ({
     maxWidth: 800,
   },
   partnersLink: {
-    color: '#43BEC1',
+    color: colorPicker(theme.palette.primary, 300, '#2DB7BA'),
     textAlign: 'center',
     marginTop: 40,
   },
@@ -239,7 +240,7 @@ export default makeStyles((theme: Theme) => ({
     fontSize: '14px',
     fontWeight: 300,
     '& > a': {
-      color: '#409CB0',
+      color: colorPicker(theme.palette.primary, 600, '#409CB0'),
     },
   },
   checkbox: {
