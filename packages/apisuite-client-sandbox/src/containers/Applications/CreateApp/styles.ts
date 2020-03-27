@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/styles'
 import requireImage from 'util/requireImage'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   container: {
     backgroundColor: 'white',
     paddingTop: 250,
@@ -56,7 +57,7 @@ export default makeStyles({
     backgroundColor: '#333333',
     color: 'white',
     padding: '8px 24px',
-    borderRadius: 4,
+    borderRadius: theme.shape,
     cursor: 'pointer',
     fontWeight: 500,
     marginRight: 16,
@@ -117,7 +118,7 @@ export default makeStyles({
     fontSize: 13,
     color: '#FFF',
     padding: '2px 15px',
-    borderRadius: 5,
+    borderRadius: theme.shape,
     minHeight: 20,
   },
-})
+}))

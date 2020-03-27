@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from 'themes/types'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme: Theme) => ({
   registerContainer: {
     // zIndex: 1000,
     // position: 'fixed',
@@ -20,19 +21,19 @@ const useStyles = makeStyles({
   },
   emailTextfield: {
     backgroundColor: 'white',
-    borderRadius: 4,
+    borderRadius: theme.shape,
     color: '#ACACAC',
     // height: '5px',
   },
   nameTextfield: {
     backgroundColor: 'white',
-    borderRadius: 4,
+    borderRadius: theme.shape,
     color: '#ACACAC',
     // height: '5px',
   },
   passPhrasefield: {
     backgroundColor: 'white',
-    borderRadius: 4,
+    borderRadius: theme.shape,
     color: '#ACACAC',
     // height: '5px',
   },
@@ -71,7 +72,7 @@ const useStyles = makeStyles({
     border: 'solid',
     height: '25px',
     borderWidth: '1px',
-    borderRadius: '4px',
+    borderRadius: theme.shape,
     borderColor: '#A94442',
     color: '#A94442',
     fontSize: '13px',
@@ -86,7 +87,7 @@ const useStyles = makeStyles({
     border: 'solid',
     height: '40px',
     borderWidth: '1px',
-    borderRadius: '4px',
+    borderRadius: theme.shape,
     borderColor: '#A94442',
     color: '#A94442',
     fontSize: '13px',
@@ -94,6 +95,6 @@ const useStyles = makeStyles({
     paddingRight: 6,
     lineHeight: '110%',
   },
-})
+}))
 
 export default useStyles

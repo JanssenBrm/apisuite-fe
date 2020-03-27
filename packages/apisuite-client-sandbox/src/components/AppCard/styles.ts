@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   card: {
     display: 'flex',
     flexDirection: 'column',
@@ -10,7 +11,7 @@ export default makeStyles({
     height: 218,
     cursor: 'pointer',
     margin: 8,
-    borderRadius: 4,
+    borderRadius: theme.shape,
     padding: 16,
     backgroundColor: 'white',
   },
@@ -53,4 +54,4 @@ export default makeStyles({
   disabled: {
     opacity: 0.5,
   },
-})
+}))

@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   table: {
     display: 'flex',
     flexDirection: 'column',
@@ -8,7 +9,7 @@ export default makeStyles({
     justifyContent: 'center',
     width: '100%',
     cursor: 'pointer',
-    borderRadius: 4,
+    borderRadius: theme.shape,
     backgroundColor: 'white',
     overflow: 'hidden',
     borderStyle: 'solid',
@@ -76,7 +77,7 @@ export default makeStyles({
     width: '100%',
     minHeight: 42,
     borderStyle: 'solid',
-    borderRadius: 3,
+    borderRadius: theme.shape,
     borderTopWidth: 1,
     borderBottomWidth: 1,
     borderRightWidth: 1,
@@ -98,7 +99,7 @@ export default makeStyles({
     minHeight: 438,
     width: 289,
     backgroundColor: 'white',
-    borderRadius: 4,
+    borderRadius: theme.shape,
     borderStyle: 'solid',
     borderColor: '#D1D1D1',
     borderWidth: 1,
@@ -148,7 +149,7 @@ export default makeStyles({
     alignItems: 'center',
     marginBottom: 20,
     borderWidth: 1,
-    borderRadius: 4,
+    borderRadius: theme.shape,
     borderColor: '#D1D1D1',
     borderStyle: 'solid',
     cursor: 'pointer',
@@ -196,4 +197,4 @@ export default makeStyles({
   vNumber: {
     color: '#ACACAC',
   },
-})
+}))

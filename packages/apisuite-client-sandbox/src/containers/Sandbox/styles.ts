@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/styles'
 import requireImage from 'util/requireImage'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -50,7 +51,7 @@ export default makeStyles({
     color: '#333333',
     backgroundColor: 'white',
     padding: '8px 24px',
-    borderRadius: 4,
+    borderRadius: theme.shape,
     cursor: 'pointer',
     fontWeight: 500,
   },
@@ -69,7 +70,7 @@ export default makeStyles({
     color: '#333333',
     backgroundColor: '#2DB7BA',
     padding: '8px 24px',
-    borderRadius: 4,
+    borderRadius: theme.shape,
     marginLeft: 12,
     cursor: 'pointer',
     fontWeight: 500,
@@ -230,7 +231,7 @@ export default makeStyles({
   },
   emailTextfield: {
     backgroundColor: '#646464',
-    borderRadius: 4,
+    borderRadius: theme.shape,
     color: '#ACACAC',
     margin: 0,
   },
@@ -251,4 +252,4 @@ export default makeStyles({
   buttonLink: {
     textDecoration: 'none',
   },
-})
+}))

@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   radioGroup: {
     display: 'flex',
     flexDirection: 'row',
@@ -12,7 +13,7 @@ export default makeStyles({
     border: '1px solid rgba(0,0,0,0.23)',
     marginRight: 8,
     paddingRight: 12,
-    borderRadius: 4,
+    borderRadius: theme.shape,
     cursor: 'pointer',
   },
   controlLabel: {
@@ -31,4 +32,4 @@ export default makeStyles({
     marginTop: 0,
     marginBottom: 24,
   },
-})
+}))

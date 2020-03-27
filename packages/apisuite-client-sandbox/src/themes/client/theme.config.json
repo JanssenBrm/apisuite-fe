@@ -1,0 +1,136 @@
+{
+    "palette": {
+        "primary": {
+            "50": "##ffebee",
+            "100": "#ffcdd2",
+            "200": "#ef9a9a",
+            "300": "#e57373",
+            "400": "#ef5350",
+            "500": "#f44336",
+            "600": "#e53935",
+            "700": "#d32f2f",
+            "800": "#c62828",
+            "900": "#b71c1c",
+            "A100": "#ff8a80",
+            "A200": "#ff5252",
+            "A400": "#ff1744",
+            "A700": "#d50000"
+        },
+        "secondary": {
+            "50": "#fce4ec",
+            "100": "#f8bbd0",
+            "200": "#f48fb1",
+            "300": "#f06292",
+            "400": "#ec407a",
+            "500": "#e91e63",
+            "600": "#d81b60",
+            "700": "#c2185b",
+            "800": "#ad1457",
+            "900": "#880e4f",
+            "A100": "#ff80ab",
+            "A200": "#ff4081",
+            "A400": "#f50057",
+            "A700": "#c51162"
+        },
+        "background": {
+            "default": "#E3E3E3",
+            "paper": "#F9FAFC"
+        },
+        "error": {
+            "main": "#FF4949"
+        },
+        "grey": {
+            "50": "#fafafa",
+            "100": "#f5f5f5",
+            "200": "#eeeeee",
+            "300": "#e0e0e0",
+            "400": "#bdbdbd",
+            "500": "#9e9e9e",
+            "600": "#757575",
+            "700": "#616161",
+            "800": "#424242",
+            "900": "#212121"
+        },
+        "common": {
+            "black": "#1F2D3D",
+            "white": "#F9FAFC"
+        },
+        "text": {
+            "primary": "#3C4858",
+            "secondary": "#8492A6",
+            "disabled": "#EFF2F7",
+            "hint": "#1FB6FF"
+        },
+        "action": {
+            "active": "#1FB6FF",
+            "hover": "#EFF2F7",
+            "hoverOpacity": 0,
+            "selected": "#3C4858",
+            "disabled": "#E0E6ED",
+            "disabledBackground": "#E0E6ED"
+        }
+    },
+    "typography": {
+        "fontFamily": [
+            "Open Sans",
+            "Arial",
+            "sans serif"
+        ],
+        "fonts": [
+            {
+                "style": "normal",
+                "weight": 900,
+                "file": "OpenSans-ExtraBold"
+            },
+            {
+                "style": "italic",
+                "weight": 900,
+                "file": "OpenSans-ExtraBoldItalic"
+            },
+            {
+                "style": "normal",
+                "weight": 700,
+                "file": "OpenSans-Bold"
+            },
+            {
+                "style": "italic",
+                "weight": 700,
+                "file": "OpenSans-BoldItalic"
+            },
+            {
+                "style": "normal",
+                "weight": 500,
+                "file": "OpenSans-SemiBold"
+            },
+            {
+                "style": "italic",
+                "weight": 500,
+                "file": "OpenSans-SemiBoldItalic"
+            },
+            {
+                "style": "normal",
+                "weight": 400,
+                "file": "OpenSans-Regular"
+            },
+            {
+                "style": "italic",
+                "weight": 400,
+                "file": "OpenSans-Italic"
+            },
+            {
+                "style": "normal",
+                "weight": 300,
+                "file": "OpenSans-Light"
+            },
+            {
+                "style": "italic",
+                "weight": 300,
+                "file": "OpenSans-LightItalic"
+            }
+        ],
+        "format": "ttf"
+    },
+    "shape": {
+        "borderRadius": 4
+    }
+}

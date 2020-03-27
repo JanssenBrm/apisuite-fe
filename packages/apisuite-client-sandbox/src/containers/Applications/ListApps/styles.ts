@@ -31,7 +31,7 @@ export default makeStyles((theme: Theme) => ({
       fontSize: '18px',
       fontWeight: 300,
       textAlign: 'center',
-      color: theme.palette.primary.main,
+      color: theme.palette.primary[700],
     },
     '& > p': {
       margin: 0,

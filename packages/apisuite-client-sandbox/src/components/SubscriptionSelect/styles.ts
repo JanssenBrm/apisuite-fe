@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   subSelect: {
     display: 'flex',
     width: '100%',
@@ -18,7 +19,7 @@ export default makeStyles({
   chip: {
     display: 'flex',
     margin: 4,
-    borderRadius: 3,
+    borderRadius: theme.shape,
     background: 'linear-gradient(270deg, #2DB7BA 0%, #14DE2D 100%)',
   },
   chips: {
@@ -33,4 +34,4 @@ export default makeStyles({
   icon: {
     cursor: 'pointer',
   },
-})
+}))
