@@ -1,5 +1,3 @@
-import { THEME } from 'constants/global'
-
-const theme = require(`./${THEME}`)
+const theme = require(`./${process.env.THEME || 'default'}`)
 
 export type Theme = typeof theme

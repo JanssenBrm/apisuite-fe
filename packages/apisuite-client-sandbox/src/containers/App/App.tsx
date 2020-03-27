@@ -2,8 +2,9 @@ import * as React from 'react'
 import { ThemeProvider } from '@material-ui/styles'
 import { Theme } from 'themes/types'
 import requireImage from 'util/requireImage'
+import CssBaseline from '@material-ui/core/CssBaseline'
 
-import { config, THEME } from 'constants/global'
+import { config } from 'constants/global'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import InformDialog from 'components/InformDialog'
@@ -13,7 +14,7 @@ import { AppProps } from './types'
 import { initTabs, loginTabs, gobackConfig } from './config'
 import NotificationStack from 'containers/NotificationStack'
 
-const theme: Theme = require(`themes/${THEME}`).default
+const theme: Theme = require(`themes/${process.env.THEME || 'default'}`).default
 
 const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   const [currentTab, setCurrentTab] = React.useState(0)
@@ -83,6 +84,8 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
+
       {navigations &&
         <Navigation
           key='app-navigation'
@@ -107,6 +110,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       {navigations && <Footer />}
 
       <InformDialog />
+
       <NotificationStack />
     </ThemeProvider>
   )
