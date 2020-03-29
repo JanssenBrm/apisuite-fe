@@ -1,40 +1,25 @@
 {
     "palette": {
         "primary": {
-            "50": "#333",
             "100": "#E5FEFF",
             "200": "#BBECFF",
-            "300": "#333",
-            "400": "#333",
-            "500": "#333",
+            "500": "#409CB0",
             "600": "#409CB0",
             "700": "#2DB7BA",
             "800": "#19B3EE",
-            "900": "#035E86",
-            "A100": "#333",
-            "A200": "#333",
-            "A400": "#333",
-            "A700": "#333"
+            "900": "#035E86"
         },
         "secondary": {
-            "50": "#333",
             "100": "#1CBA91",
             "200": "#14BC7D",
             "300": "#14C762",
             "400": "#14DE2D",
             "500": "#333",
-            "600": "#333",
-            "700": "#333",
-            "800": "#333",
-            "900": "#333",
-            "A100": "#333",
-            "A200": "#333",
-            "A400": "#333",
-            "A700": "#333"
+            "A400": "#333"
         },
         "background": {
             "default": "#EEEEEE",
-            "paper": "#333"
+            "paper": "#FFF"
         },
         "error": {
             "main": "#FF1515"
@@ -57,17 +42,17 @@
         },
         "text": {
             "primary": "#545454",
-            "secondary": "#2DB7BA",
+            "secondary": "#8B8B8B",
             "disabled": "#333",
             "hint": "#333"
         },
         "action": {
-            "active": "#333",
-            "hover": "#333",
+            "active": "#2DB7BA",
+            "hover": "#2DB7BA",
             "hoverOpacity": 0,
-            "selected": "#333",
-            "disabled": "#333",
-            "disabledBackground": "#333"
+            "selected": "#2DB7BA",
+            "disabled": "#2DB7BA",
+            "disabledBackground": "#2DB7BA"
         }
     },
     "typography": {

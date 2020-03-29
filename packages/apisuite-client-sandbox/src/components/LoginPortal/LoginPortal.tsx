@@ -63,7 +63,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
 
   return (
     <div className={classes.loginContainer}>
-      <div className={classes.content}>
+      <div>
         <FormCard
           buttonLabel={t('loginPortal.button')}
           buttonDisabled={!isFormValid}
