@@ -9,6 +9,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const MinifyPlugin = require('babel-minify-webpack-plugin')
 const RobotstxtPlugin = require('robotstxt-webpack-plugin')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 
 module.exports = {
   mode: 'production',
@@ -30,6 +31,7 @@ module.exports = {
     new MinifyPlugin({ mangle: { topLevel: true } }, { comments: false }),
     new webpack.HashedModuleIdsPlugin(),
     new RobotstxtPlugin(),
+    new BundleAnalyzerPlugin({ generateStatsFile: true }),
   ],
 
   optimization: {
