@@ -1,8 +1,11 @@
 import * as React from 'react'
 import useStyles, { codeStyle } from './styles'
-import SyntaxHighlighter from 'react-syntax-highlighter'
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
+import bash from 'react-syntax-highlighter/dist/esm/languages/hljs/bash'
 import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
 import NavMenu from 'components/NavMenu'
+
+SyntaxHighlighter.registerLanguage('bash', bash)
 
 const Instructions: React.FC<{}> = () => {
   const classes = useStyles()
