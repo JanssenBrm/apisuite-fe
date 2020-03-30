@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar'
 import Select from 'components/Select'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
-import moment from 'moment'
+import i18n from 'i18next'
 
 import { selectOptions } from './config'
 import useCommonStyles from '../styles'
@@ -34,7 +34,6 @@ const AppDetail: React.FC<AppDetailProps> = (
   const classes = useStyles()
   const [t] = useTranslation()
   const appId = parseInt(useParams<RouteParams>().id)
-
   const [changed, setChanged] = React.useState(false)
   const [changedDetails, setChangedDetails] = React.useState(false)
   const [input, setInput] = React.useState<AppData>({
@@ -52,6 +51,16 @@ const AppDetail: React.FC<AppDetailProps> = (
   })
   const [errors, setErrors] = React.useState()
   const [isFormValid, setFormValid] = React.useState(false)
+  const dateOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: false,
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  }
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -244,11 +253,15 @@ const AppDetail: React.FC<AppDetailProps> = (
               <br /> */}
 
               <InputLabel shrink>Registration date</InputLabel>
-              <div>{moment(currentApp.createdAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
+              <div>{currentApp.createdAt !== undefined &&
+                new Intl.DateTimeFormat(i18n.language, dateOptions).format(Date.parse(currentApp.createdAt))}
+              </div>
               <br />
 
               <InputLabel shrink>Last update</InputLabel>
-              <div>{moment(currentApp.updatedAt).format('MMMM Do YYYY, h:mm:ss a')}</div>
+              <div>{currentApp.updatedAt !== undefined &&
+                new Intl.DateTimeFormat(i18n.language, dateOptions).format(Date.parse(currentApp.updatedAt))}
+              </div>
               <br />
 
               <Button
