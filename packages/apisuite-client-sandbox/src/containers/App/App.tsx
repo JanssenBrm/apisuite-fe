@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { ThemeProvider } from '@material-ui/styles'
 import { Theme } from 'themes/types'
-import requireImage from 'util/requireImage'
 import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { config } from 'constants/global'
@@ -95,7 +94,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
           onTabChange={handleOnTabChange}
           onSubTabChange={handleOnSubTabChange}
           name={config.navbar.name}
-          logoSrc={requireImage(config.navbar.logoUrl)}
+          logoSrc={theme.images.apiLogo}
           user={auth.user}
           forceScrolled={navScrolled}
           showBackButton={gobackLabel.length > 0}

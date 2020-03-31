@@ -9,12 +9,13 @@ import store, { history } from 'store'
 import ErrorMonitor from 'components/ErrorMonitor'
 import App from 'containers/App'
 
+// Translations
+import 'language/i18n'
+
 // Main Application Styles
 import 'typeface-roboto'
 import 'styles/app.scss'
-
-// Translations
-import 'language/i18n'
+import(`themes/${process.env.THEME}/theme.scss`)
 
 function render (Component: any) {
   // @ts-ignore

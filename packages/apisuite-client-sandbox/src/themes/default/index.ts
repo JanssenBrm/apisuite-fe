@@ -1,6 +1,9 @@
 import { createMuiTheme } from '@material-ui/core/styles'
 import themeConfig from './theme.config.json'
 
+const apiLogo = require('./images/api-logo.png')
+const footerLogo = require('./images/footer-logo.svg')
+
 const fontName = themeConfig.typography.fontFamily[0]
 const fontFormat = themeConfig.typography.format
 const fonts = themeConfig.typography.fonts
@@ -34,6 +37,9 @@ export default createMuiTheme({
   },
   spacing: (factor: number) => 8 * factor,
 }, {
-  images: {},
+  images: {
+    apiLogo: apiLogo,
+    footerLogo: footerLogo,
+  },
   gradients: themeConfig.gradients,
 })
