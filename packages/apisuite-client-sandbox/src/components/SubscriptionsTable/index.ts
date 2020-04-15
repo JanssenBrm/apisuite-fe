@@ -1,18 +1,22 @@
-import { connect, MapDispatchToPropsFunction } from 'react-redux'
-import { Dispatch } from 'react'
-import { deleteAppSub, addAppSub } from 'containers/Subscriptions/ducks'
+import { connect } from 'react-redux'
+import { getApisByName } from 'containers/Subscriptions/selectors'
+import { getApis } from 'containers/Subscriptions/ducks'
+import { getUserApps, addAppSubscription, removeAppSubscription } from 'containers/Applications/ducks'
 import SubscriptionsTable from './SubscriptionsTable'
-import { AnyAction } from 'redux'
+import { Dispatch } from 'redux'
 import { Store } from 'store/types'
 
-const mapDispatchToProps: MapDispatchToPropsFunction<any, any> = (dispatch: Dispatch<AnyAction>) => ({
-  deleteAppSub: (APIid: number, appNumber: number) => dispatch(deleteAppSub(APIid, appNumber)),
-  addAppSub: (APIid: number, appName: string, newAppNumber: number) => dispatch(
-    addAppSub(APIid, appName, newAppNumber)),
+const mapStateToProps = (store: Store) => ({
+  apisByName: getApisByName(store),
+  user: store.auth.user,
+  userApps: store.applications.userApps,
 })
 
-const mapStateToProps = ({ subscriptions }: Store) => ({
-  subscriptions: subscriptions,
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  getUserApps: (userId: number) => dispatch(getUserApps(userId)),
+  getApis: () => dispatch(getApis()),
+  addAppSubscription: (appId: number, apiName: string) => dispatch(addAppSubscription(appId, apiName)),
+  removeAppSubscription: (appId: number, apiName: string) => dispatch(removeAppSubscription(appId, apiName)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionsTable)

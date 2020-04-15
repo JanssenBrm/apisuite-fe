@@ -1,7 +1,41 @@
-import { CREATE_APP, UPDATE_APP, DELETE_APP, GET_APP_DETAILS, getAppDetailsSuccess, getUserAppsSuccess, GET_USER_APPS, getUserApps, createAppError, updateAppError, deleteAppError, deleteAppSuccess, updateAppSuccess, createAppSuccess } from './ducks'
-import { takeLatest, call, put } from 'redux-saga/effects'
-import { CreateAppAction, UpdateAppAction, DeleteAppAction, GetUserAppsAction, GetAppDetails, AppData } from './types'
-import { API_URL, SIGNUP_PORT } from 'constants/endpoints'
+import {
+  CREATE_APP,
+  UPDATE_APP,
+  DELETE_APP,
+  GET_APP_DETAILS,
+  getAppDetailsSuccess,
+  getUserAppsSuccess,
+  GET_USER_APPS,
+  getUserApps,
+  createAppError,
+  updateAppError,
+  deleteAppError,
+  deleteAppSuccess,
+  updateAppSuccess,
+  createAppSuccess,
+} from './ducks'
+import { SubscriptionsActionTypes } from 'containers/Subscriptions/ducks'
+import {
+  AddAppSubscriptionAction,
+  RemoveAppSubscriptionAction,
+} from 'containers/Subscriptions/types'
+import {
+  takeLatest,
+  call,
+  put,
+} from 'redux-saga/effects'
+import {
+  CreateAppAction,
+  UpdateAppAction,
+  DeleteAppAction,
+  GetUserAppsAction,
+  GetAppDetails,
+  AppData,
+} from './types'
+import {
+  API_URL,
+  SIGNUP_PORT,
+} from 'constants/endpoints'
 import request from 'util/request'
 import { push } from 'connected-react-router'
 import qs from 'qs'
@@ -13,9 +47,15 @@ export function * createApp (action: CreateAppAction) {
       description: action.appData.description,
       'redirect_url': action.appData.redirectUrl,
       logo: action.appData.logo,
+      visibility: action.appData.visibility,
       'user_id': action.appData.userId,
-      'sandbox_id': '1',
-      'pub_urls': [action.appData.pubUrls],
+      // TODO: change
+      subscriptions: [1, 2],
+      // TODO: change
+      'pub_urls': [{
+        url: 'http://ssss.com',
+        type: 'client',
+      }],
     }
 
     const createAppUrl = `${API_URL}${SIGNUP_PORT}/app/create`
@@ -41,6 +81,7 @@ export function * updateApp (action: UpdateAppAction) {
       description: action.appData.description,
       'redirect_url': action.appData.redirectUrl,
       logo: action.appData.logo,
+      visibility: action.appData.visibility,
       'user_id': action.appData.userId,
       'sandbox_id': '1',
       'pub_urls': [action.appData.pubUrls],
@@ -62,7 +103,8 @@ export function * updateApp (action: UpdateAppAction) {
       redirectUrl: action.appData.redirectUrl,
       logo: action.appData.logo,
       userId: action.appData.userId,
-      sandboxId: '1',
+      visibility: action.appData.visibility,
+      subscriptions: action.appData.subscriptions,
       pubUrls: action.appData.pubUrls,
       enable: action.appData.enable,
       clientId: action.appData.clientId,
@@ -93,7 +135,7 @@ export function * getUsersApps (action: GetUserAppsAction) {
         redirectUrl: userApp.redirect_url,
         logo: userApp.logo,
         userId: userApp.userId,
-        sandboxId: userApp.sandboxId,
+        subscriptions: userApp.subscriptions,
         pubUrls: '',
         enable: userApp.enable,
         createdAt: userApp.createdAt,
@@ -148,7 +190,7 @@ export function * getAppDetails (action: GetAppDetails) {
       redirectUrl: userApp.redirect_url,
       logo: userApp.logo,
       userId: userApp.userId,
-      sandboxId: userApp.sandboxId,
+      subscriptions: userApp.subscriptions,
       pubUrls: '',
       enable: userApp.enable,
       createdAt: userApp.createdAt,
@@ -162,12 +204,24 @@ export function * getAppDetails (action: GetAppDetails) {
   yield put(getAppDetailsSuccess(userApps[appIndx]))
 }
 
+export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
+  console.log('add sub')
+  console.log(action)
+}
+
+export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction) {
+  console.log('remove sub')
+  console.log(action)
+}
+
 function * rootSaga () {
   yield takeLatest(CREATE_APP, createApp)
   yield takeLatest(UPDATE_APP, updateApp)
   yield takeLatest(DELETE_APP, deleteApp)
   yield takeLatest(GET_APP_DETAILS, getAppDetails)
   yield takeLatest(GET_USER_APPS, getUsersApps)
+  yield takeLatest(SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION, addAppSubscriptionSaga)
+  yield takeLatest(SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION, removeAppSubscriptionSaga)
 }
 
 export default rootSaga

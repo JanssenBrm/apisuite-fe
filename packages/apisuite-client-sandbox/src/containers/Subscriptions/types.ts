@@ -27,10 +27,44 @@ export interface GetApisErrorAction extends Action {
   type: typeof SubscriptionsActionTypes.GET_APIS_ERROR,
 }
 
+export interface AddAppSubscriptionAction extends Action {
+  type: typeof SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION,
+  appId: number,
+  apiId: number,
+}
+
+export interface AddAppSubscriptionSuccessAction extends Action {
+  type: typeof SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS,
+}
+
+export interface AddAppSubscriptionErrorAction extends Action {
+  type: typeof SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_ERROR,
+}
+
+export interface RemoveAppSubscriptionAction extends Action {
+  type: typeof SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION,
+  appId: number,
+  apiId: number,
+}
+
+export interface RemoveAppSubscriptionSuccessAction extends Action {
+  type: typeof SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS,
+}
+
+export interface RemoveAppSubscriptionErrorAction extends Action {
+  type: typeof SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_ERROR,
+}
+
 export type SubscriptionsActions =
   GetApisAction |
   GetApisSuccessAction |
-  GetApisErrorAction
+  GetApisErrorAction |
+  AddAppSubscriptionAction |
+  AddAppSubscriptionSuccessAction |
+  AddAppSubscriptionErrorAction |
+  RemoveAppSubscriptionAction |
+  RemoveAppSubscriptionSuccessAction |
+  RemoveAppSubscriptionErrorAction
 
 /** Endpoint response type */
 export interface ApisResponse {

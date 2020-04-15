@@ -18,22 +18,21 @@ import clsx from 'clsx'
 const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCreate }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
-  const [visibility, setVisibility] = React.useState('private')
+  // const [visible, toggle] = React.useReducer(v => !v, false)
   const [isFormValid, setFormValid] = React.useState(false)
   const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState({
     name: '',
     description: '',
     redirectUrl: '',
-    logo: '',
+    logo: 'http://logo.png',
     userId: 0,
-    sandboxId: '',
-    pubUrls: '',
+    // visibility: visible ? 'public' : 'private',
+    visibility: 'private',
+    subscriptions: [],
+    // TODO review puburls
+    pubUrls: null,
   })
-
-  function handleVisibilityChange (_: any, value: string) {
-    setVisibility(value)
-  }
 
   function handleCancelClick () {
     history.goBack()
@@ -64,9 +63,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
       description: input.description,
       redirectUrl: input.redirectUrl,
       logo: input.logo,
+      visibility: 'private',
       userId: userId,
-      sandboxId: input.sandboxId,
-      pubUrls: input.pubUrls,
+      subscriptions: input.subscriptions,
+      pubUrls: null,
       enable: true,
       clientId: '',
       clientSecret: '',
@@ -149,8 +149,9 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
               placeholder='Client URL'
               name='pubUrls'
               type='text'
-              value={input.pubUrls}
-              onChange={handleInputs}
+              // TODO change back to input.pubUrls
+              value=''
+              // onChange={handleInputs}
             />
 
             <Button variant='outlined' className={classes.iconBtn}>
@@ -163,8 +164,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
           <InputLabel shrink>Application visibility</InputLabel>
           <RadioBoxes
             options={radioOptions}
-            selected={visibility}
-            onChange={handleVisibilityChange}
+            selected='private'
           />
 
           <br />
