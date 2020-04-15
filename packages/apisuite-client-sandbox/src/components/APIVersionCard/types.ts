@@ -1,4 +1,4 @@
 export interface APIVersionCardProps {
-  vName: string,
-  vNumber: string,
+  apiTitle: string,
+  versionName: string,
 }
