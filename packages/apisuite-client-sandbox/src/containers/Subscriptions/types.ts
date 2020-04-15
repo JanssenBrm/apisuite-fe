@@ -1,54 +1,60 @@
 import { Action } from 'redux'
-import { DELETE_APP_SUB, DELETE_APP_SUB_SUCCESS, ADD_APP_SUB, ADD_APP_SUB_SUCCESS } from './ducks'
-import { GetUserAppsActionSuccess } from 'containers/Applications/types'
+import { SubscriptionsActionTypes } from './ducks'
 
-export interface APIversion {
-  vName: string,
-  vNumber: string,
-}
-
-export interface App {
-  name: string,
-  isLoading: boolean,
-}
-
-export interface API {
+/** State types */
+export interface Api {
   id: number,
   name: string,
-  versions: APIversion[],
-  apps: App[],
-  description: string,
+  apiTitle: string,
+  version: string,
 }
 
-export interface SubStore {
-  subscribedAPIs: API[],
-  userApps: App[],
+export interface SubscriptionsStore {
+  apis: Api[],
 }
 
-export interface DeleteAppSubAction extends Action {
-  type: typeof DELETE_APP_SUB,
-  APIid: number,
-  appNumber: number,
+/** Action types */
+export interface GetApisAction extends Action {
+  type: typeof SubscriptionsActionTypes.GET_APIS,
 }
 
-export interface DeleteAppSubSuccessAction extends Action {
-  type: typeof DELETE_APP_SUB_SUCCESS,
-  APIid: number,
-  appNumber: number,
+export interface GetApisSuccessAction extends Action {
+  type: typeof SubscriptionsActionTypes.GET_APIS_SUCCESS,
+  apis: ApiResponse[],
 }
 
-export interface AddAppSubAction extends Action {
-  type: typeof ADD_APP_SUB,
-  APIid: number,
-  appName: string,
-  newAppNumber: number,
+export interface GetApisErrorAction extends Action {
+  type: typeof SubscriptionsActionTypes.GET_APIS_ERROR,
 }
 
-export interface AddAppSubSuccessAction extends Action {
-  type: typeof ADD_APP_SUB_SUCCESS,
-  APIid: number,
-  newAppNumber: number,
+export type SubscriptionsActions =
+  GetApisAction |
+  GetApisSuccessAction |
+  GetApisErrorAction
+
+/** Endpoint response type */
+export interface ApisResponse {
+  apis: {
+    pagination: {
+      page: number,
+      pageCount: number,
+      pageSize: number,
+      rowCount: number,
+    },
+    rows: ApiResponse[],
+  },
+  message: string,
+  success: boolean,
 }
 
-export type AppSubActions = DeleteAppSubAction | DeleteAppSubSuccessAction | AddAppSubAction
-| AddAppSubSuccessAction | GetUserAppsActionSuccess
+export interface ApiResponse {
+  api_title: string,
+  createdAt: string,
+  id: number,
+  name: string,
+  route: {
+    paths: string,
+  },
+  updatedAt: string,
+  version: string,
+}
