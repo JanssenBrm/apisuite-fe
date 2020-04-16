@@ -90,39 +90,40 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
               <div className={classes.actions}>{t('subscriptionsTable.actions')}</div>
             </div>
 
-            {apisByName.length > 0 && apisByName.map((api, indx: number) => (
-              <div key={indx} className={classes.apiContainer}>
-                <div className={classes.apiCard}>
-                  <div className={classes.apiTitle}>
-                    {api.name}
-                  </div>
+            {apisByName.length > 0 && apisByName.filter(api => api.name.toLowerCase().includes(filter.toLowerCase()))
+              .map((api, indx: number) => (
+                <div key={indx} className={classes.apiContainer}>
+                  <div className={classes.apiCard}>
+                    <div className={classes.apiTitle}>
+                      {api.name}
+                    </div>
 
-                  <div className={classes.appsListContainer}>
-                    <SubscriptionSelect
-                      apps={api.apps}
-                      apiName={api.name}
-                      handleDelete={handleDelete}
-                      handleClick={handleClick}
-                    />
-                  </div>
-
-                  <div className={classes.icons}>
-                    <CodeIcon />
-                  </div>
-                </div>
-                <div>
-                  {api.versions.map((version, indx: number) => {
-                    return (
-                      <APIVersionCard
-                        key={indx}
-                        apiTitle={version.apiTitle}
-                        versionName={version.versionName}
+                    <div className={classes.appsListContainer}>
+                      <SubscriptionSelect
+                        apps={api.apps}
+                        apiName={api.name}
+                        handleDelete={handleDelete}
+                        handleClick={handleClick}
                       />
-                    )
-                  })}
+                    </div>
+
+                    <div className={classes.icons}>
+                      <CodeIcon />
+                    </div>
+                  </div>
+                  <div>
+                    {api.versions.map((version, indx: number) => {
+                      return (
+                        <APIVersionCard
+                          key={indx}
+                          apiTitle={version.apiTitle}
+                          versionName={version.versionName}
+                        />
+                      )
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
 
             <Popover
               open={open}

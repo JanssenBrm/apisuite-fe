@@ -250,14 +250,14 @@ export function addAppSubscription (appId: number, apiName: string) {
   return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION, appId, apiName }
 }
 
-export function addAppSubscriptionSuccess (updatedApp: AppData, updateAppIndx: number) {
-  return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS, updateAppIndx, updatedApp }
+export function addAppSubscriptionSuccess (updatedApp: AppData, updatedAppIndx: number) {
+  return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS, updatedAppIndx, updatedApp }
 }
 
 export function removeAppSubscription (appId: number, apiName: string) {
   return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION, appId, apiName }
 }
 
-export function removeAppSubscriptionSuccess (updatedApp: AppData, updateAppIndx: number) {
-  return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS, updateAppIndx, updatedApp }
+export function removeAppSubscriptionSuccess (updatedApp: AppData, updatedAppIndx: number) {
+  return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS, updatedAppIndx, updatedApp }
 }
