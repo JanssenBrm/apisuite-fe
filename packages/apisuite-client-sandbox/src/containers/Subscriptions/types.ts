@@ -97,3 +97,15 @@ export interface ApiResponse {
   updatedAt: string,
   version: string,
 }
+
+/** Selector types */
+export interface VersionInfo {
+  versionName: string,
+  apiTitle: string,
+  apiId: number,
+}
+
+export interface AppInfo {
+  appName: string,
+  appId: number,
+}

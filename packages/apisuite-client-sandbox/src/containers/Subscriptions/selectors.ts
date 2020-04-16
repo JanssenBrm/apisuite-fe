@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { Store } from 'store/types'
-import { Api, SubscriptionsStore } from './types'
+import { Api, SubscriptionsStore, VersionInfo, AppInfo } from './types'
 import { ApplicationsStore } from 'containers/Applications/types'
 
 const getApis = ({ subscriptions }: Store) => subscriptions
@@ -11,30 +11,30 @@ export const getApisByName = createSelector(
   (subscriptions: SubscriptionsStore, applications: ApplicationsStore) => {
     const apiNames = [...new Set(subscriptions.apis.map((api: Api) => api.name))]
     return apiNames.map(apiName => {
-      const getVersions = []
-      const getApps = []
+      const getVersions: VersionInfo[] = []
+      const getApps: AppInfo[] = []
 
       /** For each API(version) gets the version, title, and id */
-      for (const apiIndx in subscriptions.apis) {
-        if (subscriptions.apis[apiIndx].name === apiName) {
+      subscriptions.apis.forEach((api) => {
+        if (api.name === apiName) {
           getVersions.push({
-            versionName: subscriptions.apis[apiIndx].version,
-            apiTitle: subscriptions.apis[apiIndx].apiTitle,
-            apiId: subscriptions.apis[apiIndx].id,
+            versionName: api.version,
+            apiTitle: api.apiTitle,
+            apiId: api.id,
           })
         }
-      }
+      })
 
       /** For each API(name) gets the apps which are subscribed to it  */
-      for (const appIndx in applications.userApps) {
-        const appSubs = [...new Set(applications.userApps[appIndx].subscriptions.map(api => api.name))]
+      applications.userApps.forEach((app) => {
+        const appSubs = [...new Set(app.subscriptions.map(api => api.name))]
         if (appSubs.includes(apiName)) {
           getApps.push({
-            appName: applications.userApps[appIndx].name,
-            appId: applications.userApps[appIndx].appId,
+            appName: app.name,
+            appId: app.appId,
           })
         }
-      }
+      })
 
       return ({
         name: apiName,
