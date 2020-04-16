@@ -13,16 +13,20 @@ import {
   deleteAppSuccess,
   updateAppSuccess,
   createAppSuccess,
+  addAppSubscriptionSuccess,
+  removeAppSubscriptionSuccess,
 } from './ducks'
 import { SubscriptionsActionTypes } from 'containers/Subscriptions/ducks'
 import {
   AddAppSubscriptionAction,
   RemoveAppSubscriptionAction,
+  Api,
 } from 'containers/Subscriptions/types'
 import {
   takeLatest,
   call,
   put,
+  select,
 } from 'redux-saga/effects'
 import {
   CreateAppAction,
@@ -38,6 +42,7 @@ import {
 } from 'constants/endpoints'
 import request from 'util/request'
 import { push } from 'connected-react-router'
+import { Store } from 'store/types'
 import qs from 'qs'
 
 export function * createApp (action: CreateAppAction) {
@@ -205,13 +210,66 @@ export function * getAppDetails (action: GetAppDetails) {
 }
 
 export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
-  console.log('add sub')
-  console.log(action)
+  const addAppSubscriptionUrl = `${API_URL}/app/${action.appId}/subscribe`
+  const apis: Api[] = yield select((store: Store) => store.subscriptions.apis)
+  const userApps: AppData[] = yield select((store: Store) => store.applications.userApps)
+  const appInfo: AppData[] = userApps.filter(app => app.appId === action.appId)
+  const appSubscriptions = appInfo[0].subscriptions.map((sub: Api) => sub.id)
+
+  for (const apiIndx in apis) {
+    if (apis[apiIndx].name === action.apiName) appSubscriptions.push(apis[apiIndx].id)
+  }
+
+  const data = {
+    subscriptions: [...new Set(appSubscriptions)],
+  }
+
+  try {
+    // TODO: add response type
+    const response = yield call(request, {
+      url: addAppSubscriptionUrl,
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      data: qs.stringify(data),
+    })
+
+    const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
+    yield put(addAppSubscriptionSuccess(response.app, appIndx))
+  } catch {
+    console.log('error adding subscription')
+  }
 }
 
 export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction) {
-  console.log('remove sub')
-  console.log(action)
+  const addAppSubscriptionUrl = `${API_URL}/app/${action.appId}/subscribe`
+  const apis: Api[] = yield select((store: Store) => store.subscriptions.apis)
+  const userApps: AppData[] = yield select((store: Store) => store.applications.userApps)
+  const appInfo: AppData[] = userApps.filter(app => app.appId === action.appId)
+  const appSubscriptions = appInfo[0].subscriptions.map((sub: Api) => sub.id)
+  const subscriptionsToRemove = apis.filter((api: Api) => api.name === action.apiName).map((api: Api) => api.id)
+
+  const data = {
+    subscriptions: appSubscriptions.filter(apiId => !subscriptionsToRemove.includes(apiId)),
+  }
+
+  try {
+    // TODO: add response type
+    const response = yield call(request, {
+      url: addAppSubscriptionUrl,
+      method: 'PUT',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+      data: qs.stringify(data),
+    })
+
+    const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
+    yield put(removeAppSubscriptionSuccess(response.app, appIndx))
+  } catch {
+    console.log('error removing subscription')
+  }
 }
 
 function * rootSaga () {

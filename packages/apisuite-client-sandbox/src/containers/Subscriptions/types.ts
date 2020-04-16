@@ -1,5 +1,6 @@
 import { Action } from 'redux'
 import { SubscriptionsActionTypes } from './ducks'
+import { AppData } from 'containers/Applications/types'
 
 /** State types */
 export interface Api {
@@ -30,11 +31,13 @@ export interface GetApisErrorAction extends Action {
 export interface AddAppSubscriptionAction extends Action {
   type: typeof SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION,
   appId: number,
-  apiId: number,
+  apiName: string,
 }
 
 export interface AddAppSubscriptionSuccessAction extends Action {
   type: typeof SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS,
+  updatedApp: AppData,
+  updatedAppIndx: number,
 }
 
 export interface AddAppSubscriptionErrorAction extends Action {
@@ -44,11 +47,13 @@ export interface AddAppSubscriptionErrorAction extends Action {
 export interface RemoveAppSubscriptionAction extends Action {
   type: typeof SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION,
   appId: number,
-  apiId: number,
+  apiName: string,
 }
 
 export interface RemoveAppSubscriptionSuccessAction extends Action {
   type: typeof SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS,
+  updatedApp: AppData,
+  updatedAppIndx: number,
 }
 
 export interface RemoveAppSubscriptionErrorAction extends Action {

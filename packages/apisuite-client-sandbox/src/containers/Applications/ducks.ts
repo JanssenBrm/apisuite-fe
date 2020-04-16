@@ -173,7 +173,9 @@ export default function reducer (
     }
 
     case SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS: {
-      return state
+      return update(state, {
+        userApps: { [action.updatedAppIndx]: { $set: action.updatedApp } },
+      })
     }
 
     case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION: {
@@ -181,7 +183,9 @@ export default function reducer (
     }
 
     case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS: {
-      return state
+      return update(state, {
+        userApps: { [action.updatedAppIndx]: { $set: action.updatedApp } },
+      })
     }
 
     default:
@@ -246,6 +250,14 @@ export function addAppSubscription (appId: number, apiName: string) {
   return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION, appId, apiName }
 }
 
+export function addAppSubscriptionSuccess (updatedApp: AppData, updateAppIndx: number) {
+  return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS, updateAppIndx, updatedApp }
+}
+
 export function removeAppSubscription (appId: number, apiName: string) {
   return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION, appId, apiName }
+}
+
+export function removeAppSubscriptionSuccess (updatedApp: AppData, updateAppIndx: number) {
+  return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS, updateAppIndx, updatedApp }
 }
