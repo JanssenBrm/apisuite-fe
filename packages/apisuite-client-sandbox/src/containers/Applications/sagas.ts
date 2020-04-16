@@ -54,8 +54,7 @@ export function * createApp (action: CreateAppAction) {
       logo: action.appData.logo,
       visibility: action.appData.visibility,
       'user_id': action.appData.userId,
-      // TODO: change
-      subscriptions: [1, 2],
+      subscriptions: action.appData.subscriptions,
       // TODO: change
       'pub_urls': [{
         url: 'http://ssss.com',

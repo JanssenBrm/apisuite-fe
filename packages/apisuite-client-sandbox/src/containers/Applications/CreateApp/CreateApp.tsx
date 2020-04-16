@@ -6,16 +6,25 @@ import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
 import RadioBoxes from 'components/RadioBoxes/RadioBoxes'
 import Select from 'components/Select'
+import { SelectOption } from 'components/Select/types'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { FormFieldEvent } from 'components/FormField/types'
+import { Api } from 'containers/Subscriptions/types'
 
-import { radioOptions, selectOptions } from './config'
+import { radioOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { CreateAppProps } from './types'
 import clsx from 'clsx'
 
-const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCreate }) => {
+const CreateApp: React.FC<CreateAppProps> = ({
+  history,
+  createApp,
+  user,
+  resCreate,
+  apis,
+  getApis,
+}) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
   // const [visible, toggle] = React.useReducer(v => !v, false)
@@ -29,10 +38,22 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
     userId: 0,
     // visibility: visible ? 'public' : 'private',
     visibility: 'private',
-    subscriptions: [],
+    subscriptions: [1],
     // TODO review puburls
     pubUrls: null,
   })
+
+  const selectOptions = (apis: Api[]) => {
+    return apis.map(api => ({
+      label: api.apiTitle,
+      value: api.id,
+      group: api.name,
+    }))
+  }
+
+  React.useEffect(() => {
+    getApis()
+  }, [getApis])
 
   function handleCancelClick () {
     history.goBack()
@@ -46,6 +67,15 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
     })
     const eventTarget = e.target
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
+  }
+
+  function chooseApi (e: React.ChangeEvent<{}>, option: SelectOption) {
+    if (e) {
+      setInput({
+        ...input,
+        subscriptions: [option.value],
+      })
+    }
   }
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
@@ -174,7 +204,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
           <br />
 
           <InputLabel className={classes.marginBottom} shrink>Sandbox Subscriptions</InputLabel>
-          <Select options={selectOptions} />
+          <Select
+            options={selectOptions(apis)}
+            onChange={chooseApi}
+          />
 
           <br /><br />
 
