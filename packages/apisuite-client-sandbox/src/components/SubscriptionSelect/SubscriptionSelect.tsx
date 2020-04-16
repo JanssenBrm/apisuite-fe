@@ -5,6 +5,7 @@ import Chip from '@material-ui/core/Chip'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
 // import CircularProgress from '@material-ui/core/CircularProgress'
 import { useTranslation } from 'react-i18next'
+import ClearIcon from '@material-ui/icons/Clear'
 
 const SubscriptionSelect: React.FC<SubscriptionSelectProps> = ({
   apps,
@@ -31,6 +32,13 @@ const SubscriptionSelect: React.FC<SubscriptionSelectProps> = ({
           label={app.appName}
           className={classes.chip}
           onDelete={handleDelete(app.appId, apiName)}
+          deleteIcon={
+            <ClearIcon
+              classes={{
+                root: classes.clearIcon,
+              }}
+            />
+          }
           // {...chooseIcon(app.isLoading)}
         />
       ))}
