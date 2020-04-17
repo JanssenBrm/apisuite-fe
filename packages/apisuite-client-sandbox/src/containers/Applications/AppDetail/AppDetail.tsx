@@ -108,9 +108,14 @@ const AppDetail: React.FC<AppDetailProps> = (
   React.useEffect(() => {
     if (user) {
       setInput({ ...currentApp })
-      getAppDetails(appId, user.id)
     }
   }, [currentApp])
+
+  React.useEffect(() => {
+    if (user) {
+      getAppDetails(appId, user.id)
+    }
+  }, [])
 
   return (
     <>
