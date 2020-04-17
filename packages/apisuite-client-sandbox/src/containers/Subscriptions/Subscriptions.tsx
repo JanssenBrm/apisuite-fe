@@ -3,15 +3,9 @@ import useStyles from './styles'
 import SubscriptionsTable from 'components/SubscriptionsTable'
 import { useTranslation } from 'react-i18next'
 
-const Subscriptions: React.FC<{user: any; userApps: any; getUserApps: any}> = ({ user, userApps, getUserApps }) => {
+const Subscriptions: React.FC<{}> = () => {
   const classes = useStyles()
   const [t] = useTranslation()
-
-  React.useEffect(() => {
-    if (user) {
-      getUserApps(user.id)
-    }
-  }, [])
 
   return (
     <div className={classes.root}>
@@ -23,7 +17,7 @@ const Subscriptions: React.FC<{user: any; userApps: any; getUserApps: any}> = ({
         </p>
 
         <div className={classes.subscriptionsContainer}>
-          <SubscriptionsTable apps={userApps} />
+          <SubscriptionsTable />
         </div>
 
       </section>

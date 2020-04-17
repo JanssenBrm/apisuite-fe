@@ -1,7 +1,7 @@
-import { App } from 'containers/Subscriptions/types'
+import { AppData } from 'containers/Applications/types'
 
-export interface ApiSelectProps {
-  userApps: App[],
-  handleAdd: (APIid: number, appName: string) => (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void,
-  APIid: number,
+export type ApiSelectProps = {
+  userApps: AppData[],
+  handleAdd: (appId: number, apiName: string) => (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => void,
+  apiName: string,
 }

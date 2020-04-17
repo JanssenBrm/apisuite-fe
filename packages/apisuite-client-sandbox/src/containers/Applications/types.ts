@@ -30,13 +30,20 @@ export interface AppData {
   redirectUrl: string,
   logo: string,
   userId: number,
-  sandboxId: string,
-  pubUrls: string,
+  subscriptions: any[],
+  visibility: 'public' | 'private',
+  // TODO change
+  pubUrls: null,
   enable: boolean,
   updatedAt?: string,
   createdAt?: string,
   clientId: string,
   clientSecret: string,
+}
+
+export interface PubUrl {
+  url: string,
+  type: string,
 }
 
 export interface CreateAppAction extends Action {

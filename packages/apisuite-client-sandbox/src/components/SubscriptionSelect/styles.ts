@@ -19,7 +19,9 @@ export default makeStyles({
     display: 'flex',
     margin: 4,
     borderRadius: 3,
-    background: 'linear-gradient(270deg, #2DB7BA 0%, #14DE2D 100%)',
+    background: 'linear-gradient(270deg, #2DB7BA 0%, #14BC7D 100%)',
+    fontWeight: 400,
+    color: '#fff',
   },
   chips: {
     display: 'flex',
@@ -32,5 +34,13 @@ export default makeStyles({
   },
   icon: {
     cursor: 'pointer',
+  },
+  clearIcon: {
+    fill: 'rgba(255, 255, 255, 0.6)',
+    height: 14,
+    '&:hover': {
+      fill: 'rgba(255, 255, 255, 1)',
+      height: 18,
+    },
   },
 })
