@@ -42,8 +42,9 @@ const AppDetail: React.FC<AppDetailProps> = (
     description: currentApp.description,
     redirectUrl: currentApp.redirectUrl,
     logo: currentApp.logo,
+    visibility: currentApp.visibility,
     userId: currentApp.userId,
-    sandboxId: currentApp.sandboxId,
+    subscriptions: currentApp.subscriptions,
     pubUrls: currentApp.pubUrls,
     enable: true,
     clientId: currentApp.clientId,
@@ -70,8 +71,9 @@ const AppDetail: React.FC<AppDetailProps> = (
       description: input.description,
       redirectUrl: input.redirectUrl,
       logo: input.logo,
+      visibility: 'private',
       userId: input.userId,
-      sandboxId: input.sandboxId,
+      subscriptions: input.subscriptions,
       pubUrls: input.pubUrls,
       enable: true,
       clientId: '',
@@ -106,9 +108,14 @@ const AppDetail: React.FC<AppDetailProps> = (
   React.useEffect(() => {
     if (user) {
       setInput({ ...currentApp })
-      getAppDetails(appId, user.id)
     }
   }, [currentApp])
+
+  React.useEffect(() => {
+    if (user) {
+      getAppDetails(appId, user.id)
+    }
+  }, [])
 
   return (
     <>
@@ -146,7 +153,8 @@ const AppDetail: React.FC<AppDetailProps> = (
               label='Client URL'
               placeholder='https://localhost'
               name='pubUrls'
-              value={input.pubUrls}
+              // TODO change
+              value=''
               onChange={handleInputs}
             />
 

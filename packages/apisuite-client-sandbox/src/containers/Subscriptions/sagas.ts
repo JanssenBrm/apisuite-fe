@@ -1,18 +1,37 @@
-import { put, takeLatest } from 'redux-saga/effects'
-import { deleteAppSubSuccess, addAppSubSuccess, DELETE_APP_SUB, ADD_APP_SUB } from './ducks'
-import { DeleteAppSubAction, AddAppSubAction } from './types'
+import {
+  call,
+  put,
+  takeLatest,
+} from 'redux-saga/effects'
+import {
+  SubscriptionsActionTypes,
+  getApisSuccess,
+  getApisError,
+} from './ducks'
+import { ApisResponse } from './types'
+import { API_URL } from 'constants/endpoints'
+import request from 'util/request'
 
-function * deleteAppSub (action: DeleteAppSubAction) {
-  yield put(deleteAppSubSuccess(action.APIid, action.appNumber))
-}
+function * getApisSaga () {
+  try {
+    const getApisUrl = `${API_URL}/sandboxapi/`
+    const response: ApisResponse = yield call(request, {
+      url: getApisUrl,
+      method: 'GET',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+    })
 
-function * addAppSub (action: AddAppSubAction) {
-  yield put(addAppSubSuccess(action.APIid, action.newAppNumber))
+    yield put(getApisSuccess(response.apis.rows))
+  } catch {
+    // TODO: decide and implement error handling
+    yield put(getApisError())
+  }
 }
 
 export function * rootSaga () {
-  yield takeLatest(DELETE_APP_SUB, deleteAppSub)
-  yield takeLatest(ADD_APP_SUB, addAppSub)
+  yield takeLatest(SubscriptionsActionTypes.GET_APIS, getApisSaga)
 }
 
 export default rootSaga

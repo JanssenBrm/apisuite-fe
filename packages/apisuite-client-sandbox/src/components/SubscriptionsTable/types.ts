@@ -1,10 +1,15 @@
-import { SubStore } from 'containers/Subscriptions/types'
+import { getApisByName } from 'containers/Subscriptions/selectors'
+import { User } from 'containers/Auth/types'
+import { AppData } from 'containers/Applications/types'
 
 export type ViewType = 'list' | 'cards'
 
-export interface SubscriptionsTableProps {
-  view: ViewType,
-  subscriptions: SubStore,
-  deleteAppSub: (APIid: number, appNumber: number) => void,
-  addAppSub: (APIid: number, appName: string, newAppNumber: number) => void,
+export type SubscriptionsTableProps = {
+  apisByName: ReturnType<typeof getApisByName>,
+  user?: User,
+  userApps: AppData[]
+  getApis: () => void,
+  getUserApps: (userId: number) => void,
+  addAppSubscription: (appId: number, apiName: string) => void,
+  removeAppSubscription: (appId: number, apiName: string) => void,
 }

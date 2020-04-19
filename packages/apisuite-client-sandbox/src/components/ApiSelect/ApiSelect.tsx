@@ -1,13 +1,12 @@
 import * as React from 'react'
 import { ApiSelectProps } from './types'
-import { App } from 'containers/Subscriptions/types'
 import MenuItem from '@material-ui/core/MenuItem'
 
-const ApiSelect: React.FC<ApiSelectProps> = ({ userApps, handleAdd, APIid }) => {
+const ApiSelect: React.FC<ApiSelectProps> = ({ userApps, handleAdd, apiName }) => {
   return (
     <>
-      {userApps.map((app: App, indx: number) => (
-        <MenuItem onClick={handleAdd(APIid, app.name)} key={indx}>{app.name}</MenuItem>
+      {userApps.map((app, indx: number) => (
+        <MenuItem onClick={handleAdd(app.appId, apiName)} key={indx}>{app.name}</MenuItem>
       ))}
     </>
   )

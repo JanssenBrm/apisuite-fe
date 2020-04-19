@@ -16,8 +16,8 @@ function generateEnvFiles() {
   if [[ $CIRCLE_BRANCH =~ develop$ ]]; then
 
     echo "ENV=dev
-AUTH_URL=${AUTH_URL_DEV}
-API_URL=${API_URL_DEV}
+AUTH_URL=${AUTH_URL_STG}
+API_URL=${API_URL_STG}
 APP_URL=${APP_URL_DEV}
 SUPPORT_URL=${SUPPORT_URL_DEV}
 LOGIN_PORT=${LOGIN_PORT_DEV}
