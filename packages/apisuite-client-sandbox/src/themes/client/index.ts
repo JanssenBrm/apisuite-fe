@@ -2,6 +2,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import themeConfig from './theme.config.json'
 
 const apiLogo = require('./images/api-logo.png')
+// TODO: consider loading as React component
 const footerLogo = require('./images/footer-logo.svg')
 
 const fontName = themeConfig.typography.fontFamily[0]

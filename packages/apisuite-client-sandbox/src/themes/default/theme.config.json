@@ -123,7 +123,7 @@
                 "file": "Roboto-ThinItalic"
             }
         ],
-        "format": "ttf"
+        "format": "woff2"
     },
     "shape": {
         "borderRadius": 4
