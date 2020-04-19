@@ -14,26 +14,3 @@ export const radioOptions = [
     checked: true,
   },
 ]
-
-export const selectOptions = [
-  {
-    label: 'Petstore API v1',
-    value: 'petstore-v1',
-    group: "Common sandbox API's",
-  },
-  // {
-  //   label: 'Star Wars API v2',
-  //   value: 'startw-v2',
-  //   group: "Common sandbox API's",
-  // },
-  // {
-  //   label: 'UK Standard AIS API',
-  //   value: 'uk-s-ais',
-  //   group: "Openbanking sandbox API's",
-  // },
-  // {
-  //   label: 'UK Standard PIS API',
-  //   value: 'uk-s-pis',
-  //   group: "Openbanking sandbox API's",
-  // },
-]

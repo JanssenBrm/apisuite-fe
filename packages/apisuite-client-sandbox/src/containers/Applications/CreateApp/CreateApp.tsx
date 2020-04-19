@@ -6,34 +6,54 @@ import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
 import RadioBoxes from 'components/RadioBoxes/RadioBoxes'
 import Select from 'components/Select'
+import { SelectOption } from 'components/Select/types'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { FormFieldEvent } from 'components/FormField/types'
+import { Api } from 'containers/Subscriptions/types'
 
-import { radioOptions, selectOptions } from './config'
+import { radioOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { CreateAppProps } from './types'
 import clsx from 'clsx'
 
-const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCreate }) => {
+const CreateApp: React.FC<CreateAppProps> = ({
+  history,
+  createApp,
+  user,
+  resCreate,
+  apis,
+  getApis,
+}) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
-  const [visibility, setVisibility] = React.useState('private')
+  // const [visible, toggle] = React.useReducer(v => !v, false)
   const [isFormValid, setFormValid] = React.useState(false)
   const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState({
     name: '',
     description: '',
     redirectUrl: '',
-    logo: '',
+    logo: 'http://logo.png',
     userId: 0,
-    sandboxId: '',
-    pubUrls: '',
+    // visibility: visible ? 'public' : 'private',
+    visibility: 'private',
+    subscriptions: [1],
+    // TODO review puburls
+    pubUrls: null,
   })
 
-  function handleVisibilityChange (_: any, value: string) {
-    setVisibility(value)
+  const selectOptions = (apis: Api[]) => {
+    return apis.map(api => ({
+      label: api.apiTitle,
+      value: api.id,
+      group: api.name,
+    }))
   }
+
+  React.useEffect(() => {
+    getApis()
+  }, [getApis])
 
   function handleCancelClick () {
     history.goBack()
@@ -47,6 +67,15 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
     })
     const eventTarget = e.target
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
+  }
+
+  function chooseApi (e: React.ChangeEvent<{}>, option: SelectOption) {
+    if (e) {
+      setInput({
+        ...input,
+        subscriptions: [option.value],
+      })
+    }
   }
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
@@ -64,9 +93,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
       description: input.description,
       redirectUrl: input.redirectUrl,
       logo: input.logo,
+      visibility: 'private',
       userId: userId,
-      sandboxId: input.sandboxId,
-      pubUrls: input.pubUrls,
+      subscriptions: input.subscriptions,
+      pubUrls: null,
       enable: true,
       clientId: '',
       clientSecret: '',
@@ -149,8 +179,9 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
               placeholder='Client URL'
               name='pubUrls'
               type='text'
-              value={input.pubUrls}
-              onChange={handleInputs}
+              // TODO change back to input.pubUrls
+              value=''
+              // onChange={handleInputs}
             />
 
             <Button variant='outlined' className={classes.iconBtn}>
@@ -163,8 +194,7 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
           <InputLabel shrink>Application visibility</InputLabel>
           <RadioBoxes
             options={radioOptions}
-            selected={visibility}
-            onChange={handleVisibilityChange}
+            selected='private'
           />
 
           <br />
@@ -174,7 +204,10 @@ const CreateApp: React.FC<CreateAppProps> = ({ history, createApp, user, resCrea
           <br />
 
           <InputLabel className={classes.marginBottom} shrink>Sandbox Subscriptions</InputLabel>
-          <Select options={selectOptions} />
+          <Select
+            options={selectOptions(apis)}
+            onChange={chooseApi}
+          />
 
           <br /><br />
 
