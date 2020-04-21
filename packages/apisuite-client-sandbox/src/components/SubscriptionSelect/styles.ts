@@ -45,4 +45,4 @@ export default makeStyles((theme: Theme) => ({
       height: 18,
     },
   },
-})
+}))
