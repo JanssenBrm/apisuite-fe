@@ -99,7 +99,11 @@ jobs:
         - run:
             name: Deploy Over SSH
             command: |
-              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_CN "cd /apps/APISuite/ && docker-compose pull && docker-compose up -d && docker image prune --force"
+              chmod +x ./util/clean_compose.sh
+              (cd ./util && ./clean_compose.sh)
+              chmod +x ./util/merge_env.sh
+              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_CN:/apps/APISuite/
+              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_CN "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
 
 workflows:
   version: 2
