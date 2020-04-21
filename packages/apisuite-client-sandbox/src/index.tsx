@@ -15,7 +15,10 @@ import 'language/i18n'
 // Main Application Styles
 import 'typeface-roboto'
 import 'styles/app.scss'
-import(`themes/${process.env.THEME}/theme.scss`)
+
+(async () => {
+  await import(`themes/${process.env.THEME || 'default'}/theme.scss`)
+})()
 
 function render (Component: any) {
   // @ts-ignore
