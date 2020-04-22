@@ -1,11 +1,14 @@
 import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
-import requireImage from 'util/requireImage'
+import { useTheme } from '@material-ui/core/styles'
+import { Theme } from 'themes/types'
 
 import './styles.scss'
 
 const Footer = () => {
+  const theme: Theme = useTheme()
+
   function handleFabClick () {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
@@ -14,7 +17,7 @@ const Footer = () => {
     <footer className='footer'>
       <div className='container'>
         <div className='logo-container'>
-          <img src={requireImage('apisuite_logo_white.svg')} alt='logo' className='logo' />
+          <img src={theme.images.footerLogo} alt='logo' className='logo' />
           <p>{'© 2020 APISuite\nAll rights reserved.\nProudly made in Europe.'}</p>
 
           <div className='icons-container'>

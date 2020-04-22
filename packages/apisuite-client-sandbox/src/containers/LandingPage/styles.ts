@@ -1,7 +1,8 @@
 import { makeStyles } from '@material-ui/styles'
 import requireImage from 'util/requireImage'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -93,8 +94,8 @@ export default makeStyles({
     color: '#333333',
     backgroundColor: 'white',
     padding: '8px 24px',
-    borderRadius: 4,
+    borderRadius: theme.shape.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
   },
-})
+}))

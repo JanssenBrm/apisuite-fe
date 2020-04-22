@@ -6,12 +6,10 @@
       "console": false
     },
     "navbar": {
-      "name": "CLOUDOKI",
-      "logoUrl": "api-logo.png"
+      "name": "CLOUDOKI"
     },
     "footer": {
-      "copyright": "© Cloudoki 2019.\nAll rights reserved.\nProudly made in Europe.",
-      "logoUrl": "logo-blue.png"
+      "copyright": "© Cloudoki 2019.\nAll rights reserved.\nProudly made in Europe."
     },
     "i18n": [
       { "locale": "en-US", "label": "We speak English" },
