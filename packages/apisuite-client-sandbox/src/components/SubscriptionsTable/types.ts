@@ -7,7 +7,7 @@ export type ViewType = 'list' | 'cards'
 export type SubscriptionsTableProps = {
   apisByName: ReturnType<typeof getApisByName>,
   user?: User,
-  userApps: AppData[]
+  userApps: AppData[],
   getApis: () => void,
   getUserApps: (userId: number) => void,
   addAppSubscription: (appId: number, apiName: string) => void,
