@@ -24,7 +24,7 @@ LOGIN_PORT=${LOGIN_PORT_DEV}
 THEME=
 SIGNUP_PORT=${SIGNUP_PORT_DEV}" > ${ENV_FILE_APISUITE_SANDBOX_CLIENT}
 
-  elif [[ $CIRCLE_BRANCH =~ [-]*rc[0-9]*$ ]]; then
+  elif [[ $CIRCLE_BRANCH =~ staging$ ]]; then
 
     echo "ENV=stg
 AUTH_URL=${AUTH_URL_STG}
