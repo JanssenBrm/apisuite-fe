@@ -38,7 +38,7 @@ const InformDialog: React.FC<InformDialogProps> = (
   }
 
   React.useEffect(() => {
-    const timer = setInterval((newEmail) => {
+    const timer = setInterval((newEmail: any) => {
       if (pass) setIsValid(isValidEmail(newEmail))
     }, idleTime, email)
     return () => {

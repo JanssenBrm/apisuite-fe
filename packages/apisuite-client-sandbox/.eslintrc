@@ -41,7 +41,7 @@
     "@typescript-eslint/member-delimiter-style": ["error", { "multiline": { "delimiter": "comma", "requireLast": true }}],
     "@typescript-eslint/member-ordering": ["error"],
     "@typescript-eslint/no-non-null-assertion": "off",
-    "@typescript-eslint/ban-ts-ignore": "warn",
+    "@typescript-eslint/ban-ts-ignore": "off",
     "@typescript-eslint/no-var-requires": "off"
   },
   "overrides": [
