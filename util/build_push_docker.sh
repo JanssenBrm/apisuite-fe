@@ -80,6 +80,7 @@ else
   echo "No services listed will not build and push"
   if [[ "$FORCE_BUILD" == "true" ]]; then
     echo "Will build anyways."
+    . ./generate_packages_envfile.sh
     docker-compose build
     docker-compose push
   fi
