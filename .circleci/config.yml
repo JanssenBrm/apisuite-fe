@@ -115,7 +115,7 @@ workflows:
                 branches:
                   only:
                     - develop
-                    - rc
+                    - staging
             requires:
                 - test
         - deploy-dev:
@@ -129,7 +129,7 @@ workflows:
             filters:
                 branches:
                   only:
-                    - rc
+                    - staging
             requires:
                 - build
         - deploy-carnext:
