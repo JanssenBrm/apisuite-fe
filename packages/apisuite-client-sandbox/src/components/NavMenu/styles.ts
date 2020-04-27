@@ -1,6 +1,8 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from 'themes/types'
+import { colorPicker } from 'util/colorPicker'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   menuItem: {
     fontSize: 16,
     '& a': {
@@ -13,16 +15,16 @@ export default makeStyles({
     borderRightWidth: 0,
     borderTopWidth: 0,
     borderBottomWidth: 0,
-    borderColor: '#979797',
-    color: '#545454',
+    borderColor: colorPicker(theme.palette.grey, 500, '#8B8B8B'),
+    color: theme.palette.text.primary,
     fontWeight: 500,
   },
   selected: {
-    color: '#2DB7BA',
-    borderColor: '#2DB7BA',
+    color: theme.palette.text.secondary,
+    borderColor: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
     borderLeftWidth: 3,
     borderRightWidth: 0,
     borderTopWidth: 0,
     borderBottomWidth: 0,
   },
-})
+}))

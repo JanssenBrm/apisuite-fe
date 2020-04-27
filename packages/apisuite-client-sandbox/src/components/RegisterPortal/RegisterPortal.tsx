@@ -71,7 +71,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
 
   return (
     <div className={classes.registerContainer}>
-      <div className={classes.content}>
+      <div>
         <FormCard
           buttonLabel={registerButtonLabel}
           buttonDisabled={!isFormValid}

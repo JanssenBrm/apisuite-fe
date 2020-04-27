@@ -1,4 +1,4 @@
-import { LocaleOption } from 'Language/types'
+import { LocaleOption } from 'language/types'
 
 export interface SandboxConfig {
   includes: { [prop: string]: boolean },

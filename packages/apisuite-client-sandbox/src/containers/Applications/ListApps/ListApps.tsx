@@ -27,9 +27,7 @@ const ListApps: React.FC<ListAppsProps> = ({ history, user, userApps, getUserApp
   }
 
   React.useEffect(() => {
-    if (user) {
-      getUserApps(user.id)
-    }
+    if (user) getUserApps(user.id)
   }, [])
 
   return (

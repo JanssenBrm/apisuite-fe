@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from 'themes/types'
 
-export default makeStyles({
+export default makeStyles((theme: Theme) => ({
   root: {
     minHeight: '100%',
     paddingTop: 200,
@@ -53,13 +54,13 @@ export default makeStyles({
   codeBlock: {
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
-    borderBottomLeftRadius: 4,
-    borderBottomRightRadius: 4,
+    borderBottomLeftRadius: theme.shape.borderRadius,
+    borderBottomRightRadius: theme.shape.borderRadius,
   },
   noteContainer: {
     width: '100%',
     backgroundColor: '#00A7AA',
-    borderRadius: 4,
+    borderRadius: theme.shape.borderRadius,
     overflow: 'hidden',
     marginBottom: 20,
   },
@@ -87,8 +88,8 @@ export default makeStyles({
     marginTop: 0,
     paddingLeft: 20,
     paddingRight: 20,
-    borderTopRightRadius: 4,
-    borderTopLeftRadius: 4,
+    borderTopRightRadius: theme.shape.borderRadius,
+    borderTopLeftRadius: theme.shape.borderRadius,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },
@@ -104,7 +105,7 @@ export default makeStyles({
     position: 'sticky',
     top: 180,
   },
-})
+}))
 
 export const codeStyle = {
   'hljs-string': {
