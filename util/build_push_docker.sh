@@ -78,8 +78,11 @@ if [[ -n ${DOCKER_SERVICES// } ]]; then
   docker-compose push $DOCKER_SERVICES
 else
   echo "No services listed will not build and push"
-  # docker-compose build $DOCKER_SERVICES
-  # docker-compose push $DOCKER_SERVICES
+  if [[ "$FORCE_BUILD" == "true" ]]; then
+    echo "Will build anyways."
+    docker-compose build
+    docker-compose push
+  fi
 fi
 
 # Logout from docker
