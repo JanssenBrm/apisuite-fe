@@ -234,8 +234,25 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
       data: qs.stringify(data),
     })
 
+    const updatedApp = {
+      appId: response.app.id,
+      name: response.app.name,
+      description: response.app.description,
+      redirectUrl: response.app.redirect_url,
+      logo: response.app.logo,
+      userId: response.app.userId,
+      subscriptions: response.app.subscriptions,
+      pubUrls: response.app.pub_urls,
+      visibility: response.app.visibility,
+      enable: response.app.enable,
+      createdAt: response.app.createdAt,
+      updatedAt: response.app.updatedAt,
+      clientId: response.app.client_data.client_id,
+      clientSecret: response.app.client_data.client_secret,
+    }
+
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
-    yield put(addAppSubscriptionSuccess(response.app, appIndx))
+    yield put(addAppSubscriptionSuccess(updatedApp, appIndx))
   } catch {
     console.log('error adding subscription')
   }
@@ -264,8 +281,25 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
       data: qs.stringify(data),
     })
 
+    const updatedApp = {
+      appId: response.app.id,
+      name: response.app.name,
+      description: response.app.description,
+      redirectUrl: response.app.redirect_url,
+      logo: response.app.logo,
+      userId: response.app.userId,
+      subscriptions: response.app.subscriptions,
+      pubUrls: response.app.pub_urls,
+      visibility: response.app.visibility,
+      enable: response.app.enable,
+      createdAt: response.app.createdAt,
+      updatedAt: response.app.updatedAt,
+      clientId: response.app.client_data.client_id,
+      clientSecret: response.app.client_data.client_secret,
+    }
+
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
-    yield put(removeAppSubscriptionSuccess(response.app, appIndx))
+    yield put(removeAppSubscriptionSuccess(updatedApp, appIndx))
   } catch {
     console.log('error removing subscription')
   }
