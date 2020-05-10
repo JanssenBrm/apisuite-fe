@@ -260,7 +260,7 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
       <br /><br /><br />
       {/** #conditional-loader-end */}
 
-      <section className={classes.subscribeContainer}>
+      {/* <section className={classes.subscribeContainer}>
         <div className={classes.wheelContainer}>
           <Wheel selected='br' />
         </div>
@@ -314,7 +314,7 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
             </FormGroup>
           </form>
         </div>
-      </section>
+      </section> */}
     </main>
   )
 }
