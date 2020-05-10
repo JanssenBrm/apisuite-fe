@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { ThemeProvider } from '@material-ui/styles'
 import { Theme } from 'themes/types'
-import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { config } from 'constants/global'
 import Navigation from 'components/Navigation'
@@ -83,7 +82,6 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
       {navigations &&
         <Navigation
           key='app-navigation'
