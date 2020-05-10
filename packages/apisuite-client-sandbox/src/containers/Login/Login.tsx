@@ -4,6 +4,14 @@ import RegisterPortal from 'components/RegisterPortal'
 import classnames from 'classnames'
 import requireImage from 'util/requireImage'
 import { View } from './types'
+import {
+  Main,
+  FormSide,
+  FormContainer,
+  ImageSide,
+  ImageContainer,
+  Stripe,
+} from './subComponents'
 
 const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
   const view = match.params.view
@@ -12,7 +20,7 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
   const [justRegistered, setJustRegistered] = React.useState(false)
   const [isRedirected, setRedirected] = React.useState(false)
 
-  function handleViewChange (view: string) {
+  function handleViewChange (view: View) {
     switch (view) {
       case 'login':
         setAuthView(view)
@@ -51,38 +59,56 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
   }
 
   return (
-    <div className='auth-page'>
-      <div className='auth-left-wrapper' />
-      <div className='content-wrapper'>
-        <div className='auth-content-left'>
-          <div className='auth-content-stripe' />
-          <div className='auth-forms-wrapper'>
-            <h1>Welcome</h1>
-            <div className='subtitle'>Please feel free to login or register, it's completely free!</div>
-            <div className='auth-block'>
-              <div className='auth-selector'>
-                <div className={classnames({ selected: authView === 'login' })} onClick={() => handleViewChange('login')}>Login</div>
-                <div className={classnames({ selected: authView === 'register' })} onClick={() => handleViewChange('register')}>Register</div>
-              </div>
-              <div className='auth-form'>
-                {authView === 'login' &&
-                  <LoginPortal />}
-                {authView === 'register' &&
-                  <RegisterPortal defaultEmail={defaultEmail()} />}
-                {justRegistered && <div className='user-created-feedback'>Your account is created, {register.user}!</div>}
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className='auth-content-right'>
-          {authView === 'login' &&
-            <img src={requireImage('woman_login.svg')} />}
-          {authView === 'register' &&
-            <img src={requireImage('woman_register.svg')} />}
-        </div>
-      </div>
-      <div className='auth-right-wrapper' />
-    </div>
+    <Main>
+
+      <FormSide>
+        <FormContainer>
+          <h1 style={{ color: 'var(--gray-800)' }}>Welcome</h1>
+          Form container!!
+        </FormContainer>
+      </FormSide>
+
+      <Stripe>
+        <ImageSide>
+          <ImageContainer>
+            Image container!!!
+          </ImageContainer>
+        </ImageSide>
+      </Stripe>
+
+    </Main>
+    // <div className='auth-page'>
+    //   <div className='auth-left-wrapper' />
+    //   <div className='content-wrapper'>
+    //     <div className='auth-content-left'>
+    //       <div className='auth-content-stripe' />
+    //       <div className='auth-forms-wrapper'>
+    //         <h1>Welcome</h1>
+    //         <div className='subtitle'>Please feel free to login or register, it's completely free!</div>
+    //         <div className='auth-block'>
+    //           <div className='auth-selector'>
+    //             <div className={classnames({ selected: authView === 'login' })} onClick={() => handleViewChange('login')}>Login</div>
+    //             <div className={classnames({ selected: authView === 'register' })} onClick={() => handleViewChange('register')}>Register</div>
+    //           </div>
+    //           <div className='auth-form'>
+    //             {authView === 'login' &&
+    //               <LoginPortal />}
+    //             {authView === 'register' &&
+    //               <RegisterPortal defaultEmail={defaultEmail()} />}
+    //             {justRegistered && <div className='user-created-feedback'>Your account is created, {register.user}!</div>}
+    //           </div>
+    //         </div>
+    //       </div>
+    //     </div>
+    //     <div className='auth-content-right'>
+    //       {authView === 'login' &&
+    //         <img src={requireImage('woman_login.svg')} />}
+    //       {authView === 'register' &&
+    //         <img src={requireImage('woman_register.svg')} />}
+    //     </div>
+    //   </div>
+    //   <div className='auth-right-wrapper' />
+    // </div>
   )
 }
 

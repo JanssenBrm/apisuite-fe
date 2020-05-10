@@ -33,6 +33,7 @@
     "@types/react-scrollspy": "3.3.2",
     "@types/react-syntax-highlighter": "11.0.4",
     "@types/redux-logger": "3.0.7",
+    "@types/styled-components": "5.1.0",
     "axios": "0.19.2",
     "classnames": "2.2.6",
     "clsx": "1.0.4",
@@ -58,6 +59,7 @@
     "reselect": "4.0.0",
     "sass-mq": "5.0.1",
     "start-server-and-test": "1.10.6",
+    "styled-components": "5.1.0",
     "tinycolor2": "1.4.1",
     "typeface-roboto": "0.0.75"
   },

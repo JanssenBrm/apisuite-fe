@@ -1,0 +1,26 @@
+:root {
+  /* Background */
+  --light-background: #FFFFFF;
+  --primary-background: #035E86;
+
+  /* Accents */
+  --primary-accent: #08597D;
+
+  /* Grays */ 
+  --gray-800: #333333;
+
+  --max-width: 1280px;
+}
+
+
+h1 {
+  font-size: 43px;
+  font-weight: 700;
+  line-height: 50px;
+}
+
+h3 {
+  font-size: 24px;
+  line-height: 32px;
+  font-weight: 500;
+}

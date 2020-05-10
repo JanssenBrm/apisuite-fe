@@ -1,0 +1,11 @@
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.main {
+  display: flex;
+  /* TODO: only applies if in the future #root becomes a flex column container */
+  flex-grow: 1;
+}
