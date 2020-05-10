@@ -8,13 +8,13 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-import FormGroup from '@material-ui/core/FormGroup'
-import FormControlLabel from '@material-ui/core/FormControlLabel'
-import Checkbox from '@material-ui/core/Checkbox'
-import Link from '@material-ui/core/Link'
+// import TextField from '@material-ui/core/TextField'
+// import FormGroup from '@material-ui/core/FormGroup'
+// import FormControlLabel from '@material-ui/core/FormControlLabel'
+// import Checkbox from '@material-ui/core/Checkbox'
+// import Link from '@material-ui/core/Link'
 import Carousel from 'components/Carousel'
-import Wheel from 'components/ApiSuiteWheel'
+// import Wheel from 'components/ApiSuiteWheel'
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
 import { config } from 'constants/global'
@@ -26,15 +26,15 @@ import partnersUrl from 'assets/partners.png'
 const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
   const classes = useStyles()
   const [t] = useTranslation()
-  const [termsCheck, setTermsCheck] = React.useState(false)
+  // const [termsCheck, setTermsCheck] = React.useState(false)
 
   // #conditional-loader-start: alert
   window.alert(config.navbar.name)
   // #conditional-loader-end
 
-  function handleCheckboxClick () {
-    setTermsCheck(!termsCheck)
-  }
+  // function handleCheckboxClick () {
+  //   setTermsCheck(!termsCheck)
+  // }
 
   function handleTrigger () {
     toggleInform()
@@ -260,7 +260,7 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
       <br /><br /><br />
       {/** #conditional-loader-end */}
 
-      <section className={classes.subscribeContainer}>
+      {/* <section className={classes.subscribeContainer}>
         <div className={classes.wheelContainer}>
           <Wheel selected='br' />
         </div>
@@ -314,7 +314,7 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
             </FormGroup>
           </form>
         </div>
-      </section>
+      </section> */}
     </main>
   )
 }

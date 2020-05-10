@@ -1,8 +1,10 @@
 import { SlideConfig, ListConfig } from './types'
 import requireImage from 'util/requireImage'
 
+const experienceTheSandboxUrl = requireImage('features-experience-the-sandbox.svg')
+const securePocUrl = requireImage('features-secure-poc.svg')
+const sailTheSeasUrl = requireImage('features-sail-the-seas.png')
 const slideOvalUrl = requireImage('slide-oval.png')
-const slideFeatureslUrl = requireImage('features-illustration.png')
 
 /**
  * Slides configuration
@@ -16,7 +18,7 @@ export const slidesConfig: SlideConfig[] = [
     btnStr: 'sandboxPage.slides.one.btnStr',
     linkTo: '/auth/register',
     btn: 1,
-    imgUrl: slideOvalUrl,
+    imgUrl: experienceTheSandboxUrl,
   },
   {
     key: 'slide-proof',
@@ -27,7 +29,7 @@ export const slidesConfig: SlideConfig[] = [
     linkTo: '/',
     disabled: true,
     btn: 2,
-    imgUrl: slideOvalUrl,
+    imgUrl: securePocUrl,
   },
   {
     key: 'slide-features',
@@ -38,7 +40,7 @@ export const slidesConfig: SlideConfig[] = [
     linkTo: '/',
     disabled: true,
     btn: 3,
-    imgUrl: slideFeatureslUrl,
+    imgUrl: sailTheSeasUrl,
   },
   {
     key: 'slide-docs',
