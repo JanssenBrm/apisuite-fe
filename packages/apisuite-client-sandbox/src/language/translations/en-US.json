@@ -150,5 +150,9 @@
   "subscriptionsTable": {
     "header": "Available API's",
     "actions": "actions"
+  },
+  "login": {
+    "welcomeTitle": "Welcome",
+    "welcomeMsg": "Please feel free to login or register, it's completely free!"
   }
 }

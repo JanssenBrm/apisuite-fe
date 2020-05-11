@@ -3,6 +3,7 @@ import LoginPortal from 'components/LoginPortal'
 import RegisterPortal from 'components/RegisterPortal'
 import classnames from 'classnames'
 import requireImage from 'util/requireImage'
+import { useTranslation } from 'react-i18next'
 import { View } from './types'
 import {
   Main,
@@ -11,6 +12,11 @@ import {
   ImageSide,
   ImageContainer,
   Stripe,
+  WelcomeTitle,
+  WelcomeMsg,
+  SignInSignUpSelector,
+  Option,
+  Img,
 } from './subComponents'
 
 const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
@@ -19,6 +25,7 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
   const [authView, setAuthView] = React.useState<View>(view === 'register' ? 'register' : 'login')
   const [justRegistered, setJustRegistered] = React.useState(false)
   const [isRedirected, setRedirected] = React.useState(false)
+  const [t] = useTranslation()
 
   function handleViewChange (view: View) {
     switch (view) {
@@ -63,17 +70,27 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
 
       <FormSide>
         <FormContainer>
-          <h1 style={{ color: 'var(--gray-800)' }}>Welcome</h1>
-          Form container!!
+          <WelcomeTitle>{t('login.welcomeTitle')}</WelcomeTitle>
+          <WelcomeMsg>{t('login.welcomeMsg')}</WelcomeMsg>
+
+          <SignInSignUpSelector>
+            <Option onClick={() => handleViewChange('login')}>{t('login.signIn')}</Option>
+            <Option onClick={() => handleViewChange('register')}>{t('login.signUp')}</Option>
+          </SignInSignUpSelector>
+
         </FormContainer>
       </FormSide>
 
       <Stripe>
         <ImageSide>
           <ImageContainer>
-            Image container!!!
+            {authView === 'login' &&
+              <Img src={requireImage('woman_login.svg')} />}
+            {authView === 'register' &&
+              <Img src={requireImage('woman_register.svg')} />}
           </ImageContainer>
         </ImageSide>
+
       </Stripe>
 
     </Main>

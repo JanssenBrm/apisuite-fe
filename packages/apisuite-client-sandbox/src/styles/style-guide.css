@@ -1,26 +1,35 @@
 :root {
   /* Background */
-  --light-background: #FFFFFF;
-  --primary-background: #035E86;
+  --light-background: rgba(255, 255, 255, 1);
+  --primary-background: rgba(3, 94, 134, 1);
 
   /* Accents */
-  --primary-accent: #08597D;
+  --primary-accent: rgba(8, 89, 125, 1);
+  --primary-accent-low-opacity: rgba(8, 89, 125, 0.9);
 
   /* Grays */ 
-  --gray-800: #333333;
+  --gray-800: rgba(51, 51, 51, 1);
+  --gray-600: rgba(100, 100, 100, 1);
 
-  --max-width: 1280px;
+  /* Screen Sizes */
+  --large-screen: 1280px;
+  --medium-screen: 1024px;
+  --small-screen: 640px;
 }
-
 
 h1 {
   font-size: 43px;
-  font-weight: 700;
   line-height: 50px;
+  font-weight: bold;
 }
 
 h3 {
   font-size: 24px;
   line-height: 32px;
   font-weight: 500;
+}
+
+p {
+  font-size: 18px;
+  line-height: 28px;
 }
