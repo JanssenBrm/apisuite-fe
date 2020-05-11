@@ -3,6 +3,7 @@ import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
 import { useTheme } from '@material-ui/core/styles'
 import { Theme } from 'themes/types'
+import LocaleSelect from 'language/LocaleSelect'
 
 import './styles.scss'
 
@@ -35,7 +36,7 @@ const Footer = () => {
             </a>
           </div>
 
-          {/* <LocaleSelect /> */}
+          <LocaleSelect />
         </div>
 
         <div className='sections-container'>
