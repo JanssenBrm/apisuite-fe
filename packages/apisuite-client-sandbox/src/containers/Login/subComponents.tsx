@@ -88,10 +88,15 @@ export const WelcomeMsg = styled.p`
 export const WelcomeTitle = styled.h1`
 `
 
-export const SignInSignUpSelector = styled.div`
+export const LoginRegisterSelector = styled.div`
   display: flex;
 `
 
-export const Option = styled.button`
+export const Option = styled.button<{ selected: boolean }>`
   flex: 1 1 0;
+  height: 40px;
+  
+  color: ${props => props.selected ? 'var(--secondary)' : 'var(--gray-500)'};
+  font-weight: ${props => props.selected ? 'bold' : 'normal'};
+  border-bottom: ${props => props.selected ? '3px solid var(--secondary)' : '1px solid var(--gray-300)'};
 `

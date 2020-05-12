@@ -1,8 +1,8 @@
 import * as React from 'react'
-import LoginPortal from 'components/LoginPortal'
-import RegisterPortal from 'components/RegisterPortal'
 import { useTranslation } from 'react-i18next'
 import { View } from './types'
+import LoginPortal from 'components/LoginPortal'
+import RegisterPortal from 'components/RegisterPortal'
 import {
   Main,
   FormSide,
@@ -10,7 +10,7 @@ import {
   ImageSide,
   WelcomeTitle,
   WelcomeMsg,
-  SignInSignUpSelector,
+  LoginRegisterSelector,
   Option,
 } from './subComponents'
 
@@ -53,10 +53,10 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
           <WelcomeTitle>{t('login.welcomeTitle')}</WelcomeTitle>
           <WelcomeMsg>{t('login.welcomeMsg')}</WelcomeMsg>
 
-          <SignInSignUpSelector>
-            <Option onClick={() => setView('login')}>{t('login.signIn')}</Option>
-            <Option onClick={() => setView('register')}>{t('login.signUp')}</Option>
-          </SignInSignUpSelector>
+          <LoginRegisterSelector>
+            <Option selected={view === 'login'} onClick={() => setView('login')}>{t('login.loginBtn')}</Option>
+            <Option selected={view === 'register'} onClick={() => setView('register')}>{t('login.registerBtn')}</Option>
+          </LoginRegisterSelector>
 
           {view === 'login'
             ? <LoginPortal />

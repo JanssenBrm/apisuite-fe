@@ -1,19 +1,21 @@
 :root {
-  /* Background */
   --light-background: #FFFFFF;
   --primary-background: #035E86;
 
-  /* Primary */
   --primary: #08597D;
 
-  /* Grays */
-  --gray-800: #333333;
-  --gray-600: #646464;
+  --secondary: #2DB7BA;
 
-  /* Screen Sizes */
+  --gray-300: #D1D1D1;
+  --gray-500: #8B8B8B;
+  --gray-600: #646464;
+  --gray-800: #333333;
+
   --large-screen: 1280px;
   --medium-screen: 1024px;
   --small-screen: 640px;
+
+  --font-family: "Roboto", BlinkMacSystemFont, "Segoe UI", Ubuntu, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
 }
 
 h1 {
@@ -36,4 +38,14 @@ p {
   line-height: 28px;
   color: var(--gray-600);
   margin: 0;
+}
+
+button {
+  font-family: var(--font-family);
+  font-size: 14px;
+  line-height: 14px;
+  font-weight: bold;
+  border: none;
+  outline: none;
+  padding: 0;
 }

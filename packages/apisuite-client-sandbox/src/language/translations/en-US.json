@@ -153,6 +153,8 @@
   },
   "login": {
     "welcomeTitle": "Welcome",
-    "welcomeMsg": "Please feel free to login or register, it's completely free!"
+    "welcomeMsg": "Please feel free to login or register, it's completely free!",
+    "loginBtn": "Login",
+    "registerBtn": "Register"
   }
 }
