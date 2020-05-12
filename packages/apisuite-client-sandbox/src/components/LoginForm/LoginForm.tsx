@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { LoginPortalProps } from './types'
+import { LoginFormProps } from './types'
 import FormCard from 'components/FormCard'
 import FormField, { parseErrors, isValidEmail } from 'components/FormField'
 import useStyles from './styles'
@@ -10,7 +10,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 import { FormFieldEvent } from 'components/FormField/types'
 
-const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
+const LoginForm: React.FC<LoginFormProps> = ({ auth, login }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -65,7 +65,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
     <div className={classes.loginContainer}>
       <div>
         <FormCard
-          buttonLabel={t('loginPortal.button')}
+          buttonLabel={t('loginForm.button')}
           buttonDisabled={!isFormValid}
           loading={auth.isAuthorizing}
           error={auth.error}
@@ -88,7 +88,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
                 classes: { input: classes.emailTextfield },
               }}
               rules={[
-                { rule: isValidEmail(input.email), message: t('loginPortal.warnings.email') },
+                { rule: isValidEmail(input.email), message: t('loginForm.warnings.email') },
               ]}
             />
           </div>
@@ -118,7 +118,7 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
   </InputAdornment>,
                 }}
                 rules={[
-                  { rule: input.password.length > 0, message: t('loginPortal.warnings.password') },
+                  { rule: input.password.length > 0, message: t('loginForm.warnings.password') },
                 ]}
               />
             </div>
@@ -133,4 +133,4 @@ const LoginPortal: React.FC<LoginPortalProps> = ({ auth, login }) => {
   )
 }
 
-export default LoginPortal
+export default LoginForm

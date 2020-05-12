@@ -1,5 +1,5 @@
 /**
- * @module RegisterPortal/sagas
+ * @module RegisterForm/sagas
  */
 
 import { REGISTER_USER, registerActions } from './ducks'

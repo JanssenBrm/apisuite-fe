@@ -1,6 +1,6 @@
 
 import * as React from 'react'
-import { RegisterPortalProps } from './types'
+import { RegisterFormProps } from './types'
 import FormCard from 'components/FormCard'
 import FormField, { parseErrors, isValidEmail, isValidPass } from 'components/FormField'
 import useStyles from './styles'
@@ -11,7 +11,7 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 import { FormFieldEvent } from 'components/FormField/types'
 
-const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser, defaultEmail }) => {
+const RegisterForm: React.FC<RegisterFormProps> = ({ register, registerUser, defaultEmail }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -95,7 +95,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
                 classes: { input: classes.emailTextfield },
               }}
               rules={[
-                { rule: input.name.length > 0, message: t('registerPortal.warnings.name') },
+                { rule: input.name.length > 0, message: t('registerForm.warnings.name') },
               ]}
             />
           </div>
@@ -114,7 +114,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
                 classes: { input: classes.emailTextfield },
               }}
               rules={[
-                { rule: isValidEmail(input.email), message: t('registerPortal.warnings.email') },
+                { rule: isValidEmail(input.email), message: t('registerForm.warnings.email') },
               ]}
             />
           </div>
@@ -131,7 +131,7 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
                 errorPlacing='bottom'
                 onChange={handleInputs}
                 rules={[
-                  { rule: isValidPass(input.password), message: t('registerPortal.warnings.password') },
+                  { rule: isValidPass(input.password), message: t('registerForm.warnings.password') },
                 ]}
                 InputProps={{
                   classes: { input: classes.passPhrasefield },
@@ -156,4 +156,4 @@ const RegisterPortal: React.FC<RegisterPortalProps> = ({ register, registerUser,
   )
 }
 
-export default RegisterPortal
+export default RegisterForm

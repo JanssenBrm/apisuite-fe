@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import { View } from './types'
-import LoginPortal from 'components/LoginPortal'
-import RegisterPortal from 'components/RegisterPortal'
+import LoginForm from 'components/LoginForm'
+import RegisterForm from 'components/RegisterForm'
 import {
   Main,
   FormSide,
@@ -59,8 +59,8 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
           </LoginRegisterSelector>
 
           {view === 'login'
-            ? <LoginPortal />
-            : <RegisterPortal defaultEmail={defaultEmail()} />}
+            ? <LoginForm />
+            : <RegisterForm defaultEmail={defaultEmail()} />}
         </FormContainer>
       </FormSide>
 
@@ -81,9 +81,9 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
     //           </div>
     //           <div className='auth-form'>
     //             {authView === 'login' &&
-    //               <LoginPortal />}
+    //               <LoginForm />}
     //             {authView === 'register' &&
-    //               <RegisterPortal defaultEmail={defaultEmail()} />}
+    //               <RegisterForm defaultEmail={defaultEmail()} />}
     //             {justRegistered && <div className='user-created-feedback'>Your account is created, {register.user}!</div>}
     //           </div>
     //         </div>

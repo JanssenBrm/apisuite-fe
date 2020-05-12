@@ -1,6 +1,6 @@
 import update from 'immutability-helper'
 import { AuthStore, AuthStoreActionTypes, AuthPayloads } from './types'
-import { REGISTER_USER } from 'components/RegisterPortal/ducks'
+import { REGISTER_USER } from 'components/RegisterForm/ducks'
 import { Reducer, AnyAction, Dispatch } from 'redux'
 import { History } from 'history'
 import cookie from 'js-cookie'

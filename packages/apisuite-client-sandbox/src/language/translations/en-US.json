@@ -106,7 +106,7 @@
       }
     }
   },
-  "loginPortal": {
+  "loginForm": {
     "title": "Login",
     "button": "LOG IN",
     "warnings": {
@@ -118,7 +118,7 @@
       "password": "Pass Phrase"
     }
   },
-  "registerPortal": {
+  "registerForm": {
     "warnings": {
       "name": "Please enter your name.",
       "email": "Please enter a valid email address.",

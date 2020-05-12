@@ -4,7 +4,7 @@ export interface RegisterDispatchToProps {
   registerUser: (userData: UserData) => void,
 }
 
-export interface RegisterPortalProps extends RegisterDispatchToProps {
+export interface RegisterFormProps extends RegisterDispatchToProps {
   register: any,
   defaultEmail?: string,
 }

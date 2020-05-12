@@ -1,6 +1,6 @@
 import { AuthPayloads, AuthStore } from 'containers/Auth/types'
 
-export interface LoginPortalProps extends LoginDispatchToProps {
+export interface LoginFormProps extends LoginDispatchToProps {
   auth: AuthStore,
 }
 

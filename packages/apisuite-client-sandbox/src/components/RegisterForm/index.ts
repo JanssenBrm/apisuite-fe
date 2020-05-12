@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { registerActions } from './ducks'
-import RegisterPortal from './RegisterPortal'
+import RegisterForm from './RegisterForm'
 import { UserData } from './types'
 import { Dispatch } from 'redux'
 import { Store } from 'store/types'
@@ -13,4 +13,4 @@ const mapStateToProps = ({ register }: Store) => ({
   register: register,
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(RegisterPortal)
+export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)
