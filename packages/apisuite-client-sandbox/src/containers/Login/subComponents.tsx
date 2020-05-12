@@ -1,9 +1,10 @@
 import styled from 'styled-components'
+import loginImage from 'assets/loginImage.svg'
+import registerImage from 'assets/registerImage.svg'
+import { View } from './types'
 
-export const Main = styled.main.attrs({
-  className: 'main',
-})`
-  /* TODO: remove height if in the future #root becomes a flex column container */
+export const Main = styled.main`
+  display: flex;
   height: 100%;
   background-color: var(--light-background);
 
@@ -26,31 +27,48 @@ export const FormSide = styled.section`
   }
 `
 
-export const Stripe = styled.aside`
+export const ImageSide = styled.aside<{ view: View }>`
+  display: flex;
+  flex-direction: column;
   width: 55.75%;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 41px 100%);
-  background-color: var(--primary-accent);
+
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 51px 100%);
+  backface-visibility: hidden;
+
+  background-image: url(${props => props.view === 'login' ? loginImage : registerImage});
+  background-color: var(--primary-background);
+  background-repeat: no-repeat;
+  background-position: 57px center;
+
+  @media (max-width: 1440px) {
+    background-size: 80% auto;
+    background-position: center;
+  }
+
+  ::before {
+    content: '';
+    height: 100%;
+    clip-path: polygon(0 0, 12px 0, calc(57px + 12px) 100%, 51px 100%);
+    background-color: var(--primary);
+  }
 
   @media (max-width: 1024px) {
     width: 100%;
     height: 41.5%;
+    min-height: 375px;
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 22px));
-    background-color: var(--primary-accent-low-opacity);
-  }
-`
+    background-position: center -12px;
+    background-size: auto 115%;
 
-export const ImageSide = styled.aside`
-  display: flex;
-  height: 100%;
-  width: 100%;
-  clip-path: polygon(10px 0, 100% 0, 100% 100%, calc(41px + 10px) 100%);
-  align-items: center;
-  justify-content: start;
-  background-color: var(--primary-background);
-
-  @media (max-width: 1024px) {
-    justify-content: center;
-    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 12px), 0 calc(100% - 22px - 12px));
+    ::before {
+      position: absolute;
+      width: 100%;
+      height: 41.5%;
+      min-height: 375px;
+      background-color: var(--primary);
+      opacity: 0.1;
+      clip-path: polygon(0 calc(100% - 12px - 22px), 100% calc(100% - 12px), 100% 100%, 0 calc(100% - 22px));
+    }
   }
 `
 
@@ -64,21 +82,10 @@ export const FormContainer = styled.section`
   }
 `
 
-export const ImageContainer = styled.aside`
-  margin: 0 auto 0 calc(57px - 10px);
-  padding: 0 10px 0 10px;
-
-  @media (max-width: 1024px) {
-    margin: 0;
-  }
-`
-
 export const WelcomeMsg = styled.p`
-  color: var(--gray-600);
 `
 
 export const WelcomeTitle = styled.h1`
-  color: var(--gray-800);
 `
 
 export const SignInSignUpSelector = styled.div`
@@ -87,12 +94,4 @@ export const SignInSignUpSelector = styled.div`
 
 export const Option = styled.button`
   flex: 1 1 0;
-`
-
-export const Img = styled.img`
-  @media (max-width: 1024px) {
-    width: 385px;
-    height: 391px;
-    transform: translateY(36px);
-  }
 `

@@ -1,8 +1,6 @@
 import * as React from 'react'
 import LoginPortal from 'components/LoginPortal'
 import RegisterPortal from 'components/RegisterPortal'
-import classnames from 'classnames'
-import requireImage from 'util/requireImage'
 import { useTranslation } from 'react-i18next'
 import { View } from './types'
 import {
@@ -10,40 +8,23 @@ import {
   FormSide,
   FormContainer,
   ImageSide,
-  ImageContainer,
-  Stripe,
   WelcomeTitle,
   WelcomeMsg,
   SignInSignUpSelector,
   Option,
-  Img,
 } from './subComponents'
 
 const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
-  const view = match.params.view
+  const viewParam = match.params.view
   const encodedEmail = match.params.email
-  const [authView, setAuthView] = React.useState<View>(view === 'register' ? 'register' : 'login')
+  const [view, setView] = React.useState<View>(viewParam === 'register' ? 'register' : 'login')
   const [justRegistered, setJustRegistered] = React.useState(false)
   const [isRedirected, setRedirected] = React.useState(false)
   const [t] = useTranslation()
 
-  function handleViewChange (view: View) {
-    switch (view) {
-      case 'login':
-        setAuthView(view)
-        break
-      case 'register':
-        setAuthView(view)
-        break
-      default:
-        setAuthView('login')
-    }
-    setJustRegistered(false)
-  }
-
   React.useEffect(() => {
     if (register.isRegistered) {
-      handleViewChange('login')
+      setView('login')
       setJustRegistered(true)
 
       setTimeout(() => {
@@ -52,7 +33,7 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
     }
 
     if (match.params.email && !isRedirected) {
-      handleViewChange('register')
+      setView('register')
       setRedirected(true)
     }
   }, [register.isRegistered])
@@ -67,32 +48,23 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
 
   return (
     <Main>
-
       <FormSide>
         <FormContainer>
           <WelcomeTitle>{t('login.welcomeTitle')}</WelcomeTitle>
           <WelcomeMsg>{t('login.welcomeMsg')}</WelcomeMsg>
 
           <SignInSignUpSelector>
-            <Option onClick={() => handleViewChange('login')}>{t('login.signIn')}</Option>
-            <Option onClick={() => handleViewChange('register')}>{t('login.signUp')}</Option>
+            <Option onClick={() => setView('login')}>{t('login.signIn')}</Option>
+            <Option onClick={() => setView('register')}>{t('login.signUp')}</Option>
           </SignInSignUpSelector>
 
+          {view === 'login'
+            ? <LoginPortal />
+            : <RegisterPortal defaultEmail={defaultEmail()} />}
         </FormContainer>
       </FormSide>
 
-      <Stripe>
-        <ImageSide>
-          <ImageContainer>
-            {authView === 'login' &&
-              <Img src={requireImage('woman_login.svg')} />}
-            {authView === 'register' &&
-              <Img src={requireImage('woman_register.svg')} />}
-          </ImageContainer>
-        </ImageSide>
-
-      </Stripe>
-
+      <ImageSide view={view} />
     </Main>
     // <div className='auth-page'>
     //   <div className='auth-left-wrapper' />
