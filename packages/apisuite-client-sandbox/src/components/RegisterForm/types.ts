@@ -14,7 +14,9 @@ import {
 
 export type RegisterFormProps =
 ReturnType<typeof mapStateToProps> &
-ReturnType<typeof mapDispatchToProps>
+ReturnType<typeof mapDispatchToProps> & {
+  prefilledEmail?: string,
+}
 
 export type Step = keyof typeof steps
 

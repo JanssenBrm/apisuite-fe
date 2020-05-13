@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next'
 import { View } from './types'
 import LoginForm from 'components/LoginForm'
 import RegisterForm from 'components/RegisterForm'
+import { decodeBase64 } from 'util/decodeBase64'
+import { useParams } from 'react-router'
 import {
   Main,
   FormSide,
@@ -14,19 +16,10 @@ import {
   Option,
 } from './subComponents'
 
-const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
-  const viewParam = match.params.view
-  const encodedEmail = match.params.email
+const Login: React.FC<{}> = () => {
+  const { view: viewParam, email: emailParam } = useParams()
   const [view, setView] = React.useState<View>(viewParam === 'register' ? 'register' : 'login')
   const [t] = useTranslation()
-
-  const defaultEmail = () => {
-    try {
-      return atob(encodedEmail)
-    } catch {
-      return ''
-    }
-  }
 
   return (
     <Main>
@@ -42,7 +35,7 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
 
           {view === 'login'
             ? <LoginForm />
-            : <RegisterForm defaultEmail={defaultEmail()} />}
+            : <RegisterForm prefilledEmail={decodeBase64(emailParam)} />}
         </FormContainer>
       </FormSide>
 

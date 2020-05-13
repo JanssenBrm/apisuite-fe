@@ -1,5 +1,8 @@
 import * as React from 'react'
-import { Route, Switch } from 'react-router'
+import {
+  Route,
+  Switch,
+} from 'react-router'
 import NotFound from 'components/NotFound'
 import Terms from 'components/Terms'
 import Privacy from 'components/Privacy'
@@ -11,10 +14,10 @@ import AppDetail from 'containers/Applications/AppDetail'
 import Subscriptions from 'containers/Subscriptions'
 import Console from 'containers/Console'
 import Login from 'containers/Login'
-// import Register from 'containers/Register'
 import { AppRouteProps } from './types'
 import RequireAuth from 'containers/Auth'
 import Instructions from 'containers/Instructions'
+import RegisterConfirmation from 'containers/RegisterConfirmation'
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
@@ -29,6 +32,7 @@ export const routesConfig: AppRouteProps[] = [
   // #conditional-loader-start: console
   // #conditional-loader-end
   { path: '/auth/:view?/:email?', exact: true, component: Login },
+  { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation },
   // { path: '/register', component: Register },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },

@@ -25,11 +25,12 @@ import {
 
 const PersonalDetailsForm: React.FC<{
   handleSubmit: (personalDetails: PersonalDetails) => void,
-}> = ({ handleSubmit }) => {
+  prefilledEmail?: string,
+}> = ({ handleSubmit, prefilledEmail = '' }) => {
   const [t] = useTranslation()
   const { formState, handleFocus, handleChange } = useForm({
     name: '',
-    email: '',
+    email: prefilledEmail,
   }, {
     name: {
       rules: [isRequired],
@@ -51,7 +52,7 @@ const PersonalDetailsForm: React.FC<{
       <input name='name' onChange={handleChange} onFocus={handleFocus} />
 
       <label>Email:</label>
-      <input name='email' onChange={handleChange} onFocus={handleFocus} />
+      <input name='email' value={formState.values.email} onChange={handleChange} onFocus={handleFocus} />
 
       <button type='submit' disabled={formState.isValid}>Submit</button>
     </form>
@@ -121,12 +122,12 @@ export let steps = {
   4: 'Success',
 }
 
-// const RegisterForm: React.FC<RegisterFormProps> = ({ register, registerUser, defaultEmail }) => {
 const RegisterForm: React.FC<RegisterFormProps> = ({
   step,
   submitPersonalDetails,
   submitOrganisationDetails,
   submitSecurityStep,
+  prefilledEmail = '',
 }) => {
   const [t] = useTranslation()
   steps = {
@@ -156,13 +157,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   const formStep = (step: keyof typeof steps) => {
     switch (step) {
       case 1:
-        return <PersonalDetailsForm handleSubmit={submitPersonalDetails} />
+        return <PersonalDetailsForm prefilledEmail={prefilledEmail} handleSubmit={submitPersonalDetails} />
       case 2:
         return <OrganisationDetailsForm handleSubmit={submitOrganisationDetails} />
       case 3:
         return <SecurityStepForm handleSubmit={submitSecurityStep} />
       case 4:
-        return <Redirect to='/' />
+        return <Redirect to='/confirmation' />
     }
   }
 
