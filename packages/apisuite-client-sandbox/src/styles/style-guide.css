@@ -6,6 +6,7 @@
 
   --secondary: #2DB7BA;
 
+  --gray-100: #EEEEEE;
   --gray-300: #D1D1D1;
   --gray-500: #8B8B8B;
   --gray-600: #646464;
@@ -47,5 +48,11 @@ button {
   font-weight: bold;
   border: none;
   outline: none;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
   padding: 0;
 }

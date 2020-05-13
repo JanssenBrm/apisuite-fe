@@ -1,12 +1,46 @@
 import * as React from 'react'
 import { StepsProgressProps } from './types'
+import {
+  Container,
+  StepProgress,
+  StepCircle,
+  Progress,
+} from './subComponents'
 
 const StepsProgress: React.FC<StepsProgressProps> = ({
   steps,
-  step,
+  currentStep,
 }) => {
-  console.log(steps, step)
-  return <div>AAA</div>
+  return (
+    <Container>
+      {Object.values(steps).slice(0, -1).map((step, indx) => (
+        <>
+          {indx === 0 &&
+            <StepProgress>
+              <StepCircle
+                step={step}
+                currentStep={currentStep}
+                indx={indx}
+              />
+            </StepProgress>}
+
+          {indx !== 0 &&
+            <StepProgress>
+              <Progress
+                step={step}
+                currentStep={currentStep}
+                indx={indx}
+              />
+              <StepCircle
+                step={step}
+                currentStep={currentStep}
+                indx={indx}
+              />
+            </StepProgress>}
+        </>
+      ))}
+    </Container>
+  )
 }
 
 export default StepsProgress

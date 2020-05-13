@@ -114,7 +114,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
 
   return (
     <>
-      <StepsProgress steps={steps} step={step} />
+      <StepsProgress steps={steps} currentStep={step} />
       {formStep(step)}
     </>
   )

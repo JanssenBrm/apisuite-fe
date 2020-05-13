@@ -3,5 +3,5 @@ import { steps } from 'components/RegisterForm/RegisterForm'
 
 export type StepsProgressProps = {
   steps: typeof steps,
-  step: Step,
+  currentStep: Step,
 }
