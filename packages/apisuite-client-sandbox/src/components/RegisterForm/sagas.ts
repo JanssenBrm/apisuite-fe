@@ -64,7 +64,7 @@ export function * submitSecurityStepSaga (
   try {
     const registrationToken = yield select(
       (state: Store) => state.register.registrationToken)
-    const response = yield call(request, {
+    yield call(request, {
       url: `${API_URL}/registration/security`,
       method: 'POST',
       headers: {
@@ -73,7 +73,6 @@ export function * submitSecurityStepSaga (
       },
       data: JSON.stringify(action.payload),
     })
-    console.log(response)
 
     // yield put(submitPersonalDetailsActions.success())
     yield put(nextStepAction())

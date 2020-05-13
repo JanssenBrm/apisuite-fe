@@ -1,8 +1,19 @@
 import * as React from 'react'
-import { RegisterFormProps } from './types'
+import {
+  RegisterFormProps,
+  PersonalDetails,
+  OrganisationDetails,
+  SecurityStep,
+} from './types'
 import { useTranslation } from 'react-i18next'
 import { Redirect } from 'react-router-dom'
 import StepsProgress from 'components/StepsProgress'
+import { useForm } from 'util/useForm'
+import {
+  isRequired,
+  isValidEmail,
+  isValidPass,
+} from 'util/validations'
 // import FormCard from 'components/FormCard'
 // import FormField, { parseErrors, isValidEmail, isValidPass } from 'components/FormField'
 // import useStyles from './styles'
@@ -12,49 +23,92 @@ import StepsProgress from 'components/StepsProgress'
 // import InputAdornment from '@material-ui/core/InputAdornment'
 // import { FormFieldEvent } from 'components/FormField/types'
 
-const PersonalDetails: React.FC<{handleSubmit: any}> = ({ handleSubmit }) => {
+const PersonalDetailsForm: React.FC<{
+  handleSubmit: (personalDetails: PersonalDetails) => void,
+}> = ({ handleSubmit }) => {
+  const [t] = useTranslation()
+  const { formState, handleFocus, handleChange } = useForm({
+    name: '',
+    email: '',
+  }, {
+    name: {
+      rules: [isRequired],
+      message: t('registerForm.warnings.name'),
+    },
+    email: {
+      rules: [isValidEmail],
+      message: t('registerForm.warnings.email'),
+    },
+  })
+
   return (
     <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-      handleSubmit({
-        name: 'johnaa',
-        email: 'john@gmmaiaaal.com',
-      })
+      handleSubmit(formState.values)
     }}
     >
-      <input name='name' />
-      <button type='submit'>Submit</button>
+      <label>Name:</label>
+      <input name='name' onChange={handleChange} onFocus={handleFocus} />
+
+      <label>Email:</label>
+      <input name='email' onChange={handleChange} onFocus={handleFocus} />
+
+      <button type='submit' disabled={formState.isValid}>Submit</button>
     </form>
   )
 }
 
-const OrganisationDetails: React.FC<{handleSubmit: any}> = ({ handleSubmit }) => {
+const OrganisationDetailsForm: React.FC<{
+  handleSubmit: (organisationDetails: OrganisationDetails) => void,
+}> = ({ handleSubmit }) => {
+  const { formState, handleFocus, handleChange } = useForm({
+    name: '',
+    website: '',
+    vat: '',
+  })
+
   return (
     <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-      handleSubmit({
-        name: 'johnOrgaaaa',
-        website: 'www.johnOasdasrgaaa.com',
-        vat: '12342323',
-      })
+      handleSubmit(formState.values)
     }}
     >
-      <input name='name' />
-      <button type='submit'>Submit</button>
+      <label>Organisation Name:</label>
+      <input name='name' onChange={handleChange} onFocus={handleFocus} />
+
+      <label>Website:</label>
+      <input name='website' onChange={handleChange} onFocus={handleFocus} />
+
+      <label>VAT:</label>
+      <input name='vat' onChange={handleChange} onFocus={handleFocus} />
+
+      <button type='submit' disabled={formState.isValid}>Submit</button>
     </form>
   )
 }
 
-const SecurityStep: React.FC<{handleSubmit: any}> = ({ handleSubmit }) => {
+const SecurityStepForm: React.FC<{
+  handleSubmit: (securityStep: SecurityStep) => void,
+}> = ({ handleSubmit }) => {
+  const [t] = useTranslation()
+  const { formState, handleFocus, handleChange } = useForm({
+    password: '',
+  }, {
+    password: {
+      rules: [isValidPass],
+      message: t('registerForm.warnings.password'),
+    },
+  })
+
   return (
     <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
-      handleSubmit({
-        password: 'ezpasswordAAA$B$$',
-      })
+      handleSubmit(formState.values)
     }}
     >
-      <input name='security' />
+      <label>Password:</label>
+      <input name='password' onChange={handleChange} onFocus={handleFocus} />
+
       <button type='submit'>Submit</button>
     </form>
   )
@@ -102,11 +156,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   const formStep = (step: keyof typeof steps) => {
     switch (step) {
       case 1:
-        return <PersonalDetails handleSubmit={submitPersonalDetails} />
+        return <PersonalDetailsForm handleSubmit={submitPersonalDetails} />
       case 2:
-        return <OrganisationDetails handleSubmit={submitOrganisationDetails} />
+        return <OrganisationDetailsForm handleSubmit={submitOrganisationDetails} />
       case 3:
-        return <SecurityStep handleSubmit={submitSecurityStep} />
+        return <SecurityStepForm handleSubmit={submitSecurityStep} />
       case 4:
         return <Redirect to='/' />
     }

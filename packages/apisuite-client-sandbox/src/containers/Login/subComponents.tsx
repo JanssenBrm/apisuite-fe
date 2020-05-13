@@ -83,9 +83,11 @@ export const FormContainer = styled.section`
 `
 
 export const WelcomeMsg = styled.p`
+  color: var(--gray-600);
 `
 
 export const WelcomeTitle = styled.h1`
+  color: var(--gray-800);
 `
 
 export const LoginRegisterSelector = styled.div`

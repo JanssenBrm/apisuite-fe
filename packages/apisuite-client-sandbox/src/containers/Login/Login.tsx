@@ -18,25 +18,7 @@ const Login: React.FC<{match: any; register: any}> = ({ match, register }) => {
   const viewParam = match.params.view
   const encodedEmail = match.params.email
   const [view, setView] = React.useState<View>(viewParam === 'register' ? 'register' : 'login')
-  const [justRegistered, setJustRegistered] = React.useState(false)
-  const [isRedirected, setRedirected] = React.useState(false)
   const [t] = useTranslation()
-
-  React.useEffect(() => {
-    if (register.isRegistered) {
-      setView('login')
-      setJustRegistered(true)
-
-      setTimeout(() => {
-        setJustRegistered(false)
-      }, 2000)
-    }
-
-    if (match.params.email && !isRedirected) {
-      setView('register')
-      setRedirected(true)
-    }
-  }, [register.isRegistered])
 
   const defaultEmail = () => {
     try {
