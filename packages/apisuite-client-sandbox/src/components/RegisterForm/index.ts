@@ -1,16 +1,24 @@
 import { connect } from 'react-redux'
-import { registerActions } from './ducks'
+import {
+  submitPersonalDetailsActions,
+  submitOrganisationDetailsActions,
+  submitSecurityStepActions,
+} from './ducks'
 import RegisterForm from './RegisterForm'
-import { UserData } from './types'
-import { Dispatch } from 'redux'
+import {
+  Dispatch,
+  bindActionCreators,
+} from 'redux'
 import { Store } from 'store/types'
 
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  registerUser: (userData: UserData) => dispatch(registerActions.registerUser(userData)),
+export const mapStateToProps = ({ register }: Store) => ({
+  step: register.step,
 })
 
-const mapStateToProps = ({ register }: Store) => ({
-  register: register,
-})
+export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
+  submitOrganisationDetails: submitOrganisationDetailsActions.request,
+  submitPersonalDetails: submitPersonalDetailsActions.request,
+  submitSecurityStep: submitSecurityStepActions.request,
+}, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)

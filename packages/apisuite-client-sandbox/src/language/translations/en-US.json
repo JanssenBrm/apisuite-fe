@@ -123,6 +123,11 @@
       "name": "Please enter your name.",
       "email": "Please enter a valid email address.",
       "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long."
+    },
+    "steps": {
+      "personalDetails": "Personal Details",
+      "organisationDetails": "Organisation Details",
+      "securityStep": "Security Step"
     }
   },
   "listApps": {
