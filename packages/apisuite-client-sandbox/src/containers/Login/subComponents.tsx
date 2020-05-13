@@ -16,7 +16,9 @@ export const Main = styled.main`
 export const FormSide = styled.section`
   display: flex;
   width: calc(100% - 55.75%);
-  align-items: center;
+  height: 50%;
+  margin: auto 0 auto 0;
+  align-items: flex-start;
   justify-content: end;
 
   @media (max-width: 1024px) {
@@ -39,11 +41,6 @@ export const ImageSide = styled.aside<{ view: View }>`
   background-color: var(--primary-background);
   background-repeat: no-repeat;
   background-position: 57px center;
-
-  @media (max-width: 1440px) {
-    background-size: 80% auto;
-    background-position: center;
-  }
 
   ::before {
     content: '';
@@ -69,6 +66,11 @@ export const ImageSide = styled.aside<{ view: View }>`
       opacity: 0.1;
       clip-path: polygon(0 calc(100% - 12px - 22px), 100% calc(100% - 12px), 100% 100%, 0 calc(100% - 22px));
     }
+  }
+
+  @media (max-width: 1440px) {
+    background-size: 80% auto;
+    background-position: center;
   }
 `
 

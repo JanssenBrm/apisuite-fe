@@ -41,38 +41,6 @@ const Login: React.FC<{}> = () => {
 
       <ImageSide view={view} />
     </Main>
-    // <div className='auth-page'>
-    //   <div className='auth-left-wrapper' />
-    //   <div className='content-wrapper'>
-    //     <div className='auth-content-left'>
-    //       <div className='auth-content-stripe' />
-    //       <div className='auth-forms-wrapper'>
-    //         <h1>Welcome</h1>
-    //         <div className='subtitle'>Please feel free to login or register, it's completely free!</div>
-    //         <div className='auth-block'>
-    //           <div className='auth-selector'>
-    //             <div className={classnames({ selected: authView === 'login' })} onClick={() => handleViewChange('login')}>Login</div>
-    //             <div className={classnames({ selected: authView === 'register' })} onClick={() => handleViewChange('register')}>Register</div>
-    //           </div>
-    //           <div className='auth-form'>
-    //             {authView === 'login' &&
-    //               <LoginForm />}
-    //             {authView === 'register' &&
-    //               <RegisterForm defaultEmail={defaultEmail()} />}
-    //             {justRegistered && <div className='user-created-feedback'>Your account is created, {register.user}!</div>}
-    //           </div>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <div className='auth-content-right'>
-    //       {authView === 'login' &&
-    //         <img src={requireImage('woman_login.svg')} />}
-    //       {authView === 'register' &&
-    //         <img src={requireImage('woman_register.svg')} />}
-    //     </div>
-    //   </div>
-    //   <div className='auth-right-wrapper' />
-    // </div>
   )
 }
 

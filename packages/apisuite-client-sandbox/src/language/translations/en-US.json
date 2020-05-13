@@ -162,5 +162,9 @@
     "welcomeMsg": "Please feel free to login or register, it's completely free!",
     "loginBtn": "Login",
     "registerBtn": "Register"
+  },
+  "registerConfirmation": {
+    "messageTitle": "Thanks for joining us!",
+    "message": "A verification link has been sent to your email address. Please follow the instruction to finish your registration!"
   }
 }
