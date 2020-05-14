@@ -79,8 +79,9 @@ const ForgotPasswordPage: React.FC<{
           <MessageContainer>
             <MessageTitle>{t('forgotPassword.sent.messageTitle')}</MessageTitle>
             <Message>{t('forgotPassword.sent.message')}</Message>
+            {/* TODO: removed once implemented */}
+            <p><em>This feature is currently in development</em></p>
           </MessageContainer>}
-
       </MessageSide>
 
       <ImageSide />
