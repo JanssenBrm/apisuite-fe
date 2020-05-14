@@ -123,6 +123,35 @@ export function useForm<FormValues extends FieldValues> (
     return valid
   }
 
+  const checkInitialErrors = () => {
+    return Object.keys(formState.values).reduce(
+      (obj, key) => {
+        let error = false
+
+        if (rules) {
+          const fieldRules = rules[key]
+
+          if (fieldRules) {
+            error = isError(formState.values[key], fieldRules.rules)
+          }
+        }
+
+        return ({
+          ...obj,
+          [key]: error,
+        })
+      },
+      {} as Record<FieldName<FormValues>, boolean>,
+    )
+  }
+
+  React.useEffect(() => {
+    setFormState({
+      ...formState,
+      errors: checkInitialErrors(),
+    })
+  }, [])
+
   const validate = (name: FieldName<FormValues>, value: string | number) => {
     if (rules) {
       const fieldRules = rules[name]

@@ -92,10 +92,12 @@ export const FormContainer = styled.section`
 
 export const WelcomeMsg = styled.p`
   color: var(--gray-600);
+  margin-bottom: 24px;
 `
 
 export const WelcomeTitle = styled.h1`
-  color: var(--gray-800);
+  color: var(--gray-700);
+  margin-bottom: 4px;
 `
 
 export const LoginRegisterSelector = styled.div`
@@ -106,7 +108,14 @@ export const Option = styled.button<{ selected: boolean }>`
   flex: 1 1 0;
   height: 40px;
   
+  cursor: pointer;
   color: ${props => props.selected ? 'var(--secondary)' : 'var(--gray-500)'};
   font-weight: ${props => props.selected ? 'bold' : 'normal'};
   border-bottom: ${props => props.selected ? '3px solid var(--secondary)' : '1px solid var(--gray-300)'};
+
+  :hover {
+    color: var(--gray-500);
+    font-weight: bold;
+    border-bottom: 2px solid var(--gray-500);
+  }
 `

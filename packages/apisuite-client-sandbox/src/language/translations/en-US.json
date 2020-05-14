@@ -110,7 +110,7 @@
     "title": "Login",
     "button": "LOG IN",
     "warnings": {
-      "email": "Please enter a valid email address.",
+      "email": "Please enter a valid e-mail address.",
       "password": "Please fill in your pass phrase."
     },
     "fields": {
@@ -121,7 +121,7 @@
   "registerForm": {
     "warnings": {
       "name": "Please enter your name.",
-      "email": "Please enter a valid email address.",
+      "email": "Please enter a valid e-mail address.",
       "organisationName": "Please enter the name of your organisation.",
       "website": "Please enter a valid website for your organisation.",
       "vat": "Please enter your organisations' VAT.",
