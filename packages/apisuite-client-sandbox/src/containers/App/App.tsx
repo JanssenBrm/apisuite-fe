@@ -40,7 +40,8 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
     if (pathname.startsWith('/auth') ||
     pathname.startsWith('/confirmation') ||
-    pathname.startsWith('/registration')) {
+    pathname.startsWith('/registration') ||
+    pathname.startsWith('/forgot')) {
       setNavigations(false)
     } else {
       setNavigations(true)

@@ -12,6 +12,8 @@ const LOGIN_USER_SUCCESS = 'auth/LOGIN_USER_SUCCESS'
 const LOGIN_USER_ERROR = 'auth/LOGIN_USER_ERROR'
 const LOGOUT = 'auth/LOGOUT'
 
+export const RECOVER_PASSWORD = 'auth/RECOVER_PASSWORD'
+
 export const TOKEN_KEY = 'at'
 export const TOKEN_MAX_AGE = 30 // <-- 1 month
 
@@ -89,6 +91,7 @@ export const authActions = {
   loginError: (error: AuthPayloads['loginError']) => ({ type: LOGIN_ERROR, error }),
   loginUserSuccess: (payload: AuthPayloads['loginUserSuccess']) => ({ type: LOGIN_USER_SUCCESS, payload }),
   loginUserError: (error: AuthPayloads['loginUserError']) => ({ type: LOGIN_USER_ERROR, error }),
+  recoverPassword: (payload: AuthPayloads['recoverPassword']) => ({ type: RECOVER_PASSWORD, payload }),
   logout: () => ({ type: LOGOUT }),
 }
 

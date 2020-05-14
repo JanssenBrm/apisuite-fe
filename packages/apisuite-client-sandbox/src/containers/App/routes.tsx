@@ -19,6 +19,7 @@ import RequireAuth from 'containers/Auth'
 import Instructions from 'containers/Instructions'
 import RegisterConfirmation from 'containers/RegisterConfirmation'
 import RedirectPage from 'containers/RedirectPage'
+import ForgotPasswordPage from 'containers/ForgotPasswordPage'
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
@@ -35,7 +36,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/auth/:view?/:email?', exact: true, component: Login },
   { path: '/registration/confirm', exact: true, component: RedirectPage },
   { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation },
-  // { path: '/register', component: Register },
+  { path: '/forgot', exact: true, component: ForgotPasswordPage },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
   { render: () => <NotFound /> },

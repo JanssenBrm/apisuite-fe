@@ -9,6 +9,7 @@ import { useTranslation } from 'react-i18next'
 import { Redirect } from 'react-router-dom'
 import StepsProgress from 'components/StepsProgress'
 import { useForm } from 'util/useForm'
+// TODO: all of these will be reused so they should be changed to their own folder
 import {
   Form,
   Button,

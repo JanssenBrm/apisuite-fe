@@ -5,7 +5,8 @@ import { colorPicker } from 'util/colorPicker'
 const useStyles = makeStyles((theme: Theme) => ({
   loginContainer: {
     width: '100%',
-    height: '100%',
+    display: 'flex',
+    flexDirection: 'column',
   },
   emailTextfield: {
     backgroundColor: 'white',
@@ -65,6 +66,19 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     flexDirection: 'column',
     color: 'white',
+  },
+  forgotPassword: {
+    display: 'flex',
+    justifyContent: 'center',
+    fontSize: 13,
+    lineHeight: '14px',
+    color: '#ACACAC',
+    textDecoration: 'underline',
+    cursor: 'pointer',
+    '& hover': {
+      fontWeight: 'bold',
+      color: '#ACACAC',
+    },
   },
 }))
 
