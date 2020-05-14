@@ -89,9 +89,6 @@ export function useForm<FormValues extends FieldValues> (
   )
 
   const isFormValid = (errors: Record<FieldName<FormValues>, boolean>) => {
-    if (Object.values(errors).length < Object.values(defaultValues).length) {
-      return false
-    }
     if (Object.values(errors).includes(true)) return false
     return true
   }
@@ -149,9 +146,7 @@ export function useForm<FormValues extends FieldValues> (
   const handleChange = (event: React.ChangeEvent<UseFormHTMLElement>) => {
     event.persist()
 
-    if (formState.touched[event.target.name]) {
-      validate(event.target.name, event.target.value)
-    }
+    validate(event.target.name, event.target.value)
 
     setFormState((prevFormState: FormState<FormValues>) => ({
       ...prevFormState,

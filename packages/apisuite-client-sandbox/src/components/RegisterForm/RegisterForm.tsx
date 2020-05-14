@@ -44,16 +44,13 @@ const PersonalDetailsForm: React.FC<{
       handleSubmit(formState.values)
     }}
     >
-
-      {console.log(formState.isValid)}
-
-      {console.log(formState.values)}
-      {console.log(formState.errors)}
       <label>Name:</label>
       <input name='name' onChange={handleChange} onFocus={handleFocus} />
+      <p>{formState.touched.name && formState.errors.name && formState.errorMsgs.name}</p>
 
       <label>Email:</label>
       <input name='email' value={formState.values.email} onChange={handleChange} onFocus={handleFocus} />
+      <p>{formState.touched.email && formState.errors.email && formState.errorMsgs.email}</p>
 
       <button type='submit' disabled={!formState.isValid}>Submit</button>
     </Form>
