@@ -10,6 +10,9 @@ import { Redirect } from 'react-router-dom'
 import StepsProgress from 'components/StepsProgress'
 import { useForm } from 'util/useForm'
 import {
+  Form,
+} from './subComponents'
+import {
   isRequired,
   isValidEmail,
   isValidPass,
@@ -36,19 +39,24 @@ const PersonalDetailsForm: React.FC<{
   })
 
   return (
-    <form onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
+    <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
       event.preventDefault()
       handleSubmit(formState.values)
     }}
     >
+
+      {console.log(formState.isValid)}
+
+      {console.log(formState.values)}
+      {console.log(formState.errors)}
       <label>Name:</label>
       <input name='name' onChange={handleChange} onFocus={handleFocus} />
 
       <label>Email:</label>
       <input name='email' value={formState.values.email} onChange={handleChange} onFocus={handleFocus} />
 
-      <button type='submit' disabled={formState.isValid}>Submit</button>
-    </form>
+      <button type='submit' disabled={!formState.isValid}>Submit</button>
+    </Form>
   )
 }
 
@@ -81,9 +89,6 @@ const OrganisationDetailsForm: React.FC<{
       handleSubmit(formState.values)
     }}
     >
-
-      {console.log(formState)}
-
       <label>Organisation Name:</label>
       <input name='name' onChange={handleChange} onFocus={handleFocus} />
 
@@ -93,7 +98,7 @@ const OrganisationDetailsForm: React.FC<{
       <label>VAT:</label>
       <input name='vat' onChange={handleChange} onFocus={handleFocus} />
 
-      <button type='submit' disabled={formState.isValid}>Submit</button>
+      <button type='submit' disabled={!formState.isValid}>Submit</button>
     </form>
   )
 }
@@ -120,7 +125,7 @@ const SecurityStepForm: React.FC<{
       <label>Password:</label>
       <input name='password' onChange={handleChange} onFocus={handleFocus} />
 
-      <button type='submit'>Submit</button>
+      <button type='submit' disabled={!formState.isValid}>Submit</button>
     </form>
   )
 }

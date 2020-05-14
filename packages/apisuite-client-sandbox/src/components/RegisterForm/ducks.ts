@@ -22,6 +22,10 @@ export enum RegisterFormActionTypes {
   SUBMIT_SECURITY_STEP_SUCCESS = 'SUBMIT_SECURITY_STEP_SUCCESS',
   SUBMIT_SECURITY_STEP_ERROR = 'SUBMIT_SECURITY_STEP_ERROR',
 
+  CONFIRM_REGISTRATION_REQUEST = 'CONFIRM_REGISTRATION_REQUEST',
+  CONFIRM_REGISTRATION_SUCCESS = 'CONFIRM_REGISTRATION_SUCCESS',
+  CONFIRM_REGISTRATION_ERROR = 'CONFIRM_REGISTRATION_ERROR',
+
   NEXT_STEP = 'NEXT_STEP'
 }
 
@@ -147,6 +151,27 @@ export const submitSecurityStepActions = {
   error: (error: string) => {
     return {
       type: RegisterFormActionTypes.SUBMIT_SECURITY_STEP_ERROR,
+      error: error,
+    } as const
+  },
+}
+
+export const confirmRegistrationActions = {
+  request: (token: string) => {
+    return {
+      type: RegisterFormActionTypes.CONFIRM_REGISTRATION_REQUEST,
+      payload: { token: token },
+    } as const
+  },
+  success: (response: any) => {
+    return {
+      type: RegisterFormActionTypes.CONFIRM_REGISTRATION_SUCCESS,
+      response: response,
+    } as const
+  },
+  error: (error: string) => {
+    return {
+      type: RegisterFormActionTypes.CONFIRM_REGISTRATION_ERROR,
       error: error,
     } as const
   },

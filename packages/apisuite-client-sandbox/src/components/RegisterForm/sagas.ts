@@ -11,7 +11,9 @@ import {
   submitPersonalDetailsActions,
   submitOrganisationDetailsActions,
   submitSecurityStepActions,
+  confirmRegistrationActions,
 } from './ducks'
+import { openNotification } from 'containers/NotificationStack/ducks'
 import {
   Store,
 } from 'store/types'
@@ -81,10 +83,31 @@ export function * submitSecurityStepSaga (
   }
 }
 
+export function * confirmRegistrationSaga (
+  action: ReturnType<typeof confirmRegistrationActions.request>,
+) {
+  try {
+    yield call(request, {
+      url: `${API_URL}/registration/confirm`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(openNotification('success', 'We have confirmed your account, you can login!', 4000))
+    // yield put(confirmRegistrationActions.success())
+  } catch (error) {
+    yield put(confirmRegistrationActions.error(error))
+  }
+}
+
 function * rootSaga () {
   yield takeLatest(RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST, submitPersonalDetailsSaga)
   yield takeLatest(RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST, submitOrganisationDetailsSaga)
   yield takeLatest(RegisterFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST, submitSecurityStepSaga)
+  yield takeLatest(RegisterFormActionTypes.CONFIRM_REGISTRATION_REQUEST, confirmRegistrationSaga)
 }
 
 export default rootSaga

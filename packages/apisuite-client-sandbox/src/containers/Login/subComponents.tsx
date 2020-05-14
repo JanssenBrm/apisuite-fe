@@ -68,10 +68,16 @@ export const ImageSide = styled.aside<{ view: View }>`
     }
   }
 
-  @media (max-width: 1440px) {
-    background-size: 80% auto;
+  @media (min-width: 1024px) {
+    background-size: 85% auto;
+  }
+
+  @media (min-width: 1441px) {
+    background-size: 60% auto;
     background-position: center;
   }
+
+  
 `
 
 export const FormContainer = styled.section`
