@@ -123,6 +123,8 @@
       "name": "Please enter your name.",
       "email": "Please enter a valid email address.",
       "organisationName": "Please enter the name of your organisation.",
+      "website": "Please enter a valid website for your organisation.",
+      "vat": "Please enter your organisations' VAT.",
       "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long."
     },
     "steps": {

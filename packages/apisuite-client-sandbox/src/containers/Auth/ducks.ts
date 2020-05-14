@@ -1,6 +1,5 @@
 import update from 'immutability-helper'
 import { AuthStore, AuthStoreActionTypes, AuthPayloads } from './types'
-import { REGISTER_USER } from 'components/RegisterForm/ducks'
 import { Reducer, AnyAction, Dispatch } from 'redux'
 import { History } from 'history'
 import cookie from 'js-cookie'
@@ -56,11 +55,11 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
       })
     }
 
-    case REGISTER_USER: {
-      return update(state, {
-        error: { $set: undefined },
-      })
-    }
+    // case REGISTER_USER: {
+    //   return update(state, {
+    //     error: { $set: undefined },
+    //   })
+    // }
 
     case LOGIN_ERROR:
     case LOGIN_USER_ERROR: {

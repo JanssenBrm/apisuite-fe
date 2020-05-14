@@ -13,15 +13,8 @@ import {
   isRequired,
   isValidEmail,
   isValidPass,
+  isValidURL,
 } from 'util/validations'
-// import FormCard from 'components/FormCard'
-// import FormField, { parseErrors, isValidEmail, isValidPass } from 'components/FormField'
-// import useStyles from './styles'
-// import IconButton from '@material-ui/core/IconButton'
-// import Visibility from '@material-ui/icons/Visibility'
-// import VisibilityOff from '@material-ui/icons/VisibilityOff'
-// import InputAdornment from '@material-ui/core/InputAdornment'
-// import { FormFieldEvent } from 'components/FormField/types'
 
 const PersonalDetailsForm: React.FC<{
   handleSubmit: (personalDetails: PersonalDetails) => void,
@@ -62,10 +55,24 @@ const PersonalDetailsForm: React.FC<{
 const OrganisationDetailsForm: React.FC<{
   handleSubmit: (organisationDetails: OrganisationDetails) => void,
 }> = ({ handleSubmit }) => {
+  const [t] = useTranslation()
   const { formState, handleFocus, handleChange } = useForm({
     name: '',
     website: '',
     vat: '',
+  }, {
+    name: {
+      rules: [isRequired],
+      message: t('registerForm.warnings.organisationName'),
+    },
+    website: {
+      rules: [isRequired, isValidURL],
+      message: t('registerForm.warnings.website'),
+    },
+    vat: {
+      rules: [isRequired],
+      message: t('registerForm.warnings.vat'),
+    },
   })
 
   return (
@@ -74,6 +81,9 @@ const OrganisationDetailsForm: React.FC<{
       handleSubmit(formState.values)
     }}
     >
+
+      {console.log(formState)}
+
       <label>Organisation Name:</label>
       <input name='name' onChange={handleChange} onFocus={handleFocus} />
 
