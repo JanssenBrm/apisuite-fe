@@ -8,7 +8,6 @@ export const Main = styled.main`
   height: 100%;
   width: 100vw;
   background-color: var(--light-background);
-  overflowr: hidden;
 
   @media (max-width: 1024px) {
     flex-direction: column-reverse;

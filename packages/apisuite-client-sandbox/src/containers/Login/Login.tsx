@@ -15,8 +15,9 @@ import {
   LoginRegisterSelector,
   Option,
 } from './subComponents'
+import { History } from 'history'
 
-const Login: React.FC<{}> = () => {
+const Login: React.FC<{ history: History }> = ({ history }) => {
   const { view: viewParam, email: emailParam } = useParams()
   const [view, setView] = React.useState<View>(viewParam === 'register' ? 'register' : 'login')
   const [t] = useTranslation()
@@ -34,7 +35,7 @@ const Login: React.FC<{}> = () => {
           </LoginRegisterSelector>
 
           {view === 'login'
-            ? <LoginForm />
+            ? <LoginForm history={history} />
             : <RegisterForm prefilledEmail={decodeBase64(emailParam)} />}
         </FormContainer>
       </FormSide>

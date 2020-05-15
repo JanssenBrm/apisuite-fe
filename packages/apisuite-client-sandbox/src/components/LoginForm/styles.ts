@@ -70,6 +70,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   forgotPassword: {
     display: 'flex',
     justifyContent: 'center',
+    marginBottom: 40,
     fontSize: 13,
     lineHeight: '14px',
     color: '#ACACAC',
