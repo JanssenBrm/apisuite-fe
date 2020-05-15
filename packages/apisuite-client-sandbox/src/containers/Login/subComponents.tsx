@@ -6,7 +6,9 @@ import { View } from './types'
 export const Main = styled.main`
   display: flex;
   height: 100%;
+  width: 100vw;
   background-color: var(--light-background);
+  overflowr: hidden;
 
   @media (max-width: 1024px) {
     flex-direction: column-reverse;
@@ -107,6 +109,7 @@ export const LoginRegisterSelector = styled.div`
 export const Option = styled.button<{ selected: boolean }>`
   flex: 1 1 0;
   height: 40px;
+  background: none;
   
   cursor: pointer;
   color: ${props => props.selected ? 'var(--secondary)' : 'var(--gray-500)'};

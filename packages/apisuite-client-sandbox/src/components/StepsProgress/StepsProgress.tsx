@@ -27,6 +27,7 @@ const StepsProgress: React.FC<StepsProgressProps> = ({
           {indx !== 0 &&
             <StepProgress>
               <Progress
+                divideBy={Object.values(steps).slice(0, -1).length - 1}
                 step={step}
                 currentStep={currentStep}
                 indx={indx}

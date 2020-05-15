@@ -33,11 +33,21 @@ export const Progress = styled.progress<{
   step: string,
   currentStep: Step,
   indx: number,
+  divideBy: number,
 }>`
   -webkit-appearance: none;
+  -moz-appearance: none;
   height: 4px;
+  width: ${props => 180 / props.divideBy}px;
 
   &::-webkit-progress-bar {
+    background-image: ${props => props.indx === props.currentStep &&
+      'linear-gradient(to right, var(--secondary), var(--gray-100))'};
+    background-color: ${props => props.indx > props.currentStep
+    ? 'var(--gray-100)' : 'var(--secondary)'};
+  }
+
+  &::-moz-progress-bar {
     background-image: ${props => props.indx === props.currentStep &&
       'linear-gradient(to right, var(--secondary), var(--gray-100))'};
     background-color: ${props => props.indx > props.currentStep
@@ -54,6 +64,6 @@ export const Container = styled.ul`
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 90%;
-  margin: 36px auto 76px auto;
+  margin: 36px 0 76px 0;
+  width: 100%;
 `
