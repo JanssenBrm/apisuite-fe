@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import keyIllustration from 'assets/keyIllustration.png'
+import keyIllustration from 'assets/keyIllustration.svg'
 
 export const Main = styled.main`
   display: flex;

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import manSendingEmail from 'assets/manSendingEmail.png'
+import manSendingEmail from 'assets/manSendingEmail.svg'
 
 export const Main = styled.main`
   display: flex;
