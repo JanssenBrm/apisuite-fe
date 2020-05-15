@@ -37,7 +37,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     opacity: 0.5,
   },
   errorPlaceholder: {
-    minHeight: 50,
     marginTop: 30,
   },
   errorAlert: {

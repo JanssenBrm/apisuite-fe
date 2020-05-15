@@ -1,7 +1,6 @@
 import * as React from 'react'
 import { ThemeProvider } from '@material-ui/styles'
 import { Theme } from 'themes/types'
-import CssBaseline from '@material-ui/core/CssBaseline'
 
 import { config } from 'constants/global'
 import Navigation from 'components/Navigation'
@@ -39,7 +38,10 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
     const gb = gobackConfig.find((item) => pathname.includes(item.path))
 
-    if (pathname.startsWith('/auth')) {
+    if (pathname.startsWith('/auth') ||
+    pathname.startsWith('/confirmation') ||
+    pathname.startsWith('/registration') ||
+    pathname.startsWith('/forgot')) {
       setNavigations(false)
     } else {
       setNavigations(true)
@@ -83,7 +85,6 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
   return (
     <ThemeProvider theme={theme}>
-      <CssBaseline />
       {navigations &&
         <Navigation
           key='app-navigation'
