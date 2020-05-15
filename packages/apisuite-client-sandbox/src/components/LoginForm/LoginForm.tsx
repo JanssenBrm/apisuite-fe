@@ -10,7 +10,11 @@ import InputAdornment from '@material-ui/core/InputAdornment'
 import { useTranslation } from 'react-i18next'
 import { FormFieldEvent } from 'components/FormField/types'
 
-const LoginForm: React.FC<LoginFormProps> = ({ auth, login }) => {
+const LoginForm: React.FC<LoginFormProps> = ({
+  auth,
+  login,
+  history,
+}) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -125,8 +129,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ auth, login }) => {
       </FormCard>
       <a
         className={classes.forgotPassword}
-        // TODO: change this to be handled by react router
-        href='/forgot'
+        onClick={() => history.push('/forgot')}
       >
         Forgot password?
       </a>

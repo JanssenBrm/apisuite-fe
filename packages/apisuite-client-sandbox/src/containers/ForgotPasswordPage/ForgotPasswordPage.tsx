@@ -1,6 +1,6 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
-// TODO: change imports when these subcomponents get move to their own folders
+// TODO: change imports when these subcomponents get moved to their own folders
 import {
   Main,
   MessageContainer,
@@ -80,7 +80,7 @@ const ForgotPasswordPage: React.FC<{
             <MessageTitle>{t('forgotPassword.sent.messageTitle')}</MessageTitle>
             <Message>{t('forgotPassword.sent.message')}</Message>
             {/* TODO: removed once implemented */}
-            <p><em>This feature is currently in development</em></p>
+            <p><em>This feature is currently under development</em></p>
           </MessageContainer>}
       </MessageSide>
 
