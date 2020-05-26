@@ -9,7 +9,6 @@ import {
   submitPersonalDetailsActions,
   submitOrganisationDetailsActions,
   submitSecurityStepActions,
-  registerFormRequestsIState,
 } from './ducks'
 
 export type RegisterFormProps =
@@ -42,8 +41,9 @@ export type SecurityStep = {
 
 export type RegisterFormStore = {
   registrationToken?: string,
+  isRequesting: boolean,
+  error?: string,
   step: Step,
-  registerFormRequests: typeof registerFormRequestsIState,
 }
 
 export type RegisterFormActions =

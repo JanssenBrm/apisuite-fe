@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import { config } from 'constants/global'
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(({
   formCard: {
     display: 'block',
     // width: '40%',
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     color: 'white',
     padding: 8,
     border: '1px solid white',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: config.dimensions.borderRadius,
   },
   loading: {
     position: 'relative',
@@ -37,13 +37,14 @@ const useStyles = makeStyles((theme: Theme) => ({
     opacity: 0.5,
   },
   errorPlaceholder: {
+    minHeight: 50,
     marginTop: 30,
   },
   errorAlert: {
-    backgroundColor: theme.palette.error.main,
-    color: theme.palette.common.white,
+    backgroundColor: config.palette.feedback.error,
+    color: '#fff',
     padding: '12px 25px',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: config.dimensions.borderRadius,
     minHeight: 50,
   },
 }))

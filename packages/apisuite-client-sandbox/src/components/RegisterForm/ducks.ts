@@ -29,28 +29,11 @@ export enum RegisterFormActionTypes {
   NEXT_STEP = 'NEXT_STEP'
 }
 
-export const registerFormRequestsIState = {
-  submitPersonalDetails: {
-    isRequesting: false,
-    isError: false,
-    error: '',
-  },
-  submitOrganisationDetails: {
-    isRequesting: false,
-    isError: false,
-    error: '',
-  },
-  submitSecurityStep: {
-    isRequesting: false,
-    isError: false,
-    error: '',
-  },
-}
-
 const IState: RegisterFormStore = {
+  isRequesting: false,
+  error: undefined,
   registrationToken: undefined,
   step: 1,
-  registerFormRequests: registerFormRequestsIState,
 }
 
 export default function registerFormReducer (
@@ -72,17 +55,27 @@ export default function registerFormReducer (
     case RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_SUCCESS: {
       return update(state, {
         registrationToken: { $set: action.response.token },
+        isRequesting: { $set: false },
       })
     }
 
-    // case LOGIN: {
-    //   return update(state, {
-    //     isRegistering: { $set: false },
-    //     isRegistered: { $set: false },
-    //     user: { $set: undefined },
-    //     error: { $set: undefined },
-    //   })
-    // }
+    case RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST:
+    case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST:
+    case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST: {
+      return update(state, {
+        isRequesting: { $set: true },
+      })
+    }
+
+    case RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_ERROR:
+    case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_SUCCESS:
+    case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_ERROR:
+    case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_SUCCESS:
+    case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_ERROR: {
+      return update(state, {
+        isRequesting: { $set: false },
+      })
+    }
 
     default:
       return state
@@ -121,10 +114,9 @@ export const submitOrganisationDetailsActions = {
       payload: organisationDetails,
     } as const
   },
-  success: (response: any) => {
+  success: () => {
     return {
       type: RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_SUCCESS,
-      response: response,
     } as const
   },
   error: (error: string) => {
@@ -142,10 +134,9 @@ export const submitSecurityStepActions = {
       payload: securityStep,
     } as const
   },
-  success: (response: any) => {
+  success: () => {
     return {
       type: RegisterFormActionTypes.SUBMIT_SECURITY_STEP_SUCCESS,
-      response: response,
     } as const
   },
   error: (error: string) => {

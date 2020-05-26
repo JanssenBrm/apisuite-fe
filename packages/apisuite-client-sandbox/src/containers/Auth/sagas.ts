@@ -75,9 +75,11 @@ function * recoverPasswordSaga (action: AnyAction) {
       },
       data: JSON.stringify(action.payload),
     })
+
+    yield put(authActions.recoverPasswordSuccess())
   } catch (error) {
     // TODO: change to action
-    console.log('Error recovering e-mail')
+    authActions.recoverPasswordError(error)
   }
 }
 

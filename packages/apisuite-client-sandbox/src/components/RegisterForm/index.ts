@@ -12,7 +12,7 @@ import {
 import { Store } from 'store/types'
 
 export const mapStateToProps = ({ register }: Store) => ({
-  step: register.step,
+  register,
 })
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({

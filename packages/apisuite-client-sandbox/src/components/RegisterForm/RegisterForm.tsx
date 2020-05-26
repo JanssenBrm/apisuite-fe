@@ -8,253 +8,274 @@ import {
 import { useTranslation } from 'react-i18next'
 import { Redirect } from 'react-router-dom'
 import StepsProgress from 'components/StepsProgress'
-import { useForm } from 'util/useForm'
-// TODO: all of these will be reused so they should be changed to their own folder
-import {
-  Form,
-  Button,
-  Input,
-  Label,
-  Field,
-  ErrorMsg,
-  Placeholder,
-} from './subComponents'
-import {
-  isRequired,
+import IconButton from '@material-ui/core/IconButton'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import FormCard from 'components/FormCard'
+import FormField, {
+  parseErrors,
   isValidEmail,
+  isRequired,
   isValidPass,
   isValidURL,
-} from 'util/validations'
+} from 'components/FormField'
+import { FormFieldEvent } from 'components/FormField/types'
+import useStyles from './styles'
 
 const PersonalDetailsForm: React.FC<{
   handleSubmit: (personalDetails: PersonalDetails) => void,
-  prefilledEmail?: string,
-}> = ({ handleSubmit, prefilledEmail = '' }) => {
+  register: any,
+}> = ({ handleSubmit, register }) => {
+  const classes = useStyles()
   const [t] = useTranslation()
-  const { formState, handleFocus, handleChange } = useForm({
+
+  const [isFormValid, setFormValid] = React.useState(false)
+  const [errors, setErrors] = React.useState()
+  const [input, setInput] = React.useState({
+    email: '',
     name: '',
-    email: prefilledEmail,
-  }, {
-    name: {
-      rules: [isRequired],
-      message: t('registerForm.warnings.name'),
-    },
-    email: {
-      rules: [isValidEmail],
-      message: t('registerForm.warnings.email'),
-    },
   })
 
+  const handleInputs = (e: FormFieldEvent, err: any) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+    const eventTarget = e.target
+    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
+  }
+
+  React.useEffect(() => {
+    setFormValid(errors && errors.length === 0)
+  }, [errors])
+
   return (
-    <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault()
-      handleSubmit(formState.values)
-    }}
-    >
-      <Field>
-        <Placeholder>
-          <Label
-            focused={formState.focused.name}
-            error={formState.touched.name && formState.errors.name}
-          >
-            Name
-          </Label>
-        </Placeholder>
-        <Input
-          name='name'
-          placeholder='Name'
-          type='text'
-          onChange={handleChange}
-          onFocus={handleFocus}
-          focused={formState.focused.name}
-          autoFocus
-          error={formState.touched.name && formState.errors.name}
-        />
-        <Placeholder>
-          <ErrorMsg>{formState.touched.name && formState.errors.name && formState.errorMsgs.name}</ErrorMsg>
-        </Placeholder>
-      </Field>
-
-      <Field>
-        <Placeholder>
-          <Label
-            focused={formState.focused.email}
-            error={formState.touched.email && formState.errors.email}
-          >
-            E-mail
-          </Label>
-        </Placeholder>
-        <Input
-          name='email'
-          placeholder='E-mail'
-          type='email'
-          value={formState.values.email}
-          onChange={handleChange}
-          onFocus={handleFocus}
-          focused={formState.focused.email}
-          error={formState.touched.email && formState.errors.email}
-        />
-        <Placeholder>
-          <ErrorMsg>{formState.touched.email && formState.errors.email && formState.errorMsgs.email}</ErrorMsg>
-        </Placeholder>
-      </Field>
-
-      <Button type='submit' disabled={!formState.isValid}>Next</Button>
-    </Form>
+    <div className={classes.registerContainer}>
+      <FormCard
+        buttonLabel='Next'
+        buttonDisabled={!isFormValid}
+        handleSubmit={() => handleSubmit(input)}
+        loading={register.isRequesting}
+      >
+        <div className={classes.fieldContainer}>
+          <FormField
+            id='name-field'
+            label='Name'
+            variant='outlined'
+            type='text'
+            name='name'
+            value={input.name}
+            onChange={handleInputs}
+            autoFocus
+            fullWidth
+            errorPlacing='bottom'
+            InputProps={{
+              classes: { input: classes.textField },
+            }}
+            rules={[
+              { rule: isRequired(input.name), message: t('registerForm.warnings.name') },
+            ]}
+          />
+        </div>
+        <div className={classes.fieldContainer}>
+          <FormField
+            id='email-field'
+            label='E-mail'
+            variant='outlined'
+            type='email'
+            placeholder=''
+            name='email'
+            value={input.email}
+            onChange={handleInputs}
+            fullWidth
+            errorPlacing='bottom'
+            InputProps={{
+              classes: { input: classes.textField },
+            }}
+            rules={[
+              { rule: isValidEmail(input.email), message: t('registerForm.warnings.email') },
+            ]}
+          />
+        </div>
+      </FormCard>
+    </div>
   )
 }
 
 const OrganisationDetailsForm: React.FC<{
   handleSubmit: (organisationDetails: OrganisationDetails) => void,
-}> = ({ handleSubmit }) => {
+  register: any,
+}> = ({ handleSubmit, register }) => {
+  const classes = useStyles()
   const [t] = useTranslation()
-  const { formState, handleFocus, handleChange } = useForm({
+
+  const [isFormValid, setFormValid] = React.useState(false)
+  const [errors, setErrors] = React.useState()
+  const [input, setInput] = React.useState({
     name: '',
     website: '',
     vat: '',
-  }, {
-    name: {
-      rules: [isRequired],
-      message: t('registerForm.warnings.organisationName'),
-    },
-    website: {
-      rules: [isRequired, isValidURL],
-      message: t('registerForm.warnings.website'),
-    },
-    vat: {
-      rules: [isRequired],
-      message: t('registerForm.warnings.vat'),
-    },
   })
 
+  const handleInputs = (e: FormFieldEvent, err: any) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+    const eventTarget = e.target
+    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
+  }
+
+  React.useEffect(() => {
+    setFormValid(errors && errors.length === 0)
+  }, [errors])
+
   return (
-    <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault()
-      handleSubmit(formState.values)
-    }}
-    >
-      <Field>
-        <Placeholder>
-          <Label
-            focused={formState.focused.name}
-            error={formState.touched.name && formState.errors.name}
-          >
-            Organisation Name
-          </Label>
-        </Placeholder>
-        <Input
-          name='name'
-          placeholder='Organisation Name'
-          type='text'
-          onChange={handleChange}
-          onFocus={handleFocus}
-          focused={formState.focused.name}
-          autoFocus
-          error={formState.touched.name && formState.errors.name}
-        />
-        <Placeholder>
-          <ErrorMsg>{formState.touched.name && formState.errors.name && formState.errorMsgs.name}</ErrorMsg>
-        </Placeholder>
-      </Field>
-
-      <Field>
-        <Placeholder>
-          <Label
-            focused={formState.focused.website}
-            error={formState.touched.website && formState.errors.website}
-          >
-            Website
-          </Label>
-        </Placeholder>
-        <Input
-          name='website'
-          placeholder='Website'
-          type='url'
-          onChange={handleChange}
-          onFocus={handleFocus}
-          focused={formState.focused.website}
-          autoFocus
-          error={formState.touched.website && formState.errors.website}
-        />
-        <Placeholder>
-          <ErrorMsg>{formState.touched.website && formState.errors.website && formState.errorMsgs.website}</ErrorMsg>
-        </Placeholder>
-      </Field>
-
-      <Field>
-        <Placeholder>
-          <Label
-            focused={formState.focused.vat}
-            error={formState.touched.vat && formState.errors.vat}
-          >
-            VAT
-          </Label>
-        </Placeholder>
-        <Input
-          name='vat'
-          placeholder='VAT'
-          type='text'
-          onChange={handleChange}
-          onFocus={handleFocus}
-          focused={formState.focused.vat}
-          autoFocus
-          error={formState.touched.vat && formState.errors.vat}
-        />
-        <Placeholder>
-          <ErrorMsg>{formState.touched.vat && formState.errors.vat && formState.errorMsgs.vat}</ErrorMsg>
-        </Placeholder>
-      </Field>
-
-      <Button type='submit' disabled={!formState.isValid}>Next</Button>
-    </Form>
+    <div className={classes.registerContainer}>
+      <FormCard
+        buttonLabel='Next'
+        buttonDisabled={!isFormValid}
+        handleSubmit={() => handleSubmit(input)}
+        loading={register.isRequesting}
+      >
+        <div className={classes.fieldContainer}>
+          <FormField
+            id='name-field'
+            label='Organisation Name'
+            variant='outlined'
+            type='text'
+            name='name'
+            value={input.name}
+            onChange={handleInputs}
+            autoFocus
+            fullWidth
+            errorPlacing='bottom'
+            InputProps={{
+              classes: { input: classes.textField },
+            }}
+            rules={[
+              { rule: isRequired(input.name), message: t('registerForm.warnings.organisationName') },
+            ]}
+          />
+        </div>
+        <div className={classes.fieldContainer}>
+          <FormField
+            id='website-field'
+            label='Website'
+            variant='outlined'
+            type='text'
+            placeholder=''
+            name='website'
+            value={input.website}
+            onChange={handleInputs}
+            fullWidth
+            errorPlacing='bottom'
+            InputProps={{
+              classes: { input: classes.textField },
+            }}
+            rules={[
+              { rule: isValidURL(input.website), message: t('registerForm.warnings.website') },
+            ]}
+          />
+        </div>
+        <div className={classes.fieldContainer}>
+          <FormField
+            id='vat-field'
+            label='VAT'
+            variant='outlined'
+            type='text'
+            placeholder=''
+            name='vat'
+            value={input.vat}
+            onChange={handleInputs}
+            fullWidth
+            errorPlacing='bottom'
+            InputProps={{
+              classes: { input: classes.textField },
+            }}
+            rules={[
+              { rule: isRequired(input.vat), message: t('registerForm.warnings.vat') },
+            ]}
+          />
+        </div>
+      </FormCard>
+    </div>
   )
 }
 
 const SecurityStepForm: React.FC<{
   handleSubmit: (securityStep: SecurityStep) => void,
-}> = ({ handleSubmit }) => {
+  register: any,
+}> = ({ handleSubmit, register }) => {
+  const classes = useStyles()
   const [t] = useTranslation()
-  const { formState, handleFocus, handleChange } = useForm({
+
+  const [isFormValid, setFormValid] = React.useState(false)
+  const [showPassword, setShowPassword] = React.useState(false)
+  const [errors, setErrors] = React.useState()
+  const [input, setInput] = React.useState({
     password: '',
-  }, {
-    password: {
-      rules: [isValidPass],
-      message: t('registerForm.warnings.password'),
-    },
   })
 
-  return (
-    <Form onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault()
-      handleSubmit(formState.values)
-    }}
-    >
-      <Field>
-        <Placeholder>
-          <Label
-            focused={formState.focused.password}
-            error={formState.touched.password && formState.errors.password}
-          >
-            Password
-          </Label>
-        </Placeholder>
-        <Input
-          name='password'
-          placeholder='Password'
-          type='password'
-          onChange={handleChange}
-          onFocus={handleFocus}
-          focused={formState.focused.password}
-          autoFocus
-          error={formState.touched.password && formState.errors.password}
-        />
-        <Placeholder>
-          <ErrorMsg>{formState.touched.password && formState.errors.password && formState.errorMsgs.password}</ErrorMsg>
-        </Placeholder>
-      </Field>
+  const handleInputs = (e: FormFieldEvent, err: any) => {
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
+    const eventTarget = e.target
+    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
+  }
 
-      <Button type='submit' disabled={!formState.isValid}>Create Account</Button>
-    </Form>
+  React.useEffect(() => {
+    setFormValid(errors && errors.length === 0)
+  }, [errors])
+
+  function handleClickShowPassword () {
+    setShowPassword(!showPassword)
+  }
+
+  return (
+    <div className={classes.registerContainer}>
+      <FormCard
+        buttonLabel='Finish'
+        buttonDisabled={!isFormValid}
+        handleSubmit={() => handleSubmit(input)}
+        loading={register.isRequesting}
+      >
+        <div className={classes.fieldContainer}>
+          <div>
+            <FormField
+              id='pass-field'
+              label='Password'
+              variant='outlined'
+              type={showPassword ? 'text' : 'password'}
+              name='password'
+              value={input.password}
+              onChange={handleInputs}
+              fullWidth
+              errorPlacing='bottom'
+              InputProps={{
+                classes: { input: classes.textField },
+                endAdornment:
+  <InputAdornment position='end'>
+    <IconButton
+      aria-label='toggle password visibility'
+      onClick={handleClickShowPassword}
+      edge='end'
+    >
+      {showPassword ? <Visibility /> : <VisibilityOff />}
+    </IconButton>
+  </InputAdornment>,
+              }}
+              rules={[
+                { rule: isValidPass(input.password), message: t('registerForm.warnings.password') },
+              ]}
+            />
+          </div>
+        </div>
+      </FormCard>
+    </div>
   )
 }
 
@@ -266,12 +287,12 @@ export let steps = {
 }
 
 const RegisterForm: React.FC<RegisterFormProps> = ({
-  step,
+  register,
   submitPersonalDetails,
   submitOrganisationDetails,
   submitSecurityStep,
-  prefilledEmail = '',
 }) => {
+  const step = register.step
   const [t] = useTranslation()
   steps = {
     ...steps,
@@ -283,11 +304,11 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   const formStep = (step: keyof typeof steps) => {
     switch (step) {
       case 1:
-        return <PersonalDetailsForm prefilledEmail={prefilledEmail} handleSubmit={submitPersonalDetails} />
+        return <PersonalDetailsForm register={register} handleSubmit={submitPersonalDetails} />
       case 2:
-        return <OrganisationDetailsForm handleSubmit={submitOrganisationDetails} />
+        return <OrganisationDetailsForm register={register} handleSubmit={submitOrganisationDetails} />
       case 3:
-        return <SecurityStepForm handleSubmit={submitSecurityStep} />
+        return <SecurityStepForm register={register} handleSubmit={submitSecurityStep} />
       case 4:
         return <Redirect to='/confirmation' />
     }

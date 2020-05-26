@@ -1,4 +1,3 @@
-
 import * as React from 'react'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
@@ -8,91 +7,44 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-// import TextField from '@material-ui/core/TextField'
-// import FormGroup from '@material-ui/core/FormGroup'
-// import FormControlLabel from '@material-ui/core/FormControlLabel'
-// import Checkbox from '@material-ui/core/Checkbox'
-// import Link from '@material-ui/core/Link'
 import Carousel from 'components/Carousel'
-// import Wheel from 'components/ApiSuiteWheel'
+
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
-import { config } from 'constants/global'
+import ContentGenerator from 'components/ContentGenerator'
 
 import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
 import partnersUrl from 'assets/partners.png'
+import themeBg from 'theme/images/home_bg.png'
 
-const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
+const Sandbox: React.FC<{}> = () => {
   const classes = useStyles()
   const [t] = useTranslation()
-  // const [termsCheck, setTermsCheck] = React.useState(false)
 
-  // #conditional-loader-start: alert
-  window.alert(config.navbar.name)
-  // #conditional-loader-end
+  // const [termsCheck, setTermsCheck] = React.useState(false)
 
   // function handleCheckboxClick () {
   //   setTermsCheck(!termsCheck)
   // }
 
-  function handleTrigger () {
-    toggleInform()
-  }
-
   return (
-    <main className={classes.root}>
+    <main className={classes.root} style={{ backgroundImage: `url(${themeBg})` }}>
+
+      {/** #conditional-loader-start: instance */}
+      <ContentGenerator page='landing' />
+      {/** #conditional-loader-end */}
+
+      {/** #conditional-loader-start: demo */}
       <section className={classes.section}>
-        <Carousel autoplay interval={8000}>
-          {slidesConfig.map((slide) => (
-            <div key={slide.key} className={classes.slide}>
-              <img className={classes.slideImage} src={slide.imgUrl} alt='' />
-
-              <div className={classes.spacer} />
-
-              <section className={classes.slideInfo}>
-                <h1 className={classes.slideInfoH1}>{t(slide.title)}</h1>
-
-                {/** TODO: strings are not being escaped from translations, this needs to be reviwed */}
-                <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: t(slide.p1) }} />
-
-                {slide.p2 && (
-                  <p
-                    className={classes.slideInfoParagraph}
-                    dangerouslySetInnerHTML={{ __html: t(slide.p2) }}
-                  />
-                )}
-
-                <div
-                  role='button'
-                  arial-label='register'
-                  className={clsx(classes.btn, {
-                    [classes.btn2]: slide.btn === 2,
-                    [classes.btn3]: slide.btn === 3,
-                  })}
-                  onClick={slide.disabled ? handleTrigger : undefined}
-                >
-                  {!slide.disabled &&
-                    <a href={slide.linkTo} className={classes.buttonLink}>
-                      {t(slide.btnStr)}
-                    </a>}
-                  {slide.disabled &&
-                    <div>{t(slide.btnStr)}</div>}
-                </div>
-              </section>
-            </div>
-          ))}
-        </Carousel>
+        <Carousel slideConfig={slidesConfig} />
       </section>
+      <br /><br />
 
-      <br /><br /><br /><br />
-
-      <Panel>
-        <div className={classes.cardContent}>
-          <h1 className={classes.featuresTitle}>{t('sandboxPage.features.title')}</h1>
-          <p className={classes.featuresDesc}>{t('sandboxPage.features.desc')}</p>
-        </div>
-
+      <Panel
+        title={t('sandboxPage.features.title')}
+        subtitle={t('sandboxPage.features.desc')}
+      >
         <div className={classes.listContainer}>
           <List className={classes.list}>
             {featuresLeftConfig.map((item) => (
@@ -121,7 +73,6 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
           </List>
         </div>
 
-        {/** #conditional-loader-start: other */}
         <div className={classes.cardContent}>
           <h1 className={clsx(classes.featuresTitle, classes.otherTitle)}>
             {t('sandboxPage.otherTreats.title')}
@@ -157,12 +108,10 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
             ))}
           </List>
         </div>
-        {/** #conditional-loader-end */}
-
         <br />
       </Panel>
 
-      <br /><br /><br />
+      <br />
 
       <section className={classes.stepsContainer}>
         <Panel>
@@ -172,8 +121,6 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
               <h3 style={{ color: '#37E34D' }}>Add your app</h3>
               <p>You’ll need an app to send and recieve API calls.</p>
               <p>Adding your app details will help us enabling this flow.</p>
-
-              <div className={classes.spacer} />
 
               <Button
                 className={classes.stepBtn}
@@ -192,8 +139,6 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
                  we provide an overview of our available Sandbox API’s your apps can subscribe to.
               </p>
 
-              <div className={classes.spacer} />
-
               <Button
                 className={classes.stepBtn}
                 variant='outlined'
@@ -210,8 +155,6 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
                 Once your app and API subscriptions are all ready to go,
                  head to our “Getting Started” documentation for lift-off.
               </p>
-
-              <div className={classes.spacer} />
 
               <Button
                 className={classes.stepBtn}
@@ -246,9 +189,8 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
         </aside>
       </section>
 
-      <br /><br /><br />
+      <br />
 
-      {/** #conditional-loader-start: partners */}
       <Panel>
         <div className={classes.partnersContainer}>
           <h1 className={classes.partnersTitle}>Cloudoki customers & partners</h1>
@@ -257,18 +199,16 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
         </div>
       </Panel>
 
-      <br /><br /><br />
+      <br />
       {/** #conditional-loader-end */}
 
       {/* <section className={classes.subscribeContainer}>
         <div className={classes.wheelContainer}>
           <Wheel selected='br' />
         </div>
-
         <div className={classes.emailContainer}>
           <h1>Fly with us</h1>
           <p>Subscribe to our newsletter to keep up with updates, events and more.</p>
-
           <form noValidate autoComplete='off'>
             <div className={classes.email}>
               <TextField
@@ -279,7 +219,6 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
                 fullWidth
                 className={classes.emailTextfield}
               />
-
               <Button
                 // arial-label='register'
                 // type='submit'
@@ -291,9 +230,7 @@ const Sandbox: React.FC<{toggleInform: any}> = ({ toggleInform }) => {
                 Subscribe
               </Button>
             </div>
-
             <br />
-
             <FormGroup row>
               <FormControlLabel
                 classes={{ label: classes.checkBoxLabel }}

@@ -1,14 +1,13 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
-import { colorPicker } from 'util/colorPicker'
+import { config } from 'constants/global'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   subSelect: {
     display: 'flex',
     width: '100%',
     alignItems: 'center',
     justifyContent: 'space-between',
-    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
+    color: config.palette.greyScales[400],
   },
   dropdown: {
     display: 'flex',

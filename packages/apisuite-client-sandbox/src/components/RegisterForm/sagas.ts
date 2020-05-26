@@ -53,7 +53,7 @@ export function * submitOrganisationDetailsSaga (
       data: JSON.stringify(action.payload),
     })
 
-    // yield put(submitPersonalDetailsActions.success())
+    yield put(submitOrganisationDetailsActions.success())
     yield put(nextStepAction())
   } catch (error) {
     yield put(submitOrganisationDetailsActions.error(error))
@@ -76,7 +76,7 @@ export function * submitSecurityStepSaga (
       data: JSON.stringify(action.payload),
     })
 
-    // yield put(submitPersonalDetailsActions.success())
+    yield put(submitSecurityStepActions.success())
     yield put(nextStepAction())
   } catch (error) {
     yield put(submitSecurityStepActions.error(error))

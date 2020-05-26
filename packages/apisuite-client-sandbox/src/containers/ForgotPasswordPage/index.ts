@@ -7,9 +7,14 @@ import {
   Dispatch,
   bindActionCreators,
 } from 'redux'
+import { Store } from 'store/types'
+
+export const mapStateToProps = ({ auth }: Store) => ({
+  auth,
+})
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-  handleSubmit: (emailInformation: { email: string}) => authActions.recoverPassword(emailInformation),
+  forgotPassword: (emailInformation: { email: string}) => authActions.recoverPassword(emailInformation),
 }, dispatch)
 
-export default connect(null, mapDispatchToProps)(ForgotPasswordPage)
+export default connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordPage)
