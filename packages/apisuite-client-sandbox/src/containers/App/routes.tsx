@@ -21,6 +21,7 @@ import RegisterConfirmation from 'containers/RegisterConfirmation'
 import RedirectPage from 'containers/RedirectPage'
 import ForgotPasswordPage from 'containers/ForgotPasswordPage'
 import TeamPage from 'containers/TeamPage'
+import Profile from 'containers/Profile'
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
@@ -32,7 +33,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/dashboard/subscriptions', exact: true, render: (props) => <RequireAuth component={Subscriptions} {...props} /> },
   { path: '/dashboard/test', exact: true, render: (props) => <RequireAuth component={Instructions} {...props} /> },
   { path: '/dashboard/console', render: (props) => <RequireAuth component={Console} {...props} /> },
-  { path: '/dashboard/profile', exact: true, render: (props) => <RequireAuth component={Instructions} {...props} /> },
+  { path: '/dashboard/profile', exact: true, render: (props) => <RequireAuth component={Profile} {...props} /> },
   { path: '/dashboard/team', exact: true, render: (props) => <RequireAuth component={TeamPage} {...props} /> },
   // #conditional-loader-start: console
   // #conditional-loader-end

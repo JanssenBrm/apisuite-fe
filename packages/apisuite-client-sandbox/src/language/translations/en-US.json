@@ -185,5 +185,20 @@
       "invite": "Invite member",
       "send": "send"
     }
+  },
+  "warnings": {
+    "url": "Please enter a valid URL.",
+    "mobileNumber": "Please enter a valid mobile number."
+  },
+  "labels": {
+    "name": "Name",
+    "email": "E-mail address",
+    "bio": "Bio",
+    "mobileNumber": "Mobile number (international)",
+    "avatarUrl": "Avatar URL"
+  },
+  "actions": {
+    "save": "Save",
+    "saveDisabled": "Nothing to save"
   }
 }
