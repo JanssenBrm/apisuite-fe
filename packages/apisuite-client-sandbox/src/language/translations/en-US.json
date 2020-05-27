@@ -176,5 +176,14 @@
       "messageTitle": "Check your inbox",
       "message": "We've sent you an e-mail so you can recover your password. Check your inbox."
     }
+  },
+  "rbac": {
+    "team": {
+      "title": "Manage Team",
+      "header": "Organisation members",
+      "actions": "Role",
+      "invite": "Invite member",
+      "send": "send"
+    }
   }
 }
