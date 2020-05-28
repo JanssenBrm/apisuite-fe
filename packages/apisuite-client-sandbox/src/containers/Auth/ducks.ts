@@ -13,6 +13,8 @@ const LOGIN_USER_ERROR = 'auth/LOGIN_USER_ERROR'
 const LOGOUT = 'auth/LOGOUT'
 
 export const RECOVER_PASSWORD = 'auth/RECOVER_PASSWORD'
+export const RECOVER_PASSWORD_ERROR = 'auth/RECOVER_PASSWORD_ERROR'
+export const RECOVER_PASSWORD_SUCCESS = 'auth/RECOVER_PASSWORD_SUCCESS'
 
 export const TOKEN_KEY = 'at'
 export const TOKEN_MAX_AGE = 30 // <-- 1 month
@@ -23,6 +25,7 @@ const initialState: AuthStore = {
   authToken,
   user: undefined,
   isAuthorizing: false,
+  isRecoveringPassword: false,
   error: undefined,
 }
 
@@ -57,11 +60,17 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
       })
     }
 
-    // case REGISTER_USER: {
-    //   return update(state, {
-    //     error: { $set: undefined },
-    //   })
-    // }
+    case RECOVER_PASSWORD: {
+      return update(state, {
+        isRecoveringPassword: { $set: true },
+      })
+    }
+
+    case RECOVER_PASSWORD_SUCCESS: {
+      return update(state, {
+        isRecoveringPassword: { $set: false },
+      })
+    }
 
     case LOGIN_ERROR:
     case LOGIN_USER_ERROR: {
@@ -92,6 +101,8 @@ export const authActions = {
   loginUserSuccess: (payload: AuthPayloads['loginUserSuccess']) => ({ type: LOGIN_USER_SUCCESS, payload }),
   loginUserError: (error: AuthPayloads['loginUserError']) => ({ type: LOGIN_USER_ERROR, error }),
   recoverPassword: (payload: AuthPayloads['recoverPassword']) => ({ type: RECOVER_PASSWORD, payload }),
+  recoverPasswordError: (payload: AuthPayloads['recoverPasswordError']) => ({ type: RECOVER_PASSWORD_ERROR, payload }),
+  recoverPasswordSuccess: () => ({ type: RECOVER_PASSWORD_SUCCESS }),
   logout: () => ({ type: LOGOUT }),
 }
 

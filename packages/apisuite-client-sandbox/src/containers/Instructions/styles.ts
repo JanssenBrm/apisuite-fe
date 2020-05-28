@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import { config } from 'constants/global'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   root: {
     minHeight: '100%',
     paddingTop: 200,
@@ -54,13 +54,13 @@ export default makeStyles((theme: Theme) => ({
   codeBlock: {
     borderTopRightRadius: 0,
     borderTopLeftRadius: 0,
-    borderBottomLeftRadius: theme.shape.borderRadius,
-    borderBottomRightRadius: theme.shape.borderRadius,
+    borderBottomLeftRadius: config.dimensions.borderRadius,
+    borderBottomRightRadius: config.dimensions.borderRadius,
   },
   noteContainer: {
     width: '100%',
-    backgroundColor: '#00A7AA',
-    borderRadius: theme.shape.borderRadius,
+    backgroundColor: config.palette.secondary,
+    borderRadius: config.dimensions.borderRadius,
     overflow: 'hidden',
     marginBottom: 20,
   },
@@ -74,7 +74,7 @@ export default makeStyles((theme: Theme) => ({
     color: 'white',
   },
   noteContent: {
-    backgroundColor: '#2DB7BA',
+    backgroundColor: config.palette.primary,
     padding: 20,
     marginLeft: 5,
   },
@@ -88,15 +88,15 @@ export default makeStyles((theme: Theme) => ({
     marginTop: 0,
     paddingLeft: 20,
     paddingRight: 20,
-    borderTopRightRadius: theme.shape.borderRadius,
-    borderTopLeftRadius: theme.shape.borderRadius,
+    borderTopRightRadius: config.dimensions.borderRadius,
+    borderTopLeftRadius: config.dimensions.borderRadius,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
   },
   clipboardIcon: {
     cursor: 'pointer',
     '&:hover': {
-      color: '#2DB7BA',
+      color: config.palette.primary,
     },
     zIndex: 1,
   },
@@ -109,16 +109,16 @@ export default makeStyles((theme: Theme) => ({
 
 export const codeStyle = {
   'hljs-string': {
-    'color': '#2DB7BA',
+    'color': config.palette.primary,
   },
   'hljs-symbol': {
-    'color': '#2DB7BA',
+    'color': config.palette.primary,
   },
   'hljs-bullet': {
-    'color': '#2DB7BA',
+    'color': config.palette.primary,
   },
   'hljs-addition': {
-    'color': '#2DB7BA',
+    'color': config.palette.primary,
   },
   'hljs': {
     display: 'block',

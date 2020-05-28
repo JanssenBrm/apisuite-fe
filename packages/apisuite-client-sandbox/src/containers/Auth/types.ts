@@ -6,6 +6,7 @@ export interface AuthStore {
   user?: User,
   authToken?: string,
   isAuthorizing: boolean,
+  isRecoveringPassword: boolean,
   error?: string,
 }
 
@@ -34,6 +35,7 @@ export interface AuthPayloads {
   recoverPassword: {
     email: string,
   },
+  recoverPasswordError: ErrorReason,
 }
 
 export interface AuthStoreActionTypes {
@@ -43,6 +45,8 @@ export interface AuthStoreActionTypes {
   loginUserSuccess: AnyAction & { payload: AuthPayloads['loginUserSuccess'] },
   loginUserError: AnyAction & { error: AuthPayloads['loginUserError'] },
   recoverPassword: AnyAction & { payload: AuthPayloads['recoverPassword']},
+  recoverPasswordError: AnyAction & { payload: AuthPayloads['recoverPasswordError']},
+  recoverPasswordSuccess: AnyAction,
   logout: AnyAction,
 }
 
