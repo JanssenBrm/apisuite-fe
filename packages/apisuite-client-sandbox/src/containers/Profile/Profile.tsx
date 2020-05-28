@@ -2,6 +2,7 @@ import * as React from 'react'
 import useStyles from './styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import Avatar from '@material-ui/core/Avatar'
 import {
   isValidURL,
   // TODO: decide on a name for mobile numbers ("phone number or mobile number") and change it everywhere
@@ -9,8 +10,10 @@ import {
 } from 'util/validations'
 import { useForm } from 'util/useForm'
 import { useTranslation } from 'react-i18next'
+import { User } from 'containers/Auth/types'
 
-const Profile: React.FC<{}> = () => {
+const Profile: React.FC<{ user?: User }> = ({ user }) => {
+  let initials = ''
   const classes = useStyles()
   const [t] = useTranslation()
   const { formState, handleFocus, handleChange } = useForm({
@@ -30,12 +33,16 @@ const Profile: React.FC<{}> = () => {
     },
   })
 
+  if (user) initials = user.fName.charAt(0) + user.lName.charAt(0)
+
   return (
     <div className={classes.root}>
       <section className={classes.contentContainer}>
         <form className={classes.form} onSubmit={() => console.log(formState)}>
           <aside className={classes.aside}>
-            <img src={formState.values.avatarUrl} alt='profile picture' className={classes.img} />
+            {formState.values.avatarUrl
+              ? <img src={formState.values.avatarUrl} alt='profile picture' className={classes.img} />
+              : <Avatar className={classes.avatar}>{initials.toLocaleUpperCase()}</Avatar>}
 
             <Button
               type='submit'

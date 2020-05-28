@@ -69,20 +69,26 @@ export const loginTabs: TabProps[] = [
         label: 'Test',
         route: '/dashboard/test',
       },
-      {
-        label: 'Profile',
-        route: '/dashboard/profile',
-      },
-      {
-        label: 'Team',
-        route: '/dashboard/team',
-      },
       // #conditional-loader-start: console
       {
         label: <ConsoleLabel />,
         route: '/dashboard/console',
       },
       // #conditional-loader-end
+    ],
+  },
+  {
+    label: 'Profile',
+    route: '/profile',
+    subTabs: [
+      {
+        label: 'Profile',
+        route: '/profile',
+      },
+      {
+        label: 'Team',
+        route: '/profile/team',
+      },
     ],
   },
 ]

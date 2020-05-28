@@ -31,4 +31,12 @@ export default makeStyles(({
     height: 160,
     borderRadius: '50%',
   },
+  avatar: {
+    fontSize: 26,
+    fontWeight: 300,
+    background: 'linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)',
+    //  background: 'linear-gradient config',
+    width: 124,
+    height: 124,
+  },
 }))
