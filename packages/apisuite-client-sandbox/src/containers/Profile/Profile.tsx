@@ -5,12 +5,12 @@ import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
 import {
   isValidURL,
-  // TODO: decide on a name for mobile numbers ("phone number or mobile number") and change it everywhere
   isValidPhoneNumber,
-} from 'util/validations'
+} from 'components/FormField/index'
 import { useForm } from 'util/useForm'
 import { useTranslation } from 'react-i18next'
 import { User } from 'containers/Auth/types'
+import clsx from 'clsx'
 
 const Profile: React.FC<{ user?: User }> = ({ user }) => {
   let initials = ''
@@ -46,14 +46,17 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
 
             <Button
               type='submit'
-              disabled={!formState.isDirty && !formState.isValid}
+              disabled={!(formState.isDirty && formState.isValid)}
+              className={clsx(
+                classes.btn, classes.btn2, (!(formState.isDirty && formState.isValid) && classes.disabled))}
             >
-              {!formState.isDirty && !formState.isValid ? t('actions.saveDisabled') : t('actions.save')}
+              {formState.isDirty && formState.isValid ? t('actions.save') : t('actions.saveDisabled')}
             </Button>
           </aside>
 
           <main className={classes.main}>
             <TextField
+              className={classes.textField}
               label={t('labels.name')}
               type='text'
               name='name'
@@ -65,19 +68,27 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
               disabled
             />
 
+            <br />
+
             <TextField
+              className={classes.textField}
               label={t('labels.bio')}
               type='text'
               name='bio'
               onChange={handleChange}
               onFocus={handleFocus}
               autoFocus
+              multiline
+              rows={5}
               variant='outlined'
               margin='dense'
               fullWidth
             />
 
+            <br />
+
             <TextField
+              className={classes.textField}
               label={t('labels.email')}
               type='email'
               name='email'
@@ -89,7 +100,10 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
               disabled
             />
 
+            <br />
+
             <TextField
+              className={classes.textField}
               label={t('labels.mobileNumber')}
               type='tel'
               name='mobileNumber'
@@ -104,7 +118,10 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
               }
             />
 
+            <br />
+
             <TextField
+              className={classes.textField}
               label={t('labels.avatarUrl')}
               type='url'
               name='avatarUrl'
