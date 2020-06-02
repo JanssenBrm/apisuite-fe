@@ -14,6 +14,7 @@ export interface User {
   fName: string,
   lName: string,
   id: number,
+  roleId: string,
 }
 
 export interface AuthPayloads {
