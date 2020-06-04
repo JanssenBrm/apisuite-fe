@@ -12,6 +12,7 @@ import {
 import { ApisResponse } from './types'
 import { API_URL } from 'constants/endpoints'
 import request from 'util/request'
+import { Store } from 'store/types'
 
 function * getApisSaga () {
   try {
