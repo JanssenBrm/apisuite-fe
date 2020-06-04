@@ -24,7 +24,7 @@ function * getApisSaga () {
       method: 'GET',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken
+        'x-access-token': accessToken,
       },
     })
 

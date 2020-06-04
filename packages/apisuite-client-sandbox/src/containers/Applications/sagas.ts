@@ -70,7 +70,7 @@ export function * createApp (action: CreateAppAction) {
       method: 'POST',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken
+        'x-access-token': accessToken,
       },
       data: qs.stringify(data),
     })
@@ -102,7 +102,7 @@ export function * updateApp (action: UpdateAppAction) {
       method: 'PUT',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken
+        'x-access-token': accessToken,
       },
       data: qs.stringify(data),
     })
@@ -135,7 +135,7 @@ export function * getUsersApps (action: GetUserAppsAction) {
       method: 'GET',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken
+        'x-access-token': accessToken,
       },
     })
 
@@ -173,7 +173,7 @@ export function * deleteApp (action: DeleteAppAction) {
       method: 'DELETE',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken
+        'x-access-token': accessToken,
       },
     })
     yield put(deleteAppSuccess())
@@ -196,7 +196,7 @@ export function * getAppDetails (action: GetAppDetails) {
     method: 'GET',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
-      'x-access-token': accessToken
+      'x-access-token': accessToken,
     },
   })
 
@@ -247,7 +247,7 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
       method: 'PUT',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken
+        'x-access-token': accessToken,
       },
       data: qs.stringify(data),
     })
@@ -297,7 +297,7 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
       method: 'PUT',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken
+        'x-access-token': accessToken,
       },
       data: qs.stringify(data),
     })
