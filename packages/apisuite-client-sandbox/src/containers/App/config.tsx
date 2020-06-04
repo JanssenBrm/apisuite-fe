@@ -89,6 +89,10 @@ export const loginTabs: TabProps[] = [
         label: 'Team',
         route: '/profile/team',
       },
+      {
+        label: 'Organisation',
+        route: '/profile/organisation',
+      },
     ],
   },
 ]
