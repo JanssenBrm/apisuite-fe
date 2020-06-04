@@ -2,6 +2,7 @@ import {
   call,
   put,
   takeLatest,
+  select,
 } from 'redux-saga/effects'
 import {
   SubscriptionsActionTypes,
@@ -15,11 +16,14 @@ import request from 'util/request'
 function * getApisSaga () {
   try {
     const getApisUrl = `${API_URL}/sandboxapi/`
+    const accessToken = yield select(
+      (state: Store) => state.auth.authToken)
     const response: ApisResponse = yield call(request, {
       url: getApisUrl,
       method: 'GET',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
+        'x-access-token': accessToken
       },
     })
 
