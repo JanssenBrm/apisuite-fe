@@ -5,42 +5,14 @@ import Select from 'components/Select'
 import Button from '@material-ui/core/Button'
 import FormField from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
+import { TeamPageProps } from './types'
 
-const teamMembers: TeamMember[] = [
-  {
-    name: 'Quentin Antoine',
-    role: 'Developer',
-    auth: 'sms',
-  },
-  {
-    name: 'Rui Dias',
-    role: 'Developer',
-    auth: 'app',
-  },
-]
-
-type TeamMember = {
-  name: string,
-  role: 'Developer' | 'Administrator' | 'Sales' | 'Tester',
-  auth: 'app' | 'sms' | 'none',
-}
-
-const availableRoles = [
-  'Developer',
-  'Administrator',
-  'Sales',
-  'Tester',
-]
-
-const selectOptions = (roles: typeof availableRoles) => {
-  return roles.map(role => ({
-    label: role,
-    value: role,
-    group: 'Role',
-  }))
-}
-
-const TeamPage: React.FC<{}> = () => {
+const TeamPage: React.FC<TeamPageProps> = ({
+  fetchTeamMembers,
+  fetchRoleOptions,
+  members,
+  roleOptions,
+}) => {
   const classes = useStyles()
   const [inviteVisible, toggle] = React.useReducer(v => !v, false)
   const [t] = useTranslation()
@@ -49,12 +21,25 @@ const TeamPage: React.FC<{}> = () => {
     email: '',
   })
 
+  const selectOptions = (roles: typeof roleOptions) => {
+    return roles.map(role => ({
+      label: role,
+      value: role,
+      group: 'Role',
+    }))
+  }
+
   const handleInputs = (e: FormFieldEvent) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
   }
+
+  React.useEffect(() => {
+    fetchTeamMembers()
+    fetchRoleOptions()
+  }, [fetchTeamMembers, fetchRoleOptions])
 
   const inviteCard = () => (
     <div className={classes.inviteCard}>
@@ -96,7 +81,7 @@ const TeamPage: React.FC<{}> = () => {
 
       <Select
         className={classes.select}
-        options={selectOptions(availableRoles)}
+        options={selectOptions(roleOptions)}
         onChange={() => console.log('im changing')}
       />
     </div>
@@ -113,27 +98,26 @@ const TeamPage: React.FC<{}> = () => {
             <div className={classes.actions}>{t('rbac.team.actions')}</div>
           </div>
 
-          {teamMembers.map((teamMember, indx) => (
+          {members.map((member, indx) => (
             <div key={indx} className={classes.row}>
               <div>
                 <div className={classes.name}>
-                  {teamMember.name}
+                  {member.User.name}
                 </div>
                 <div>
-                  {teamMember.auth !== 'none'
-                    ? <p className={classes.auth}>2 factor authentication {teamMember.auth} enabled</p>
-                    : <p className={classes.auth}>2 factor authentication not enabled</p>}
+                  <p className={classes.auth}>2 factor authentication not enabled</p>
                 </div>
               </div>
 
               <Select
                 className={classes.select}
-                options={selectOptions(availableRoles)}
+                options={selectOptions(roleOptions)}
                 onChange={() => console.log('im changing')}
+                selected={selectOptions(roleOptions).find(
+                  option => option.value === member.Role.name)}
               />
             </div>
           ))}
-
         </div>
 
         {inviteVisible
