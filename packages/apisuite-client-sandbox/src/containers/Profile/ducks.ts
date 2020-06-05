@@ -28,7 +28,11 @@ export enum ProfileActionTypes {
 
   FETCH_ROLE_OPTIONS_REQUEST = 'FETCH_ROLE_OPTIONS_REQUEST',
   FETCH_ROLE_OPTIONS_SUCCESS = 'FETCH_ROLE_OPTIONS_SUCCESS',
-  FETCH_ROLE_OPTIONS_ERROR = 'FETCH_ROLE_OPTIONS_ERROR'
+  FETCH_ROLE_OPTIONS_ERROR = 'FETCH_ROLE_OPTIONS_ERROR',
+
+  INVITE_MEMBER_REQUEST = 'INVITE_MEMBER_REQUEST',
+  INVITE_MEMBER_SUCCESS = 'INVITE_MEMBER_SUCCESS',
+  INVITE_MEMBER_ERROR = 'INVITE_MEMBER_ERROR'
 }
 
 export default function profileReducer (
@@ -80,6 +84,27 @@ export const fetchRoleOptionsActions = {
   error: (error: string) => {
     return {
       type: ProfileActionTypes.FETCH_ROLE_OPTIONS_ERROR,
+      error: error,
+    } as const
+  },
+}
+
+export const inviteMemberActions = {
+  request: () => {
+    return {
+      type: ProfileActionTypes.INVITE_MEMBER_REQUEST,
+      payload: ,
+    } as const
+  },
+  success: (response: FetchRoleOptionsResponse) => {
+    return {
+      type: ProfileActionTypes.INVITE_MEMBER_SUCCESS,
+      response: response,
+    } as const
+  },
+  error: (error: string) => {
+    return {
+      type: ProfileActionTypes.INVITE_MEMBER_ERROR,
       error: error,
     } as const
   },

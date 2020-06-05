@@ -10,10 +10,8 @@ export type ProfileStore = Pick<FetchTeamMembersResponse, 'members'> & {
 }
 
 export type Role = {
-  'Role': {
-    name: RoleOptions,
-    id: string,
-  },
+  name: RoleOptions,
+  id: string,
 }
 
 export type FetchTeamMembersResponse = {
@@ -22,12 +20,12 @@ export type FetchTeamMembersResponse = {
   members: ({
     'org_id': string,
     'User': Pick<User, 'id'> & { name: string },
-  } & Role)[],
+  } & {
+    'Role': Role,
+  })[],
 }
 
-export type FetchRoleOptionsResponse = {
-
-}
+export type FetchRoleOptionsResponse = Role[]
 
 export type RoleOptions = 'superadmin' | 'admin' | 'developer'
 
