@@ -214,8 +214,8 @@ export function * getAppDetails (action: GetAppDetails) {
       enable: userApp.enable,
       createdAt: userApp.createdAt,
       updatedAt: userApp.updatedAt,
-      clientId: userApp.client_data.client_id,
-      clientSecret: userApp.client_data.client_secret,
+      clientId: userApp.client_data.client.client_id,
+      clientSecret: userApp.client_data.client.client_secret,
     }
   ))
 
