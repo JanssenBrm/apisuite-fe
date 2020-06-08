@@ -10,6 +10,7 @@ import {
   fetchTeamMembersActions,
   fetchRoleOptionsActions,
   inviteMemberActions,
+  confirmInviteActions,
 } from './ducks'
 import { Store } from 'store/types'
 import { API_URL } from 'constants/endpoints'
@@ -18,6 +19,7 @@ import {
   FetchRoleOptionsResponse,
   InviteMemberResponse,
 } from './types'
+import { openNotification } from 'containers/NotificationStack/ducks'
 
 export function * fetchTeamMembersSaga () {
   try {
@@ -60,11 +62,33 @@ export function * inviteMemberSaga (
       headers: {
         'x-access-token': accessToken,
         'content-type': 'application/json',
-        data: JSON.stringify(action.payload),
       },
+      data: JSON.stringify(action.payload),
     })
 
     yield put(inviteMemberActions.success(response))
+  } catch (error) {
+    yield put(inviteMemberActions.error(error))
+  }
+}
+
+export function * confirmInviteSaga (
+  action: ReturnType<typeof confirmInviteActions.request>,
+) {
+  try {
+    const accessToken = yield select((state: Store) => state.auth.authToken)
+    const response: InviteMemberResponse = yield call(request, {
+      url: `${API_URL}/users/invite/confirm`,
+      method: 'POST',
+      headers: {
+        'x-access-token': accessToken,
+        'content-type': 'application/json',
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(inviteMemberActions.success(response))
+    yield put(openNotification('success', 'New team member added!', 4000))
   } catch (error) {
     yield put(inviteMemberActions.error(error))
   }
@@ -74,6 +98,7 @@ function * rootSaga () {
   yield takeLatest(ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST, fetchTeamMembersSaga)
   yield takeLatest(ProfileActionTypes.FETCH_ROLE_OPTIONS_REQUEST, fetchRoleOptionsSaga)
   yield takeLatest(ProfileActionTypes.INVITE_MEMBER_REQUEST, inviteMemberSaga)
+  yield takeLatest(ProfileActionTypes.CONFIRM_INVITE_MEMBER_REQUEST, confirmInviteSaga)
 }
 
 export default rootSaga

@@ -1,9 +1,11 @@
-// import update from 'immutability-helper'
+import update from 'immutability-helper'
 import {
   ProfileActions,
   ProfileStore,
   FetchTeamMembersResponse,
   FetchRoleOptionsResponse,
+  InviteMemberResponse,
+  ConfirmInviteResponse,
 } from './types'
 
 const initialState: ProfileStore = {
@@ -14,11 +16,14 @@ const initialState: ProfileStore = {
       id: 0,
     },
     'Role': {
-      name: 'admin',
+      name: '',
       id: '',
     },
   }],
-  roleOptions: ['admin'],
+  roleOptions: [{
+    name: '',
+    id: '',
+  }],
 }
 
 export enum ProfileActionTypes {
@@ -32,7 +37,11 @@ export enum ProfileActionTypes {
 
   INVITE_MEMBER_REQUEST = 'INVITE_MEMBER_REQUEST',
   INVITE_MEMBER_SUCCESS = 'INVITE_MEMBER_SUCCESS',
-  INVITE_MEMBER_ERROR = 'INVITE_MEMBER_ERROR'
+  INVITE_MEMBER_ERROR = 'INVITE_MEMBER_ERROR',
+
+  CONFIRM_INVITE_MEMBER_REQUEST = 'CONFIRM_INVITE_MEMBER_REQUEST',
+  CONFIRM_INVITE_MEMBER_SUCCESS = 'CONFIRM_INVITE_MEMBER_SUCCESS',
+  CONFIRM_INVITE_MEMBER_ERROR = 'CONFIRM_INVITE_MEMBER_ERROR'
 }
 
 export default function profileReducer (
@@ -41,7 +50,15 @@ export default function profileReducer (
 ): ProfileStore {
   switch (action.type) {
     case ProfileActionTypes.FETCH_TEAM_MEMBERS_SUCCESS: {
-      return state
+      return update(state, {
+        members: { $set: action.response.members },
+      })
+    }
+
+    case ProfileActionTypes.FETCH_ROLE_OPTIONS_SUCCESS: {
+      return update(state, {
+        roleOptions: { $set: action.response },
+      })
     }
 
     default:
@@ -90,13 +107,16 @@ export const fetchRoleOptionsActions = {
 }
 
 export const inviteMemberActions = {
-  request: () => {
+  request: (email: string, roleId: string) => {
     return {
       type: ProfileActionTypes.INVITE_MEMBER_REQUEST,
-      payload: ,
+      payload: {
+        email: email,
+        'role_id': roleId,
+      },
     } as const
   },
-  success: (response: FetchRoleOptionsResponse) => {
+  success: (response: InviteMemberResponse) => {
     return {
       type: ProfileActionTypes.INVITE_MEMBER_SUCCESS,
       response: response,
@@ -105,6 +125,27 @@ export const inviteMemberActions = {
   error: (error: string) => {
     return {
       type: ProfileActionTypes.INVITE_MEMBER_ERROR,
+      error: error,
+    } as const
+  },
+}
+
+export const confirmInviteActions = {
+  request: (confirmationToken: string) => {
+    return {
+      type: ProfileActionTypes.CONFIRM_INVITE_MEMBER_REQUEST,
+      payload: { token: confirmationToken },
+    } as const
+  },
+  success: (response: ConfirmInviteResponse) => {
+    return {
+      type: ProfileActionTypes.CONFIRM_INVITE_MEMBER_SUCCESS,
+      response: response,
+    } as const
+  },
+  error: (error: string) => {
+    return {
+      type: ProfileActionTypes.CONFIRM_INVITE_MEMBER_ERROR,
       error: error,
     } as const
   },

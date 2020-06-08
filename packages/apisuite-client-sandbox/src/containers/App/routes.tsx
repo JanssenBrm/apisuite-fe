@@ -40,7 +40,7 @@ export const routesConfig: AppRouteProps[] = [
   // #conditional-loader-start: console
   // #conditional-loader-end
   { path: '/auth/:view?/:email?', exact: true, component: Login },
-  { path: '/registration/confirm', exact: true, component: RedirectPage },
+  { path: '/:confirmType/confirm', exact: true, component: RedirectPage },
   { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation },
   { path: '/forgot', exact: true, component: ForgotPasswordPage },
   { path: '/terms', component: Terms },

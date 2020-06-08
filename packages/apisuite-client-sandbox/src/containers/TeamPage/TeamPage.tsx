@@ -6,10 +6,13 @@ import Button from '@material-ui/core/Button'
 import FormField from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
 import { TeamPageProps } from './types'
+import { SelectOption } from 'components/Select/types'
+import { Role } from 'containers/Profile/types'
 
 const TeamPage: React.FC<TeamPageProps> = ({
   fetchTeamMembers,
   fetchRoleOptions,
+  inviteMember,
   members,
   roleOptions,
 }) => {
@@ -17,14 +20,14 @@ const TeamPage: React.FC<TeamPageProps> = ({
   const [inviteVisible, toggle] = React.useReducer(v => !v, false)
   const [t] = useTranslation()
   const [input, setInput] = React.useState({
-    name: '',
     email: '',
+    roleId: '',
   })
 
-  const selectOptions = (roles: typeof roleOptions) => {
+  const selectOptions = (roles: Role[]) => {
     return roles.map(role => ({
-      label: role,
-      value: role,
+      label: role.name,
+      value: role.id,
       group: 'Role',
     }))
   }
@@ -41,9 +44,26 @@ const TeamPage: React.FC<TeamPageProps> = ({
     fetchRoleOptions()
   }, [fetchTeamMembers, fetchRoleOptions])
 
+  function chooseRole (e: React.ChangeEvent<{}>, option: SelectOption) {
+    if (e) {
+      setInput({
+        ...input,
+        roleId: option.value,
+      })
+    }
+  }
+
   const inviteCard = () => (
-    <div className={classes.inviteCard}>
-      <Button className={classes.btn}>{t('rbac.team.send')}</Button>
+    <form
+      className={classes.inviteCard}
+      onSubmit={(e) => {
+        e.preventDefault()
+        inviteMember(input.email, input.roleId.toString())
+      }}
+    >
+      <Button className={classes.btn} type='submit'>
+        {t('rbac.team.send')}
+      </Button>
 
       <FormField
         id='email-field'
@@ -62,7 +82,7 @@ const TeamPage: React.FC<TeamPageProps> = ({
         }}
       />
 
-      <FormField
+      {/* <FormField
         id='name-field'
         label='Name'
         variant='outlined'
@@ -77,14 +97,14 @@ const TeamPage: React.FC<TeamPageProps> = ({
         InputProps={{
           classes: { input: classes.nameTextfield },
         }}
-      />
+      /> */}
 
       <Select
         className={classes.select}
         options={selectOptions(roleOptions)}
-        onChange={() => console.log('im changing')}
+        onChange={chooseRole}
       />
-    </div>
+    </form>
   )
 
   return (

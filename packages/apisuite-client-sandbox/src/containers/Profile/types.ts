@@ -3,14 +3,15 @@ import { ReturnNestedType } from 'util/typeUtils'
 import {
   fetchTeamMembersActions,
   fetchRoleOptionsActions,
+  inviteMemberActions,
 } from './ducks'
 
 export type ProfileStore = Pick<FetchTeamMembersResponse, 'members'> & {
-  roleOptions: RoleOptions[],
+  roleOptions: Role[],
 }
 
 export type Role = {
-  name: RoleOptions,
+  name: RoleNameOptions,
   id: string,
 }
 
@@ -27,8 +28,13 @@ export type FetchTeamMembersResponse = {
 
 export type FetchRoleOptionsResponse = Role[]
 
-export type RoleOptions = 'superadmin' | 'admin' | 'developer'
+export type InviteMemberResponse = any
+
+export type ConfirmInviteResponse = any
+
+export type RoleNameOptions = 'superadmin' | 'admin' | 'developer' | ''
 
 export type ProfileActions =
   ReturnNestedType<typeof fetchTeamMembersActions> |
-  ReturnNestedType<typeof fetchRoleOptionsActions>
+  ReturnNestedType<typeof fetchRoleOptionsActions> |
+  ReturnNestedType<typeof inviteMemberActions>

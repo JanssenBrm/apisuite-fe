@@ -2,6 +2,7 @@ import { connect } from 'react-redux'
 import {
   fetchTeamMembersActions,
   fetchRoleOptionsActions,
+  inviteMemberActions,
 } from 'containers/Profile/ducks'
 import {
   Dispatch,
@@ -18,6 +19,7 @@ export const mapStateToProps = ({ profile }: Store) => ({
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   fetchTeamMembers: fetchTeamMembersActions.request,
   fetchRoleOptions: fetchRoleOptionsActions.request,
+  inviteMember: inviteMemberActions.request,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamPage)
