@@ -1,6 +1,7 @@
 import { ErrorReason } from 'util/request'
 import { AnyAction } from 'redux'
 import { ReactType } from 'react'
+import { Role } from 'containers/Profile/types'
 
 export interface AuthStore {
   user?: User,
@@ -14,7 +15,7 @@ export interface User {
   fName: string,
   lName: string,
   id: number,
-  roleId: string,
+  role: Role,
 }
 
 export interface AuthPayloads {

@@ -4,14 +4,17 @@ import {
   fetchTeamMembersActions,
   fetchRoleOptionsActions,
   inviteMemberActions,
+  confirmInviteActions,
 } from './ducks'
+
+export const roleNameOptions = ['superadmin', 'admin', 'developer', ''] as const
 
 export type ProfileStore = Pick<FetchTeamMembersResponse, 'members'> & {
   roleOptions: Role[],
 }
 
 export type Role = {
-  name: RoleNameOptions,
+  name: typeof roleNameOptions[number],
   id: string,
 }
 
@@ -32,9 +35,10 @@ export type InviteMemberResponse = any
 
 export type ConfirmInviteResponse = any
 
-export type RoleNameOptions = 'superadmin' | 'admin' | 'developer' | ''
+export type ChangeRoleResponse = any
 
 export type ProfileActions =
   ReturnNestedType<typeof fetchTeamMembersActions> |
   ReturnNestedType<typeof fetchRoleOptionsActions> |
-  ReturnNestedType<typeof inviteMemberActions>
+  ReturnNestedType<typeof inviteMemberActions> |
+  ReturnNestedType<typeof confirmInviteActions>

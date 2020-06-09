@@ -6,6 +6,7 @@ import {
   FetchRoleOptionsResponse,
   InviteMemberResponse,
   ConfirmInviteResponse,
+  ChangeRoleResponse,
 } from './types'
 
 const initialState: ProfileStore = {
@@ -41,7 +42,11 @@ export enum ProfileActionTypes {
 
   CONFIRM_INVITE_MEMBER_REQUEST = 'CONFIRM_INVITE_MEMBER_REQUEST',
   CONFIRM_INVITE_MEMBER_SUCCESS = 'CONFIRM_INVITE_MEMBER_SUCCESS',
-  CONFIRM_INVITE_MEMBER_ERROR = 'CONFIRM_INVITE_MEMBER_ERROR'
+  CONFIRM_INVITE_MEMBER_ERROR = 'CONFIRM_INVITE_MEMBER_ERROR',
+
+  CHANGE_ROLE_REQUEST = 'CHANGE_ROLE_REQUEST',
+  CHANGE_ROLE_SUCCESS = 'CHANGE_ROLE_SUCCESS',
+  CHANGE_ROLE_ERROR = 'CHANGE_ROLE_ERROR'
 }
 
 export default function profileReducer (
@@ -146,6 +151,31 @@ export const confirmInviteActions = {
   error: (error: string) => {
     return {
       type: ProfileActionTypes.CONFIRM_INVITE_MEMBER_ERROR,
+      error: error,
+    } as const
+  },
+}
+
+export const changeRoleActions = {
+  request: (userId: string, orgId: string, roleId: string) => {
+    return {
+      type: ProfileActionTypes.CHANGE_ROLE_REQUEST,
+      payload: {
+        'user_id': userId,
+        'org_id': orgId,
+        'role_id': roleId,
+      },
+    } as const
+  },
+  success: (response: ChangeRoleResponse) => {
+    return {
+      type: ProfileActionTypes.CHANGE_ROLE_SUCCESS,
+      response: response,
+    } as const
+  },
+  error: (error: string) => {
+    return {
+      type: ProfileActionTypes.CHANGE_ROLE_ERROR,
       error: error,
     } as const
   },

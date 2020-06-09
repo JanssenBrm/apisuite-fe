@@ -16,7 +16,7 @@ import {
   LOGIN_PORT,
   API_URL,
 } from 'constants/endpoints'
-import { roleMap } from 'constants/global'
+import { roleNameOptions } from 'containers/Profile/types'
 import qs from 'qs'
 
 import { AnyAction } from 'redux'
@@ -76,7 +76,10 @@ function * loginUWorker (action: AnyAction) {
         fName: userName[0],
         lName: userName[userName.length - 1],
         id: userId,
-        roleId: roleMap[user.role_id],
+        role: {
+          id: user.role_id,
+          name: roleNameOptions[user.role_id - 1],
+        },
       },
     }))
   } catch (error) {

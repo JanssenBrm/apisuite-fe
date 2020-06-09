@@ -13,8 +13,10 @@ const TeamPage: React.FC<TeamPageProps> = ({
   fetchTeamMembers,
   fetchRoleOptions,
   inviteMember,
+  changeRole,
   members,
   roleOptions,
+  user,
 }) => {
   const classes = useStyles()
   const [inviteVisible, toggle] = React.useReducer(v => !v, false)
@@ -51,6 +53,12 @@ const TeamPage: React.FC<TeamPageProps> = ({
         roleId: option.value,
       })
     }
+  }
+
+  const handleChangeRole = (userId: number, orgId: string) => (e: React.ChangeEvent<{}>, option: SelectOption) => {
+    e.preventDefault()
+    // TOOD: review; there's is something wrongly typed somewhere
+    if (option.value) changeRole(userId.toString(), orgId.toString(), option.value.toString())
   }
 
   const inviteCard = () => (
@@ -132,9 +140,10 @@ const TeamPage: React.FC<TeamPageProps> = ({
               <Select
                 className={classes.select}
                 options={selectOptions(roleOptions)}
-                onChange={() => console.log('im changing')}
+                onChange={handleChangeRole(member.User.id, member.org_id)}
+                disabled={!(user?.role.name === 'superadmin' || user?.role.name === 'admin')}
                 selected={selectOptions(roleOptions).find(
-                  option => option.value === member.Role.name)}
+                  option => option.label === member.Role.name)}
               />
             </div>
           ))}
@@ -142,7 +151,8 @@ const TeamPage: React.FC<TeamPageProps> = ({
 
         {inviteVisible
           ? inviteCard()
-          : <Button className={classes.btn} style={{ marginTop: 24 }} onClick={toggle}>{t('rbac.team.invite')} </Button>}
+          : (user?.role.name === 'superadmin' || user?.role.name === 'admin') &&
+            <Button className={classes.btn} style={{ marginTop: 24 }} onClick={toggle}>{t('rbac.team.invite')} </Button>}
 
       </section>
     </div>
