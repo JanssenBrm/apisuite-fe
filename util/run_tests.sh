@@ -8,7 +8,6 @@ set -e
 # Args        : -
 # Author      : Délio Amaral (C) 2019 - cloudoki
 # Email       : delio@cloudoki.com
-#
 ###################################################################
 
 
