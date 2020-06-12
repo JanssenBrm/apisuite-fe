@@ -4,6 +4,7 @@ import { ApplicationsStore } from 'containers/Applications/types'
 import { SubscriptionsStore } from 'containers/Subscriptions/types'
 import { AppStoreState } from 'components/InformDialog/types'
 import { NotificationStackStore } from 'containers/NotificationStack/types'
+import { ProfileStore } from 'containers/Profile/types'
 
 export interface Store {
   router: RouterState,
@@ -13,4 +14,5 @@ export interface Store {
   subscriptions: SubscriptionsStore,
   informDialog: AppStoreState,
   notifications: NotificationStackStore,
+  profile: ProfileStore,
 }

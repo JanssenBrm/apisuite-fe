@@ -77,6 +77,24 @@ export const loginTabs: TabProps[] = [
       // #conditional-loader-end
     ],
   },
+  {
+    label: 'Profile',
+    route: '/profile',
+    subTabs: [
+      {
+        label: 'Profile',
+        route: '/profile',
+      },
+      {
+        label: 'Team',
+        route: '/profile/team',
+      },
+      {
+        label: 'Organisation',
+        route: '/profile/organisation',
+      },
+    ],
+  },
 ]
 
 export const gobackConfig = [

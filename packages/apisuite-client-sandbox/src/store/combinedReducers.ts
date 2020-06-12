@@ -12,6 +12,7 @@ import auth from 'containers/Auth/ducks'
 import applications from 'containers/Applications/ducks'
 import subscriptions from 'containers/Subscriptions/ducks'
 import notifications from 'containers/NotificationStack/ducks'
+import profile from 'containers/Profile/ducks'
 
 export default (history: History<any>) => combineReducers({
   router: connectRouter(history),
@@ -21,4 +22,5 @@ export default (history: History<any>) => combineReducers({
   subscriptions,
   informDialog,
   notifications,
+  profile,
 })

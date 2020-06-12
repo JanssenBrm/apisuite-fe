@@ -20,6 +20,9 @@ import Instructions from 'containers/Instructions'
 import RegisterConfirmation from 'containers/RegisterConfirmation'
 import RedirectPage from 'containers/RedirectPage'
 import ForgotPasswordPage from 'containers/ForgotPasswordPage'
+import TeamPage from 'containers/TeamPage'
+import Profile from 'containers/Profile'
+import OrganisationPage from 'containers/OrganisationPage'
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
@@ -31,10 +34,13 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/dashboard/subscriptions', exact: true, render: (props) => <RequireAuth component={Subscriptions} {...props} /> },
   { path: '/dashboard/test', exact: true, render: (props) => <RequireAuth component={Instructions} {...props} /> },
   { path: '/dashboard/console', render: (props) => <RequireAuth component={Console} {...props} /> },
+  { path: '/profile', exact: true, render: (props) => <RequireAuth component={Profile} {...props} /> },
+  { path: '/profile/team', exact: true, render: (props) => <RequireAuth component={TeamPage} {...props} /> },
+  { path: '/profile/organisation', exact: true, render: (props) => <RequireAuth component={OrganisationPage} {...props} /> },
   // #conditional-loader-start: console
   // #conditional-loader-end
   { path: '/auth/:view?/:email?', exact: true, component: Login },
-  { path: '/registration/confirm', exact: true, component: RedirectPage },
+  { path: '/:confirmType/confirm', exact: true, component: RedirectPage },
   { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation },
   { path: '/forgot', exact: true, component: ForgotPasswordPage },
   { path: '/terms', component: Terms },

@@ -176,5 +176,29 @@
       "messageTitle": "Check your inbox",
       "message": "We've sent you an e-mail so you can recover your password. Check your inbox."
     }
+  },
+  "rbac": {
+    "team": {
+      "title": "Manage Team",
+      "header": "Organisation members",
+      "actions": "Role",
+      "invite": "Invite member",
+      "send": "send"
+    }
+  },
+  "warnings": {
+    "url": "Please enter a valid URL.",
+    "mobileNumber": "Please enter a valid mobile number."
+  },
+  "labels": {
+    "name": "Name",
+    "email": "E-mail address",
+    "bio": "Bio",
+    "mobileNumber": "Mobile number (international)",
+    "avatarUrl": "Avatar URL"
+  },
+  "actions": {
+    "save": "Save",
+    "saveDisabled": "Nothing to save"
   }
 }

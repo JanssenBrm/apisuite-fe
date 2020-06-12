@@ -1,7 +1,22 @@
-import { put, call, takeLatest } from 'redux-saga/effects'
+import {
+  put,
+  call,
+  takeLatest,
+} from 'redux-saga/effects'
 import request from 'util/request'
-import { authActions, LOGIN, LOGIN_USER, LOGIN_SUCCESS, RECOVER_PASSWORD } from './ducks'
-import { AUTH_URL, LOGIN_PORT, API_URL } from 'constants/endpoints'
+import {
+  authActions,
+  LOGIN,
+  LOGIN_USER,
+  LOGIN_SUCCESS,
+  RECOVER_PASSWORD,
+} from './ducks'
+import {
+  AUTH_URL,
+  LOGIN_PORT,
+  API_URL,
+} from 'constants/endpoints'
+import { roleNameOptions } from 'containers/Profile/types'
 import qs from 'qs'
 
 import { AnyAction } from 'redux'
@@ -44,9 +59,8 @@ function * loginWorker (action: AnyAction) {
 
 function * loginUWorker (action: AnyAction) {
   try {
-    const userInfoUrl = `${AUTH_URL}/userinfo`
     const userinfo = yield call(request, {
-      url: userInfoUrl,
+      url: `${AUTH_URL}/userinfo`,
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${action.payload.token}`,
@@ -58,7 +72,15 @@ function * loginUWorker (action: AnyAction) {
     const userId = user.id
 
     yield put(authActions.loginUserSuccess({
-      user: { fName: userName[0], lName: userName[userName.length - 1], id: userId },
+      user: {
+        fName: userName[0],
+        lName: userName[userName.length - 1],
+        id: userId,
+        role: {
+          id: user.role_id,
+          name: roleNameOptions[user.role_id - 1],
+        },
+      },
     }))
   } catch (error) {
     yield put(authActions.loginUserError(error))
