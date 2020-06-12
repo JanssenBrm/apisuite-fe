@@ -137,22 +137,23 @@ const TeamPage: React.FC<TeamPageProps> = ({
                 </div>
               </div>
 
-              <Select
-                className={classes.select}
-                options={selectOptions(roleOptions)}
-                onChange={handleChangeRole(member.User.id, member.org_id)}
-                disabled={!(user?.role.name === 'superadmin' || user?.role.name === 'admin')}
-                selected={selectOptions(roleOptions).find(
-                  option => option.label === member.Role.name)}
-              />
+              {user &&
+                <Select
+                  className={classes.select}
+                  options={selectOptions(roleOptions)}
+                  onChange={handleChangeRole(member.User.id, member.org_id)}
+                  disabled={!(user.role.name === 'superadmin' || user.role.name === 'admin')}
+                  selected={selectOptions(roleOptions).find(
+                    option => option.label === member.Role.name)}
+                />}
             </div>
           ))}
         </div>
 
-        {inviteVisible
-          ? inviteCard()
-          : (user?.role.name === 'superadmin' || user?.role.name === 'admin') &&
-            <Button className={classes.btn} style={{ marginTop: 24 }} onClick={toggle}>{t('rbac.team.invite')} </Button>}
+        {!inviteVisible && user
+          ? (user.role.name === 'superadmin' || user.role.name === 'admin') &&
+            <Button className={classes.btn} style={{ marginTop: 24 }} onClick={toggle}>{t('rbac.team.invite')} </Button>
+          : inviteCard()}
 
       </section>
     </div>
