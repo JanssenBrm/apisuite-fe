@@ -5,7 +5,7 @@ export default makeStyles(({
   root: {
     minHeight: '100%',
     paddingTop: 200,
-    backgroundColor: config.palette.background.default,
+    backgroundColor: config.palette.greyScales[50],
   },
   contentContainer: {
     maxWidth: 900,
@@ -66,6 +66,7 @@ export default makeStyles(({
     display: 'inline-block',
     color: 'white',
     padding: '8px 24px',
+    backgroundColor: config.palette.greyScales[900],
     borderRadius: config.dimensions.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
