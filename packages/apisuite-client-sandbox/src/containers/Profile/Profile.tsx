@@ -3,20 +3,31 @@ import useStyles from './styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
+import Select from 'components/Select'
+import { SelectOption } from 'components/Select/types'
+import InputLabel from '@material-ui/core/InputLabel'
 import {
   isValidURL,
   isValidPhoneNumber,
 } from 'components/FormField/index'
 import { useForm } from 'util/useForm'
 import { useTranslation } from 'react-i18next'
-import { User } from 'containers/Auth/types'
+import i18n from 'i18next'
 import clsx from 'clsx'
+import {
+  ProfileProps,
+  Organization,
+} from './types'
 
-const Profile: React.FC<{ user?: User }> = ({ user }) => {
+const Profile: React.FC<ProfileProps> = ({
+  user,
+  getProfile,
+  profile,
+}) => {
   let initials = ''
   const classes = useStyles()
   const [t] = useTranslation()
-  const { formState, handleFocus, handleChange } = useForm({
+  const { formState, handleFocus, handleChange, resetForm } = useForm({
     name: '',
     bio: '',
     email: '',
@@ -32,8 +43,42 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
       message: t('warnings.mobileNumber'),
     },
   })
+  const dateOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour12: false,
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  }
 
   if (user) initials = user.fName.charAt(0) + user.lName.charAt(0)
+
+  React.useEffect(() => {
+    getProfile()
+  }, [getProfile])
+
+  React.useEffect(() => {
+    resetForm({
+      name: profile.user.name,
+      bio: profile.user.bio ?? '',
+      email: profile.user.email,
+      mobileNumber: profile.user.mobile ?? '',
+      avatarUrl: profile.user.avatar ?? '',
+    })
+  }, [profile])
+
+  const selectOptions = (orgs: Organization[]) => {
+    return orgs.map(org => ({
+      label: org.name,
+      value: org.id,
+      group: 'Organization',
+    }))
+  }
+
+  function chooseOrg (e: React.ChangeEvent<{}>, option: SelectOption) {
+    console.log(e)
+    console.log(option)
+  }
 
   return (
     <div className={classes.root}>
@@ -44,6 +89,28 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
               ? <img src={formState.values.avatarUrl} alt='profile picture' className={classes.img} />
               : <Avatar className={classes.avatar}>{initials.toLocaleUpperCase()}</Avatar>}
 
+            <InputLabel shrink>Access level</InputLabel>
+            <div>{profile.current_org.role.name}</div>
+
+            <InputLabel shrink>Last login</InputLabel>
+            <div>
+              {profile.user.last_login &&
+              new Intl.DateTimeFormat(i18n.language, dateOptions).format(Date.parse(profile.user.last_login))}
+            </div>
+
+            <InputLabel shrink>Member since</InputLabel>
+            <div>
+              {profile.current_org.member_since &&
+              new Intl.DateTimeFormat(i18n.language, dateOptions).format(Date.parse(profile.current_org.member_since))}
+            </div>
+
+            <InputLabel className={classes.inputLabel} shrink>Organisation</InputLabel>
+            <Select
+              options={selectOptions(profile.orgs_member)}
+              onChange={chooseOrg}
+            />
+
+            <InputLabel className={classes.inputLabel} shrink>Actions</InputLabel>
             <Button
               type='submit'
               disabled={!(formState.isDirty && formState.isValid)}
@@ -62,6 +129,7 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
               name='name'
               onChange={handleChange}
               onFocus={handleFocus}
+              value={formState.values.name}
               variant='outlined'
               margin='dense'
               fullWidth
@@ -77,6 +145,7 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
               name='bio'
               onChange={handleChange}
               onFocus={handleFocus}
+              value={formState.values.bio}
               autoFocus
               multiline
               rows={5}
@@ -94,6 +163,7 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
               name='email'
               onChange={handleChange}
               onFocus={handleFocus}
+              value={formState.values.email}
               variant='outlined'
               margin='dense'
               fullWidth
@@ -109,6 +179,7 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
               name='mobileNumber'
               onChange={handleChange}
               onFocus={handleFocus}
+              value={formState.values.mobileNumber}
               variant='outlined'
               margin='dense'
               fullWidth
@@ -127,6 +198,7 @@ const Profile: React.FC<{ user?: User }> = ({ user }) => {
               name='avatarUrl'
               onChange={handleChange}
               onFocus={handleFocus}
+              value={formState.values.avatarUrl}
               variant='outlined'
               margin='dense'
               fullWidth

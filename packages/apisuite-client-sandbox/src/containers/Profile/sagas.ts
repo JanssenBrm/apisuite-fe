@@ -12,6 +12,7 @@ import {
   inviteMemberActions,
   confirmInviteActions,
   changeRoleActions,
+  getProfileActions,
 } from './ducks'
 import { Store } from 'store/types'
 import { API_URL } from 'constants/endpoints'
@@ -19,6 +20,7 @@ import {
   FetchTeamMembersResponse,
   FetchRoleOptionsResponse,
   InviteMemberResponse,
+  GetProfileResponse,
 } from './types'
 import { openNotification } from 'containers/NotificationStack/ducks'
 
@@ -116,12 +118,31 @@ export function * changeRoleSaga (
   }
 }
 
+export function * getProfileSaga () {
+  try {
+    const accessToken = yield select((state: Store) => state.auth.authToken)
+    const response: GetProfileResponse = yield call(request, {
+      url: `${API_URL}/users/profile`,
+      method: 'GET',
+      headers: {
+        'x-access-token': accessToken,
+        'content-type': 'application/json',
+      },
+    })
+
+    yield put(getProfileActions.success(response))
+  } catch (error) {
+    yield put(getProfileActions.error(error))
+  }
+}
+
 function * rootSaga () {
   yield takeLatest(ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST, fetchTeamMembersSaga)
   yield takeLatest(ProfileActionTypes.FETCH_ROLE_OPTIONS_REQUEST, fetchRoleOptionsSaga)
   yield takeLatest(ProfileActionTypes.INVITE_MEMBER_REQUEST, inviteMemberSaga)
   yield takeLatest(ProfileActionTypes.CONFIRM_INVITE_MEMBER_REQUEST, confirmInviteSaga)
   yield takeLatest(ProfileActionTypes.CHANGE_ROLE_REQUEST, changeRoleSaga)
+  yield takeLatest(ProfileActionTypes.GET_PROFILE_REQUEST, getProfileSaga)
 }
 
 export default rootSaga

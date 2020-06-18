@@ -24,11 +24,13 @@ export default makeStyles(({
     display: 'flex',
     flexDirection: 'column',
     width: 'calc(100% - 65%)',
+    marginRight: 52,
   },
   img: {
     width: 160,
     height: 160,
     borderRadius: '50%',
+    marginBottom: 24,
   },
   avatar: {
     fontSize: 26,
@@ -36,6 +38,7 @@ export default makeStyles(({
     background: 'linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)',
     width: 160,
     height: 160,
+    marginBottom: 24,
   },
   textField: {
     '& label.Mui-focused': {
@@ -49,6 +52,7 @@ export default makeStyles(({
         borderColor: config.palette.primary,
       },
     },
+    marginTop: 24,
   },
   disabled: {
     opacity: 0.5,
@@ -61,13 +65,14 @@ export default makeStyles(({
     borderRadius: config.dimensions.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
-    marginRight: 16,
-    marginTop: 36,
     width: '60%',
   },
   btn2: {
     backgroundColor: 'white',
     color: config.palette.greyScales[700],
     border: '1px solid ' + config.palette.greyScales[700],
+  },
+  inputLabel: {
+    marginTop: 12,
   },
 }))
