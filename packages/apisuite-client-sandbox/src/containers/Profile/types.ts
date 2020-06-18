@@ -18,14 +18,18 @@ export type Role = {
   id: string,
 }
 
+export type Organization = {
+  id: string,
+  name: string,
+}
+
 export type FetchTeamMembersResponse = {
   success: boolean,
   message: string,
   members: ({
-    'org_id': string,
-    'User': Pick<User, 'id'> & { name: string },
-  } & {
+    'Organization': Organization,
     'Role': Role,
+    'User': Pick<User, 'id'> & { name: string },
   })[],
 }
 
