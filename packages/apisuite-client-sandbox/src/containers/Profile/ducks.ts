@@ -8,6 +8,7 @@ import {
   ConfirmInviteResponse,
   ChangeRoleResponse,
   GetProfileResponse,
+  UpdateProfileResponse,
 } from './types'
 
 const initialState: ProfileStore = {
@@ -75,7 +76,11 @@ export enum ProfileActionTypes {
 
   GET_PROFILE_REQUEST = 'GET_PROFILE_REQUEST',
   GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS',
-  GET_PROFILE_ERROR = 'GET_PROFILE_ERROR'
+  GET_PROFILE_ERROR = 'GET_PROFILE_ERROR',
+
+  UPDATE_PROFILE_REQUEST = 'UPDATE_PROFILE_REQUEST',
+  UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS',
+  UPDATE_PROFILE_ERROR = 'UPDATE_PROFILE_ERROR'
 }
 
 export default function profileReducer (
@@ -231,6 +236,32 @@ export const getProfileActions = {
   error: (error: string) => {
     return {
       type: ProfileActionTypes.GET_PROFILE_ERROR,
+      error: error,
+    } as const
+  },
+}
+
+export const updateProfileActions = {
+  request: (bio: string, avatar: string, mobile: number, orgId: string) => {
+    return {
+      type: ProfileActionTypes.UPDATE_PROFILE_REQUEST,
+      payload: {
+        bio: bio,
+        avatar: avatar,
+        mobile: mobile,
+        'org_id': orgId,
+      },
+    } as const
+  },
+  success: (response: UpdateProfileResponse) => {
+    return {
+      type: ProfileActionTypes.UPDATE_PROFILE_SUCCESS,
+      response: response,
+    } as const
+  },
+  error: (error: string) => {
+    return {
+      type: ProfileActionTypes.UPDATE_PROFILE_ERROR,
       error: error,
     } as const
   },

@@ -107,6 +107,6 @@ export default makeStyles(({
   featureAvatar: {
     height: 60,
     width: 60,
-    backgroundColor: config.palette.primary
-  }
+    backgroundColor: config.palette.primary,
+  },
 }))

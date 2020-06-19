@@ -74,6 +74,11 @@ export type GetProfileResponse = {
   success: boolean,
 }
 
+export type UpdateProfileResponse = {
+  success: boolean,
+  message: string,
+}
+
 export type ProfileActions =
   ReturnNestedType<typeof fetchTeamMembersActions> |
   ReturnNestedType<typeof fetchRoleOptionsActions> |

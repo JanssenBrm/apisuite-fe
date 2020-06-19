@@ -7,6 +7,7 @@ import {
 } from 'redux'
 import {
   getProfileActions,
+  updateProfileActions,
 } from 'containers/Profile/ducks'
 
 export const mapStateToProps = ({ auth, profile }: Store) => ({
@@ -16,6 +17,7 @@ export const mapStateToProps = ({ auth, profile }: Store) => ({
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   getProfile: getProfileActions.request,
+  updateProfile: updateProfileActions.request,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)

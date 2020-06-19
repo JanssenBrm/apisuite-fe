@@ -23,6 +23,7 @@ const Profile: React.FC<ProfileProps> = ({
   user,
   getProfile,
   profile,
+  updateProfile,
 }) => {
   let initials = ''
   const classes = useStyles()
@@ -75,15 +76,22 @@ const Profile: React.FC<ProfileProps> = ({
     }))
   }
 
-  function chooseOrg (e: React.ChangeEvent<{}>, option: SelectOption) {
-    console.log(e)
-    console.log(option)
+  function updateFormProfile (e: React.ChangeEvent<{}>, option?: SelectOption) {
+    e.preventDefault()
+    let number = parseInt(formState.values.mobileNumber)
+    let org = profile.current_org.id
+    if (!formState.values.mobileNumber) number = 0
+    if (option) org = option.value.toString()
+    updateProfile(formState.values.bio, formState.values.avatarUrl, number, org)
   }
 
   return (
     <div className={classes.root}>
       <section className={classes.contentContainer}>
-        <form className={classes.form} onSubmit={() => console.log(formState)}>
+        <form
+          className={classes.form}
+          onSubmit={(e) => updateFormProfile(e)}
+        >
           <aside className={classes.aside}>
             {formState.values.avatarUrl
               ? <img src={formState.values.avatarUrl} alt='profile picture' className={classes.img} />
@@ -107,7 +115,9 @@ const Profile: React.FC<ProfileProps> = ({
             <InputLabel className={classes.inputLabel} shrink>Organisation</InputLabel>
             <Select
               options={selectOptions(profile.orgs_member)}
-              onChange={chooseOrg}
+              onChange={updateFormProfile}
+              selected={selectOptions(profile.orgs_member).find(
+                option => option.value === profile.current_org.id)}
             />
 
             <InputLabel className={classes.inputLabel} shrink>Actions</InputLabel>
