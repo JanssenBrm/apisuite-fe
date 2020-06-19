@@ -21,6 +21,7 @@ const ForgotPasswordPage: React.FC<{
   })
 
   React.useEffect(() => {
+    // @ts-ignore
     setFormValid(errors && errors.length === 0)
   }, [errors])
 
@@ -37,6 +38,7 @@ const ForgotPasswordPage: React.FC<{
     })
     const eventTarget = e.target
 
+    // @ts-ignore
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
