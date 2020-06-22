@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { Location } from 'history'
 import { useTranslation } from 'react-i18next'
 import FormCard from 'components/FormCard'
 import FormField, { parseErrors, isValidEmail } from 'components/FormField'
@@ -7,8 +8,18 @@ import useStyles from './styles'
 
 const ForgotPasswordPage: React.FC<{
   forgotPassword: (emailInformation: { email: string }) => void,
+  location: Location<{
+    stage: 'recover' | 'forgot',
+    token: string,
+  }>,
   auth: any,
-}> = ({ forgotPassword, auth }) => {
+  recoverPassword: (recoverInformation: { token: string; password: string}) => void,
+}> = ({
+  forgotPassword,
+  auth,
+  location,
+  recoverPassword,
+}) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -16,9 +27,7 @@ const ForgotPasswordPage: React.FC<{
   const [submited, setSubmited] = React.useState(false)
   const [isFormValid, setFormValid] = React.useState(false)
   const [errors, setErrors] = React.useState()
-  const [input, setInput] = React.useState({
-    email: '',
-  })
+  const [input, setInput] = React.useState('')
 
   React.useEffect(() => {
     setFormValid(errors && errors.length === 0)
@@ -31,10 +40,7 @@ const ForgotPasswordPage: React.FC<{
   }, [auth.isRecoveringPassword])
 
   const handleInputs = (e: FormFieldEvent, err: any) => {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    })
+    setInput(e.target.value)
     const eventTarget = e.target
 
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
@@ -43,7 +49,11 @@ const ForgotPasswordPage: React.FC<{
   function handleSubmit (e: React.FormEvent<HTMLFormElement> | KeyboardEvent) {
     e.preventDefault()
     setSubmited(true)
-    forgotPassword({ email: input.email })
+    if (location.state.stage === 'recover') {
+      recoverPassword({ token: location.state.token, password: input })
+    } else {
+      forgotPassword({ email: input })
+    }
   }
 
   return (
@@ -51,36 +61,64 @@ const ForgotPasswordPage: React.FC<{
       <section className={classes.messageSide}>
         {!sent &&
           <section className={classes.messageContainer}>
-            <h1 className={classes.messageTitle}>{t('forgotPassword.messageTitle')}</h1>
-            <p className={classes.message}>{t('forgotPassword.message')}</p>
+            <h1 className={classes.messageTitle}>
+              {location.state.stage === 'recover' ? t('forgotPassword.messageTitleRecover') : t('forgotPassword.messageTitle')}
+            </h1>
+            <p className={classes.message}>
+              {location.state.stage === 'recover' ? t('forgotPassword.messageRecover') : t('forgotPassword.message')}
+            </p>
 
             <div className={classes.forgotPasswordContainer}>
               <FormCard
-                buttonLabel='Send'
+                buttonLabel={location.state.stage === 'recover' ? t('actions.save') : t('actions.send')}
                 buttonDisabled={!isFormValid}
                 handleSubmit={handleSubmit}
                 loading={auth.isRecoveringPassword}
               >
                 <div className={classes.fieldContainer}>
-                  <FormField
-                    id='email-field'
-                    label='E-mail'
-                    variant='outlined'
-                    type='email'
-                    placeholder=''
-                    name='email'
-                    value={input.email}
-                    onChange={handleInputs}
-                    autoFocus
-                    fullWidth
-                    errorPlacing='bottom'
-                    InputProps={{
-                      classes: { input: classes.textField },
-                    }}
-                    rules={[
-                      { rule: isValidEmail(input.email), message: t('registerForm.warnings.email') },
-                    ]}
-                  />
+                  {location.state.stage === 'recover'
+                    ? (
+                      <FormField
+                        id='password-field'
+                        label='Password'
+                        variant='outlined'
+                        type='password'
+                        placeholder=''
+                        name='password'
+                        value={input}
+                        onChange={handleInputs}
+                        autoFocus
+                        fullWidth
+                        errorPlacing='bottom'
+                        InputProps={{
+                          classes: { input: classes.textField },
+                        }}
+                        rules={[
+                          { rule: isValidEmail(input), message: t('registerForm.warnings.password') },
+                        ]}
+                      />
+                    )
+                    : (
+                      <FormField
+                        id='email-field'
+                        label='E-mail'
+                        variant='outlined'
+                        type='email'
+                        placeholder=''
+                        name='email'
+                        value={input}
+                        onChange={handleInputs}
+                        autoFocus
+                        fullWidth
+                        errorPlacing='bottom'
+                        InputProps={{
+                          classes: { input: classes.textField },
+                        }}
+                        rules={[
+                          { rule: isValidEmail(input), message: t('registerForm.warnings.email') },
+                        ]}
+                      />
+                    )}
                 </div>
               </FormCard>
             </div>
@@ -90,8 +128,6 @@ const ForgotPasswordPage: React.FC<{
           <section className={classes.messageContainer}>
             <h1 className={classes.messageTitle}>{t('forgotPassword.sent.messageTitle')}</h1>
             <p className={classes.message}>{t('forgotPassword.sent.message')}</p>
-            {/* TODO: removed once implemented */}
-            <p><em>This feature is currently under development</em></p>
           </section>}
       </section>
 

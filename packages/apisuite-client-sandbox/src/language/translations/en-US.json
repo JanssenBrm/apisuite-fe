@@ -171,7 +171,9 @@
   },
   "forgotPassword": {
     "messageTitle": "Forgot your password?",
+    "messageTitleRecover": "Enter your new password",
     "message": "Enter your recovery information below and we'll send you an e-mail to recover your password",
+    "messageRecover": "Please enter a new password:",
     "sent": {
       "messageTitle": "Check your inbox",
       "message": "We've sent you an e-mail so you can recover your password. Check your inbox."
@@ -199,6 +201,7 @@
   },
   "actions": {
     "save": "Save",
-    "saveDisabled": "Nothing to save"
+    "saveDisabled": "Nothing to save",
+    "send": "Send"
   }
 }
