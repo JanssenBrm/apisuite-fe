@@ -95,6 +95,7 @@ const AppDetail: React.FC<AppDetailProps> = (
     setChanged(true)
     setChangedDetails(!(JSON.stringify(currentApp) === JSON.stringify(input)))
     const eventTarget = e.target
+    // @ts-ignore
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
@@ -103,6 +104,7 @@ const AppDetail: React.FC<AppDetailProps> = (
   }
 
   React.useEffect(() => {
+    // @ts-ignore
     setFormValid(errors && errors.length === 0)
   }, [errors])
 
