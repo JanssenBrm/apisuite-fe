@@ -141,7 +141,7 @@ const TeamPage: React.FC<TeamPageProps> = ({
                 <Select
                   className={classes.select}
                   options={selectOptions(roleOptions)}
-                  onChange={handleChangeRole(member.User.id, member.org_id)}
+                  onChange={handleChangeRole(member.User.id, member.Organization.id)}
                   disabled={!(user.role.name === 'superadmin' || user.role.name === 'admin')}
                   selected={selectOptions(roleOptions).find(
                     option => option.label === member.Role.name)}
