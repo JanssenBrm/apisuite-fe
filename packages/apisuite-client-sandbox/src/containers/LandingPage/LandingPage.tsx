@@ -71,13 +71,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
           <div className={classes.cardRow}>
             <div className={classes.cardItem} style={{ borderRight: borderStyle, borderBottom: borderStyle }}>
               <Avatar className={classes.featureAvatar}>
-                <img src={application}/>
+                <img src={application} />
               </Avatar>
               <p>Client Applications</p>
             </div>
             <div className={classes.cardItem} style={{ borderBottom: borderStyle }}>
               <Avatar className={classes.featureAvatar}>
-                <img src={subscriptions}/>
+                <img src={subscriptions} />
               </Avatar>
               <p>Subscriptions</p>
             </div>
@@ -86,13 +86,13 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
           <div className={classes.cardRow}>
             <div className={classes.cardItem} style={{ borderRight: borderStyle }}>
               <Avatar className={classes.featureAvatar}>
-                <img src={testdata}/>
+                <img src={testdata} />
               </Avatar>
               <p>Test Data</p>
             </div>
             <div className={classes.cardItem}>
               <Avatar className={classes.featureAvatar}>
-                <img src={documentation}/>
+                <img src={documentation} />
               </Avatar>
               <p>Documentation</p>
             </div>

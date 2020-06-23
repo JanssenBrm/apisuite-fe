@@ -1,12 +1,11 @@
 import { makeStyles } from '@material-ui/styles'
-// import { config } from 'constants/global'
+import { config } from 'constants/global'
 
 export default makeStyles(({
   root: {
     minHeight: '100%',
     paddingTop: 200,
-    // backgroundColor: config.palette...,
-    backgroundColor: '#EEEEEE',
+    backgroundColor: config.palette.greyScales[50],
   },
   contentContainer: {
     maxWidth: 900,
@@ -25,13 +24,11 @@ export default makeStyles(({
     justifyContent: 'center',
     width: '100%',
     cursor: 'pointer',
-    // borderRadius: config.shape.borderRadius,
-    borderRadius: '4px',
+    borderRadius: config.dimensions.borderRadius,
     backgroundColor: 'white',
     overflow: 'hidden',
     borderStyle: 'solid',
-    // borderColor: config.palette,
-    borderColor: '#D1D1D1',
+    borderColor: config.palette.greyScales[300],
     border: 1,
   },
   header: {
@@ -42,8 +39,7 @@ export default makeStyles(({
     justifyContent: 'space-between',
     height: 42,
     paddingLeft: 10,
-    // color: config.palette,
-    color: '#ACACAC',
+    color: config.palette.greyScales[400],
   },
   actions: {
     paddingRight: 178,
@@ -53,29 +49,25 @@ export default makeStyles(({
     padding: '16px 30px 16px 10px',
     justifyContent: 'space-between',
     width: '100%',
-    borderTop: '1px solid #D1D1D1',
-    //  borderTop: '1px solid ' + config.palette.greyScales,
+    borderTop: '1px solid ' + config.palette.greyScales[300],
   },
   auth: {
     fontSize: 14,
-    color: '#424242',
-    // color: config.palette.text.secondary
+    color: config.palette.text.secondary,
   },
   select: {
     width: 182,
   },
   name: {
     fontSize: 16,
-    color: '#333',
-    // color: config.palette.text.primary
+    color: config.palette.text.primary,
   },
   btn: {
     display: 'inline-block',
-    backgroundColor: '#333333',
     color: 'white',
     padding: '8px 24px',
-    borderRadius: 4,
-    // borderRadius: config.dimensions.borderRadius,
+    backgroundColor: config.palette.greyScales[900],
+    borderRadius: config.dimensions.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
     marginRight: 16,
@@ -86,13 +78,11 @@ export default makeStyles(({
     justifyContent: 'space-between',
     width: '100%',
     cursor: 'pointer',
-    // borderRadius: config.shape.borderRadius,
-    borderRadius: '4px',
+    borderRadius: config.dimensions.borderRadius,
     backgroundColor: 'white',
     overflow: 'hidden',
     borderStyle: 'solid',
-    // borderColor: config.palette,
-    borderColor: '#D1D1D1',
+    borderColor: config.palette.greyScales[300],
     border: 1,
     marginTop: 24,
     height: 82,
@@ -101,17 +91,13 @@ export default makeStyles(({
   emailTextfield: {
     backgroundColor: 'white',
     width: 220,
-    // borderRadius: config.dimensions.borderRadius,
-    borderRadius: 4,
-    color: '#ACACAC',
-    // color: config.,
+    borderRadius: config.dimensions.borderRadius,
+    color: config.palette.greyScales[400],
   },
   nameTextfield: {
     backgroundColor: 'white',
     width: 220,
-    // borderRadius: config.dimensions.borderRadius,
-    borderRadius: 4,
-    color: '#ACACAC',
-    // color: config.,
+    borderRadius: config.dimensions.borderRadius,
+    color: config.palette.greyScales[400],
   },
 }))
