@@ -32,6 +32,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
       [e.target.name]: e.target.value,
     })
     const eventTarget = e.target
+    // @ts-ignore
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
@@ -45,6 +46,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
   }
 
   React.useEffect(() => {
+    // @ts-ignore
     setFormValid(errors && errors.length === 0)
   }, [errors])
 

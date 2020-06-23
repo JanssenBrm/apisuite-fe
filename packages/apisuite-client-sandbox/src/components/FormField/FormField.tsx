@@ -50,6 +50,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       }, err)
     }
 
+    // @ts-ignore
     setErrors(err)
     setChanged(true)
   }, [value, changed])
@@ -63,6 +64,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       <TextField
         className={classes.textField}
         label={label}
+        // @ts-ignore
         error={blured && errors && errors.length > 0}
         variant={variant}
         margin={margin}
@@ -72,8 +74,10 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         value={value}
         {...rest}
       />
+      {/* @ts-ignore */}
       {blured && errors && errors.length > 0 &&
         <div className={classnames('formfield-errors', errorPlacing)}>
+          {/* @ts-ignore */}
           {errors && errors.length > 0 && errors.map((e: any) => e.message)}
         </div>}
     </div>
