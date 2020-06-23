@@ -14,7 +14,9 @@ export const mapStateToProps = ({ auth }: Store) => ({
 })
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
-  forgotPassword: (emailInformation: { email: string}) => authActions.recoverPassword(emailInformation),
+  forgotPassword: (emailInformation: { email: string }) => authActions.forgotPassword(emailInformation),
+  recoverPassword: (recoverInformation: { token: string; password: string}) =>
+    authActions.recoverPassword(recoverInformation),
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordPage)

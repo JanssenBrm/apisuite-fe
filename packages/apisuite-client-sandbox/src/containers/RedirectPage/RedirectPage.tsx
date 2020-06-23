@@ -10,19 +10,31 @@ const RedirectPage: React.FC<RedirectPageProps> = ({
 }) => {
   const query = useQuery()
   const token = query.get('token')
-  const confirmType = useParams<{confirmType: 'invite' | 'registration'}>().confirmType
+  const redirect = useParams<{redirect: 'invite' | 'registration' | 'password'}>().redirect
 
   React.useEffect(() => {
-    if (token && confirmType === 'registration') confirmRegistration(token)
-    if (token && confirmType === 'invite') confirmInvite(token)
+    if (token && redirect === 'registration') confirmRegistration(token)
+    if (token && redirect === 'invite') confirmInvite(token)
   }, [confirmRegistration, confirmInvite])
 
-  switch (confirmType) {
+  switch (redirect) {
     case 'registration':
       return <Redirect to='/auth/login' />
 
     case 'invite':
       return <Redirect to='/profile/team' />
+
+    case 'password':
+      return (
+        <Redirect to={{
+          pathname: '/forgot',
+          state: {
+            stage: 'recover',
+            token: token,
+          },
+        }}
+        />
+      )
 
     default:
       return <Redirect to='/' />

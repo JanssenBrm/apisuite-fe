@@ -34,10 +34,15 @@ export interface AuthPayloads {
     user: User,
   },
   loginUserError: ErrorReason,
-  recoverPassword: {
+  forgotPassword: {
     email: string,
   },
-  recoverPasswordError: ErrorReason,
+  forgotPasswordError: ErrorReason,
+  recoverPassword: {
+    password: string,
+    token: string,
+  },
+  recoverPasswordError: any,
 }
 
 export interface AuthStoreActionTypes {
@@ -46,6 +51,9 @@ export interface AuthStoreActionTypes {
   loginError: AnyAction & { error: AuthPayloads['loginError'] },
   loginUserSuccess: AnyAction & { payload: AuthPayloads['loginUserSuccess'] },
   loginUserError: AnyAction & { error: AuthPayloads['loginUserError'] },
+  forgotPassword: AnyAction & { payload: AuthPayloads['forgotPassword']},
+  forgotPasswordError: AnyAction & { payload: AuthPayloads['forgotPasswordError']},
+  forgotPasswordSuccess: AnyAction,
   recoverPassword: AnyAction & { payload: AuthPayloads['recoverPassword']},
   recoverPasswordError: AnyAction & { payload: AuthPayloads['recoverPasswordError']},
   recoverPasswordSuccess: AnyAction,

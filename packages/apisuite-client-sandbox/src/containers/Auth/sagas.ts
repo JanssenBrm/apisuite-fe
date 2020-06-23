@@ -9,6 +9,7 @@ import {
   LOGIN,
   LOGIN_USER,
   LOGIN_SUCCESS,
+  FORGOT_PASSWORD,
   RECOVER_PASSWORD,
 } from './ducks'
 import {
@@ -87,6 +88,24 @@ function * loginUWorker (action: AnyAction) {
   }
 }
 
+function * forgotPasswordSaga (action: AnyAction) {
+  try {
+    yield call(request, {
+      url: `${API_URL}/users/forgot`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(authActions.forgotPasswordSuccess())
+  } catch (error) {
+    // TODO: change to action
+    authActions.forgotPasswordError(error)
+  }
+}
+
 function * recoverPasswordSaga (action: AnyAction) {
   try {
     yield call(request, {
@@ -108,6 +127,7 @@ function * recoverPasswordSaga (action: AnyAction) {
 export function * rootSaga () {
   yield takeLatest(LOGIN, loginWorker)
   yield takeLatest([LOGIN_SUCCESS, LOGIN_USER], loginUWorker)
+  yield takeLatest(FORGOT_PASSWORD, forgotPasswordSaga)
   yield takeLatest(RECOVER_PASSWORD, recoverPasswordSaga)
 }
 export default rootSaga
