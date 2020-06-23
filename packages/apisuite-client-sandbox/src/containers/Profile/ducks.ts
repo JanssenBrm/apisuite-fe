@@ -11,7 +11,10 @@ import {
 
 const initialState: ProfileStore = {
   members: [{
-    'org_id': '',
+    'Organization': {
+      id: '',
+      name: '',
+    },
     'User': {
       name: '',
       id: 0,

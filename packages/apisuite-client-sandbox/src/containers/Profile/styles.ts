@@ -56,7 +56,6 @@ export default makeStyles(({
   },
   btn: {
     display: 'inline-block',
-    backgroundColor: '#333333',
     color: 'white',
     padding: '8px 24px',
     borderRadius: config.dimensions.borderRadius,
@@ -68,7 +67,7 @@ export default makeStyles(({
   },
   btn2: {
     backgroundColor: 'white',
-    color: '#646464',
-    border: '1px solid #646464',
+    color: config.palette.greyScales[700],
+    border: '1px solid ' + config.palette.greyScales[700],
   },
 }))
