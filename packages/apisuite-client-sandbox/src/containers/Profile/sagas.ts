@@ -14,6 +14,7 @@ import {
   changeRoleActions,
   getProfileActions,
   updateProfileActions,
+  fetchOrgActions,
 } from './ducks'
 import { Store } from 'store/types'
 import { API_URL } from 'constants/endpoints'
@@ -159,6 +160,26 @@ export function * updateProfileSaga (
   }
 }
 
+export function * fetchOrgSaga (
+  action: ReturnType<typeof fetchOrgActions.request>,
+) {
+  try {
+    const accessToken = yield select((state: Store) => state.auth.authToken)
+    const response: InviteMemberResponse = yield call(request, {
+      url: `${API_URL}/organization/${action.payload.org_id}`,
+      method: 'GET',
+      headers: {
+        'x-access-token': accessToken,
+        'content-type': 'application/json',
+      },
+    })
+
+    yield put(fetchOrgActions.success(response))
+  } catch (error) {
+    yield put(fetchOrgActions.error(error))
+  }
+}
+
 function * rootSaga () {
   yield takeLatest(ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST, fetchTeamMembersSaga)
   yield takeLatest(ProfileActionTypes.FETCH_ROLE_OPTIONS_REQUEST, fetchRoleOptionsSaga)
@@ -167,6 +188,7 @@ function * rootSaga () {
   yield takeLatest(ProfileActionTypes.CHANGE_ROLE_REQUEST, changeRoleSaga)
   yield takeLatest(ProfileActionTypes.GET_PROFILE_REQUEST, getProfileSaga)
   yield takeLatest(ProfileActionTypes.UPDATE_PROFILE_REQUEST, updateProfileSaga)
+  yield takeLatest(ProfileActionTypes.FETCH_ORG_REQUEST, fetchOrgSaga)
 }
 
 export default rootSaga

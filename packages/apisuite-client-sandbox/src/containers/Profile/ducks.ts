@@ -51,6 +51,15 @@ const initialState: ProfileStore = {
     name: '',
     id: '',
   }],
+  org: {
+    name: '',
+    id: '',
+    description: '',
+    vat: '',
+    website: '',
+    terms: '',
+    logo: '',
+  },
 }
 
 export enum ProfileActionTypes {
@@ -80,7 +89,11 @@ export enum ProfileActionTypes {
 
   UPDATE_PROFILE_REQUEST = 'UPDATE_PROFILE_REQUEST',
   UPDATE_PROFILE_SUCCESS = 'UPDATE_PROFILE_SUCCESS',
-  UPDATE_PROFILE_ERROR = 'UPDATE_PROFILE_ERROR'
+  UPDATE_PROFILE_ERROR = 'UPDATE_PROFILE_ERROR',
+
+  FETCH_ORG_REQUEST = 'FETCH_ORG_REQUEST',
+  FETCH_ORG_SUCCESS = 'FETCH_ORG_SUCCESS',
+  FETCH_ORG_ERROR = 'FETCH_ORG_ERROR'
 }
 
 export default function profileReducer (
@@ -103,6 +116,12 @@ export default function profileReducer (
     case ProfileActionTypes.GET_PROFILE_SUCCESS: {
       return update(state, {
         profile: { $set: action.response.profile },
+      })
+    }
+
+    case ProfileActionTypes.FETCH_ORG_SUCCESS: {
+      return update(state, {
+        org: { $set: action.response.org },
       })
     }
 
@@ -262,6 +281,29 @@ export const updateProfileActions = {
   error: (error: string) => {
     return {
       type: ProfileActionTypes.UPDATE_PROFILE_ERROR,
+      error: error,
+    } as const
+  },
+}
+
+export const fetchOrgActions = {
+  request: (orgId: string) => {
+    return {
+      type: ProfileActionTypes.FETCH_ORG_REQUEST,
+      payload: {
+        'org_id': orgId,
+      },
+    } as const
+  },
+  success: (response: ChangeRoleResponse) => {
+    return {
+      type: ProfileActionTypes.FETCH_ORG_SUCCESS,
+      response: response,
+    } as const
+  },
+  error: (error: string) => {
+    return {
+      type: ProfileActionTypes.FETCH_ORG_ERROR,
       error: error,
     } as const
   },

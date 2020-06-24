@@ -11,6 +11,7 @@ export default makeStyles(({
     maxWidth: 900,
     margin: '0 auto',
     transform: 'translateX(-8px)',
+    paddingBottom: 100,
   },
   form: {
     display: 'flex',
@@ -24,13 +25,11 @@ export default makeStyles(({
     display: 'flex',
     flexDirection: 'column',
     width: 'calc(100% - 65%)',
-    marginRight: 52,
   },
   img: {
     width: 160,
     height: 160,
     borderRadius: '50%',
-    marginBottom: 24,
   },
   avatar: {
     fontSize: 26,
@@ -38,7 +37,6 @@ export default makeStyles(({
     background: 'linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)',
     width: 160,
     height: 160,
-    marginBottom: 24,
   },
   textField: {
     '& label.Mui-focused': {
@@ -52,7 +50,6 @@ export default makeStyles(({
         borderColor: config.palette.primary,
       },
     },
-    marginTop: 24,
   },
   disabled: {
     opacity: 0.5,
@@ -60,6 +57,7 @@ export default makeStyles(({
   },
   btn: {
     display: 'inline-block',
+    backgroundColor: '#333333',
     color: 'white',
     padding: '8px 24px',
     borderRadius: config.dimensions.borderRadius,
@@ -71,10 +69,7 @@ export default makeStyles(({
   },
   btn2: {
     backgroundColor: 'white',
-    color: config.palette.greyScales[700],
-    border: '1px solid ' + config.palette.greyScales[700],
-  },
-  inputLabel: {
-    marginTop: 12,
+    color: '#646464',
+    border: '1px solid #646464',
   },
 }))

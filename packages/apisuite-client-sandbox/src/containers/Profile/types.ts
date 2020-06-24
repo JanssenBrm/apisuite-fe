@@ -6,6 +6,7 @@ import {
   inviteMemberActions,
   confirmInviteActions,
   getProfileActions,
+  fetchOrgActions,
 } from './ducks'
 import {
   mapStateToProps,
@@ -18,9 +19,21 @@ ReturnType<typeof mapDispatchToProps>
 
 export const roleNameOptions = ['superadmin', 'admin', 'developer', ''] as const
 
+export type OrgInfo = {
+  description: string | null,
+  vat: string,
+  website: string,
+  terms: string,
+  logo: string,
+  'org_code': string,
+  createdAt: string,
+  updatedAt: string,
+}
+
 export type ProfileStore = Pick<FetchTeamMembersResponse, 'members'> & {
   roleOptions: Role[],
   profile: Profile,
+  org: Organization & Pick<OrgInfo, 'description' | 'vat' | 'website' | 'terms' | 'logo'>,
 }
 
 export type Profile = {
@@ -79,9 +92,16 @@ export type UpdateProfileResponse = {
   message: string,
 }
 
+export type FetchOrgResponse = {
+  success: boolean,
+  message: string,
+  org: Organization & OrgInfo,
+}
+
 export type ProfileActions =
   ReturnNestedType<typeof fetchTeamMembersActions> |
   ReturnNestedType<typeof fetchRoleOptionsActions> |
   ReturnNestedType<typeof inviteMemberActions> |
   ReturnNestedType<typeof confirmInviteActions> |
-  ReturnNestedType<typeof getProfileActions>
+  ReturnNestedType<typeof getProfileActions> |
+  ReturnNestedType<typeof fetchOrgActions>

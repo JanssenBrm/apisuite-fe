@@ -197,7 +197,13 @@
     "email": "E-mail address",
     "bio": "Bio",
     "mobileNumber": "Mobile number (international)",
-    "avatarUrl": "Avatar URL"
+    "avatarUrl": "Avatar URL",
+    "organization": "Organization",
+    "organizationDescription": "Organization description",
+    "organizationWebsite": "Organization website",
+    "organizationLogo": "Organization logo URL",
+    "organizationTerms": "Organization terms of use",
+    "vat": "VAT"
   },
   "actions": {
     "save": "Save",
