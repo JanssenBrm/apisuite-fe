@@ -63,7 +63,7 @@ const Profile: React.FC<ProfileProps> = ({
       name: profile.user.name,
       bio: profile.user.bio ?? '',
       email: profile.user.email,
-      mobileNumber: profile.user.mobile ?? '',
+      mobileNumber: (profile.user.mobile && profile.user.mobile !== '0') ? profile.user.mobile : '',
       avatarUrl: profile.user.avatar ?? '',
     })
   }, [profile])
@@ -82,7 +82,7 @@ const Profile: React.FC<ProfileProps> = ({
     let org = profile.current_org.id
     if (!formState.values.mobileNumber) number = 0
     if (option) org = option.value.toString()
-    updateProfile(formState.values.bio, formState.values.avatarUrl, number, org)
+    updateProfile(formState.values.bio, formState.values.avatarUrl, number, org.toString())
   }
 
   return (
@@ -123,11 +123,14 @@ const Profile: React.FC<ProfileProps> = ({
             <InputLabel className={classes.inputLabel} shrink>Actions</InputLabel>
             <Button
               type='submit'
-              disabled={!(formState.isDirty && formState.isValid)}
+              disabled={!(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0))}
               className={clsx(
-                classes.btn, classes.btn2, (!(formState.isDirty && formState.isValid) && classes.disabled))}
+                classes.btn,
+                classes.btn2,
+                (!(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)) &&
+                classes.disabled))}
             >
-              {formState.isDirty && formState.isValid ? t('actions.save') : t('actions.saveDisabled')}
+              {formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0) ? t('actions.save') : t('actions.saveDisabled')}
             </Button>
           </aside>
 
