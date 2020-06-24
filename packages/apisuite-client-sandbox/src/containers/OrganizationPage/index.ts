@@ -9,6 +9,7 @@ import OrganizationPage from './OrganizationPage'
 
 export const mapStateToProps = ({ profile }: Store) => ({
   org: profile.org,
+  profile: profile.profile,
 })
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({

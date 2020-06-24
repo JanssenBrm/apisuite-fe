@@ -7,6 +7,7 @@ import {
   confirmInviteActions,
   getProfileActions,
   fetchOrgActions,
+  updateProfileActions,
 } from './ducks'
 import {
   mapStateToProps,
@@ -98,10 +99,13 @@ export type FetchOrgResponse = {
   org: Organization & OrgInfo,
 }
 
+export type UpdateOrgResponse = any
+
 export type ProfileActions =
   ReturnNestedType<typeof fetchTeamMembersActions> |
   ReturnNestedType<typeof fetchRoleOptionsActions> |
   ReturnNestedType<typeof inviteMemberActions> |
   ReturnNestedType<typeof confirmInviteActions> |
   ReturnNestedType<typeof getProfileActions> |
+  ReturnNestedType<typeof updateProfileActions> |
   ReturnNestedType<typeof fetchOrgActions>

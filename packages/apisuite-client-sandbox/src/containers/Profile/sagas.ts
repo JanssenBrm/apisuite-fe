@@ -155,6 +155,7 @@ export function * updateProfileSaga (
     })
 
     yield put(updateProfileActions.success(response))
+    yield put(getProfileActions.request())
   } catch (error) {
     yield put(updateProfileActions.error(error))
   }

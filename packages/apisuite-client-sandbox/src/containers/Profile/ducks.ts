@@ -9,6 +9,7 @@ import {
   ChangeRoleResponse,
   GetProfileResponse,
   UpdateProfileResponse,
+  UpdateOrgResponse,
 } from './types'
 
 const initialState: ProfileStore = {
@@ -93,7 +94,11 @@ export enum ProfileActionTypes {
 
   FETCH_ORG_REQUEST = 'FETCH_ORG_REQUEST',
   FETCH_ORG_SUCCESS = 'FETCH_ORG_SUCCESS',
-  FETCH_ORG_ERROR = 'FETCH_ORG_ERROR'
+  FETCH_ORG_ERROR = 'FETCH_ORG_ERROR',
+
+  UPDATE_ORG_REQUEST = 'UPDATE_ORG_REQUEST',
+  UPDATE_ORG_SUCCESS = 'UPDATE_ORG_SUCCESS',
+  UPDATE_ORG_ERROR = 'UPDATE_ORG_ERROR'
 }
 
 export default function profileReducer (
@@ -304,6 +309,29 @@ export const fetchOrgActions = {
   error: (error: string) => {
     return {
       type: ProfileActionTypes.FETCH_ORG_ERROR,
+      error: error,
+    } as const
+  },
+}
+
+export const updateOrgActions = {
+  request: (orgId: string) => {
+    return {
+      type: ProfileActionTypes.UPDATE_ORG_REQUEST,
+      payload: {
+        'org_id': orgId,
+      },
+    } as const
+  },
+  success: (response: UpdateOrgResponse) => {
+    return {
+      type: ProfileActionTypes.UPDATE_ORG_SUCCESS,
+      response: response,
+    } as const
+  },
+  error: (error: string) => {
+    return {
+      type: ProfileActionTypes.UPDATE_ORG_ERROR,
       error: error,
     } as const
   },

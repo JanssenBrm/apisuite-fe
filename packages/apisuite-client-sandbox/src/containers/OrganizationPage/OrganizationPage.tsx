@@ -12,6 +12,7 @@ import clsx from 'clsx'
 const OrganizationPage: React.FC<OrganizationPageProps> = ({
   org,
   fetchOrg,
+  profile,
 }) => {
   const classes = useStyles()
   const [t] = useTranslation()
@@ -48,7 +49,7 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
   * Fetches organization's information by ID when mounting
   */
   React.useEffect(() => {
-    fetchOrg('4')
+    fetchOrg(profile.current_org.id)
   }, [fetchOrg])
 
   /**
