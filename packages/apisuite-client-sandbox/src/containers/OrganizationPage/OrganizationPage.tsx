@@ -72,6 +72,7 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
   return (
     <div className={classes.root}>
       <section className={classes.contentContainer}>
+        {console.log(formState)}
         <form
           className={classes.form}
           onSubmit={(e) => {
@@ -86,11 +87,14 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
 
             <Button
               type='submit'
-              disabled={!(formState.isDirty && formState.isValid)}
+              disabled={!(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0))}
               className={clsx(
-                classes.btn, classes.btn2, (!(formState.isDirty && formState.isValid) && classes.disabled))}
+                classes.btn,
+                classes.btn2,
+                (!(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)) &&
+                classes.disabled))}
             >
-              {formState.isDirty && formState.isValid ? t('actions.save') : t('actions.saveDisabled')}
+              {formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0) ? t('actions.save') : t('actions.saveDisabled')}
             </Button>
           </aside>
 
