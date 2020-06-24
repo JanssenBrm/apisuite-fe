@@ -120,6 +120,7 @@ export function * changeRoleSaga (
     })
 
     yield put(changeRoleActions.success(response))
+    yield put(fetchTeamMembersActions.request())
   } catch (error) {
     yield put(changeRoleActions.error(error))
   }
