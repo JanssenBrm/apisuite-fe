@@ -15,6 +15,7 @@ import {
   getProfileActions,
   updateProfileActions,
   fetchOrgActions,
+  updateOrgActions,
 } from './ducks'
 import { Store } from 'store/types'
 import { API_URL } from 'constants/endpoints'
@@ -24,6 +25,8 @@ import {
   InviteMemberResponse,
   GetProfileResponse,
   UpdateProfileResponse,
+  FetchOrgResponse,
+  UpdateOrgResponse,
 } from './types'
 import { openNotification } from 'containers/NotificationStack/ducks'
 
@@ -166,7 +169,7 @@ export function * fetchOrgSaga (
 ) {
   try {
     const accessToken = yield select((state: Store) => state.auth.authToken)
-    const response: InviteMemberResponse = yield call(request, {
+    const response: FetchOrgResponse = yield call(request, {
       url: `${API_URL}/organization/${action.payload.org_id}`,
       method: 'GET',
       headers: {
@@ -181,6 +184,27 @@ export function * fetchOrgSaga (
   }
 }
 
+export function * updateOrgSaga (
+  action: ReturnType<typeof updateOrgActions.request>,
+) {
+  try {
+    const accessToken = yield select((state: Store) => state.auth.authToken)
+    const response: UpdateOrgResponse = yield call(request, {
+      url: `${API_URL}/organization/${action.orgId}`,
+      method: 'PUT',
+      headers: {
+        'x-access-token': accessToken,
+        'content-type': 'application/json',
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(updateOrgActions.success(response))
+  } catch (error) {
+    yield put(updateOrgActions.error(error))
+  }
+}
+
 function * rootSaga () {
   yield takeLatest(ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST, fetchTeamMembersSaga)
   yield takeLatest(ProfileActionTypes.FETCH_ROLE_OPTIONS_REQUEST, fetchRoleOptionsSaga)
@@ -190,6 +214,7 @@ function * rootSaga () {
   yield takeLatest(ProfileActionTypes.GET_PROFILE_REQUEST, getProfileSaga)
   yield takeLatest(ProfileActionTypes.UPDATE_PROFILE_REQUEST, updateProfileSaga)
   yield takeLatest(ProfileActionTypes.FETCH_ORG_REQUEST, fetchOrgSaga)
+  yield takeLatest(ProfileActionTypes.UPDATE_ORG_REQUEST, updateOrgSaga)
 }
 
 export default rootSaga

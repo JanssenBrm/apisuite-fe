@@ -10,6 +10,7 @@ import {
   GetProfileResponse,
   UpdateProfileResponse,
   UpdateOrgResponse,
+  OrgInfo,
 } from './types'
 
 const initialState: ProfileStore = {
@@ -315,12 +316,11 @@ export const fetchOrgActions = {
 }
 
 export const updateOrgActions = {
-  request: (orgId: string) => {
+  request: (orgId: string, orgInfo: OrgInfo) => {
     return {
       type: ProfileActionTypes.UPDATE_ORG_REQUEST,
-      payload: {
-        'org_id': orgId,
-      },
+      orgId: orgId,
+      payload: orgInfo,
     } as const
   },
   success: (response: UpdateOrgResponse) => {

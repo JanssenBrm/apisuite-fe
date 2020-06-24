@@ -13,6 +13,7 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
   org,
   fetchOrg,
   profile,
+  updateOrg,
 }) => {
   const classes = useStyles()
   const [t] = useTranslation()
@@ -71,7 +72,13 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
   return (
     <div className={classes.root}>
       <section className={classes.contentContainer}>
-        <form className={classes.form} onSubmit={() => console.log(formState)}>
+        <form
+          className={classes.form}
+          onSubmit={(e) => {
+            e.preventDefault()
+            updateOrg(org.id, formState.values)
+          }}
+        >
           <aside className={classes.aside}>
             {formState.values.logo
               ? <img src={formState.values.logo} alt='organization logo' className={classes.img} />

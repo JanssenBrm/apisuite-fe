@@ -26,9 +26,9 @@ export type OrgInfo = {
   website: string,
   terms: string,
   logo: string,
-  'org_code': string,
-  createdAt: string,
-  updatedAt: string,
+  'org_code'?: string,
+  createdAt?: string,
+  updatedAt?: string,
 }
 
 export type ProfileStore = Pick<FetchTeamMembersResponse, 'members'> & {
