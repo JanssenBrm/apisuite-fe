@@ -72,7 +72,6 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
   return (
     <div className={classes.root}>
       <section className={classes.contentContainer}>
-        {console.log(formState)}
         <form
           className={classes.form}
           onSubmit={(e) => {

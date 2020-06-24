@@ -25,6 +25,7 @@ import {
   InviteMemberResponse,
   GetProfileResponse,
   UpdateProfileResponse,
+  ChangeRoleResponse,
   FetchOrgResponse,
   UpdateOrgResponse,
 } from './types'
@@ -108,7 +109,7 @@ export function * changeRoleSaga (
 ) {
   try {
     const accessToken = yield select((state: Store) => state.auth.authToken)
-    const response: InviteMemberResponse = yield call(request, {
+    const response: ChangeRoleResponse = yield call(request, {
       url: `${API_URL}/organization/assign`,
       method: 'POST',
       headers: {
@@ -169,8 +170,13 @@ export function * fetchOrgSaga (
 ) {
   try {
     const accessToken = yield select((state: Store) => state.auth.authToken)
+    let orgId
+    if (!action.payload.org_id) {
+      yield call(getProfileSaga)
+      orgId = yield select((state: Store) => state.profile.profile.current_org.id)
+    }
     const response: FetchOrgResponse = yield call(request, {
-      url: `${API_URL}/organization/${action.payload.org_id}`,
+      url: `${API_URL}/organization/${action.payload.org_id !== '' ? action.payload.org_id : orgId}`,
       method: 'GET',
       headers: {
         'x-access-token': accessToken,
@@ -200,6 +206,7 @@ export function * updateOrgSaga (
     })
 
     yield put(updateOrgActions.success(response))
+    yield put(fetchOrgActions.request(action.orgId))
   } catch (error) {
     yield put(updateOrgActions.error(error))
   }
