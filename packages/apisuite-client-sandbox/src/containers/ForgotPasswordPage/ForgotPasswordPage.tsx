@@ -1,8 +1,8 @@
 import * as React from 'react'
-import { Location } from 'history'
+import { Location, History } from 'history'
 import { useTranslation } from 'react-i18next'
 import FormCard from 'components/FormCard'
-import FormField, { parseErrors, isValidEmail } from 'components/FormField'
+import FormField, { parseErrors, isValidEmail, isValidPass } from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
 import useStyles from './styles'
 
@@ -12,12 +12,14 @@ const ForgotPasswordPage: React.FC<{
     stage: 'recover' | 'forgot',
     token: string,
   }>,
+  history: History<any>,
   auth: any,
-  recoverPassword: (recoverInformation: { token: string; password: string}) => void,
+  recoverPassword: (payload: { token: string; password: string }, history: History<any>) => void,
 }> = ({
   forgotPassword,
   auth,
   location,
+  history,
   recoverPassword,
 }) => {
   const classes = useStyles()
@@ -54,7 +56,7 @@ const ForgotPasswordPage: React.FC<{
     e.preventDefault()
     setSubmited(true)
     if (stage === 'recover') {
-      recoverPassword({ token: location.state.token, password: input })
+      recoverPassword({ token: location.state.token, password: input }, history)
     } else {
       forgotPassword({ email: input })
     }
@@ -98,7 +100,7 @@ const ForgotPasswordPage: React.FC<{
                           classes: { input: classes.textField },
                         }}
                         rules={[
-                          { rule: isValidEmail(input), message: t('registerForm.warnings.password') },
+                          { rule: isValidPass(input), message: t('registerForm.warnings.password') },
                         ]}
                       />
                     )
