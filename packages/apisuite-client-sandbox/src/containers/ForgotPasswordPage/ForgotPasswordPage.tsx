@@ -5,6 +5,10 @@ import FormCard from 'components/FormCard'
 import FormField, { parseErrors, isValidEmail, isValidPass } from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
 import useStyles from './styles'
+import IconButton from '@material-ui/core/IconButton'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import InputAdornment from '@material-ui/core/InputAdornment'
 
 const ForgotPasswordPage: React.FC<{
   forgotPassword: (emailInformation: { email: string }) => void,
@@ -32,6 +36,7 @@ const ForgotPasswordPage: React.FC<{
   const [isFormValid, setFormValid] = React.useState(false)
   const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState('')
+  const [showPassword, toggle] = React.useReducer(v => !v, false)
 
   React.useEffect(() => {
     // @ts-ignore
@@ -88,7 +93,7 @@ const ForgotPasswordPage: React.FC<{
                         id='password-field'
                         label='Password'
                         variant='outlined'
-                        type='password'
+                        type={showPassword ? 'text' : 'password'}
                         placeholder=''
                         name='password'
                         value={input}
@@ -98,6 +103,16 @@ const ForgotPasswordPage: React.FC<{
                         errorPlacing='bottom'
                         InputProps={{
                           classes: { input: classes.textField },
+                          endAdornment:
+                        <InputAdornment position='end'>
+                          <IconButton
+                            aria-label='toggle password visibility'
+                            onClick={toggle}
+                            edge='end'
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>,
                         }}
                         rules={[
                           { rule: isValidPass(input), message: t('registerForm.warnings.password') },
