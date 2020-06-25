@@ -22,6 +22,8 @@ const ForgotPasswordPage: React.FC<{
 }) => {
   const classes = useStyles()
   const [t] = useTranslation()
+  let stage = 'forgot'
+  if (location.state) stage = location.state.stage
 
   const [sent, setSent] = React.useState(false)
   const [submited, setSubmited] = React.useState(false)
@@ -51,7 +53,7 @@ const ForgotPasswordPage: React.FC<{
   function handleSubmit (e: React.FormEvent<HTMLFormElement> | KeyboardEvent) {
     e.preventDefault()
     setSubmited(true)
-    if (location.state.stage === 'recover') {
+    if (stage === 'recover') {
       recoverPassword({ token: location.state.token, password: input })
     } else {
       forgotPassword({ email: input })
@@ -64,21 +66,21 @@ const ForgotPasswordPage: React.FC<{
         {!sent &&
           <section className={classes.messageContainer}>
             <h1 className={classes.messageTitle}>
-              {location.state.stage === 'recover' ? t('forgotPassword.messageTitleRecover') : t('forgotPassword.messageTitle')}
+              {stage === 'recover' ? t('forgotPassword.messageTitleRecover') : t('forgotPassword.messageTitle')}
             </h1>
             <p className={classes.message}>
-              {location.state.stage === 'recover' ? t('forgotPassword.messageRecover') : t('forgotPassword.message')}
+              {stage === 'recover' ? t('forgotPassword.messageRecover') : t('forgotPassword.message')}
             </p>
 
             <div className={classes.forgotPasswordContainer}>
               <FormCard
-                buttonLabel={location.state.stage === 'recover' ? t('actions.save') : t('actions.send')}
+                buttonLabel={(location.state && location.state.stage === 'recover') ? t('actions.save') : t('actions.send')}
                 buttonDisabled={!isFormValid}
                 handleSubmit={handleSubmit}
                 loading={auth.isRecoveringPassword}
               >
                 <div className={classes.fieldContainer}>
-                  {location.state.stage === 'recover'
+                  {stage === 'recover'
                     ? (
                       <FormField
                         id='password-field'
