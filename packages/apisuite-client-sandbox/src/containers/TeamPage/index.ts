@@ -4,6 +4,7 @@ import {
   fetchRoleOptionsActions,
   inviteMemberActions,
   changeRoleActions,
+  resetErrorAction,
 } from 'containers/Profile/ducks'
 import {
   Dispatch,
@@ -16,6 +17,7 @@ export const mapStateToProps = ({ profile, auth }: Store) => ({
   members: profile.members,
   roleOptions: profile.roleOptions,
   user: auth.user,
+  requestStatutes: profile.requestStatuses,
 })
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
@@ -23,6 +25,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   fetchRoleOptions: fetchRoleOptionsActions.request,
   inviteMember: inviteMemberActions.request,
   changeRole: changeRoleActions.request,
+  resetErrors: resetErrorAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeamPage)

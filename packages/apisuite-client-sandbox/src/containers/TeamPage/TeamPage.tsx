@@ -7,7 +7,9 @@ import FormField from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
 import { TeamPageProps } from './types'
 import { SelectOption } from 'components/Select/types'
+import Close from '@material-ui/icons/Close'
 import { Role } from 'containers/Profile/types'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const TeamPage: React.FC<TeamPageProps> = ({
   fetchTeamMembers,
@@ -17,6 +19,8 @@ const TeamPage: React.FC<TeamPageProps> = ({
   members,
   roleOptions,
   user,
+  requestStatutes,
+  resetErrors,
 }) => {
   const classes = useStyles()
   const [inviteVisible, toggle] = React.useReducer(v => !v, false)
@@ -70,7 +74,7 @@ const TeamPage: React.FC<TeamPageProps> = ({
       }}
     >
       <Button className={classes.btn} type='submit'>
-        {t('rbac.team.send')}
+        {requestStatutes.inviteMemberRequest.isRequesting ? <CircularProgress size={20} className={classes.loading} /> : t('rbac.team.send')}
       </Button>
 
       <FormField
@@ -154,6 +158,15 @@ const TeamPage: React.FC<TeamPageProps> = ({
           ? (user.role.name === 'superadmin' || user.role.name === 'admin') &&
             <Button className={classes.btn} style={{ marginTop: 24 }} onClick={toggle}>{t('rbac.team.invite')} </Button>
           : inviteCard()}
+
+        {(requestStatutes.inviteMemberRequest.error !== '' || requestStatutes.changeRoleRequest.error !== '') &&
+          <div className={classes.errorPlaceholder}>
+            <div className={classes.errorAlert}>
+              {requestStatutes.inviteMemberRequest.error || requestStatutes.changeRoleRequest.error}
+              <Close onClick={resetErrors} />
+            </div>
+
+          </div>}
 
       </section>
     </div>

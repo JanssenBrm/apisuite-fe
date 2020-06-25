@@ -14,6 +14,8 @@ import {
   changeRoleActions,
   getProfileActions,
   updateProfileActions,
+  fetchOrgActions,
+  updateOrgActions,
 } from './ducks'
 import { Store } from 'store/types'
 import { API_URL } from 'constants/endpoints'
@@ -23,6 +25,9 @@ import {
   InviteMemberResponse,
   GetProfileResponse,
   UpdateProfileResponse,
+  ChangeRoleResponse,
+  FetchOrgResponse,
+  UpdateOrgResponse,
 } from './types'
 import { openNotification } from 'containers/NotificationStack/ducks'
 
@@ -73,7 +78,7 @@ export function * inviteMemberSaga (
 
     yield put(inviteMemberActions.success(response))
   } catch (error) {
-    yield put(inviteMemberActions.error(error))
+    yield put(inviteMemberActions.error(error.response.data.error))
   }
 }
 
@@ -104,7 +109,7 @@ export function * changeRoleSaga (
 ) {
   try {
     const accessToken = yield select((state: Store) => state.auth.authToken)
-    const response: InviteMemberResponse = yield call(request, {
+    const response: ChangeRoleResponse = yield call(request, {
       url: `${API_URL}/organization/assign`,
       method: 'POST',
       headers: {
@@ -115,8 +120,9 @@ export function * changeRoleSaga (
     })
 
     yield put(changeRoleActions.success(response))
+    yield put(fetchTeamMembersActions.request())
   } catch (error) {
-    yield put(changeRoleActions.error(error))
+    yield put(changeRoleActions.error(error.response.data.error))
   }
 }
 
@@ -154,8 +160,56 @@ export function * updateProfileSaga (
     })
 
     yield put(updateProfileActions.success(response))
+    yield put(getProfileActions.request())
   } catch (error) {
-    yield put(updateProfileActions.error(error))
+    yield put(updateProfileActions.error(error.response.data.error))
+  }
+}
+
+export function * fetchOrgSaga (
+  action: ReturnType<typeof fetchOrgActions.request>,
+) {
+  try {
+    const accessToken = yield select((state: Store) => state.auth.authToken)
+    let orgId
+    if (!action.payload.org_id) {
+      yield call(getProfileSaga)
+      orgId = yield select((state: Store) => state.profile.profile.current_org.id)
+    }
+    const response: FetchOrgResponse = yield call(request, {
+      url: `${API_URL}/organization/${action.payload.org_id !== '' ? action.payload.org_id : orgId}`,
+      method: 'GET',
+      headers: {
+        'x-access-token': accessToken,
+        'content-type': 'application/json',
+      },
+    })
+
+    yield put(fetchOrgActions.success(response))
+  } catch (error) {
+    yield put(fetchOrgActions.error(error))
+  }
+}
+
+export function * updateOrgSaga (
+  action: ReturnType<typeof updateOrgActions.request>,
+) {
+  try {
+    const accessToken = yield select((state: Store) => state.auth.authToken)
+    const response: UpdateOrgResponse = yield call(request, {
+      url: `${API_URL}/organization/${action.orgId}`,
+      method: 'PUT',
+      headers: {
+        'x-access-token': accessToken,
+        'content-type': 'application/json',
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(updateOrgActions.success(response))
+    yield put(fetchOrgActions.request(action.orgId))
+  } catch (error) {
+    yield put(updateOrgActions.error(error.response.data.error))
   }
 }
 
@@ -167,6 +221,8 @@ function * rootSaga () {
   yield takeLatest(ProfileActionTypes.CHANGE_ROLE_REQUEST, changeRoleSaga)
   yield takeLatest(ProfileActionTypes.GET_PROFILE_REQUEST, getProfileSaga)
   yield takeLatest(ProfileActionTypes.UPDATE_PROFILE_REQUEST, updateProfileSaga)
+  yield takeLatest(ProfileActionTypes.FETCH_ORG_REQUEST, fetchOrgSaga)
+  yield takeLatest(ProfileActionTypes.UPDATE_ORG_REQUEST, updateOrgSaga)
 }
 
 export default rootSaga
