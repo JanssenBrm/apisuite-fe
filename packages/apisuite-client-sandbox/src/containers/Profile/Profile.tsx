@@ -14,6 +14,7 @@ import { useForm } from 'util/useForm'
 import { useTranslation } from 'react-i18next'
 import i18n from 'i18next'
 import clsx from 'clsx'
+import Close from '@material-ui/icons/Close'
 import {
   ProfileProps,
   Organization,
@@ -24,6 +25,8 @@ const Profile: React.FC<ProfileProps> = ({
   getProfile,
   profile,
   updateProfile,
+  requestStatutes,
+  resetErrors,
 }) => {
   let initials = ''
   const classes = useStyles()
@@ -132,6 +135,12 @@ const Profile: React.FC<ProfileProps> = ({
             >
               {formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0) ? t('actions.save') : t('actions.saveDisabled')}
             </Button>
+
+            {requestStatutes.updateProfileRequest.error !== '' &&
+              <div className={classes.errorPlaceholder}>
+                <div className={classes.errorAlert}>{requestStatutes.updateProfileRequest.error}</div>
+                <Close onClick={resetErrors} />
+              </div>}
           </aside>
 
           <main className={classes.main}>

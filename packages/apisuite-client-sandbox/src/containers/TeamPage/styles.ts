@@ -100,4 +100,27 @@ export default makeStyles(({
     borderRadius: config.dimensions.borderRadius,
     color: config.palette.greyScales[400],
   },
+  loading: {
+    position: 'relative',
+    top: 4,
+    color: 'white',
+    opacity: 0.5,
+  },
+  errorPlaceholder: {
+    display: 'flex',
+    marginTop: 10,
+  },
+  errorAlert: {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: config.palette.feedback.error,
+    border: 'solid',
+    borderWidth: 1,
+    borderColor: config.palette.feedback.error,
+    fontSize: 13,
+    color: '#FFF',
+    padding: '2px 15px',
+    borderRadius: config.dimensions.borderRadius,
+    minHeight: 20,
+  },
 }))

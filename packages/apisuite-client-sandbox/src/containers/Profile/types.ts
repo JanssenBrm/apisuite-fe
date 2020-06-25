@@ -8,11 +8,15 @@ import {
   getProfileActions,
   fetchOrgActions,
   updateProfileActions,
+  updateOrgActions,
+  changeRoleActions,
+  resetErrorAction,
 } from './ducks'
 import {
   mapStateToProps,
   mapDispatchToProps,
 } from './index'
+import { RequestStatus } from 'util/request'
 
 export type ProfileProps =
 ReturnType<typeof mapStateToProps> &
@@ -35,6 +39,12 @@ export type ProfileStore = Pick<FetchTeamMembersResponse, 'members'> & {
   roleOptions: Role[],
   profile: Profile,
   org: Organization & Pick<OrgInfo, 'description' | 'vat' | 'website' | 'terms' | 'logo'>,
+  requestStatuses: {
+    inviteMemberRequest: RequestStatus,
+    updateProfileRequest: RequestStatus,
+    updateOrgRequest: RequestStatus,
+    changeRoleRequest: RequestStatus,
+  },
 }
 
 export type Profile = {
@@ -108,4 +118,7 @@ export type ProfileActions =
   ReturnNestedType<typeof confirmInviteActions> |
   ReturnNestedType<typeof getProfileActions> |
   ReturnNestedType<typeof updateProfileActions> |
-  ReturnNestedType<typeof fetchOrgActions>
+  ReturnNestedType<typeof updateOrgActions> |
+  ReturnNestedType<typeof changeRoleActions> |
+  ReturnNestedType<typeof fetchOrgActions> |
+  ReturnType<typeof resetErrorAction>

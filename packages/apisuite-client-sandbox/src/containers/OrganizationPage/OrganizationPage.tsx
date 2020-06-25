@@ -6,6 +6,7 @@ import Button from '@material-ui/core/Button'
 import Avatar from '@material-ui/core/Avatar'
 import { isValidURL } from 'components/FormField/index'
 import { useForm } from 'util/useForm'
+import Close from '@material-ui/icons/Close'
 import { useTranslation } from 'react-i18next'
 import clsx from 'clsx'
 
@@ -14,6 +15,8 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
   fetchOrg,
   profile,
   updateOrg,
+  requestStatutes,
+  resetErrors,
 }) => {
   const classes = useStyles()
   const [t] = useTranslation()
@@ -95,6 +98,14 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
             >
               {formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0) ? t('actions.save') : t('actions.saveDisabled')}
             </Button>
+
+            {requestStatutes.updateOrgRequest.error !== '' &&
+              <div className={classes.errorPlaceholder}>
+                <div className={classes.errorAlert}>
+                  {requestStatutes.updateOrgRequest.error}
+                  <Close onClick={resetErrors} />
+                </div>
+              </div>}
           </aside>
 
           <main className={classes.main}>

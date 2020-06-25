@@ -66,7 +66,6 @@ export default makeStyles(({
     cursor: 'pointer',
     fontWeight: 500,
     marginRight: 16,
-    marginTop: 36,
     width: '60%',
   },
   btn2: {
@@ -76,5 +75,22 @@ export default makeStyles(({
   },
   inputLabel: {
     marginTop: 12,
+  },
+  errorPlaceholder: {
+    display: 'flex',
+    marginTop: 10,
+  },
+  errorAlert: {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: config.palette.feedback.error,
+    border: 'solid',
+    borderWidth: 1,
+    borderColor: config.palette.feedback.error,
+    fontSize: 13,
+    color: '#FFF',
+    padding: '2px 15px',
+    borderRadius: config.dimensions.borderRadius,
+    minHeight: 20,
   },
 }))

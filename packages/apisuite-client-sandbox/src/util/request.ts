@@ -14,6 +14,11 @@ export interface ErrorReason {
   message: string,
 }
 
+export type RequestStatus = {
+  isRequesting: boolean,
+  error: string,
+}
+
 function checkToken (response: AxiosResponse) {
   const search = response.request.responseURL.split('?')[1]
   const urlParams = new URLSearchParams(search)

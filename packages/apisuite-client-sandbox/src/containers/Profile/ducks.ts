@@ -62,6 +62,24 @@ const initialState: ProfileStore = {
     terms: '',
     logo: '',
   },
+  requestStatuses: {
+    inviteMemberRequest: {
+      isRequesting: false,
+      error: '',
+    },
+    updateProfileRequest: {
+      isRequesting: false,
+      error: '',
+    },
+    updateOrgRequest: {
+      isRequesting: false,
+      error: '',
+    },
+    changeRoleRequest: {
+      isRequesting: false,
+      error: '',
+    },
+  },
 }
 
 export enum ProfileActionTypes {
@@ -99,7 +117,9 @@ export enum ProfileActionTypes {
 
   UPDATE_ORG_REQUEST = 'UPDATE_ORG_REQUEST',
   UPDATE_ORG_SUCCESS = 'UPDATE_ORG_SUCCESS',
-  UPDATE_ORG_ERROR = 'UPDATE_ORG_ERROR'
+  UPDATE_ORG_ERROR = 'UPDATE_ORG_ERROR',
+
+  RESET_ERRORS = 'RESET_ERRORS',
 }
 
 export default function profileReducer (
@@ -110,6 +130,134 @@ export default function profileReducer (
     case ProfileActionTypes.FETCH_TEAM_MEMBERS_SUCCESS: {
       return update(state, {
         members: { $set: action.response.members },
+      })
+    }
+
+    case ProfileActionTypes.INVITE_MEMBER_REQUEST: {
+      return update(state, {
+        requestStatuses: {
+          inviteMemberRequest: {
+            isRequesting: { $set: true },
+            error: { $set: '' },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.INVITE_MEMBER_SUCCESS: {
+      return update(state, {
+        requestStatuses: {
+          inviteMemberRequest: {
+            isRequesting: { $set: false },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.INVITE_MEMBER_ERROR: {
+      return update(state, {
+        requestStatuses: {
+          inviteMemberRequest: {
+            isRequesting: { $set: false },
+            error: { $set: action.error },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.UPDATE_PROFILE_REQUEST: {
+      return update(state, {
+        requestStatuses: {
+          updateProfileRequest: {
+            isRequesting: { $set: true },
+            error: { $set: '' },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.UPDATE_PROFILE_SUCCESS: {
+      return update(state, {
+        requestStatuses: {
+          updateProfileRequest: {
+            isRequesting: { $set: false },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.UPDATE_PROFILE_ERROR: {
+      return update(state, {
+        requestStatuses: {
+          updateProfileRequest: {
+            isRequesting: { $set: false },
+            error: { $set: action.error },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.UPDATE_ORG_REQUEST: {
+      return update(state, {
+        requestStatuses: {
+          updateOrgRequest: {
+            isRequesting: { $set: true },
+            error: { $set: '' },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.UPDATE_ORG_SUCCESS: {
+      return update(state, {
+        requestStatuses: {
+          updateOrgRequest: {
+            isRequesting: { $set: false },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.UPDATE_ORG_ERROR: {
+      return update(state, {
+        requestStatuses: {
+          updateOrgRequest: {
+            isRequesting: { $set: false },
+            error: { $set: action.error },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.CHANGE_ROLE_REQUEST: {
+      return update(state, {
+        requestStatuses: {
+          changeRoleRequest: {
+            isRequesting: { $set: true },
+            error: { $set: '' },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.CHANGE_ROLE_SUCCESS: {
+      return update(state, {
+        requestStatuses: {
+          changeRoleRequest: {
+            isRequesting: { $set: false },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.CHANGE_ROLE_ERROR: {
+      return update(state, {
+        requestStatuses: {
+          changeRoleRequest: {
+            isRequesting: { $set: false },
+            error: { $set: action.error },
+          },
+        },
       })
     }
 
@@ -128,6 +276,25 @@ export default function profileReducer (
     case ProfileActionTypes.FETCH_ORG_SUCCESS: {
       return update(state, {
         org: { $set: action.response.org },
+      })
+    }
+
+    case ProfileActionTypes.RESET_ERRORS: {
+      return update(state, {
+        requestStatuses: {
+          inviteMemberRequest: {
+            error: { $set: '' },
+          },
+          updateProfileRequest: {
+            error: { $set: '' },
+          },
+          updateOrgRequest: {
+            error: { $set: '' },
+          },
+          changeRoleRequest: {
+            error: { $set: '' },
+          },
+        },
       })
     }
 
@@ -336,3 +503,9 @@ export const updateOrgActions = {
     } as const
   },
 }
+
+export const resetErrorAction = () =>
+  ({
+    type: ProfileActionTypes.RESET_ERRORS,
+  } as const
+  )

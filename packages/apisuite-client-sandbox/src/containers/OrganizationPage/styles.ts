@@ -72,4 +72,22 @@ export default makeStyles(({
     color: '#646464',
     border: '1px solid #646464',
   },
+  errorPlaceholder: {
+    display: 'flex',
+    marginTop: 10,
+    width: '70%',
+  },
+  errorAlert: {
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: config.palette.feedback.error,
+    border: 'solid',
+    borderWidth: 1,
+    borderColor: config.palette.feedback.error,
+    fontSize: 13,
+    color: '#FFF',
+    padding: '2px 15px',
+    borderRadius: config.dimensions.borderRadius,
+    minHeight: 20,
+  },
 }))

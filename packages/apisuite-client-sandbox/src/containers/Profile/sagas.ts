@@ -78,7 +78,7 @@ export function * inviteMemberSaga (
 
     yield put(inviteMemberActions.success(response))
   } catch (error) {
-    yield put(inviteMemberActions.error(error))
+    yield put(inviteMemberActions.error(error.response.data.error))
   }
 }
 
@@ -122,7 +122,7 @@ export function * changeRoleSaga (
     yield put(changeRoleActions.success(response))
     yield put(fetchTeamMembersActions.request())
   } catch (error) {
-    yield put(changeRoleActions.error(error))
+    yield put(changeRoleActions.error(error.response.data.error))
   }
 }
 
@@ -162,7 +162,7 @@ export function * updateProfileSaga (
     yield put(updateProfileActions.success(response))
     yield put(getProfileActions.request())
   } catch (error) {
-    yield put(updateProfileActions.error(error))
+    yield put(updateProfileActions.error(error.response.data.error))
   }
 }
 
@@ -209,7 +209,7 @@ export function * updateOrgSaga (
     yield put(updateOrgActions.success(response))
     yield put(fetchOrgActions.request(action.orgId))
   } catch (error) {
-    yield put(updateOrgActions.error(error))
+    yield put(updateOrgActions.error(error.response.data.error))
   }
 }
 
