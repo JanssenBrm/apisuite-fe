@@ -1,15 +1,41 @@
 import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
-import { useTheme } from '@material-ui/core/styles'
-import { Theme } from 'themes/types'
 import LocaleSelect from 'language/LocaleSelect'
+import { config } from 'constants/global'
+import logo from 'theme/images/logo.png'
 
 import './styles.scss'
 
-const Footer = () => {
-  const theme: Theme = useTheme()
+const renderSocialLinks = () => {
+  const social = config.social
+  if (!social) {
+    return null
+  }
 
+  return (
+    <div className='icons-container'>
+      {social.web &&
+        <a href={social.web} target='_blank' rel='noopener noreferrer'>
+          <SvgIcon size={24} name='earth' />
+        </a>}
+      {social.twitter &&
+        <a href={social.twitter} target='_blank' rel='noopener noreferrer'>
+          <SvgIcon size={24} name='twitter' />
+        </a>}
+      {social.facebook &&
+        <a href={social.facebook} target='_blank' rel='noopener noreferrer'>
+          <SvgIcon size={24} name='facebook' />
+        </a>}
+      {social.github &&
+        <a href={social.github} target='_blank' rel='noopener noreferrer'>
+          <SvgIcon size={24} name='github-face' />
+        </a>}
+    </div>
+  )
+}
+
+const Footer = () => {
   function handleFabClick () {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
@@ -18,24 +44,10 @@ const Footer = () => {
     <footer className='footer'>
       <div className='container'>
         <div className='logo-container'>
-          <img src={theme.images.footerLogo} alt='logo' className='logo' />
-          <p>{'© 2020 APISuite\nAll rights reserved.\nProudly made in Europe.'}</p>
+          <img src={logo} alt='logo' className='logo' />
+          <p>{config.footer.copyright}</p>
 
-          <div className='icons-container'>
-            <a href='https://cloudoki.com' target='_blank' rel='noopener noreferrer'>
-              <SvgIcon size={24} name='earth' />
-            </a>
-            <a href='https://twitter.com/TeamCloudoki' target='_blank' rel='noopener noreferrer'>
-              <SvgIcon size={24} name='twitter' />
-            </a>
-            <a href='https://www.facebook.com/cloudokiTeam/' target='_blank' rel='noopener noreferrer'>
-              <SvgIcon size={24} name='facebook' />
-            </a>
-            <a href='https://github.com/Cloudoki' target='_blank' rel='noopener noreferrer'>
-              <SvgIcon size={24} name='github-face' />
-            </a>
-          </div>
-
+          {renderSocialLinks()}
           <LocaleSelect />
         </div>
 

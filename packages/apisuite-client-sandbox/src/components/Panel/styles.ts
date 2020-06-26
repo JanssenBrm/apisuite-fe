@@ -1,16 +1,16 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
+import { config } from 'constants/global'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   card: {
     position: 'relative',
     display: 'flex',
     flexDirection: 'column',
     backgroundColor: 'white',
-    borderRadius: theme.shape.borderRadius * 2,
+    borderRadius: config.dimensions.borderRadius * 2,
     boxShadow: '-1px -1px 1px 0px rgba(0,0,0,0.03)',
     maxWidth: 900,
-    margin: '0 auto',
+    margin: '20px auto',
   },
   cardShadow: {
     position: 'absolute',
@@ -30,5 +30,25 @@ export default makeStyles((theme: Theme) => ({
     height: '100%',
     width: 60,
     background: 'linear-gradient(left, rgba(0,0,0,0.03) 0%, rgba(0,0,0,0) 100%)',
+  },
+  cardContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'center',
+    padding: '16px 24px',
+  },
+  featuresTitle: {
+    fontSize: 26,
+    fontWeight: 100,
+    textAlign: 'center',
+    color: config.palette.primary,
+  },
+  otherTitle: {
+    color: config.palette.primary,
+  },
+  featuresDesc: {
+    textAlign: 'center',
+    color: '#666666',
+    maxWidth: 600,
   },
 }))

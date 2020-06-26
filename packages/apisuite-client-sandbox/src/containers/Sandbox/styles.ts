@@ -1,16 +1,13 @@
 import { makeStyles } from '@material-ui/styles'
-import requireImage from 'util/requireImage'
-import { Theme } from 'themes/types'
-import { colorPicker } from 'util/colorPicker'
+import { config } from 'constants/global'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   root: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
     minHeight: '100%',
-    background: `url("${requireImage('sandbox-background.png')}") no-repeat`,
-    backgroundSize: '100% 100%',
+    backgroundSize: 'cover',
     paddingTop: 300,
     paddingBottom: 45,
   },
@@ -18,67 +15,37 @@ export default makeStyles((theme: Theme) => ({
     maxWidth: 900,
     margin: '0 auto',
   },
-  slide: {
-    display: 'flex',
-    alignItems: 'center',
-  },
-  slideImage: {
-    width: 400,
-    height: 350,
-  },
-  slideInfo: {
-    width: 400,
-    marginTop: 50,
-    color: 'white',
-  },
-  slideInfoH1: {
-    display: 'inline-block',
-    fontSize: 26,
-    fontWeight: 100,
-    backgroundColor: 'white',
-    padding: '8px 16px',
-    margin: 0,
-    marginBottom: 8,
-    color: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
-  },
-  slideInfoParagraph: {
-    marginBottom: 48,
-  },
-  spacer: {
-    flex: 1,
-  },
   btn: {
     display: 'inline-block',
     color: '#333333',
     backgroundColor: 'white',
     padding: '8px 24px',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: config.dimensions.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
-  },
-  btn2: {
-    backgroundColor: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
-    color: 'white',
-    border: '1px solid white',
-  },
-  btn3: {
-    backgroundColor: '#14C762',
-    color: 'white',
-    border: '1px solid white',
   },
   btn4: {
     display: 'flex',
     color: '#333333',
-    backgroundColor: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
+    backgroundColor: config.palette.primary,
     padding: '8px 24px',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: config.dimensions.borderRadius,
     marginLeft: 12,
     cursor: 'pointer',
     fontWeight: 500,
     '&:hover': {
       color: '#FFF',
-      backgroundColor: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
+      backgroundColor: config.palette.primary,
     },
+  },
+  featuresTitle: {
+    fontSize: 26,
+    fontWeight: 100,
+    textAlign: 'center',
+    color: config.palette.primary,
+  },
+  otherTitle: {
+    color: config.palette.primary,
   },
   cardContent: {
     display: 'flex',
@@ -86,19 +53,11 @@ export default makeStyles((theme: Theme) => ({
     alignItems: 'center',
     padding: '16px 24px',
   },
-  featuresTitle: {
-    fontSize: 26,
-    fontWeight: 100,
-    textAlign: 'center',
-    color: colorPicker(theme.palette.primary, 700, '#2DB7BA'),
-  },
-  otherTitle: {
-    color: colorPicker(theme.palette.primary, 300, '#2DB7BA'),
-  },
   featuresDesc: {
     textAlign: 'center',
     color: '#666666',
     maxWidth: 600,
+    margin: '0 auto 20px',
   },
   listContainer: {
     display: 'flex',
@@ -112,10 +71,10 @@ export default makeStyles((theme: Theme) => ({
     margin: '0 40px',
   },
   featureAvatar: {
-    background: `linear-gradient(270deg, ${theme.gradients.G1.begin} 0%, ${theme.gradients.G1.end} 100%)`,
+    background: 'linear-gradient(270deg, #2DB7BA 0%, #14BC7D 100%)',
   },
   otherAvatar: {
-    background: `linear-gradient(270deg, ${theme.gradients.G2.begin} 0%, ${theme.gradients.G2.end} 100%)`,
+    background: 'linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)',
   },
   partnersContainer: {
     display: 'felx',
@@ -133,7 +92,7 @@ export default makeStyles((theme: Theme) => ({
     maxWidth: 800,
   },
   partnersLink: {
-    color: colorPicker(theme.palette.primary, 300, '#2DB7BA'),
+    color: config.palette.primary,
     textAlign: 'center',
     marginTop: 40,
   },
@@ -232,7 +191,7 @@ export default makeStyles((theme: Theme) => ({
   },
   emailTextfield: {
     backgroundColor: '#646464',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: config.dimensions.borderRadius,
     color: '#ACACAC',
     margin: 0,
   },
@@ -240,7 +199,7 @@ export default makeStyles((theme: Theme) => ({
     fontSize: '14px',
     fontWeight: 300,
     '& > a': {
-      color: colorPicker(theme.palette.primary, 600, '#409CB0'),
+      color: config.palette.primaryLight,
     },
   },
   checkbox: {

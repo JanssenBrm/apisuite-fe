@@ -4,7 +4,7 @@ import { TabProps } from 'components/Navigation/types'
 
 export const initTabs: TabProps[] = [
   {
-    label: 'Sandbox Features',
+    label: 'Home',
     route: '/',
   },
   {
@@ -36,7 +36,7 @@ const ConsoleLabel = () => (
 
 export const loginTabs: TabProps[] = [
   {
-    label: 'Sandbox Features',
+    label: 'Home',
     route: '/',
   },
   {
@@ -75,6 +75,24 @@ export const loginTabs: TabProps[] = [
         route: '/dashboard/console',
       },
       // #conditional-loader-end
+    ],
+  },
+  {
+    label: 'Profile',
+    route: '/profile',
+    subTabs: [
+      {
+        label: 'Profile',
+        route: '/profile',
+      },
+      {
+        label: 'Team',
+        route: '/profile/team',
+      },
+      {
+        label: 'Organisation',
+        route: '/profile/organisation',
+      },
     ],
   },
 ]

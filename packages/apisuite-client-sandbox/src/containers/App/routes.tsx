@@ -1,5 +1,8 @@
 import * as React from 'react'
-import { Route, Switch } from 'react-router'
+import {
+  Route,
+  Switch,
+} from 'react-router'
 import NotFound from 'components/NotFound'
 import Terms from 'components/Terms'
 import Privacy from 'components/Privacy'
@@ -11,10 +14,15 @@ import AppDetail from 'containers/Applications/AppDetail'
 import Subscriptions from 'containers/Subscriptions'
 import Console from 'containers/Console'
 import Login from 'containers/Login'
-// import Register from 'containers/Register'
 import { AppRouteProps } from './types'
 import RequireAuth from 'containers/Auth'
 import Instructions from 'containers/Instructions'
+import RegisterConfirmation from 'containers/RegisterConfirmation'
+import RedirectPage from 'containers/RedirectPage'
+import ForgotPasswordPage from 'containers/ForgotPasswordPage'
+import TeamPage from 'containers/TeamPage'
+import Profile from 'containers/Profile'
+import OrganizationPage from 'containers/OrganizationPage'
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
@@ -26,10 +34,15 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/dashboard/subscriptions', exact: true, render: (props) => <RequireAuth component={Subscriptions} {...props} /> },
   { path: '/dashboard/test', exact: true, render: (props) => <RequireAuth component={Instructions} {...props} /> },
   { path: '/dashboard/console', render: (props) => <RequireAuth component={Console} {...props} /> },
+  { path: '/profile', exact: true, render: (props) => <RequireAuth component={Profile} {...props} /> },
+  { path: '/profile/team', exact: true, render: (props) => <RequireAuth component={TeamPage} {...props} /> },
+  { path: '/profile/organisation', exact: true, render: (props) => <RequireAuth component={OrganizationPage} {...props} /> },
   // #conditional-loader-start: console
   // #conditional-loader-end
   { path: '/auth/:view?/:email?', exact: true, component: Login },
-  // { path: '/register', component: Register },
+  { path: ['/:redirect/confirm', '/:redirect/reset'], exact: true, component: RedirectPage },
+  { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation },
+  { path: '/forgot', exact: true, component: ForgotPasswordPage },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
   { render: () => <NotFound /> },

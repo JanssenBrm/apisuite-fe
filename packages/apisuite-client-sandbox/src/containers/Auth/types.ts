@@ -1,11 +1,14 @@
 import { ErrorReason } from 'util/request'
 import { AnyAction } from 'redux'
 import { ReactType } from 'react'
+import { Role } from 'containers/Profile/types'
+import { History } from 'history'
 
 export interface AuthStore {
   user?: User,
   authToken?: string,
   isAuthorizing: boolean,
+  isRecoveringPassword: boolean,
   error?: string,
 }
 
@@ -13,6 +16,7 @@ export interface User {
   fName: string,
   lName: string,
   id: number,
+  role: Role,
 }
 
 export interface AuthPayloads {
@@ -31,6 +35,15 @@ export interface AuthPayloads {
     user: User,
   },
   loginUserError: ErrorReason,
+  forgotPassword: {
+    email: string,
+  },
+  forgotPasswordError: ErrorReason,
+  recoverPassword: {
+    password: string,
+    token: string,
+  },
+  recoverPasswordError: any,
 }
 
 export interface AuthStoreActionTypes {
@@ -39,6 +52,12 @@ export interface AuthStoreActionTypes {
   loginError: AnyAction & { error: AuthPayloads['loginError'] },
   loginUserSuccess: AnyAction & { payload: AuthPayloads['loginUserSuccess'] },
   loginUserError: AnyAction & { error: AuthPayloads['loginUserError'] },
+  forgotPassword: AnyAction & { payload: AuthPayloads['forgotPassword']},
+  forgotPasswordError: AnyAction & { payload: AuthPayloads['forgotPasswordError']},
+  forgotPasswordSuccess: AnyAction,
+  recoverPassword: AnyAction & { payload: AuthPayloads['recoverPassword']} & { history: History<any> },
+  recoverPasswordError: AnyAction & { payload: AuthPayloads['recoverPasswordError']},
+  recoverPasswordSuccess: AnyAction,
   logout: AnyAction,
 }
 

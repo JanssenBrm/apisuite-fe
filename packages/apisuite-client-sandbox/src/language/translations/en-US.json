@@ -3,26 +3,26 @@
     "slides": {
       "one": {
         "title": "Experience the Sandbox",
-        "p1": "We have released a <b>Live Demo</b> of our Sandbox product. Browse through the features below to see what you can expect.",
-        "p2": "The proof of the pudding is, as they say, in the eating.",
-        "btnStr": "Register"
+        "subtitle": "We have released a <b>Live Demo</b> of our Sandbox product. Browse through the features below to see what you can expect.",
+        "content": "The proof of the pudding is, as they say, in the eating.",
+        "button": "Register"
       },
       "two": {
         "title": "Secure Proof of Concepts",
-        "p1": "With Cloudoki Sandbox, secure <b>proof of concepts</b> are as easy to manage as calling an Uber. (We have an app for that.)",
-        "p2": "Talk to one of our humans for more information.",
-        "btnStr": "Contact"
+        "subtitle": "With {{clientName}} Sandbox, secure <b>proof of concepts</b> are as easy to manage as calling an Uber. (We have an app for that.)",
+        "content": "Talk to one of our humans for more information.",
+        "button": "Contact"
       },
       "three": {
         "title": "Sail the Seas of Innovation",
-        "p1": "Cloudoki <b>Sandbox</b> is built on open source technology, just ahead of the curve, in order to give you a long and smooth lifetime cycle.",
-        "p2": "Docker, Kubernetes, Kong, it is all there.",
-        "btnStr": "Features"
+        "subtitle": "Cloudoki <b>Sandbox</b> is built on open source technology, just ahead of the curve, in order to give you a long and smooth lifetime cycle.",
+        "content": "Docker, Kubernetes, Kong, it is all there.",
+        "button": "Features"
       },
       "four": {
         "title": "Extend and Customize",
-        "p1": "The Cloudoki Sandbox is purpose built for customization. Do you need a manual onboarding process? <b>Extend</b>. Send your 2FA sms’es through Twillio? <b>Configure</b>. Support Korean i18n? <b>Customize</b>.",
-        "btnStr": "Documentation"
+        "subtitle": "The Cloudoki Sandbox is purpose built for customization. Do you need a manual onboarding process? <b>Extend</b>. Send your 2FA sms’es through Twillio? <b>Configure</b>. Support Korean i18n? <b>Customize</b>.",
+        "button": "Documentation"
       }
     },
     "features": {
@@ -106,11 +106,11 @@
       }
     }
   },
-  "loginPortal": {
+  "loginForm": {
     "title": "Login",
     "button": "LOG IN",
     "warnings": {
-      "email": "Please enter a valid email address.",
+      "email": "Please enter a valid e-mail address.",
       "password": "Please fill in your pass phrase."
     },
     "fields": {
@@ -118,11 +118,19 @@
       "password": "Pass Phrase"
     }
   },
-  "registerPortal": {
+  "registerForm": {
     "warnings": {
       "name": "Please enter your name.",
-      "email": "Please enter a valid email address.",
+      "email": "Please enter a valid e-mail address.",
+      "organisationName": "Please enter the name of your organisation.",
+      "website": "Please enter a valid website for your organisation.",
+      "vat": "Please enter your organisations' VAT.",
       "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long."
+    },
+    "steps": {
+      "personalDetails": "Personal Details",
+      "organisationDetails": "Organisation Details",
+      "securityStep": "Security Step"
     }
   },
   "listApps": {
@@ -142,7 +150,7 @@
   },
   "subscriptions": {
     "title": "Subscriptions",
-    "description": "The Cloudoki Sandbox can hold an unlimited amount of API Products and API versions. The former defines the business side of an API, the latter is the technical entry, defined by OpenAPI contracts. This view enables you to automate deprecation control and give better insight in how the API’s and applications are linked together."
+    "description": "The {{config.clientName}} Sandbox can hold an unlimited amount of API Products and API versions. The former defines the business side of an API, the latter is the technical entry, defined by OpenAPI contracts. This view enables you to automate deprecation control and give better insight in how the API’s and applications are linked together."
   },
   "subscriptionSelect": {
     "addApplication": "Subscribe applications..."
@@ -150,5 +158,56 @@
   "subscriptionsTable": {
     "header": "Available API's",
     "actions": "actions"
+  },
+  "login": {
+    "welcomeTitle": "Welcome",
+    "welcomeMsg": "Please feel free to login or register, it's completely free!",
+    "loginBtn": "Login",
+    "registerBtn": "Register"
+  },
+  "registerConfirmation": {
+    "messageTitle": "Thanks for joining us!",
+    "message": "A verification link has been sent to your email address. Please follow the instruction to finish your registration!"
+  },
+  "forgotPassword": {
+    "messageTitle": "Forgot your password?",
+    "messageTitleRecover": "Enter your new password",
+    "message": "Enter your recovery information below and we'll send you an e-mail to recover your password",
+    "messageRecover": "Please enter a new password:",
+    "sent": {
+      "messageTitle": "Check your inbox",
+      "message": "We've sent you an e-mail so you can recover your password. Check your inbox."
+    }
+  },
+  "rbac": {
+    "team": {
+      "title": "Manage Team",
+      "header": "Organisation members",
+      "actions": "Role",
+      "invite": "Invite member",
+      "send": "send"
+    }
+  },
+  "warnings": {
+    "url": "Please enter a valid URL.",
+    "mobileNumber": "Please enter a valid mobile number."
+  },
+  "labels": {
+    "name": "Name",
+    "email": "E-mail address",
+    "bio": "Bio",
+    "mobileNumber": "Mobile number (international)",
+    "avatarUrl": "Avatar URL",
+    "organization": "Organization",
+    "organizationDescription": "Organization description",
+    "organizationWebsite": "Organization website",
+    "organizationLogo": "Organization logo URL",
+    "organizationTerms": "Organization terms of use",
+    "vat": "VAT"
+  },
+  "actions": {
+    "save": "Save",
+    "saveDisabled": "Nothing to save",
+    "send": "Send"
   }
 }

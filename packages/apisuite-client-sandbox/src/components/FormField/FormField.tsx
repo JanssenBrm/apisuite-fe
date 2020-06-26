@@ -1,7 +1,7 @@
 import * as React from 'react'
 import TextField from '@material-ui/core/TextField'
 import classnames from 'classnames'
-
+import useStyles from './styles'
 import { FormFieldProps } from './types'
 
 const FormField: React.FC<FormFieldProps> = (props) => {
@@ -21,6 +21,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   const [errors, setErrors] = React.useState()
   const [changed, setChanged] = React.useState(false)
   const [blured, setBlured] = React.useState(false)
+  const classes = useStyles()
 
   function handleOnFocus (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     // TODO: Fix this
@@ -49,6 +50,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       }, err)
     }
 
+    // @ts-ignore
     setErrors(err)
     setChanged(true)
   }, [value, changed])
@@ -60,8 +62,9 @@ const FormField: React.FC<FormFieldProps> = (props) => {
     >
 
       <TextField
-        className='formfield'
+        className={classes.textField}
         label={label}
+        // @ts-ignore
         error={blured && errors && errors.length > 0}
         variant={variant}
         margin={margin}
@@ -71,8 +74,10 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         value={value}
         {...rest}
       />
+      {/* @ts-ignore */}
       {blured && errors && errors.length > 0 &&
         <div className={classnames('formfield-errors', errorPlacing)}>
+          {/* @ts-ignore */}
           {errors && errors.length > 0 && errors.map((e: any) => e.message)}
         </div>}
     </div>

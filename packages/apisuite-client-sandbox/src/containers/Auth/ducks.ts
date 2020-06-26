@@ -1,6 +1,5 @@
 import update from 'immutability-helper'
 import { AuthStore, AuthStoreActionTypes, AuthPayloads } from './types'
-import { REGISTER_USER } from 'components/RegisterPortal/ducks'
 import { Reducer, AnyAction, Dispatch } from 'redux'
 import { History } from 'history'
 import cookie from 'js-cookie'
@@ -13,6 +12,14 @@ const LOGIN_USER_SUCCESS = 'auth/LOGIN_USER_SUCCESS'
 const LOGIN_USER_ERROR = 'auth/LOGIN_USER_ERROR'
 const LOGOUT = 'auth/LOGOUT'
 
+export const FORGOT_PASSWORD = 'auth/FORGOT_PASSWORD'
+export const FORGOT_PASSWORD_SUCCESS = 'auth/FORGOT_PASSWORD_SUCCESS'
+export const FORGOT_PASSWORD_ERROR = 'auth/FORGOT_PASSWORD_ERROR'
+
+export const RECOVER_PASSWORD = 'auth/RECOVER_PASSWORD'
+export const RECOVER_PASSWORD_ERROR = 'auth/RECOVER_PASSWORD_ERROR'
+export const RECOVER_PASSWORD_SUCCESS = 'auth/RECOVER_PASSWORD_SUCCESS'
+
 export const TOKEN_KEY = 'at'
 export const TOKEN_MAX_AGE = 30 // <-- 1 month
 
@@ -22,6 +29,7 @@ const initialState: AuthStore = {
   authToken,
   user: undefined,
   isAuthorizing: false,
+  isRecoveringPassword: false,
   error: undefined,
 }
 
@@ -56,9 +64,15 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
       })
     }
 
-    case REGISTER_USER: {
+    case FORGOT_PASSWORD: {
       return update(state, {
-        error: { $set: undefined },
+        isRecoveringPassword: { $set: true },
+      })
+    }
+
+    case FORGOT_PASSWORD_SUCCESS: {
+      return update(state, {
+        isRecoveringPassword: { $set: false },
       })
     }
 
@@ -90,6 +104,12 @@ export const authActions = {
   loginError: (error: AuthPayloads['loginError']) => ({ type: LOGIN_ERROR, error }),
   loginUserSuccess: (payload: AuthPayloads['loginUserSuccess']) => ({ type: LOGIN_USER_SUCCESS, payload }),
   loginUserError: (error: AuthPayloads['loginUserError']) => ({ type: LOGIN_USER_ERROR, error }),
+  forgotPassword: (payload: AuthPayloads['forgotPassword']) => ({ type: FORGOT_PASSWORD, payload }),
+  forgotPasswordError: (payload: AuthPayloads['forgotPasswordError']) => ({ type: FORGOT_PASSWORD_ERROR, payload }),
+  forgotPasswordSuccess: () => ({ type: FORGOT_PASSWORD_SUCCESS }),
+  recoverPassword: (payload: AuthPayloads['recoverPassword'], history: History) => ({ type: RECOVER_PASSWORD, payload, history }),
+  recoverPasswordError: (payload: AuthPayloads['recoverPasswordError']) => ({ type: RECOVER_PASSWORD_ERROR, payload }),
+  recoverPasswordSuccess: () => ({ type: RECOVER_PASSWORD_SUCCESS }),
   logout: () => ({ type: LOGOUT }),
 }
 

@@ -1,8 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
-import { colorPicker } from 'util/colorPicker'
+import { config } from 'constants/global'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles({
   card: {
     display: 'flex',
     flexDirection: 'column',
@@ -12,13 +11,13 @@ export default makeStyles((theme: Theme) => ({
     height: 218,
     cursor: 'pointer',
     margin: 8,
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: config.dimensions.borderRadius,
     padding: 16,
     backgroundColor: 'white',
   },
   cardAdd: {
     backgroundColor: 'transparent',
-    border: `2px dashed ${colorPicker(theme.palette.grey, 300, '#D1D1D1')}`,
+    border: `2px dashed ${config.palette.greyScales[300]}`,
   },
   avatar: {
     fontSize: 26,
@@ -49,10 +48,10 @@ export default makeStyles((theme: Theme) => ({
     display: 'flex',
     alignItems: 'center',
     fontSize: 12,
-    color: colorPicker(theme.palette.grey, 700, '#646464'),
+    color: config.palette.greyScales[700],
     marginTop: 4,
   },
   disabled: {
     opacity: 0.5,
   },
-}))
+})

@@ -1,14 +1,12 @@
 import { makeStyles } from '@material-ui/styles'
-import requireImage from 'util/requireImage'
-import { Theme } from 'themes/types'
+import { config } from 'constants/global'
 
-export default makeStyles((theme: Theme) => ({
+export default makeStyles(({
   root: {
     display: 'flex',
     flexDirection: 'column',
     width: '100%',
     minHeight: '100%',
-    background: `url("${requireImage('landing-bg.png')}") no-repeat`,
     backgroundSize: '110% 110%',
     paddingTop: 300,
     paddingBottom: 45,
@@ -66,7 +64,7 @@ export default makeStyles((theme: Theme) => ({
   cardRow: {
     display: 'flex',
     flexDirection: 'row',
-    width: 600,
+    width: 550,
   },
   cardItem: {
     display: 'flex',
@@ -74,19 +72,27 @@ export default makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     width: 300,
-    height: 200,
+    height: 150,
     '& > p': {
-      color: '#E3E3E3',
+      fontSize: 16,
       textAlign: 'center',
       margin: 0,
       marginTop: 16,
     },
   },
   cardSide: {
-    marginLeft: 40,
+    paddingRight: 60,
+    paddingTop: 60,
+    color: '#fff',
     '& > h1': {
-      fontSize: '26px',
+      display: 'inline-block',
+      fontSize: 26,
       fontWeight: 300,
+      backgroundColor: 'white',
+      padding: '0px 16px',
+      margin: 0,
+      marginBottom: 30,
+      color: config.palette.primary,
     },
   },
   btn: {
@@ -94,8 +100,13 @@ export default makeStyles((theme: Theme) => ({
     color: '#333333',
     backgroundColor: 'white',
     padding: '8px 24px',
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: config.dimensions.borderRadius,
     cursor: 'pointer',
     fontWeight: 500,
+  },
+  featureAvatar: {
+    height: 60,
+    width: 60,
+    backgroundColor: config.palette.primary,
   },
 }))

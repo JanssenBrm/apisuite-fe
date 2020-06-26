@@ -17,6 +17,7 @@ import { AppDetailProps } from './types'
 import { RouteParams, AppData } from '../types'
 import { useParams } from 'react-router'
 import { FormFieldEvent } from 'components/FormField/types'
+import { config } from 'constants/global'
 
 const AppDetail: React.FC<AppDetailProps> = (
   {
@@ -94,6 +95,7 @@ const AppDetail: React.FC<AppDetailProps> = (
     setChanged(true)
     setChangedDetails(!(JSON.stringify(currentApp) === JSON.stringify(input)))
     const eventTarget = e.target
+    // @ts-ignore
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
@@ -102,6 +104,7 @@ const AppDetail: React.FC<AppDetailProps> = (
   }
 
   React.useEffect(() => {
+    // @ts-ignore
     setFormValid(errors && errors.length === 0)
   }, [errors])
 
@@ -163,7 +166,7 @@ const AppDetail: React.FC<AppDetailProps> = (
             <div className={classes.fieldWrapper}>
               <FormField
                 label='Terms of service'
-                value='https://cloudoki.com/tos'
+                value={`https://${config.clientName}.com/tos`}
               />
 
               {/* <Button variant='outlined' className={classes.iconBtn}>

@@ -15,7 +15,10 @@ import { radioOptions } from './config'
 import useCommonStyles from '../styles'
 import useStyles from './styles'
 import { CreateAppProps } from './types'
+import { AppData } from '../types'
 import clsx from 'clsx'
+
+type Input = Pick<AppData, 'name' | 'description' | 'redirectUrl' | 'logo' | 'userId' | 'visibility' | 'subscriptions' | 'pubUrls'>
 
 const CreateApp: React.FC<CreateAppProps> = ({
   history,
@@ -30,7 +33,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
   // const [visible, toggle] = React.useReducer(v => !v, false)
   const [isFormValid, setFormValid] = React.useState(false)
   const [errors, setErrors] = React.useState()
-  const [input, setInput] = React.useState({
+  const [input, setInput] = React.useState<Input>({
     name: '',
     description: '',
     redirectUrl: '',
@@ -38,7 +41,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
     userId: 0,
     // visibility: visible ? 'public' : 'private',
     visibility: 'private',
-    subscriptions: [1],
+    subscriptions: [],
     // TODO review puburls
     pubUrls: null,
   })
@@ -66,6 +69,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
       [e.target.name]: e.target.value,
     })
     const eventTarget = e.target
+    // @ts-ignore
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
@@ -104,6 +108,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
   }
 
   React.useEffect(() => {
+    // @ts-ignore
     setFormValid(errors && errors.length === 0)
   }, [errors])
 

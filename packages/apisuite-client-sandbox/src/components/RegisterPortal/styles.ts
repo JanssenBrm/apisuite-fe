@@ -1,26 +1,25 @@
 import { makeStyles } from '@material-ui/styles'
-import { Theme } from 'themes/types'
-import { colorPicker } from 'util/colorPicker'
+import { config } from 'constants/global'
 
-const useStyles = makeStyles((theme: Theme) => ({
+const useStyles = makeStyles(({
   registerContainer: {
     width: '100%',
     height: '100%',
   },
   emailTextfield: {
     backgroundColor: 'white',
-    borderRadius: theme.shape.borderRadius,
-    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
+    borderRadius: config.dimensions.borderRadius,
+    color: config.palette.greyScales[400],
   },
   nameTextfield: {
     backgroundColor: 'white',
-    borderRadius: theme.shape.borderRadius,
-    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
+    borderRadius: config.dimensions.borderRadius,
+    color: config.palette.greyScales[400],
   },
   passPhrasefield: {
     backgroundColor: 'white',
-    borderRadius: theme.shape.borderRadius,
-    color: colorPicker(theme.palette.grey, 400, '#ACACAC'),
+    borderRadius: config.dimensions.borderRadius,
+    color: config.palette.greyScales[400],
   },
   passPhraseContainer: {
     display: 'flex',
