@@ -19,6 +19,7 @@ import {
 } from 'constants/endpoints'
 import { roleNameOptions } from 'containers/Profile/types'
 import qs from 'qs'
+import { openNotification } from 'containers/NotificationStack/ducks'
 
 import { AnyAction } from 'redux'
 
@@ -109,7 +110,7 @@ function * forgotPasswordSaga (action: AnyAction) {
 function * recoverPasswordSaga (action: AnyAction) {
   try {
     yield call(request, {
-      url: `${API_URL}/users/forgot`,
+      url: `${API_URL}/users/recover`,
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -118,6 +119,8 @@ function * recoverPasswordSaga (action: AnyAction) {
     })
 
     yield put(authActions.recoverPasswordSuccess())
+    action.history.replace('auth/login')
+    yield put(openNotification('success', 'Password changed, you can login.', 3000))
   } catch (error) {
     // TODO: change to action
     authActions.recoverPasswordError(error)

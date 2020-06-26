@@ -98,7 +98,7 @@ export function * confirmInviteSaga (
     })
 
     yield put(confirmInviteActions.success(response))
-    yield put(openNotification('success', 'New team member added!', 4000))
+    yield put(openNotification('success', 'You were added to a team, go to your profile to check your new organization!', 5000))
   } catch (error) {
     yield put(confirmInviteActions.error(error))
   }

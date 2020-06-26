@@ -3,6 +3,7 @@ import {
   authActions,
 } from 'containers/Auth/ducks'
 import ForgotPasswordPage from './ForgotPasswordPage'
+import { History } from 'history'
 import {
   Dispatch,
   bindActionCreators,
@@ -15,8 +16,8 @@ export const mapStateToProps = ({ auth }: Store) => ({
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   forgotPassword: (emailInformation: { email: string }) => authActions.forgotPassword(emailInformation),
-  recoverPassword: (recoverInformation: { token: string; password: string}) =>
-    authActions.recoverPassword(recoverInformation),
+  recoverPassword: (recoverInformation: { token: string; password: string}, history: History<any>) =>
+    authActions.recoverPassword(recoverInformation, history),
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(ForgotPasswordPage)

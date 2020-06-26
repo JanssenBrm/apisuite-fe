@@ -1,10 +1,14 @@
 import * as React from 'react'
-import { Location } from 'history'
+import { Location, History } from 'history'
 import { useTranslation } from 'react-i18next'
 import FormCard from 'components/FormCard'
-import FormField, { parseErrors, isValidEmail } from 'components/FormField'
+import FormField, { parseErrors, isValidEmail, isValidPass } from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
 import useStyles from './styles'
+import IconButton from '@material-ui/core/IconButton'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import InputAdornment from '@material-ui/core/InputAdornment'
 
 const ForgotPasswordPage: React.FC<{
   forgotPassword: (emailInformation: { email: string }) => void,
@@ -12,22 +16,27 @@ const ForgotPasswordPage: React.FC<{
     stage: 'recover' | 'forgot',
     token: string,
   }>,
+  history: History<any>,
   auth: any,
-  recoverPassword: (recoverInformation: { token: string; password: string}) => void,
+  recoverPassword: (payload: { token: string; password: string }, history: History<any>) => void,
 }> = ({
   forgotPassword,
   auth,
   location,
+  history,
   recoverPassword,
 }) => {
   const classes = useStyles()
   const [t] = useTranslation()
+  let stage = 'forgot'
+  if (location.state) stage = location.state.stage
 
   const [sent, setSent] = React.useState(false)
   const [submited, setSubmited] = React.useState(false)
   const [isFormValid, setFormValid] = React.useState(false)
   const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState('')
+  const [showPassword, toggle] = React.useReducer(v => !v, false)
 
   React.useEffect(() => {
     // @ts-ignore
@@ -51,8 +60,8 @@ const ForgotPasswordPage: React.FC<{
   function handleSubmit (e: React.FormEvent<HTMLFormElement> | KeyboardEvent) {
     e.preventDefault()
     setSubmited(true)
-    if (location.state.stage === 'recover') {
-      recoverPassword({ token: location.state.token, password: input })
+    if (stage === 'recover') {
+      recoverPassword({ token: location.state.token, password: input }, history)
     } else {
       forgotPassword({ email: input })
     }
@@ -64,27 +73,27 @@ const ForgotPasswordPage: React.FC<{
         {!sent &&
           <section className={classes.messageContainer}>
             <h1 className={classes.messageTitle}>
-              {location.state.stage === 'recover' ? t('forgotPassword.messageTitleRecover') : t('forgotPassword.messageTitle')}
+              {stage === 'recover' ? t('forgotPassword.messageTitleRecover') : t('forgotPassword.messageTitle')}
             </h1>
             <p className={classes.message}>
-              {location.state.stage === 'recover' ? t('forgotPassword.messageRecover') : t('forgotPassword.message')}
+              {stage === 'recover' ? t('forgotPassword.messageRecover') : t('forgotPassword.message')}
             </p>
 
             <div className={classes.forgotPasswordContainer}>
               <FormCard
-                buttonLabel={location.state.stage === 'recover' ? t('actions.save') : t('actions.send')}
+                buttonLabel={(location.state && location.state.stage === 'recover') ? t('actions.save') : t('actions.send')}
                 buttonDisabled={!isFormValid}
                 handleSubmit={handleSubmit}
                 loading={auth.isRecoveringPassword}
               >
                 <div className={classes.fieldContainer}>
-                  {location.state.stage === 'recover'
+                  {stage === 'recover'
                     ? (
                       <FormField
                         id='password-field'
                         label='Password'
                         variant='outlined'
-                        type='password'
+                        type={showPassword ? 'text' : 'password'}
                         placeholder=''
                         name='password'
                         value={input}
@@ -94,9 +103,19 @@ const ForgotPasswordPage: React.FC<{
                         errorPlacing='bottom'
                         InputProps={{
                           classes: { input: classes.textField },
+                          endAdornment:
+                        <InputAdornment position='end'>
+                          <IconButton
+                            aria-label='toggle password visibility'
+                            onClick={toggle}
+                            edge='end'
+                          >
+                            {showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>,
                         }}
                         rules={[
-                          { rule: isValidEmail(input), message: t('registerForm.warnings.password') },
+                          { rule: isValidPass(input), message: t('registerForm.warnings.password') },
                         ]}
                       />
                     )
