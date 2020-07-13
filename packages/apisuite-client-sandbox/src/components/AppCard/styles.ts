@@ -22,7 +22,7 @@ export default makeStyles({
   avatar: {
     fontSize: 26,
     fontWeight: 300,
-    background: 'linear-gradient(270deg, #14BC7D 0%, #14DE2D 100%)',
+    background: config.palette.secondary,
     width: 124,
     height: 124,
   },
