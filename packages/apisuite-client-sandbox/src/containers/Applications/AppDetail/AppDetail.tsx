@@ -63,19 +63,9 @@ const AppDetail: React.FC<AppDetailProps> = (
     hour12: false,
     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   }
-
-  /* To get our app's initials (to be shown in its avatar), we do the following:
-    1) We create an array - called 'splitName' - that will store each word that makes up
-    our app's name.
-    2) We build a string - called 'initials' - by either:
-      a) Picking the first character of the first 2 words in the 'splitName' array (if the
-      array in question contains 2 or more words);
-      b) Picking the first 2 characters of whatever single word is in the 'splitName' array
-      (if the array in question does NOT contain 2 or more words);
-  */
   const splitName = currentApp.name.split(' ')
   const initials = splitName.length >= 2
-    ? `${splitName[0].charAt(0)}${splitName[1].charAt(0)}` : splitName[0].slice(0, 2)
+    ? `${splitName[0][0] + splitName[1][0]}` : splitName[0].slice(0, 2)
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
