@@ -63,6 +63,9 @@ const AppDetail: React.FC<AppDetailProps> = (
     hour12: false,
     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   }
+  const splitName = currentApp.name.split(' ')
+  const initials = splitName.length >= 2
+    ? `${splitName[0][0] + splitName[1][0]}` : splitName[0].slice(0, 2)
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -240,7 +243,8 @@ const AppDetail: React.FC<AppDetailProps> = (
           <aside className={classes.right}>
             <form onSubmit={handleSubmit}>
 
-              <Avatar className={classes.avatar}>MA</Avatar>
+              {/* We render our app's avatar with its initials in uppercase. */}
+              <Avatar className={classes.avatar}>{initials.toLocaleUpperCase()}</Avatar>
 
               <br />
 
