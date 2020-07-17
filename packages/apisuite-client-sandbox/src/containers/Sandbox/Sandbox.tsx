@@ -12,6 +12,7 @@ import Carousel from 'components/Carousel'
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
 import ContentGenerator from 'components/ContentGenerator'
+import { getSections } from 'util/extensions'
 
 import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
@@ -30,6 +31,8 @@ const Sandbox: React.FC<{}> = () => {
 
   return (
     <main className={classes.root} style={{ backgroundImage: `url(${themeBg})` }}>
+
+      {getSections('homepage', 'precontent')}
 
       {/** #conditional-loader-start: instance */}
       <ContentGenerator page='landing' />

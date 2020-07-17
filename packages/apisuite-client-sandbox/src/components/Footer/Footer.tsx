@@ -4,6 +4,8 @@ import Fab from '@material-ui/core/Fab'
 import LocaleSelect from 'language/LocaleSelect'
 import { config } from 'constants/global'
 import logo from 'theme/images/logo.png'
+import { MenuSection, MenuSections } from './types'
+import { getMenuEntries } from 'util/extensions'
 
 import './styles.scss'
 
@@ -35,6 +37,131 @@ const renderSocialLinks = () => {
   )
 }
 
+const menuSections: MenuSections = {
+  apiProducts: {
+    title: 'API Products',
+    entries: [
+      {
+        label: 'Upcoming',
+      },
+      {
+        label: 'Feedback',
+      },
+      {
+        label: 'Subscriptions',
+      },
+    ],
+  },
+  profile: {
+    title: 'Profile',
+
+    entries: [
+      {
+        label: 'Security',
+      },
+      {
+        label: 'Logout',
+      },
+    ],
+  },
+  documentation: {
+    title: 'Documentation',
+    entries: [
+      {
+        label: 'Getting Started',
+      },
+      {
+        label: 'API References',
+      },
+      {
+        label: 'Search',
+      },
+    ],
+  },
+  team: {
+    title: 'Team',
+    entries: [
+      {
+        label: 'Manage Team',
+      },
+      {
+        label: 'Organisation',
+      },
+    ],
+  },
+  dashboard: {
+    title: 'Dashboard',
+    entries: [
+      {
+        label: 'Manage Apps',
+      },
+      {
+        label: 'Test Data',
+      },
+      {
+        label: 'API Console',
+      },
+    ],
+  },
+  legal: {
+    title: 'Legal Notice',
+    entries: [
+      {
+        label: 'Data Privacy Notice',
+      },
+      {
+        label: 'Cookies policy',
+      },
+    ],
+  },
+  support: {
+    title: 'Support',
+    entries: [
+      {
+        label: 'Knowledge Base',
+      },
+      {
+        label: 'External resources',
+      },
+      {
+        label: '\u00A0', // Empty entry to fix alignment
+      },
+    ],
+  },
+  apiStatus: {
+    title: 'API Status',
+    entries: [
+      {
+        label: 'Activity Log',
+      },
+    ],
+  },
+}
+
+const renderSubSection = (subMenu: string) => {
+  const section: MenuSection = menuSections[subMenu]
+  const extensionsMenuEntries = getMenuEntries('footer', subMenu)
+  const allEntries = [...section.entries, ...extensionsMenuEntries]
+
+  return (
+    <div key={subMenu} className='sub-section'>
+      <h3>{section.title}</h3>
+      <>
+        {allEntries.map((entry, i) => {
+          const { label, ...anchorProps } = entry
+          return entry.route && entry.route !== '#' ? (
+            <a {...anchorProps} href={entry.route} key={i}>
+              {label}
+            </a>
+          ) : (
+            <p key={i}>{label}</p>
+          )
+        })}
+      </>
+    </div>
+  )
+}
+
 const Footer = () => {
   function handleFabClick () {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
@@ -59,62 +186,23 @@ const Footer = () => {
           </div>
 
           <div className='section'>
-            <div className='sub-section'>
-              <h3>API Products</h3>
-              <p>Upcoming</p>
-              <p>Feedback</p>
-              <p>Subscriptions</p>
-            </div>
-
-            <div className='sub-section'>
-              <h3>Profile</h3>
-              <p>Security</p>
-              <p>Logout</p>
-            </div>
+            {renderSubSection('apiProducts')}
+            {renderSubSection('profile')}
           </div>
 
           <div className='section'>
-            <div className='sub-section'>
-              <h3>Documentation</h3>
-              <p>Getting Started</p>
-              <p>API References</p>
-              <p>Search</p>
-            </div>
-
-            <div className='sub-section'>
-              <h3>Team</h3>
-              <p>Manage Team</p>
-              <p>Organisation</p>
-            </div>
+            {renderSubSection('documentation')}
+            {renderSubSection('team')}
           </div>
 
           <div className='section'>
-            <div className='sub-section'>
-              <h3>Dashboard</h3>
-              <p>Manage Apps</p>
-              <p>Test Data</p>
-              <p>API Console</p>
-            </div>
-
-            <div className='sub-section'>
-              <h3>Legal Notice</h3>
-              <p>Data Privacy Notice</p>
-              <p>Cookies policy</p>
-            </div>
+            {renderSubSection('dashboard')}
+            {renderSubSection('legal')}
           </div>
 
           <div className='section'>
-            <div className='sub-section'>
-              <h3>Support</h3>
-              <p>Knowledge Base</p>
-              <p>External resources</p>
-              <br />
-            </div>
-
-            <div className='sub-section'>
-              <h3>API Status</h3>
-              <p>Activity Log</p>
-            </div>
+            {renderSubSection('support')}
+            {renderSubSection('apiStatus')}
           </div>
         </div>
       </div>

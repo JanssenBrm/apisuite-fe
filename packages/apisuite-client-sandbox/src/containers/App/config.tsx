@@ -1,6 +1,12 @@
 import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import { TabProps } from 'components/Navigation/types'
+import { getMenuEntries } from 'util/extensions'
+
+const extensionsInitTabs = getMenuEntries('headerAnonymous')
+const extensionsLoginTabs = getMenuEntries('headerAuthenticated', 'main')
+const extensionsLoginDashboardTabs = getMenuEntries('headerAuthenticated', 'dashboard')
+const extensionsLoginProfileTabs = getMenuEntries('headerAuthenticated', 'profile')
 
 export const initTabs: TabProps[] = [
   {
@@ -21,6 +27,7 @@ export const initTabs: TabProps[] = [
     route: '/',
     disabled: true,
   },
+  ...extensionsInitTabs,
 ]
 
 const ConsoleLabel = () => (
@@ -75,6 +82,7 @@ export const loginTabs: TabProps[] = [
         route: '/dashboard/console',
       },
       // #conditional-loader-end
+      ...extensionsLoginDashboardTabs,
     ],
   },
   {
@@ -93,8 +101,10 @@ export const loginTabs: TabProps[] = [
         label: 'Organisation',
         route: '/profile/organisation',
       },
+      ...extensionsLoginProfileTabs,
     ],
   },
+  ...extensionsLoginTabs,
 ]
 
 export const gobackConfig = [

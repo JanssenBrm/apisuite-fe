@@ -9,6 +9,8 @@ import store, { history } from 'store'
 import ErrorMonitor from 'components/ErrorMonitor'
 import App from 'containers/App'
 
+import 'util/extensions'
+
 // Translations
 import 'language/i18n'
 
