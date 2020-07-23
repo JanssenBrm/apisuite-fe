@@ -38,38 +38,15 @@ const PersonalDetailsForm: React.FC<{
   })
 
   const handleInputs = (e: FormFieldEvent, err: any) => {
-    // 1) If the input field we are messing with is the 'Name' one (...)
-    if (e.target.name === 'name') {
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
+    setInput({
+      ...input,
+      [e.target.name]: e.target.value,
+    })
 
-      const eventTarget = e.target
+    const eventTarget = e.target
 
-      // @ts-ignore
-      setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
-
-      return
-    }
-
-    // 2) If the input field we are messing with is the 'E-mail' one (...)
-    const currentInput = e.target.value // The input field's current value
-    const previousInput = input.email   // The input field's previous value (which might, or might've not been submitted yet)
-
-    // If the 'E-mail' field's current value is NOT the same as its previous value, (...)
-    if (currentInput !== previousInput) {
-      /* (...) we update the component's 'input.email' state field. */
-      setInput({
-        ...input,
-        [e.target.name]: e.target.value,
-      })
-
-      const eventTarget = e.target
-
-      // @ts-ignore
-      setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
-    }
+    // @ts-ignore
+    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
   React.useEffect(() => {
