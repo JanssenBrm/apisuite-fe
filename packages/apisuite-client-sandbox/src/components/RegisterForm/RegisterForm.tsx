@@ -38,13 +38,38 @@ const PersonalDetailsForm: React.FC<{
   })
 
   const handleInputs = (e: FormFieldEvent, err: any) => {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    })
-    const eventTarget = e.target
-    // @ts-ignore
-    setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
+    // 1) If the input field we are messing with is the 'Name' one (...)
+    if (e.target.name === 'name') {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+
+      const eventTarget = e.target
+
+      // @ts-ignore
+      setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
+
+      return
+    }
+
+    // 2) If the input field we are messing with is the 'E-mail' one (...)
+    const currentInput = e.target.value // The input field's current value
+    const previousInput = input.email   // The input field's previous value (which might, or might've not been submitted yet)
+
+    // If the 'E-mail' field's current value is NOT the same as its previous value, (...)
+    if (currentInput !== previousInput) {
+      /* (...) we update the component's 'input.email' state field. */
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+
+      const eventTarget = e.target
+
+      // @ts-ignore
+      setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
+    }
   }
 
   React.useEffect(() => {
@@ -97,6 +122,10 @@ const PersonalDetailsForm: React.FC<{
             }}
             rules={[
               { rule: isValidEmail(input.email), message: t('registerForm.warnings.email') },
+
+              /* If the most recently submitted E-mail caused an error (meaning that it's already in use), and every time our 'E-mail' field's
+              current value is the same as the one that was submitted (and caused an error), we return 'true' so as to make our error message appear. */
+              { rule: !(register.error === '409' && input.email === register.submittedEmail), message: t('registerForm.warnings.emailInUse') },
             ]}
           />
         </div>
@@ -237,7 +266,7 @@ const SecurityStepForm: React.FC<{
     setFormValid(errors && errors.length === 0)
   }, [errors])
 
-  function handleClickShowPassword () {
+  function handleClickShowPassword() {
     setShowPassword(!showPassword)
   }
 
@@ -264,15 +293,15 @@ const SecurityStepForm: React.FC<{
               InputProps={{
                 classes: { input: classes.textField },
                 endAdornment:
-  <InputAdornment position='end'>
-    <IconButton
-      aria-label='toggle password visibility'
-      onClick={handleClickShowPassword}
-      edge='end'
-    >
-      {showPassword ? <Visibility /> : <VisibilityOff />}
-    </IconButton>
-  </InputAdornment>,
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={handleClickShowPassword}
+                      edge='end'
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>,
               }}
               rules={[
                 { rule: isValidPass(input.password), message: t('registerForm.warnings.password') },

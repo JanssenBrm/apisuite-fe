@@ -34,9 +34,10 @@ const IState: RegisterFormStore = {
   error: undefined,
   registrationToken: undefined,
   step: 1,
+  submittedEmail: "",
 }
 
-export default function registerFormReducer (
+export default function registerFormReducer(
   state = IState,
   action: RegisterFormActions,
 ): RegisterFormStore {
@@ -56,10 +57,16 @@ export default function registerFormReducer (
       return update(state, {
         registrationToken: { $set: action.response.token },
         isRequesting: { $set: false },
+        submittedEmail: { $set: "" },
       })
     }
 
     case RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST:
+      return update(state, {
+        isRequesting: { $set: true },
+        error: { $set: undefined },
+        submittedEmail: { $set: action.payload.email }
+      })
     case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST:
     case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST: {
       return update(state, {
@@ -68,6 +75,20 @@ export default function registerFormReducer (
     }
 
     case RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_ERROR:
+      /* The submission of one's personal details can fail for a number of
+      reasons (e.g., connection issues, bad requests, ...), one of them
+      being an e-mail address that's already in use. When this happens,
+      the back-end's response status is '409'. */
+
+      // @ts-ignore
+      if (action.error.response.status === 409) {
+        return update(state, {
+          isRequesting: { $set: false },
+          error: { $set: '409' },
+        })
+      } else {
+        // Other kinds of error can be handled here.
+      }
     case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_SUCCESS:
     case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_ERROR:
     case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_SUCCESS:
@@ -99,7 +120,7 @@ export const submitPersonalDetailsActions = {
       response: response,
     } as const
   },
-  error: (error: string) => {
+  error: (error: object) => {
     return {
       type: RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_ERROR,
       error: error,

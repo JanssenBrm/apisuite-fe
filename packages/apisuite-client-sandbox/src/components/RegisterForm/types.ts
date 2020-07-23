@@ -12,10 +12,10 @@ import {
 } from './ducks'
 
 export type RegisterFormProps =
-ReturnType<typeof mapStateToProps> &
-ReturnType<typeof mapDispatchToProps> & {
-  prefilledEmail?: string,
-}
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> & {
+    prefilledEmail?: string,
+  }
 
 export type Step = keyof typeof steps
 
@@ -44,6 +44,7 @@ export type RegisterFormStore = {
   isRequesting: boolean,
   error?: string,
   step: Step,
+  submittedEmail: string,
 }
 
 export type RegisterFormActions =
@@ -52,6 +53,6 @@ export type RegisterFormActions =
   ReturnNestedType<typeof submitOrganisationDetailsActions> |
   ReturnNestedType<typeof submitSecurityStepActions>
 
-export function isStep (step: Step | number): step is Step {
+export function isStep(step: Step | number): step is Step {
   return step as Step !== undefined
 }
