@@ -243,7 +243,7 @@ const SecurityStepForm: React.FC<{
     setFormValid(errors && errors.length === 0)
   }, [errors])
 
-  function handleClickShowPassword() {
+  function handleClickShowPassword () {
     setShowPassword(!showPassword)
   }
 

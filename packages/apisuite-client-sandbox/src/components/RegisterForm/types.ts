@@ -29,6 +29,12 @@ export type PersonalDetailsResponse = {
   token: string,
 }
 
+export type PersonalDetailsResponseErrorObject = {
+  response: {
+    status: number
+  },
+}
+
 export type OrganisationDetails = {
   name: string,
   website: string,
@@ -53,6 +59,6 @@ export type RegisterFormActions =
   ReturnNestedType<typeof submitOrganisationDetailsActions> |
   ReturnNestedType<typeof submitSecurityStepActions>
 
-export function isStep(step: Step | number): step is Step {
+export function isStep (step: Step | number): step is Step {
   return step as Step !== undefined
 }

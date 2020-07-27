@@ -23,13 +23,13 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   const [blured, setBlured] = React.useState(false)
   const classes = useStyles()
 
-  function handleOnFocus(event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleOnFocus (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     // TODO: Fix this
     // @ts-ignore
     onFocus && onFocus(event)
   }
 
-  function handleOnBlur(event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
+  function handleOnBlur (event: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement>) {
     setBlured(true)
 
     // TODO: Fix this

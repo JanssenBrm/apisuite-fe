@@ -7,6 +7,7 @@ import {
   OrganisationDetails,
   SecurityStep,
   PersonalDetailsResponse,
+  PersonalDetailsResponseErrorObject,
 } from './types'
 
 export enum RegisterFormActionTypes {
@@ -34,10 +35,10 @@ const IState: RegisterFormStore = {
   error: undefined,
   registrationToken: undefined,
   step: 1,
-  submittedEmail: "",
+  submittedEmail: '',
 }
 
-export default function registerFormReducer(
+export default function registerFormReducer (
   state = IState,
   action: RegisterFormActions,
 ): RegisterFormStore {
@@ -57,7 +58,7 @@ export default function registerFormReducer(
       return update(state, {
         registrationToken: { $set: action.response.token },
         isRequesting: { $set: false },
-        submittedEmail: { $set: "" },
+        submittedEmail: { $set: '' },
       })
     }
 
@@ -80,7 +81,6 @@ export default function registerFormReducer(
       being an e-mail address that's already in use. When this happens,
       the back-end's response status is '409'. */
 
-      // @ts-ignore
       if (action.error.response.status === 409) {
         return update(state, {
           isRequesting: { $set: false },
@@ -120,7 +120,7 @@ export const submitPersonalDetailsActions = {
       response: response,
     } as const
   },
-  error: (error: object) => {
+  error: (error: PersonalDetailsResponseErrorObject) => {
     return {
       type: RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_ERROR,
       error: error,
