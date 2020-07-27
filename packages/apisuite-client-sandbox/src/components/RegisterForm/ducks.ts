@@ -36,7 +36,7 @@ const IState: RegisterFormStore = {
   step: 1,
 }
 
-export default function registerFormReducer(
+export default function registerFormReducer (
   state = IState,
   action: RegisterFormActions,
 ): RegisterFormStore {

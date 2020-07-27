@@ -1,10 +1,11 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import useStyles from './styles'
-import store from 'store'
-import { nextStepAction } from 'components/RegisterForm/ducks'
+import { RegisterConfirmationProps } from './types'
 
-const RegisterConfirmation: React.FC<{}> = () => {
+const RegisterConfirmation: React.FC<RegisterConfirmationProps> = ({
+  nextStep,
+}) => {
   const [t] = useTranslation()
   const classes = useStyles()
 
@@ -12,8 +13,8 @@ const RegisterConfirmation: React.FC<{}> = () => {
   our registration process), we dispatch a 'NEXT_STEP' type of action so as to
   reset the 'steps' property of our app's store back to 1. */
   React.useEffect(() => {
-    store.dispatch(nextStepAction())
-  })
+    nextStep()
+  }, [nextStep])
 
   return (
     <main className={classes.main}>
