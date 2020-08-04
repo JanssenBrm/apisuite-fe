@@ -16,10 +16,11 @@ const ListApps: React.FC<ListAppsProps> = ({ history, user, userApps, getUserApp
   const classes = useStyles()
   const [t] = useTranslation()
 
-  function handleAppClick (event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
-    history.push(`/dashboard/apps/detail/${event.currentTarget.id}`)
-    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-  }
+  // function handleAppClick (event: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+  //   event.stopPropagation()
+  //   history.push(`/dashboard/apps/detail/${event.currentTarget.id}`)
+  //   window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+  // }
 
   function handleCreateClick () {
     history.push('/dashboard/apps/create')
@@ -44,7 +45,6 @@ const ListApps: React.FC<ListAppsProps> = ({ history, user, userApps, getUserApp
                     <AppCard
                       id={userApp.appId.toString()}
                       name={userApp.name}
-                      onClick={handleAppClick}
                       appId={userApp.appId}
                       userId={user ? user.id : undefined}
                       history={history}

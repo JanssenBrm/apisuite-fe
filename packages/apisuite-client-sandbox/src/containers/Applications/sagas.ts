@@ -182,7 +182,19 @@ export function * deleteApp (action: DeleteAppAction) {
     }
     yield put(push('/dashboard/apps'))
   } catch (error) {
-    yield put(deleteAppError())
+    /* For some strange reason, this Saga considers a response
+    from the server whose status code is 204 as an error. */
+    if (error.status === 204) {
+      yield put(deleteAppSuccess())
+
+      if (action.userId) {
+        yield put(getUserApps(action.userId))
+      }
+
+      yield put(push('/dashboard/apps'))
+    } else {
+      yield put(deleteAppError())
+    }
   }
 }
 
