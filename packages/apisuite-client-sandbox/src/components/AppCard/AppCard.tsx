@@ -15,8 +15,6 @@ const AppCard: React.FC<AppCardProps> = (
   const classes = useStyles()
   const [openDialog, setOpenDialog] = React.useState(false)
 
-  console.log("(AppCard): Current value of 'openDialog'", openDialog)
-
   if (addVariant) {
     return (
       <div className={clsx(classes.card, classes.cardAdd, className)} {...rest}>
