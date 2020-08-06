@@ -101,8 +101,6 @@ const CreateApp: React.FC<CreateAppProps> = ({
       userId = user.id
     }
 
-    console.log("About to trigger the 'createApp' action with the following 'pubUrls':", input.pubUrls)
-
     createApp({
       appId: 0,
       name: input.name,

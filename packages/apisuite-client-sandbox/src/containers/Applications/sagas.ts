@@ -58,8 +58,6 @@ export function * createApp (action: CreateAppAction) {
       'pub_urls': action.appData.pubUrls,
     }
 
-    console.log("The 'createApp' saga was called. Here is the data to be sent:", data)
-
     const accessToken = yield select(
       (state: Store) => state.auth.authToken)
     const createAppUrl = `${API_URL}${SIGNUP_PORT}/app/create`
@@ -157,7 +155,7 @@ export function * getUsersApps (action: GetUserAppsAction) {
     ))
     yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
   } catch (error) {
-    console.log('Error fecthing user apps')
+    console.log('Error fetching user apps')
   }
 }
 
@@ -271,7 +269,7 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
     yield put(addAppSubscriptionSuccess(updatedApp, appIndx))
   } catch {
-    console.log('error adding subscription')
+    console.log('Error adding subscription')
   }
 }
 
@@ -321,7 +319,7 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
     yield put(removeAppSubscriptionSuccess(updatedApp, appIndx))
   } catch {
-    console.log('error removing subscription')
+    console.log('Error removing subscription')
   }
 }
 
