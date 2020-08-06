@@ -55,12 +55,11 @@ export function * createApp (action: CreateAppAction) {
       visibility: action.appData.visibility,
       'user_id': action.appData.userId,
       subscriptions: action.appData.subscriptions,
-      // TODO: change
-      // 'pub_urls': [{
-      //   url: 'http://ssss.com',
-      //   type: 'client',
-      // }],
+      'pub_urls': action.appData.pubUrls,
     }
+
+    console.log("The 'createApp' saga was called. Here is the data to be sent:", data)
+
     const accessToken = yield select(
       (state: Store) => state.auth.authToken)
     const createAppUrl = `${API_URL}${SIGNUP_PORT}/app/create`
@@ -91,7 +90,7 @@ export function * updateApp (action: UpdateAppAction) {
       visibility: action.appData.visibility,
       'user_id': action.appData.userId,
       'sandbox_id': '1',
-      'pub_urls': [action.appData.pubUrls],
+      'pub_urls': action.appData.pubUrls,
     }
     const accessToken = yield select(
       (state: Store) => state.auth.authToken)
@@ -148,7 +147,7 @@ export function * getUsersApps (action: GetUserAppsAction) {
         logo: userApp.logo,
         userId: userApp.userId,
         subscriptions: userApp.subscriptions,
-        pubUrls: '',
+        pubUrls: userApp.pub_urls,
         enable: userApp.enable,
         createdAt: userApp.createdAt,
         updatedAt: userApp.updatedAt,
@@ -210,7 +209,7 @@ export function * getAppDetails (action: GetAppDetails) {
       logo: userApp.logo,
       userId: userApp.userId,
       subscriptions: userApp.subscriptions,
-      pubUrls: '',
+      pubUrls: userApp.pub_urls,
       enable: userApp.enable,
       createdAt: userApp.createdAt,
       updatedAt: userApp.updatedAt,

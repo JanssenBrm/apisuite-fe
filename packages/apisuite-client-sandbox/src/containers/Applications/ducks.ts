@@ -14,8 +14,10 @@ const initialState: ApplicationsStore = {
     userId: 0,
     subscriptions: [],
     visibility: 'private',
-    // TODO change
-    pubUrls: null,
+    pubUrls: [{
+      url: '',
+      type: 'client',
+    }],
     enable: true,
     clientId: '',
     clientSecret: '',
@@ -59,6 +61,7 @@ export default function reducer (
 ): ApplicationsStore {
   switch (action.type) {
     case CREATE_APP: {
+      console.log("The 'CREATE_APP' action was triggered.")
       return update(state, {
         resCreate: {
           isRequesting: { $set: true },
