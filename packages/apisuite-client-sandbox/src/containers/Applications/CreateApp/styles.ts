@@ -121,4 +121,7 @@ export default makeStyles(({
     borderRadius: config.dimensions.borderRadius,
     minHeight: 20,
   },
+  disabled: {
+    opacity: 0.5,
+  },
 }))

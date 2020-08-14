@@ -28,6 +28,7 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   | 'facebook'
   | 'github-face'
   | 'plus'
+  | 'close'
   | 'dots-vrtical'
   | 'circle'
   | 'launch'
