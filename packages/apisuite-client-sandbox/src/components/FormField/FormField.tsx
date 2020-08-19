@@ -42,7 +42,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
     // const messages = err && err.map(e => e.message).join(', ')
 
     if (props.onChange) {
-      props.onChange({
+      () => props.onChange({
         target: {
           name: props.name,
           value: value,
@@ -53,7 +53,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
     // @ts-ignore
     setErrors(err)
     setChanged(true)
-  }, [value, changed])
+  }, [value, changed, props.rules])
 
   return (
     <div

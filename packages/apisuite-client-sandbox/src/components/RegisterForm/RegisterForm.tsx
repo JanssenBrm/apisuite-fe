@@ -42,7 +42,9 @@ const PersonalDetailsForm: React.FC<{
       ...input,
       [e.target.name]: e.target.value,
     })
+
     const eventTarget = e.target
+
     // @ts-ignore
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
@@ -97,6 +99,10 @@ const PersonalDetailsForm: React.FC<{
             }}
             rules={[
               { rule: isValidEmail(input.email), message: t('registerForm.warnings.email') },
+
+              /* If the most recently submitted E-mail caused an error (meaning that it's already in use), and every time our 'E-mail' field's
+              current value is the same as the one that was submitted (and caused an error), we return 'true' so as to make our error message appear. */
+              { rule: !(register.error === '409' && input.email === register.submittedEmail), message: t('registerForm.warnings.emailInUse') },
             ]}
           />
         </div>
@@ -264,15 +270,15 @@ const SecurityStepForm: React.FC<{
               InputProps={{
                 classes: { input: classes.textField },
                 endAdornment:
-  <InputAdornment position='end'>
-    <IconButton
-      aria-label='toggle password visibility'
-      onClick={handleClickShowPassword}
-      edge='end'
-    >
-      {showPassword ? <Visibility /> : <VisibilityOff />}
-    </IconButton>
-  </InputAdornment>,
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={handleClickShowPassword}
+                      edge='end'
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>,
               }}
               rules={[
                 { rule: isValidPass(input.password), message: t('registerForm.warnings.password') },
