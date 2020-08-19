@@ -46,11 +46,19 @@ export default function registerFormReducer (
     case RegisterFormActionTypes.NEXT_STEP: {
       const nextStep = state.step + 1
 
+      // If 'nextStep' ever amounts to '5', it means we have reached the 'Confirm registration' view.
+      if (nextStep === 5) {
+        return update(state, {
+          step: { $set: 1 },
+        })
+      }
+
       if (isStep(nextStep)) {
         return update(state, {
           step: { $set: nextStep },
         })
       }
+
       return state
     }
 
