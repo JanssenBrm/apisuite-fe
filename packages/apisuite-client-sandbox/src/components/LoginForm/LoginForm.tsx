@@ -41,11 +41,11 @@ const LoginForm: React.FC<LoginFormProps> = ({
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
 
-  function handleClickShowPassword() {
+  function handleClickShowPassword () {
     setShowPassword(!showPassword)
   }
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement> | KeyboardEvent) {
+  function handleSubmit (e: React.FormEvent<HTMLFormElement> | KeyboardEvent) {
     e.preventDefault()
 
     login({ email: input.email, password: input.password })
@@ -84,7 +84,7 @@ const LoginForm: React.FC<LoginFormProps> = ({
         /* We pass an error message to the 'FormCard' component if an authentication error is detected,
         and as long as a) the previously submitted inputs are not changed, and b) the 'E-mail' or
         'Password' input fields are not empty. */
-        error={auth.error && !inputHasChanged && (input.email !== "" || input.password !== "") ? auth.error : undefined}
+        error={auth.error && !inputHasChanged && (input.email !== '' || input.password !== '') ? auth.error : undefined}
         handleSubmit={handleSubmit}
       >
         <div className={classes.fieldContainer}>
@@ -123,15 +123,15 @@ const LoginForm: React.FC<LoginFormProps> = ({
               InputProps={{
                 classes: { input: classes.passPhrasefield },
                 endAdornment:
-                  <InputAdornment position='end'>
-                    <IconButton
-                      aria-label='toggle password visibility'
-                      onClick={handleClickShowPassword}
-                      edge='end'
-                    >
-                      {showPassword ? <Visibility /> : <VisibilityOff />}
-                    </IconButton>
-                  </InputAdornment>,
+  <InputAdornment position='end'>
+    <IconButton
+      aria-label='toggle password visibility'
+      onClick={handleClickShowPassword}
+      edge='end'
+    >
+      {showPassword ? <Visibility /> : <VisibilityOff />}
+    </IconButton>
+  </InputAdornment>,
               }}
               rules={[
                 { rule: input.password.length > 0, message: t('loginForm.warnings.password') },

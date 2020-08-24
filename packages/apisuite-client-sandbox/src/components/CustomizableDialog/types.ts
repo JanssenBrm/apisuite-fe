@@ -1,4 +1,4 @@
-import { DialogProps } from "@material-ui/core/Dialog";
+import { DialogProps } from '@material-ui/core/Dialog'
 
 export interface CustomizableDialogProps extends DialogProps {
   // Props passed by the 'calling' component to be added below
@@ -12,13 +12,13 @@ export interface CustomizableDialogProps extends DialogProps {
   closeDialogCallback?: (...args: any[]) => any,
   confirmButtonCallback: (...args: any[]) => any,
   confirmButtonProps?: {
-    [key: string]: any
+    [key: string]: any,
   },
   cancelButtonProps?: {
-    [key: string]: any
+    [key: string]: any,
   },
   providedDialogActions?: {
-    [key: string]: any
+    [key: string]: any,
   },
 
   // 'mapStateToProps' props (i.e., coming from the app's Redux 'store') to be added below (if any)

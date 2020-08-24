@@ -31,7 +31,7 @@ export type PersonalDetailsResponse = {
 
 export type PersonalDetailsResponseErrorObject = {
   response: {
-    status: number
+    status: number,
   },
 }
 

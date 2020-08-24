@@ -230,7 +230,7 @@ const AppDetail: React.FC<AppDetailProps> = (
                 /* <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnLeft)}>
                 <SvgIcon name='autorenew' size='24' />
                 </Button>
-                
+
                 <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnRight)}>
                 <SvgIcon name='content-copy' size='24' />
                 </Button> */
@@ -339,9 +339,9 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               {
                 resDelete.isError &&
-                <div className={classes.errorPlaceholder}>
-                  <div className={classes.errorAlert}>Error deleting app</div>
-                </div>
+                  <div className={classes.errorPlaceholder}>
+                    <div className={classes.errorAlert}>Error deleting app</div>
+                  </div>
               }
             </form>
           </aside>
@@ -350,14 +350,14 @@ const AppDetail: React.FC<AppDetailProps> = (
 
       {
         openDialog &&
-        <CustomizableDialog
-          open={openDialog}
-          providedTitle='Delete app'
-          providedText='Are you sure you want to delete this app? This action is not reversible.'
-          closeDialogCallback={handleCloseDialog}
-          confirmButtonLabel='Delete'
-          confirmButtonCallback={handleDeleteApp}
-        />
+          <CustomizableDialog
+            open={openDialog}
+            providedTitle='Delete app'
+            providedText='Are you sure you want to delete this app? This action is not reversible.'
+            closeDialogCallback={handleCloseDialog}
+            confirmButtonLabel='Delete'
+            confirmButtonCallback={handleDeleteApp}
+          />
       }
     </>
   )

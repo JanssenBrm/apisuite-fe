@@ -93,12 +93,21 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
       })
     }
 
+    /* An alternative solution is to be explored in the future (and if possible):
+
+    When a login attempt is not successful, an appropriate error message is displayed.
+    Unfortunately, it remains on the screen even if, at some point, we move back to other points
+    of the API Suite project and return to the Login screen, and so, in an attempt at correcting
+    this issue, this was the only solution that was found (which is not ideal, as it runs for
+    every 'LOCATION_CHANGE' action that is triggered throughout the project).
+
+    Refer to APIS-342 for more details. */
     case LOCATION_CHANGE: {
       if (action.payload.action === 'POP') {
         return update(state, {
           error: { $set: undefined },
         })
-      }
+      } else { return state }
     }
 
     default:

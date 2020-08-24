@@ -104,14 +104,14 @@ const AppCard: React.FC<AppCardProps> = (
 
       {
         openDialog &&
-        <CustomizableDialog
-          open={openDialog}
-          providedTitle='Delete app'
-          providedText='Are you sure you want to delete this app? This action is not reversible.'
-          closeDialogCallback={handleCloseDialog}
-          confirmButtonLabel='Delete'
-          confirmButtonCallback={handleDelete}
-        />
+          <CustomizableDialog
+            open={openDialog}
+            providedTitle='Delete app'
+            providedText='Are you sure you want to delete this app? This action is not reversible.'
+            closeDialogCallback={handleCloseDialog}
+            confirmButtonLabel='Delete'
+            confirmButtonCallback={handleDelete}
+          />
       }
     </div>
   )
