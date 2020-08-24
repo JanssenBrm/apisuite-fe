@@ -281,7 +281,7 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <InputLabel shrink className={classes.marginBottom}>Application visibility</InputLabel>
 
-              <Select options={selectOptions} selected={selectOptions[0]} disabled={true} />
+              <Select options={selectOptions} selected={selectOptions[0]} disabled />
 
               <br />
 

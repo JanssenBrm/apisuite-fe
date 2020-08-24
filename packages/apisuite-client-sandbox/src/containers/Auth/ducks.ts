@@ -3,6 +3,7 @@ import { AuthStore, AuthStoreActionTypes, AuthPayloads } from './types'
 import { Reducer, AnyAction, Dispatch } from 'redux'
 import { History } from 'history'
 import cookie from 'js-cookie'
+import { LOCATION_CHANGE } from 'connected-react-router'
 
 export const LOGIN = 'auth/LOGIN'
 export const LOGIN_USER = 'auth/LOGIN_USER'
@@ -90,6 +91,14 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
         authToken: { $set: undefined },
         isAuthorizing: { $set: false },
       })
+    }
+
+    case LOCATION_CHANGE: {
+      if (action.payload.action === 'POP') {
+        return update(state, {
+          error: { $set: undefined },
+        })
+      }
     }
 
     default:

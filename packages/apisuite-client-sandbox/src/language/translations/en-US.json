@@ -122,6 +122,7 @@
     "warnings": {
       "name": "Please enter your name.",
       "email": "Please enter a valid e-mail address.",
+      "emailInUse": "The provided e-mail address is already in use.",
       "organisationName": "Please enter the name of your organisation.",
       "website": "Please enter a valid website for your organisation.",
       "vat": "Please enter your organisations' VAT.",
