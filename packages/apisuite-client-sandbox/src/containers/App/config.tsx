@@ -2,11 +2,12 @@ import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import { TabProps } from 'components/Navigation/types'
 import { getMenuEntries } from 'util/extensions'
+import { Menus } from 'apisuite-extension-ui-types'
 
-const extensionsInitTabs = getMenuEntries('headerAnonymous')
-const extensionsLoginTabs = getMenuEntries('headerAuthenticated', 'main')
-const extensionsLoginDashboardTabs = getMenuEntries('headerAuthenticated', 'dashboard')
-const extensionsLoginProfileTabs = getMenuEntries('headerAuthenticated', 'profile')
+const extensionsInitTabs = getMenuEntries(Menus.HeaderAnonymousMain)
+const extensionsLoginTabs = getMenuEntries(Menus.HeaderAuthenticatedMain)
+const extensionsLoginDashboardTabs = getMenuEntries(Menus.HeaderAuthenticatedDashboard)
+const extensionsLoginProfileTabs = getMenuEntries(Menus.HeaderAuthenticatedProfile)
 
 export const initTabs: TabProps[] = [
   {
