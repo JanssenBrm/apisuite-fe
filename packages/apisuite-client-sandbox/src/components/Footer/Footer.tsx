@@ -1,6 +1,7 @@
 import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
+import { Menus } from 'apisuite-extension-ui-types'
 import LocaleSelect from 'language/LocaleSelect'
 import { config } from 'constants/global'
 import logo from 'theme/images/logo.png'
@@ -38,7 +39,7 @@ const renderSocialLinks = () => {
 }
 
 const menuSections: MenuSections = {
-  apiProducts: {
+  [Menus.FooterProducts]: {
     title: 'API Products',
     entries: [
       {
@@ -52,9 +53,8 @@ const menuSections: MenuSections = {
       },
     ],
   },
-  profile: {
+  [Menus.FooterProfile]: {
     title: 'Profile',
-
     entries: [
       {
         label: 'Security',
@@ -64,7 +64,7 @@ const menuSections: MenuSections = {
       },
     ],
   },
-  documentation: {
+  [Menus.FooterDocumentation]: {
     title: 'Documentation',
     entries: [
       {
@@ -78,7 +78,7 @@ const menuSections: MenuSections = {
       },
     ],
   },
-  team: {
+  [Menus.FooterTeam]: {
     title: 'Team',
     entries: [
       {
@@ -89,7 +89,7 @@ const menuSections: MenuSections = {
       },
     ],
   },
-  dashboard: {
+  [Menus.FooterDashboard]: {
     title: 'Dashboard',
     entries: [
       {
@@ -103,7 +103,7 @@ const menuSections: MenuSections = {
       },
     ],
   },
-  legal: {
+  [Menus.FooterLegal]: {
     title: 'Legal Notice',
     entries: [
       {
@@ -114,7 +114,7 @@ const menuSections: MenuSections = {
       },
     ],
   },
-  support: {
+  [Menus.FooterSupport]: {
     title: 'Support',
     entries: [
       {
@@ -128,7 +128,7 @@ const menuSections: MenuSections = {
       },
     ],
   },
-  apiStatus: {
+  [Menus.FooterStatus]: {
     title: 'API Status',
     entries: [
       {
@@ -140,7 +140,7 @@ const menuSections: MenuSections = {
 
 const renderSubSection = (subMenu: string) => {
   const section: MenuSection = menuSections[subMenu]
-  const extensionsMenuEntries = getMenuEntries('footer', subMenu)
+  const extensionsMenuEntries = getMenuEntries(subMenu)
   const allEntries = [...section.entries, ...extensionsMenuEntries]
 
   return (
@@ -149,12 +149,16 @@ const renderSubSection = (subMenu: string) => {
       <>
         {allEntries.map((entry, i) => {
           const { label, ...anchorProps } = entry
-          return entry.route && entry.route !== '#' ? (
-            <a {...anchorProps} href={entry.route} key={i}>
-              {label}
-            </a>
-          ) : (
-            <p key={i}>{label}</p>
+          return (
+            <p key={i}>
+              {entry.route && entry.route !== '#' ? (
+                <a {...anchorProps} href={entry.route} key={i}>
+                  {label}
+                </a>
+              ): (
+                label
+              )}
+            </p>
           )
         })}
       </>
@@ -186,23 +190,23 @@ const Footer = () => {
           </div>
 
           <div className='section'>
-            {renderSubSection('apiProducts')}
-            {renderSubSection('profile')}
+            {renderSubSection(Menus.FooterProducts)}
+            {renderSubSection(Menus.FooterProfile)}
           </div>
 
           <div className='section'>
-            {renderSubSection('documentation')}
-            {renderSubSection('team')}
+            {renderSubSection(Menus.FooterDocumentation)}
+            {renderSubSection(Menus.FooterTeam)}
           </div>
 
           <div className='section'>
-            {renderSubSection('dashboard')}
-            {renderSubSection('legal')}
+            {renderSubSection(Menus.FooterDashboard)}
+            {renderSubSection(Menus.FooterLegal)}
           </div>
 
           <div className='section'>
-            {renderSubSection('support')}
-            {renderSubSection('apiStatus')}
+            {renderSubSection(Menus.FooterSupport)}
+            {renderSubSection(Menus.FooterStatus)}
           </div>
         </div>
       </div>
