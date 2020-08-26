@@ -155,7 +155,7 @@ const renderSubSection = (subMenu: string) => {
                 <a {...anchorProps} href={entry.route} key={i}>
                   {label}
                 </a>
-              ): (
+              ) : (
                 label
               )}
             </p>
