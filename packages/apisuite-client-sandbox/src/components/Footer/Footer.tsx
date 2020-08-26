@@ -3,7 +3,8 @@ import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
 import LocaleSelect from 'language/LocaleSelect'
 import { config } from 'constants/global'
-import logo from 'theme/images/logo.png'
+
+import logo from 'theme/images/current_Cloudoki_logo.png'
 
 import './styles.scss'
 
