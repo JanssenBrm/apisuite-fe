@@ -8,10 +8,12 @@ import SvgIcon from 'components/SvgIcon'
 
 import useStyles from './styles'
 import { AppCardProps } from './types'
+import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 
 const AppCard: React.FC<AppCardProps> = (
   { history, addVariant = false, deleteApp, appId, userId, name, className, ...rest }) => {
   const classes = useStyles()
+  const [openDialog, setOpenDialog] = React.useState(false)
 
   if (addVariant) {
     return (
@@ -43,16 +45,25 @@ const AppCard: React.FC<AppCardProps> = (
     event.stopPropagation()
   }
 
-  function handleDelete (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
-    event.stopPropagation(
+  function handleOpenDialog () {
+    setOpenDialog(true)
+  }
 
-    )
+  function handleCloseDialog () {
+    setAnchorEl(null)
+
+    setOpenDialog(false)
+  }
+
+  function handleDelete () {
     if (appId && userId) {
       deleteApp(appId, userId)
     }
+
+    handleCloseDialog()
   }
 
-  function handleOpen (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+  function handleOpenApp (event: React.MouseEvent<HTMLElement, MouseEvent>) {
     event.stopPropagation()
 
     if (history) {
@@ -62,9 +73,8 @@ const AppCard: React.FC<AppCardProps> = (
   }
 
   return (
-
     <div className={clsx(classes.card, className)} {...rest}>
-      <Avatar className={classes.avatar}>{initials.toLocaleUpperCase()}</Avatar>
+      <Avatar className={classes.avatar} onClick={handleOpenApp}>{initials.toLocaleUpperCase()}</Avatar>
 
       <div className={classes.actions}>
         <div className={classes.actionsInfo}>
@@ -85,12 +95,24 @@ const AppCard: React.FC<AppCardProps> = (
           open={Boolean(anchorEl)}
           onClose={handleClose}
         >
-          <MenuItem onClick={handleOpen}>App details</MenuItem>
+          <MenuItem onClick={handleOpenApp}>App details</MenuItem>
           <MenuItem onClick={handleVoid} className={classes.disabled}>Open in console</MenuItem>
           <MenuItem onClick={handleVoid} className={classes.disabled}>View activity</MenuItem>
-          <MenuItem onClick={handleDelete}>Remove</MenuItem>
+          <MenuItem onClick={handleOpenDialog}>Remove</MenuItem>
         </Menu>
       </div>
+
+      {
+        openDialog &&
+          <CustomizableDialog
+            open={openDialog}
+            providedTitle='Delete app'
+            providedText='Are you sure you want to delete this app? This action is not reversible.'
+            closeDialogCallback={handleCloseDialog}
+            confirmButtonLabel='Delete'
+            confirmButtonCallback={handleDelete}
+          />
+      }
     </div>
   )
 }

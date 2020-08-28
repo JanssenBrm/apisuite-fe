@@ -74,7 +74,7 @@ export default function registerFormReducer (
       return update(state, {
         isRequesting: { $set: true },
         error: { $set: undefined },
-        submittedEmail: { $set: action.payload.email }
+        submittedEmail: { $set: action.payload.email },
       })
     case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST:
     case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST: {
@@ -88,15 +88,11 @@ export default function registerFormReducer (
       reasons (e.g., connection issues, bad requests, ...), one of them
       being an e-mail address that's already in use. When this happens,
       the back-end's response status is '409'. */
+      return update(state, {
+        isRequesting: { $set: false },
+        error: { $set: `${action.error.response.status}` },
+      })
 
-      if (action.error.response.status === 409) {
-        return update(state, {
-          isRequesting: { $set: false },
-          error: { $set: '409' },
-        })
-      } else {
-        // Other kinds of error can be handled here.
-      }
     case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_SUCCESS:
     case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_ERROR:
     case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_SUCCESS:

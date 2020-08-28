@@ -1,6 +1,7 @@
 import * as React from 'react'
 import clsx from 'clsx'
 import FormField, { parseErrors, isValidURL } from 'components/FormField'
+import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 import Button from '@material-ui/core/Button'
 import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -53,6 +54,8 @@ const AppDetail: React.FC<AppDetailProps> = (
   })
   const [errors, setErrors] = React.useState()
   const [isFormValid, setFormValid] = React.useState(false)
+  const [openDialog, setOpenDialog] = React.useState(false)
+
   const dateOptions = {
     year: 'numeric',
     month: 'long',
@@ -85,8 +88,19 @@ const AppDetail: React.FC<AppDetailProps> = (
     })
   }
 
+  function handleOpenDialog () {
+    setOpenDialog(true)
+  }
+
+  function handleCloseDialog () {
+    setOpenDialog(false)
+  }
+
   function handleDeleteApp () {
+    setOpenDialog(false)
+
     deleteApp(appId)
+
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
@@ -172,9 +186,11 @@ const AppDetail: React.FC<AppDetailProps> = (
                 value={`https://${config.clientName}.com/tos`}
               />
 
-              {/* <Button variant='outlined' className={classes.iconBtn}>
+              {
+                /* <Button variant='outlined' className={classes.iconBtn}>
                 <SvgIcon name='plus' size='24' />
-              </Button> */}
+                </Button> */
+              }
             </div>
 
             <br /><br /><br /><br /><br />
@@ -194,9 +210,11 @@ const AppDetail: React.FC<AppDetailProps> = (
                 inputProps={{ readOnly: true }}
               />
 
-              {/* <Button variant='outlined' className={classes.iconBtn}>
+              {
+                /* <Button variant='outlined' className={classes.iconBtn}>
                 <SvgIcon name='content-copy' size='24' />
-              </Button> */}
+                </Button> */
+              }
             </div>
 
             <br />
@@ -208,13 +226,15 @@ const AppDetail: React.FC<AppDetailProps> = (
                 inputProps={{ readOnly: true }}
               />
 
-              {/* <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnLeft)}>
+              {
+                /* <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnLeft)}>
                 <SvgIcon name='autorenew' size='24' />
-              </Button>
+                </Button>
 
-              <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnRight)}>
+                <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnRight)}>
                 <SvgIcon name='content-copy' size='24' />
-              </Button> */}
+                </Button> */
+              }
             </div>
 
             <br />
@@ -232,9 +252,11 @@ const AppDetail: React.FC<AppDetailProps> = (
                 ]}
               />
 
-              {/* <Button variant='outlined' className={classes.iconBtn}>
+              {
+                /* <Button variant='outlined' className={classes.iconBtn}>
                 <SvgIcon name='plus' size='24' />
-              </Button> */}
+                </Button> */
+              }
             </div>
 
             <br />
@@ -251,7 +273,7 @@ const AppDetail: React.FC<AppDetailProps> = (
               <InputLabel shrink>Application Status</InputLabel>
               <div className={classes.status}>
                 <SvgIcon name='circle' color='#2DB7B9' size={12} style={{ display: 'inline-block' }} />
-              &nbsp;&nbsp;
+                &nbsp;&nbsp;
                 <span>Sandbox Access</span>
               </div>
 
@@ -263,9 +285,11 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <br />
 
-              {/* <InputLabel shrink>Author</InputLabel>
-              <div className={classes.link}>Finish your team info</div>
-              <br /> */}
+              {
+                /* <InputLabel shrink>Author</InputLabel>
+                <div className={classes.link}>Finish your team info</div>
+                <br /> */
+              }
 
               <InputLabel shrink>Registration date</InputLabel>
               <div>{currentApp.createdAt !== undefined &&
@@ -311,22 +335,30 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <InputLabel shrink>Additional actions</InputLabel>
               <div className={classes.link} onClick={() => toggleInform()}>Activity monitoring</div>
-              <div
-                className={classes.link}
-                onClick={handleDeleteApp}
-              >
-                Delete application
-              </div>
+              <div className={classes.link} onClick={handleOpenDialog}>Delete application</div>
 
-              {resDelete.isError &&
-                <div className={classes.errorPlaceholder}>
-                  <div className={classes.errorAlert}>Error deleting app</div>
-                </div>}
-
+              {
+                resDelete.isError &&
+                  <div className={classes.errorPlaceholder}>
+                    <div className={classes.errorAlert}>Error deleting app</div>
+                  </div>
+              }
             </form>
           </aside>
         </section>
       </div>
+
+      {
+        openDialog &&
+          <CustomizableDialog
+            open={openDialog}
+            providedTitle='Delete app'
+            providedText='Are you sure you want to delete this app? This action is not reversible.'
+            closeDialogCallback={handleCloseDialog}
+            confirmButtonLabel='Delete'
+            confirmButtonCallback={handleDeleteApp}
+          />
+      }
     </>
   )
 }
