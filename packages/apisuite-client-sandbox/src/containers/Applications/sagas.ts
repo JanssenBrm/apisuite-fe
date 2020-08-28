@@ -182,8 +182,9 @@ export function * deleteApp (action: DeleteAppAction) {
     }
     yield put(push('/dashboard/apps'))
   } catch (error) {
-    /* For some strange reason, this Saga considers a response
-    from the server whose status code is 204 as an error. */
+    /* TODO: Review the 'checkStatus' function in 'util/request.ts',
+    as this Saga considers a response from the server whose status
+    code is 204 (i.e., a 'No Content') as an error. */
     if (error.status === 204) {
       yield put(deleteAppSuccess())
 
