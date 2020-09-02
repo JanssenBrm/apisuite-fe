@@ -8,8 +8,8 @@
   "portalName": "API Suite Portal",
   "clientName": "API Suite",
   "infra": {
-    "hydra": "hydraauth.develop.apisuite.io",
-    "sandbox": "sandbox.develop.apisuite.io"
+    "hydra": "hydraauth.apisuite.io",
+    "sandbox": "sandbox.apisuite.io"
   },
   "social": {
     "web": "https://cloudoki.com/",
