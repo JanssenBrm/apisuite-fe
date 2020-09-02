@@ -10,7 +10,6 @@ RUN mkdir /root/.ssh/ &&\
     chmod 600 /root/.ssh/id_rsa &&\
     touch /root/.ssh/known_hosts &&\
     ssh-keyscan github.com >> /root/.ssh/known_hosts
-RUN cat /root/.ssh/id_rsa
 RUN node scripts/extensions-installer.js
 RUN npm install -g yarn
 RUN yarn install
