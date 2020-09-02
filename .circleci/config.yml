@@ -116,7 +116,6 @@ workflows:
                   only:
                     - develop
                     - staging
-                    - feat/APIS-438
             requires:
                 - test
         - deploy-dev:

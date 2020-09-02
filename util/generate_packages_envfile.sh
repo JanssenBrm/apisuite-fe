@@ -13,7 +13,7 @@ set -e
 function generateEnvFiles() {
   # Map branch name to the environment
 
-  if [[ $CIRCLE_BRANCH =~ (develop|"feat/APIS-438")$ ]]; then
+  if [[ $CIRCLE_BRANCH =~ develop$ ]]; then
     echo "ENV=dev
 AUTH_URL=${AUTH_URL_DEV}
 API_URL=${API_URL_DEV}
