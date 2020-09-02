@@ -5,7 +5,7 @@
       "name": "apisuite-extension-status-ui",
       "className": "Status",
       "config": {
-        "servicesStatusDataUrl": "https://sandbox-develop.apisuite.cloudoki.com/services"
+        "servicesStatusDataUrl": "https://gateway.develop.apisuite.io/services"
       }
     }
   ]
