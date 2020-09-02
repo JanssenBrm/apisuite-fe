@@ -50,6 +50,15 @@ for project in ${PROJECTS_LIST}; do
   CLEAN_PROJECT_PREFIX=${project#$PREFIX_FILTER}
   CLEAN_PROJECT_SUFFIX=${CLEAN_PROJECT_PREFIX%$SUFFIX_FILTER}
   echo "$(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG=${CLEAN_PROJECT_SUFFIX}-${PROJECT_PACKAGE_VERSION}" >> .env
+
+
+  if [[ "${project}" == "apisuite-client-sandbox" ]]; then
+    if [[ -f ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config-${CIRCLE_BRANCH}.json ]]; then
+      cp ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config-${CIRCLE_BRANCH}.json ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config.json
+    else
+      cp ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config-develop.json ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config.json
+    fi
+  fi
 done
 
 # Get the projects folder name to build

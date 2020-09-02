@@ -12,10 +12,10 @@ import {
 } from './ducks'
 
 export type RegisterFormProps =
-ReturnType<typeof mapStateToProps> &
-ReturnType<typeof mapDispatchToProps> & {
-  prefilledEmail?: string,
-}
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps> & {
+    prefilledEmail?: string,
+  }
 
 export type Step = keyof typeof steps
 
@@ -27,6 +27,12 @@ export type PersonalDetails = {
 export type PersonalDetailsResponse = {
   success: boolean,
   token: string,
+}
+
+export type PersonalDetailsResponseErrorObject = {
+  response: {
+    status: number,
+  },
 }
 
 export type OrganisationDetails = {
@@ -44,6 +50,7 @@ export type RegisterFormStore = {
   isRequesting: boolean,
   error?: string,
   step: Step,
+  submittedEmail: string,
 }
 
 export type RegisterFormActions =
