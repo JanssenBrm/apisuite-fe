@@ -182,7 +182,20 @@ export function * deleteApp (action: DeleteAppAction) {
     }
     yield put(push('/dashboard/apps'))
   } catch (error) {
-    yield put(deleteAppError())
+    /* TODO: Review the 'checkStatus' function in 'util/request.ts',
+    as this Saga considers a response from the server whose status
+    code is 204 (i.e., a 'No Content') as an error. */
+    if (error.status === 204) {
+      yield put(deleteAppSuccess())
+
+      if (action.userId) {
+        yield put(getUserApps(action.userId))
+      }
+
+      yield put(push('/dashboard/apps'))
+    } else {
+      yield put(deleteAppError())
+    }
   }
 }
 
@@ -214,8 +227,8 @@ export function * getAppDetails (action: GetAppDetails) {
       enable: userApp.enable,
       createdAt: userApp.createdAt,
       updatedAt: userApp.updatedAt,
-      clientId: userApp.client_data.client.client_id,
-      clientSecret: userApp.client_data.client.client_secret,
+      clientId: userApp.client_data.client_id,
+      clientSecret: userApp.client_data.client_secret,
     }
   ))
 
