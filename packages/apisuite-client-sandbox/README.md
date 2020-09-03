@@ -24,3 +24,7 @@ $docker-compose up -d --build
 ```
 
 Go to [http://localhost:3500](http://localhost:3500)
+
+## Extending the APISuite client
+
+The APISuite Portal can be extended through APISuite UI Extensions. For more details consult the [EXTENSIONS.md](EXTENSIONS.md) documentation.

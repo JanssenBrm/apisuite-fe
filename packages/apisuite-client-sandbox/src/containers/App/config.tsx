@@ -1,6 +1,13 @@
 import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import { TabProps } from 'components/Navigation/types'
+import { getMenuEntries } from 'util/extensions'
+import { Menus } from 'apisuite-extension-ui-types'
+
+const extensionsInitTabs = getMenuEntries(Menus.HeaderAnonymousMain)
+const extensionsLoginTabs = getMenuEntries(Menus.HeaderAuthenticatedMain)
+const extensionsLoginDashboardTabs = getMenuEntries(Menus.HeaderAuthenticatedDashboard)
+const extensionsLoginProfileTabs = getMenuEntries(Menus.HeaderAuthenticatedProfile)
 
 export const initTabs: TabProps[] = [
   {
@@ -21,6 +28,7 @@ export const initTabs: TabProps[] = [
     route: '/',
     disabled: true,
   },
+  ...extensionsInitTabs,
 ]
 
 const ConsoleLabel = () => (
@@ -75,6 +83,7 @@ export const loginTabs: TabProps[] = [
         route: '/dashboard/console',
       },
       // #conditional-loader-end
+      ...extensionsLoginDashboardTabs,
     ],
   },
   {
@@ -93,8 +102,10 @@ export const loginTabs: TabProps[] = [
         label: 'Organisation',
         route: '/profile/organisation',
       },
+      ...extensionsLoginProfileTabs,
     ],
   },
+  ...extensionsLoginTabs,
 ]
 
 export const gobackConfig = [
