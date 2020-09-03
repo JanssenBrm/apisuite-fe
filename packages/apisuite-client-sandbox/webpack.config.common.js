@@ -100,6 +100,7 @@ module.exports = {
   ],
 
   resolve: {
+    symlinks: false,
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     modules: [
       path.resolve(__dirname, 'src'),
