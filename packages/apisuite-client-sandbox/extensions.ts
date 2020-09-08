@@ -3,6 +3,7 @@ import { Extension } from 'apisuite-extension-ui-types'
 
 type RegistryEntry = Extension[]
 
+
 const registry: RegistryEntry = [
   // new Example({
   //   someKey: 'Overriden value',
