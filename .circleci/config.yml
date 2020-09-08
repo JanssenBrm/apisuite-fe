@@ -110,7 +110,7 @@ workflows:
   build:
     jobs:
         - test
-        - build:
+        - release:
             filters:
                 branches:
                   only:
@@ -127,7 +127,7 @@ workflows:
                     - develop
                     - staging
             requires:
-                - test
+                - release
         - deploy-dev:
             filters:
                 branches:
