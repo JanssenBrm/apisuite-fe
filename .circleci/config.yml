@@ -22,6 +22,28 @@ jobs:
               chmod +x install_dependencies.sh
               [[ $SHOULD_TEST == "false" ]] && echo "Bypass tests" || (./install_dependencies.sh && ./run_tests.sh)
 
+  release:
+    executor: apisuite-executor
+    steps:
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run: yarn --frozen-lockfile
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+      - run: |
+          if [ "$CIRCLE_BRANCH" = "develop" ]; then
+            GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
+          elif [ "$CIRCLE_BRANCH" = "feat/APIS-481" ]; then
+            GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
+          elif [ "$CIRCLE_BRANCH" = "staging" ]; then
+            GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid rc --yes
+          elif [ "$CIRCLE_BRANCH" = "production" ]; then
+            GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-graduate --yes
+          fi
+
   build:
       executor: apisuite-executor
       steps:
@@ -88,6 +110,17 @@ workflows:
   build:
     jobs:
         - test
+        - release:
+          filters:
+            branches:
+              only:
+                only:
+                  - feat/APIS-481
+                  - develop
+                  - staging
+                  - production
+        requires:
+            - test
         - build:
             filters:
                 branches:
