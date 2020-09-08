@@ -25,6 +25,9 @@ jobs:
   release:
     executor: apisuite-executor
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "7f:86:85:4e:99:1e:77:42:27:11:f4:57:43:e0:c5:27"
       - checkout
       - restore_cache:
           key: dependency-cache-{{ checksum "yarn.lock" }}
@@ -33,18 +36,6 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-      - run:
-          name: Remove CircleCI's read-only SSH key from the ssh agent
-          command: |
-            ssh-add -D
-      - run:
-          name: Add the apisuite-machine-user SSH key
-          command: |
-            SSH_PRIVATE_KEY="$(echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d)" &&\
-            echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa_github &&\
-            chmod 600 ~/.ssh/id_rsa_github &&\
-            touch ~/.ssh/known_hosts &&\
-            ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run:
           name: Tag and release a new version of all changed projects
           command: |
