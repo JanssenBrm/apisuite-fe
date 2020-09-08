@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.2...apisuite-client-sandbox@1.0.0-alpha.3) (2020-09-08)
+
+
+### Features
+
+* **internal:** Trying out the CHANGELOG generation. ([e79bbf3](https://github.com/Cloudoki/APISuite/commit/e79bbf3ede791b7aa19e09aaf6f4b236049e3911))
+
+
+
+
+
 # 1.0.0-alpha.2 (2020-09-08)
 
 
