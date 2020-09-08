@@ -33,17 +33,31 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - node_modules
-      - run: |
-          git config --global user.name 'apisuite-machine-user'; git config --global user.email 'dev@apisuite.io'
-          if [ "$CIRCLE_BRANCH" = "develop" ]; then
-            GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
-          elif [ "$CIRCLE_BRANCH" = "feat/APIS-481" ]; then
-            GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
-          elif [ "$CIRCLE_BRANCH" = "staging" ]; then
-            GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid rc --yes
-          elif [ "$CIRCLE_BRANCH" = "production" ]; then
-            GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-graduate --yes
-          fi
+      - run:
+          name: Remove CircleCI's read-only SSH key from the ssh agent
+          command: |
+            ssh-add -D
+      - run:
+          name: Add the apisuite-machine-user SSH key
+          command: |
+            SSH_PRIVATE_KEY="$(echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d)" &&\
+            echo "${SSH_PRIVATE_KEY}" > ~/.ssh/id_rsa_github &&\
+            chmod 600 ~/.ssh/id_rsa_github &&\
+            touch ~/.ssh/known_hosts &&\
+            ssh-keyscan github.com >> ~/.ssh/known_hosts
+      - run:
+          name: Tag and release a new version of all changed projects
+          command: |
+            git config --global user.name 'apisuite-machine-user'; git config --global user.email 'dev@apisuite.io'
+            if [ "$CIRCLE_BRANCH" = "develop" ]; then
+              GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
+            elif [ "$CIRCLE_BRANCH" = "feat/APIS-481" ]; then
+              GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
+            elif [ "$CIRCLE_BRANCH" = "staging" ]; then
+              GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid rc --yes
+            elif [ "$CIRCLE_BRANCH" = "production" ]; then
+              GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-graduate --yes
+            fi
 
   build:
       executor: apisuite-executor
