@@ -41,13 +41,13 @@ jobs:
           command: |
             git config --global user.name 'apisuite-machine-user'; git config --global user.email 'dev@apisuite.io'
             if [ "$CIRCLE_BRANCH" = "develop" ]; then
-              GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
+              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
             elif [ "$CIRCLE_BRANCH" = "feat/APIS-481" ]; then
-              GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
+              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
             elif [ "$CIRCLE_BRANCH" = "staging" ]; then
-              GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid rc --yes
+              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid rc --yes
             elif [ "$CIRCLE_BRANCH" = "production" ]; then
-              GITHUB_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-graduate --yes
+              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-graduate --yes
             fi
 
   build:
