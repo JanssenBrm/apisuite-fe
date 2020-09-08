@@ -110,17 +110,16 @@ workflows:
   build:
     jobs:
         - test
-        - release:
-          filters:
-            branches:
-              only:
-                only:
-                  - feat/APIS-481
-                  - develop
-                  - staging
-                  - production
-          requires:
-            - test
+        - build:
+            filters:
+                branches:
+                  only:
+                    - feat/APIS-481
+                    - develop
+                    - staging
+                    - production
+            requires:
+                - test
         - build:
             filters:
                 branches:
