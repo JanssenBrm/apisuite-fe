@@ -1,0 +1,21 @@
+{
+  "packages": ["packages/*"],
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "changelogPreset": "angular",
+  "ignoreChanges": [
+    "**/*.test.*",
+    "**/*.md",
+    "**/nodemon.json",
+    "**/jest.json"
+  ],
+  "command": {
+    "version": {
+      "xxxallowBranch": ["develop", "staging", "production"],
+      "allowBranch": ["feat/APIS-481"],
+      "conventionalCommits": true,
+      "createRelease": "github"
+    }
+  }
+}
