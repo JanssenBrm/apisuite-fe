@@ -12,8 +12,7 @@
   ],
   "command": {
     "version": {
-      "xxxallowBranch": ["develop", "staging", "production"],
-      "allowBranch": ["feat/APIS-481"],
+      "allowBranch": ["develop", "staging", "production"],
       "conventionalCommits": true,
       "createRelease": "github"
     }
