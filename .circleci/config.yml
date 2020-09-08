@@ -119,7 +119,7 @@ workflows:
                   - develop
                   - staging
                   - production
-        requires:
+          requires:
             - test
         - build:
             filters:
