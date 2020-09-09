@@ -151,6 +151,7 @@ workflows:
                   only:
                     - develop
                     - staging
+                    - production
             requires:
                 - release
         - deploy-dev:
