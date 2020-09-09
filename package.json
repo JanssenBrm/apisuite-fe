@@ -6,9 +6,15 @@
   "author": "Cloudoki",
   "license": "MIT",
   "private": true,
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
+    "lerna": "lerna",
     "sandbox-dev": "yarn workspace apisuite-client-sandbox dev",
     "sandbox-build": "yarn workspace apisuite-client-sandbox build"
+  },
+  "devDependencies": {
+    "lerna": "^3.22.1"
   }
 }

@@ -34,7 +34,7 @@ LOGIN_PORT=${LOGIN_PORT_STG}
 THEME=
 SIGNUP_PORT=${SIGNUP_PORT_STG}" > ${ENV_FILE_APISUITE_SANDBOX_CLIENT}
 
-  elif [[ $CIRCLE_BRANCH =~ master$ ]]; then
+  elif [[ $CIRCLE_BRANCH =~ production$ ]]; then
 
     echo "ENV=prod
 AUTH_URL=${AUTH_URL_PROD}
