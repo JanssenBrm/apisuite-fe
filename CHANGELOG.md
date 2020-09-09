@@ -1,4 +1,10 @@
-## [1.0.1](https://github.com/Cloudoki/APISuite/compare/v1.0.0...v1.0.1) (2020-09-08)
+# Change Log
+
+This Change Log is kept for historical reasons. It was generated for the whole repo before we changed to per-project tagging and CHANGELOG generation.
+
+Find each individual project's `CHANGELOG.md` file in their respective directories.
+
+# [0.9.0](https://github.com/Cloudoki/APISuite/compare/v0.9.0...v0.8.0) (2020-09-04)
 
 
 ### Bug Fixes
@@ -19,7 +25,7 @@
 
 
 
-# 1.0.0 (2020-09-08)
+# 0.8.0 (2020-08-19)
 
 
 ### Bug Fixes
