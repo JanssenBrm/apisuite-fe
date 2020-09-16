@@ -35,7 +35,7 @@ if [[ $CIRCLE_BRANCH =~ develop$ ]]; then
   APISUITE_ENVIRONMENT="dev";
 elif [[ $CIRCLE_BRANCH =~ staging$ ]]; then
   APISUITE_ENVIRONMENT="stg";
-elif [[ $CIRCLE_BRANCH =~ master$ ]]; then
+elif [[ $CIRCLE_BRANCH =~ production$ ]]; then
   APISUITE_ENVIRONMENT="prod";
 fi
 

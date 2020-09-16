@@ -1,10 +1,20 @@
 import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 import useStyles from './styles'
+import { RegisterConfirmationProps } from './types'
 
-const RegisterConfirmation: React.FC<{}> = () => {
+const RegisterConfirmation: React.FC<RegisterConfirmationProps> = ({
+  nextStep,
+}) => {
   const [t] = useTranslation()
   const classes = useStyles()
+
+  /* Once this component renders (which means that we've reached the end of
+  our registration process), we dispatch a 'NEXT_STEP' type of action so as to
+  reset the 'steps' property of our app's store back to 1. */
+  React.useEffect(() => {
+    nextStep()
+  }, [nextStep])
 
   return (
     <main className={classes.main}>
