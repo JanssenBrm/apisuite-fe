@@ -83,14 +83,14 @@ if [[ -n ${DOCKER_SERVICES// } ]]; then
   echo "Services to build: $DOCKER_SERVICES"
   # generate the env files for the packages
   . ./generate_packages_envfile.sh
-  docker-compose build $DOCKER_SERVICES
+  docker-compose build --build-arg SSH_PRIVATE_KEY="$(echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d)" $DOCKER_SERVICES
   docker-compose push $DOCKER_SERVICES
 else
   echo "No services listed will not build and push"
   if [[ "$FORCE_BUILD" == "true" ]]; then
     echo "Will build anyways."
     . ./generate_packages_envfile.sh
-    docker-compose build
+    docker-compose build --build-arg SSH_PRIVATE_KEY="$(echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d)"
     docker-compose push
   fi
 fi

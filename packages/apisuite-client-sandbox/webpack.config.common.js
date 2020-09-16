@@ -2,12 +2,27 @@
  * Webpack Common configuration file
  */
 
+const fs = require('fs')
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const autoprefixer = require('autoprefixer')
 const Dotenv = require('dotenv-webpack')
-const sandboxConfig = require('./sandbox.config.json')
+
+/**
+ * Looks for `sandbox.config.json`. If it doesn't exist, create a copy of the
+ * `develop` environment's one.
+ */
+function getSandboxConfig () {
+  const pathToFile = path.join(__dirname, 'sandbox.config.json')
+  const pathToDevFile = path.join(__dirname, 'sandbox.config-develop.json')
+  if (!fs.existsSync(pathToFile)) {
+    fs.copyFileSync(pathToDevFile, pathToFile)
+  }
+  return require('./sandbox.config.json')
+}
+
+const sandboxConfig = getSandboxConfig()
 
 module.exports = {
   entry: path.resolve(__dirname, 'src', 'index'),
@@ -100,6 +115,7 @@ module.exports = {
   ],
 
   resolve: {
+    symlinks: false,
     extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
     modules: [
       path.resolve(__dirname, 'src'),

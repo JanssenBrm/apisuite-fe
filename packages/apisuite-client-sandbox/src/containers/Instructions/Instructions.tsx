@@ -31,7 +31,6 @@ const Instructions: React.FC<{}> = () => {
     -H "Accept: application/json" \\
     -H "Content-Type: application/json" \\
     -H "Authorization: Bearer {TOKEN}" \\
-    -H "Host: ${config.infra.sandbox}" \\
     -d '{"name":"Jack Daniels","desc":"My cat","tag":"cat"}' \\
     https://${config.infra.sandbox}/v1/pets`,
     },
@@ -43,7 +42,6 @@ const Instructions: React.FC<{}> = () => {
       note: '',
       command: `curl -X GET \\
     -H "Authorization: Bearer {TOKEN}" \\
-    -H "Host: ${config.infra.sandbox}" \\
     https://${config.infra.sandbox}/v1/pets`,
     },
   ]

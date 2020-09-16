@@ -1,7 +1,16 @@
 FROM cypress/base:ubuntu16-12.13.1 AS build
 
+ARG ENV=dev
+ARG SSH_PRIVATE_KEY
+
 WORKDIR /build
 COPY . /build
+RUN mkdir /root/.ssh/ &&\
+    echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa &&\
+    chmod 600 /root/.ssh/id_rsa &&\
+    touch /root/.ssh/known_hosts &&\
+    ssh-keyscan github.com >> /root/.ssh/known_hosts
+RUN node scripts/extensions-installer.js
 RUN npm install -g yarn
 RUN yarn install
 RUN yarn run build

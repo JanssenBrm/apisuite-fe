@@ -25,13 +25,18 @@ const LoginForm: React.FC<LoginFormProps> = ({
     email: '',
     password: '',
   })
+  const [inputHasChanged, setInputHasChanged] = React.useState(false)
 
   const handleInputs = (e: FormFieldEvent, err: any) => {
     setInput({
       ...input,
       [e.target.name]: e.target.value,
     })
+
+    setInputHasChanged(true)
+
     const eventTarget = e.target
+
     // @ts-ignore
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
@@ -42,7 +47,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement> | KeyboardEvent) {
     e.preventDefault()
+
     login({ email: input.email, password: input.password })
+
+    setInputHasChanged(false)
   }
 
   React.useEffect(() => {
@@ -73,7 +81,10 @@ const LoginForm: React.FC<LoginFormProps> = ({
         buttonLabel={t('loginForm.button')}
         buttonDisabled={!isFormValid}
         loading={auth.isAuthorizing}
-        error={auth.error}
+        /* We pass an error message to the 'FormCard' component if an authentication error is detected,
+        and as long as a) the previously submitted inputs are not changed, and b) the 'E-mail' or
+        'Password' input fields are not empty. */
+        error={auth.error && !inputHasChanged && (input.email !== '' || input.password !== '') ? auth.error : undefined}
         handleSubmit={handleSubmit}
       >
         <div className={classes.fieldContainer}>
