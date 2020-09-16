@@ -42,8 +42,11 @@ const CreateApp: React.FC<CreateAppProps> = ({
     // visibility: visible ? 'public' : 'private',
     visibility: 'private',
     subscriptions: [],
-    // TODO review puburls
-    pubUrls: null,
+    // This is the format that the BE expects - an array of PubUrl objects
+    pubUrls: [{
+      url: '',
+      type: 'client',
+    }],
   })
 
   const selectOptions = (apis: Api[]) => {
@@ -64,10 +67,17 @@ const CreateApp: React.FC<CreateAppProps> = ({
   }
 
   function handleInputs (e: FormFieldEvent, err: any) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    })
+    if (e.target.name === 'pubUrls') {
+      setInput({
+        ...input,
+        [e.target.name]: [{...input.pubUrls[0], url: e.target.value}],
+      })
+    } else {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    }
     const eventTarget = e.target
     // @ts-ignore
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
@@ -100,7 +110,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
       visibility: 'private',
       userId: userId,
       subscriptions: input.subscriptions,
-      pubUrls: null,
+      pubUrls: input.pubUrls,
       enable: true,
       clientId: '',
       clientSecret: '',
@@ -184,9 +194,13 @@ const CreateApp: React.FC<CreateAppProps> = ({
               placeholder='Client URL'
               name='pubUrls'
               type='text'
-              // TODO change back to input.pubUrls
-              value=''
-              // onChange={handleInputs}
+              value={input.pubUrls[0].url}
+              onChange={handleInputs}
+              errorPlacing='bottom'
+              rules={[
+                { rule: isValidURL(input.pubUrls[0].url), message: 'Please provide a valid URL' },
+                { rule: input.pubUrls[0].url.length > 0, message: 'Please provide a valid URL' },
+              ]}
             />
 
             <Button variant='outlined' className={classes.iconBtn}>
@@ -241,7 +255,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
           <p className={classes.info}>
             Not sure if you’re doing it right?
             <Link href='#'>
-                We have documentation.&nbsp;
+              We have documentation.&nbsp;
               <SvgIcon name='launch' size={13} style={{ display: 'inline', transform: 'translateY(2px)' }} />
             </Link>
           </p>

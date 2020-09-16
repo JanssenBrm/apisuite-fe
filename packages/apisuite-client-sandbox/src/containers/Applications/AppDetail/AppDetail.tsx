@@ -105,10 +105,17 @@ const AppDetail: React.FC<AppDetailProps> = (
   }
 
   function handleInputs (e: FormFieldEvent, err: any) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    })
+    if (e.target.name === 'pubUrls') {
+      setInput({
+        ...input,
+        [e.target.name]: [{...input.pubUrls[0], url: e.target.value}],
+      })
+    } else {
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    }
     setChanged(true)
     setChangedDetails(!(JSON.stringify(currentApp) === JSON.stringify(input)))
     const eventTarget = e.target
@@ -173,9 +180,14 @@ const AppDetail: React.FC<AppDetailProps> = (
               label='Client URL'
               placeholder='https://localhost'
               name='pubUrls'
-              // TODO change
-              value=''
+              type='text'
+              value={input.pubUrls[0].url}
               onChange={handleInputs}
+              errorPlacing='bottom'
+              rules={[
+                { rule: isValidURL(input.pubUrls[0].url), message: 'Please provide a valid URL' },
+                { rule: input.pubUrls[0].url.length > 0, message: 'Please provide a valid URL' },
+              ]}
             />
 
             <br />
@@ -183,7 +195,8 @@ const AppDetail: React.FC<AppDetailProps> = (
             <div className={classes.fieldWrapper}>
               <FormField
                 label='Terms of service'
-                value={`https://${config.clientName}.com/tos`}
+                placeholder={`https://${config.clientName}.com/tos`}
+                value=''
               />
 
               {
