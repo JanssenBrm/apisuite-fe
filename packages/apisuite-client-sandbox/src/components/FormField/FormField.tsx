@@ -55,6 +55,13 @@ const FormField: React.FC<FormFieldProps> = (props) => {
     setChanged(true)
   }, [value, changed])
 
+  React.useEffect(() => {
+    const err = props.rules && props.rules.filter(r => (props.showErrors ? !r.rule : changed && !r.rule))
+
+    // @ts-ignore
+    setErrors(err)
+  }, [props.rules])
+
   return (
     <div
       style={{ width: fullWidth ? '100%' : undefined }}

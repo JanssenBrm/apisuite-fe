@@ -1,6 +1,7 @@
 import * as React from 'react'
 import clsx from 'clsx'
 import FormField, { parseErrors, isValidURL, isValidEmail } from 'components/FormField'
+import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 import Button from '@material-ui/core/Button'
 import SvgIcon from 'components/SvgIcon'
 import InputLabel from '@material-ui/core/InputLabel'
@@ -54,6 +55,8 @@ const AppDetail: React.FC<AppDetailProps> = (
   const [inputsHaveChanged, setInputsHaveChanged] = React.useState(false)
   const [errors, setErrors] = React.useState()
   const [isFormValid, setFormValid] = React.useState(false)
+  const [openDialog, setOpenDialog] = React.useState(false)
+
   const dateOptions = {
     year: 'numeric',
     month: 'long',
@@ -153,8 +156,19 @@ const AppDetail: React.FC<AppDetailProps> = (
     })
   }
 
+  function handleOpenDialog () {
+    setOpenDialog(true)
+  }
+
+  function handleCloseDialog () {
+    setOpenDialog(false)
+  }
+
   function handleDeleteApp () {
+    setOpenDialog(false)
+
     deleteApp(appId)
+
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
@@ -332,6 +346,11 @@ const AppDetail: React.FC<AppDetailProps> = (
                   Support e-mail
                 </MenuItem>
               </Menu>
+              {
+                /* <Button variant='outlined' className={classes.iconBtn}>
+                <SvgIcon name='plus' size='24' />
+                </Button> */
+              }
             </div>
 
             {
@@ -528,7 +547,7 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <InputLabel shrink className={classes.marginBottom}>Application visibility</InputLabel>
 
-              <Select options={selectOptions} selected={selectOptions[0]} disabled={true} />
+              <Select options={selectOptions} selected={selectOptions[0]} disabled />
 
               <br />
 
@@ -580,22 +599,30 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <InputLabel shrink>Additional actions</InputLabel>
               <div className={classes.link} onClick={() => toggleInform()}>Activity monitoring</div>
-              <div
-                className={classes.link}
-                onClick={handleDeleteApp}
-              >
-                Delete application
-              </div>
+              <div className={classes.link} onClick={handleOpenDialog}>Delete application</div>
 
-              {resDelete.isError &&
-                <div className={classes.errorPlaceholder}>
-                  <div className={classes.errorAlert}>Error deleting app</div>
-                </div>}
-
+              {
+                resDelete.isError &&
+                  <div className={classes.errorPlaceholder}>
+                    <div className={classes.errorAlert}>Error deleting app</div>
+                  </div>
+              }
             </form>
           </aside>
         </section>
       </div>
+
+      {
+        openDialog &&
+          <CustomizableDialog
+            open={openDialog}
+            providedTitle='Delete app'
+            providedText='Are you sure you want to delete this app? This action is not reversible.'
+            closeDialogCallback={handleCloseDialog}
+            confirmButtonLabel='Delete'
+            confirmButtonCallback={handleDeleteApp}
+          />
+      }
     </>
   )
 }

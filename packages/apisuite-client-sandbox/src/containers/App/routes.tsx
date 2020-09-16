@@ -23,6 +23,21 @@ import ForgotPasswordPage from 'containers/ForgotPasswordPage'
 import TeamPage from 'containers/TeamPage'
 import Profile from 'containers/Profile'
 import OrganizationPage from 'containers/OrganizationPage'
+import { getRoutes } from 'util/extensions'
+
+const extensionsRoutes = getRoutes().map(
+  (route: any): AppRouteProps => {
+    if (!route.auth) {
+      return route
+    }
+    return {
+      ...route,
+      render: (props) => <RequireAuth component={route.component} {...props} />,
+      auth: undefined,
+      component: undefined,
+    }
+  },
+)
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox },
@@ -45,6 +60,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/forgot', exact: true, component: ForgotPasswordPage },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
+  ...extensionsRoutes,
   { render: () => <NotFound /> },
 ]
 
