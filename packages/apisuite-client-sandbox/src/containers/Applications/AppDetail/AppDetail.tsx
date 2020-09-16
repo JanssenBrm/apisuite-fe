@@ -299,7 +299,7 @@ const AppDetail: React.FC<AppDetailProps> = (
               <FormField
                 label='Client URL'
                 placeholder='https://localhost'
-                name='pubUrls'
+                name='clientUrl'
                 type='text'
                 value={currentInput.pubUrls[0].url}
                 onChange={handleInputs}
