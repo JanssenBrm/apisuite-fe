@@ -35,7 +35,8 @@ export type OrgInfo = {
   updatedAt?: string,
 }
 
-export type ProfileStore = Pick<FetchTeamMembersResponse, 'members'> & {
+export type ProfileStore = {
+  members: FetchTeamMembersResponse[],
   roleOptions: Role[],
   profile: Profile,
   org: Organization & Pick<OrgInfo, 'description' | 'vat' | 'website' | 'terms' | 'logo'>,
@@ -75,13 +76,9 @@ export type Organization = {
 }
 
 export type FetchTeamMembersResponse = {
-  success: boolean,
-  message: string,
-  members: ({
-    'Organization': Organization,
-    'Role': Role,
-    'User': Pick<User, 'id'> & { name: string },
-  })[],
+  'Organization': Organization,
+  'Role': Role,
+  'User': Pick<User, 'id'> & { name: string },
 }
 
 export type FetchRoleOptionsResponse = Role[]
@@ -92,11 +89,7 @@ export type ConfirmInviteResponse = any
 
 export type ChangeRoleResponse = any
 
-export type GetProfileResponse = {
-  message: string,
-  profile: Profile,
-  success: boolean,
-}
+export type GetProfileResponse = Profile
 
 export type UpdateProfileResponse = {
   success: boolean,

@@ -91,7 +91,7 @@ const AppDetail: React.FC<AppDetailProps> = (
 
     const selectedMenuItem = event.currentTarget
     const selectedMenuItemText = selectedMenuItem.textContent
-    let newActiveMenuItems = [...isActiveMenuItems]
+    const newActiveMenuItems = [...isActiveMenuItems]
 
     if (selectedMenuItemText === 'Terms of service URL') {
       newActiveMenuItems[0] = true
@@ -111,8 +111,8 @@ const AppDetail: React.FC<AppDetailProps> = (
     event.stopPropagation()
 
     const fieldToRemove = event.currentTarget.parentElement
-    let newActiveMenuItems = [...isActiveMenuItems]
-    let newPubUrls = [...currentInput.pubUrls]
+    const newActiveMenuItems = [...isActiveMenuItems]
+    const newPubUrls = [...currentInput.pubUrls]
 
     if (fieldToRemove!.id === 'tosUrlFieldWrapper') {
       newActiveMenuItems[0] = false
@@ -173,7 +173,7 @@ const AppDetail: React.FC<AppDetailProps> = (
   }
 
   function handleInputs (e: FormFieldEvent, err: any) {
-    let newPubUrls = [...currentInput.pubUrls]
+    const newPubUrls = [...currentInput.pubUrls]
 
     /* Updating inputs */
 
@@ -198,9 +198,8 @@ const AppDetail: React.FC<AppDetailProps> = (
       newPubUrls[4].url = e.target.value
 
       setCurrentInput({ ...currentInput, pubUrls: newPubUrls })
-    }
-    // All other kinds of input (e.g., 'App Name', 'Description', ...)
-    else {
+    } else {
+      // All other kinds of input (e.g., 'App Name', 'Description', ...)
       setCurrentInput({
         ...currentInput,
         [e.target.name]: e.target.value,
@@ -237,14 +236,14 @@ const AppDetail: React.FC<AppDetailProps> = (
   React.useEffect(() => {
     /* The 'AppDetail' container holds state when we go from one app to another,
     and it requires 'pubUrls' to be of the below format, which is why we need to do the following. */
-    let newPubUrls = [
-      { url: '', type: 'client', },
-      { url: '', type: 'tos', },
-      { url: '', type: 'policy', },
-      { url: '', type: 'support', },
-      { url: '', type: 'support_email', },
+    const newPubUrls = [
+      { url: '', type: 'client' },
+      { url: '', type: 'tos' },
+      { url: '', type: 'policy' },
+      { url: '', type: 'support' },
+      { url: '', type: 'support_email' },
     ]
-    let newActiveMenuItems = [false, false, false, false]
+    const newActiveMenuItems = [false, false, false, false]
 
     currentApp.pubUrls.forEach((pubUrl) => {
       if (pubUrl.type === 'client') { newPubUrls[0].url = pubUrl.url }
@@ -307,7 +306,7 @@ const AppDetail: React.FC<AppDetailProps> = (
                 rules={[
                   {
                     rule: currentInput.pubUrls[0].url.length > 0 ? isValidURL(currentInput.pubUrls[0].url) : true,
-                    message: 'Please provide a valid URL'
+                    message: 'Please provide a valid URL',
                   },
                 ]}
               />
@@ -355,114 +354,114 @@ const AppDetail: React.FC<AppDetailProps> = (
 
             {
               isActiveMenuItems[0] &&
-              <div
-                id='tosUrlFieldWrapper'
-                className={classes.fieldWrapper}
-              >
-                <FormField
-                  label='Terms of service URL (optional)'
-                  placeholder='Terms of service URL'
-                  name='tosUrl'
-                  type='text'
-                  value={currentInput.pubUrls[1].url}
-                  onChange={handleInputs}
-                  errorPlacing='bottom'
-                  rules={[
-                    {
-                      rule: currentInput.pubUrls[1].url.length > 0 ? isValidURL(currentInput.pubUrls[1].url) : true,
-                      message: 'Please provide a valid URL'
-                    },
-                  ]}
-                />
+                <div
+                  id='tosUrlFieldWrapper'
+                  className={classes.fieldWrapper}
+                >
+                  <FormField
+                    label='Terms of service URL (optional)'
+                    placeholder='Terms of service URL'
+                    name='tosUrl'
+                    type='text'
+                    value={currentInput.pubUrls[1].url}
+                    onChange={handleInputs}
+                    errorPlacing='bottom'
+                    rules={[
+                      {
+                        rule: currentInput.pubUrls[1].url.length > 0 ? isValidURL(currentInput.pubUrls[1].url) : true,
+                        message: 'Please provide a valid URL',
+                      },
+                    ]}
+                  />
 
-                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
-                  <SvgIcon name='close' size='24' />
-                </Button>
-              </div>
+                  <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                    <SvgIcon name='close' size='24' />
+                  </Button>
+                </div>
             }
 
             {
               isActiveMenuItems[1] &&
-              <div
-                id='policyUrlFieldWrapper'
-                className={classes.fieldWrapper}
-              >
-                <FormField
-                  label='Policy URL (optional)'
-                  placeholder='Policy URL'
-                  name='policyUrl'
-                  type='text'
-                  value={currentInput.pubUrls[2].url}
-                  onChange={handleInputs}
-                  errorPlacing='bottom'
-                  rules={[
-                    {
-                      rule: currentInput.pubUrls[2].url.length > 0 ? isValidURL(currentInput.pubUrls[2].url) : true,
-                      message: 'Please provide a valid URL'
-                    },
-                  ]}
-                />
+                <div
+                  id='policyUrlFieldWrapper'
+                  className={classes.fieldWrapper}
+                >
+                  <FormField
+                    label='Policy URL (optional)'
+                    placeholder='Policy URL'
+                    name='policyUrl'
+                    type='text'
+                    value={currentInput.pubUrls[2].url}
+                    onChange={handleInputs}
+                    errorPlacing='bottom'
+                    rules={[
+                      {
+                        rule: currentInput.pubUrls[2].url.length > 0 ? isValidURL(currentInput.pubUrls[2].url) : true,
+                        message: 'Please provide a valid URL',
+                      },
+                    ]}
+                  />
 
-                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
-                  <SvgIcon name='close' size='24' />
-                </Button>
-              </div>
+                  <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                    <SvgIcon name='close' size='24' />
+                  </Button>
+                </div>
             }
 
             {
               isActiveMenuItems[2] &&
-              <div
-                id='supportUrlFieldWrapper'
-                className={classes.fieldWrapper}
-              >
-                <FormField
-                  label='Support URL (optional)'
-                  placeholder='Support URL'
-                  name='supportUrl'
-                  type='text'
-                  value={currentInput.pubUrls[3].url}
-                  onChange={handleInputs}
-                  errorPlacing='bottom'
-                  rules={[
-                    {
-                      rule: currentInput.pubUrls[3].url.length > 0 ? isValidURL(currentInput.pubUrls[3].url) : true,
-                      message: 'Please provide a valid URL'
-                    },
-                  ]}
-                />
+                <div
+                  id='supportUrlFieldWrapper'
+                  className={classes.fieldWrapper}
+                >
+                  <FormField
+                    label='Support URL (optional)'
+                    placeholder='Support URL'
+                    name='supportUrl'
+                    type='text'
+                    value={currentInput.pubUrls[3].url}
+                    onChange={handleInputs}
+                    errorPlacing='bottom'
+                    rules={[
+                      {
+                        rule: currentInput.pubUrls[3].url.length > 0 ? isValidURL(currentInput.pubUrls[3].url) : true,
+                        message: 'Please provide a valid URL',
+                      },
+                    ]}
+                  />
 
-                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
-                  <SvgIcon name='close' size='24' />
-                </Button>
-              </div>
+                  <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                    <SvgIcon name='close' size='24' />
+                  </Button>
+                </div>
             }
 
             {
               isActiveMenuItems[3] &&
-              <div
-                id='supportEmailFieldWrapper'
-                className={classes.fieldWrapper}
-              >
-                <FormField
-                  label='Support e-mail (optional)'
-                  placeholder='Support e-mail'
-                  name='supportEmail'
-                  type='text'
-                  value={currentInput.pubUrls[4].url}
-                  onChange={handleInputs}
-                  errorPlacing='bottom'
-                  rules={[
-                    {
-                      rule: currentInput.pubUrls[4].url.length > 0 ? isValidEmail(currentInput.pubUrls[4].url) : true,
-                      message: 'Please provide a valid e-mail address'
-                    },
-                  ]}
-                />
+                <div
+                  id='supportEmailFieldWrapper'
+                  className={classes.fieldWrapper}
+                >
+                  <FormField
+                    label='Support e-mail (optional)'
+                    placeholder='Support e-mail'
+                    name='supportEmail'
+                    type='text'
+                    value={currentInput.pubUrls[4].url}
+                    onChange={handleInputs}
+                    errorPlacing='bottom'
+                    rules={[
+                      {
+                        rule: currentInput.pubUrls[4].url.length > 0 ? isValidEmail(currentInput.pubUrls[4].url) : true,
+                        message: 'Please provide a valid e-mail address',
+                      },
+                    ]}
+                  />
 
-                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
-                  <SvgIcon name='close' size='24' />
-                </Button>
-              </div>
+                  <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                    <SvgIcon name='close' size='24' />
+                  </Button>
+                </div>
             }
 
             <br />
