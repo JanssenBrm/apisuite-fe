@@ -3,6 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.7](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.6...apisuite-client-sandbox@1.0.0-alpha.7) (2020-09-17)
+
+
+### Bug Fixes
+
+* **merge-conflicts:** fix conflicts in merge ([978e34f](https://github.com/Cloudoki/APISuite/commit/978e34f0be2392ac2c33b423cb10a8c4c4eca8c0))
+* **types&lint:** lint fixes and update broken types ([e65e435](https://github.com/Cloudoki/APISuite/commit/e65e4351153bdc44b59e252618c4e9ce8d05cdf1))
+
+
+### Features
+
+* **CreateApp:** Implemented multiple URL support to the app creation, review, and updating processes ([5d70cf7](https://github.com/Cloudoki/APISuite/commit/5d70cf70e26c8faaa702f8a9a8a877ecb3adfbd9))
+
+
+
+
+
 # [1.0.0-alpha.6](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.5...apisuite-client-sandbox@1.0.0-alpha.6) (2020-09-16)
 
 
