@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.6](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.5...apisuite-client-sandbox@1.0.0-alpha.6) (2020-09-16)
+
+
+### Bug Fixes
+
+* **AppDetail:** Made Client (i.e., Public) URL input fields editable ([6e8404c](https://github.com/Cloudoki/APISuite/commit/6e8404c40c16c8fb24a2fdfac10a6b932ad7c4ed))
+* **Navigation:** Fixed some navigation menu issues ([bf0243f](https://github.com/Cloudoki/APISuite/commit/bf0243f521aba24b9fe10983b85cd142f9c7697a))
+
+
+
+
+
 # [1.0.0-alpha.5](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.4...apisuite-client-sandbox@1.0.0-alpha.5) (2020-09-09)
 
 **Note:** Version bump only for package apisuite-client-sandbox
