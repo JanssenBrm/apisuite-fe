@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { config } from 'constants/global'
+// import { config } from 'constants/global'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import InformDialog from 'components/InformDialog'
@@ -10,7 +10,7 @@ import { AppProps } from './types'
 import { initTabs, loginTabs, gobackConfig } from './config'
 import NotificationStack from 'containers/NotificationStack'
 
-import logo from 'theme/images/logo.png'
+import logo from 'theme/images/current_APISuite_logo.png'
 
 const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   const [currentTab, setCurrentTab] = React.useState(0)
@@ -129,7 +129,8 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
           subTabIndex={currentSubTab}
           onTabChange={handleOnTabChange}
           onSubTabChange={handleOnSubTabChange}
-          name={config.portalName}
+          // The previous value of this property was '{config.portalName}'
+          name=''
           logoSrc={logo}
           user={auth.user}
           forceScrolled={navScrolled}
