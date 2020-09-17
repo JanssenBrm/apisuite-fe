@@ -7,11 +7,13 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
+import { Sections } from 'apisuite-extension-ui-types'
 import Carousel from 'components/Carousel'
 
 import SvgIcon from 'components/SvgIcon'
 import Panel from 'components/Panel'
 import ContentGenerator from 'components/ContentGenerator'
+import { getSections } from 'util/extensions'
 
 import useStyles from './styles'
 import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
@@ -30,6 +32,8 @@ const Sandbox: React.FC<{}> = () => {
 
   return (
     <main className={classes.root} style={{ backgroundImage: `url(${themeBg})` }}>
+
+      {getSections(Sections.HomepagePrecontent)}
 
       {/** #conditional-loader-start: instance */}
       <ContentGenerator page='landing' />

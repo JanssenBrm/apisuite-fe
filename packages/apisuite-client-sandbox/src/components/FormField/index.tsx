@@ -4,7 +4,21 @@ export const isValidEmail = (email: any) => {
 }
 
 export const isValidURL = (url: any) => {
-  const re = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
+  /*
+    The following regular expression was changed from
+
+    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
+    (where 'http://' and 'https://' are optional)
+
+    to
+
+    /^(http:\/\/|https:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
+    (where 'http://' and 'https://' are mandatory)
+
+    because the BE requires the presence of 'http://' or 'https://' in its
+    URLs in order to create an app.
+  */
+  const re = /^(http:\/\/|https:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
   return re.test(String(url).toLowerCase())
 }
 

@@ -93,7 +93,7 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
       })
     }
 
-    /* An alternative solution is to be explored in the future (and if possible):
+    /* TODO: An alternative solution is to be explored in the future (and if possible):
 
     When a login attempt is not successful, an appropriate error message is displayed.
     Unfortunately, it remains on the screen even if, at some point, we move back to other points
@@ -107,7 +107,9 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
         return update(state, {
           error: { $set: undefined },
         })
-      } else { return state }
+      }
+
+      return state
     }
 
     default:

@@ -129,7 +129,10 @@ export default function profileReducer (
   switch (action.type) {
     case ProfileActionTypes.FETCH_TEAM_MEMBERS_SUCCESS: {
       return update(state, {
-        members: { $set: action.response.members },
+        /* Previously '{ $set: action.response.members }', which caused the
+        'Profile -> Team' view to NOT be rendered as a result of an error
+        ('members' being 'undefined'). */
+        members: { $set: action.response },
       })
     }
 
@@ -269,13 +272,19 @@ export default function profileReducer (
 
     case ProfileActionTypes.GET_PROFILE_SUCCESS: {
       return update(state, {
-        profile: { $set: action.response.profile },
+        /* Previously '{ $set: action.response.profile }', which caused the
+        'Profile -> Profile' view to NOT be rendered as a result of an error
+        ('profile' being 'undefined'). */
+        profile: { $set: action.response },
       })
     }
 
     case ProfileActionTypes.FETCH_ORG_SUCCESS: {
       return update(state, {
-        org: { $set: action.response.org },
+        /* Previously '{ $set: action.response.org }', which caused the
+        'Profile -> Organisation' view to NOT be rendered as a result of an error
+        ('org' being 'undefined'). */
+        org: { $set: action.response },
       })
     }
 
@@ -309,7 +318,7 @@ export const fetchTeamMembersActions = {
       type: ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST,
     } as const
   },
-  success: (response: FetchTeamMembersResponse) => {
+  success: (response: FetchTeamMembersResponse[]) => {
     return {
       type: ProfileActionTypes.FETCH_TEAM_MEMBERS_SUCCESS,
       response: response,
