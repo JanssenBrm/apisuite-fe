@@ -34,7 +34,7 @@ import { openNotification } from 'containers/NotificationStack/ducks'
 export function * fetchTeamMembersSaga () {
   try {
     const accessToken = yield select((state: Store) => state.auth.authToken)
-    const response: FetchTeamMembersResponse = yield call(request, {
+    const response: FetchTeamMembersResponse[] = yield call(request, {
       url: `${API_URL}/organization/members/list`,
       method: 'GET',
       headers: { 'x-access-token': accessToken },

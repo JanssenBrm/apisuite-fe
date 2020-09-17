@@ -53,7 +53,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   const refs = tabsRange.map(() => React.useRef(null))
   const subRefs = tabsRange.map(() => React.useRef(null))
   const scrolled = scrollPos >= 10
-  
+
   function scrollHandler () {
     setScrollPos(window.scrollY)
   }
@@ -106,7 +106,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
           <div ref={tabsRef} className='tabs'>
             <div className='space' />
 
-            {tabs.map((tab, idx) => 
+            {tabs.map((tab, idx) =>
               <div
                 data-testid={`nav-tab-${idx}`}
                 key={`nav-tab-${idx}`}
@@ -118,7 +118,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
                 data-disabled={tab.disabled}
               >
                 {tab.label}
-              </div>
+              </div>,
             )}
 
             {!(scrolled || forceScrolled) && (

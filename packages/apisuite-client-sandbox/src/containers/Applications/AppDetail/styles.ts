@@ -45,6 +45,9 @@ export default makeStyles(({
     flexWrap: 'nowrap',
     alignItems: 'flex-end',
   },
+  hiddenFieldWrapper: {
+    display: 'none',
+  },
   divider: {
     width: '100%',
     height: 1,

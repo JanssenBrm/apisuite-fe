@@ -51,7 +51,7 @@ const TeamPage: React.FC<TeamPageProps> = ({
   }, [fetchTeamMembers, fetchRoleOptions])
 
   function chooseRole (e: React.ChangeEvent<{}>, option: SelectOption) {
-    if (e) {
+    if (e && option) {
       setInput({
         ...input,
         roleId: option.value,

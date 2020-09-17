@@ -318,7 +318,7 @@ export const fetchTeamMembersActions = {
       type: ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST,
     } as const
   },
-  success: (response: FetchTeamMembersResponse) => {
+  success: (response: FetchTeamMembersResponse[]) => {
     return {
       type: ProfileActionTypes.FETCH_TEAM_MEMBERS_SUCCESS,
       response: response,

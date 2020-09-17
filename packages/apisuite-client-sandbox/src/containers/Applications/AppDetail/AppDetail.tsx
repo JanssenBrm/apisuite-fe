@@ -1,6 +1,6 @@
 import * as React from 'react'
 import clsx from 'clsx'
-import FormField, { parseErrors, isValidURL } from 'components/FormField'
+import FormField, { parseErrors, isValidURL, isValidEmail } from 'components/FormField'
 import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 import Button from '@material-ui/core/Button'
 import SvgIcon from 'components/SvgIcon'
@@ -18,7 +18,8 @@ import { AppDetailProps } from './types'
 import { RouteParams, AppData } from '../types'
 import { useParams } from 'react-router'
 import { FormFieldEvent } from 'components/FormField/types'
-import { config } from 'constants/global'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 
 const AppDetail: React.FC<AppDetailProps> = (
   {
@@ -36,9 +37,8 @@ const AppDetail: React.FC<AppDetailProps> = (
   const classes = useStyles()
   const [t] = useTranslation()
   const appId = parseInt(useParams<RouteParams>().id)
-  const [changed, setChanged] = React.useState(false)
-  const [changedDetails, setChangedDetails] = React.useState(false)
-  const [input, setInput] = React.useState<AppData>({
+  const [initialInput, setInitialInput] = React.useState()
+  const [currentInput, setCurrentInput] = React.useState<AppData>({
     appId: currentApp.appId,
     name: currentApp.name,
     description: currentApp.description,
@@ -52,6 +52,7 @@ const AppDetail: React.FC<AppDetailProps> = (
     clientId: currentApp.clientId,
     clientSecret: currentApp.clientSecret,
   })
+  const [inputsHaveChanged, setInputsHaveChanged] = React.useState(false)
   const [errors, setErrors] = React.useState()
   const [isFormValid, setFormValid] = React.useState(false)
   const [openDialog, setOpenDialog] = React.useState(false)
@@ -70,18 +71,85 @@ const AppDetail: React.FC<AppDetailProps> = (
   const initials = splitName.length >= 2
     ? `${splitName[0][0] + splitName[1][0]}` : splitName[0].slice(0, 2)
 
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [isActiveMenuItems, setActiveMenuItems] = React.useState([false, false, false, false])
+
+  function handleMenuClick (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    event.stopPropagation()
+
+    setAnchorEl((event as any).currentTarget)
+  }
+
+  function handleClose (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    event.stopPropagation()
+
+    setAnchorEl(null)
+  }
+
+  function handleAddOtherFormField (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    event.stopPropagation()
+
+    const selectedMenuItem = event.currentTarget
+    const selectedMenuItemText = selectedMenuItem.textContent
+    const newActiveMenuItems = [...isActiveMenuItems]
+
+    if (selectedMenuItemText === 'Terms of service URL') {
+      newActiveMenuItems[0] = true
+    } else if (selectedMenuItemText === 'Policy URL') {
+      newActiveMenuItems[1] = true
+    } else if (selectedMenuItemText === 'Support URL') {
+      newActiveMenuItems[2] = true
+    } else {
+      newActiveMenuItems[3] = true
+    }
+
+    setActiveMenuItems(newActiveMenuItems)
+    setAnchorEl(null)
+  }
+
+  function handleRemoveOtherFormField (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    event.stopPropagation()
+
+    const fieldToRemove = event.currentTarget.parentElement
+    const newActiveMenuItems = [...isActiveMenuItems]
+    const newPubUrls = [...currentInput.pubUrls]
+
+    if (fieldToRemove!.id === 'tosUrlFieldWrapper') {
+      newActiveMenuItems[0] = false
+      newPubUrls[1].url = ''
+    } else if (fieldToRemove!.id === 'policyUrlFieldWrapper') {
+      newActiveMenuItems[1] = false
+      newPubUrls[2].url = ''
+    } else if (fieldToRemove!.id === 'supportUrlFieldWrapper') {
+      newActiveMenuItems[2] = false
+      newPubUrls[3].url = ''
+    } else {
+      newActiveMenuItems[3] = false
+      newPubUrls[4].url = ''
+    }
+
+    setActiveMenuItems(newActiveMenuItems)
+    setCurrentInput({ ...currentInput, pubUrls: newPubUrls })
+    setAnchorEl(null)
+  }
+
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
+
+    /* The BE can't handle 'url' fields in 'pub_urls' that are NOT filled in,
+    so we filter those out before requesting the creation of a new app. */
+    const finalPubUrls = currentInput.pubUrls.filter((pubUrl) => pubUrl.url !== '')
+
     updateApp({
       appId: appId,
-      name: input.name,
-      description: input.description,
-      redirectUrl: input.redirectUrl,
-      logo: input.logo,
+      name: currentInput.name,
+      description: currentInput.description,
+      redirectUrl: currentInput.redirectUrl,
+      logo: currentInput.logo,
       visibility: 'private',
-      userId: input.userId,
-      subscriptions: input.subscriptions,
-      pubUrls: input.pubUrls,
+      userId: currentInput.userId,
+      subscriptions: currentInput.subscriptions,
+      pubUrls: finalPubUrls,
       enable: true,
       clientId: '',
       clientSecret: '',
@@ -105,20 +173,47 @@ const AppDetail: React.FC<AppDetailProps> = (
   }
 
   function handleInputs (e: FormFieldEvent, err: any) {
-    if (e.target.name === 'pubUrls') {
-      setInput({
-        ...input,
-        [e.target.name]: [{...input.pubUrls[0], url: e.target.value}],
-      })
+    const newPubUrls = [...currentInput.pubUrls]
+
+    /* Updating inputs */
+
+    // Inputs related to 'pubUrls'
+    if (e.target.name === 'clientUrl') {
+      newPubUrls[0].url = e.target.value
+
+      setCurrentInput({ ...currentInput, pubUrls: newPubUrls })
+    } else if (e.target.name === 'tosUrl') {
+      newPubUrls[1].url = e.target.value
+
+      setCurrentInput({ ...currentInput, pubUrls: newPubUrls })
+    } else if (e.target.name === 'policyUrl') {
+      newPubUrls[2].url = e.target.value
+
+      setCurrentInput({ ...currentInput, pubUrls: newPubUrls })
+    } else if (e.target.name === 'supportUrl') {
+      newPubUrls[3].url = e.target.value
+
+      setCurrentInput({ ...currentInput, pubUrls: newPubUrls })
+    } else if (e.target.name === 'supportEmail') {
+      newPubUrls[4].url = e.target.value
+
+      setCurrentInput({ ...currentInput, pubUrls: newPubUrls })
     } else {
-      setInput({
-        ...input,
+      // All other kinds of input (e.g., 'App Name', 'Description', ...)
+      setCurrentInput({
+        ...currentInput,
         [e.target.name]: e.target.value,
       })
     }
-    setChanged(true)
-    setChangedDetails(!(JSON.stringify(currentApp) === JSON.stringify(input)))
+
+    /* Comparing current inputs with those received (stored in 'currentApp') */
+
+    const inputChangesDetected = (JSON.stringify(initialInput) !== JSON.stringify(currentInput))
+
+    inputChangesDetected ? setInputsHaveChanged(true) : setInputsHaveChanged(false)
+
     const eventTarget = e.target
+
     // @ts-ignore
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
   }
@@ -134,15 +229,38 @@ const AppDetail: React.FC<AppDetailProps> = (
 
   React.useEffect(() => {
     if (user) {
-      setInput({ ...currentApp })
-    }
-  }, [currentApp])
-
-  React.useEffect(() => {
-    if (user) {
       getAppDetails(appId, user.id)
     }
   }, [])
+
+  React.useEffect(() => {
+    /* The 'AppDetail' container holds state when we go from one app to another,
+    and it requires 'pubUrls' to be of the below format, which is why we need to do the following. */
+    const newPubUrls = [
+      { url: '', type: 'client' },
+      { url: '', type: 'tos' },
+      { url: '', type: 'policy' },
+      { url: '', type: 'support' },
+      { url: '', type: 'support_email' },
+    ]
+    const newActiveMenuItems = [false, false, false, false]
+
+    currentApp.pubUrls.forEach((pubUrl) => {
+      if (pubUrl.type === 'client') { newPubUrls[0].url = pubUrl.url }
+      if (pubUrl.type === 'tos') { newPubUrls[1].url = pubUrl.url; newActiveMenuItems[0] = true }
+      if (pubUrl.type === 'policy') { newPubUrls[2].url = pubUrl.url; newActiveMenuItems[1] = true }
+      if (pubUrl.type === 'support') { newPubUrls[3].url = pubUrl.url; newActiveMenuItems[2] = true }
+      if (pubUrl.type === 'support_email') { newPubUrls[4].url = pubUrl.url; newActiveMenuItems[3] = true }
+    })
+
+    // 'initialInput' will hold a deep copy of app data that has NOT been changed yet.
+    setInitialInput(JSON.parse(JSON.stringify({ ...currentApp, pubUrls: newPubUrls })))
+
+    // 'currentInput' will hold app data that may, or may not be changed.
+    setCurrentInput({ ...currentApp, pubUrls: newPubUrls })
+
+    setActiveMenuItems(newActiveMenuItems)
+  }, [currentApp])
 
   return (
     <>
@@ -154,11 +272,11 @@ const AppDetail: React.FC<AppDetailProps> = (
               placeholder='Your App name'
               name='name'
               type='text'
-              value={input.name}
+              value={currentInput.name}
               onChange={handleInputs}
               errorPlacing='bottom'
               rules={[
-                { rule: input.name.length > 0, message: 'Please provide a valid name' },
+                { rule: currentInput.name.length > 0, message: 'Please provide a valid name' },
               ]}
             />
 
@@ -170,35 +288,63 @@ const AppDetail: React.FC<AppDetailProps> = (
               multiline
               name='description'
               rows={5}
-              value={input.description}
+              value={currentInput.description}
               onChange={handleInputs}
-            />
-
-            <br />
-
-            <FormField
-              label='Client URL'
-              placeholder='https://localhost'
-              name='pubUrls'
-              type='text'
-              value={input.pubUrls[0].url}
-              onChange={handleInputs}
-              errorPlacing='bottom'
-              rules={[
-                { rule: isValidURL(input.pubUrls[0].url), message: 'Please provide a valid URL' },
-                { rule: input.pubUrls[0].url.length > 0, message: 'Please provide a valid URL' },
-              ]}
             />
 
             <br />
 
             <div className={classes.fieldWrapper}>
               <FormField
-                label='Terms of service'
-                placeholder={`https://${config.clientName}.com/tos`}
-                value=''
+                label='Client URL'
+                placeholder='https://localhost'
+                name='clientUrl'
+                type='text'
+                value={currentInput.pubUrls[0].url}
+                onChange={handleInputs}
+                errorPlacing='bottom'
+                rules={[
+                  {
+                    rule: currentInput.pubUrls[0].url.length > 0 ? isValidURL(currentInput.pubUrls[0].url) : true,
+                    message: 'Please provide a valid URL',
+                  },
+                ]}
               />
 
+              <Button variant='outlined' className={classes.iconBtn} onClick={handleMenuClick}>
+                <SvgIcon name='plus' size='24' />
+              </Button>
+
+              <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem
+                  className={!isActiveMenuItems[0] ? undefined : classes.disabled}
+                  onClick={handleAddOtherFormField}
+                >
+                  Terms of service URL
+                </MenuItem>
+                <MenuItem
+                  className={!isActiveMenuItems[1] ? undefined : classes.disabled}
+                  onClick={handleAddOtherFormField}
+                >
+                  Policy URL
+                </MenuItem>
+                <MenuItem
+                  className={!isActiveMenuItems[2] ? undefined : classes.disabled}
+                  onClick={handleAddOtherFormField}
+                >
+                  Support URL
+                </MenuItem>
+                <MenuItem
+                  className={!isActiveMenuItems[3] ? undefined : classes.disabled}
+                  onClick={handleAddOtherFormField}
+                >
+                  Support e-mail
+                </MenuItem>
+              </Menu>
               {
                 /* <Button variant='outlined' className={classes.iconBtn}>
                 <SvgIcon name='plus' size='24' />
@@ -206,7 +352,119 @@ const AppDetail: React.FC<AppDetailProps> = (
               }
             </div>
 
-            <br /><br /><br /><br /><br />
+            {
+              isActiveMenuItems[0] &&
+                <div
+                  id='tosUrlFieldWrapper'
+                  className={classes.fieldWrapper}
+                >
+                  <FormField
+                    label='Terms of service URL (optional)'
+                    placeholder='Terms of service URL'
+                    name='tosUrl'
+                    type='text'
+                    value={currentInput.pubUrls[1].url}
+                    onChange={handleInputs}
+                    errorPlacing='bottom'
+                    rules={[
+                      {
+                        rule: currentInput.pubUrls[1].url.length > 0 ? isValidURL(currentInput.pubUrls[1].url) : true,
+                        message: 'Please provide a valid URL',
+                      },
+                    ]}
+                  />
+
+                  <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                    <SvgIcon name='close' size='24' />
+                  </Button>
+                </div>
+            }
+
+            {
+              isActiveMenuItems[1] &&
+                <div
+                  id='policyUrlFieldWrapper'
+                  className={classes.fieldWrapper}
+                >
+                  <FormField
+                    label='Policy URL (optional)'
+                    placeholder='Policy URL'
+                    name='policyUrl'
+                    type='text'
+                    value={currentInput.pubUrls[2].url}
+                    onChange={handleInputs}
+                    errorPlacing='bottom'
+                    rules={[
+                      {
+                        rule: currentInput.pubUrls[2].url.length > 0 ? isValidURL(currentInput.pubUrls[2].url) : true,
+                        message: 'Please provide a valid URL',
+                      },
+                    ]}
+                  />
+
+                  <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                    <SvgIcon name='close' size='24' />
+                  </Button>
+                </div>
+            }
+
+            {
+              isActiveMenuItems[2] &&
+                <div
+                  id='supportUrlFieldWrapper'
+                  className={classes.fieldWrapper}
+                >
+                  <FormField
+                    label='Support URL (optional)'
+                    placeholder='Support URL'
+                    name='supportUrl'
+                    type='text'
+                    value={currentInput.pubUrls[3].url}
+                    onChange={handleInputs}
+                    errorPlacing='bottom'
+                    rules={[
+                      {
+                        rule: currentInput.pubUrls[3].url.length > 0 ? isValidURL(currentInput.pubUrls[3].url) : true,
+                        message: 'Please provide a valid URL',
+                      },
+                    ]}
+                  />
+
+                  <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                    <SvgIcon name='close' size='24' />
+                  </Button>
+                </div>
+            }
+
+            {
+              isActiveMenuItems[3] &&
+                <div
+                  id='supportEmailFieldWrapper'
+                  className={classes.fieldWrapper}
+                >
+                  <FormField
+                    label='Support e-mail (optional)'
+                    placeholder='Support e-mail'
+                    name='supportEmail'
+                    type='text'
+                    value={currentInput.pubUrls[4].url}
+                    onChange={handleInputs}
+                    errorPlacing='bottom'
+                    rules={[
+                      {
+                        rule: currentInput.pubUrls[4].url.length > 0 ? isValidEmail(currentInput.pubUrls[4].url) : true,
+                        message: 'Please provide a valid e-mail address',
+                      },
+                    ]}
+                  />
+
+                  <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                    <SvgIcon name='close' size='24' />
+                  </Button>
+                </div>
+            }
+
+            <br />
 
             <div className={classes.divider} />
 
@@ -219,15 +477,13 @@ const AppDetail: React.FC<AppDetailProps> = (
             <div className={classes.fieldWrapper}>
               <FormField
                 label='Client ID'
-                value={input.clientId}
+                value={currentInput.clientId}
                 inputProps={{ readOnly: true }}
               />
 
-              {
-                /* <Button variant='outlined' className={classes.iconBtn}>
-                <SvgIcon name='content-copy' size='24' />
-                </Button> */
-              }
+              {/* <Button variant='outlined' className={classes.iconBtn}>
+                    <SvgIcon name='content-copy' size='24' />
+                  </Button> */}
             </div>
 
             <br />
@@ -235,19 +491,17 @@ const AppDetail: React.FC<AppDetailProps> = (
             <div className={classes.fieldWrapper}>
               <FormField
                 label='Client Secret'
-                value={input.clientSecret}
+                value={currentInput.clientSecret}
                 inputProps={{ readOnly: true }}
               />
 
-              {
-                /* <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnLeft)}>
-                <SvgIcon name='autorenew' size='24' />
-                </Button>
+              {/* <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnLeft)}>
+                    <SvgIcon name='autorenew' size='24' />
+                  </Button>
 
-                <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnRight)}>
-                <SvgIcon name='content-copy' size='24' />
-                </Button> */
-              }
+                  <Button variant='outlined' className={clsx(classes.iconBtn, classes.iconBtnRight)}>
+                    <SvgIcon name='content-copy' size='24' />
+                  </Button> */}
             </div>
 
             <br />
@@ -257,19 +511,17 @@ const AppDetail: React.FC<AppDetailProps> = (
                 label='Redirect URL'
                 name='redirectUrl'
                 type='text'
-                value={input.redirectUrl}
+                value={currentInput.redirectUrl}
                 onChange={handleInputs}
                 rules={[
-                  { rule: isValidURL(input.redirectUrl), message: 'Please provide a valid URL' },
-                  { rule: input.redirectUrl.length > 0, message: 'Please provide a valid URL' },
+                  { rule: isValidURL(currentInput.redirectUrl), message: 'Please provide a valid URL' },
+                  { rule: currentInput.redirectUrl.length > 0, message: 'Please provide a valid URL' },
                 ]}
               />
 
-              {
-                /* <Button variant='outlined' className={classes.iconBtn}>
-                <SvgIcon name='plus' size='24' />
-                </Button> */
-              }
+              {/* <Button variant='outlined' className={classes.iconBtn}>
+                    <SvgIcon name='plus' size='24' />
+                  </Button> */}
             </div>
 
             <br />
@@ -298,11 +550,9 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <br />
 
-              {
-                /* <InputLabel shrink>Author</InputLabel>
-                <div className={classes.link}>Finish your team info</div>
-                <br /> */
-              }
+              {/* <InputLabel shrink>Author</InputLabel>
+                  <div className={classes.link}>Finish your team info</div>
+                  <br /> */}
 
               <InputLabel shrink>Registration date</InputLabel>
               <div>{currentApp.createdAt !== undefined &&
@@ -318,10 +568,10 @@ const AppDetail: React.FC<AppDetailProps> = (
 
               <Button
                 type='submit'
-                disabled={!(changed && isFormValid && changedDetails)}
-                className={clsx(classes.btn, classes.btn2, (!changed && classes.disabled))}
+                disabled={!(isFormValid && inputsHaveChanged)}
+                className={clsx(classes.btn, classes.btn2, (!inputsHaveChanged && classes.disabled))}
               >
-                {resUpdate.isRequesting ? <CircularProgress size={20} /> : !changedDetails ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
+                {resUpdate.isRequesting ? <CircularProgress size={20} /> : !inputsHaveChanged ? t('appDetail.buttonDisabled') : t('appDetail.buttonEnabled')}
               </Button>
 
               {resUpdate.isError &&
