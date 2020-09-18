@@ -1,5 +1,5 @@
 import * as React from 'react'
-import FormField, { parseErrors, isValidURL } from 'components/FormField'
+import FormField, { parseErrors, isValidURL, isValidEmail } from 'components/FormField'
 import Button from '@material-ui/core/Button'
 import Link from '@material-ui/core/Link'
 import SvgIcon from 'components/SvgIcon'
@@ -17,6 +17,8 @@ import useStyles from './styles'
 import { CreateAppProps } from './types'
 import { AppData } from '../types'
 import clsx from 'clsx'
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 
 type Input = Pick<AppData, 'name' | 'description' | 'redirectUrl' | 'logo' | 'userId' | 'visibility' | 'subscriptions' | 'pubUrls'>
 
@@ -42,21 +44,92 @@ const CreateApp: React.FC<CreateAppProps> = ({
     // visibility: visible ? 'public' : 'private',
     visibility: 'private',
     subscriptions: [],
-    // TODO review puburls
-    pubUrls: null,
+    // This is the format that the BE expects - an array of PubUrl objects
+    pubUrls: [
+      {
+        url: '',
+        type: 'client',
+      },
+      {
+        url: '',
+        type: 'tos',
+      },
+      {
+        url: '',
+        type: 'policy',
+      },
+      {
+        url: '',
+        type: 'support',
+      },
+      {
+        url: '',
+        type: 'support_email',
+      },
+    ],
   })
 
-  const selectOptions = (apis: Api[]) => {
-    return apis.map(api => ({
-      label: api.apiTitle,
-      value: api.id,
-      group: api.name,
-    }))
+  const [anchorEl, setAnchorEl] = React.useState(null)
+  const [isActiveMenuItems, setActiveMenuItems] = React.useState([false, false, false, false])
+
+  function handleMenuClick (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    event.stopPropagation()
+
+    setAnchorEl((event as any).currentTarget)
   }
 
-  React.useEffect(() => {
-    getApis()
-  }, [getApis])
+  function handleClose (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    event.stopPropagation()
+
+    setAnchorEl(null)
+  }
+
+  function handleAddOtherFormField (event: React.MouseEvent<HTMLLIElement, MouseEvent>) {
+    event.stopPropagation()
+
+    const selectedMenuItem = event.currentTarget
+    const selectedMenuItemText = selectedMenuItem.textContent
+    const newActiveMenuItems = [...isActiveMenuItems]
+
+    if (selectedMenuItemText === 'Terms of service URL') {
+      newActiveMenuItems[0] = true
+    } else if (selectedMenuItemText === 'Policy URL') {
+      newActiveMenuItems[1] = true
+    } else if (selectedMenuItemText === 'Support URL') {
+      newActiveMenuItems[2] = true
+    } else {
+      newActiveMenuItems[3] = true
+    }
+
+    setActiveMenuItems(newActiveMenuItems)
+    setAnchorEl(null)
+  }
+
+  function handleRemoveOtherFormField (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+    event.stopPropagation()
+
+    const fieldToRemove = event.currentTarget.parentElement
+    const newActiveMenuItems = [...isActiveMenuItems]
+    const newPubUrls = [...input.pubUrls]
+
+    if (fieldToRemove!.id === 'tosUrlFieldWrapper') {
+      newActiveMenuItems[0] = false
+      newPubUrls[1].url = ''
+    } else if (fieldToRemove!.id === 'policyUrlFieldWrapper') {
+      newActiveMenuItems[1] = false
+      newPubUrls[2].url = ''
+    } else if (fieldToRemove!.id === 'supportUrlFieldWrapper') {
+      newActiveMenuItems[2] = false
+      newPubUrls[3].url = ''
+    } else {
+      newActiveMenuItems[3] = false
+      newPubUrls[4].url = ''
+    }
+
+    setActiveMenuItems(newActiveMenuItems)
+    setInput({ ...input, pubUrls: newPubUrls })
+    setAnchorEl(null)
+  }
 
   function handleCancelClick () {
     history.goBack()
@@ -64,13 +137,49 @@ const CreateApp: React.FC<CreateAppProps> = ({
   }
 
   function handleInputs (e: FormFieldEvent, err: any) {
-    setInput({
-      ...input,
-      [e.target.name]: e.target.value,
-    })
+    const newPubUrls = [...input.pubUrls]
+
+    // Inputs related to 'pubUrls'
+    if (e.target.name === 'clientUrl') {
+      newPubUrls[0].url = e.target.value
+
+      setInput({ ...input, pubUrls: newPubUrls })
+    } else if (e.target.name === 'tosUrl') {
+      newPubUrls[1].url = e.target.value
+
+      setInput({ ...input, pubUrls: newPubUrls })
+    } else if (e.target.name === 'policyUrl') {
+      newPubUrls[2].url = e.target.value
+
+      setInput({ ...input, pubUrls: newPubUrls })
+    } else if (e.target.name === 'supportUrl') {
+      newPubUrls[3].url = e.target.value
+
+      setInput({ ...input, pubUrls: newPubUrls })
+    } else if (e.target.name === 'supportEmail') {
+      newPubUrls[4].url = e.target.value
+
+      setInput({ ...input, pubUrls: newPubUrls })
+    } else {
+      // All other kinds of input (e.g., 'App Name', 'Description', ...)
+      setInput({
+        ...input,
+        [e.target.name]: e.target.value,
+      })
+    }
+
     const eventTarget = e.target
+
     // @ts-ignore
     setErrors((old: string[]) => parseErrors(eventTarget, err, old || []))
+  }
+
+  const selectOptions = (apis: Api[]) => {
+    return apis.map(api => ({
+      label: api.apiTitle,
+      value: api.id,
+      group: api.name,
+    }))
   }
 
   function chooseApi (e: React.ChangeEvent<{}>, option: SelectOption) {
@@ -82,6 +191,10 @@ const CreateApp: React.FC<CreateAppProps> = ({
     }
   }
 
+  React.useEffect(() => {
+    getApis()
+  }, [getApis])
+
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
@@ -90,6 +203,10 @@ const CreateApp: React.FC<CreateAppProps> = ({
     if (user) {
       userId = user.id
     }
+
+    /* The BE can't handle 'url' fields in 'pub_urls' that are NOT filled in,
+    so we filter those out before requesting the creation of a new app. */
+    const finalPubUrls = input.pubUrls.filter((pubUrl) => pubUrl.url !== '')
 
     createApp({
       appId: 0,
@@ -100,7 +217,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
       visibility: 'private',
       userId: userId,
       subscriptions: input.subscriptions,
-      pubUrls: null,
+      pubUrls: finalPubUrls,
       enable: true,
       clientId: '',
       clientSecret: '',
@@ -159,7 +276,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
               errorPlacing='bottom'
               rules={[
                 { rule: isValidURL(input.redirectUrl), message: 'Please provide a valid URL' },
-                { rule: input.redirectUrl.length > 0, message: 'Please provide a valid URL' },
+                { rule: !!input.redirectUrl && input.redirectUrl.length > 0, message: 'Please provide a valid URL' },
               ]}
             />
 
@@ -169,7 +286,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
           </div>
 
           <p className={classes.info}>
-            You can add multiple redirect URL’s, at least one is required.&nbsp;
+            You can add multiple redirect URLs, but at least one is required.&nbsp;
             <Link href='#'>
               Learn more about the OAuth process.&nbsp;
               <SvgIcon name='launch' size={13} style={{ display: 'inline', transform: 'translateY(2px)' }} />
@@ -180,19 +297,168 @@ const CreateApp: React.FC<CreateAppProps> = ({
 
           <div className={classes.fieldWrapper}>
             <FormField
-              label={'Public URL\'s (optional)'}
+              label='Public URL (optional)'
               placeholder='Client URL'
-              name='pubUrls'
+              name='clientUrl'
               type='text'
-              // TODO change back to input.pubUrls
-              value=''
-              // onChange={handleInputs}
+              value={input.pubUrls[0].url}
+              onChange={handleInputs}
+              errorPlacing='bottom'
+              rules={[
+                {
+                  rule: input.pubUrls[0].url.length > 0 ? isValidURL(input.pubUrls[0].url) : true,
+                  message: 'Please provide a valid URL',
+                },
+              ]}
             />
 
-            <Button variant='outlined' className={classes.iconBtn}>
+            <Button variant='outlined' className={classes.iconBtn} onClick={handleMenuClick}>
               <SvgIcon name='plus' size='24' />
             </Button>
+
+            <Menu
+              anchorEl={anchorEl}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem
+                className={!isActiveMenuItems[0] ? undefined : classes.disabled}
+                onClick={handleAddOtherFormField}
+              >
+                Terms of service URL
+              </MenuItem>
+              <MenuItem
+                className={!isActiveMenuItems[1] ? undefined : classes.disabled}
+                onClick={handleAddOtherFormField}
+              >
+                Policy URL
+              </MenuItem>
+              <MenuItem
+                className={!isActiveMenuItems[2] ? undefined : classes.disabled}
+                onClick={handleAddOtherFormField}
+              >
+                Support URL
+              </MenuItem>
+              <MenuItem
+                className={!isActiveMenuItems[3] ? undefined : classes.disabled}
+                onClick={handleAddOtherFormField}
+              >
+                Support e-mail
+              </MenuItem>
+            </Menu>
           </div>
+
+          {
+            isActiveMenuItems[0] &&
+              <div
+                id='tosUrlFieldWrapper'
+                className={classes.fieldWrapper}
+              >
+                <FormField
+                  label='Terms of service URL (optional)'
+                  placeholder='Terms of service URL'
+                  name='tosUrl'
+                  type='text'
+                  value={input.pubUrls[1].url}
+                  onChange={handleInputs}
+                  errorPlacing='bottom'
+                  rules={[
+                    {
+                      rule: input.pubUrls[1].url.length > 0 ? isValidURL(input.pubUrls[1].url) : true,
+                      message: 'Please provide a valid URL',
+                    },
+                  ]}
+                />
+
+                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                  <SvgIcon name='close' size='24' />
+                </Button>
+              </div>
+          }
+
+          {
+            isActiveMenuItems[1] &&
+              <div
+                id='policyUrlFieldWrapper'
+                className={classes.fieldWrapper}
+              >
+                <FormField
+                  label='Policy URL (optional)'
+                  placeholder='Policy URL'
+                  name='policyUrl'
+                  type='text'
+                  value={input.pubUrls[2].url}
+                  onChange={handleInputs}
+                  errorPlacing='bottom'
+                  rules={[
+                    {
+                      rule: input.pubUrls[2].url.length > 0 ? isValidURL(input.pubUrls[2].url) : true,
+                      message: 'Please provide a valid URL',
+                    },
+                  ]}
+                />
+
+                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                  <SvgIcon name='close' size='24' />
+                </Button>
+              </div>
+          }
+
+          {
+            isActiveMenuItems[2] &&
+              <div
+                id='supportUrlFieldWrapper'
+                className={classes.fieldWrapper}
+              >
+                <FormField
+                  label='Support URL (optional)'
+                  placeholder='Support URL'
+                  name='supportUrl'
+                  type='text'
+                  value={input.pubUrls[3].url}
+                  onChange={handleInputs}
+                  errorPlacing='bottom'
+                  rules={[
+                    {
+                      rule: input.pubUrls[3].url.length > 0 ? isValidURL(input.pubUrls[3].url) : true,
+                      message: 'Please provide a valid URL',
+                    },
+                  ]}
+                />
+
+                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                  <SvgIcon name='close' size='24' />
+                </Button>
+              </div>
+          }
+
+          {
+            isActiveMenuItems[3] &&
+              <div
+                id='supportEmailFieldWrapper'
+                className={classes.fieldWrapper}
+              >
+                <FormField
+                  label='Support e-mail (optional)'
+                  placeholder='Support e-mail'
+                  name='supportEmail'
+                  type='text'
+                  value={input.pubUrls[4].url}
+                  onChange={handleInputs}
+                  errorPlacing='bottom'
+                  rules={[
+                    {
+                      rule: input.pubUrls[4].url.length > 0 ? isValidEmail(input.pubUrls[4].url) : true,
+                      message: 'Please provide a valid e-mail address',
+                    },
+                  ]}
+                />
+
+                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                  <SvgIcon name='close' size='24' />
+                </Button>
+              </div>
+          }
 
           <br />
 
@@ -241,7 +507,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
           <p className={classes.info}>
             Not sure if you’re doing it right?
             <Link href='#'>
-                We have documentation.&nbsp;
+              We have documentation.&nbsp;
               <SvgIcon name='launch' size={13} style={{ display: 'inline', transform: 'translateY(2px)' }} />
             </Link>
           </p>
