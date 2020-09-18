@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.10](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.9...apisuite-client-sandbox@1.0.0-alpha.10) (2020-09-18)
+
+
+### Bug Fixes
+
+* **apps:** update app sagas for client id and secret ([2557147](https://github.com/Cloudoki/APISuite/commit/25571472e0dcd83f48c0659ca6b7b63e36bf5636))
+
+
+
+
+
 # [1.0.0-alpha.9](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.8...apisuite-client-sandbox@1.0.0-alpha.9) (2020-09-18)
 
 
