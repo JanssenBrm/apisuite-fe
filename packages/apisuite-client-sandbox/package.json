@@ -1,6 +1,6 @@
 {
   "name": "apisuite-client-sandbox",
-  "version": "1.0.0-rc.0",
+  "version": "1.0.0-rc.1",
   "description": "APISuite sandbox package",
   "license": "MIT",
   "main": "dist/index.js",
