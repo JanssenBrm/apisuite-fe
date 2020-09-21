@@ -74,21 +74,12 @@ module.exports = {
         ],
       },
       {
-        test: /\.(gif|png|jpe?g|svg)$/i,
+        test: /\.(svg|webp|jpg|png|woff2)$/,
         use: [
           {
             loader: 'file-loader',
             options: {
-              name: 'assets/images/[name]-[hash].[ext]',
-            },
-          },
-          {
-            loader: 'image-webpack-loader',
-            options: {
-              webp: {
-                quality: 90,
-                enabled: true,
-              },
+              esModule: false,
             },
           },
         ],
