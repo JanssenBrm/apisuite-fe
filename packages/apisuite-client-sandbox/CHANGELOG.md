@@ -6,6 +6,23 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 # [1.0.0-rc.0](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.8...apisuite-client-sandbox@1.0.0-rc.0) (2020-09-18)
 
 **Note:** Version bump only for package apisuite-client-sandbox
+# [1.0.0-alpha.10](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.9...apisuite-client-sandbox@1.0.0-alpha.10) (2020-09-18)
+
+
+### Bug Fixes
+
+* **apps:** update app sagas for client id and secret ([2557147](https://github.com/Cloudoki/APISuite/commit/25571472e0dcd83f48c0659ca6b7b63e36bf5636))
+
+
+
+
+
+# [1.0.0-alpha.9](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.8...apisuite-client-sandbox@1.0.0-alpha.9) (2020-09-18)
+
+
+### Bug Fixes
+
+* **favicon:** update favicon to new logo ([e7ecc43](https://github.com/Cloudoki/APISuite/commit/e7ecc43ba6f3a7ebec194f77e7b87c4fe1c4a612))
 
 
 
