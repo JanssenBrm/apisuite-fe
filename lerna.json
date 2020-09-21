@@ -1,0 +1,21 @@
+{
+  "packages": ["packages/*"],
+  "version": "independent",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "changelogPreset": "angular",
+  "ignoreChanges": [
+    "**/*.test.*",
+    "**/*.md",
+    "**/nodemon.json",
+    "**/jest.json"
+  ],
+  "command": {
+    "version": {
+      "allowBranch": ["develop", "staging", "production"],
+      "conventionalCommits": true,
+      "createRelease": "github",
+      "message": "chore(release): publish [ci skip]"
+    }
+  }
+}

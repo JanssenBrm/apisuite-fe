@@ -22,6 +22,32 @@ jobs:
               chmod +x install_dependencies.sh
               [[ $SHOULD_TEST == "false" ]] && echo "Bypass tests" || (./install_dependencies.sh && ./run_tests.sh)
 
+  release:
+    executor: apisuite-executor
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "7f:86:85:4e:99:1e:77:42:27:11:f4:57:43:e0:c5:27"
+      - checkout
+      - restore_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - run: yarn --frozen-lockfile
+      - save_cache:
+          key: dependency-cache-{{ checksum "yarn.lock" }}
+          paths:
+            - node_modules
+      - run:
+          name: Tag and release a new version of all changed projects
+          command: |
+            git config --global user.name 'apisuite-machine-user'; git config --global user.email 'dev@apisuite.io'
+            if [ "$CIRCLE_BRANCH" = "develop" ]; then
+              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
+            elif [ "$CIRCLE_BRANCH" = "staging" ]; then
+              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid rc --yes
+            elif [ "$CIRCLE_BRANCH" = "production" ]; then
+              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-graduate --yes
+            fi
+
   build:
       executor: apisuite-executor
       steps:
@@ -30,6 +56,7 @@ jobs:
         - run:
             name: Build packages with docker-compose and push to registry
             command: |
+              sudo apt-get update
               sudo apt-get install ruby-full jq
               cd util
               chmod +x build_push_docker.sh
@@ -110,7 +137,7 @@ workflows:
   build:
     jobs:
         - test
-        - build:
+        - release:
             filters:
                 branches:
                   only:
@@ -119,6 +146,15 @@ workflows:
                     - production
             requires:
                 - test
+        - build:
+            filters:
+                branches:
+                  only:
+                    - develop
+                    - staging
+                    - production
+            requires:
+                - release
         - deploy-dev:
             filters:
                 branches:

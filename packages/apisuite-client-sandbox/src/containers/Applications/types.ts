@@ -32,8 +32,7 @@ export interface AppData {
   userId: number,
   subscriptions: any[],
   visibility: 'public' | 'private',
-  // TODO change
-  pubUrls: null,
+  pubUrls: PubUrl[],
   enable: boolean,
   updatedAt?: string,
   createdAt?: string,

@@ -1,4 +1,4 @@
-@import 'styles/variables';
+@import "styles/variables";
 
 .footer {
   width: 100%;
@@ -25,7 +25,7 @@
 
     .logo {
       display: block;
-      width: 85px;
+      width: 40px;
       height: auto;
       margin-right: 40px;
       margin-bottom: 16px;
@@ -84,7 +84,7 @@
         }
 
         p {
-          color: rgba(255,255,255, .5);
+          color: rgba(255, 255, 255, 0.5);
         }
       }
     }

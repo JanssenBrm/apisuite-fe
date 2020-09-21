@@ -55,12 +55,9 @@ export function * createApp (action: CreateAppAction) {
       visibility: action.appData.visibility,
       'user_id': action.appData.userId,
       subscriptions: action.appData.subscriptions,
-      // TODO: change
-      // 'pub_urls': [{
-      //   url: 'http://ssss.com',
-      //   type: 'client',
-      // }],
+      'pub_urls': action.appData.pubUrls,
     }
+
     const accessToken = yield select(
       (state: Store) => state.auth.authToken)
     const createAppUrl = `${API_URL}${SIGNUP_PORT}/app/create`
@@ -91,7 +88,7 @@ export function * updateApp (action: UpdateAppAction) {
       visibility: action.appData.visibility,
       'user_id': action.appData.userId,
       'sandbox_id': '1',
-      'pub_urls': [action.appData.pubUrls],
+      'pub_urls': action.appData.pubUrls,
     }
     const accessToken = yield select(
       (state: Store) => state.auth.authToken)
@@ -148,17 +145,17 @@ export function * getUsersApps (action: GetUserAppsAction) {
         logo: userApp.logo,
         userId: userApp.userId,
         subscriptions: userApp.subscriptions,
-        pubUrls: '',
+        pubUrls: userApp.pub_urls,
         enable: userApp.enable,
         createdAt: userApp.createdAt,
         updatedAt: userApp.updatedAt,
-        clientId: userApp.client_data.client_id,
-        clientSecret: userApp.client_data.client_secret,
+        clientId: userApp.clientId,
+        clientSecret: userApp.clientSecret,
       }
     ))
     yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
   } catch (error) {
-    console.log('Error fecthing user apps')
+    console.log('Error fetching user apps')
   }
 }
 
@@ -223,12 +220,12 @@ export function * getAppDetails (action: GetAppDetails) {
       logo: userApp.logo,
       userId: userApp.userId,
       subscriptions: userApp.subscriptions,
-      pubUrls: '',
+      pubUrls: userApp.pub_urls,
       enable: userApp.enable,
       createdAt: userApp.createdAt,
       updatedAt: userApp.updatedAt,
-      clientId: userApp.client_data.client_id,
-      clientSecret: userApp.client_data.client_secret,
+      clientId: userApp.clientId,
+      clientSecret: userApp.clientSecret,
     }
   ))
 
@@ -278,14 +275,14 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
       enable: response.app.enable,
       createdAt: response.app.createdAt,
       updatedAt: response.app.updatedAt,
-      clientId: response.app.client_data.client_id,
-      clientSecret: response.app.client_data.client_secret,
+      clientId: response.app.clientId,
+      clientSecret: response.app.clientSecret,
     }
 
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
     yield put(addAppSubscriptionSuccess(updatedApp, appIndx))
   } catch {
-    console.log('error adding subscription')
+    console.log('Error adding subscription')
   }
 }
 
@@ -328,14 +325,14 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
       enable: response.app.enable,
       createdAt: response.app.createdAt,
       updatedAt: response.app.updatedAt,
-      clientId: response.app.client_data.client_id,
-      clientSecret: response.app.client_data.client_secret,
+      clientId: response.app.clientId,
+      clientSecret: response.app.clientSecret,
     }
 
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
     yield put(removeAppSubscriptionSuccess(updatedApp, appIndx))
   } catch {
-    console.log('error removing subscription')
+    console.log('Error removing subscription')
   }
 }
 

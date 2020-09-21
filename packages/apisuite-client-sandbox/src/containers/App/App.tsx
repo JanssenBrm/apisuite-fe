@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import { config } from 'constants/global'
+// import { config } from 'constants/global'
 import Navigation from 'components/Navigation'
 import Footer from 'components/Footer'
 import InformDialog from 'components/InformDialog'
@@ -10,7 +10,7 @@ import { AppProps } from './types'
 import { initTabs, loginTabs, gobackConfig } from './config'
 import NotificationStack from 'containers/NotificationStack'
 
-import logo from 'theme/images/logo.png'
+import logo from 'theme/images/current_APISuite_logo.png'
 
 const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   const [currentTab, setCurrentTab] = React.useState(0)
@@ -75,9 +75,46 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
   React.useEffect(() => {
     if (auth.user) {
-      setTabs(loginTabs)
-      setCurrentTab(3)
-      setSubTabs(loginTabs[3].subTabs)
+      const currentPath = history.location.pathname
+
+      /* The following code, while somewhat verbose, is required to handle
+      page refreshes, as the navigation menu misbehaves (by defaulting to
+      Dashboard - Landing page) if we don't do this path-checking. */
+      if (currentPath === '/') {
+        // Home
+        setTabs(loginTabs)
+        setCurrentTab(0)
+      } else if (currentPath === '/auth/login' || currentPath.startsWith('/dashboard')) {
+        // Setting up the aftermath of a login, that leads to Dashboard
+        setTabs(loginTabs)
+        setCurrentTab(3)
+        setSubTabs(loginTabs[3].subTabs)
+
+        // Dashboard sub-tabs
+        if (currentPath.endsWith('/subscriptions')) {
+          setCurrentSubTab(1)
+        } else if (currentPath.endsWith('/apps')) {
+          setCurrentSubTab(2)
+        } else if (currentPath.endsWith('/test')) {
+          setCurrentSubTab(3)
+        } else {
+          setCurrentSubTab(0)
+        }
+      } else if (currentPath.startsWith('/profile')) {
+        // Profile
+        setTabs(loginTabs)
+        setCurrentTab(4)
+        setSubTabs(loginTabs[4].subTabs)
+
+        // Profile sub-tabs
+        if (currentPath.endsWith('/team')) {
+          setCurrentSubTab(1)
+        } else if (currentPath.endsWith('/organisation')) {
+          setCurrentSubTab(2)
+        } else {
+          setCurrentSubTab(0)
+        }
+      }
     }
   }, [auth.user])
 
@@ -92,7 +129,8 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
           subTabIndex={currentSubTab}
           onTabChange={handleOnTabChange}
           onSubTabChange={handleOnSubTabChange}
-          name={config.portalName}
+          // The previous value of this property was '{config.portalName}'
+          name=''
           logoSrc={logo}
           user={auth.user}
           forceScrolled={navScrolled}

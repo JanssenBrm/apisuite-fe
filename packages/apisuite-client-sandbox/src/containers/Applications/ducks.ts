@@ -14,8 +14,10 @@ const initialState: ApplicationsStore = {
     userId: 0,
     subscriptions: [],
     visibility: 'private',
-    // TODO change
-    pubUrls: null,
+    pubUrls: [{
+      url: '',
+      type: 'client',
+    }],
     enable: true,
     clientId: '',
     clientSecret: '',

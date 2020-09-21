@@ -106,7 +106,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
           <div ref={tabsRef} className='tabs'>
             <div className='space' />
 
-            {tabs.map((tab, idx) => (
+            {tabs.map((tab, idx) =>
               <div
                 data-testid={`nav-tab-${idx}`}
                 key={`nav-tab-${idx}`}
@@ -118,8 +118,8 @@ const Navigation: React.FC<NavigationProps> = (props) => {
                 data-disabled={tab.disabled}
               >
                 {tab.label}
-              </div>
-            ))}
+              </div>,
+            )}
 
             {!(scrolled || forceScrolled) && (
               <div className='top-bar' style={{ left: barValues.left, width: barValues.width }} />
