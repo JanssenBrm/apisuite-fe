@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.11](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.10...apisuite-client-sandbox@1.0.0-alpha.11) (2020-09-25)
+
+
+### Bug Fixes
+
+* **package.json:** Fixed design breaks exclusive to Safari ([fadf3e6](https://github.com/Cloudoki/APISuite/commit/fadf3e6d227112745b92d25ffa0abdd077f9751c))
+
+
+
+
+
 # [1.0.0-alpha.10](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.9...apisuite-client-sandbox@1.0.0-alpha.10) (2020-09-18)
 
 
