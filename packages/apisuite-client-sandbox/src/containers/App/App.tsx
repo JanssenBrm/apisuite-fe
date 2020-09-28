@@ -54,7 +54,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
   function handleOnTabChange (index: number) {
     // For tabs and sub-tabs with external links
-    if (/^https?:\/\//.test(tabs[index].route)) {
+    if (!tabs[index].route.startsWith('/')) {
       window.open(tabs[index].route, '_blank')
 
       return
