@@ -173,7 +173,6 @@ const AppDetail: React.FC<AppDetailProps> = (
   }
 
   function handleInputs (e: FormFieldEvent, err: any) {
-    // If the BE gives us an empty 'pubUrls' (i.e., '[]'), we have to set up our own
     const newPubUrls = currentInput.pubUrls.length > 0 ?
     [...currentInput.pubUrls] :
     [
