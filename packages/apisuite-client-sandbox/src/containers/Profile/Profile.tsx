@@ -21,7 +21,6 @@ import {
 } from './types'
 
 const Profile: React.FC<ProfileProps> = ({
-  user,
   getProfile,
   profile,
   updateProfile,
@@ -56,11 +55,11 @@ const Profile: React.FC<ProfileProps> = ({
   }
 
   if (profile) {
-    const initialsArray = profile.user.name.split(" ")
+    const initialsArray = profile.user.name.split(' ')
 
-    initials = initialsArray.length > 1 ?
-    `${initialsArray[0].charAt(0)}${initialsArray[1].charAt(0)}` :
-    `${initialsArray[0].charAt(0)}${initialsArray[0].charAt(0)}`
+    initials = initialsArray.length > 1
+      ? `${initialsArray[0].charAt(0)}${initialsArray[1].charAt(0)}`
+      : `${initialsArray[0].charAt(0)}${initialsArray[0].charAt(0)}`
   }
 
   React.useEffect(() => {
