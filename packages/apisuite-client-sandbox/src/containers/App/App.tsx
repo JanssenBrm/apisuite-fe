@@ -53,6 +53,14 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
   }, [history.location.pathname])
 
   function handleOnTabChange (index: number) {
+    // For tabs and sub-tabs with external links
+    if (!tabs[index].route.startsWith('/')) {
+      window.open(tabs[index].route, '_blank')
+
+      return
+    }
+
+    // For tabs and sub-tabs without external links (i.e., for project navigation)
     setCurrentTab(index)
     setSubTabs(tabs[index].subTabs)
     setCurrentSubTab(0)
