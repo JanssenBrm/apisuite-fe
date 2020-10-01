@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.13](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.12...apisuite-client-sandbox@1.0.0-alpha.13) (2020-10-01)
+
+
+### Bug Fixes
+
+* **AppDetail:** Fixed an issue that caused an app's details to not be loaded ([149b88d](https://github.com/Cloudoki/APISuite/commit/149b88dfe520f2a0b37ae977c5278773fd972dc2))
+
+
+
+
+
 # [1.0.0-alpha.12](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.11...apisuite-client-sandbox@1.0.0-alpha.12) (2020-10-01)
 
 
