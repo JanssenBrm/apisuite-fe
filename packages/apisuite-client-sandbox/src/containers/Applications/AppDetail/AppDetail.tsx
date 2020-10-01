@@ -173,15 +173,15 @@ const AppDetail: React.FC<AppDetailProps> = (
   }
 
   function handleInputs (e: FormFieldEvent, err: any) {
-    const newPubUrls = currentInput.pubUrls.length > 0 ?
-    [...currentInput.pubUrls] :
-    [
-      { url: '', type: 'client' },
-      { url: '', type: 'tos' },
-      { url: '', type: 'policy' },
-      { url: '', type: 'support' },
-      { url: '', type: 'support_email' },
-    ]
+    const newPubUrls = currentInput.pubUrls.length > 0
+      ? [...currentInput.pubUrls]
+      : [
+        { url: '', type: 'client' },
+        { url: '', type: 'tos' },
+        { url: '', type: 'policy' },
+        { url: '', type: 'support' },
+        { url: '', type: 'support_email' },
+      ]
 
     /* Updating inputs */
 
