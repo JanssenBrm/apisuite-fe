@@ -55,7 +55,13 @@ const Profile: React.FC<ProfileProps> = ({
     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   }
 
-  if (user) initials = user.fName.charAt(0) + user.lName.charAt(0)
+  if (profile) {
+    const initialsArray = profile.user.name.split(" ")
+
+    initials = initialsArray.length > 1 ?
+    `${initialsArray[0].charAt(0)}${initialsArray[1].charAt(0)}` :
+    `${initialsArray[0].charAt(0)}${initialsArray[0].charAt(0)}`
+  }
 
   React.useEffect(() => {
     getProfile()
@@ -85,7 +91,7 @@ const Profile: React.FC<ProfileProps> = ({
     let org = profile.current_org.id
     if (!formState.values.mobileNumber) number = 0
     if (option) org = option.value.toString()
-    updateProfile(formState.values.bio, formState.values.avatarUrl, number, org.toString())
+    updateProfile(formState.values.name, formState.values.bio, formState.values.avatarUrl, number, org.toString())
   }
 
   return (
@@ -155,7 +161,6 @@ const Profile: React.FC<ProfileProps> = ({
               variant='outlined'
               margin='dense'
               fullWidth
-              disabled
             />
 
             <br />
