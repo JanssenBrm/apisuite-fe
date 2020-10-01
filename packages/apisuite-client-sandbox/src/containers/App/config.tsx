@@ -4,6 +4,8 @@ import { TabProps } from 'components/Navigation/types'
 import { getMenuEntries } from 'util/extensions'
 import { Menus } from 'apisuite-extension-ui-types'
 
+import { DOCUMENTATION_URL, SUPPORT_URL } from 'constants/endpoints'
+
 const extensionsInitTabs = getMenuEntries(Menus.HeaderAnonymousMain)
 const extensionsLoginTabs = getMenuEntries(Menus.HeaderAuthenticatedMain)
 const extensionsLoginDashboardTabs = getMenuEntries(Menus.HeaderAuthenticatedDashboard)
@@ -15,18 +17,16 @@ export const initTabs: TabProps[] = [
     route: '/',
   },
   {
-    label: 'Contact',
-    route: '/',
-    disabled: true,
+    label: 'Support',
+    route: SUPPORT_URL,
   },
   {
     label: 'Log in',
     route: '/auth/login',
   },
   {
-    label: 'Demo',
-    route: '/',
-    disabled: true,
+    label: 'Register',
+    route: '/auth/register',
   },
   ...extensionsInitTabs,
 ]
@@ -49,13 +49,11 @@ export const loginTabs: TabProps[] = [
   },
   {
     label: 'Documentation',
-    route: '',
-    disabled: true,
+    route: DOCUMENTATION_URL,
   },
   {
-    label: 'Contact',
-    route: '',
-    disabled: true,
+    label: 'Support',
+    route: SUPPORT_URL,
   },
   {
     label: 'Dashboard',

@@ -149,8 +149,8 @@ export function * getUsersApps (action: GetUserAppsAction) {
         enable: userApp.enable,
         createdAt: userApp.createdAt,
         updatedAt: userApp.updatedAt,
-        clientId: userApp.client_data.client_id,
-        clientSecret: userApp.client_data.client_secret,
+        clientId: userApp.clientId,
+        clientSecret: userApp.clientSecret,
       }
     ))
     yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
@@ -224,8 +224,8 @@ export function * getAppDetails (action: GetAppDetails) {
       enable: userApp.enable,
       createdAt: userApp.createdAt,
       updatedAt: userApp.updatedAt,
-      clientId: userApp.client_data.client_id,
-      clientSecret: userApp.client_data.client_secret,
+      clientId: userApp.clientId,
+      clientSecret: userApp.clientSecret,
     }
   ))
 
@@ -275,8 +275,8 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
       enable: response.app.enable,
       createdAt: response.app.createdAt,
       updatedAt: response.app.updatedAt,
-      clientId: response.app.client_data.client_id,
-      clientSecret: response.app.client_data.client_secret,
+      clientId: response.app.clientId,
+      clientSecret: response.app.clientSecret,
     }
 
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
@@ -325,8 +325,8 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
       enable: response.app.enable,
       createdAt: response.app.createdAt,
       updatedAt: response.app.updatedAt,
-      clientId: response.app.client_data.client_id,
-      clientSecret: response.app.client_data.client_secret,
+      clientId: response.app.clientId,
+      clientSecret: response.app.clientSecret,
     }
 
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
