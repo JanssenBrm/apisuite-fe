@@ -14,7 +14,8 @@
     "version": {
       "allowBranch": ["develop", "staging", "production"],
       "conventionalCommits": true,
-      "createRelease": "github"
+      "createRelease": "github",
+      "message": "chore(release): publish [ci skip]"
     }
   }
 }
