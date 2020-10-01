@@ -94,8 +94,6 @@ const Profile: React.FC<ProfileProps> = ({
     updateProfile(formState.values.name, formState.values.bio, formState.values.avatarUrl, number, org.toString())
   }
 
-  console.log(initials)
-
   return (
     <div className={classes.root}>
       <section className={classes.contentContainer}>
