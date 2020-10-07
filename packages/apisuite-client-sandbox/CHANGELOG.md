@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-alpha.15](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.14...apisuite-client-sandbox@1.0.0-alpha.15) (2020-10-07)
+
+
+### Features
+
+* Automatically infer the API and Hydra hostnames ([82ff527](https://github.com/Cloudoki/APISuite/commit/82ff527dd70ece7df69898e9654d6c73a96c4d6b))
+
+
+
+
+
 # [1.0.0-alpha.14](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.13...apisuite-client-sandbox@1.0.0-alpha.14) (2020-10-01)
 
 
