@@ -10,6 +10,7 @@ import register from 'components/RegisterForm/ducks'
 import informDialog from 'components/InformDialog/ducks'
 import auth from 'containers/Auth/ducks'
 import applications from 'containers/Applications/ducks'
+import settings from 'containers/Settings/ducks'
 import subscriptions from 'containers/Subscriptions/ducks'
 import notifications from 'containers/NotificationStack/ducks'
 import profile from 'containers/Profile/ducks'
@@ -19,6 +20,7 @@ export default (history: History<any>) => combineReducers({
   auth,
   register,
   applications,
+  settings,
   subscriptions,
   informDialog,
   notifications,
