@@ -12,7 +12,7 @@
   ],
   "command": {
     "version": {
-      "allowBranch": ["develop", "staging", "production"],
+      "allowBranch": ["staging", "production"],
       "conventionalCommits": true,
       "createRelease": "github",
       "message": "chore(release): publish [ci skip]"
