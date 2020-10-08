@@ -1,31 +1,33 @@
 /** Endpoints constants */
 
-const { hostname } = window.location;
+const { hostname } = window.location
 
-export const IS_CLOUD = hostname.indexOf(".cloud.apisuite.io") >= 0
-export const AUTH_URL = getAuthUrl()
-export const API_URL = getApiUrl()
-export const SIGNUP_PORT = process.env.SIGNUP_PORT || ''
-export const LOGIN_PORT = process.env.LOGIN_PORT || ''
+export const IS_CLOUD = hostname.indexOf('.cloud.apisuite.io') >= 0
 
-function getApiUrl() {
+function getApiUrl () {
   if (IS_CLOUD) {
     // Transform the Portal's hostname into the API's hostname
     // Ex: ${client}.cloud.apisuite.io -> ${client}-apisuite-api.cloud.apisuite.io
-    const apiHostname = hostname.replace(".", "-apisuite-api.")
+    const apiHostname = hostname.replace('.', '-apisuite-api.')
     return `https://${apiHostname}`
   }
 
-  return process.env.API_URL || '';
+  return process.env.API_URL || ''
 }
 
-function getAuthUrl() {
+function getAuthUrl () {
   if (IS_CLOUD) {
     // Transform the Portal's hostname into the API's hostname
     // Ex: ${client}.cloud.apisuite.io -> ${client}-hydraapi.cloud.apisuite.io
-    const authHostname = hostname.replace(".", "-hydraapi.")
+    const authHostname = hostname.replace('.', '-hydraapi.')
     return `https://${authHostname}`
   }
 
-  return process.env.AUTH_URL || '';
+  return process.env.AUTH_URL || ''
 }
+
+export const AUTH_URL = getAuthUrl()
+export const API_URL = getApiUrl()
+export const INFORM_URL = process.env.INFORM_URL || ''
+export const SIGNUP_PORT = process.env.SIGNUP_PORT || ''
+export const LOGIN_PORT = process.env.LOGIN_PORT || ''

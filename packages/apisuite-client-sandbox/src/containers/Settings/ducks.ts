@@ -18,7 +18,7 @@ export const GET_SETTINGS_SUCCESS = 'Settings/GET_SETTINGS_SUCCESS'
 /** Reducer */
 const reducer: Reducer<SettingsStore, AnyAction> = (
   state = initialState,
-  action
+  action,
 ) => {
   switch (action.type) {
     case GET_SETTINGS: {
