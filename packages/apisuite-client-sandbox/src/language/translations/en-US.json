@@ -21,7 +21,7 @@
       },
       "four": {
         "title": "Extend and Customize",
-        "subtitle": "The {{clientName}} Sandbox is purpose built for customization. Do you need a manual onboarding process? <b>Extend</b>. Send your 2FA sms’es through Twillio? <b>Configure</b>. Support Korean i18n? <b>Customize</b>.",
+        "subtitle": "The {{clientName}} Sandbox is purpose-built for customization. Do you need a manual onboarding process? <b>Extend</b>. Send your 2FA sms’es through Twillio? <b>Configure</b>. Support Korean i18n? <b>Customize</b>.",
         "button": "Documentation"
       }
     },
