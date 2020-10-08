@@ -8,6 +8,7 @@ import { CarouselProps, RendererProps } from './types'
 import useStyles from './styles'
 import clsx from 'clsx'
 import { useTranslation } from 'react-i18next'
+import { useSettings } from 'util/useSetting'
 
 const VirtualizeSwipeViews = bindKeyboard(virtualize(SwipeableViews))
 const VirtualizeAutoPlaySwipeViews = autoPlay(VirtualizeSwipeViews)
@@ -18,7 +19,7 @@ const modulo = (a: number, n: number) => ((a % n) + n) % n
 const carouselSlideRenderer = (children: React.ReactNodeArray) =>
   ({ index, key }: RendererProps) => React.cloneElement(children[modulo(index, children.length)] as any, { key })
 
-const renderContent = (slidesConfig: any, classes: any, t: any) => (
+const renderContent = (slidesConfig: any, classes: any, t: any, settings: any) => (
   slidesConfig.map((slide: any, i: number) => (
     <div key={i} className={classes.slide}>
       <img className={classes.slideImage} src={slide.img} alt='' />
@@ -26,15 +27,15 @@ const renderContent = (slidesConfig: any, classes: any, t: any) => (
       <div className={classes.spacer} />
 
       <section className={classes.slideInfo}>
-        <h1 className={classes.slideInfoH1}>{t(slide.title)}</h1>
+        <h1 className={classes.slideInfoH1}>{t(slide.title, settings)}</h1>
 
         {/** TODO: strings are not being escaped from translations, this needs to be reviwed */}
-        <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: t(slide.subtitle) }} />
+        <p className={classes.slideInfoParagraph} dangerouslySetInnerHTML={{ __html: t(slide.subtitle, settings) }} />
 
         {slide.content && (
           <p
             className={classes.slideInfoParagraph}
-            dangerouslySetInnerHTML={{ __html: t(slide.content) }}
+            dangerouslySetInnerHTML={{ __html: t(slide.content, settings) }}
           />
         )}
 
@@ -48,10 +49,10 @@ const renderContent = (slidesConfig: any, classes: any, t: any) => (
         >
           {!slide.disabled &&
             <a href={slide.link} className={classes.buttonLink}>
-              {t(slide.button)}
+              {t(slide.button, settings)}
             </a>}
           {slide.disabled &&
-            <div>{t(slide.button)}</div>}
+            <div>{t(slide.button, settings)}</div>}
         </div>
       </section>
     </div>
@@ -61,9 +62,10 @@ const renderContent = (slidesConfig: any, classes: any, t: any) => (
 const Carousel: React.FC<CarouselProps> = ({ slideConfig }) => {
   const classes = useStyles()
   const [t] = useTranslation()
+  const [settings] = useSettings()
 
   const autoplay = true
-  const content = renderContent(slideConfig, classes, t)
+  const content = renderContent(slideConfig, classes, t, settings)
   const slideRenderer = carouselSlideRenderer(content)
   const [slideIndex, setSlideIndex] = React.useState(0)
 

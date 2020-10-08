@@ -40,9 +40,7 @@ jobs:
           name: Tag and release a new version of all changed projects
           command: |
             git config --global user.name 'apisuite-machine-user'; git config --global user.email 'dev@apisuite.io'
-            if [ "$CIRCLE_BRANCH" = "develop" ]; then
-              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
-            elif [ "$CIRCLE_BRANCH" = "staging" ]; then
+            if [ "$CIRCLE_BRANCH" = "staging" ]; then
               GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid rc --yes
             elif [ "$CIRCLE_BRANCH" = "production" ]; then
               GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-graduate --yes

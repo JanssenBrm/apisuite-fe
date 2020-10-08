@@ -1,39 +1,55 @@
 import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
+import { useTranslation } from 'react-i18next'
 import { Menus } from 'apisuite-extension-ui-types'
 import LocaleSelect from 'language/LocaleSelect'
-import { config } from 'constants/global'
 import logo from 'theme/images/current_Cloudoki_logo.png'
 import { MenuSection, MenuSections } from './types'
 import { getMenuEntries } from 'util/extensions'
+import { useSettings } from 'util/useSetting'
+import { SettingsStore } from 'containers/Settings/types'
 
 import './styles.scss'
 
-const renderSocialLinks = () => {
-  const social = config.social
-  if (!social) {
+const renderSocialLinks = ({ settings }: { settings: SettingsStore}) => {
+  const { socialURLs } = settings
+  if (!socialURLs || !socialURLs.length) {
     return null
   }
 
   return (
     <div className='icons-container'>
-      {social.web &&
-        <a href={social.web} target='_blank' rel='noopener noreferrer'>
-          <SvgIcon size={24} name='earth' />
-        </a>}
-      {social.twitter &&
-        <a href={social.twitter} target='_blank' rel='noopener noreferrer'>
-          <SvgIcon size={24} name='twitter' />
-        </a>}
-      {social.facebook &&
-        <a href={social.facebook} target='_blank' rel='noopener noreferrer'>
-          <SvgIcon size={24} name='facebook' />
-        </a>}
-      {social.github &&
-        <a href={social.github} target='_blank' rel='noopener noreferrer'>
-          <SvgIcon size={24} name='github-face' />
-        </a>}
+      {socialURLs.map((socialUrl) => {
+        switch (socialUrl.name) {
+          case 'web':
+            return (
+              <a key='web' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name='earth' />
+              </a>
+            )
+          case 'twitter':
+            return (
+              <a key='twitter' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name='twitter' />
+              </a>
+            )
+          case 'facebook':
+            return (
+              <a key='facebook' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name='facebook' />
+              </a>
+            )
+          case 'github':
+            return (
+              <a key='github' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name='github-face' />
+              </a>
+            )
+          default:
+            return null
+        }
+      })}
     </div>
   )
 }
@@ -167,28 +183,30 @@ const renderSubSection = (subMenu: string) => {
 }
 
 const Footer = () => {
+  const [settings] = useSettings()
+  const [t] = useTranslation()
+
   function handleFabClick () {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   return (
     <footer className='footer'>
+      <div className='fab-container'>
+        <Fab size='small' onClick={handleFabClick}>
+          <SvgIcon name='chevron-up' size={24} />
+        </Fab>
+      </div>
       <div className='container'>
         <div className='logo-container'>
           <img src={logo} alt='logo' className='logo' />
-          <p>{config.footer.copyright}</p>
+          <p>{t('copyright', { ...settings, year: new Date().getFullYear() })}</p>
 
-          {renderSocialLinks()}
+          {renderSocialLinks({ settings })}
           <LocaleSelect />
         </div>
 
         <div className='sections-container'>
-          <div className='fab-container'>
-            <Fab size='small' onClick={handleFabClick}>
-              <SvgIcon name='chevron-up' size={24} />
-            </Fab>
-          </div>
-
           <div className='section'>
             {renderSubSection(Menus.FooterProducts)}
             {renderSubSection(Menus.FooterProfile)}
