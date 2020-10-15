@@ -3,12 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.0.0](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-rc.1...apisuite-client-sandbox@1.0.0) (2020-09-21)
+# [1.0.0-rc.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.14...apisuite-client-sandbox@1.0.0-rc.2) (2020-10-02)
 
 **Note:** Version bump only for package apisuite-client-sandbox
 
 
 
+
+# [1.0.0-alpha.14](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.13...apisuite-client-sandbox@1.0.0-alpha.14) (2020-10-01)
+
+
+### Bug Fixes
+
+* Linting error which prevents building. ([e36b884](https://github.com/Cloudoki/APISuite/commit/e36b884169d11a9535b6e4f7bcce38aa72e54050))
+
+
+
+# [1.0.0-alpha.13](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.12...apisuite-client-sandbox@1.0.0-alpha.13) (2020-10-01)
+
+
+### Bug Fixes
+
+* **AppDetail:** Fixed an issue that caused an app's details to not be loaded ([149b88d](https://github.com/Cloudoki/APISuite/commit/149b88dfe520f2a0b37ae977c5278773fd972dc2))
+
+
+
+
+# [1.0.0-alpha.12](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.11...apisuite-client-sandbox@1.0.0-alpha.12) (2020-10-01)
+
+
+### Bug Fixes
+
+* **Profile:** Made the user's name (and thus, his avatar) editable ([6d12e30](https://github.com/Cloudoki/APISuite/commit/6d12e30a7ec8f6b8b05003ddb5073c84a3d79557))
+
+
+
+
+# [1.0.0-alpha.11](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.10...apisuite-client-sandbox@1.0.0-alpha.11) (2020-09-25)
+
+
+### Bug Fixes
+
+* **package.json:** Fixed design breaks exclusive to Safari ([fadf3e6](https://github.com/Cloudoki/APISuite/commit/fadf3e6d227112745b92d25ffa0abdd077f9751c))
 
 
 # [1.0.0-rc.1](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.10...apisuite-client-sandbox@1.0.0-rc.1) (2020-09-21)
@@ -17,11 +53,12 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-
-
 # [1.0.0-rc.0](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.8...apisuite-client-sandbox@1.0.0-rc.0) (2020-09-18)
 
 **Note:** Version bump only for package apisuite-client-sandbox
+
+
+
 # [1.0.0-alpha.10](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.9...apisuite-client-sandbox@1.0.0-alpha.10) (2020-09-18)
 
 
