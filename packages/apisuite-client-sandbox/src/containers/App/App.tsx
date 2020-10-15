@@ -31,7 +31,7 @@ const App: React.FC<AppProps> = ({
     login: loginTabs,
   }
   const activeMenu = allTabs[activeMenuName]
-  const [subTabs, setSubTabs] = React.useState(activeMenu[currentTab].subTabs)
+  const subTabs = activeMenu[currentTab].subTabs
 
   React.useEffect(() => {
     const pathname = history.location.pathname
@@ -76,7 +76,6 @@ const App: React.FC<AppProps> = ({
 
     // For tabs and sub-tabs without external links (i.e., for project navigation)
     setCurrentTab(index)
-    setSubTabs(activeMenu[index].subTabs)
     setCurrentSubTab(0)
 
     history.push(activeMenu[index].route)
@@ -108,9 +107,11 @@ const App: React.FC<AppProps> = ({
         setCurrentTab(0)
       } else if (currentPath === '/auth/login' || currentPath.startsWith('/dashboard')) {
         // Setting up the aftermath of a login, that leads to Dashboard
+        if (!loginTabs[3]) {
+          return
+        }
         setActiveMenuName('login')
         setCurrentTab(3)
-        setSubTabs(loginTabs[3].subTabs)
 
         // Dashboard sub-tabs
         if (currentPath.endsWith('/subscriptions')) {
@@ -126,7 +127,6 @@ const App: React.FC<AppProps> = ({
         // Profile
         setActiveMenuName('login')
         setCurrentTab(4)
-        setSubTabs(loginTabs[4].subTabs)
 
         // Profile sub-tabs
         if (currentPath.endsWith('/team')) {

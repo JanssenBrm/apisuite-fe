@@ -7,9 +7,15 @@ const TEMPLATE_IMPORT_PLACEHOLDER = '// EXTENSIONS-IMPORT-PLACEHOLDER'
 const TEMPLATE_REGISTRATION_PLACEHOLDER = '// EXTENSIONS-REGISTRATION-PLACEHOLDER'
 
 function getEnvironment () {
-  // First look for the ENV setting in ../.env
+  // First look for the CLOUD or ENV setting in ../.env
   const dotEnvFile = fs.readFileSync(`${__dirname}/../.env`, 'utf8')
-  const envMatch = dotEnvFile.match(/ENV=(.*)/)
+
+  const cloudMatch = dotEnvFile.match(/^CLOUD=(.*)/m)
+  if (cloudMatch && cloudMatch[1] === 'true') {
+    return 'cloud'
+  }
+
+  const envMatch = dotEnvFile.match(/^ENV=(.*)/m)
 
   if (envMatch) {
     return envMatch[1]
@@ -56,17 +62,18 @@ function interpolateEnvVars (envValue) {
 
 function loadEnvExtensionsConfig (environment) {
   let envExtensions
+  const emptyExtensions = { extensions: [] }
   try {
     const envExtensionsString = fs.readFileSync(`${__dirname}/../extensions.${environment}.json`, 'utf8')
     envExtensions = JSON.parse(envExtensionsString)
   } catch (err) {
     // File not found
-    process.exit()
+    return emptyExtensions
   }
 
   if (!envExtensions && !Array.isArray(envExtensions.extensions)) {
     // Empty or invalid file, nothing to do here
-    process.exit()
+    return emptyExtensions
   }
 
   return envExtensions

@@ -4,6 +4,23 @@ const { hostname } = window.location
 
 export const IS_CLOUD = hostname.indexOf('.cloud.apisuite.io') >= 0
 
+/**
+ * For when running in the cloud environment.
+ * Given the current Portal hostname, get the corresponding domain for another
+ * service running in a given subdomain prefix.
+ * Ex: ${client}.cloud.apisuite.io -> ${client}-${subdomainSuffx}.cloud.apisuite.io
+ *
+ * @param subdomain
+ */
+export function getCloudUrlForSubdomainSuffix (subdomainSuffix: string) {
+  if (IS_CLOUD) {
+    const apiHostname = hostname.replace('.', `-${subdomainSuffix}.`)
+    return `https://${apiHostname}`
+  }
+
+  return null
+}
+
 function getApiUrl () {
   if (IS_CLOUD) {
     // Transform the Portal's hostname into the API's hostname

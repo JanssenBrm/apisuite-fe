@@ -77,3 +77,13 @@ fatal: Could not read from remote repository.
 ```
 
 There's something wrong with your SSH Key setup. Read this [documentation](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+## Run-time
+
+### Invalid Hook Call Warning
+
+During run-time, in the browser, one might receive a React error related to having multiple react versions installed at the same time.
+
+This might happen when manually installing UI extensions during development time after having installed the monorepo's dependencies with `yarn` in the project root. This initial setup adds `react` and `react-dom` to the root's `node_modules` folder. Installing the extension in a particular subproject might install `react` and `react-dom` in the subproject's local `node_modules` folder as well. During run-time, some some packages will use one `react` and some others the other `react`.
+
+To fix this, run `npm install` locally which should install all dependencies under the local `node_modules`.
