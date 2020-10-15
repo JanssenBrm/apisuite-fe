@@ -64,6 +64,26 @@ jobs:
               paths:
                 - .env
 
+  build-cloud:
+      executor: apisuite-executor
+      environment:
+        CLOUD_BUILD: "true"
+      steps:
+        - checkout
+        - setup_remote_docker
+        - run:
+            name: Build packages with docker-compose and push to registry
+            command: |
+              sudo apt-get update
+              sudo apt-get install ruby-full jq
+              cd util
+              chmod +x build_push_docker.sh
+              ./build_push_docker.sh
+        - persist_to_workspace:
+              root: ./util
+              paths:
+                - .env
+
   deploy-dev:
       executor: apisuite-executor
       steps:
@@ -153,6 +173,16 @@ workflows:
                     - production
             requires:
                 - release
+        - build-cloud:
+            filters:
+                branches:
+                  only:
+                    - chore/cicd-cloud-build
+                    # - develop
+                    # - staging
+                    #- production
+            requires:
+                - build
         - deploy-dev:
             filters:
                 branches:
