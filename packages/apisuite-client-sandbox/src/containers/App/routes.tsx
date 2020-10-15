@@ -32,7 +32,7 @@ const extensionsRoutes = getRoutes().map(
     }
     return {
       ...route,
-      render: (props) => <RequireAuth component={route.component} {...props} />,
+      render: (props) => <RequireAuth component={route.component} roleReq={route.role} {...props} />,
       auth: undefined,
       component: undefined,
     }

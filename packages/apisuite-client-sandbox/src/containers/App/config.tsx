@@ -4,11 +4,8 @@ import { TabProps } from 'components/Navigation/types'
 import { getMenuEntries } from 'util/extensions'
 import { Menus } from 'apisuite-extension-ui-types'
 import { useSettings } from 'util/useSetting'
-
-const extensionsInitTabs = getMenuEntries(Menus.HeaderAnonymousMain)
-const extensionsLoginTabs = getMenuEntries(Menus.HeaderAuthenticatedMain)
-const extensionsLoginDashboardTabs = getMenuEntries(Menus.HeaderAuthenticatedDashboard)
-const extensionsLoginProfileTabs = getMenuEntries(Menus.HeaderAuthenticatedProfile)
+import { useSelector } from 'react-redux'
+import { getRoleName } from 'containers/Auth/selectors'
 
 const ConsoleLabel = () => (
   <div style={{ backgroundColor: '#A9A9A9', borderRadius: 4, paddingLeft: 4, paddingRight: 4, pointerEvents: 'none' }}>
@@ -23,6 +20,23 @@ const ConsoleLabel = () => (
 
 export function useTabs (): Array<TabProps[]> {
   const [settings] = useSettings()
+  const roleName = useSelector(getRoleName)
+  const [
+    extensionsInitTabs,
+    extensionsLoginTabs,
+    extensionsLoginDashboardTabs,
+    extensionsLoginProfileTabs,
+  ] = React.useMemo(
+    () => {
+      return [
+        getMenuEntries(Menus.HeaderAnonymousMain, roleName),
+        getMenuEntries(Menus.HeaderAuthenticatedMain, roleName),
+        getMenuEntries(Menus.HeaderAuthenticatedDashboard, roleName),
+        getMenuEntries(Menus.HeaderAuthenticatedProfile, roleName),
+      ]
+    },
+    [roleName],
+  )
 
   const initTabs = React.useMemo((): TabProps[] => {
     const entries = [
@@ -49,7 +63,7 @@ export function useTabs (): Array<TabProps[]> {
     }
 
     return entries
-  }, [settings])
+  }, [settings, extensionsInitTabs])
 
   const loginTabs = React.useMemo((): TabProps[] => {
     const entries = [
@@ -123,7 +137,14 @@ export function useTabs (): Array<TabProps[]> {
     }
 
     return entries
-  }, [settings])
+  }, [
+    settings,
+    extensionsLoginTabs,
+    extensionsLoginDashboardTabs,
+    extensionsLoginProfileTabs,
+  ])
+
+  console.log({ loginTabs })
 
   return [initTabs, loginTabs]
 }

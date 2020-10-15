@@ -2,7 +2,7 @@
  * Redux Store
  */
 
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, Reducer, AnyAction } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import { routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory } from 'history'
@@ -12,8 +12,12 @@ import { createAuthMiddleware } from 'containers/Auth/ducks'
 
 import combinedReducers from './combinedReducers'
 import combinedSagas from './combinedSagas'
+import { SagaManager } from './SagaManager'
 
 export const history = createBrowserHistory()
+
+const injectedReducers: Record<string, Reducer<any, any>[]> = {}
+let injectedSagas: any = []
 
 const sagaMiddleware = createSagaMiddleware()
 const routingMiddleware = routerMiddleware(history)
@@ -32,8 +36,30 @@ if (process.env.NODE_ENV === 'development') {
 
 const store = createStore(combinedReducers(history), composedMiddleware)
 
-combinedSagas.forEach((saga) => {
-  sagaMiddleware.run(saga)
+export function injectReducer (name: string, reducer: any) {
+  injectedReducers[name] = injectedReducers[name]
+    ? [...injectedReducers[name], reducer]
+    : [reducer]
+  store.replaceReducer(
+    combinedReducers(history, injectedReducers) as Reducer<{}, AnyAction>,
+  )
+}
+
+export function injectSaga (key: string, saga: any, force = false) {
+  // If already set, do nothing, except force is specified
+  const exists = injectedSagas.includes(key)
+  if (!exists || force) {
+    if (!exists) {
+      injectedSagas = [...injectedSagas, key]
+    }
+    if (force) {
+      SagaManager.cancelSaga(key, store)
+    }
+    SagaManager.startSaga(sagaMiddleware, key, saga)
+  }
+}
+combinedSagas.forEach((saga, index) => {
+  injectSaga(String(index), saga, false)
 })
 
 export default store

@@ -8,6 +8,8 @@ import logo from 'theme/images/current_Cloudoki_logo.png'
 import { MenuSection, MenuSections } from './types'
 import { getMenuEntries } from 'util/extensions'
 import { useSettings } from 'util/useSetting'
+import { useSelector } from 'react-redux'
+import { getRoleName } from 'containers/Auth/selectors'
 import { SettingsStore } from 'containers/Settings/types'
 
 import './styles.scss'
@@ -154,9 +156,9 @@ const menuSections: MenuSections = {
   },
 }
 
-const renderSubSection = (subMenu: string) => {
+const renderSubSection = (subMenu: string, roleName?: string) => {
   const section: MenuSection = menuSections[subMenu]
-  const extensionsMenuEntries = getMenuEntries(subMenu)
+  const extensionsMenuEntries = getMenuEntries(subMenu, roleName)
   const allEntries = [...section.entries, ...extensionsMenuEntries]
 
   return (
@@ -185,6 +187,7 @@ const renderSubSection = (subMenu: string) => {
 const Footer = () => {
   const [settings] = useSettings()
   const [t] = useTranslation()
+  const roleName = useSelector(getRoleName)
 
   function handleFabClick () {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
@@ -208,23 +211,23 @@ const Footer = () => {
 
         <div className='sections-container'>
           <div className='section'>
-            {renderSubSection(Menus.FooterProducts)}
-            {renderSubSection(Menus.FooterProfile)}
+            {renderSubSection(Menus.FooterProducts, roleName)}
+            {renderSubSection(Menus.FooterProfile, roleName)}
           </div>
 
           <div className='section'>
-            {renderSubSection(Menus.FooterDocumentation)}
-            {renderSubSection(Menus.FooterTeam)}
+            {renderSubSection(Menus.FooterDocumentation, roleName)}
+            {renderSubSection(Menus.FooterTeam, roleName)}
           </div>
 
           <div className='section'>
-            {renderSubSection(Menus.FooterDashboard)}
-            {renderSubSection(Menus.FooterLegal)}
+            {renderSubSection(Menus.FooterDashboard, roleName)}
+            {renderSubSection(Menus.FooterLegal, roleName)}
           </div>
 
           <div className='section'>
-            {renderSubSection(Menus.FooterSupport)}
-            {renderSubSection(Menus.FooterStatus)}
+            {renderSubSection(Menus.FooterSupport, roleName)}
+            {renderSubSection(Menus.FooterStatus, roleName)}
           </div>
         </div>
       </div>
