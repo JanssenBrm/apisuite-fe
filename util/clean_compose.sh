@@ -31,7 +31,7 @@ done < docker-compose.yaml
 ## Default environment is develop
 APISUITE_ENVIRONMENT=dev
 
-if [[ $CIRCLE_BRANCH =~ (develop|"chore/cicd-cloud-build")$ ]]; then
+if [[ $CIRCLE_BRANCH =~ develop$ ]]; then
   APISUITE_ENVIRONMENT="dev";
 elif [[ $CIRCLE_BRANCH =~ staging$ ]]; then
   APISUITE_ENVIRONMENT="stg";
