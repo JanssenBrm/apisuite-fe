@@ -177,10 +177,9 @@ workflows:
             filters:
                 branches:
                   only:
-                    - chore/cicd-cloud-build
-                    # - develop
-                    # - staging
-                    #- production
+                    - develop
+                    - staging
+                    - production
             requires:
                 - build
         - deploy-dev:
