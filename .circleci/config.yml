@@ -181,6 +181,8 @@ workflows:
                     # - develop
                     # - staging
                     #- production
+            requires:
+                - build
         - deploy-dev:
             filters:
                 branches:
