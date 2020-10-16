@@ -40,10 +40,11 @@ export default function subscriptionsReducer (
 
     case SubscriptionsActionTypes.GET_APIS_SUCCESS: {
       const apis: Api[] = action.apis.map(api => ({
-        apiTitle: api.api_title,
+        baseUri: api.baseUri,
         id: api.id,
         name: api.name,
-        version: api.version,
+        baseUriSandbox: api.baseUriSandbox,
+        docs: api.docs,
       }))
 
       return update(state, {

@@ -6,8 +6,9 @@ import { AppData } from 'containers/Applications/types'
 export interface Api {
   id: number,
   name: string,
-  apiTitle: string,
-  version: string,
+  baseUri?: string,
+  baseUriSandbox?: string,
+  docs?: ApiDocs,
 }
 
 export interface SubscriptionsStore {
@@ -73,29 +74,31 @@ export type SubscriptionsActions =
 
 /** Endpoint response type */
 export interface ApisResponse {
-  apis: {
-    pagination: {
-      page: number,
-      pageCount: number,
-      pageSize: number,
-      rowCount: number,
-    },
-    rows: ApiResponse[],
+  pagination: {
+    page: number,
+    pageCount: number,
+    pageSize: number,
+    rowCount: number,
   },
-  message: string,
-  success: boolean,
+  rows: ApiResponse[],
 }
 
 export interface ApiResponse {
-  api_title: string,
   createdAt: string,
   id: number,
   name: string,
-  route: {
-    paths: string,
-  },
+  baseUri?: string,
+  baseUriSandbox?: string,
+  docs?: ApiDocs,
   updatedAt: string,
-  version: string,
+}
+
+export interface ApiDocs {
+  title?: string,
+  info?: string,
+  target: string,
+  image?: string,
+  updatedAt: string,
 }
 
 /** Selector types */
