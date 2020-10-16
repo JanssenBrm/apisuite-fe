@@ -15,6 +15,17 @@ const useStyles = makeStyles(({
     borderRadius: config.dimensions.borderRadius,
     color: config.palette.greyScales[400],
   },
+  centerContent: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '200px',
+    color: 'red',
+    fontWeight: 500,
+  },
+  loading: {
+    color: config.palette.primary,
+  },
 
 }))
 

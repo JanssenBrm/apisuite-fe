@@ -12,6 +12,7 @@ import {
   submitOrganisationDetailsActions,
   submitSecurityStepActions,
   confirmRegistrationActions,
+  validateRegisterTokenActions,
 } from './ducks'
 import { openNotification } from 'containers/NotificationStack/ducks'
 import {
@@ -23,10 +24,18 @@ export function * submitPersonalDetailsSaga (
   action: ReturnType<typeof submitPersonalDetailsActions.request>,
 ) {
   try {
+    const headers = {
+      'Content-Type': 'application/json',
+    }
+    if (action.payload.token) {
+      // @ts-ignore
+      headers.Authorization = `Bearer ${action.payload.token}`
+    }
+    delete action.payload.token
     const response = yield call(request, {
       url: `${API_URL}/registration/user`,
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       data: JSON.stringify(action.payload),
     })
 
@@ -64,15 +73,20 @@ export function * submitSecurityStepSaga (
   action: ReturnType<typeof submitSecurityStepActions.request>,
 ) {
   try {
-    const registrationToken = yield select(
-      (state: Store) => state.register.registrationToken)
+    const registrationToken = yield select((state: Store) => state.register.registrationToken)
+
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${registrationToken}`,
+    }
+    if (action.payload.token) {
+      headers.Authorization = `Bearer ${action.payload.token}`
+    }
+    delete action.payload.token
     yield call(request, {
       url: `${API_URL}/registration/security`,
       method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${registrationToken}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
       data: JSON.stringify(action.payload),
     })
 
@@ -103,11 +117,32 @@ export function * confirmRegistrationSaga (
   }
 }
 
+export function * validateRegisterTokenSaga (
+  action: ReturnType<typeof validateRegisterTokenActions.request>,
+) {
+  try {
+    const response = yield call(request, {
+      url: `${API_URL}/registration/invitation`,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${action.payload.token}`,
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(validateRegisterTokenActions.success(response))
+  } catch (error) {
+    yield put(validateRegisterTokenActions.error(error))
+  }
+}
+
 function * rootSaga () {
   yield takeLatest(RegisterFormActionTypes.SUBMIT_PERSONAL_DETAILS_REQUEST, submitPersonalDetailsSaga)
   yield takeLatest(RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST, submitOrganisationDetailsSaga)
   yield takeLatest(RegisterFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST, submitSecurityStepSaga)
   yield takeLatest(RegisterFormActionTypes.CONFIRM_REGISTRATION_REQUEST, confirmRegistrationSaga)
+  yield takeLatest(RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_REQUEST, validateRegisterTokenSaga)
 }
 
 export default rootSaga

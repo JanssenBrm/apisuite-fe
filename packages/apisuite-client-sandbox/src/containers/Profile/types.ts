@@ -26,7 +26,7 @@ export const roleNameOptions = ['superadmin', 'admin', 'developer', ''] as const
 
 export type OrgInfo = {
   description: string | null,
-  vat: string,
+  vat?: string|null,
   website: string,
   terms: string,
   logo: string,

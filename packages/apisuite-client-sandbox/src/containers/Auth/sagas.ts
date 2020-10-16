@@ -11,6 +11,7 @@ import {
   LOGIN_SUCCESS,
   FORGOT_PASSWORD,
   RECOVER_PASSWORD,
+  LOGOUT,
 } from './ducks'
 import {
   AUTH_URL,
@@ -127,10 +128,37 @@ function * recoverPasswordSaga (action: AnyAction) {
   }
 }
 
+function * logoutWorker () {
+  try {
+    const logoutSessionUrl = `${AUTH_URL}/auth/session/logout`
+    const logoutUrl = `${AUTH_URL}/auth/logout`
+
+    try {
+      // try to logout via session
+      yield call(request, {
+        url: logoutSessionUrl,
+        method: 'GET',
+      })
+    } catch (_) {
+      // if it fails try callback call to remove active session if exists
+      yield call(request, {
+        url: logoutUrl,
+        method: 'GET',
+      })
+    }
+
+    yield put(authActions.logoutSuccess())
+  } catch (error) {
+    const errorMessage = error ? error.response.data.error : undefined
+    yield put(authActions.logoutError({ error: errorMessage || 'Unknown error occurred.' }))
+  }
+}
+
 export function * rootSaga () {
   yield takeLatest(LOGIN, loginWorker)
   yield takeLatest([LOGIN_SUCCESS, LOGIN_USER], loginUWorker)
   yield takeLatest(FORGOT_PASSWORD, forgotPasswordSaga)
   yield takeLatest(RECOVER_PASSWORD, recoverPasswordSaga)
+  yield takeLatest(LOGOUT, logoutWorker)
 }
 export default rootSaga
