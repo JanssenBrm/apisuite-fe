@@ -38,11 +38,21 @@ const Profile: React.FC<ProfileProps> = ({
     avatarUrl: '',
   }, {
     avatarUrl: {
-      rules: [isValidURL],
+      rules: [(uri) => {
+        const stringURI = uri.toString()
+        if (stringURI.length === 0) return true
+        if (stringURI.length > 0) return isValidURL(uri)
+        return false
+      }],
       message: t('warnings.url'),
     },
     mobileNumber: {
-      rules: [isValidPhoneNumber],
+      rules: [(phone) => {
+        const stringPhone = phone.toString()
+        if (stringPhone.length === 0) return true
+        if (stringPhone.length > 0) return isValidPhoneNumber(phone)
+        return false
+      }],
       message: t('warnings.mobileNumber'),
     },
   })
