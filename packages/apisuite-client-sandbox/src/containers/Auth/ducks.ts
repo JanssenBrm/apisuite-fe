@@ -11,7 +11,7 @@ export const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS'
 const LOGIN_ERROR = 'auth/LOGIN_ERROR'
 const LOGIN_USER_SUCCESS = 'auth/LOGIN_USER_SUCCESS'
 const LOGIN_USER_ERROR = 'auth/LOGIN_USER_ERROR'
-const LOGOUT = 'auth/LOGOUT'
+export const LOGOUT = 'auth/LOGOUT'
 
 export const FORGOT_PASSWORD = 'auth/FORGOT_PASSWORD'
 export const FORGOT_PASSWORD_SUCCESS = 'auth/FORGOT_PASSWORD_SUCCESS'
@@ -86,11 +86,7 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
     }
 
     case LOGOUT: {
-      return update(state, {
-        user: { $set: undefined },
-        authToken: { $set: undefined },
-        isAuthorizing: { $set: false },
-      })
+      return initialState
     }
 
     /* TODO: An alternative solution is to be explored in the future (and if possible):

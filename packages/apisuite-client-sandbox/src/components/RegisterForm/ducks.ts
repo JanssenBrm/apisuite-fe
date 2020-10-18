@@ -1,4 +1,6 @@
 import update from 'immutability-helper'
+import { AuthStoreActionTypes } from 'containers/Auth/types'
+import { LOGOUT } from 'containers/Auth/ducks'
 import {
   RegisterFormStore,
   RegisterFormActions,
@@ -30,7 +32,7 @@ export enum RegisterFormActionTypes {
   NEXT_STEP = 'NEXT_STEP'
 }
 
-const IState: RegisterFormStore = {
+const initialState: RegisterFormStore = {
   isRequesting: false,
   error: undefined,
   registrationToken: undefined,
@@ -39,10 +41,14 @@ const IState: RegisterFormStore = {
 }
 
 export default function registerFormReducer (
-  state = IState,
-  action: RegisterFormActions,
+  state = initialState,
+  action: RegisterFormActions | AuthStoreActionTypes['logout'],
 ): RegisterFormStore {
   switch (action.type) {
+    case LOGOUT: {
+      return initialState
+    }
+
     case RegisterFormActionTypes.NEXT_STEP: {
       const nextStep = state.step + 1
 
