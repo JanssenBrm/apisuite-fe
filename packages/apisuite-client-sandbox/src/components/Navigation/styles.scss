@@ -82,6 +82,10 @@ $header-space: 50px;
     &.scrolled {
       transform: translateY(0);
       margin-right: 44px;
+
+      .MuiTabs-indicator {
+        display: none;
+      }
     }
   }
 
@@ -102,6 +106,10 @@ $header-space: 50px;
       transform: translateY(0);
       background-color: #E3E3E3;
       color: #333333;
+
+      .MuiTabs-indicator {
+        display: inline;
+      }
     }
   }
 
@@ -119,14 +127,6 @@ $header-space: 50px;
 
     .space {
       flex: 1;
-    }
-
-    .tab {
-      margin: 16px;
-      transition: opacity .2s ease;
-      white-space: nowrap;
-
-      cursor: pointer;
     }
 
     .sub-tab {

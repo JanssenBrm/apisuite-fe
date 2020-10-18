@@ -1,8 +1,9 @@
 import * as React from 'react'
+import { useLocation } from 'react-router-dom'
 import SvgIcon from 'components/SvgIcon'
 import { TabProps } from 'components/Navigation/types'
 import { getMenuEntries } from 'util/extensions'
-import { Menus } from 'apisuite-extension-ui-types'
+import { MenuEntry, Menus } from 'apisuite-extension-ui-types'
 import { useSettings } from 'util/useSetting'
 import { useSelector } from 'react-redux'
 import { getRoleName } from 'containers/Auth/selectors'
@@ -21,6 +22,42 @@ const ConsoleLabel = () => (
 export function useTabs (): Array<TabProps[]> {
   const [settings] = useSettings()
   const roleName = useSelector(getRoleName)
+  const { pathname } = useLocation()
+
+  // Create an array for each accumulated level of pathnames of the current URI
+  // Ex: /dashboard/subscriptions -> [/dashboard, /dashboard/subscriptions]
+  const levelPathnames = React.useMemo(() => {
+    const pathParts = pathname.split('/')
+    return pathParts.reduce((accum, _part, index) => {
+      const levelParts = pathParts.slice(0, index + 1)
+      return [...accum, levelParts.join('/')]
+    }, [] as string[]).slice(1)
+  }, [pathname])
+
+  // Iterates through all menu and sub-menu entries and sets which entries are
+  // active. Active entries are either those whose path match with the current
+  // page or where any of the sub menu items is active.
+  const setMenuActiveEntries = React.useCallback((entries, level = 0) => {
+    return entries.map((entry: MenuEntry) => {
+      const hasLevelPathname = !!levelPathnames[level]
+      const curEntryActive =
+        entry.route === levelPathnames[level] || entry.route === pathname
+      const matchesPrevLevelPath =
+        !hasLevelPathname && entry.route === levelPathnames[level - 1]
+      let subTabs = entry.subTabs
+      let hasActiveSubtab
+      if (subTabs) {
+        subTabs = setMenuActiveEntries(entry.subTabs, level + 1)
+        hasActiveSubtab = !!subTabs && subTabs.some((entry) => entry.active)
+      }
+      return {
+        ...entry,
+        subTabs,
+        active: hasActiveSubtab || curEntryActive || matchesPrevLevelPath,
+      }
+    })
+  }, [pathname, levelPathnames])
+
   const [
     extensionsInitTabs,
     extensionsLoginTabs,
@@ -47,10 +84,12 @@ export function useTabs (): Array<TabProps[]> {
       {
         label: 'Log in',
         route: '/auth/login',
+        active: pathname === '/auth/login',
       },
       {
         label: 'Register',
         route: '/auth/register',
+        active: pathname === '/auth/register',
       },
       ...extensionsInitTabs,
     ].filter(Boolean)
@@ -62,7 +101,7 @@ export function useTabs (): Array<TabProps[]> {
       })
     }
 
-    return entries
+    return setMenuActiveEntries(entries)
   }, [settings, extensionsInitTabs])
 
   const loginTabs = React.useMemo((): TabProps[] => {
@@ -136,15 +175,14 @@ export function useTabs (): Array<TabProps[]> {
       })
     }
 
-    return entries
+    return setMenuActiveEntries(entries)
   }, [
     settings,
     extensionsLoginTabs,
     extensionsLoginDashboardTabs,
     extensionsLoginProfileTabs,
+    levelPathnames,
   ])
-
-  console.log({ loginTabs })
 
   return [initTabs, loginTabs]
 }
