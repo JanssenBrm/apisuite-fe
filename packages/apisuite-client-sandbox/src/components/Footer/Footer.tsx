@@ -9,7 +9,7 @@ import { MenuSection, MenuSections } from './types'
 import { getMenuEntries } from 'util/extensions'
 import { useSettings } from 'util/useSetting'
 import { useSelector } from 'react-redux'
-import { getRoleName } from 'containers/Auth/selectors'
+import { getRoleName } from 'containers/Profile/selectors'
 import { SettingsStore } from 'containers/Settings/types'
 
 import './styles.scss'

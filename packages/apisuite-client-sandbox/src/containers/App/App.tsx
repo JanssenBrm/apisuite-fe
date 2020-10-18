@@ -14,6 +14,7 @@ import logo from 'theme/images/current_APISuite_logo.png'
 const App: React.FC<AppProps> = ({
   auth,
   history,
+  getProfile,
   getSettings,
   loginUser,
   logout,
@@ -32,6 +33,13 @@ const App: React.FC<AppProps> = ({
   React.useEffect(function initOnce () {
     getSettings()
   }, [])
+
+  React.useEffect(() => {
+    if (auth.user) {
+      getProfile()
+    }
+    setActiveMenuName(auth.user ? 'login' : 'init')
+  }, [auth.user])
 
   React.useEffect(() => {
     const pathname = history.location.pathname
@@ -69,10 +77,6 @@ const App: React.FC<AppProps> = ({
   function handleGobackClick () {
     history.goBack()
   }
-
-  React.useEffect(() => {
-    setActiveMenuName(auth.user ? 'login' : 'init')
-  }, [auth.user])
 
   return (
     <div style={{ height: '100%' }}>

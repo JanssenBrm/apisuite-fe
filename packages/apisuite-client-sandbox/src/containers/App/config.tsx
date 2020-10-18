@@ -6,7 +6,7 @@ import { getMenuEntries } from 'util/extensions'
 import { MenuEntry, Menus } from 'apisuite-extension-ui-types'
 import { useSettings } from 'util/useSetting'
 import { useSelector } from 'react-redux'
-import { getRoleName } from 'containers/Auth/selectors'
+import { getRoleName } from 'containers/Profile/selectors'
 
 const ConsoleLabel = () => (
   <div style={{ backgroundColor: '#A9A9A9', borderRadius: 4, paddingLeft: 4, paddingRight: 4, pointerEvents: 'none' }}>

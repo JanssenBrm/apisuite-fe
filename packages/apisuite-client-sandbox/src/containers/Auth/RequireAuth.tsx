@@ -2,7 +2,7 @@ import * as React from 'react'
 import { RequireAuthProps } from './types'
 import { Redirect } from 'react-router'
 import { useSelector } from 'react-redux'
-import { getRoleName } from 'containers/Auth/selectors'
+import { getRoleName } from 'containers/Profile/selectors'
 import { validateRoleConfig } from 'util/roleSetup'
 
 export const RequireAuth: React.FC<RequireAuthProps> = ({
