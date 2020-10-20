@@ -3,7 +3,7 @@ import { Action, AnyAction } from 'redux'
 import { ReactType } from 'react'
 import { Role } from 'containers/Profile/types'
 import { History } from 'history'
-import { RoleRequirement } from 'apisuite-extension-ui-types'
+import { RoleRequirement } from '@apisuite/extension-ui-types'
 import { LOGOUT } from './ducks'
 
 export interface AuthStore {

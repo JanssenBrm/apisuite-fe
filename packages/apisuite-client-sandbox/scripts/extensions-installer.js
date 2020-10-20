@@ -81,8 +81,8 @@ function loadEnvExtensionsConfig (environment) {
 
 function injectExtensionsIntoPackageJson (envExtensions) {
   envExtensions.extensions.forEach(extension => {
-    packageJson.dependencies = packageJson.dependencies || {}
-    packageJson.dependencies[extension.name] = extension.path
+    packageJson.devDependencies = packageJson.devDependencies || {}
+    packageJson.devDependencies[extension.name] = extension.version || extension.path
   })
 
   fs.writeFileSync(`${__dirname}/../package.json`, JSON.stringify(packageJson, null, 2) + '\n')
@@ -99,8 +99,12 @@ function injectExtensionsIntoExtensionsTs (envExtensions) {
       ? JSON.stringify(extension.config, null, 2)
       : ''
     imports.push(`import ${extension.className} from '${extension.name}'`)
-    registrations.push(`new ${extension.className}(${extensionConfig}),`)
+    registrations.push(`instanceExtension(${extension.className}, ${extensionConfig}),`)
   })
+
+  if (imports.length) {
+    imports.unshift("import { instanceExtension } from 'util/extensionsParams'")
+  }
 
   const importsString = imports.join('\n')
   const registrationString = interpolateEnvVars(registrations.join('\n'))

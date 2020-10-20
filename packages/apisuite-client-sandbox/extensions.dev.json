@@ -1,8 +1,9 @@
 {
   "extensions": [
     {
-      "path": "github:Cloudoki/apisuite-extension-status-ui#v1.0.3",
-      "name": "apisuite-extension-status-ui",
+      "name": "@apisuite/extension-status-ui",
+      "version": "^1.0.4",
+      "path": "",
       "className": "Status",
       "config": {
         "servicesStatusDataUrl": "https://gateway.develop.apisuite.io/services"
