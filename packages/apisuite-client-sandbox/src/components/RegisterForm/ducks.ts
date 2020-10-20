@@ -27,6 +27,10 @@ export enum RegisterFormActionTypes {
   CONFIRM_REGISTRATION_SUCCESS = 'CONFIRM_REGISTRATION_SUCCESS',
   CONFIRM_REGISTRATION_ERROR = 'CONFIRM_REGISTRATION_ERROR',
 
+  VALIDATE_REGISTRATION_TOKEN_REQUEST = 'VALIDATE_REGISTRATION_TOKEN_REQUEST',
+  VALIDATE_REGISTRATION_TOKEN_SUCCESS = 'VALIDATE_REGISTRATION_TOKEN_SUCCESS',
+  VALIDATE_REGISTRATION_TOKEN_ERROR = 'VALIDATE_REGISTRATION_TOKEN_ERROR',
+
   NEXT_STEP = 'NEXT_STEP'
 }
 
@@ -36,6 +40,10 @@ const IState: RegisterFormStore = {
   registrationToken: undefined,
   step: 1,
   submittedEmail: '',
+  invitation: {
+    email: undefined,
+  },
+  invitationError: undefined,
 }
 
 export default function registerFormReducer (
@@ -45,6 +53,15 @@ export default function registerFormReducer (
   switch (action.type) {
     case RegisterFormActionTypes.NEXT_STEP: {
       const nextStep = state.step + 1
+
+      // if we have an invitation skip setp 2
+      if (state.invitation && state.invitation.email && nextStep === 2) {
+        const skipedStep = nextStep + 1
+        return update(state, {
+          // @ts-ignore
+          step: { $set: skipedStep },
+        })
+      }
 
       // If 'nextStep' ever amounts to '5', it means we have reached the 'Confirm registration' view.
       if (nextStep === 5) {
@@ -77,7 +94,8 @@ export default function registerFormReducer (
         submittedEmail: { $set: action.payload.email },
       })
     case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_REQUEST:
-    case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST: {
+    case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_REQUEST:
+    case RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_REQUEST: {
       return update(state, {
         isRequesting: { $set: true },
       })
@@ -98,6 +116,19 @@ export default function registerFormReducer (
     case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_SUCCESS:
     case RegisterFormActionTypes.SUBMIT_SECURITY_STEP_ERROR: {
       return update(state, {
+        isRequesting: { $set: false },
+      })
+    }
+
+    case RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_SUCCESS: {
+      return update(state, {
+        invitation: { $set: action.response },
+        isRequesting: { $set: false },
+      })
+    }
+    case RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_ERROR: {
+      return update(state, {
+        invitationError: { $set: action.error },
         isRequesting: { $set: false },
       })
     }
@@ -188,6 +219,27 @@ export const confirmRegistrationActions = {
   error: (error: string) => {
     return {
       type: RegisterFormActionTypes.CONFIRM_REGISTRATION_ERROR,
+      error: error,
+    } as const
+  },
+}
+
+export const validateRegisterTokenActions = {
+  request: (token: string) => {
+    return {
+      type: RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_REQUEST,
+      payload: { token: token },
+    } as const
+  },
+  success: (response: any) => {
+    return {
+      type: RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_SUCCESS,
+      response: response,
+    } as const
+  },
+  error: (error: string) => {
+    return {
+      type: RegisterFormActionTypes.VALIDATE_REGISTRATION_TOKEN_ERROR,
       error: error,
     } as const
   },

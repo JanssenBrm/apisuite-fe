@@ -46,14 +46,25 @@ for project in ${PROJECTS_LIST}; do
   if [ "${CIRCLE_BRANCH}" != "develop" ]; then
     PROJECT_PACKAGE_VERSION=$(cat ../${ROOT_PROJECTS_FOLDER}/${project}/package.json | grep version | head -1 | awk -F ": " '{ print $2 }' | sed 's/[",]//g')
   fi
+  PROJECT_PACKAGE_ENV_SUFFIX=""
+  if [ "${CLOUD_BUILD}" == "true" ]; then
+    # When creating the cloud build, add a suffix so that we get
+    # an image tag like `client-sandbox-cloud-1.0.0`
+    PROJECT_PACKAGE_ENV_SUFFIX="-cloud"
+    # And also add this env var so that the projects can prepare a cloud-specific build, if necessary
+    echo "CLOUD=true" >> .env
+  fi
+  # Example: APISUITE_CLIENT_SANDBOX_TAG
   echo "Creating the var for $(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG"
   CLEAN_PROJECT_PREFIX=${project#$PREFIX_FILTER}
   CLEAN_PROJECT_SUFFIX=${CLEAN_PROJECT_PREFIX%$SUFFIX_FILTER}
-  echo "$(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG=${CLEAN_PROJECT_SUFFIX}-${PROJECT_PACKAGE_VERSION}" >> .env
+  echo "$(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG=${CLEAN_PROJECT_SUFFIX}${PROJECT_PACKAGE_ENV_SUFFIX}-${PROJECT_PACKAGE_VERSION}" >> .env
 
 
   if [[ "${project}" == "apisuite-client-sandbox" ]]; then
-    if [[ -f ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config-${CIRCLE_BRANCH}.json ]]; then
+    if [ "${CLOUD_BUILD}" == "true" ]; then
+      cp ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config-cloud.json ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config.json
+    elif [[ -f ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config-${CIRCLE_BRANCH}.json ]]; then
       cp ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config-${CIRCLE_BRANCH}.json ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config.json
     else
       cp ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config-develop.json ../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config.json

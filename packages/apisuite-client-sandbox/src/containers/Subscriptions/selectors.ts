@@ -18,7 +18,10 @@ export const getApisByName = createSelector(
       subscriptions.apis.forEach((api) => {
         if (api.name === apiName) {
           getVersions.push({
+            // TODO fix for correct api versions
+            // @ts-ignore
             versionName: api.version,
+            // @ts-ignore
             apiTitle: api.apiTitle,
             apiId: api.id,
           })

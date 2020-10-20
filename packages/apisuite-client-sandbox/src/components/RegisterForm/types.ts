@@ -9,6 +9,7 @@ import {
   submitPersonalDetailsActions,
   submitOrganisationDetailsActions,
   submitSecurityStepActions,
+  validateRegisterTokenActions,
 } from './ducks'
 
 export type RegisterFormProps =
@@ -22,6 +23,7 @@ export type Step = keyof typeof steps
 export type PersonalDetails = {
   name: string,
   email: string,
+  token?: string,
 }
 
 export type PersonalDetailsResponse = {
@@ -38,11 +40,17 @@ export type PersonalDetailsResponseErrorObject = {
 export type OrganisationDetails = {
   name: string,
   website: string,
-  vat: string,
+  vat?: string,
 }
 
 export type SecurityStep = {
   password: string,
+  token?: string,
+}
+
+export type InvitationResponse = {
+  email?: string,
+  errors?: [string],
 }
 
 export type RegisterFormStore = {
@@ -51,13 +59,16 @@ export type RegisterFormStore = {
   error?: string,
   step: Step,
   submittedEmail: string,
+  invitation?: InvitationResponse,
+  invitationError?: string,
 }
 
 export type RegisterFormActions =
   ReturnType<typeof nextStepAction> |
   ReturnNestedType<typeof submitPersonalDetailsActions> |
   ReturnNestedType<typeof submitOrganisationDetailsActions> |
-  ReturnNestedType<typeof submitSecurityStepActions>
+  ReturnNestedType<typeof submitSecurityStepActions> |
+  ReturnNestedType<typeof validateRegisterTokenActions>
 
 export function isStep (step: Step | number): step is Step {
   return step as Step !== undefined

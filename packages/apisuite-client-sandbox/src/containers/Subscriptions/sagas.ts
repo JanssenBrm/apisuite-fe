@@ -16,7 +16,7 @@ import { Store } from 'store/types'
 
 function * getApisSaga () {
   try {
-    const getApisUrl = `${API_URL}/sandboxapi/`
+    const getApisUrl = `${API_URL}/apis`
     const accessToken = yield select(
       (state: Store) => state.auth.authToken)
     const response: ApisResponse = yield call(request, {
@@ -28,7 +28,7 @@ function * getApisSaga () {
       },
     })
 
-    yield put(getApisSuccess(response.apis.rows))
+    yield put(getApisSuccess(response.rows))
   } catch {
     // TODO: decide and implement error handling
     yield put(getApisError())
