@@ -3,6 +3,32 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.0.0-rc.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.15...apisuite-client-sandbox@1.0.0-rc.3) (2020-10-20)
+
+
+### Bug Fixes
+
+* **logout/subscriptions:** use the new apis endpoint and fix types, add logout request ([ee17116](https://github.com/Cloudoki/APISuite/commit/ee17116dec86d7211a514c83e0ee9e174fac7f5b))
+* **profile:** fix profile validation, org and teams page ([3c9da60](https://github.com/Cloudoki/APISuite/commit/3c9da60f9d5e8485bb0ca43f583426f3ca501b35))
+* **registration:** remove vat, add invitation flow ([a0ab05b](https://github.com/Cloudoki/APISuite/commit/a0ab05b25bb957a56f8dc054cd2601b309471951))
+* Remove `Demo` from the portal title ([79c0f10](https://github.com/Cloudoki/APISuite/commit/79c0f10d51f990bc53b37d6933ab2fb820d580c8))
+* **Settings:** Remove the `x-access-token` header when reading from the Settings API ([e0b4786](https://github.com/Cloudoki/APISuite/commit/e0b47868fe1f24e4f312d03a3be890771e605a46))
+
+
+### Features
+
+* Pass internal helper functions to extensions ([8d1eda5](https://github.com/Cloudoki/APISuite/commit/8d1eda5747769c06270c3a45a35c011c3d0198ce))
+* **Settings:** Integrate with the Settings API ([8e6f84f](https://github.com/Cloudoki/APISuite/commit/8e6f84f8b8304a95cb0db9b9d531daec967cabc3))
+
+
+### Performance Improvements
+
+* **audit:** update version for audit fixes ([d854a03](https://github.com/Cloudoki/APISuite/commit/d854a03ae7574c3103b3584d35ff06da75302a20))
+
+
+
+
+
 # [1.0.0-alpha.15](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.14...apisuite-client-sandbox@1.0.0-alpha.15) (2020-10-07)
 
 
