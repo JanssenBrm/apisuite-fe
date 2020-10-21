@@ -3,7 +3,8 @@ import { Link as RouterLink, LinkProps } from 'react-router-dom'
 
 type LinkBehaviourProps = {
   externalTarget?: string,
-} & LinkProps
+  href?: string,
+} & Pick<LinkProps, 'to'>
 
 const Link = React.forwardRef<any, LinkBehaviourProps>((
   {
