@@ -15,6 +15,7 @@ function generateEnvFiles() {
 
   if [[ $CIRCLE_BRANCH =~ develop$ ]]; then
     echo "ENV=dev
+CLOUD=${CLOUD_BUILD}
 AUTH_URL=${AUTH_URL_DEV}
 API_URL=${API_URL_DEV}
 APP_URL=${APP_URL_DEV}
@@ -26,6 +27,7 @@ SIGNUP_PORT=${SIGNUP_PORT_DEV}" > ${ENV_FILE_APISUITE_SANDBOX_CLIENT}
   elif [[ $CIRCLE_BRANCH =~ staging$ ]]; then
 
     echo "ENV=stg
+CLOUD=${CLOUD_BUILD}
 AUTH_URL=${AUTH_URL_STG}
 API_URL=${API_URL_STG}
 APP_URL=${APP_URL_STG}
@@ -37,6 +39,7 @@ SIGNUP_PORT=${SIGNUP_PORT_STG}" > ${ENV_FILE_APISUITE_SANDBOX_CLIENT}
   elif [[ $CIRCLE_BRANCH =~ production$ ]]; then
 
     echo "ENV=prod
+CLOUD=${CLOUD_BUILD}
 AUTH_URL=${AUTH_URL_PROD}
 API_URL=${API_URL_PROD}
 APP_URL=${APP_URL_PROD}
