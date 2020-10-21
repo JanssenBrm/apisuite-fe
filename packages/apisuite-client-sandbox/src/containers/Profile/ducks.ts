@@ -1,4 +1,6 @@
 import update from 'immutability-helper'
+import { AuthStoreActionTypes } from 'containers/Auth/types'
+import { LOGOUT } from 'containers/Auth/ducks'
 import {
   ProfileActions,
   ProfileStore,
@@ -124,9 +126,13 @@ export enum ProfileActionTypes {
 
 export default function profileReducer (
   state = initialState,
-  action: ProfileActions,
+  action: ProfileActions | AuthStoreActionTypes['logout'],
 ): ProfileStore {
   switch (action.type) {
+    case LOGOUT: {
+      return initialState
+    }
+
     case ProfileActionTypes.FETCH_TEAM_MEMBERS_SUCCESS: {
       return update(state, {
         /* Previously '{ $set: action.response.members }', which caused the

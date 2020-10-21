@@ -22,7 +22,7 @@ export type ProfileProps =
 ReturnType<typeof mapStateToProps> &
 ReturnType<typeof mapDispatchToProps>
 
-export const roleNameOptions = ['superadmin', 'admin', 'developer', ''] as const
+export const roleNameOptions = ['superadmin', 'admin', 'developer', 'organizationOwner', ''] as const
 
 export type OrgInfo = {
   description: string | null,

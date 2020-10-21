@@ -1,8 +1,8 @@
 {
   "extensions": [
     {
-      "path": "github:Cloudoki/apisuite-cloud-extension-ui#v1.0.1",
-      "name": "apisuite-cloud-extension-ui",
+      "path": "github:Cloudoki/apisuite-cloud-extension-ui#v1.0.3",
+      "name": "@apisuite/extension-cloud-extension-ui",
       "className": "CloudExtension",
       "config": {
         "cloudExtensionSubdomain": "cloudextapi",

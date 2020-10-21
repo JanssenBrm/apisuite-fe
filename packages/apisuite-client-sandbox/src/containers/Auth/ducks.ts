@@ -88,11 +88,7 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
     }
 
     case LOGOUT: {
-      return update(state, {
-        user: { $set: undefined },
-        authToken: { $set: undefined },
-        isAuthorizing: { $set: false },
-      })
+      return initialState
     }
 
     /* TODO: An alternative solution is to be explored in the future (and if possible):

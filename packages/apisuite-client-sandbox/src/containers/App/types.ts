@@ -10,6 +10,7 @@ export interface AppProps extends AppDispatchToProps {
 }
 
 export interface AppDispatchToProps {
+  getProfile: () => void,
   getSettings: () => void,
   loginUser: (payload: AuthPayloads['loginUser']) => void,
 }

@@ -2,6 +2,8 @@ import update from 'immutability-helper'
 import { AppData, ApplicationsStore, ApplicationsActions } from './types'
 import { SubscriptionsActionTypes } from 'containers/Subscriptions/ducks'
 import { SubscriptionsActions } from 'containers/Subscriptions/types'
+import { AuthStoreActionTypes } from 'containers/Auth/types'
+import { LOGOUT } from 'containers/Auth/ducks'
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -57,9 +59,12 @@ export const RESET_CURRENT_APP = 'Applications/RESET_CURRENT_APP'
 /** Reducer */
 export default function reducer (
   state = initialState,
-  action: ApplicationsActions | SubscriptionsActions,
+  action: ApplicationsActions | SubscriptionsActions | AuthStoreActionTypes['logout'],
 ): ApplicationsStore {
   switch (action.type) {
+    case LOGOUT: {
+      return state
+    }
     case CREATE_APP: {
       return update(state, {
         resCreate: {
