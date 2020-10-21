@@ -3,8 +3,7 @@ import { Link as RouterLink, LinkProps } from 'react-router-dom'
 
 type LinkBehaviourProps = {
   externalTarget?: string,
-  href?: string,
-} & Pick<LinkProps, 'to'>
+} & LinkProps
 
 const Link = React.forwardRef<any, LinkBehaviourProps>((
   {
@@ -21,7 +20,7 @@ const Link = React.forwardRef<any, LinkBehaviourProps>((
       <a
         target={externalTarget}
         href={destination}
-        {...props}
+        {...props as React.AnchorHTMLAttributes<HTMLAnchorElement>}
       >
         {props.children}
       </a>
