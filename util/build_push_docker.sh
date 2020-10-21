@@ -51,8 +51,6 @@ for project in ${PROJECTS_LIST}; do
     # When creating the cloud build, add a suffix so that we get
     # an image tag like `client-sandbox-cloud-1.0.0`
     PROJECT_PACKAGE_ENV_SUFFIX="-cloud"
-    # And also add this env var so that the projects can prepare a cloud-specific build, if necessary
-    echo "CLOUD=true" >> .env
   fi
   # Example: APISUITE_CLIENT_SANDBOX_TAG
   echo "Creating the var for $(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG"
