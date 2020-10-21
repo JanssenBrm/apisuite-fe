@@ -46,6 +46,9 @@ export interface AuthPayloads {
     token: string,
   },
   recoverPasswordError: any,
+  logoutError: {
+    error: string,
+  },
 }
 
 export interface AuthStoreActionTypes {

@@ -176,7 +176,8 @@ const CreateApp: React.FC<CreateAppProps> = ({
 
   const selectOptions = (apis: Api[]) => {
     return apis.map(api => ({
-      label: api.apiTitle,
+      label: `${api.name}-${api.id}`,
+      // label: api.apiTitle,
       value: api.id,
       group: api.name,
     }))
