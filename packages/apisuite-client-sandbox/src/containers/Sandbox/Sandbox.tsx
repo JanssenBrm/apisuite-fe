@@ -31,7 +31,7 @@ const Sandbox: React.FC<{}> = () => {
   // }
 
   return (
-    <main className={classes.root} style={{ backgroundImage: `url(${themeBg})` }}>
+    <main className={`page-container ${classes.root}`} style={{ backgroundImage: `url(${themeBg})` }}>
 
       {getSections(Sections.HomepagePrecontent)}
 

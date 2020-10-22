@@ -82,7 +82,7 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
   }, [org])
 
   return (
-    <div className={classes.root}>
+    <div className={`page-container ${classes.root}`}>
       <section className={classes.contentContainer}>
         <form
           className={classes.form}

@@ -1,9 +1,11 @@
+import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { appStoreActionCreators } from 'components/InformDialog/ducks'
+import { authActions } from 'containers/Auth/ducks'
 import Navigation from './Navigation'
-import { Dispatch } from 'redux'
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  logout: () => dispatch(authActions.logout()),
   toggleInform: () => dispatch(appStoreActionCreators.informOpen()),
 })
 

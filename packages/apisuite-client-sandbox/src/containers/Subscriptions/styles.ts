@@ -4,7 +4,6 @@ import { config } from 'constants/global'
 export default makeStyles(({
   root: {
     minHeight: '100%',
-    paddingTop: 200,
     backgroundColor: config.palette.background.default,
   },
   contentContainer: {

@@ -9,7 +9,7 @@ const Subscriptions: React.FC<{}> = () => {
   const [t] = useTranslation()
 
   return (
-    <div className={classes.root}>
+    <div className={`page-container ${classes.root}`}>
       <section className={classes.contentContainer}>
         <h1 className={classes.title}>{t('subscriptions.title')}</h1>
 

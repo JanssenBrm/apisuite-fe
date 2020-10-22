@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 const Terms: React.FC<{}> = () => (
-  <div style={{ minHeight: '100%', padding: 16 }}>
+  <div className='page-container' style={{ minHeight: '100%', padding: 16 }}>
     <h1>Terms & conditions</h1>
     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,

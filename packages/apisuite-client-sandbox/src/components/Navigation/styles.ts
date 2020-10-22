@@ -21,6 +21,5 @@ export default makeStyles(({
   },
   indicatorBottom: {
     backgroundColor: 'black',
-    display: 'none',
   },
 }))
