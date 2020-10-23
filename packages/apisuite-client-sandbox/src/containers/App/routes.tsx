@@ -3,6 +3,7 @@ import {
   Route,
   Switch,
 } from 'react-router'
+import { Layouts } from '@apisuite/extension-ui-types'
 import MainLayout from 'layouts/Main'
 import EssentialLayout from 'layouts/Essential'
 import NotFound from 'components/NotFound'
@@ -26,6 +27,11 @@ import Profile from 'containers/Profile'
 import OrganizationPage from 'containers/OrganizationPage'
 import { getRoutes } from 'util/extensions'
 
+const layouts: Record<string, React.ComponentType<any>> = {
+  [Layouts.Main]: MainLayout,
+  [Layouts.Essential]: EssentialLayout,
+}
+
 const extensionsRoutes = getRoutes().map(
   (route: any): AppRouteProps => {
     if (!route.auth) {
@@ -34,6 +40,8 @@ const extensionsRoutes = getRoutes().map(
     return {
       ...route,
       auth: true,
+      layout: layouts[route.layout] || MainLayout,
+      layoutProps: route.layoutProps,
       component: route.component,
       roleReq: route.role,
     }
@@ -65,7 +73,7 @@ export const routesConfig: AppRouteProps[] = [
 
 function RouteWrapper ({
   layout: Layout = MainLayout,
-  layoutProps,
+  layoutProps = {},
   component: Component,
   render,
   auth,
