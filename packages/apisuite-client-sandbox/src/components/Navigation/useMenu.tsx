@@ -1,25 +1,13 @@
 import * as React from 'react'
 import { useLocation } from 'react-router-dom'
-import SvgIcon from 'components/SvgIcon'
-import { TabProps } from 'components/Navigation/types'
-import { getMenuEntries } from 'util/extensions'
-import { MenuEntry, Menus } from '@apisuite/extension-ui-types'
-import { useSettings } from 'util/useSetting'
 import { useSelector } from 'react-redux'
+import { MenuEntry, Menus } from '@apisuite/extension-ui-types'
+import { getMenuEntries } from 'util/extensions'
+import { useSettings } from 'util/useSetting'
 import { getRoleName } from 'containers/Profile/selectors'
+import { TabProps } from './types'
 
-const ConsoleLabel = () => (
-  <div style={{ backgroundColor: '#A9A9A9', borderRadius: 4, paddingLeft: 4, paddingRight: 4, pointerEvents: 'none' }}>
-    <SvgIcon
-      name='code'
-      size={24}
-      color='white'
-      style={{ backgroundColor: 'transparent' }}
-    />
-  </div>
-)
-
-export function useTabs (): Array<TabProps[]> {
+export function useMenu (): Array<TabProps[]> {
   const [settings] = useSettings()
   const roleName = useSelector(getRoleName)
   const { pathname } = useLocation()
@@ -130,12 +118,6 @@ export function useTabs (): Array<TabProps[]> {
             label: 'Test',
             route: '/dashboard/test',
           },
-          // #conditional-loader-start: console
-          {
-            label: <ConsoleLabel />,
-            route: '/dashboard/console',
-          },
-          // #conditional-loader-end
           ...extensionsLoginDashboardTabs,
         ],
       },
@@ -187,7 +169,7 @@ export function useTabs (): Array<TabProps[]> {
   return [initTabs, loginTabs]
 }
 
-export const gobackConfig = [
+export const goBackConfig = [
   {
     path: '/dashboard/apps/create',
     label: 'Cancel',

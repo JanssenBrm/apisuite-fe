@@ -8,7 +8,6 @@ export default makeStyles(({
     width: '100%',
     minHeight: '100%',
     backgroundSize: 'cover',
-    paddingTop: 300,
     paddingBottom: 45,
   },
   section: {

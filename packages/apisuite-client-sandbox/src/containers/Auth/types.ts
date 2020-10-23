@@ -1,6 +1,5 @@
 import { ErrorReason } from 'util/request'
 import { Action, AnyAction } from 'redux'
-import { ReactType } from 'react'
 import { Role } from 'containers/Profile/types'
 import { History } from 'history'
 import { RoleRequirement } from '@apisuite/extension-ui-types'
@@ -74,7 +73,7 @@ export interface AuthStoreActionCreators {
 }
 
 export interface RequireAuthProps {
-  component: ReactType,
+  component: JSX.Element,
   auth?: AuthStore,
-  roleReq?: RoleRequirement,
+  role?: RoleRequirement,
 }

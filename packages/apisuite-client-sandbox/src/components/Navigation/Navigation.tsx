@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 import clsx from 'clsx'
 import Avatar from '@material-ui/core/Avatar'
 import Tabs from '@material-ui/core/Tabs'
@@ -7,26 +9,33 @@ import SvgIcon from 'components/SvgIcon'
 import Link from 'components/Link'
 import useStyles from './styles'
 import './styles.scss'
-import { NavigationProps } from './types'
+import { getAuth } from 'containers/Auth/selectors'
+import { TabMenus, NavigationProps } from './types'
+import { useMenu, goBackConfig } from './useMenu'
 
-const Navigation: React.FC<NavigationProps> = (props) => {
-  const {
-    title,
-    className,
-    tabs,
-    logoSrc,
-    user,
-    forceScrolled,
-    showBackButton,
-    backButtonLabel,
-    onGoBackCLick,
-    logout,
-    toggleInform,
-    ...rest
-  } = props
+import logoSrc from 'theme/images/current_APISuite_logo.png'
 
+const Navigation: React.FC<NavigationProps> = ({
+  title,
+  contractible = false,
+  toggleInform,
+  logout,
+  ...rest
+}) => {
   const classes = useStyles()
+  const history = useHistory()
+  const auth = useSelector(getAuth)
+  const user = auth.user
   const [scrollPos, setScrollPos] = React.useState(0)
+
+  const [activeMenuName, setActiveMenuName] = React.useState('init')
+  const [goBackLabel, setGoBackLabel] = React.useState('')
+  const [initTabs, loginTabs] = useMenu()
+  const allTabs: TabMenus = {
+    init: initTabs,
+    login: loginTabs,
+  }
+  const tabs = allTabs[activeMenuName]
 
   const { activeTab, subTabs, activeSubTab } = React.useMemo(() => {
     const activeTab = tabs.find((tab) => tab.active)
@@ -35,25 +44,50 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     return { activeTab, subTabs, activeSubTab }
   }, [tabs])
 
-  const scrolled = scrollPos >= 10
+  const scrolled = contractible && (scrollPos >= 10)
 
-  function scrollHandler () {
-    setScrollPos(window.scrollY)
-  }
+  const handleGobackClick = React.useCallback(() => history.goBack(), [])
 
   React.useEffect(() => {
+    setActiveMenuName(auth.user ? 'login' : 'init')
+  }, [auth.user])
+
+  const scrollHandler = React.useCallback(() => {
+    setScrollPos(window.scrollY)
+  }, [])
+
+  React.useEffect(() => {
+    const { pathname } = history.location
+    const gb = goBackConfig.find((item) => pathname.indexOf(item.path) === 0)
+    if (gb) {
+      setGoBackLabel(gb.label)
+    } else {
+      setGoBackLabel('')
+    }
+  }, [history.location.pathname])
+
+  React.useEffect(() => {
+    if (!contractible) {
+      return
+    }
     window.addEventListener('scroll', scrollHandler)
     return () => {
       window.removeEventListener('scroll', scrollHandler)
     }
-  }, [])
+  }, [contractible])
 
   return (
-    <div className={clsx('navigation', className, { scrolled: scrolled || forceScrolled })} {...rest}>
-      <header className={clsx({ scrolled: scrolled || forceScrolled })}>
+    <div
+      className={clsx('navigation', {
+        contractible,
+        scrolled,
+      })}
+      {...rest}
+    >
+      <header className={clsx({ scrolled })}>
         <img src={logoSrc} alt='logo' className='img' />
 
-        <nav className={clsx('container', { scrolled: scrolled || forceScrolled })}>
+        <nav className={clsx('container', { scrolled })}>
           <div className='tabs maintabs'>
             <div className='space' />
             <Tabs
@@ -79,18 +113,18 @@ const Navigation: React.FC<NavigationProps> = (props) => {
 
         {user && (
           <div className='avatar-container'>
-            {!(scrolled || forceScrolled) && <span>{user.fName}</span>}
+            {(contractible && !scrolled) && <span>{user.fName}</span>}
             <Avatar className='avatar' onClick={logout}><SvgIcon name='logout' size={20} /></Avatar>
           </div>
         )}
       </header>
 
       {!!subTabs && (
-        <div className={clsx('sub-container', { scrolled: scrolled || forceScrolled })}>
+        <div className={clsx('sub-container', { scrolled })}>
           <div className='tabs subtabs'>
-            {showBackButton && (
-              <div role='button' className='back-btn' onClick={onGoBackCLick}>
-                <SvgIcon name='chevron-left-circle' size={28} /> &nbsp;&nbsp; <span>{backButtonLabel}</span>
+            {!!goBackLabel && (
+              <div role='button' className='back-btn' onClick={handleGobackClick}>
+                <SvgIcon name='chevron-left-circle' size={28} /> &nbsp;&nbsp; <span>{goBackLabel}</span>
               </div>
             )}
 

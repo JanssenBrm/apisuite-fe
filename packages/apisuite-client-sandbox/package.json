@@ -64,7 +64,7 @@
     "yup": "^0.29.3"
   },
   "devDependencies": {
-    "@apisuite/extension-ui-types": "^1.0.4",
+    "@apisuite/extension-ui-types": "^1.0.5",
     "@babel/cli": "7.7.4",
     "@babel/core": "7.7.4",
     "@babel/plugin-proposal-class-properties": "7.7.4",

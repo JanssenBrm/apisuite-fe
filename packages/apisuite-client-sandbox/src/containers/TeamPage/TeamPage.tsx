@@ -120,7 +120,7 @@ const TeamPage: React.FC<TeamPageProps> = ({
   )
 
   return (
-    <div className={classes.root}>
+    <div className={`page-container ${classes.root}`}>
       <section className={classes.contentContainer}>
         <h1 className={classes.title}>{t('rbac.team.title')}</h1>
 

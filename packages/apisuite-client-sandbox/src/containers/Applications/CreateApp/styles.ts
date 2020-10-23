@@ -5,8 +5,6 @@ import { config } from 'constants/global'
 export default makeStyles(({
   container: {
     backgroundColor: 'white',
-    paddingTop: 250,
-    paddingBottom: 50,
     minHeight: '100%',
   },
   flexContainer: {

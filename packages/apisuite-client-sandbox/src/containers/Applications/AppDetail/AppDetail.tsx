@@ -272,7 +272,7 @@ const AppDetail: React.FC<AppDetailProps> = (
 
   return (
     <>
-      <div className={classes.container}>
+      <div className={`page-container ${classes.container}`}>
         <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
           <form noValidate autoComplete='off' className={classes.left}>
             <FormField

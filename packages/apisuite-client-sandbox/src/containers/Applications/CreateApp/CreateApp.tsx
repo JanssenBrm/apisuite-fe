@@ -231,7 +231,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
   }, [errors])
 
   return (
-    <div className={classes.container}>
+    <div className={`page-container ${classes.container}`}>
       <section className={clsx(commonClasses.contentContainer, classes.flexContainer)}>
         <form
           noValidate autoComplete='off'
