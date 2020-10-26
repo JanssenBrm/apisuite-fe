@@ -19,6 +19,7 @@ import {
   ProfileProps,
   Organization,
 } from './types'
+import { ROLES } from 'constants/global'
 
 const Profile: React.FC<ProfileProps> = ({
   getProfile,
@@ -116,7 +117,7 @@ const Profile: React.FC<ProfileProps> = ({
               : <Avatar className={classes.avatar}>{initials.toLocaleUpperCase()}</Avatar>}
 
             <InputLabel shrink>Access level</InputLabel>
-            <div>{profile.current_org.role.name}</div>
+            <div>{ROLES[profile.current_org.role.name]?.label}</div>
 
             <InputLabel shrink>Last login</InputLabel>
             <div>

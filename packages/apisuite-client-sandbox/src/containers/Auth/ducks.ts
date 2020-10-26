@@ -4,6 +4,7 @@ import { Reducer, AnyAction, Dispatch } from 'redux'
 import { History } from 'history'
 import cookie from 'js-cookie'
 import { LOCATION_CHANGE } from 'connected-react-router'
+import { openNotification } from 'containers/NotificationStack/ducks'
 
 export const LOGIN = 'auth/LOGIN'
 export const LOGIN_USER = 'auth/LOGIN_USER'
@@ -14,6 +15,7 @@ const LOGIN_USER_ERROR = 'auth/LOGIN_USER_ERROR'
 export const LOGOUT = 'auth/LOGOUT'
 const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS'
 const LOGOUT_ERROR = 'auth/LOGOUT_ERROR'
+const EXPIRED_SESSION = 'auth/EXPIRED_SESSION'
 
 export const FORGOT_PASSWORD = 'auth/FORGOT_PASSWORD'
 export const FORGOT_PASSWORD_SUCCESS = 'auth/FORGOT_PASSWORD_SUCCESS'
@@ -131,11 +133,20 @@ export const authActions = {
   logout: () => ({ type: LOGOUT }),
   logoutSuccess: () => ({ type: LOGOUT_SUCCESS }),
   logoutError: (payload: AuthPayloads['logoutError']) => ({ type: LOGOUT_ERROR, payload }),
+  handleSessionExpire: (payload: AuthPayloads['expireSession']) => ({ type: EXPIRED_SESSION, payload }),
 }
 
 export const createAuthMiddleware = (history: History) => () => (next: Dispatch) => (action: AnyAction) => {
   next(action)
-  if (action.type === LOGIN_SUCCESS) {
+  if (action.type === EXPIRED_SESSION) {
+    if (action.payload && action.payload.response && action.payload.response.status === 401) {
+      setTimeout(() => {
+        next(authActions.logout())
+      }, 1500)
+
+      next(openNotification('error', 'Your session has expired, you need to login again.', 5000))
+    }
+  } else if (action.type === LOGIN_SUCCESS) {
     cookie.set(TOKEN_KEY, action.payload.token, {
       expires: TOKEN_MAX_AGE,
       path: '/',

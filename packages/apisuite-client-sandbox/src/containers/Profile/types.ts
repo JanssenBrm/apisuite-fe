@@ -41,7 +41,9 @@ export type ProfileStore = {
   profile: Profile,
   org: Organization & Pick<OrgInfo, 'description' | 'vat' | 'website' | 'terms' | 'logo'>,
   requestStatuses: {
-    inviteMemberRequest: RequestStatus,
+    getMembersRequest: RequestStatus,
+    getRolesRequest: RequestStatus,
+    inviteMemberRequest: RequestStatus & { invited: boolean },
     updateProfileRequest: RequestStatus,
     updateOrgRequest: RequestStatus,
     changeRoleRequest: RequestStatus,
