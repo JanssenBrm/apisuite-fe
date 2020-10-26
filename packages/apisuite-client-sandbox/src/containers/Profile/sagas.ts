@@ -30,6 +30,7 @@ import {
   UpdateOrgResponse,
 } from './types'
 import { openNotification } from 'containers/NotificationStack/ducks'
+import { authActions } from 'containers/Auth/ducks'
 
 export function * fetchTeamMembersSaga () {
   try {
@@ -43,6 +44,7 @@ export function * fetchTeamMembersSaga () {
     yield put(fetchTeamMembersActions.success(response))
   } catch (error) {
     yield put(fetchTeamMembersActions.error(error))
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -58,6 +60,7 @@ export function * fetchRoleOptionsSaga () {
     yield put(fetchRoleOptionsActions.success(response))
   } catch (error) {
     yield put(fetchRoleOptionsActions.error(error))
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -77,8 +80,11 @@ export function * inviteMemberSaga (
     })
 
     yield put(inviteMemberActions.success(response))
+    yield put(openNotification('success', 'Member was invited successfully.', 3000))
   } catch (error) {
-    yield put(inviteMemberActions.error(error.response.data.error))
+    yield put(inviteMemberActions.error(error.response.data.error || { error: 'Invitation failed.' }))
+    yield put(openNotification('error', 'Error inviting member.', 3000))
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -121,8 +127,11 @@ export function * changeRoleSaga (
 
     yield put(changeRoleActions.success(response))
     yield put(fetchTeamMembersActions.request())
+    yield put(openNotification('success', 'Role updaded successfully.', 3000))
   } catch (error) {
     yield put(changeRoleActions.error(error.response.data.error))
+    yield put(openNotification('error', 'Failed to update role.', 3000))
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -141,6 +150,7 @@ export function * getProfileSaga () {
     yield put(getProfileActions.success(response))
   } catch (error) {
     yield put(getProfileActions.error(error))
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -163,6 +173,7 @@ export function * updateProfileSaga (
     yield put(getProfileActions.request())
   } catch (error) {
     yield put(updateProfileActions.error(error.response.data.error))
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -188,6 +199,7 @@ export function * fetchOrgSaga (
     yield put(fetchOrgActions.success(response))
   } catch (error) {
     yield put(fetchOrgActions.error(error))
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -210,6 +222,7 @@ export function * updateOrgSaga (
     yield put(fetchOrgActions.request(action.orgId))
   } catch (error) {
     yield put(updateOrgActions.error(error.response.data.error))
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 

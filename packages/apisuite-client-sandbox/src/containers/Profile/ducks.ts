@@ -65,8 +65,17 @@ const initialState: ProfileStore = {
     logo: '',
   },
   requestStatuses: {
+    getMembersRequest: {
+      isRequesting: false,
+      error: '',
+    },
+    getRolesRequest: {
+      isRequesting: false,
+      error: '',
+    },
     inviteMemberRequest: {
       isRequesting: false,
+      invited: false,
       error: '',
     },
     updateProfileRequest: {
@@ -133,12 +142,37 @@ export default function profileReducer (
       return initialState
     }
 
+    case ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST: {
+      return update(state, {
+        requestStatuses: {
+          getMembersRequest: {
+            isRequesting: { $set: true },
+          },
+        },
+      })
+    }
+
     case ProfileActionTypes.FETCH_TEAM_MEMBERS_SUCCESS: {
       return update(state, {
         /* Previously '{ $set: action.response.members }', which caused the
         'Profile -> Team' view to NOT be rendered as a result of an error
         ('members' being 'undefined'). */
+        requestStatuses: {
+          getMembersRequest: {
+            isRequesting: { $set: false },
+          },
+        },
         members: { $set: action.response },
+      })
+    }
+
+    case ProfileActionTypes.FETCH_TEAM_MEMBERS_ERROR: {
+      return update(state, {
+        requestStatuses: {
+          getMembersRequest: {
+            isRequesting: { $set: false },
+          },
+        },
       })
     }
 
@@ -147,6 +181,7 @@ export default function profileReducer (
         requestStatuses: {
           inviteMemberRequest: {
             isRequesting: { $set: true },
+            invited: { $set: false },
             error: { $set: '' },
           },
         },
@@ -158,6 +193,7 @@ export default function profileReducer (
         requestStatuses: {
           inviteMemberRequest: {
             isRequesting: { $set: false },
+            invited: { $set: true },
           },
         },
       })
@@ -168,6 +204,7 @@ export default function profileReducer (
         requestStatuses: {
           inviteMemberRequest: {
             isRequesting: { $set: false },
+            invited: { $set: false },
             error: { $set: action.error },
           },
         },
@@ -285,12 +322,43 @@ export default function profileReducer (
       })
     }
 
+    case ProfileActionTypes.FETCH_ORG_REQUEST: {
+      return update(state, {
+        /* Previously '{ $set: action.response.org }', which caused the
+        'Profile -> Organisation' view to NOT be rendered as a result of an error
+        ('org' being 'undefined'). */
+        requestStatuses: {
+          getRolesRequest: {
+            isRequesting: { $set: true },
+          },
+        },
+      })
+    }
+
     case ProfileActionTypes.FETCH_ORG_SUCCESS: {
       return update(state, {
         /* Previously '{ $set: action.response.org }', which caused the
         'Profile -> Organisation' view to NOT be rendered as a result of an error
         ('org' being 'undefined'). */
+        requestStatuses: {
+          getRolesRequest: {
+            isRequesting: { $set: false },
+          },
+        },
         org: { $set: action.response },
+      })
+    }
+
+    case ProfileActionTypes.FETCH_ORG_ERROR: {
+      return update(state, {
+        /* Previously '{ $set: action.response.org }', which caused the
+        'Profile -> Organisation' view to NOT be rendered as a result of an error
+        ('org' being 'undefined'). */
+        requestStatuses: {
+          getRolesRequest: {
+            isRequesting: { $set: false },
+          },
+        },
       })
     }
 

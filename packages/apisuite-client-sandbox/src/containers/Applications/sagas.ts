@@ -44,6 +44,7 @@ import request from 'util/request'
 import { push } from 'connected-react-router'
 import { Store } from 'store/types'
 import qs from 'qs'
+import { authActions } from 'containers/Auth/ducks'
 
 export function * createApp (action: CreateAppAction) {
   try {
@@ -75,6 +76,7 @@ export function * createApp (action: CreateAppAction) {
     yield put(push('/dashboard/apps'))
   } catch (error) {
     yield put(createAppError())
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -119,6 +121,7 @@ export function * updateApp (action: UpdateAppAction) {
     }))
   } catch (error) {
     yield put(updateAppError())
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -156,6 +159,7 @@ export function * getUsersApps (action: GetUserAppsAction) {
     yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
   } catch (error) {
     console.log('Error fetching user apps')
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -192,6 +196,7 @@ export function * deleteApp (action: DeleteAppAction) {
       yield put(push('/dashboard/apps'))
     } else {
       yield put(deleteAppError())
+      yield put(authActions.handleSessionExpire(error))
     }
   }
 }
@@ -281,8 +286,9 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
 
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
     yield put(addAppSubscriptionSuccess(updatedApp, appIndx))
-  } catch {
+  } catch (error) {
     console.log('Error adding subscription')
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
@@ -331,8 +337,9 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
 
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
     yield put(removeAppSubscriptionSuccess(updatedApp, appIndx))
-  } catch {
+  } catch (error) {
     console.log('Error removing subscription')
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 
