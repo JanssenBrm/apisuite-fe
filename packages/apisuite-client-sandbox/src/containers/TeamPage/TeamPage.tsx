@@ -7,9 +7,15 @@ import FormField, { isValidEmail } from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
 import { TeamPageProps } from './types'
 import { SelectOption } from 'components/Select/types'
-import { Role } from 'containers/Profile/types'
+import { Role, FetchTeamMembersResponse } from 'containers/Profile/types'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { ROLES } from 'constants/global'
+import { User } from 'containers/Auth/types'
+const AUTHORIZED_ROLES = [
+  ROLES.superadmin.value,
+  ROLES.admin.value,
+  ROLES.organizationOwner.value,
+]
 
 const TeamPage: React.FC<TeamPageProps> = ({
   fetchTeamMembers,
@@ -76,6 +82,22 @@ const TeamPage: React.FC<TeamPageProps> = ({
 
   const resetFields = () => {
     input.email = ''
+  }
+
+  const canInvite = (role: string) => {
+    return AUTHORIZED_ROLES.includes(role)
+  }
+
+  const isEmpty = (members: FetchTeamMembersResponse[], roleOptions: Role[]) => {
+    // check if the arrays contain empty data
+    const hasEmptyMember = members.some((m) => !(m.Organization.id && m.Role.id && m.User.id))
+    const hasEmptyRole = roleOptions.some((r) => !(r.id && r.name))
+    return hasEmptyMember || hasEmptyRole
+  }
+
+  const getUserMemberRole = (user: User) => {
+    const member = members.find((member) => user.id === member.User.id)
+    return member?.Role || user.role
   }
 
   React.useEffect(() => {
@@ -150,7 +172,7 @@ const TeamPage: React.FC<TeamPageProps> = ({
           <div className={classes.actions}>{t('rbac.team.actions')}</div>
         </div>
 
-        {members.length && members.map((member, indx) => (
+        {!isEmpty(members, roleOptions) && members.map((member, indx) => (
           <div key={indx} className={classes.row}>
             <div>
               <div className={classes.name}>
@@ -164,18 +186,18 @@ const TeamPage: React.FC<TeamPageProps> = ({
             {user &&
               <Select
                 className={classes.select}
-                options={roleOptions && selectOptions(roleOptions)}
+                options={selectOptions(roleOptions)}
                 onChange={handleChangeRole(member.User.id, member.Organization.id)}
-                disabled={user.role.name === 'developer' || user.id === member.User.id}
-                selected={roleOptions && selectOptions(roleOptions).find(
-                  option => option.label === ROLES[member.Role.name]?.label)}
+                disabled={getUserMemberRole(user).name === 'developer' || user.id === member.User.id || ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level}
+                selected={selectOptions(roleOptions).find(
+                  option => option.label === ROLES[member.Role.name].label)}
               />}
           </div>
         ))}
       </div>
 
       {!inviteVisible && user
-        ? (ROLES[user.role.name].level <= ROLES.organizationOwner.level) &&
+        ? canInvite(getUserMemberRole(user).name) &&
           <Button className={classes.btn} style={{ marginTop: 24 }} onClick={toggle}>{t('rbac.team.invite')} </Button>
         : inviteCard()}
     </>
