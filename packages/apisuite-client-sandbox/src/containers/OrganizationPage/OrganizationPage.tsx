@@ -95,7 +95,7 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
           <aside className={classes.aside}>
             {formState.values.logo
               // @ts-ignore This need to be fixed useForm converts the type to string|number
-              ? <img src={formState.values.logo} alt='organization logo' className={classes.img} />
+              ? <img src={formState.values.logo} alt='organisation logo' className={classes.img} />
               : <Avatar className={classes.avatar}>{initials.toLocaleUpperCase()}</Avatar>}
 
             <Button
