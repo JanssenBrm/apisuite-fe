@@ -199,11 +199,11 @@
     "bio": "Bio",
     "mobileNumber": "Mobile number (international)",
     "avatarUrl": "Avatar URL",
-    "organization": "Organization",
-    "organizationDescription": "Organization description",
-    "organizationWebsite": "Organization website",
-    "organizationLogo": "Organization logo URL",
-    "organizationTerms": "Organization terms of use",
+    "organization": "Organisation",
+    "organizationDescription": "Organisation description",
+    "organizationWebsite": "Organisation website",
+    "organizationLogo": "Organisation logo URL",
+    "organizationTerms": "Organisation terms of use",
     "vat": "VAT"
   },
   "actions": {

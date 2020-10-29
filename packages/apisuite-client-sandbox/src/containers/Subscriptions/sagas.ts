@@ -13,6 +13,7 @@ import { ApisResponse } from './types'
 import { API_URL } from 'constants/endpoints'
 import request from 'util/request'
 import { Store } from 'store/types'
+import { authActions } from 'containers/Auth/ducks'
 
 function * getApisSaga () {
   try {
@@ -29,9 +30,10 @@ function * getApisSaga () {
     })
 
     yield put(getApisSuccess(response.rows))
-  } catch {
+  } catch (error) {
     // TODO: decide and implement error handling
     yield put(getApisError())
+    yield put(authActions.handleSessionExpire(error))
   }
 }
 

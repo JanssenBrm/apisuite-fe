@@ -48,6 +48,9 @@ export interface AuthPayloads {
   logoutError: {
     error: string,
   },
+  expireSession: {
+    error: any,
+  },
 }
 
 export interface AuthStoreActionTypes {
