@@ -18,26 +18,34 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
   requestStatutes,
   resetErrors,
 }) => {
+  const validateURI = (uri: string|number) => {
+    const stringURI = uri ? uri.toString() : null
+    if (stringURI === null) return true
+    if (stringURI.length === 0) return true
+    if (stringURI.length > 0) return isValidURL(uri)
+    return false
+  }
   const classes = useStyles()
   const [t] = useTranslation()
   const { formState, handleFocus, handleChange, resetForm } = useForm({
     name: '',
     description: '',
-    vat: '',
+    // @ts-ignore This need to be fixed useForm converts the type to string|number
+    vat: null,
     website: '',
     terms: '',
     logo: '',
   }, {
     website: {
-      rules: [isValidURL],
+      rules: [validateURI],
       message: t('warnings.url'),
     },
     terms: {
-      rules: [isValidURL],
+      rules: [validateURI],
       message: t('warnings.url'),
     },
     logo: {
-      rules: [isValidURL],
+      rules: [validateURI],
       message: t('warnings.url'),
     },
   })
@@ -65,6 +73,7 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
     resetForm({
       name: org.name,
       description: org.description ?? '',
+      // @ts-ignore This need to be fixed useForm converts the type to string|number
       vat: org.vat,
       website: org.website,
       terms: org.terms,
@@ -79,11 +88,13 @@ const OrganizationPage: React.FC<OrganizationPageProps> = ({
           className={classes.form}
           onSubmit={(e) => {
             e.preventDefault()
+            // @ts-ignore This need to be fixed useForm converts the types to string|number
             updateOrg(org.id, formState.values)
           }}
         >
           <aside className={classes.aside}>
             {formState.values.logo
+              // @ts-ignore This need to be fixed useForm converts the type to string|number
               ? <img src={formState.values.logo} alt='organization logo' className={classes.img} />
               : <Avatar className={classes.avatar}>{initials.toLocaleUpperCase()}</Avatar>}
 

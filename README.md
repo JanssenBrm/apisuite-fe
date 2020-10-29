@@ -53,13 +53,7 @@ Releases are managed automatically through the configured CircleCI pipelines and
 
 To accomodate our release environments, different environments have different pre-release tags, or none.
 
-When new commits (direct or through PRs/merges) are made to one of the environment branches (`develop`, `staging`, `production`), a release with the adequate tag is triggered.
-
-**`develop`**
-
-The development environment uses the `alpha` pre-release tag.
-
-Example release tag: `apisuite-client-sandbox@1.0.0-alpha.0`.
+When new commits (direct or through PRs/merges) are made to one of the main environment branches (`staging`, `production`), a release with the adequate tag is triggered.
 
 **`staging`**
 

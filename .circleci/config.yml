@@ -40,9 +40,7 @@ jobs:
           name: Tag and release a new version of all changed projects
           command: |
             git config --global user.name 'apisuite-machine-user'; git config --global user.email 'dev@apisuite.io'
-            if [ "$CIRCLE_BRANCH" = "develop" ]; then
-              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid alpha --yes
-            elif [ "$CIRCLE_BRANCH" = "staging" ]; then
+            if [ "$CIRCLE_BRANCH" = "staging" ]; then
               GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid rc --yes
             elif [ "$CIRCLE_BRANCH" = "production" ]; then
               GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-graduate --yes
@@ -50,6 +48,26 @@ jobs:
 
   build:
       executor: apisuite-executor
+      steps:
+        - checkout
+        - setup_remote_docker
+        - run:
+            name: Build packages with docker-compose and push to registry
+            command: |
+              sudo apt-get update
+              sudo apt-get install ruby-full jq
+              cd util
+              chmod +x build_push_docker.sh
+              ./build_push_docker.sh
+        - persist_to_workspace:
+              root: ./util
+              paths:
+                - .env
+
+  build-cloud:
+      executor: apisuite-executor
+      environment:
+        CLOUD_BUILD: "true"
       steps:
         - checkout
         - setup_remote_docker
@@ -155,6 +173,15 @@ workflows:
                     - production
             requires:
                 - release
+        - build-cloud:
+            filters:
+                branches:
+                  only:
+                    - develop
+                    - staging
+                    - production
+            requires:
+                - build
         - deploy-dev:
             filters:
                 branches:

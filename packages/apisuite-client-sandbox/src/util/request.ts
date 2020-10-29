@@ -4,6 +4,7 @@
  */
 
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
+import { API_URL, SIGNUP_PORT } from 'constants/endpoints'
 
 export interface ErrorReason {
   /** response status */
@@ -29,6 +30,8 @@ function checkToken (response: AxiosResponse) {
     token,
   }
 }
+
+export { axios }
 
 async function checkStatus (response: AxiosResponse) {
   // TODO: we should review this reponse handling
@@ -68,4 +71,20 @@ export async function requestInform (init: AxiosRequestConfig) {
   const response = await axios({ ...init, withCredentials: false })
 
   return checkStatus(response)
+}
+
+export async function apiRequest (init: AxiosRequestConfig) {
+  const baseUrl = `${API_URL}${SIGNUP_PORT}`
+  return request({
+    ...init,
+    url: `${baseUrl}${init.url}`,
+  })
+}
+
+export async function apiRequestInform (init: AxiosRequestConfig) {
+  const baseUrl = `${API_URL}${SIGNUP_PORT}`
+  return requestInform({
+    ...init,
+    url: `${baseUrl}${init.url}`,
+  })
 }

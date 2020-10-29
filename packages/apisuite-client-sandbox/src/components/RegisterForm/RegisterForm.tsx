@@ -1,4 +1,5 @@
 import * as React from 'react'
+import qs from 'qs'
 import {
   RegisterFormProps,
   PersonalDetails,
@@ -22,19 +23,23 @@ import FormField, {
 } from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
 import useStyles from './styles'
+import LoadingView from './loading'
 
 const PersonalDetailsForm: React.FC<{
   handleSubmit: (personalDetails: PersonalDetails) => void,
   register: any,
-}> = ({ handleSubmit, register }) => {
+  token: string|undefined,
+}> = ({ handleSubmit, register, token }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
   const [isFormValid, setFormValid] = React.useState(false)
   const [errors, setErrors] = React.useState()
+  const [hasEmail, setEmail] = React.useState(false)
   const [input, setInput] = React.useState({
     email: '',
     name: '',
+    token,
   })
 
   const handleInputs = (e: FormFieldEvent, err: any) => {
@@ -50,9 +55,16 @@ const PersonalDetailsForm: React.FC<{
   }
 
   React.useEffect(() => {
+    if (register.invitation && register.invitation.email && !input.email && !hasEmail) {
+      setEmail(true)
+      setInput({
+        ...input,
+        email: register.invitation.email,
+      })
+    }
     // @ts-ignore
     setFormValid(errors && errors.length === 0)
-  }, [errors])
+  }, [errors, hasEmail, input, register])
 
   return (
     <div className={classes.registerContainer}>
@@ -93,6 +105,7 @@ const PersonalDetailsForm: React.FC<{
             value={input.email}
             onChange={handleInputs}
             fullWidth
+            disabled={hasEmail}
             errorPlacing='bottom'
             InputProps={{
               classes: { input: classes.textField },
@@ -124,7 +137,7 @@ const OrganisationDetailsForm: React.FC<{
   const [input, setInput] = React.useState({
     name: '',
     website: '',
-    vat: '',
+    // vat: '',
   })
 
   const handleInputs = (e: FormFieldEvent, err: any) => {
@@ -190,6 +203,7 @@ const OrganisationDetailsForm: React.FC<{
             ]}
           />
         </div>
+        {/* VAT is not needed currently -- commented out of page
         <div className={classes.fieldContainer}>
           <FormField
             id='vat-field'
@@ -210,6 +224,7 @@ const OrganisationDetailsForm: React.FC<{
             ]}
           />
         </div>
+        */}
       </FormCard>
     </div>
   )
@@ -218,7 +233,8 @@ const OrganisationDetailsForm: React.FC<{
 const SecurityStepForm: React.FC<{
   handleSubmit: (securityStep: SecurityStep) => void,
   register: any,
-}> = ({ handleSubmit, register }) => {
+  token: string|undefined,
+}> = ({ handleSubmit, register, token }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -227,6 +243,7 @@ const SecurityStepForm: React.FC<{
   const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState({
     password: '',
+    token,
   })
 
   const handleInputs = (e: FormFieldEvent, err: any) => {
@@ -304,7 +321,18 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   submitPersonalDetails,
   submitOrganisationDetails,
   submitSecurityStep,
+  validateToken,
 }) => {
+  // get token from url
+  const invitationToken = qs.parse(window.location.search.slice(1)).token || undefined
+  const { invitation, invitationError } = register
+
+  React.useEffect(() => {
+    if (invitationToken && !invitation.email && invitationError === undefined) {
+      validateToken(invitationToken)
+    }
+  }, [invitationToken, invitation, invitationError])
+
   const step = register.step
   const [t] = useTranslation()
   steps = {
@@ -313,24 +341,48 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     2: t('registerForm.steps.organisationDetails'),
     3: t('registerForm.steps.securityStep'),
   }
+  if (invitationToken) {
+    // @ts-ignore
+    delete steps[2]
+  }
 
   const formStep = (step: keyof typeof steps) => {
     switch (step) {
       case 1:
-        return <PersonalDetailsForm register={register} handleSubmit={submitPersonalDetails} />
+        return <PersonalDetailsForm register={register} token={invitationToken} handleSubmit={submitPersonalDetails} />
       case 2:
         return <OrganisationDetailsForm register={register} handleSubmit={submitOrganisationDetails} />
       case 3:
-        return <SecurityStepForm register={register} handleSubmit={submitSecurityStep} />
+        return <SecurityStepForm register={register} token={invitationToken} handleSubmit={submitSecurityStep} />
       case 4:
         return <Redirect to='/confirmation' />
     }
   }
 
-  return (
+  const formView = (
     <>
       <StepsProgress steps={steps} currentStep={step} />
       {formStep(step)}
+    </>
+  )
+
+  return (
+    <>
+      {
+        invitationToken &&
+          <>
+            {
+              !invitation.email &&
+                <LoadingView
+                  isLoading={!invitation.email && !invitationError}
+                  isError={!!invitationError}
+                  errorMessage='This invitation is invalid or expired.'
+                />
+            }
+            {invitation.email && formView}
+          </>
+      }
+      {!invitationToken && formView}
     </>
   )
 }

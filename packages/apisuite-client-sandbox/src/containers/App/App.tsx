@@ -6,23 +6,37 @@ import Footer from 'components/Footer'
 import InformDialog from 'components/InformDialog'
 
 import routes from './routes'
-import { AppProps } from './types'
-import { initTabs, loginTabs, gobackConfig } from './config'
+import { AppProps, TabMenus } from './types'
+import { gobackConfig, useTabs } from './config'
 import NotificationStack from 'containers/NotificationStack'
 
 import logo from 'theme/images/current_APISuite_logo.png'
 
-const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
+const App: React.FC<AppProps> = ({
+  auth,
+  history,
+  getSettings,
+  loginUser,
+  logout,
+}) => {
   const [currentTab, setCurrentTab] = React.useState(0)
   const [currentSubTab, setCurrentSubTab] = React.useState(0)
-  const [tabs, setTabs] = React.useState(initTabs)
+  const [activeMenuName, setActiveMenuName] = React.useState('init')
   const [navScrolled, setNavScrolled] = React.useState(false)
   const [gobackLabel, setGobackLabel] = React.useState('')
-  const [subTabs, setSubTabs] = React.useState(tabs[currentTab].subTabs)
   const [navigations, setNavigations] = React.useState(true)
+  const [initTabs, loginTabs] = useTabs()
+  const allTabs: TabMenus = {
+    init: initTabs,
+    login: loginTabs,
+  }
+  const activeMenu = allTabs[activeMenuName]
+  const subTabs = activeMenu[currentTab].subTabs
 
   React.useEffect(() => {
     const pathname = history.location.pathname
+
+    getSettings()
 
     if (auth.authToken && !auth.user) {
       loginUser({ token: auth.authToken })
@@ -54,22 +68,21 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
 
   function handleOnTabChange (index: number) {
     // For tabs and sub-tabs with external links
-    if (!tabs[index].route.startsWith('/')) {
-      window.open(tabs[index].route, '_blank')
+    if (!activeMenu[index].route.startsWith('/')) {
+      window.open(activeMenu[index].route, '_blank')
 
       return
     }
 
     // For tabs and sub-tabs without external links (i.e., for project navigation)
     setCurrentTab(index)
-    setSubTabs(tabs[index].subTabs)
     setCurrentSubTab(0)
 
-    history.push(tabs[index].route)
+    history.push(activeMenu[index].route)
   }
 
   function handleOnSubTabChange (index: number) {
-    const subTabs = tabs[currentTab].subTabs
+    const subTabs = activeMenu[currentTab].subTabs
 
     if (Array.isArray(subTabs)) {
       setCurrentSubTab(index)
@@ -90,13 +103,15 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       Dashboard - Landing page) if we don't do this path-checking. */
       if (currentPath === '/') {
         // Home
-        setTabs(loginTabs)
+        setActiveMenuName('login')
         setCurrentTab(0)
       } else if (currentPath === '/auth/login' || currentPath.startsWith('/dashboard')) {
         // Setting up the aftermath of a login, that leads to Dashboard
-        setTabs(loginTabs)
+        if (!loginTabs[3]) {
+          return
+        }
+        setActiveMenuName('login')
         setCurrentTab(3)
-        setSubTabs(loginTabs[3].subTabs)
 
         // Dashboard sub-tabs
         if (currentPath.endsWith('/subscriptions')) {
@@ -110,9 +125,8 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
         }
       } else if (currentPath.startsWith('/profile')) {
         // Profile
-        setTabs(loginTabs)
+        setActiveMenuName('login')
         setCurrentTab(4)
-        setSubTabs(loginTabs[4].subTabs)
 
         // Profile sub-tabs
         if (currentPath.endsWith('/team')) {
@@ -131,7 +145,7 @@ const App: React.FC<AppProps> = ({ auth, history, loginUser, logout }) => {
       {navigations &&
         <Navigation
           key='app-navigation'
-          tabs={tabs}
+          tabs={activeMenu}
           subTabs={Array.isArray(subTabs) ? subTabs : undefined}
           tabIndex={currentTab}
           subTabIndex={currentSubTab}

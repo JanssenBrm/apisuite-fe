@@ -1,6 +1,6 @@
 import request from 'util/requesting'
 import { takeLatest, call, put } from 'redux-saga/effects'
-import { SUPPORT_URL } from 'constants/endpoints'
+import { INFORM_URL } from 'constants/endpoints'
 import { INFORM, appStoreActionCreators } from './ducks'
 import { AppStoreActionTypes } from './types'
 import { openNotification } from 'containers/NotificationStack/ducks'
@@ -10,7 +10,7 @@ function * inform ({ payload }: AppStoreActionTypes['inform']) {
     const headers = { 'Content-Type': 'application/json' }
     const body = JSON.stringify(payload)
 
-    yield call(request, SUPPORT_URL as string, {
+    yield call(request, INFORM_URL as string, {
       method: 'POST',
       headers,
       body,

@@ -137,7 +137,7 @@ const TeamPage: React.FC<TeamPageProps> = ({
                   {member.User.name}
                 </div>
                 <div>
-                  <p className={classes.auth}>2 factor authentication not enabled</p>
+                  <p className={classes.auth}>{/* '2 factor authentication not enabled' */}</p>
                 </div>
               </div>
 

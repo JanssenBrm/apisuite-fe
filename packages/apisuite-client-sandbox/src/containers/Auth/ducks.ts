@@ -11,7 +11,9 @@ export const LOGIN_SUCCESS = 'auth/LOGIN_SUCCESS'
 const LOGIN_ERROR = 'auth/LOGIN_ERROR'
 const LOGIN_USER_SUCCESS = 'auth/LOGIN_USER_SUCCESS'
 const LOGIN_USER_ERROR = 'auth/LOGIN_USER_ERROR'
-const LOGOUT = 'auth/LOGOUT'
+export const LOGOUT = 'auth/LOGOUT'
+const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS'
+const LOGOUT_ERROR = 'auth/LOGOUT_ERROR'
 
 export const FORGOT_PASSWORD = 'auth/FORGOT_PASSWORD'
 export const FORGOT_PASSWORD_SUCCESS = 'auth/FORGOT_PASSWORD_SUCCESS'
@@ -131,6 +133,8 @@ export const authActions = {
   recoverPasswordError: (payload: AuthPayloads['recoverPasswordError']) => ({ type: RECOVER_PASSWORD_ERROR, payload }),
   recoverPasswordSuccess: () => ({ type: RECOVER_PASSWORD_SUCCESS }),
   logout: () => ({ type: LOGOUT }),
+  logoutSuccess: () => ({ type: LOGOUT_SUCCESS }),
+  logoutError: (payload: AuthPayloads['logoutError']) => ({ type: LOGOUT_ERROR, payload }),
 }
 
 export const createAuthMiddleware = (history: History) => () => (next: Dispatch) => (action: AnyAction) => {
@@ -150,7 +154,7 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
   } else if (action.type === LOGIN_ERROR || action.type === LOGIN_USER_ERROR) {
     cookie.remove(TOKEN_KEY, { path: '/' })
     history.replace('/auth/login')
-  } else if (action.type === LOGOUT) {
+  } else if (action.type === LOGOUT || action.type === LOGOUT_ERROR) {
     cookie.remove(TOKEN_KEY, { path: '/' })
     history.replace('/auth/login')
   }
