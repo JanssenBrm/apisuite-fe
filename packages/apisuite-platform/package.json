@@ -1,6 +1,6 @@
 {
   "name": "apisuite-platform",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-rc.1",
   "main": "dist/index.js",
   "scripts": {
     "dev": "cross-env NODE_ENV=development THEME=default webpack-dev-server",
