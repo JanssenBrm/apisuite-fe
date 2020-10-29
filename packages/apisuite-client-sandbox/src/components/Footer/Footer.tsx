@@ -2,14 +2,14 @@ import * as React from 'react'
 import SvgIcon from 'components/SvgIcon'
 import Fab from '@material-ui/core/Fab'
 import { useTranslation } from 'react-i18next'
-import { Menus } from 'apisuite-extension-ui-types'
+import { Menus } from '@apisuite/extension-ui-types'
 import LocaleSelect from 'language/LocaleSelect'
 import logo from 'theme/images/current_Cloudoki_logo.png'
 import { MenuSection, MenuSections } from './types'
 import { getMenuEntries } from 'util/extensions'
 import { useSettings } from 'util/useSetting'
 import { useSelector } from 'react-redux'
-import { getRoleName } from 'containers/Auth/selectors'
+import { getRoleName } from 'containers/Profile/selectors'
 import { SettingsStore } from 'containers/Settings/types'
 
 import './styles.scss'
@@ -22,34 +22,26 @@ const renderSocialLinks = ({ settings }: { settings: SettingsStore}) => {
 
   return (
     <div className='icons-container'>
-      {socialURLs.map((socialUrl) => {
+      {socialURLs.map((socialUrl, index) => {
         switch (socialUrl.name) {
-          case 'web':
-            return (
-              <a key='web' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='earth' />
-              </a>
-            )
           case 'twitter':
-            return (
-              <a key='twitter' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='twitter' />
-              </a>
-            )
           case 'facebook':
-            return (
-              <a key='facebook' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='facebook' />
-              </a>
-            )
+          case 'linkedin':
+          case 'reddit':
           case 'github':
+          case 'instagram':
+          case 'gitlab':
             return (
-              <a key='github' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='github-face' />
+              <a key={`${index}-${socialUrl.name}`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name={socialUrl.name} />
               </a>
             )
           default:
-            return null
+            return (
+              <a key={`${index}-web`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name='earth' />
+              </a>
+            )
         }
       })}
     </div>

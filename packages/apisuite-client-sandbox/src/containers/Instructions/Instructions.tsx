@@ -47,7 +47,7 @@ const Instructions: React.FC<{}> = () => {
   ]
 
   return (
-    <div className={classes.root}>
+    <div className={`page-container ${classes.root}`}>
       <section className={classes.contentContainer}>
         <h1 className={classes.title}>How to use and test your Sandbox</h1>
         <div className={classes.mainContainer}>

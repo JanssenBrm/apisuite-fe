@@ -2,21 +2,20 @@ import * as React from 'react'
 import { RequireAuthProps } from './types'
 import { Redirect } from 'react-router'
 import { useSelector } from 'react-redux'
-import { getRoleName } from 'containers/Auth/selectors'
+import { getRoleName } from 'containers/Profile/selectors'
 import { validateRoleConfig } from 'util/roleSetup'
 
 export const RequireAuth: React.FC<RequireAuthProps> = ({
   auth,
-  roleReq,
-  component: Component,
-  ...rest
+  role,
+  component,
 }) => {
   const roleName = useSelector(getRoleName)
-  const roleAuthorized = validateRoleConfig(roleReq, roleName ? [roleName] : [])
+  const roleAuthorized = validateRoleConfig(role, roleName ? [roleName] : [])
 
   if (auth) {
     if (auth.user && !auth.isAuthorizing && roleAuthorized) {
-      return <Component {...rest} />
+      return component
     } else if (!auth.authToken) {
       return <Redirect to='/auth/login' />
     } else {

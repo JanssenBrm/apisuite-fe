@@ -32,11 +32,7 @@
   ],
   "palette": {
     "primary": "#2DB7BA",
-    "primaryLight": "#2DB7BA",
-    "primaryDark": "#2DB7BA",
     "secondary": "#035e86",
-    "secondaryLight": "#035e86",
-    "secondaryDark": "#035e86",
     "background": {
       "default": "#fff"
     },

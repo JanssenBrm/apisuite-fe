@@ -14,8 +14,8 @@ module.exports = {
   mode: 'production',
 
   output: {
-    filename: '[name]-[contenthash].js',
-    chunkFilename: '[name]-[contenthash].js',
+    filename: 'assets/[name]-[contenthash].js',
+    chunkFilename: 'assets/[name]-[contenthash].js',
   },
 
   plugins: [
@@ -26,7 +26,7 @@ module.exports = {
         collapseWhitespace: true,
       },
     }),
-    new MiniCssExtractPlugin({ filename: '[name]-[contenthash].css' }),
+    new MiniCssExtractPlugin({ filename: 'assets/[name]-[contenthash].css' }),
     new MinifyPlugin({ mangle: { topLevel: true } }, { comments: false }),
     new webpack.HashedModuleIdsPlugin(),
     new RobotstxtPlugin(),

@@ -2,14 +2,8 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Route } from 'react-router'
 import { ConnectedRouter } from 'connected-react-router'
 import store, { history } from 'store'
-
-import ErrorMonitor from 'components/ErrorMonitor'
-import App from 'containers/App'
-
-import 'util/extensions'
 
 // Translations
 import 'language/i18n'
@@ -18,10 +12,10 @@ import 'language/i18n'
 import 'typeface-roboto'
 import 'styles/app.scss'
 
-// TODO
-// (async () => {
-//   await import('theme/styles/theme.scss')
-// })()
+import App from 'containers/App'
+import ErrorMonitor from 'components/ErrorMonitor'
+
+import 'util/extensions'
 
 function render (Component: any) {
   // @ts-ignore
@@ -29,7 +23,7 @@ function render (Component: any) {
     <ErrorMonitor>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Route path='/' component={Component} />
+          <Component />
         </ConnectedRouter>
       </Provider>
     </ErrorMonitor>,

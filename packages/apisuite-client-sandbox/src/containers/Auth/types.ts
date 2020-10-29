@@ -1,9 +1,9 @@
 import { ErrorReason } from 'util/request'
-import { AnyAction } from 'redux'
-import { ReactType } from 'react'
+import { Action, AnyAction } from 'redux'
 import { Role } from 'containers/Profile/types'
 import { History } from 'history'
-import { RoleRequirement } from 'apisuite-extension-ui-types'
+import { RoleRequirement } from '@apisuite/extension-ui-types'
+import { LOGOUT } from './ducks'
 
 export interface AuthStore {
   user?: User,
@@ -48,6 +48,9 @@ export interface AuthPayloads {
   logoutError: {
     error: string,
   },
+  expireSession: {
+    error: any,
+  },
 }
 
 export interface AuthStoreActionTypes {
@@ -62,7 +65,7 @@ export interface AuthStoreActionTypes {
   recoverPassword: AnyAction & { payload: AuthPayloads['recoverPassword']} & { history: History<any> },
   recoverPasswordError: AnyAction & { payload: AuthPayloads['recoverPasswordError']},
   recoverPasswordSuccess: AnyAction,
-  logout: AnyAction,
+  logout: Action<typeof LOGOUT>,
 }
 
 export interface AuthStoreActionCreators {
@@ -73,7 +76,7 @@ export interface AuthStoreActionCreators {
 }
 
 export interface RequireAuthProps {
-  component: ReactType,
+  component: JSX.Element,
   auth?: AuthStore,
-  roleReq?: RoleRequirement,
+  role?: RoleRequirement,
 }

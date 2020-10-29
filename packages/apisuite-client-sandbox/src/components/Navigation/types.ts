@@ -1,27 +1,20 @@
-import { User } from 'containers/Auth/types'
-
 export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
-  tabs: TabProps[],
-  subTabs?: SubTabProps[],
-  tabIndex: number,
-  subTabIndex: number,
-  name: string,
-  logoSrc: string,
-  onTabChange: (index: number) => void,
-  onSubTabChange: (index: number) => void,
-  user?: User,
-  forceScrolled?: boolean,
+  contractible?: boolean,
   showBackButton?: boolean,
   backButtonLabel?: string,
-  onGoBackCLick?: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
-  logout: (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void,
+  logout: any,
   toggleInform: any,
+}
+
+export interface TabMenus {
+  [key: string]: TabProps[],
 }
 
 export interface TabProps {
   label: string,
   route: string,
   disabled?: boolean,
+  active?: boolean,
   subTabs?: SubTabProps[],
 }
 
@@ -29,4 +22,5 @@ export interface SubTabProps {
   label: any,
   route: string,
   disabled?: boolean,
+  active?: boolean,
 }

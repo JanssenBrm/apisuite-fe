@@ -17,7 +17,7 @@ const LandingPage: React.FC<LandingPageProps> = ({ user }) => {
   const fname = user ? user.fName : ''
 
   return (
-    <main className={classes.root} style={{ backgroundImage: `url(${sandboxBg})` }}>
+    <main className={`page-container ${classes.root}`} style={{ backgroundImage: `url(${sandboxBg})` }}>
       <section className={classes.section}>
         <div className={classes.steps}>
           <div className={classes.step}>

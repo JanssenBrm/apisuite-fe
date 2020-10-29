@@ -1,6 +1,7 @@
 export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   /** The width and height of the icon - it should be uniform */
   size?: number | string,
+  viewBox?: string,
   /** The icon path name */
   name:
   | 'autorenew'
@@ -26,7 +27,11 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   | 'earth'
   | 'twitter'
   | 'facebook'
-  | 'github-face'
+  | 'github'
+  | 'gitlab'
+  | 'linkedin'
+  | 'reddit'
+  | 'instagram'
   | 'plus'
   | 'close'
   | 'dots-vrtical'
@@ -38,6 +43,20 @@ export interface SvgIconProps extends React.HTMLAttributes<SVGSVGElement> {
   | 'logout',
   /** The fill to be applied to the vector */
   color?: string,
+}
+
+export interface BaseSvgIconProps extends SvgIconProps {
+  children: React.FunctionComponent<InternalSvgIconProps>,
+}
+
+export interface InternalSvgIconProps extends React.SVGProps<SVGSVGElement> {
+  width?: string | number,
+  height?: string | number,
+  color?: string,
+}
+
+export interface CallableSvgIconProps extends InternalSvgIconProps {
+  name: SvgIconProps['name'],
 }
 
 export interface IconPaths {

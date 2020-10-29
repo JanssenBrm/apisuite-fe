@@ -8,7 +8,6 @@ export default makeStyles(({
     width: '100%',
     minHeight: '100%',
     backgroundSize: 'cover',
-    paddingTop: 300,
     paddingBottom: 45,
   },
   section: {
@@ -199,7 +198,7 @@ export default makeStyles(({
     fontSize: '14px',
     fontWeight: 300,
     '& > a': {
-      color: config.palette.primaryLight,
+      color: config.palette.primary,
     },
   },
   checkbox: {
