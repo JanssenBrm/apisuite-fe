@@ -54,7 +54,7 @@ export default makeStyles(({
     border: '1px solid white',
   },
   btn3: {
-    backgroundColor: config.palette.secondaryLight,
+    backgroundColor: config.palette.secondary,
     color: 'white',
     border: '1px solid white',
   },

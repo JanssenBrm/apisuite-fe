@@ -1,9 +1,12 @@
 import * as React from 'react'
 import { useLocation } from 'react-router-dom'
+import { createMuiTheme } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/styles'
 import InformDialog from 'components/InformDialog'
 import NotificationStack from 'containers/NotificationStack'
 import routes from './routes'
 import { AppProps } from './types'
+import theme from 'theme'
 
 const App: React.FC<AppProps> = ({
   auth,
@@ -31,11 +34,11 @@ const App: React.FC<AppProps> = ({
   }, [auth.user])
 
   return (
-    <>
+    <ThemeProvider theme={createMuiTheme(theme)}>
       {routes()}
       <InformDialog />
       <NotificationStack />
-    </>
+    </ThemeProvider>
   )
 }
 

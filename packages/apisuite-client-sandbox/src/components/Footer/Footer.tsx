@@ -22,34 +22,26 @@ const renderSocialLinks = ({ settings }: { settings: SettingsStore}) => {
 
   return (
     <div className='icons-container'>
-      {socialURLs.map((socialUrl) => {
+      {socialURLs.map((socialUrl, index) => {
         switch (socialUrl.name) {
-          case 'web':
-            return (
-              <a key='web' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='earth' />
-              </a>
-            )
           case 'twitter':
-            return (
-              <a key='twitter' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='twitter' />
-              </a>
-            )
           case 'facebook':
-            return (
-              <a key='facebook' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='facebook' />
-              </a>
-            )
+          case 'linkedin':
+          case 'reddit':
           case 'github':
+          case 'instagram':
+          case 'gitlab':
             return (
-              <a key='github' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='github-face' />
+              <a key={`${index}-${socialUrl.name}`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name={socialUrl.name} />
               </a>
             )
           default:
-            return null
+            return (
+              <a key={`${index}-web`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name='earth' />
+              </a>
+            )
         }
       })}
     </div>
