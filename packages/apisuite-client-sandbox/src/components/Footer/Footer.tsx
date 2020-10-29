@@ -24,13 +24,6 @@ const renderSocialLinks = ({ settings }: { settings: SettingsStore}) => {
     <div className='icons-container'>
       {socialURLs.map((socialUrl, index) => {
         switch (socialUrl.name) {
-          case 'web':
-          case 'other':
-            return (
-              <a key={`${index}-web`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='earth' />
-              </a>
-            )
           case 'twitter':
           case 'facebook':
           case 'linkedin':
@@ -44,7 +37,11 @@ const renderSocialLinks = ({ settings }: { settings: SettingsStore}) => {
               </a>
             )
           default:
-            return null
+            return (
+              <a key={`${index}-web`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name='earth' />
+              </a>
+            )
         }
       })}
     </div>

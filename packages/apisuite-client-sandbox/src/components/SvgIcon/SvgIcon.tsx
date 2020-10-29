@@ -23,6 +23,7 @@ const SvgIcon: React.FC<SvgIconProps> = ({
         width={size}
         height={size}
         fill={color}
+        viewBox='0 0 24 24'
         style={{ display: 'block', ...style }}
         {...rest}
       >
