@@ -30,7 +30,7 @@ const FormCard: React.FC<FormCardProps> = ({
       </form>
       {error &&
         <div className={classes.errorPlaceholder}>
-          <div className={classes.errorAlert}>{error}</div>
+          <div className={classes.errorAlert}>{typeof error === 'string' ? error : error.message}</div>
         </div>}
     </div>
   )

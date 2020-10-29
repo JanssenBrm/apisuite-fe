@@ -198,7 +198,7 @@ export default makeStyles(({
     fontSize: '14px',
     fontWeight: 300,
     '& > a': {
-      color: config.palette.primaryLight,
+      color: config.palette.primary,
     },
   },
   checkbox: {
