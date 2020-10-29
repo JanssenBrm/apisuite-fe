@@ -74,12 +74,13 @@ module.exports = {
         ],
       },
       {
-        test: /\.(svg|webp|jpg|png|woff2)$/,
+        test: /\.(gif|svg|webp|jpg|png|woff2)$/,
         use: [
           {
             loader: 'file-loader',
             options: {
               esModule: false,
+              name: 'assets/images/[name]-[hash].[ext]',
             },
           },
         ],
