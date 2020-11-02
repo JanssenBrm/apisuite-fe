@@ -76,6 +76,7 @@ export interface AuthStoreActionCreators {
 }
 
 export interface RequireAuthProps {
+  requireAuth: boolean,
   component: JSX.Element,
   auth?: AuthStore,
   role?: RoleRequirement,
