@@ -53,6 +53,11 @@
     },
     "feedback": {
       "error": "#FF0000"
+    },
+    "alert": {
+      "success": {
+        "background": "#BBECFF"
+      }
     }
   },
   "dimensions": {

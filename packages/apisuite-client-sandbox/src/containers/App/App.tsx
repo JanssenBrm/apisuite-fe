@@ -4,9 +4,10 @@ import { createMuiTheme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import InformDialog from 'components/InformDialog'
 import NotificationStack from 'containers/NotificationStack'
+import theme from 'theme'
 import routes from './routes'
 import { AppProps } from './types'
-import theme from 'theme'
+import useStyles from './styles'
 
 const App: React.FC<AppProps> = ({
   auth,
@@ -14,6 +15,7 @@ const App: React.FC<AppProps> = ({
   getSettings,
   loginUser,
 }) => {
+  const classes = useStyles()
   const { pathname } = useLocation()
 
   React.useEffect(() => {
@@ -35,9 +37,11 @@ const App: React.FC<AppProps> = ({
 
   return (
     <ThemeProvider theme={createMuiTheme(theme)}>
-      {routes()}
-      <InformDialog />
-      <NotificationStack />
+      <div className={classes.root}>
+        {routes()}
+        <InformDialog />
+        <NotificationStack />
+      </div>
     </ThemeProvider>
   )
 }
