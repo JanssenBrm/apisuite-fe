@@ -13,7 +13,7 @@ import { getAuth } from 'containers/Auth/selectors'
 import { TabMenus, NavigationProps } from './types'
 import { useMenu, goBackConfig } from './useMenu'
 
-import logoSrc from 'theme/images/current_APISuite_logo.png'
+import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 
 const Navigation: React.FC<NavigationProps> = ({
   title,
@@ -85,7 +85,12 @@ const Navigation: React.FC<NavigationProps> = ({
       {...rest}
     >
       <header className={clsx({ scrolled })}>
-        <img src={logoSrc} alt='logo' className='img' />
+        <div className={classes.logoAndPortalNameContainer}>
+          <AmpStoriesRoundedIcon className={classes.logo} />
+
+          {/* TODO: Perhaps change the following text to "{settings.clientName}'s Portal" */}
+          <h3 className={classes.portalName}>Cloudoki's Portal</h3>
+        </div>
 
         <nav className={clsx('container', { scrolled })}>
           <div className='tabs maintabs'>

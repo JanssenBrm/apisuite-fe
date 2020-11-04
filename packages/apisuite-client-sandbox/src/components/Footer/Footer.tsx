@@ -1,64 +1,34 @@
 import * as React from 'react'
-import SvgIcon from 'components/SvgIcon'
-import Fab from '@material-ui/core/Fab'
-import { useTranslation } from 'react-i18next'
-import { Menus } from '@apisuite/extension-ui-types'
-import LocaleSelect from 'language/LocaleSelect'
-import logo from 'theme/images/current_Cloudoki_logo.png'
-import { MenuSection, MenuSections } from './types'
-import { getMenuEntries } from 'util/extensions'
-import { useSettings } from 'util/useSetting'
+
 import { useSelector } from 'react-redux'
+
+import { useTranslation } from 'react-i18next'
+
+import { Menus } from '@apisuite/extension-ui-types'
+
 import { getRoleName } from 'containers/Profile/selectors'
 import { SettingsStore } from 'containers/Settings/types'
 
-import './styles.scss'
+import SvgIcon from 'components/SvgIcon'
 
-const renderSocialLinks = ({ settings }: { settings: SettingsStore}) => {
-  const { socialURLs } = settings
-  if (!socialURLs || !socialURLs.length) {
-    return null
-  }
+import Fab from '@material-ui/core/Fab'
 
-  return (
-    <div className='icons-container'>
-      {socialURLs.map((socialUrl) => {
-        switch (socialUrl.name) {
-          case 'web':
-            return (
-              <a key='web' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='earth' />
-              </a>
-            )
-          case 'twitter':
-            return (
-              <a key='twitter' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='twitter' />
-              </a>
-            )
-          case 'facebook':
-            return (
-              <a key='facebook' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='facebook' />
-              </a>
-            )
-          case 'github':
-            return (
-              <a key='github' href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
-                <SvgIcon size={24} name='github-face' />
-              </a>
-            )
-          default:
-            return null
-        }
-      })}
-    </div>
-  )
-}
+import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
+
+import LocaleSelect from 'language/LocaleSelect'
+
+import { getMenuEntries } from 'util/extensions'
+import { useSettings } from 'util/useSetting'
+
+import useStyles from './styles'
+
+import { MenuSection, MenuSections } from './types'
+
+// Footer's sections
 
 const menuSections: MenuSections = {
   [Menus.FooterProducts]: {
-    title: 'API Products',
+    title: 'Products',
     entries: [
       {
         label: 'Upcoming',
@@ -71,17 +41,7 @@ const menuSections: MenuSections = {
       },
     ],
   },
-  [Menus.FooterProfile]: {
-    title: 'Profile',
-    entries: [
-      {
-        label: 'Security',
-      },
-      {
-        label: 'Logout',
-      },
-    ],
-  },
+
   [Menus.FooterDocumentation]: {
     title: 'Documentation',
     entries: [
@@ -96,42 +56,7 @@ const menuSections: MenuSections = {
       },
     ],
   },
-  [Menus.FooterTeam]: {
-    title: 'Team',
-    entries: [
-      {
-        label: 'Manage Team',
-      },
-      {
-        label: 'Organisation',
-      },
-    ],
-  },
-  [Menus.FooterDashboard]: {
-    title: 'Dashboard',
-    entries: [
-      {
-        label: 'Manage Apps',
-      },
-      {
-        label: 'Test Data',
-      },
-      {
-        label: 'API Console',
-      },
-    ],
-  },
-  [Menus.FooterLegal]: {
-    title: 'Legal Notice',
-    entries: [
-      {
-        label: 'Data Privacy Notice',
-      },
-      {
-        label: 'Cookies policy',
-      },
-    ],
-  },
+
   [Menus.FooterSupport]: {
     title: 'Support',
     entries: [
@@ -146,36 +71,63 @@ const menuSections: MenuSections = {
       },
     ],
   },
-  [Menus.FooterStatus]: {
-    title: 'API Status',
+
+  [Menus.FooterDashboard]: {
+    title: 'Dashboard',
     entries: [
       {
-        label: 'Activity Log',
+        label: 'Manage Apps',
+      },
+      {
+        label: 'Test Data',
+      },
+      {
+        label: 'API Console',
+      },
+    ],
+  },
+
+  [Menus.FooterProfile]: {
+    title: 'Profile',
+    entries: [
+      {
+        label: 'Security',
+      },
+      {
+        label: 'Log out',
       },
     ],
   },
 }
 
 const renderSubSection = (subMenu: string, roleName?: string) => {
+  const classes = useStyles()
+
   const section: MenuSection = menuSections[subMenu]
   const extensionsMenuEntries = getMenuEntries(subMenu, roleName)
   const allEntries = [...section.entries, ...extensionsMenuEntries]
 
   return (
-    <div key={subMenu} className='sub-section'>
+    <div className={classes.subSection} key={subMenu}>
       <h3>{section.title}</h3>
+
       <>
         {allEntries.map((entry, i) => {
           const { label, ...anchorProps } = entry
+
           return (
             <p key={i}>
-              {entry.route && entry.route !== '#' ? (
-                <a {...anchorProps} href={entry.route} key={i}>
-                  {label}
-                </a>
-              ) : (
-                label
-              )}
+              {
+                entry.route && entry.route !== '#'
+                  ? (
+                    <a {...anchorProps} href={entry.route} key={i}>
+                      {label}
+                    </a>
+                  )
+                  : (
+                    label
+                  )
+              }
             </p>
           )
         })}
@@ -184,51 +136,126 @@ const renderSubSection = (subMenu: string, roleName?: string) => {
   )
 }
 
+// Footer's social media links
+
+const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
+  const classes = useStyles()
+
+  const { socialURLs } = settings
+
+  if (!socialURLs || !socialURLs.length) {
+    return null
+  }
+
+  return (
+    <div className={classes.iconsContainer}>
+      {socialURLs.map((socialUrl) => {
+        switch (socialUrl.name) {
+          case 'web':
+            return (
+              <a key='web' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
+                <SvgIcon name='earth' size={24} />
+              </a>
+            )
+
+          case 'twitter':
+            return (
+              <a key='twitter' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
+                <SvgIcon name='twitter' size={24} />
+              </a>
+            )
+
+          case 'facebook':
+            return (
+              <a key='facebook' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
+                <SvgIcon name='facebook' size={24} />
+              </a>
+            )
+
+          case 'github':
+            return (
+              <a key='github' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
+                <SvgIcon name='github-face' size={24} />
+              </a>
+            )
+
+          default:
+            return null
+        }
+      })}
+    </div>
+  )
+}
+
+// Footer
+
 const Footer = () => {
+  const classes = useStyles()
+
   const [settings] = useSettings()
   const [t] = useTranslation()
   const roleName = useSelector(getRoleName)
 
-  function handleFabClick () {
+  const handleFabClick = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
   return (
-    <footer className='footer'>
-      <div className='fab-container'>
+    <footer className={classes.footer}>
+      <div className={classes.footerToTopShortcutContainer}>
         <Fab size='small' onClick={handleFabClick}>
           <SvgIcon name='chevron-up' size={24} />
         </Fab>
       </div>
-      <div className='container'>
-        <div className='logo-container'>
-          <img src={logo} alt='logo' className='logo' />
-          <p>{t('copyright', { ...settings, year: new Date().getFullYear() })}</p>
 
-          {renderSocialLinks({ settings })}
-          <LocaleSelect />
+      <div className={classes.footerContentsContainer}>
+        <div className={classes.leftFooterContentsContainer}>
+          <div className={classes.logoAndPortalNameContainer}>
+            <AmpStoriesRoundedIcon className={classes.logo} />
+
+            {/* TODO: Perhaps change the following text to "{settings.clientName}'s Portal" */}
+            <h3 className={classes.portalName}>Cloudoki's Portal</h3>
+          </div>
+
+          <div className={classes.sectionsContainer}>
+            <div>
+              {renderSubSection(Menus.FooterProducts, roleName)}
+            </div>
+
+            <div className={classes.section}>
+              {renderSubSection(Menus.FooterDocumentation, roleName)}
+            </div>
+
+            <div className={classes.section}>
+              {renderSubSection(Menus.FooterSupport, roleName)}
+            </div>
+
+            <div className={classes.section}>
+              {renderSubSection(Menus.FooterDashboard, roleName)}
+            </div>
+
+            <div className={classes.section}>
+              {renderSubSection(Menus.FooterProfile, roleName)}
+            </div>
+          </div>
         </div>
 
-        <div className='sections-container'>
-          <div className='section'>
-            {renderSubSection(Menus.FooterProducts, roleName)}
-            {renderSubSection(Menus.FooterProfile, roleName)}
+        <div className={classes.rightFooterContentsContainer}>
+          {renderSocialLinks({ settings })}
+
+          <div className={classes.copyrightContainer}>
+            <a
+              href='https://apisuite.io/'
+              rel='noopener noreferrer'
+              target='_blank'
+            >
+              &copy; {new Date().getFullYear()} APISuite.io
+            </a>
+
+            <p>All rights reserved</p>
           </div>
 
-          <div className='section'>
-            {renderSubSection(Menus.FooterDocumentation, roleName)}
-            {renderSubSection(Menus.FooterTeam, roleName)}
-          </div>
-
-          <div className='section'>
-            {renderSubSection(Menus.FooterDashboard, roleName)}
-            {renderSubSection(Menus.FooterLegal, roleName)}
-          </div>
-
-          <div className='section'>
-            {renderSubSection(Menus.FooterSupport, roleName)}
-            {renderSubSection(Menus.FooterStatus, roleName)}
-          </div>
+          <LocaleSelect />
         </div>
       </div>
     </footer>
