@@ -34,22 +34,14 @@ function checkToken (response: AxiosResponse) {
 export { axios }
 
 async function checkStatus (response: AxiosResponse) {
-  // TODO: we should review this reponse handling
-  if (response.statusText === 'OK' || response.statusText === 'Created') {
-    // TODO add this back when API changes
-    // const contentType = response.headers.get('Content-Type')
-
-    // if (contentType && /application\/json/.test(contentType)) {
-    //   return Promise.resolve(response.json())
-    // }
-
+  if (response.status >= 200 || response.status < 400) {
     // check if the response has a token and get it
     const { hasToken, token } = checkToken(response)
     if (hasToken) {
-      return Promise.resolve({ token })
+      return { token }
     }
 
-    return Promise.resolve(response.data)
+    return response.data
   }
 
   const reason: ErrorReason = {
@@ -58,7 +50,7 @@ async function checkStatus (response: AxiosResponse) {
     message: response.data || response.statusText,
   }
 
-  return Promise.reject(reason)
+  return reason
 }
 
 export default async function request (init: AxiosRequestConfig) {

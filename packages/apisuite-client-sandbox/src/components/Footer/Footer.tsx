@@ -24,7 +24,43 @@ import useStyles from './styles'
 
 import { MenuSection, MenuSections } from './types'
 
-// Footer's sections
+const renderSocialLinks = ({ settings }: { settings: SettingsStore}) => {
+  const classes = useStyles()
+
+  const { socialURLs } = settings
+
+  if (!socialURLs || !socialURLs.length) {
+    return null
+  }
+
+  return (
+    <div className={classes.iconsContainer}>
+      {socialURLs.map((socialUrl, index) => {
+        switch (socialUrl.name) {
+          case 'twitter':
+          case 'facebook':
+          case 'linkedin':
+          case 'reddit':
+          case 'github':
+          case 'instagram':
+          case 'gitlab':
+            return (
+              <a key={`${index}-${socialUrl.name}`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name={socialUrl.name} />
+              </a>
+            )
+
+          default:
+            return (
+              <a key={`${index}-web`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+                <SvgIcon size={24} name='earth' />
+              </a>
+            )
+        }
+      })}
+    </div>
+  )
+}
 
 const menuSections: MenuSections = {
   [Menus.FooterProducts]: {
@@ -138,54 +174,54 @@ const renderSubSection = (subMenu: string, roleName?: string) => {
 
 // Footer's social media links
 
-const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
-  const classes = useStyles()
+// const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
+//   const classes = useStyles()
 
-  const { socialURLs } = settings
+//   const { socialURLs } = settings
 
-  if (!socialURLs || !socialURLs.length) {
-    return null
-  }
+//   if (!socialURLs || !socialURLs.length) {
+//     return null
+//   }
 
-  return (
-    <div className={classes.iconsContainer}>
-      {socialURLs.map((socialUrl) => {
-        switch (socialUrl.name) {
-          case 'web':
-            return (
-              <a key='web' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
-                <SvgIcon name='earth' size={24} />
-              </a>
-            )
+//   return (
+//     <div className={classes.iconsContainer}>
+//       {socialURLs.map((socialUrl) => {
+//         switch (socialUrl.name) {
+//           case 'web':
+//             return (
+//               <a key='web' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
+//                 <SvgIcon name='earth' size={24} />
+//               </a>
+//             )
 
-          case 'twitter':
-            return (
-              <a key='twitter' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
-                <SvgIcon name='twitter' size={24} />
-              </a>
-            )
+//           case 'twitter':
+//             return (
+//               <a key='twitter' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
+//                 <SvgIcon name='twitter' size={24} />
+//               </a>
+//             )
 
-          case 'facebook':
-            return (
-              <a key='facebook' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
-                <SvgIcon name='facebook' size={24} />
-              </a>
-            )
+//           case 'facebook':
+//             return (
+//               <a key='facebook' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
+//                 <SvgIcon name='facebook' size={24} />
+//               </a>
+//             )
 
-          case 'github':
-            return (
-              <a key='github' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
-                <SvgIcon name='github-face' size={24} />
-              </a>
-            )
+//           case 'github':
+//             return (
+//               <a key='github' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
+//                 <SvgIcon name='github-face' size={24} />
+//               </a>
+//             )
 
-          default:
-            return null
-        }
-      })}
-    </div>
-  )
-}
+//           default:
+//             return null
+//         }
+//       })}
+//     </div>
+//   )
+// }
 
 // Footer
 

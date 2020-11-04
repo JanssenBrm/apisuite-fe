@@ -17,7 +17,7 @@ export const mapStateToProps = ({ profile, auth }: Store) => ({
   members: profile.members,
   roleOptions: profile.roleOptions,
   user: auth.user,
-  requestStatutes: profile.requestStatuses,
+  requestStatuses: profile.requestStatuses,
 })
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({

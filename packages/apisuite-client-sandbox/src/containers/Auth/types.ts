@@ -48,6 +48,9 @@ export interface AuthPayloads {
   logoutError: {
     error: string,
   },
+  expireSession: {
+    error: any,
+  },
 }
 
 export interface AuthStoreActionTypes {
@@ -73,6 +76,7 @@ export interface AuthStoreActionCreators {
 }
 
 export interface RequireAuthProps {
+  requireAuth: boolean,
   component: JSX.Element,
   auth?: AuthStore,
   role?: RoleRequirement,

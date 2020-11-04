@@ -22,7 +22,7 @@ export type ProfileProps =
 ReturnType<typeof mapStateToProps> &
 ReturnType<typeof mapDispatchToProps>
 
-export const roleNameOptions = ['superadmin', 'admin', 'developer', 'organizationOwner', ''] as const
+export const roleNameOptions = ['superadmin', 'admin', 'organizationOwner', 'developer', ''] as const
 
 export type OrgInfo = {
   description: string | null,
@@ -41,7 +41,9 @@ export type ProfileStore = {
   profile: Profile,
   org: Organization & Pick<OrgInfo, 'description' | 'vat' | 'website' | 'terms' | 'logo'>,
   requestStatuses: {
-    inviteMemberRequest: RequestStatus,
+    getMembersRequest: RequestStatus,
+    getRolesRequest: RequestStatus,
+    inviteMemberRequest: RequestStatus & { invited: boolean },
     updateProfileRequest: RequestStatus,
     updateOrgRequest: RequestStatus,
     changeRoleRequest: RequestStatus,

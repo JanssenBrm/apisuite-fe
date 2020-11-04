@@ -19,6 +19,7 @@ import {
   ProfileProps,
   Organization,
 } from './types'
+import { ROLES } from 'constants/global'
 
 const Profile: React.FC<ProfileProps> = ({
   getProfile,
@@ -99,8 +100,23 @@ const Profile: React.FC<ProfileProps> = ({
     let number = parseInt(formState.values.mobileNumber)
     let org = profile.current_org.id
     if (!formState.values.mobileNumber) number = 0
-    if (option) org = option.value.toString()
-    updateProfile(formState.values.name, formState.values.bio, formState.values.avatarUrl, number, org.toString())
+    if (option && option.value) {
+      const name = profile.user.name
+      const bio = profile.user.bio ?? ''
+      const phone = Number(profile.user.mobile) ?? 0
+      const avatarUrl = profile.user.avatar ?? ''
+      org = option.value.toString()
+      updateProfile(name, bio, avatarUrl, phone, org)
+    } else {
+      updateProfile(formState.values.name, formState.values.bio, formState.values.avatarUrl, number, org.toString())
+    }
+  }
+
+  const shouldUpdateProfile = (e: React.ChangeEvent<{}>, option?: SelectOption) => {
+    e.preventDefault()
+    if (option && option.value && option.value !== profile.current_org.id) {
+      updateFormProfile(e, option)
+    }
   }
 
   return (
@@ -116,7 +132,7 @@ const Profile: React.FC<ProfileProps> = ({
               : <Avatar className={classes.avatar}>{initials.toLocaleUpperCase()}</Avatar>}
 
             <InputLabel shrink>Access level</InputLabel>
-            <div>{profile.current_org.role.name}</div>
+            <div>{ROLES[profile.current_org.role.name]?.label}</div>
 
             <InputLabel shrink>Last login</InputLabel>
             <div>
@@ -133,7 +149,7 @@ const Profile: React.FC<ProfileProps> = ({
             <InputLabel className={classes.inputLabel} shrink>Organisation</InputLabel>
             <Select
               options={selectOptions(profile.orgs_member)}
-              onChange={updateFormProfile}
+              onChange={shouldUpdateProfile}
               selected={selectOptions(profile.orgs_member).find(
                 option => option.value === profile.current_org.id)}
             />

@@ -40,8 +40,5 @@ export default makeStyles(({
     padding: 16,
     minWidth: 'unset',
     opacity: 1,
-    '&$selected': {
-      fontWeight: 600,
-    },
   },
 }))

@@ -42,8 +42,8 @@ echo "DOCKER_REPO=${DOCKER_REPO}" >> .env
 
 # Create env vars with the version for each package and write to .env
 for project in ${PROJECTS_LIST}; do
-  PROJECT_PACKAGE_VERSION="develop"
-  if [ "${CIRCLE_BRANCH}" != "develop" ]; then
+  PROJECT_PACKAGE_VERSION="${CIRCLE_BRANCH}"
+  if [ "${CIRCLE_BRANCH}" == "production" ]; then
     PROJECT_PACKAGE_VERSION=$(cat ../${ROOT_PROJECTS_FOLDER}/${project}/package.json | grep version | head -1 | awk -F ": " '{ print $2 }' | sed 's/[",]//g')
   fi
   PROJECT_PACKAGE_ENV_SUFFIX=""

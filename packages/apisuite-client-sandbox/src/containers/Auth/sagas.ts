@@ -18,7 +18,7 @@ import {
   LOGIN_PORT,
   API_URL,
 } from 'constants/endpoints'
-import { roleNameOptions } from 'containers/Profile/types'
+import { Profile } from 'containers/Profile/types'
 import qs from 'qs'
 import { openNotification } from 'containers/NotificationStack/ducks'
 
@@ -74,14 +74,20 @@ function * loginUWorker (action: AnyAction) {
     const userName = user.name.split(' ')
     const userId = user.id
 
+    const profile: Profile = yield call(request, {
+      url: `${API_URL}/users/profile`,
+      method: 'GET',
+      headers: { 'x-access-token': action.payload.token },
+    })
+
     yield put(authActions.loginUserSuccess({
       user: {
         fName: userName[0],
         lName: userName[userName.length - 1],
         id: userId,
         role: {
-          id: user.role_id,
-          name: roleNameOptions[user.role_id - 1],
+          id: profile.current_org.role.id,
+          name: profile.current_org.role.name,
         },
       },
     }))

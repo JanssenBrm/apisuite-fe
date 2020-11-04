@@ -50,9 +50,7 @@ const extensionsRoutes = getRoutes().map(
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox, layoutProps: { contractibleMenu: true } },
-  { path: '/dashboard', exact: true, component: LandingPage, layoutProps: { contractibleMenu: true } },
-  // { path: '/dashboard', exact: true, render: (props) => <RequireAuth component={LandingPage} {...props} /> },
-  // // // { path: '/dashboard/apps', exact: true, render: (props) => <RequireAuth component={ListApps} {...props} /> },
+  { path: '/dashboard', exact: true, auth: true, component: LandingPage, layoutProps: { contractibleMenu: true } },
   { path: '/dashboard/apps', exact: true, auth: true, component: ListApps },
   { path: '/dashboard/apps/create', exact: true, auth: true, component: CreateApp },
   { path: '/dashboard/apps/detail/:id', exact: true, auth: true, component: AppDetail },
@@ -73,49 +71,58 @@ export const routesConfig: AppRouteProps[] = [
 
 function RouteWrapper ({
   layout: Layout = MainLayout,
-  layoutProps = {},
+  layoutProps,
   component: Component,
   render,
   auth,
   role,
   ...rest
 }: AppRouteProps) {
-  const renderFunc = render || ((props) => {
-    if (!Component) {
-      return <NotFound />
-    }
-    const LayoutContainer = (
-      <Layout {...layoutProps}>
-        <Component {...props} />
-      </Layout>
-    )
+  const renderFunc = React.useMemo(() => {
+    return render || ((props: any) => {
+      if (!Component) {
+        return <NotFound />
+      }
+      const LayoutContainer = (
+        <Layout
+          {...layoutProps}
+        >
+          <Component {...props} />
+        </Layout>
+      )
 
-    return auth ? (
-      <RequireAuth role={role} component={LayoutContainer} {...props} />
-    ) : (
-      LayoutContainer
-    )
-  })
+      return (
+        <RequireAuth
+          requireAuth={auth}
+          role={role}
+          component={LayoutContainer}
+          {...props}
+        />
+      )
+    })
+  }, [Layout, Component, render, auth, role])
 
   return (
-    <Route {...rest} render={renderFunc} />
+    <Route render={renderFunc} {...rest} />
   )
 }
 
-export default () => (
-  <Switch key='routes'>
-    {routesConfig.map((route, indx) =>
-      <RouteWrapper
-        key={`routes-${indx}`}
-        auth={route.auth}
-        role={route.role}
-        layout={route.layout}
-        layoutProps={route.layoutProps}
-        path={route.path}
-        exact={route.exact}
-        component={route.component}
-        render={route.render}
-      />,
-    )}
-  </Switch>
-)
+export default () => {
+  return (
+    <Switch key='routes'>
+      {routesConfig.map((route) =>
+        <RouteWrapper
+          key='route-wrapper-keep-same-key-for-all-please'
+          auth={route.auth}
+          role={route.role}
+          layout={route.layout}
+          layoutProps={route.layoutProps}
+          path={route.path}
+          exact={route.exact}
+          component={route.component}
+          render={route.render}
+        />,
+      )}
+    </Switch>
+  )
+}
