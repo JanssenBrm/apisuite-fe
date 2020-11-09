@@ -103,7 +103,7 @@ export default function reducer (
         },
         currentApp: {
           appId: { $set: action.appData.appId },
-          name: { $set: action.appData.description },
+          name: { $set: action.appData.name },
           description: { $set: action.appData.description },
           redirectUrl: { $set: action.appData.redirectUrl },
           logo: { $set: action.appData.logo },

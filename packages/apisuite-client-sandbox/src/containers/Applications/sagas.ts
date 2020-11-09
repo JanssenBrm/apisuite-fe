@@ -76,7 +76,7 @@ export function * createApp (action: CreateAppAction) {
     yield put(push('/dashboard/apps'))
   } catch (error) {
     yield put(createAppError())
-    yield put(authActions.handleSessionExpire(error))
+    yield put(authActions.handleSessionExpire())
   }
 }
 
@@ -107,7 +107,7 @@ export function * updateApp (action: UpdateAppAction) {
     })
     yield put(updateAppSuccess({
       appId: action.appData.appId,
-      name: action.appData.description,
+      name: action.appData.name,
       description: action.appData.description,
       redirectUrl: action.appData.redirectUrl,
       logo: action.appData.logo,
@@ -121,7 +121,7 @@ export function * updateApp (action: UpdateAppAction) {
     }))
   } catch (error) {
     yield put(updateAppError())
-    yield put(authActions.handleSessionExpire(error))
+    yield put(authActions.handleSessionExpire())
   }
 }
 
@@ -159,7 +159,7 @@ export function * getUsersApps (action: GetUserAppsAction) {
     yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
   } catch (error) {
     console.log('Error fetching user apps')
-    yield put(authActions.handleSessionExpire(error))
+    yield put(authActions.handleSessionExpire())
   }
 }
 
@@ -196,7 +196,7 @@ export function * deleteApp (action: DeleteAppAction) {
       yield put(push('/dashboard/apps'))
     } else {
       yield put(deleteAppError())
-      yield put(authActions.handleSessionExpire(error))
+      yield put(authActions.handleSessionExpire())
     }
   }
 }
@@ -288,7 +288,7 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
     yield put(addAppSubscriptionSuccess(updatedApp, appIndx))
   } catch (error) {
     console.log('Error adding subscription')
-    yield put(authActions.handleSessionExpire(error))
+    yield put(authActions.handleSessionExpire())
   }
 }
 
@@ -339,7 +339,7 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
     yield put(removeAppSubscriptionSuccess(updatedApp, appIndx))
   } catch (error) {
     console.log('Error removing subscription')
-    yield put(authActions.handleSessionExpire(error))
+    yield put(authActions.handleSessionExpire())
   }
 }
 
