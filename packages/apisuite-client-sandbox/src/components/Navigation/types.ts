@@ -16,6 +16,7 @@ export interface TabProps {
   disabled?: boolean,
   active?: boolean,
   subTabs?: SubTabProps[],
+  yetToLogIn?: boolean,
 }
 
 export interface SubTabProps {

@@ -43,9 +43,14 @@ export default makeStyles(({
   },
 
   footerToTopShortcutContainer: {
-    left: '50%',
+    // Middle of our layout's minimum width ('1024px')
+    left: '512px',
     position: 'absolute',
     transform: 'translateY(-60px)',
+
+    '@media (min-width: 1024px)': {
+      left: '50%',
+    },
   },
 
   iconsContainer: {

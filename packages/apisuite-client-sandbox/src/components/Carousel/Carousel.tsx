@@ -178,7 +178,6 @@ const NewCarousel: React.FC<NewCarouselProps> = ({
         >
           <ReactSlidy
             initialSlide={initialSlide || 0}
-            keyboardNavigation
             slide={slideNumber}
             slideSpeed={slidingAnimationDuration || 1000}
           >

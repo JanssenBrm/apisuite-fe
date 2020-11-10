@@ -12,32 +12,43 @@ export function useMenu (): Array<TabProps[]> {
   const roleName = useSelector(getRoleName)
   const { pathname } = useLocation()
 
-  // Create an array for each accumulated level of pathnames of the current URI
-  // Ex: /dashboard/subscriptions -> [/dashboard, /dashboard/subscriptions]
+  /*
+  Creates an array for each accumulated level of pathnames of the current URI
+  Ex: /dashboard/subscriptions -> [/dashboard, /dashboard/subscriptions]
+  */
   const levelPathnames = React.useMemo(() => {
     const pathParts = pathname.split('/')
+
     return pathParts.reduce((accum, _part, index) => {
       const levelParts = pathParts.slice(0, index + 1)
+
       return [...accum, levelParts.join('/')]
     }, [] as string[]).slice(1)
   }, [pathname])
 
-  // Iterates through all menu and sub-menu entries and sets which entries are
-  // active. Active entries are either those whose path match with the current
-  // page or where any of the sub menu items is active.
+  /*
+  Iterates through all menu and sub-menu entries, and sets which entries are
+  active. Active entries are either those whose path matches the current
+  page, or where any of the sub menu items is active.
+  */
   const setMenuActiveEntries = React.useCallback((entries, level = 0) => {
     return entries.map((entry: MenuEntry) => {
       const hasLevelPathname = !!levelPathnames[level]
+
       const curEntryActive =
         entry.route === levelPathnames[level] || entry.route === pathname
+
       const matchesPrevLevelPath =
         !hasLevelPathname && entry.route === levelPathnames[level - 1]
+
       let subTabs = entry.subTabs
       let hasActiveSubtab
+
       if (subTabs) {
         subTabs = setMenuActiveEntries(entry.subTabs, level + 1)
         hasActiveSubtab = !!subTabs && subTabs.some((entry) => entry.active)
       }
+
       return {
         ...entry,
         subTabs,
@@ -70,20 +81,26 @@ export function useMenu (): Array<TabProps[]> {
         route: '/',
       },
       {
-        label: 'Log in',
-        route: '/auth/login',
-        active: pathname === '/auth/login',
+        label: 'API Products',
+        route: '/api-products',
       },
       {
         label: 'Register',
         route: '/auth/register',
         active: pathname === '/auth/register',
+        yetToLogIn: true,
+      },
+      {
+        label: 'Log in',
+        route: '/auth/login',
+        active: pathname === '/auth/login',
+        yetToLogIn: true,
       },
       ...extensionsInitTabs,
     ].filter(Boolean)
 
     if (settings.supportURL) {
-      entries.splice(1, 0, {
+      entries.splice(2, 0, {
         label: 'Support',
         route: settings.supportURL,
       })
