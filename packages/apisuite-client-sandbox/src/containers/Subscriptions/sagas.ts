@@ -33,7 +33,7 @@ function * getApisSaga () {
   } catch (error) {
     // TODO: decide and implement error handling
     yield put(getApisError())
-    yield put(authActions.handleSessionExpire(error))
+    yield put(authActions.handleSessionExpire())
   }
 }
 
