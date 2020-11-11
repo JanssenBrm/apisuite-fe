@@ -18,15 +18,15 @@ Tool to manage the local APISuite environment
 Usage: $0 [method] [component] [scale] [sleep (wait for each request) ]
 
    - method:\tstart, stop, pull, restart, build and up-build
-   - component:\tall (Start all environment): sandbox, marketplace, sso, portal and Kong
+   - component:\tall (Start all environment): sandbox
 
        Or
 
    Use the command and the exact name of the 'APISuite Module' to start one at a time. Examples
 
    - $0 start sandbox
-   - $0 build portal
-   - $0 start kong
+   - $0 build sandbox
+   - $0 start sandbox
 
    Optional parameters
 
