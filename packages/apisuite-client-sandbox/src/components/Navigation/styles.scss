@@ -1,12 +1,12 @@
-@import "styles/variables";
+@import 'styles/variables';
 
 .navigation {
   position: sticky;
   top: 0;
-  transition: 0.250s ease;
+  transition: .195s ease;
   width: 100%;
   color: white;
-  background-color: #14283c;
+  background-color: #333333;
   z-index: 4;
   display: flex;
   flex-direction: column;
@@ -20,16 +20,35 @@
     top: unset;
 
     header:not(.scrolled) {
-      padding-bottom: 0px;
+      padding: 25px 0 0 0;
+      border-bottom: 1px solid white;
+
+      .tabs {
+        &.pretabs {
+          display: flex;
+          position: absolute;
+          right: 0;
+        }
+      }
+
+      .auth-related {
+        display: none;
+      }
     }
 
     .container:not(.scrolled) {
-      background-color: transparent;
+      transform: translateY(63.5px);
+      margin: 0;
+
+      .MuiTabs-indicator {
+        display: inline;
+      }
     }
 
     .sub-container:not(.scrolled) {
       color: unset;
       background-color: transparent;
+      transform: translateY(100%);
 
       .MuiTabs-indicator {
         display: none;
@@ -93,9 +112,11 @@
     justify-content: center;
     align-items: flex-end;
     flex-wrap: nowrap;
-    margin: 0px 50px;
     transform: translateY(0);
-    font-size: 18px;
+
+    .MuiTabs-indicator {
+      display: none;
+    }
   }
 
   .sub-container {
@@ -108,22 +129,19 @@
     margin: 0;
     padding: 0 50px;
 
-    color: #51606e;
-    background-color: #ecedef;
-    border: 1px solid #ecedef;
+    color: #333333;
+    background-color: #E3E3E3;
     transform: translateY(0);
-    font-size: inherit;
-    font-weight: 300;
-    text-transform: none;
-    min-width: unset;
-    opacity: 1;
   }
 
   .tabs {
     position: relative;
     display: flex;
-    width: 100%;
     align-items: center;
+
+    &.pretabs {
+      display: none;
+    }
 
     .back-btn {
       display: flex;
@@ -151,7 +169,7 @@
       height: 2px;
       width: 41.78px;
       background: currentColor;
-      transition: left 0.2s ease, width 0.2s ease;
+      transition: left .2s ease, width .2s ease;
     }
 
     .bottom-bar {
@@ -162,7 +180,7 @@
       height: 2px;
       width: 41.78px;
       background: currentColor;
-      transition: left 0.2s ease, width 0.2s ease;
+      transition: left .2s ease, width .2s ease;
     }
   }
 }

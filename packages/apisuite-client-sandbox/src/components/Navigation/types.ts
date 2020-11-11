@@ -11,12 +11,13 @@ export interface TabMenus {
 }
 
 export interface TabProps {
+  isLogin?: boolean,
+  authRelated?: boolean,
   label: string,
   route: string,
   disabled?: boolean,
   active?: boolean,
   subTabs?: SubTabProps[],
-  yetToLogIn?: boolean,
 }
 
 export interface SubTabProps {
