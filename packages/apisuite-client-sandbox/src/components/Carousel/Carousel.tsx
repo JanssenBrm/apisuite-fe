@@ -30,15 +30,15 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
   return (
     <div
-      className={
-        `
-${classes.carouselSlideOuterContainer}
-${carouselSlideContentsPlacement && carouselSlideContentsPlacement === 'side-by-side'
-      ? classes.sideBySideSlideContentsPlacement
-      : classes.topToBottomSlideContentsPlacement
-      }
-`
-      }
+    className={
+    `
+    ${classes.carouselSlideOuterContainer}
+    ${carouselSlideContentsPlacement && carouselSlideContentsPlacement === 'side-by-side'
+    ? classes.sideBySideSlideContentsPlacement
+    : classes.topToBottomSlideContentsPlacement
+    }
+    `
+    }
     >
       {
         carouselSlideImage &&
@@ -82,7 +82,11 @@ const NewCarousel: React.FC<NewCarouselProps> = ({
   const classes = useStyles()
 
   const [slideNumber, setSlideNumber] = React.useState(initialSlide || 0)
-  const [amountOfSlides, setAmountOfSlides] = React.useState(slidesArray.length)
+  const amountOfSlides = slidesArray.length
+
+  const handleCarouselSlideChange = (newSlideNumber: number) => {
+    setSlideNumber(newSlideNumber)
+  }
 
   const carouselSlides = slidesArray.map((slide, index) =>
     <div
@@ -125,10 +129,6 @@ const NewCarousel: React.FC<NewCarouselProps> = ({
       }
     </button>,
   ))
-
-  const handleCarouselSlideChange = (newSlideNumber: number) => {
-    setSlideNumber(newSlideNumber)
-  }
 
   if (slidesAutoPlay) {
     /*

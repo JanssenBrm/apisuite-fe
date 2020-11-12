@@ -11,24 +11,23 @@ const APICatalog: React.FC<APICatalogProps> = ({
 }) => {
   const classes = useStyles()
 
-  const apiCatalogEntries = recentlyAddedAPIs.map((apiDetails) => {
+  const apiCatalogEntries = recentlyAddedAPIs.map((apiDetails, index) => {
     const apiSplitName = apiDetails.apiName.split(' ')
     const apiInitials = apiSplitName.length >= 2
       ? `${apiSplitName[0].charAt(0)}${apiSplitName[1].charAt(0)}` : apiSplitName[0].slice(0, 2)
 
     return (
-      <div className={classes.apiCatalogEntry}>
+      <div
+        className={classes.apiCatalogEntry}
+        key={`apiCatalogEntry${index}`}
+      >
         <div className={classes.apiCatalogEntryAvatar}>
           <Avatar
-            className={
-              apiDetails.apiAccess === 'Production access'
-                ? classes.colorsOfProductionAPI
-                : (
-                  apiDetails.apiAccess === 'Sandbox access'
-                    ? classes.colorsOfSandboxAPI
-                    : classes.colorsOfAPIDocumentation
-                )
-            }
+            className={apiDetails.apiAccess === 'Production access'
+              ? classes.colorsOfProductionAPI
+              : (apiDetails.apiAccess === 'Sandbox access'
+                ? classes.colorsOfSandboxAPI
+                : classes.colorsOfAPIDocumentation)}
           >
             {apiInitials}
           </Avatar>
@@ -41,8 +40,8 @@ const APICatalog: React.FC<APICatalogProps> = ({
             <span
               className={
                 `
-${classes.apiCatalogEntryVersion}
-${(
+                  ${classes.apiCatalogEntryVersion}
+                  ${(
         apiDetails.apiAccess === 'Production access'
           ? classes.colorsOfProductionAPI
           : (
@@ -51,7 +50,7 @@ ${(
               : classes.colorsOfAPIDocumentation
           )
       )}
-`
+                `
               }
             >
               {apiDetails.apiVersion}

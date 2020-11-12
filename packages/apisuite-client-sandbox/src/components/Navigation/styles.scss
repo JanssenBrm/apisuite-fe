@@ -1,9 +1,9 @@
-@import 'styles/variables';
+@import "styles/variables";
 
 .navigation {
   position: sticky;
   top: 0;
-  transition: .195s ease;
+  transition: 0.195s ease;
   width: 100%;
   color: white;
   background-color: #333333;
@@ -31,7 +31,7 @@
         }
       }
 
-      .auth-related {
+      .yetToLogIn {
         display: none;
       }
     }
@@ -39,20 +39,12 @@
     .container:not(.scrolled) {
       transform: translateY(63.5px);
       margin: 0;
-
-      .MuiTabs-indicator {
-        display: inline;
-      }
     }
 
     .sub-container:not(.scrolled) {
       color: unset;
       background-color: transparent;
       transform: translateY(100%);
-
-      .MuiTabs-indicator {
-        display: none;
-      }
     }
   }
 
@@ -62,7 +54,7 @@
     display: flex;
     flex-direction: row;
     margin: 0 50px;
-    padding: 25px 0;
+    padding: 0;
     border-bottom: none;
     align-items: center;
 
@@ -113,10 +105,6 @@
     align-items: flex-end;
     flex-wrap: nowrap;
     transform: translateY(0);
-
-    .MuiTabs-indicator {
-      display: none;
-    }
   }
 
   .sub-container {
@@ -130,7 +118,7 @@
     padding: 0 50px;
 
     color: #333333;
-    background-color: #E3E3E3;
+    background-color: #e3e3e3;
     transform: translateY(0);
   }
 
@@ -169,7 +157,7 @@
       height: 2px;
       width: 41.78px;
       background: currentColor;
-      transition: left .2s ease, width .2s ease;
+      transition: left 0.2s ease, width 0.2s ease;
     }
 
     .bottom-bar {
@@ -180,7 +168,7 @@
       height: 2px;
       width: 41.78px;
       background: currentColor;
-      transition: left .2s ease, width .2s ease;
+      transition: left 0.2s ease, width 0.2s ease;
     }
   }
 }

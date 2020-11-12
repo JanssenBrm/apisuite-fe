@@ -14,6 +14,7 @@ import { TabMenus, NavigationProps } from './types'
 import { useMenu, goBackConfig } from './useMenu'
 
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
+import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded'
 
 const Navigation: React.FC<NavigationProps> = ({
   title,
@@ -24,8 +25,19 @@ const Navigation: React.FC<NavigationProps> = ({
 }) => {
   const classes = useStyles()
   const history = useHistory()
+
   const auth = useSelector(getAuth)
   const user = auth.user
+
+  let splitName
+  let initials
+
+  if (user) {
+    splitName = user.fName.split(' ')
+    initials = splitName.length >= 2
+      ? `${splitName[0][0] + splitName[1][0]}` : splitName[0].slice(0, 1)
+  }
+
   const [scrollPos, setScrollPos] = React.useState(0)
 
   const [activeMenuName, setActiveMenuName] = React.useState('init')
@@ -90,28 +102,32 @@ const Navigation: React.FC<NavigationProps> = ({
             <AmpStoriesRoundedIcon
               className={
                 !scrolled
-                ? classes.regularLogo
-                : classes.alternativeLogo
+                  ? classes.regularLogo
+                  : classes.alternativeLogo
               }
             />
 
-            {/* TODO: Eventually change the following text to "${settings.clientName}'s Portal" */}
+            {/* TODO: Eventually change the following text to reflect the client's name */}
             <h3 className={classes.portalName}>Cloudoki's Portal</h3>
           </div>
 
           {!user && (
-            <div className={'tabs pretabs'}>
+            <div className='tabs pretabs'>
               <Tabs
-                aria-label='Top navigation'
+                aria-label='Header-level navigation tabs'
                 value={(activeTab && activeTab.route) || false}
               >
                 {topTabs.map((tab, idx) =>
                   <Tab
-                    className={classes.tab}
+                    className={
+                      (contractible && !scrolled)
+                        ? classes.transparentMenuTab
+                        : classes.opaqueMenuTab
+                    }
                     component={Link}
                     disableRipple
                     key={`nav-tab-${idx}`}
-                    label={tab.isLogin ? '(|)' : tab.label}
+                    label={tab.isLogin ? <PowerSettingsNewRoundedIcon /> : tab.label}
                     to={tab.route}
                     value={tab.route}
                   />,
@@ -124,39 +140,87 @@ const Navigation: React.FC<NavigationProps> = ({
         <nav className={clsx('container', { scrolled })}>
           <div className='tabs maintabs'>
             <Tabs
-              aria-label='Main navigation'
-              classes={
-                {
-                  indicator: classes.activeTabOverLine,
-                }
-              }
+              aria-label='Navigation tabs'
+              classes={{
+                indicator: (contractible && !scrolled)
+                  ? classes.transparentMenuActiveTabOverLine
+                  : classes.opaqueMenuActiveTabOverLine,
+              }}
               value={(activeTab && activeTab.route) || false}
             >
-              {tabs.map((tab, idx) =>
-                <Tab
-                  className={
-                    `
-                      ${classes.tab}
-                      ${tab.active ? ' ' + classes.activeTab : ''}
-                      ${tab.authRelated ? ' ' + classes.authRelated : ''}
-                    `
-                  }
-                  component={Link}
-                  disableRipple
-                  key={`nav-tab-${idx}`}
-                  label={tab.label}
-                  to={tab.route}
-                  value={tab.route}
-                />,
-              )}
+              {
+                tabs.map((tab, idx) => {
+                  return !(contractible && !scrolled && tab.yetToLogIn)
+                    ? (
+                      <Tab
+                        className={
+                          `
+                            ${(contractible && !scrolled)
+                        ? classes.transparentMenuTab
+                        : classes.opaqueMenuTab
+                      }
+                            ${tab.active ? ' ' + classes.activeTab : ''}
+                            ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
+                          `
+                        }
+                        component={Link}
+                        disableRipple
+                        key={`nav-tab-${idx}`}
+                        label={tab.label}
+                        to={tab.route}
+                        value={tab.route}
+                      />
+                    )
+                    : null
+                })
+              }
             </Tabs>
           </div>
         </nav>
 
         {user && (
-          <div className='avatar-container'>
-            {(contractible && !scrolled) && <span>{user.fName}</span>}
-            <Avatar className='avatar' onClick={logout}><SvgIcon name='logout' size={20} /></Avatar>
+          <div
+            className={
+              (contractible && !scrolled)
+                ? classes.transparentMenuUserAvatarContainer
+                : classes.opaqueMenuUserAvatarContainer
+            }
+          >
+            {
+              (contractible && !scrolled) &&
+                <span className={classes.userName}>{user.fName}</span>
+            }
+
+            {
+              user.photo !== ''
+                ? (
+                  /* TODO: Using Gonçalo's picture as a placeholder - change logic to
+                  use actual picture of user, whose source should be stored somewhere
+                  in the app's Store */
+                  <Avatar
+                    alt="User's photo"
+                    className={
+                      (contractible && !scrolled)
+                        ? classes.transparentMenuUserAvatar
+                        : classes.opaqueMenuUserAvatar
+                    }
+                    onClick={logout}
+                    src='/assets/goncalo-avatar.jpg'
+                  />
+                )
+                : (
+                  <Avatar
+                    className={
+                      (contractible && !scrolled)
+                        ? classes.transparentMenuUserAvatar
+                        : classes.opaqueMenuUserAvatar
+                    }
+                    onClick={logout}
+                  >
+                    {initials}
+                  </Avatar>
+                )
+            }
           </div>
         )}
       </header>
@@ -171,23 +235,27 @@ const Navigation: React.FC<NavigationProps> = ({
             )}
 
             <Tabs
+              aria-label='Navigation sub-tabs'
+              classes={{
+                indicator: (contractible && !scrolled)
+                  ? classes.transparentSubMenuActiveTabUnderLine
+                  : classes.opaqueSubMenuActiveTabUnderLine,
+              }}
               value={(activeSubTab && activeSubTab.route) || false}
-              aria-label='Main navigation'
-              classes={{ indicator: classes.activeTabUnderLine }}
             >
               {subTabs.map((tab, idx) =>
                 <Tab
-                  component={Link}
-                  key={`nav-sub-tab-${idx}`}
-                  label={tab.label}
-                  to={tab.route}
-                  disableRipple
                   className={
                     `
                       ${classes.subTab}
                       ${tab.active ? ' ' + classes.activeTab : ''}
                     `
                   }
+                  component={Link}
+                  disableRipple
+                  key={`nav-sub-tab-${idx}`}
+                  label={tab.label}
+                  to={tab.route}
                   value={tab.route}
                 />,
               )}

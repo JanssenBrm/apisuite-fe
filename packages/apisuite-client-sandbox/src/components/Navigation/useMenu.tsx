@@ -90,16 +90,16 @@ export function useMenu (): Array<TabProps[]> {
         route: '/api-products',
       },
       {
-        authRelated: true,
-        label: 'Log in',
-        route: '/auth/login',
-        active: pathname === '/auth/login',
-      },
-      {
-        authRelated: true,
+        yetToLogIn: true,
         label: 'Register',
         route: '/auth/register',
         active: pathname === '/auth/register',
+      },
+      {
+        yetToLogIn: true,
+        label: 'Log in',
+        route: '/auth/login',
+        active: pathname === '/auth/login',
       },
       ...extensionsInitTabs,
     ].filter(Boolean)
@@ -143,25 +143,29 @@ export function useMenu (): Array<TabProps[]> {
           ...extensionsLoginDashboardTabs,
         ],
       },
-      {
-        label: 'Profile',
-        route: '/profile',
-        subTabs: [
-          {
-            label: 'Profile',
-            route: '/profile',
-          },
-          {
-            label: 'Team',
-            route: '/profile/team',
-          },
-          {
-            label: 'Organisation',
-            route: '/profile/organisation',
-          },
-          ...extensionsLoginProfileTabs,
-        ],
-      },
+
+      /* TODO: Hide for now, and work towards making this tab accessible
+      through the user's name and avatar */
+      // {
+      //   label: 'Profile',
+      //   route: '/profile',
+      //   subTabs: [
+      //     {
+      //       label: 'Profile',
+      //       route: '/profile',
+      //     },
+      //     {
+      //       label: 'Team',
+      //       route: '/profile/team',
+      //     },
+      //     {
+      //       label: 'Organisation',
+      //       route: '/profile/organisation',
+      //     },
+      //     ...extensionsLoginProfileTabs,
+      //   ],
+      // },
+
       ...extensionsLoginTabs,
     ].filter(Boolean)
 

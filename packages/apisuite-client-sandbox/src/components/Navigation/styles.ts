@@ -30,7 +30,17 @@ export default makeStyles(({
     alignItems: 'center',
   },
 
-  tab: {
+  opaqueMenuTab: {
+    color: '#FFFFFF',
+    fontSize: '18px',
+    fontWeight: 300,
+    minWidth: 'unset',
+    opacity: 1,
+    padding: '40px 16px',
+    textTransform: 'none',
+  },
+
+  transparentMenuTab: {
     color: '#FFFFFF',
     fontSize: '18px',
     fontWeight: 300,
@@ -50,7 +60,7 @@ export default makeStyles(({
     textTransform: 'none',
   },
 
-  authRelated: {
+  yetToLogIn: {
     display: 'none',
   },
 
@@ -60,17 +70,61 @@ export default makeStyles(({
     },
   },
 
-  activeTabOverLine: {
+  transparentMenuActiveTabOverLine: {
     backgroundColor: '#FFFFFF',
-    bottom: 'unset',
     height: '3px',
     top: 0,
     transition: 'none !important',
   },
 
-  activeTabUnderLine: {
+  opaqueMenuActiveTabOverLine: {
+    backgroundColor: '#32C896',
+    height: '3px',
+    top: 0,
+    transition: 'none !important',
+  },
+
+  transparentSubMenuActiveTabUnderLine: {
+    backgroundColor: '#19B3EE',
+    height: '3px',
+    transition: 'none !important',
+  },
+
+  opaqueSubMenuActiveTabUnderLine: {
     backgroundColor: '#14283C',
     height: '3px',
     transition: 'none !important',
+  },
+
+  userName: {
+    fontSize: '18px',
+    fontWeight: 300,
+    marginRight: '20px',
+  },
+
+  transparentMenuUserAvatarContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    position: 'absolute',
+    right: 0,
+  },
+
+  opaqueMenuUserAvatarContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    position: 'relative',
+    right: 0,
+  },
+
+  transparentMenuUserAvatar: {
+    border: '2px solid #FFFFFF',
+    height: '33px',
+    width: '33px',
+  },
+
+  opaqueMenuUserAvatar: {
+    border: '2px solid #32C896',
+    height: '33px',
+    width: '33px',
   },
 }))

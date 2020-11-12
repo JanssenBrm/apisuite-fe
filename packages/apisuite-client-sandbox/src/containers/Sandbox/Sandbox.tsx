@@ -63,9 +63,9 @@ const Sandbox: React.FC<{}> = () => {
         <Carousel
           carouselBackgroundImage={carouselBackground}
           iconsOfSliderButtonsArray={[
-            <ControlCameraRoundedIcon />,
-            <FlightLandRoundedIcon />,
-            <ChromeReaderModeRoundedIcon />,
+            <ControlCameraRoundedIcon key={1} />,
+            <FlightLandRoundedIcon key={2} />,
+            <ChromeReaderModeRoundedIcon key={3} />,
           ]}
           slidesAutoPlay
           slidesArray={[
@@ -230,7 +230,7 @@ const Sandbox: React.FC<{}> = () => {
               <>Cloudoki's Portal is maintained by Cloudoki. You can visit us at </>
               <a
                 href='https://www.cloudoki.com'
-                rel='noreferrer'
+                rel='noopener noreferrer'
                 target='_blank'
               >
                 https://www.cloudoki.com

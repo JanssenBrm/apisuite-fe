@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { useSelector } from 'react-redux'
 
-import { useTranslation } from 'react-i18next'
+// import { useTranslation } from 'react-i18next'
 
 import { Menus } from '@apisuite/extension-ui-types'
 
@@ -172,64 +172,15 @@ const renderSubSection = (subMenu: string, roleName?: string) => {
   )
 }
 
-// Footer's social media links
-
-// const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
-//   const classes = useStyles()
-
-//   const { socialURLs } = settings
-
-//   if (!socialURLs || !socialURLs.length) {
-//     return null
-//   }
-
-//   return (
-//     <div className={classes.iconsContainer}>
-//       {socialURLs.map((socialUrl) => {
-//         switch (socialUrl.name) {
-//           case 'web':
-//             return (
-//               <a key='web' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
-//                 <SvgIcon name='earth' size={24} />
-//               </a>
-//             )
-
-//           case 'twitter':
-//             return (
-//               <a key='twitter' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
-//                 <SvgIcon name='twitter' size={24} />
-//               </a>
-//             )
-
-//           case 'facebook':
-//             return (
-//               <a key='facebook' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
-//                 <SvgIcon name='facebook' size={24} />
-//               </a>
-//             )
-
-//           case 'github':
-//             return (
-//               <a key='github' href={socialUrl.url} rel='noopener noreferrer' target='_blank'>
-//                 <SvgIcon name='github-face' size={24} />
-//               </a>
-//             )
-
-//           default:
-//             return null
-//         }
-//       })}
-//     </div>
-//   )
-// }
-
 // Footer
 
 const Footer = () => {
   const classes = useStyles()
 
   const [settings] = useSettings()
-  const [t] = useTranslation()
+
+  // const [t] = useTranslation()
+
   const roleName = useSelector(getRoleName)
 
   const handleFabClick = () => {
