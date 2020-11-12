@@ -31,8 +31,14 @@
     }
   ],
   "palette": {
-    "primary": "#2DB7BA",
-    "secondary": "#035e86",
+    "primary": "#2ECA97",
+    "primaryContrastText": "#fff",
+    "secondary": "#19B3EE",
+    "secondaryContrastText": "#fff",
+    "tertiary": "#14283C",
+    "tertiaryContrastText": "#fff",
+    "focus": "#19B3EE",
+    "info": "#19B3EE",
     "background": {
       "default": "#fff"
     },
@@ -46,6 +52,15 @@
       "700": "#646464",
       "800": "#515151",
       "900": "#131313"
+    },
+    "newGreyScales": {
+      "25": "#f7f8f9",
+      "50": "#ecedef",
+      "100": "#dbdee1",
+      "300": "#bac0c6",
+      "400": "#85909A",
+      "500": "#6a7783",
+      "700": "#374858"
     },
     "text": {
       "primary": "#333",

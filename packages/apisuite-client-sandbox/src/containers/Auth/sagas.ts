@@ -1,6 +1,8 @@
 import {
-  put,
   call,
+  delay,
+  put,
+  select,
   takeLatest,
 } from 'redux-saga/effects'
 import request from 'util/request'
@@ -12,6 +14,7 @@ import {
   FORGOT_PASSWORD,
   RECOVER_PASSWORD,
   LOGOUT,
+  EXPIRED_SESSION,
 } from './ducks'
 import {
   AUTH_URL,
@@ -21,6 +24,7 @@ import {
 import { Profile } from 'containers/Profile/types'
 import qs from 'qs'
 import { openNotification } from 'containers/NotificationStack/ducks'
+import { Store } from 'store/types'
 
 import { AnyAction } from 'redux'
 
@@ -160,11 +164,35 @@ function * logoutWorker () {
   }
 }
 
+function * expiredSessionWorker () {
+  try {
+    const accessToken = yield select(
+      (state: Store) => state.auth.authToken)
+
+    // check token validity by calling user info endpoint
+    yield call(request, {
+      url: `${AUTH_URL}/userinfo`,
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      },
+    })
+  } catch (error) {
+    // if token expired logout
+    if (error && error.response && error.response.status === 401) {
+      yield put(openNotification('error', 'Your session has expired, you need to login again.', 5000))
+      yield delay(1000)
+      yield put(authActions.logout())
+    }
+  }
+}
+
 export function * rootSaga () {
   yield takeLatest(LOGIN, loginWorker)
   yield takeLatest([LOGIN_SUCCESS, LOGIN_USER], loginUWorker)
   yield takeLatest(FORGOT_PASSWORD, forgotPasswordSaga)
   yield takeLatest(RECOVER_PASSWORD, recoverPasswordSaga)
   yield takeLatest(LOGOUT, logoutWorker)
+  yield takeLatest(EXPIRED_SESSION, expiredSessionWorker)
 }
 export default rootSaga

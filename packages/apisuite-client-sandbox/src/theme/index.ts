@@ -6,11 +6,22 @@ const theme: ThemeOptions = {
     type: 'light',
     primary: {
       main: config?.palette?.primary,
+      contrastText: config?.palette?.primaryContrastText,
     },
     secondary: {
       main: config?.palette?.secondary,
+      contrastText: config?.palette?.secondaryContrastText,
     },
-    grey: config?.palette?.greyScales,
+    tertiary: {
+      main: config?.palette?.tertiary,
+    },
+    focus: {
+      main: config?.palette?.focus,
+    },
+    info: {
+      main: config?.palette?.info,
+    },
+    grey: config?.palette?.newGreyScales,
     text: config?.palette?.text,
   },
 }

@@ -3,6 +3,9 @@ import * as React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
+import { createMuiTheme } from '@material-ui/core/styles'
+import { ThemeProvider } from '@material-ui/styles'
+import theme from 'theme'
 import store, { history } from 'store'
 
 // Translations
@@ -23,7 +26,9 @@ function render (Component: any) {
     <ErrorMonitor>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <Component />
+          <ThemeProvider theme={createMuiTheme(theme)}>
+            <Component />
+          </ThemeProvider>
         </ConnectedRouter>
       </Provider>
     </ErrorMonitor>,
