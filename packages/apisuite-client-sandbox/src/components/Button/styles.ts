@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     fontSize: '14px',
     boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
     textDecoration: 'none',
-    textTransform: 'uppercase',
+    // textTransform: 'uppercase',
     color: '#fff !important',
     textAlign: 'center',
     position: 'relative',
