@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { MenuEntry, Menus } from '@apisuite/extension-ui-types'
 import { getMenuEntries } from 'util/extensions'
 import { useSettings } from 'util/useSetting'
+import { DEFAULT_SUPPORT_URL } from 'constants/global'
 import { getRoleName } from 'containers/Profile/selectors'
 import { TabProps } from './types'
 
@@ -121,6 +122,10 @@ export function useMenu (): Array<TabProps[]> {
         route: '/',
       },
       {
+        label: 'Support',
+        route: settings.supportURL || DEFAULT_SUPPORT_URL,
+      },
+      {
         label: 'Dashboard',
         route: '/dashboard',
         subTabs: [
@@ -168,13 +173,6 @@ export function useMenu (): Array<TabProps[]> {
 
       ...extensionsLoginTabs,
     ].filter(Boolean)
-
-    if (settings.supportURL) {
-      entries.splice(1, 0, {
-        label: 'Support',
-        route: settings.supportURL,
-      })
-    }
 
     if (settings.documentationURL) {
       entries.splice(1, 0, {
