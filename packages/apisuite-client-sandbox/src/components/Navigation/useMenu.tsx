@@ -63,6 +63,22 @@ export function useMenu (): Array<TabProps[]> {
     [roleName],
   )
 
+  const topTabs = React.useMemo((): TabProps[] => {
+    return [
+      {
+        label: 'Register',
+        route: '/auth/register',
+        active: pathname === '/auth/register',
+      },
+      {
+        isLogin: true,
+        label: 'Log in',
+        route: '/auth/login',
+        active: pathname === '/auth/login',
+      },
+    ]
+  }, [])
+
   const initTabs = React.useMemo((): TabProps[] => {
     const entries = [
       {
@@ -70,20 +86,26 @@ export function useMenu (): Array<TabProps[]> {
         route: '/',
       },
       {
-        label: 'Log in',
-        route: '/auth/login',
-        active: pathname === '/auth/login',
+        label: 'API Products',
+        route: '/api-products',
       },
       {
+        yetToLogIn: true,
         label: 'Register',
         route: '/auth/register',
         active: pathname === '/auth/register',
+      },
+      {
+        yetToLogIn: true,
+        label: 'Log in',
+        route: '/auth/login',
+        active: pathname === '/auth/login',
       },
       ...extensionsInitTabs,
     ].filter(Boolean)
 
     if (settings.supportURL) {
-      entries.splice(1, 0, {
+      entries.splice(2, 0, {
         label: 'Support',
         route: settings.supportURL,
       })
@@ -121,25 +143,29 @@ export function useMenu (): Array<TabProps[]> {
           ...extensionsLoginDashboardTabs,
         ],
       },
-      {
-        label: 'Profile',
-        route: '/profile',
-        subTabs: [
-          {
-            label: 'Profile',
-            route: '/profile',
-          },
-          {
-            label: 'Team',
-            route: '/profile/team',
-          },
-          {
-            label: 'Organisation',
-            route: '/profile/organisation',
-          },
-          ...extensionsLoginProfileTabs,
-        ],
-      },
+
+      /* TODO: Hide for now, and work towards making this tab accessible
+      through the user's name and avatar */
+      // {
+      //   label: 'Profile',
+      //   route: '/profile',
+      //   subTabs: [
+      //     {
+      //       label: 'Profile',
+      //       route: '/profile',
+      //     },
+      //     {
+      //       label: 'Team',
+      //       route: '/profile/team',
+      //     },
+      //     {
+      //       label: 'Organisation',
+      //       route: '/profile/organisation',
+      //     },
+      //     ...extensionsLoginProfileTabs,
+      //   ],
+      // },
+
       ...extensionsLoginTabs,
     ].filter(Boolean)
 
@@ -166,7 +192,7 @@ export function useMenu (): Array<TabProps[]> {
     levelPathnames,
   ])
 
-  return [initTabs, loginTabs]
+  return [topTabs, initTabs, loginTabs]
 }
 
 export const goBackConfig = [
