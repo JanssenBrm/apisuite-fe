@@ -15,7 +15,7 @@ const Button: React.FC<{
   background?: string,
   color?: string,
   className?: string,
-}> = ({ label, type, fullWidth, href, loading, disabled, onClick, background, color, className, ...rest }) => {
+}> = ({ label, type, fullWidth, href, loading, disabled, onClick, background, color, ...rest }) => {
   const classes = useStyles()
 
   return (
@@ -36,7 +36,6 @@ const Button: React.FC<{
             { [classes.secondary]: background && background === 'secondary' },
             { [classes.transparent]: background && background === 'transparent' },
             { [classes.dark]: background && background === 'dark' },
-            className,
           )}
         >
           {label}
@@ -55,7 +54,6 @@ const Button: React.FC<{
             { [classes.secondary]: background && background === 'secondary' },
             { [classes.transparent]: background && background === 'transparent' },
             { [classes.dark]: background && background === 'dark' },
-            className,
           )}
           {...rest}
         >
