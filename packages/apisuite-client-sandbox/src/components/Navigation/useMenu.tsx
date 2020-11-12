@@ -148,29 +148,25 @@ export function useMenu (): Array<TabProps[]> {
           ...extensionsLoginDashboardTabs,
         ],
       },
-
-      /* TODO: Hide for now, and work towards making this tab accessible
-      through the user's name and avatar */
-      // {
-      //   label: 'Profile',
-      //   route: '/profile',
-      //   subTabs: [
-      //     {
-      //       label: 'Profile',
-      //       route: '/profile',
-      //     },
-      //     {
-      //       label: 'Team',
-      //       route: '/profile/team',
-      //     },
-      //     {
-      //       label: 'Organisation',
-      //       route: '/profile/organisation',
-      //     },
-      //     ...extensionsLoginProfileTabs,
-      //   ],
-      // },
-
+      {
+        label: 'Profile',
+        route: '/profile',
+        subTabs: [
+          {
+            label: 'Profile',
+            route: '/profile',
+          },
+          {
+            label: 'Team',
+            route: '/profile/team',
+          },
+          {
+            label: 'Organisation',
+            route: '/profile/organisation',
+          },
+          ...extensionsLoginProfileTabs,
+        ],
+      },
       ...extensionsLoginTabs,
     ].filter(Boolean)
 
