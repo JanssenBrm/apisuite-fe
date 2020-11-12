@@ -192,7 +192,7 @@ const Navigation: React.FC<NavigationProps> = ({
             }
 
             {
-              user.photo !== ''
+              user.photo !== undefined
                 ? (
                   /* TODO: Using Gonçalo's picture as a placeholder - change logic to
                   use actual picture of user, whose source should be stored somewhere
