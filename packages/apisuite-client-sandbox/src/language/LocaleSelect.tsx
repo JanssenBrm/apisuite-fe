@@ -18,9 +18,9 @@ const LocaleSelect: React.FC<{}> = () => {
 
   const { i18n } = useTranslation()
 
-  const handleLocaleChange = ({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) => {
-    changeLocale(value)
-    localPut(LOCALE_KEY, value)
+  const handleLocaleChange = (event: React.ChangeEvent<any>) => {
+    changeLocale(event.target.value)
+    localPut(LOCALE_KEY, event.target.value)
   }
 
   const selectionMenuItems = config.i18n.map((opt) => (

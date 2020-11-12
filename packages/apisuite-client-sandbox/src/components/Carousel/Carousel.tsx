@@ -30,15 +30,15 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
   return (
     <div
-    className={
-    `
+      className={
+        `
     ${classes.carouselSlideOuterContainer}
     ${carouselSlideContentsPlacement && carouselSlideContentsPlacement === 'side-by-side'
-    ? classes.sideBySideSlideContentsPlacement
-    : classes.topToBottomSlideContentsPlacement
+      ? classes.sideBySideSlideContentsPlacement
+      : classes.topToBottomSlideContentsPlacement
     }
     `
-    }
+      }
     >
       {
         carouselSlideImage &&
@@ -161,11 +161,11 @@ const NewCarousel: React.FC<NewCarouselProps> = ({
   return (
     <>
       <Fade
-        className={classes.carouselSlider}
         in={carouselFadeIn || true}
         timeout={carouselFadeInDuration || 2500}
       >
         <div
+          className={classes.carouselSlider}
           style={
             carouselBackgroundImage
               ? {
@@ -187,11 +187,10 @@ const NewCarousel: React.FC<NewCarouselProps> = ({
       </Fade>
 
       <Fade
-        className={classes.carouselSliderButtons}
         in={carouselFadeIn || true}
         timeout={1000}
       >
-        <div>
+        <div className={classes.carouselSliderButtons}>
           {carouselSliderButtons}
         </div>
       </Fade>
