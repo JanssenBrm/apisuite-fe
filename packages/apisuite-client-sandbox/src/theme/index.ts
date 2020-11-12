@@ -21,6 +21,9 @@ const theme: ThemeOptions = {
     info: {
       main: config?.palette?.info,
     },
+    success: {
+      main: config?.palette?.success,
+    },
     grey: config?.palette?.newGreyScales,
     text: config?.palette?.text,
   },
