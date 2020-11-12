@@ -1,7 +1,5 @@
 import * as React from 'react'
 
-import { API_URL } from 'constants/endpoints'
-
 import APICatalog from 'components/APICatalog'
 import Carousel from 'components/Carousel'
 import Notice from 'components/Notice'
