@@ -36,6 +36,7 @@
       "varsIgnorePattern": "[_]",
       "ignoreRestSiblings": true
     }],
+    "react/jsx-indent": "off",
     "@typescript-eslint/indent": ["error", 2],
     "@typescript-eslint/no-object-literal-type-assertion": "off",
     "@typescript-eslint/member-delimiter-style": ["error", { "multiline": { "delimiter": "comma", "requireLast": true }}],
