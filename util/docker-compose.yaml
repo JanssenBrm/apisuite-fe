@@ -1,41 +1,5 @@
 version: '3.2'
 services:
-  # portal-client:
-  #   build: '../packages/apisuite-client-portal'
-  #   image: ${DOCKER_REPO}:${APISUITE_CLIENT_PORTAL_TAG}
-  #   container_name: apisuite-client-portal-${APISUITE_ENVIRONMENT}
-  #   restart: on-failure
-  #   ports:
-  #     - ${APISUITE_PORTAL_PORTS}
-  #   networks:
-  #     - apisuite-network
-  # sandbox-client:
-  #   build: '../packages/apisuite-client-sandbox'
-  #   image: ${DOCKER_REPO}:${APISUITE_CLIENT_SANDBOX_TAG}
-  #   container_name: apisuite-client-sandbox
-  #   restart: on-failure
-  #   ports:
-  #     - "3001:8080"
-  #   networks:
-  #     - apisuite-network
-  # marketplace-client:
-  #   build: '../packages/apisuite-client-marketplace'
-  #   image: ${DOCKER_REPO}:${APISUITE_CLIENT_MARKETPLACE_TAG}
-  #   container_name: apisuite-client-marketplace-${APISUITE_ENVIRONMENT}
-  #   restart: on-failure
-  #   ports:
-  #     - ${APISUITE_MARKETPLACE_PORTS}
-  #   networks:
-  #     - apisuite-network
-  # sso-client:
-  #   build: '../packages/apisuite-client-sso'
-  #   image: ${DOCKER_REPO}:${APISUITE_CLIENT_SSO_TAG}
-  #   container_name: apisuite-client-sso-${APISUITE_ENVIRONMENT}
-  #   restart: on-failure
-  #   ports:
-  #     - ${APISUITE_SSO_PORTS}
-  #   networks:
-  #     - apisuite-network
   sandbox-client-dev:
     build: '../packages/apisuite-client-sandbox'
     image: ${DOCKER_REPO}:${APISUITE_CLIENT_SANDBOX_TAG}
@@ -45,20 +9,6 @@ services:
       - ${APISUITE_SANDBOX_PORTS}
     networks:
       - apisuite-network
-    # environment:
-    #   - VIRTUAL_HOST=${VIRTUAL_HOST_SANDBOX}
-    #   - VIRTUAL_PORT=${VIRTUAL_PORT_SANDBOX}
-    #   - LETSENCRYPT_HOST=${LETSENCRYPT_HOST_SANDBOX}
-    #   - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL_SANDBOX}
-  # platform-client:
-  #   build: '../packages/apisuite-platform'
-  #   image: ${DOCKER_REPO}:${APISUITE_PLATFORM_TAG}
-  #   container_name: apisuite-platform-${APISUITE_ENVIRONMENT}
-  #   restart: on-failure
-  #   ports:
-  #     - ${APISUITE_PLATFORM_PORTS}
-  #   networks:
-  #     - apisuite-network
 
 networks:
   apisuite-network:
