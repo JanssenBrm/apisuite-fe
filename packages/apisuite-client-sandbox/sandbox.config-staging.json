@@ -31,7 +31,7 @@
     }
   ],
   "palette": {
-    "primary": "#2ECA97",
+    "primary": "#32C896",
     "primaryContrastText": "#fff",
     "secondary": "#19B3EE",
     "secondaryContrastText": "#fff",
@@ -39,6 +39,7 @@
     "tertiaryContrastText": "#fff",
     "focus": "#19B3EE",
     "info": "#19B3EE",
+    "success": "#14DE2D",
     "background": {
       "default": "#fff"
     },
