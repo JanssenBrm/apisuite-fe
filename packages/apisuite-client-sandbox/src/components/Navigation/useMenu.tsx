@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { MenuEntry, Menus } from '@apisuite/extension-ui-types'
 import { getMenuEntries } from 'util/extensions'
 import { useSettings } from 'util/useSetting'
+import { DEFAULT_SUPPORT_URL } from 'constants/global'
 import { getRoleName } from 'containers/Profile/selectors'
 import { TabProps } from './types'
 
@@ -63,6 +64,22 @@ export function useMenu (): Array<TabProps[]> {
     [roleName],
   )
 
+  const topTabs = React.useMemo((): TabProps[] => {
+    return [
+      {
+        label: 'Register',
+        route: '/auth/register',
+        active: pathname === '/auth/register',
+      },
+      {
+        isLogin: true,
+        label: 'Log in',
+        route: '/auth/login',
+        active: pathname === '/auth/login',
+      },
+    ]
+  }, [])
+
   const initTabs = React.useMemo((): TabProps[] => {
     const entries = [
       {
@@ -70,20 +87,26 @@ export function useMenu (): Array<TabProps[]> {
         route: '/',
       },
       {
-        label: 'Log in',
-        route: '/auth/login',
-        active: pathname === '/auth/login',
+        label: 'API Products',
+        route: '/api-products',
       },
       {
+        yetToLogIn: true,
         label: 'Register',
         route: '/auth/register',
         active: pathname === '/auth/register',
+      },
+      {
+        yetToLogIn: true,
+        label: 'Log in',
+        route: '/auth/login',
+        active: pathname === '/auth/login',
       },
       ...extensionsInitTabs,
     ].filter(Boolean)
 
     if (settings.supportURL) {
-      entries.splice(1, 0, {
+      entries.splice(2, 0, {
         label: 'Support',
         route: settings.supportURL,
       })
@@ -97,6 +120,10 @@ export function useMenu (): Array<TabProps[]> {
       {
         label: 'Home',
         route: '/',
+      },
+      {
+        label: 'Support',
+        route: settings.supportURL || DEFAULT_SUPPORT_URL,
       },
       {
         label: 'Dashboard',
@@ -143,13 +170,6 @@ export function useMenu (): Array<TabProps[]> {
       ...extensionsLoginTabs,
     ].filter(Boolean)
 
-    if (settings.supportURL) {
-      entries.splice(1, 0, {
-        label: 'Support',
-        route: settings.supportURL,
-      })
-    }
-
     if (settings.documentationURL) {
       entries.splice(1, 0, {
         label: 'Documentation',
@@ -166,7 +186,7 @@ export function useMenu (): Array<TabProps[]> {
     levelPathnames,
   ])
 
-  return [initTabs, loginTabs]
+  return [topTabs, initTabs, loginTabs]
 }
 
 export const goBackConfig = [

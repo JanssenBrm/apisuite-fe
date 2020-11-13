@@ -14,6 +14,7 @@ export interface AuthStore {
 }
 
 export interface User {
+  photo?: string,
   fName: string,
   lName: string,
   id: number,
