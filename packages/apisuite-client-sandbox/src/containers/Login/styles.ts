@@ -1,9 +1,10 @@
 import { makeStyles } from '@material-ui/styles'
+import { Theme } from '@material-ui/core'
 import { config } from 'constants/global'
 import loginImage from 'assets/loginImage.svg'
 import registerImage from 'assets/registerImage.svg'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme: Theme) => ({
   main: {
     display: 'flex',
     height: '100%',
@@ -33,14 +34,14 @@ const useStyles = makeStyles(({
     width: '55.75%',
     clipPath: 'polygon(0 0, 100% 0, 100% 100%, 51px 100%)',
     backfaceVisibility: 'hidden',
-    backgroundColor: config.palette.secondary,
+    backgroundColor: theme.palette.tertiary?.main,
     backgroundRepeat: 'no-repeat',
     backgroundPosition: '57px center',
     '&::before': {
       content: '',
       height: '100%',
       clipPath: 'polygon(0 0, 12px 0, 69px 100%, 51px 100%)',
-      backgroundColor: config.palette.secondary,
+      backgroundColor: theme.palette.tertiary?.main,
     },
     '@media (max-width: 1024px)': {
       width: '100%',
