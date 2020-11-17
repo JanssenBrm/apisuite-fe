@@ -45,16 +45,8 @@ export default function subscriptionsReducer (
     }
 
     case SubscriptionsActionTypes.GET_APIS_SUCCESS: {
-      const apis: Api[] = action.apis.map(api => ({
-        baseUri: api.baseUri,
-        id: api.id,
-        name: api.name,
-        baseUriSandbox: api.baseUriSandbox,
-        docs: api.docs,
-      }))
-
       return update(state, {
-        apis: { $set: apis },
+        apis: { $set: action.apis },
       })
     }
 

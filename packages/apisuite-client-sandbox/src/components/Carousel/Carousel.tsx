@@ -11,7 +11,7 @@ import Fade from '@material-ui/core/Fade'
 import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded'
 import RadioButtonUncheckedRoundedIcon from '@material-ui/icons/RadioButtonUncheckedRounded'
 
-import { CarouselSlideProps, NewCarouselProps } from './types'
+import { CarouselSlideProps, CarouselProps } from './types'
 
 import useStyles from './styles'
 
@@ -21,6 +21,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
   carouselSlideButton,
   carouselSlideButtonCustomStyling,
   carouselSlideButtonLabel,
+  carouselSlideButtonLink,
   carouselSlideButtonOnClick,
   carouselSlideContentsPlacement,
   carouselSlideImage,
@@ -32,19 +33,19 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
     <div
       className={
         `
-    ${classes.carouselSlideOuterContainer}
-    ${carouselSlideContentsPlacement && carouselSlideContentsPlacement === 'side-by-side'
+${classes.carouselSlideOuterContainer}
+${carouselSlideContentsPlacement && carouselSlideContentsPlacement === 'side-by-side'
       ? classes.sideBySideSlideContentsPlacement
       : classes.topToBottomSlideContentsPlacement
     }
-    `
+`
       }
     >
       {
         carouselSlideImage &&
-          <div className={classes.carouselSlideInnerContainer}>
-            <img alt='Slide image' src={carouselSlideImage} />
-          </div>
+        <div className={classes.carouselSlideInnerContainer}>
+          <img alt='Slide image' src={carouselSlideImage} />
+        </div>
       }
 
       <div className={classes.carouselSlideInnerContainer}>
@@ -52,13 +53,14 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
         {
           carouselSlideButton &&
-            <Button
-              className={
-                carouselSlideButtonCustomStyling || classes.carouselSlideButtonStyling
-              }
-              label={carouselSlideButtonLabel}
-              onClick={carouselSlideButtonOnClick}
-            />
+          <Button
+            className={
+              carouselSlideButtonCustomStyling || classes.carouselSlideButtonStyling
+            }
+            href={carouselSlideButtonLink}
+            label={carouselSlideButtonLabel}
+            onClick={carouselSlideButtonOnClick}
+          />
         }
       </div>
     </div>
@@ -67,7 +69,7 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
 
 // Carousel
 
-const NewCarousel: React.FC<NewCarouselProps> = ({
+const Carousel: React.FC<CarouselProps> = ({
   carouselBackgroundColor,
   carouselBackgroundImage,
   carouselFadeIn,
@@ -88,13 +90,18 @@ const NewCarousel: React.FC<NewCarouselProps> = ({
     setSlideNumber(newSlideNumber)
   }
 
+  const [isHoveringSlide, setIsHoveringSlide] = React.useState(false)
+
   const carouselSlides = slidesArray.map((slide, index) =>
     <div
       key={`slide_${index}`}
+      onMouseEnter={() => { setIsHoveringSlide(true) }}
+      onMouseLeave={() => { setIsHoveringSlide(false) }}
     >
       <CarouselSlide
         carouselSlideButton={slide.slideButton}
         carouselSlideButtonLabel={slide.slideButtonLabel}
+        carouselSlideButtonLink={slide.slideButtonLink}
         carouselSlideContentsPlacement={slide.slideContentsPlacement}
         carouselSlideImage={slide.slideForegroundImage}
         carouselSlideText={slide.slideText}
@@ -102,7 +109,7 @@ const NewCarousel: React.FC<NewCarouselProps> = ({
     </div>,
   )
 
-  const carouselSliderButtons = iconsOfSliderButtonsArray ? (iconsOfSliderButtonsArray.map((icon, index) =>
+  const carouselSliderIconButtons = iconsOfSliderButtonsArray ? (iconsOfSliderButtonsArray.map((icon, index) =>
     <button
       className={
         index === slideNumber
@@ -141,21 +148,25 @@ const NewCarousel: React.FC<NewCarouselProps> = ({
     3) Before the component is inevitably re-rendered, we execute the 'clearInterval' method so as to avoid
     stacking timeouts.
 
-    This behavior repeats itself ad nauseam.
+    This behavior repeats itself ad nauseam, UNLESS the user happens to hover over a particular slide.
     */
     React.useEffect(() => {
-      const scheduledCarouselSlideChange = setTimeout(() => {
-        if (slideNumber < (amountOfSlides - 1)) {
-          const newSlideNumber = slideNumber + 1
+      let scheduledCarouselSlideChange: NodeJS.Timeout
 
-          setSlideNumber(newSlideNumber)
-        } else {
-          setSlideNumber(0)
-        }
-      }, timeBetweenSlides || 1000)
+      if (!isHoveringSlide) {
+        scheduledCarouselSlideChange = setTimeout(() => {
+          if (slideNumber < (amountOfSlides - 1)) {
+            const newSlideNumber = slideNumber + 1
+
+            setSlideNumber(newSlideNumber)
+          } else {
+            setSlideNumber(0)
+          }
+        }, timeBetweenSlides || 1000)
+      }
 
       return () => clearInterval(scheduledCarouselSlideChange)
-    }, [slideNumber])
+    }, [isHoveringSlide, slideNumber])
   }
 
   return (
@@ -190,12 +201,12 @@ const NewCarousel: React.FC<NewCarouselProps> = ({
         in={carouselFadeIn || true}
         timeout={1000}
       >
-        <div className={classes.carouselSliderButtons}>
-          {carouselSliderButtons}
+        <div className={classes.carouselSliderIconButtons}>
+          {carouselSliderIconButtons}
         </div>
       </Fade>
     </>
   )
 }
 
-export default NewCarousel
+export default Carousel

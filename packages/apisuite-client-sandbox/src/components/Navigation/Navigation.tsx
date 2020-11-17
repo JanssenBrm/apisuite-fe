@@ -17,10 +17,12 @@ import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded'
 
 const Navigation: React.FC<NavigationProps> = ({
-  title,
   contractible = false,
-  toggleInform,
   logout,
+  profile,
+  settings,
+  title,
+  toggleInform,
   ...rest
 }) => {
   const classes = useStyles()
@@ -28,17 +30,24 @@ const Navigation: React.FC<NavigationProps> = ({
 
   const auth = useSelector(getAuth)
   const user = auth.user
+  const userProfile = profile.profile.user
 
+  // User's initials (to be used in his Avatar, in the absence of a picture)
   let splitName
   let initials
 
   if (user) {
-    splitName = user.fName.split(' ')
+    splitName = userProfile.name.split(' ')
     initials = splitName.length >= 2
       ? `${splitName[0][0] + splitName[1][0]}` : splitName[0].slice(0, 1)
   }
 
   const [scrollPos, setScrollPos] = React.useState(0)
+  const scrolled = contractible && (scrollPos >= 10)
+
+  const scrollHandler = React.useCallback(() => {
+    setScrollPos(window.scrollY)
+  }, [])
 
   const [activeMenuName, setActiveMenuName] = React.useState('init')
   const [goBackLabel, setGoBackLabel] = React.useState('')
@@ -53,10 +62,9 @@ const Navigation: React.FC<NavigationProps> = ({
     const activeTab = tabs.find((tab) => tab.active)
     const subTabs = !!activeTab && activeTab.subTabs
     const activeSubTab = !!subTabs && subTabs.find((tab) => tab.active)
+
     return { activeTab, subTabs, activeSubTab }
   }, [tabs])
-
-  const scrolled = contractible && (scrollPos >= 10)
 
   const handleGobackClick = React.useCallback(() => history.goBack(), [])
 
@@ -64,13 +72,10 @@ const Navigation: React.FC<NavigationProps> = ({
     setActiveMenuName(auth.user ? 'login' : 'init')
   }, [auth.user])
 
-  const scrollHandler = React.useCallback(() => {
-    setScrollPos(window.scrollY)
-  }, [])
-
   React.useEffect(() => {
     const { pathname } = history.location
     const gb = goBackConfig.find((item) => pathname.indexOf(item.path) === 0)
+
     if (gb) {
       setGoBackLabel(gb.label)
     } else {
@@ -82,7 +87,9 @@ const Navigation: React.FC<NavigationProps> = ({
     if (!contractible) {
       return
     }
+
     window.addEventListener('scroll', scrollHandler)
+
     return () => {
       window.removeEventListener('scroll', scrollHandler)
     }
@@ -107,8 +114,9 @@ const Navigation: React.FC<NavigationProps> = ({
               }
             />
 
-            {/* TODO: Eventually change the following text to reflect the client's name */}
-            <h3 className={classes.portalName}>Cloudoki's Portal</h3>
+            <h3 className={classes.portalName}>
+              {settings.portalName}
+            </h3>
           </div>
 
           {!user && (
@@ -150,23 +158,25 @@ const Navigation: React.FC<NavigationProps> = ({
             >
               {
                 tabs.map((tab, idx) => {
+                  if (tab.isProfileTab) return
+
                   return !(contractible && !scrolled && tab.yetToLogIn)
                     ? (
                       <Tab
                         className={
                           `
-                            ${(contractible && !scrolled)
+${(contractible && !scrolled)
                         ? classes.transparentMenuTab
                         : classes.opaqueMenuTab
                       }
-                            ${tab.active ? ' ' + classes.activeTab : ''}
-                            ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
-                          `
+${tab.active ? ' ' + classes.activeTab : ''}
+${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
+`
                         }
                         component={Link}
                         disableRipple
                         key={`nav-tab-${idx}`}
-                        label={tab.label}
+                        label={tab.isLogin ? <PowerSettingsNewRoundedIcon /> : tab.label}
                         to={tab.route}
                         value={tab.route}
                       />
@@ -178,57 +188,79 @@ const Navigation: React.FC<NavigationProps> = ({
           </div>
         </nav>
 
-        {user && (
-          <div
-            className={
-              (contractible && !scrolled)
-                ? classes.transparentMenuUserAvatarContainer
-                : classes.opaqueMenuUserAvatarContainer
-            }
-          >
-            {
-              (contractible && !scrolled) &&
-                <span className={classes.userName}>{user.fName}</span>
-            }
+        {
+          user && (
+            <div
+              className={
+                (contractible && !scrolled)
+                  ? classes.transparentMenuUserNameAndAvatarContainer
+                  : classes.opaqueMenuUserNameAndAvatarContainer
+              }
+            >
+              {
+                (contractible && !scrolled) &&
+                <Link
+                  className={classes.linkToProfile}
+                  to='/profile'
+                >
+                  <span className={classes.userName}>
+                    {userProfile.name}
+                  </span>
+                </Link>
+              }
 
-            {
-              user.photo !== undefined
-                ? (
-                  /* TODO: Using Gonçalo's picture as a placeholder - change logic to
-                  use actual picture of user, whose source should be stored somewhere
-                  in the app's Store */
-                  <Avatar
-                    alt="User's photo"
-                    className={
-                      (contractible && !scrolled)
-                        ? classes.transparentMenuUserAvatar
-                        : classes.opaqueMenuUserAvatar
-                    }
-                    onClick={logout}
-                    src='/assets/goncalo-avatar.jpg'
-                  />
-                )
-                : (
-                  <Avatar
-                    className={
-                      (contractible && !scrolled)
-                        ? classes.transparentMenuUserAvatar
-                        : classes.opaqueMenuUserAvatar
-                    }
-                    onClick={logout}
-                  >
-                    {initials}
-                  </Avatar>
-                )
-            }
-          </div>
-        )}
+              {
+                userProfile.avatar !== ''
+                  ? (
+                    /* TODO: Using Gonçalo's picture as a placeholder - change logic to
+                    use actual picture of user, whose source should be stored somewhere
+                    in the app's Store */
+                    <Link
+                      className={classes.linkToProfile}
+                      to='/profile'
+                    >
+                      <Avatar
+                        alt="User's photo"
+                        className={
+                          (contractible && !scrolled)
+                            ? classes.transparentMenuUserAvatar
+                            : classes.opaqueMenuUserAvatar
+                        }
+                        src={userProfile.avatar}
+                      />
+                    </Link>
+                  )
+                  : (
+                    <Link
+                      className={classes.linkToProfile}
+                      to='/profile'
+                    >
+                      <Avatar
+                        className={
+                          (contractible && !scrolled)
+                            ? classes.transparentMenuUserAvatar
+                            : classes.opaqueMenuUserAvatar
+                        }
+                      >
+                        {initials}
+                      </Avatar>
+                    </Link>
+                  )
+              }
+
+              <PowerSettingsNewRoundedIcon
+                className={classes.logOutIcon}
+                onClick={logout}
+              />
+            </div>
+          )
+        }
       </header>
 
       {!!subTabs && (
         <div className={clsx('sub-container', { scrolled })}>
           <div className='tabs subtabs'>
-            {!!goBackLabel && (
+            {goBackLabel === '' && (
               <div role='button' className='back-btn' onClick={handleGobackClick}>
                 <SvgIcon name='chevron-left-circle' size={28} /> &nbsp;&nbsp; <span>{goBackLabel}</span>
               </div>
@@ -247,9 +279,9 @@ const Navigation: React.FC<NavigationProps> = ({
                 <Tab
                   className={
                     `
-                      ${classes.subTab}
-                      ${tab.active ? ' ' + classes.activeTab : ''}
-                    `
+${classes.subTab}
+${tab.active ? ' ' + classes.activeTab : ''}
+`
                   }
                   component={Link}
                   disableRipple

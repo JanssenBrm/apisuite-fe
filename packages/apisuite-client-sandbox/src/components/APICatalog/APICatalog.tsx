@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import Link from 'components/Link'
+
 import Avatar from '@material-ui/core/Avatar'
 
 import useStyles from './styles'
@@ -16,54 +18,118 @@ const APICatalog: React.FC<APICatalogProps> = ({
     const apiInitials = apiSplitName.length >= 2
       ? `${apiSplitName[0].charAt(0)}${apiSplitName[1].charAt(0)}` : apiSplitName[0].slice(0, 2)
 
-    return (
-      <div
-        className={classes.apiCatalogEntry}
-        key={`apiCatalogEntry${index}`}
-      >
-        <div className={classes.apiCatalogEntryAvatar}>
-          <Avatar
-            className={apiDetails.apiAccess === 'Production access'
-              ? classes.colorsOfProductionAPI
-              : (apiDetails.apiAccess === 'Sandbox access'
-                ? classes.colorsOfSandboxAPI
-                : classes.colorsOfAPIDocumentation)}
+    if (apiDetails.hasMoreDetails) {
+      return (
+        <Link
+          className={classes.apiCatalogEntryLink}
+          to={`/api-details/${apiDetails.id}/${apiDetails.apiRoutingId}`}
+        >
+          <div
+            className={classes.apiCatalogEntry}
+            key={`apiCatalogEntry${index}`}
           >
-            {apiInitials}
-          </Avatar>
-        </div>
+            <div className={classes.apiCatalogEntryAvatar}>
+              <Avatar
+                className={apiDetails.apiAccess === 'Production access'
+                  ? classes.colorsOfProductionAPI
+                  : (apiDetails.apiAccess === 'Sandbox access'
+                    ? classes.colorsOfSandboxAPI
+                    : classes.colorsOfAPIDocumentation)}
+              >
+                {apiInitials.toUpperCase()}
+              </Avatar>
+            </div>
 
-        <div className={classes.apiCatalogEntryText}>
-          <p className={classes.apiCatalogEntryName}>{apiDetails.apiName}</p>
+            <div className={classes.apiCatalogEntryText}>
+              <p className={classes.apiCatalogEntryName}>{apiDetails.apiName}</p>
 
-          <p className={classes.apiCatalogEntryVersionAndAccess}>
-            <span
-              className={
-                `
-                  ${classes.apiCatalogEntryVersion}
-                  ${(
-        apiDetails.apiAccess === 'Production access'
-          ? classes.colorsOfProductionAPI
-          : (
-            apiDetails.apiAccess === 'Sandbox access'
-              ? classes.colorsOfSandboxAPI
-              : classes.colorsOfAPIDocumentation
-          )
-      )}
-                `
-              }
+              <p className={classes.apiCatalogEntryVersionAndAccess}>
+                <span
+                  className={
+                    `
+${classes.apiCatalogEntryVersion}
+${(
+          apiDetails.apiAccess === 'Production access'
+            ? classes.colorsOfProductionAPI
+            : (
+              apiDetails.apiAccess === 'Sandbox access'
+                ? classes.colorsOfSandboxAPI
+                : classes.colorsOfAPIDocumentation
+            )
+        )}
+`
+                  }
+                >
+                  {
+                    apiDetails.apiVersion === 'No version available'
+                      ? apiDetails.apiVersion
+                      : `v${apiDetails.apiVersion}`
+                  }
+                </span>
+                <>{apiDetails.apiAccess}</>
+              </p>
+
+              <p className={classes.apiCatalogEntryDescription}>
+                {apiDetails.apiDescription}
+              </p>
+            </div>
+          </div>
+        </Link>
+      )
+    } else {
+      return (
+        <div
+          className={classes.apiCatalogEntry}
+          key={`apiCatalogEntry${index}`}
+        >
+          <div className={classes.apiCatalogEntryAvatar}>
+            <Avatar
+              className={apiDetails.apiAccess === 'Production access'
+                ? classes.colorsOfProductionAPI
+                : (apiDetails.apiAccess === 'Sandbox access'
+                  ? classes.colorsOfSandboxAPI
+                  : classes.colorsOfAPIDocumentation)}
             >
-              {apiDetails.apiVersion}
-            </span>
-            <>{apiDetails.apiAccess}</>
-          </p>
+              {apiInitials.toUpperCase()}
+            </Avatar>
+          </div>
 
-          <p className={classes.apiCatalogEntryDescription}>
-            {apiDetails.apiDescription}
-          </p>
+          <div className={classes.apiCatalogEntryText}>
+            <p className={classes.apiCatalogEntryName}>{apiDetails.apiName}</p>
+
+            <p className={classes.apiCatalogEntryVersionAndAccess}>
+              <span
+                className={
+                  `
+${classes.apiCatalogEntryVersion}
+${(
+          apiDetails.apiAccess === 'Production access'
+            ? classes.colorsOfProductionAPI
+            : (
+              apiDetails.apiAccess === 'Sandbox access'
+                ? classes.colorsOfSandboxAPI
+                : classes.colorsOfAPIDocumentation
+            )
+        )}
+`
+                }
+              >
+                {
+                  apiDetails.apiVersion === 'No version available'
+                    ? apiDetails.apiVersion
+                    : `v${apiDetails.apiVersion}`
+                }
+              </span>
+              <>{apiDetails.apiAccess}</>
+            </p>
+
+            <p className={classes.apiCatalogEntryDescription}>
+              {apiDetails.apiDescription}
+            </p>
+          </div>
         </div>
-      </div>
-    )
+      )
+    }
   })
 
   return <>{apiCatalogEntries}</>

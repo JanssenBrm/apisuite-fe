@@ -88,8 +88,8 @@ export default makeStyles(({
   },
 
   individualStepButton: {
-    backgroundColor: '#BAC0C6',
-    borderColor: '#BAC0C6',
+    backgroundColor: '#14283C',
+    borderColor: '#14283C',
     borderRadius: '4px',
     color: '#FFFFFF',
     fontSize: '16px',
@@ -97,14 +97,14 @@ export default makeStyles(({
     textTransform: 'inherit',
     width: '100%',
 
-    '&:active': {
-      backgroundColor: '#BAC0C6',
-      borderColor: '#BAC0C6',
+    '&:active, &:hover, &:link, &:visited': {
+      backgroundColor: '#14283C',
+      borderColor: '#14283C',
       borderRadius: '4px',
       color: '#FFFFFF',
     },
 
-    '&:hover': {
+    '&.MuiButton-root.Mui-disabled': {
       backgroundColor: '#BAC0C6',
       borderColor: '#BAC0C6',
       borderRadius: '4px',
@@ -132,6 +132,24 @@ export default makeStyles(({
     width: '100%',
   },
 
+  stepsDescriptionContactSupportButton: {
+    backgroundColor: '#F78E27',
+    borderColor: '#F78E27',
+    borderRadius: '4px',
+    color: '#FFFFFF',
+    fontSize: '16px',
+    fontWeight: 500,
+    textTransform: 'inherit',
+    width: '160px',
+
+    '&:active, &:hover, &:link, &:visited': {
+      backgroundColor: '#F78E27',
+      borderColor: '#F78E27',
+      borderRadius: '4px',
+      color: '#FFFFFF',
+    },
+  },
+
   stepsDescriptionRegisterButton: {
     backgroundColor: '#14283C',
     borderColor: '#14283C',
@@ -142,14 +160,7 @@ export default makeStyles(({
     textTransform: 'inherit',
     width: '135px',
 
-    '&:active': {
-      backgroundColor: '#14283C',
-      borderColor: '#14283C',
-      borderRadius: '4px',
-      color: '#FFFFFF',
-    },
-
-    '&:hover': {
+    '&:active, &:hover, &:link, &:visited': {
       backgroundColor: '#14283C',
       borderColor: '#14283C',
       borderRadius: '4px',
@@ -173,14 +184,14 @@ export default makeStyles(({
   stepsDescriptionParagraphOne: {
     color: '#51606E',
     fontSize: '20px',
-    fontWeight: 300,
+    fontWeight: 200,
     margin: '12px 0px',
   },
 
   stepsDescriptionParagraphTwo: {
     color: '#85909A',
     fontSize: '16px',
-    fontWeight: 400,
+    fontWeight: 300,
     lineHeight: '20px',
     margin: '12px 0px',
 

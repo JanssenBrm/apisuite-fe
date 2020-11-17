@@ -6,7 +6,7 @@ export default makeStyles({
     border: '1px solid #BAC0C6',
     borderRadius: '4px',
     display: 'flex',
-    height: '215px',
+    height: '200px',
     marginBottom: '20px',
     width: '440px',
   },
@@ -20,6 +20,17 @@ export default makeStyles({
       margin: 'auto',
       width: '60px',
     },
+  },
+
+  apiCatalogEntryDescription: {
+    color: '#85909A',
+    fontSize: '16px',
+    fontWeight: 300,
+    lineHeight: '20px',
+  },
+
+  apiCatalogEntryLink: {
+    textDecoration: 'none',
   },
 
   apiCatalogEntryName: {
@@ -39,13 +50,6 @@ export default makeStyles({
     },
   },
 
-  apiCatalogEntryDescription: {
-    color: '#85909A',
-    fontSize: '16px',
-    fontWeight: 400,
-    lineHeight: '20px',
-  },
-
   apiCatalogEntryVersion: {
     borderRadius: '4px',
     marginRight: '8px',
@@ -55,7 +59,7 @@ export default makeStyles({
   apiCatalogEntryVersionAndAccess: {
     color: '#85909A',
     fontSize: '14px',
-    fontWeight: 400,
+    fontWeight: 300,
     marginBottom: '8px',
   },
 

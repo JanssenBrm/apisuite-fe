@@ -102,14 +102,16 @@ export default makeStyles(({
     marginRight: '20px',
   },
 
-  transparentMenuUserAvatarContainer: {
+  transparentMenuUserNameAndAvatarContainer: {
+    alignItems: 'center',
     display: 'flex',
     justifyContent: 'flex-end',
     position: 'absolute',
     right: 0,
   },
 
-  opaqueMenuUserAvatarContainer: {
+  opaqueMenuUserNameAndAvatarContainer: {
+    alignItems: 'center',
     display: 'flex',
     justifyContent: 'flex-end',
     position: 'relative',
@@ -126,5 +128,15 @@ export default makeStyles(({
     border: '2px solid #32C896',
     height: '33px',
     width: '33px',
+  },
+
+  linkToProfile: {
+    alignSelf: 'center',
+    textDecoration: 'none',
+  },
+
+  logOutIcon: {
+    cursor: 'pointer',
+    marginLeft: '12px',
   },
 }))

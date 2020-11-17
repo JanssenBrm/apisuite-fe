@@ -13,48 +13,76 @@ import FlightLandRoundedIcon from '@material-ui/icons/FlightLandRounded'
 
 import useStyles from './styles'
 
+import { SandboxProps } from './types'
+
 import carouselBackground from 'assets/space-background.svg'
 import carouselSlide1 from 'assets/carousel-slide-1.svg'
 import carouselSlide2 from 'assets/carousel-slide-2.svg'
 
-const Sandbox: React.FC<{}> = () => {
+import { DEFAULT_SUPPORT_URL } from 'constants/global'
+
+const Sandbox: React.FC<SandboxProps> = ({
+  auth,
+  getApis,
+  settings,
+  subscriptions,
+}) => {
   const classes = useStyles()
 
   // TODO: Add translation capabilities
   // const [t] = useTranslation()
 
-  const recentlyAddedAPIs = [
-    {
-      id: 0,
-      apiName: 'Swagger Petstore - OpenAPI 3.0',
-      apiDescription: 'This is a sample Pet Store Server based on the OpenAPI 3.0 specification.',
-      apiVersion: 'v1.0.5',
-      apiAccess: 'Sandbox access',
-    },
-    {
-      id: 1,
-      apiName: 'Swagger Dragonstore - OpenAPI 3.0',
-      apiDescription: 'This is a sample Dragon Store Server based on the OpenAPI 3.0 specification.',
-      apiVersion: 'v1.0.5',
-      apiAccess: 'Production access',
-    },
-    {
-      id: 2,
-      apiName: 'Swagger Lizzardstore - OpenAPI 3.0',
-      apiDescription: 'This is a sample Lizzard Store Server based on the OpenAPI 3.0 specification.',
-      apiVersion: 'v1.0.5',
-      apiAccess: 'API Documentation',
-    },
-  ]
+  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = React.useState([])
+
+  React.useEffect(() => {
+    /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
+    of all API-related information we presently have. */
+    getApis()
+  }, [])
+
+  React.useEffect(() => {
+    /* Once 'subscriptions' info is made available, we process it so as to display it
+    on our 'API Catalog' section. */
+    const allAvailableAPIs = subscriptions.apis
+
+    if (allAvailableAPIs.length) {
+      let newRecentlyAddedAPIs
+
+      newRecentlyAddedAPIs = allAvailableAPIs.map((api) => {
+        if (api.apiVersions.length) {
+          return {
+            /* Determines if an 'API Catalog' entry will be clickable,
+            and link to its corresponding 'API Details' view. */
+            hasMoreDetails: true,
+            id: api.apiVersions[0].apiId,
+            apiName: api.apiVersions[0].title,
+            apiDescription: api.docs ? api.docs.info : 'No description presently available.',
+            apiVersion: api.apiVersions[0].version,
+            // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
+            apiRoutingId: api.apiVersions[0].id,
+            apiAccess: api.type === 'local'
+              ? 'Production access'
+              : '',
+          }
+        }
+
+        return {
+          hasMoreDetails: false,
+          id: api.id,
+          apiName: api.name,
+          apiDescription: api.docs ? api.docs.info : 'No description presently available.',
+          apiVersion: 'No version available',
+          apiAccess: api.type === 'local'
+            ? 'Production access'
+            : '',
+        }
+      })
+
+      setRecentlyAddedAPIs(newRecentlyAddedAPIs)
+    }
+  }, [subscriptions])
 
   return (
-  /* TODO:
-    1) Retrieve list of most recently added APIs
-    (https://api.develop.apisuite.io/api-docs#tag/API/paths/~1:apiId~1versions~1:id/get)
-
-    2) Pass that info to the 'API Catalog' section in array form (mock data, for now)
-    */
-
     <main className='page-container'>
       {/* Carousel section */}
       <section className={classes.slideShowSectionContainer}>
@@ -70,6 +98,7 @@ const Sandbox: React.FC<{}> = () => {
             {
               slideButton: true,
               slideButtonLabel: 'Register',
+              slideButtonLink: '/auth/register',
               slideContentsPlacement: 'top-to-bottom',
               slideForegroundImage: carouselSlide1,
               slideText: 'Sign up now to enjoy all portal features',
@@ -77,6 +106,7 @@ const Sandbox: React.FC<{}> = () => {
             {
               slideButton: true,
               slideButtonLabel: 'API Products',
+              slideButtonLink: '/dashboard/subscriptions',
               slideContentsPlacement: 'side-by-side',
               slideForegroundImage: carouselSlide2,
               slideText: 'Take a look at our available APIs',
@@ -84,6 +114,7 @@ const Sandbox: React.FC<{}> = () => {
             {
               slideButton: true,
               slideButtonLabel: 'Coming soon!',
+              slideButtonLink: '#',
               slideContentsPlacement: 'side-by-side',
               slideForegroundImage: carouselSlide2,
               slideText: '3rd slide not yet available',
@@ -103,27 +134,66 @@ const Sandbox: React.FC<{}> = () => {
         <section className={classes.stepsSectionDescriptionsContainer}>
           <section className={classes.stepsDescriptionContainerOne}>
             <h3 className={classes.stepsDescriptionHeading}>
-              Create a developer account first.
+              {
+                !auth.user
+                  ? 'Create a developer account first.'
+                  : 'We value you as an interested developer!'
+              }
             </h3>
 
             <p className={classes.stepsDescriptionParagraphOne}>
-              Our API Portal enables you to register a free team-based account without on the fly.
+              {
+                !auth.user
+                  ? 'Our API Portal enables you to register a free team-based account without on the fly.'
+                  : `${settings.portalName} enables you to register your client apps and subscribe to our available API products.`
+              }
             </p>
 
             <p className={classes.stepsDescriptionParagraphTwo}>
               <span>
-                Once activated, we assist you in 3 straightforward steps to start consuming our API products.
+                {
+                  !auth.user
+                    ? 'Once activated, we assist you in 3 straightforward steps to start consuming our API products.'
+                    : 'Whenever you are ready, we assist you in 3 straightforward steps to start consuming our API products.'
+                }
               </span>
 
               <>
-                Not sure how to get there? The onboarding documentation will help you along.
+                {
+                  !auth.user
+                    ? 'Not sure how to get there? The onboarding documentation will help you along.'
+                    : 'Did you experience any issues with your account set-up?'
+                }
               </>
             </p>
 
             <Button
-              className={classes.stepsDescriptionRegisterButton}
+              className={
+                !auth.user
+                  ? classes.stepsDescriptionRegisterButton
+                  : classes.stepsDescriptionContactSupportButton
+              }
+              href={
+                !auth.user
+                  ? '/auth/register'
+                  : settings.supportURL || DEFAULT_SUPPORT_URL
+              }
+              rel={
+                auth.user
+                  ? 'noopener noreferrer'
+                  : ''
+              }
+              target={
+                auth.user
+                  ? '_blank'
+                  : ''
+              }
             >
-              Register now
+              {
+                !auth.user
+                  ? 'Register now'
+                  : 'Contact support'
+              }
             </Button>
           </section>
 
@@ -146,7 +216,8 @@ const Sandbox: React.FC<{}> = () => {
 
                 <Button
                   className={classes.individualStepButton}
-                // TODO: Add 'href' attribute
+                  disabled={!auth.user}
+                  href='/dashboard/apps'
                 >
                   Add app
                 </Button>
@@ -164,7 +235,8 @@ const Sandbox: React.FC<{}> = () => {
 
                 <Button
                   className={classes.individualStepButton}
-                // TODO: Add 'href' attribute
+                  disabled={!auth.user}
+                  href='/dashboard/subscriptions'
                 >
                   Subscribe to API
                 </Button>
@@ -182,7 +254,8 @@ const Sandbox: React.FC<{}> = () => {
 
                 <Button
                   className={classes.individualStepButton}
-                // TODO: Add 'href' attribute
+                  disabled={!auth.user}
+                  href='/dashboard/test'
                 >
                   Documentation
                 </Button>
@@ -225,13 +298,13 @@ const Sandbox: React.FC<{}> = () => {
           }
           noticeText={
             <p>
-              <>Cloudoki's Portal is maintained by Cloudoki. You can visit us at </>
+              <>{settings.portalName} is maintained by {settings.clientName}. You can visit us at </>
               <a
-                href='https://www.cloudoki.com'
+                href={settings.socialURLs.length > 0 ? settings.socialURLs[0].url : '#'}
                 rel='noopener noreferrer'
                 target='_blank'
               >
-                https://www.cloudoki.com
+                {settings.socialURLs.length > 0 ? settings.socialURLs[0].url : '(loading URL)'}
               </a>
               <>.</>
             </p>

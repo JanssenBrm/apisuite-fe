@@ -24,7 +24,7 @@ import useStyles from './styles'
 
 import { MenuSection, MenuSections } from './types'
 
-const renderSocialLinks = ({ settings }: { settings: SettingsStore}) => {
+const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
   const classes = useStyles()
 
   const { socialURLs } = settings
@@ -200,8 +200,9 @@ const Footer = () => {
           <div className={classes.logoAndPortalNameContainer}>
             <AmpStoriesRoundedIcon className={classes.logo} />
 
-            {/* TODO: Perhaps change the following text to "{settings.clientName}'s Portal" */}
-            <h3 className={classes.portalName}>Cloudoki's Portal</h3>
+            <h3 className={classes.portalName}>
+              {settings.portalName}
+            </h3>
           </div>
 
           <div className={classes.sectionsContainer}>

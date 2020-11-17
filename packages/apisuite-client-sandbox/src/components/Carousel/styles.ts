@@ -4,12 +4,13 @@ export default makeStyles({
   carouselSlideButtonStyling: {
     backgroundColor: '#32C896',
     borderRadius: '4px',
-    color: '#FFFFFF',
+    color: '#FFFFFF !important',
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
     margin: '0px auto',
     padding: '17px 40px',
+    textDecoration: 'none',
     width: '200px',
   },
 
@@ -46,11 +47,12 @@ export default makeStyles({
 
     // Makes the slider truly full-width (do NOT remove)
     '& .react-Slidy': {
+      height: '550px',
       width: '100%',
     },
   },
 
-  carouselSliderButtons: {
+  carouselSliderIconButtons: {
     display: 'flex',
     justifyContent: 'center',
     transform: 'translateY(-20px)',
@@ -84,6 +86,7 @@ export default makeStyles({
 
   sideBySideSlideContentsPlacement: {
     flexDirection: 'row',
+    minHeight: '550px',
 
     '& > :nth-child(1)': {
       padding: '165px 25px 0px 0px',
@@ -96,6 +99,7 @@ export default makeStyles({
 
   topToBottomSlideContentsPlacement: {
     flexDirection: 'column',
+    minHeight: '550px',
 
     '& > :nth-child(1)': {
       paddingBottom: '40px',
