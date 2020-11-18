@@ -66,7 +66,7 @@ ${apiDetails.apiAccess
       return (
         <Link
           className={classes.apiCatalogEntryLink}
-          to={`/api-products/${apiDetails.id}/spec/${apiDetails.apiRoutingId}`}
+          to={`/api-products/details/${apiDetails.id}/spec/${apiDetails.apiRoutingId}`}
         >
           {generateAPICatalogEntry(apiDetails, index)}
         </Link>

@@ -4,7 +4,6 @@ import { LOGOUT } from 'containers/Auth/ducks'
 import {
   SubscriptionsStore,
   SubscriptionsActions,
-  Api,
   ApiResponse,
   GetApisAction,
   GetApisSuccessAction,
@@ -46,7 +45,7 @@ export default function subscriptionsReducer (
 
     case SubscriptionsActionTypes.GET_APIS_SUCCESS: {
       return update(state, {
-        apis: { $set: action.apis },
+        // TODO: apis: Fix $set: action.apis },
       })
     }
 

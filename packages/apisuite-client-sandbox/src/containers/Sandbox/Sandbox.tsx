@@ -32,7 +32,7 @@ const Sandbox: React.FC<SandboxProps> = ({
 
   const [t] = useTranslation()
 
-  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = React.useState([])
+  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = React.useState<any[]>([])
 
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
@@ -46,24 +46,22 @@ const Sandbox: React.FC<SandboxProps> = ({
     const allAvailableAPIs = subscriptions.apis
 
     if (allAvailableAPIs.length) {
-      let newRecentlyAddedAPIs
-
-      newRecentlyAddedAPIs = allAvailableAPIs.map((api) => {
+      const newRecentlyAddedAPIs = allAvailableAPIs.map((api) => {
         return {
           /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
           'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
           link to its corresponding 'API Details' view if it has versions. */
-          hasMoreDetails: api.apiVersions.length,
+          hasMoreDetails: api.apiVersions.length > 0,
           id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
           apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
-          apiDescription: api.docs ? api.docs.info : 'No description presently available.',
+          apiDescription: api?.docs?.info || 'No description presently available.',
           apiVersion: api.apiVersions.length ? api.apiVersions[0].version : 'No version available',
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
-          apiRoutingId: api.apiVersions.length ? api.apiVersions[0].id : '',
+          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : '',
           /* An API that is 'live' (i.e., 'production accessible') is one that has versions, and has
           its 'live' property set to 'true'. Ones that do NOT meet any of the above criteria are ones
           that, presently, only have 'API Documentation' to show for it. */
-          apiAccess: (api.apiVersions.length && api.apiVersions[0].live),
+          apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
         }
       })
 
@@ -188,11 +186,11 @@ const Sandbox: React.FC<SandboxProps> = ({
 
                 <p>
                   <span>
-                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphOne', { config })}
+                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartOne', { config })}
                   </span>
 
                   <>
-                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphTwo', { config })}
+                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartTwo', { config })}
                   </>
                 </p>
 

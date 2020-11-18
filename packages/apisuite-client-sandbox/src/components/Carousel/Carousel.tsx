@@ -56,7 +56,7 @@ ${carouselSlideContentsPlacement && carouselSlideContentsPlacement === 'side-by-
         {
           carouselSlideButton &&
           <Button
-            className={
+            customButtonClassName={
               carouselSlideButtonCustomStyling || classes.carouselSlideButtonStyling
             }
             href={carouselSlideButtonLink}

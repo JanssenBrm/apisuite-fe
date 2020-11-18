@@ -1,6 +1,3 @@
-import { AnyAction } from 'redux'
-
-import { InformStorePayloads } from 'components/InformDialog/types'
 import { SvgIconProps } from 'components/SvgIcon/types'
 
 import { AuthStore } from 'containers/Auth/types'
@@ -32,10 +29,4 @@ export interface ListConfig {
   title: string,
   desc: string,
   icon: SvgIconProps['name'],
-}
-
-export interface SandboxProps {
-  inform: AnyAction & { payload: InformStorePayloads['inform'] },
-  requesting: boolean,
-  requestError: any,
 }
