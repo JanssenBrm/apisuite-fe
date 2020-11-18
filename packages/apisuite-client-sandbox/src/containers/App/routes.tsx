@@ -50,12 +50,14 @@ const extensionsRoutes = getRoutes().map(
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox, layoutProps: { contractibleMenu: true } },
+  { path: '/api-products', exact: true, auth: true, component: Subscriptions },
   { path: '/dashboard', exact: true, auth: true, component: LandingPage, layoutProps: { contractibleMenu: true } },
   { path: '/dashboard/apps', exact: true, auth: true, component: ListApps },
   { path: '/dashboard/apps/create', exact: true, auth: true, component: CreateApp },
   { path: '/dashboard/apps/detail/:id', exact: true, auth: true, component: AppDetail },
   { path: '/dashboard/subscriptions', exact: true, auth: true, component: Subscriptions },
   { path: '/dashboard/test', exact: true, auth: true, component: Instructions },
+  { path: '/documentation', exact: true, auth: true, component: Instructions },
   { path: '/profile', exact: true, auth: true, component: Profile },
   { path: '/profile/team', exact: true, auth: true, component: TeamPage },
   { path: '/profile/organisation', exact: true, auth: true, component: OrganizationPage },

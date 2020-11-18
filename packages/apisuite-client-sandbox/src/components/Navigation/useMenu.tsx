@@ -1,12 +1,19 @@
 import * as React from 'react'
-import { useLocation } from 'react-router-dom'
+
 import { useSelector } from 'react-redux'
+
+import { useLocation } from 'react-router-dom'
+
+import { getRoleName } from 'containers/Profile/selectors'
+
 import { MenuEntry, Menus } from '@apisuite/extension-ui-types'
+
 import { getMenuEntries } from 'util/extensions'
 import { useSettings } from 'util/useSetting'
-import { DEFAULT_SUPPORT_URL } from 'constants/global'
-import { getRoleName } from 'containers/Profile/selectors'
+
 import { TabProps } from './types'
+
+import { DEFAULT_SUPPORT_URL } from 'constants/global'
 
 export function useMenu (): Array<TabProps[]> {
   const [settings] = useSettings()
@@ -21,6 +28,7 @@ export function useMenu (): Array<TabProps[]> {
     const pathParts = pathname.split('/')
     return pathParts.reduce((accum, _part, index) => {
       const levelParts = pathParts.slice(0, index + 1)
+
       return [...accum, levelParts.join('/')]
     }, [] as string[]).slice(1)
   }, [pathname])
@@ -33,20 +41,23 @@ export function useMenu (): Array<TabProps[]> {
   const setMenuActiveEntries = React.useCallback((entries, level = 0) => {
     return entries.map((entry: MenuEntry) => {
       const hasLevelPathname = !!levelPathnames[level]
-      const curEntryActive =
+      const currentActiveEntry =
         entry.route === levelPathnames[level] || entry.route === pathname
       const matchesPrevLevelPath =
         !hasLevelPathname && entry.route === levelPathnames[level - 1]
+
       let subTabs = entry.subTabs
       let hasActiveSubtab
+
       if (subTabs) {
         subTabs = setMenuActiveEntries(entry.subTabs, level + 1)
         hasActiveSubtab = !!subTabs && subTabs.some((entry) => entry.active)
       }
+
       return {
         ...entry,
         subTabs,
-        active: hasActiveSubtab || curEntryActive || matchesPrevLevelPath,
+        active: hasActiveSubtab || currentActiveEntry || matchesPrevLevelPath,
       }
     })
   }, [pathname, levelPathnames])
@@ -67,6 +78,8 @@ export function useMenu (): Array<TabProps[]> {
     },
     [roleName],
   )
+
+  // Tabs and sub-tabs
 
   const topTabs = React.useMemo((): TabProps[] => {
     return [
@@ -92,15 +105,11 @@ export function useMenu (): Array<TabProps[]> {
         route: '/',
       },
       {
-        label: 'API Products',
-        route: '/dashboard/subscriptions', // TODO: Temporary route (it will cause a visual bug)
-      },
-      {
         label: 'Support',
         route: settings.supportURL || DEFAULT_SUPPORT_URL,
       },
       {
-        // Used to place this tab at the logo-level of a (contractible and NOT scrolled) navigation menu
+        // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
         label: 'Register',
         route: '/auth/register',
@@ -109,7 +118,7 @@ export function useMenu (): Array<TabProps[]> {
       {
         // Used to convert the 'Log in' tab's label into a Material UI icon
         isLogin: true,
-        // Used to place this tab at the logo-level of a (contractible and NOT scrolled) navigation menu
+        // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
         label: 'Log in',
         route: '/auth/login',
@@ -129,7 +138,11 @@ export function useMenu (): Array<TabProps[]> {
       },
       {
         label: 'API Products',
-        route: '/dashboard/subscriptions', // TODO: Temporary route (it will cause a visual bug)
+        route: '/api-products',
+      },
+      {
+        label: 'Documentation',
+        route: settings.documentationURL || '/documentation',
       },
       {
         label: 'Support',
@@ -182,13 +195,6 @@ export function useMenu (): Array<TabProps[]> {
       ...extensionsLoginTabs,
     ].filter(Boolean)
 
-    if (settings.documentationURL) {
-      entries.splice(1, 0, {
-        label: 'Documentation',
-        route: settings.documentationURL,
-      })
-    }
-
     return setMenuActiveEntries(entries)
   }, [
     settings,
@@ -201,6 +207,8 @@ export function useMenu (): Array<TabProps[]> {
   return [topTabs, initTabs, loginTabs]
 }
 
+// Navigation's 'back' buttons
+
 export const goBackConfig = [
   {
     path: '/dashboard/apps/create',
@@ -208,6 +216,10 @@ export const goBackConfig = [
   },
   {
     path: '/dashboard/apps/detail',
+    label: 'Back to overview',
+  },
+  {
+    path: '/api-products/details',
     label: 'Back to overview',
   },
 ]

@@ -1,20 +1,30 @@
 import * as React from 'react'
+
 import { useSelector } from 'react-redux'
+
 import { useHistory } from 'react-router-dom'
+
 import clsx from 'clsx'
-import Avatar from '@material-ui/core/Avatar'
-import Tabs from '@material-ui/core/Tabs'
-import Tab from '@material-ui/core/Tab'
-import SvgIcon from 'components/SvgIcon'
-import Link from 'components/Link'
-import useStyles from './styles'
-import './styles.scss'
-import { getAuth } from 'containers/Auth/selectors'
-import { TabMenus, NavigationProps } from './types'
+
 import { useMenu, goBackConfig } from './useMenu'
+
+import Link from 'components/Link'
+import SvgIcon from 'components/SvgIcon'
+
+import Avatar from '@material-ui/core/Avatar'
+import Tab from '@material-ui/core/Tab'
+import Tabs from '@material-ui/core/Tabs'
 
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded'
+
+import { getAuth } from 'containers/Auth/selectors'
+
+import useStyles from './styles'
+
+import './styles.scss'
+
+import { TabMenus, NavigationProps } from './types'
 
 const Navigation: React.FC<NavigationProps> = ({
   contractible = false,
@@ -74,10 +84,10 @@ const Navigation: React.FC<NavigationProps> = ({
 
   React.useEffect(() => {
     const { pathname } = history.location
-    const gb = goBackConfig.find((item) => pathname.indexOf(item.path) === 0)
+    const goBack = goBackConfig.find((item) => pathname.indexOf(item.path) === 0)
 
-    if (gb) {
-      setGoBackLabel(gb.label)
+    if (goBack) {
+      setGoBackLabel(goBack.label)
     } else {
       setGoBackLabel('')
     }
@@ -259,12 +269,21 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
 
       {!!subTabs && (
         <div className={clsx('sub-container', { scrolled })}>
-          <div className='tabs subtabs'>
-            {goBackLabel === '' && (
-              <div role='button' className='back-btn' onClick={handleGobackClick}>
-                <SvgIcon name='chevron-left-circle' size={28} /> &nbsp;&nbsp; <span>{goBackLabel}</span>
-              </div>
-            )}
+          <div
+            className={`tabs ${goBackLabel ? classes.subTabsAndBackButton : classes.subTabs}`}
+          >
+            {
+              !!goBackLabel && (
+                <div
+                  className={classes.goBackButton}
+                  onClick={handleGobackClick}
+                  role='button'
+                >
+                  <SvgIcon name='chevron-left-circle' size={28} />
+                  <span>{goBackLabel}</span>
+                </div>
+              )
+            }
 
             <Tabs
               aria-label='Navigation sub-tabs'

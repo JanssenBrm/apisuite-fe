@@ -15,6 +15,8 @@ import { CarouselSlideProps, CarouselProps } from './types'
 
 import useStyles from './styles'
 
+import { config } from 'constants/global'
+
 // Carousel slides
 
 const CarouselSlide: React.FC<CarouselSlideProps> = ({
@@ -113,8 +115,8 @@ const Carousel: React.FC<CarouselProps> = ({
     <button
       className={
         index === slideNumber
-          ? classes.selectedCarouselSliderButton
-          : classes.notSelectedCarouselSliderButton
+          ? classes.selectedCarouselSliderIconButton
+          : classes.notSelectedCarouselSliderIconButton
       }
       key={`slider_button_${index}`}
       onClick={() => handleCarouselSlideChange(index)}
@@ -125,8 +127,8 @@ const Carousel: React.FC<CarouselProps> = ({
     <button
       className={
         index === slideNumber
-          ? classes.selectedCarouselSliderButton
-          : classes.notSelectedCarouselSliderButton
+          ? classes.selectedCarouselSliderIconButton
+          : classes.notSelectedCarouselSliderIconButton
       }
       key={`slider_button_${index}`}
       onClick={() => handleCarouselSlideChange(index)}
@@ -184,7 +186,7 @@ const Carousel: React.FC<CarouselProps> = ({
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
               }
-              : { backgroundColor: carouselBackgroundColor || '#374858' }
+              : { backgroundColor: carouselBackgroundColor || config.palette.newGreyScales['700'] }
           }
         >
           <ReactSlidy

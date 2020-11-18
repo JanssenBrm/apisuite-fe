@@ -38,7 +38,7 @@ const Button: React.FC<{
     <div onClick={!disabled && !loading ? onClick : null}>
       {href && !disabled && (
         <a
-          to={href}
+          href={href}
           target='_blank'
           rel='noopener noreferrer'
           className={customButtonClassName || classnames(

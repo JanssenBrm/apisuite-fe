@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
 
+import { config } from 'constants/global'
+
 export default makeStyles(({
   // General JSS
 
@@ -18,14 +20,14 @@ export default makeStyles(({
   },
 
   sectionIntroHeading: {
-    color: '#14283C',
+    color: config.palette.tertiary,
     fontSize: '32px',
     fontWeight: 300,
     margin: '40px 0px',
   },
 
   sectionSeparator: {
-    color: '#BAC0C6',
+    color: config.palette.newGreyScales['300'],
     maxWidth: '900px',
     width: '100%',
   },
@@ -41,15 +43,15 @@ export default makeStyles(({
   // JSS for the 'Steps' section
 
   individualStepsContainer: {
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #BAC0C6',
+    backgroundColor: config.palette.background.default,
+    border: `1px solid ${config.palette.newGreyScales['300']}`,
     borderRadius: '8px',
     display: 'flex',
     flexDirection: 'row',
   },
 
   individualStepsDivider: {
-    borderRight: '1px solid #BAC0C6',
+    borderRight: `1px solid ${config.palette.newGreyScales['300']}`,
   },
 
   individualStep: {
@@ -73,7 +75,7 @@ export default makeStyles(({
     },
 
     '& > p': {
-      color: '#85909A',
+      color: config.palette.newGreyScales['400'],
       fontSize: '14px',
       height: '100px',
       lineHeight: '18px',
@@ -88,9 +90,9 @@ export default makeStyles(({
   },
 
   individualStepButton: {
-    backgroundColor: '#14283C',
-    borderColor: '#14283C',
-    borderRadius: '4px',
+    backgroundColor: config.palette.tertiary,
+    borderColor: config.palette.tertiary,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: '#FFFFFF',
     fontSize: '16px',
     fontWeight: 500,
@@ -98,16 +100,16 @@ export default makeStyles(({
     width: '100%',
 
     '&:active, &:hover, &:link, &:visited': {
-      backgroundColor: '#14283C',
-      borderColor: '#14283C',
-      borderRadius: '4px',
+      backgroundColor: config.palette.tertiary,
+      borderColor: config.palette.tertiary,
+      borderRadius: `${config.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
 
     '&.MuiButton-root.Mui-disabled': {
-      backgroundColor: '#BAC0C6',
-      borderColor: '#BAC0C6',
-      borderRadius: '4px',
+      backgroundColor: config.palette.newGreyScales['300'],
+      borderColor: config.palette.newGreyScales['300'],
+      borderRadius: `${config.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
   },
@@ -133,9 +135,9 @@ export default makeStyles(({
   },
 
   stepsDescriptionContactSupportButton: {
-    backgroundColor: '#F78E27',
-    borderColor: '#F78E27',
-    borderRadius: '4px',
+    backgroundColor: config.palette.warning,
+    borderColor: config.palette.warning,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: '#FFFFFF',
     fontSize: '16px',
     fontWeight: 500,
@@ -143,17 +145,17 @@ export default makeStyles(({
     width: '160px',
 
     '&:active, &:hover, &:link, &:visited': {
-      backgroundColor: '#F78E27',
-      borderColor: '#F78E27',
-      borderRadius: '4px',
+      backgroundColor: config.palette.warning,
+      borderColor: config.palette.warning,
+      borderRadius: `${config.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
   },
 
   stepsDescriptionRegisterButton: {
-    backgroundColor: '#14283C',
-    borderColor: '#14283C',
-    borderRadius: '4px',
+    backgroundColor: config.palette.tertiary,
+    borderColor: config.palette.tertiary,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: '#FFFFFF',
     fontSize: '16px',
     fontWeight: 500,
@@ -161,9 +163,9 @@ export default makeStyles(({
     width: '135px',
 
     '&:active, &:hover, &:link, &:visited': {
-      backgroundColor: '#14283C',
-      borderColor: '#14283C',
-      borderRadius: '4px',
+      backgroundColor: config.palette.tertiary,
+      borderColor: config.palette.tertiary,
+      borderRadius: `${config.dimensions.borderRadius}px`,
       color: '#FFFFFF',
     },
   },
@@ -175,21 +177,21 @@ export default makeStyles(({
   },
 
   stepsDescriptionHeading: {
-    color: '#14283C',
+    color: config.palette.tertiary,
     fontSize: '24px',
     fontWeight: 500,
     margin: '0px 0px 12px 0px',
   },
 
   stepsDescriptionParagraphOne: {
-    color: '#51606E',
+    color: config.palette.active,
     fontSize: '20px',
     fontWeight: 200,
     margin: '12px 0px',
   },
 
   stepsDescriptionParagraphTwo: {
-    color: '#85909A',
+    color: config.palette.newGreyScales['400'],
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '20px',
