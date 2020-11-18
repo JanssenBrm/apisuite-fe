@@ -45,7 +45,7 @@ export default function subscriptionsReducer (
 
     case SubscriptionsActionTypes.GET_APIS_SUCCESS: {
       return update(state, {
-        // TODO: apis: Fix $set: action.apis },
+        apis: { $set: action.apis },
       })
     }
 

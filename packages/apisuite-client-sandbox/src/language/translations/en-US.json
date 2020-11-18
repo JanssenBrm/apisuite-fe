@@ -264,5 +264,9 @@
     "saveDisabled": "Nothing to save",
     "send": "Send"
   },
-  "copyright": "© {{clientName}} {{year}}.\nAll rights reserved."
+  "copyright": "© {{clientName}} {{year}}.\nAll rights reserved.",
+  "apidetails": {
+    "notfound": "No Swagger documentation found.",
+    "goback": "Go back"
+  }
 }

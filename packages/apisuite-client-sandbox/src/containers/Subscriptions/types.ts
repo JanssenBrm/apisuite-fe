@@ -4,25 +4,13 @@ import { AppData } from 'containers/Applications/types'
 
 /** State types */
 export interface Api {
-  apiVersions: {
-    apiId: number,
-    createdAt: string,
-    deprecated: boolean,
-    id: number,
-    live: boolean,
-    title: string,
-    updatedAt: string,
-    version: string,
-  }[],
-  baseUri?: string,
-  baseUriSandbox?: string,
-  createdAt: string,
-  docs?: ApiDocs,
   id: number,
   name: string,
-  publishedAt: string,
-  type: string,
-  updatedAt: string,
+  baseUri?: string,
+  baseUriSandbox?: string,
+  docs?: ApiDocs,
+  apiVersions: APIVersion[],
+  publishedAt?: string,
 }
 
 export interface SubscriptionsStore {
@@ -98,31 +86,39 @@ export interface ApisResponse {
 }
 
 export interface ApiResponse {
-  createdAt: string,
   id: number,
   name: string,
   baseUri?: string,
   baseUriSandbox?: string,
   docs?: ApiDocs,
+  apiVersions: APIVersion[],
+  publishedAt?: string,
+  createdAt: string,
   updatedAt: string,
 }
-
 export interface ApiDocs {
   title?: string,
   info?: string,
   target: string,
   image?: string,
+  createdAt: string,
   updatedAt: string,
 }
 
 /** Selector types */
-export interface VersionInfo {
-  versionName: string,
-  apiTitle: string,
+export type APIVersion = {
+  id: number,
   apiId: number,
+  title: string,
+  version: string,
+  spec: any|null,
+  live: boolean,
+  deprecated: boolean,
+  createdAt: string,
+  updatedAt: string,
 }
 
-export interface AppInfo {
+export type AppInfo = {
   appName: string,
   appId: number,
 }
