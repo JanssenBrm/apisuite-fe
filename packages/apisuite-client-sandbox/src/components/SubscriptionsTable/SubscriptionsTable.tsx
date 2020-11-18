@@ -12,6 +12,7 @@ import ApiSelect from 'components/ApiSelect'
 import Popover from '@material-ui/core/Popover'
 import MenuItem from '@material-ui/core/MenuItem'
 import { useTranslation } from 'react-i18next'
+import Link from 'components/Link'
 
 const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
   apisByName,
@@ -113,12 +114,14 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
                   </div>
                   <div>
                     {api.versions.map((version, indx: number) => {
+                      // TODO the link to should be a passed property leaving api products fallback
                       return (
-                        <APIVersionCard
-                          key={indx}
-                          apiTitle={version.apiTitle}
-                          versionName={version.versionName}
-                        />
+                        <Link key={indx} className={classes.apiVersionLink} to={`/api-products/details/${version.apiId}/spec/${version.id}`}>
+                          <APIVersionCard
+                            apiTitle={version.title}
+                            versionName={version.version}
+                          />
+                        </Link>
                       )
                     })}
                   </div>
@@ -176,10 +179,13 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
 
                       <div>
                         {api.versions.map((APIversion, indx) => (
-                          <div key={indx} className={classes.apiVersionCard}>
-                            <div>{APIversion.apiTitle}</div>
-                            <div className={classes.vNumber}>{APIversion.versionName}</div>
-                          </div>
+                          // TODO the link to should be a passed property leaving api products fallback
+                          <Link key={indx} className={classes.apiVersionLink} to={`/api-products/details/${APIversion.apiId}/spec/${APIversion.id}`}>
+                            <div className={classes.apiVersionCard}>
+                              <div>{APIversion.title}</div>
+                              <div className={classes.vNumber}>{APIversion.version}</div>
+                            </div>
+                          </Link>
                         ))}
                       </div>
                     </div>

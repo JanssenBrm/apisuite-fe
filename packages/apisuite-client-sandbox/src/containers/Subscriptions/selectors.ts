@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect'
 import { Store } from 'store/types'
-import { Api, SubscriptionsStore, VersionInfo, AppInfo } from './types'
+import { Api, SubscriptionsStore, APIVersion, AppInfo } from './types'
 import { ApplicationsStore } from 'containers/Applications/types'
 
 const getApis = ({ subscriptions }: Store) => subscriptions
@@ -11,20 +11,13 @@ export const getApisByName = createSelector(
   (subscriptions: SubscriptionsStore, applications: ApplicationsStore) => {
     const apiNames = [...new Set(subscriptions.apis.map((api: Api) => api.name))]
     return apiNames.map(apiName => {
-      const getVersions: VersionInfo[] = []
+      let getVersions: APIVersion[] = []
       const getApps: AppInfo[] = []
 
       /** For each API(version) gets the version, title, and id */
       subscriptions.apis.forEach((api) => {
-        if (api.name === apiName) {
-          getVersions.push({
-            // TODO fix for correct api versions
-            // @ts-ignore
-            versionName: api.version,
-            // @ts-ignore
-            apiTitle: api.apiTitle,
-            apiId: api.id,
-          })
+        if (apiName === api.name) {
+          getVersions = api.apiVersions
         }
       })
 

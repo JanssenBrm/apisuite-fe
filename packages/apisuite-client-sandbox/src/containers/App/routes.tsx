@@ -26,6 +26,7 @@ import TeamPage from 'containers/TeamPage'
 import Profile from 'containers/Profile'
 import OrganizationPage from 'containers/OrganizationPage'
 import { getRoutes } from 'util/extensions'
+import APIDetails from 'containers/APIDetails'
 
 const layouts: Record<string, React.ComponentType<any>> = {
   [Layouts.Main]: MainLayout,
@@ -65,6 +66,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/forgot', exact: true, component: ForgotPasswordPage, layout: EssentialLayout },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
+  { path: '/api-products/details/:apiId/spec/:versionId', exact: true, component: APIDetails },
   ...extensionsRoutes,
   { render: () => <NotFound /> },
 ]
