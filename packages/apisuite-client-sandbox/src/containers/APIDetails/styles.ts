@@ -10,12 +10,11 @@ export default makeStyles(({
     paddingBottom: 45,
   },
   header: {
-    height: '150px',
+    height: '280px',
     display: 'flex',
+    padding: '0 50px 20px 50px',
     flexDirection: 'column',
-    // alignItems: 'center',
-    justifyContent: 'center',
-    padding: '20px',
+    justifyContent: 'flex-end',
   },
   badge: {
     padding: '5px',
@@ -30,7 +29,7 @@ export default makeStyles(({
     color: config.palette.primaryContrastText,
   },
   docs: {
-    backgroundColor: config.palette.newGreyScales[500],
+    backgroundColor: config.palette.active,
     color: config.palette.primaryContrastText,
   },
   centerVertical: {

@@ -139,6 +139,7 @@ export function useMenu (): Array<TabProps[]> {
       {
         label: 'API Products',
         route: '/api-products',
+        subTabs: [],
       },
       {
         label: 'Documentation',
@@ -219,7 +220,7 @@ export const goBackConfig = [
     label: 'Back to overview',
   },
   {
-    path: '/api-products/details',
+    path: '/api-products',
     label: 'Back to overview',
   },
 ]
