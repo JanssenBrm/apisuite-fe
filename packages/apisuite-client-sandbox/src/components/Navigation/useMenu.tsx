@@ -1,48 +1,63 @@
 import * as React from 'react'
-import { useLocation } from 'react-router-dom'
+
 import { useSelector } from 'react-redux'
+
+import { useLocation } from 'react-router-dom'
+
+import { getRoleName } from 'containers/Profile/selectors'
+
 import { MenuEntry, Menus } from '@apisuite/extension-ui-types'
+
 import { getMenuEntries } from 'util/extensions'
 import { useSettings } from 'util/useSetting'
-import { DEFAULT_SUPPORT_URL } from 'constants/global'
-import { getRoleName } from 'containers/Profile/selectors'
+
 import { TabProps } from './types'
+
+import { DEFAULT_SUPPORT_URL } from 'constants/global'
 
 export function useMenu (): Array<TabProps[]> {
   const [settings] = useSettings()
   const roleName = useSelector(getRoleName)
   const { pathname } = useLocation()
 
-  // Create an array for each accumulated level of pathnames of the current URI
-  // Ex: /dashboard/subscriptions -> [/dashboard, /dashboard/subscriptions]
+  /*
+  Create an array for each accumulated level of pathnames of the current URI.
+  E.g.: '/dashboard/subscriptions' -> ['/dashboard', '/dashboard/subscriptions']
+  */
   const levelPathnames = React.useMemo(() => {
     const pathParts = pathname.split('/')
     return pathParts.reduce((accum, _part, index) => {
       const levelParts = pathParts.slice(0, index + 1)
+
       return [...accum, levelParts.join('/')]
     }, [] as string[]).slice(1)
   }, [pathname])
 
-  // Iterates through all menu and sub-menu entries and sets which entries are
-  // active. Active entries are either those whose path match with the current
-  // page or where any of the sub menu items is active.
+  /*
+  Iterates through all menu and sub-menu entries, and sets which entries are
+  active. Active entries are either those whose path matches with the current
+  page, or where any of the sub-menu items is active.
+  */
   const setMenuActiveEntries = React.useCallback((entries, level = 0) => {
     return entries.map((entry: MenuEntry) => {
       const hasLevelPathname = !!levelPathnames[level]
-      const curEntryActive =
+      const currentActiveEntry =
         entry.route === levelPathnames[level] || entry.route === pathname
       const matchesPrevLevelPath =
         !hasLevelPathname && entry.route === levelPathnames[level - 1]
+
       let subTabs = entry.subTabs
       let hasActiveSubtab
+
       if (subTabs) {
         subTabs = setMenuActiveEntries(entry.subTabs, level + 1)
         hasActiveSubtab = !!subTabs && subTabs.some((entry) => entry.active)
       }
+
       return {
         ...entry,
         subTabs,
-        active: hasActiveSubtab || curEntryActive || matchesPrevLevelPath,
+        active: hasActiveSubtab || currentActiveEntry || matchesPrevLevelPath,
       }
     })
   }, [pathname, levelPathnames])
@@ -64,6 +79,8 @@ export function useMenu (): Array<TabProps[]> {
     [roleName],
   )
 
+  // Tabs and sub-tabs
+
   const topTabs = React.useMemo((): TabProps[] => {
     return [
       {
@@ -72,6 +89,7 @@ export function useMenu (): Array<TabProps[]> {
         active: pathname === '/auth/register',
       },
       {
+        // Used to convert the 'Log in' tab's label into a Material UI icon
         isLogin: true,
         label: 'Log in',
         route: '/auth/login',
@@ -87,16 +105,20 @@ export function useMenu (): Array<TabProps[]> {
         route: '/',
       },
       {
-        label: 'API Products',
-        route: '/api-products',
+        label: 'Support',
+        route: settings.supportURL || DEFAULT_SUPPORT_URL,
       },
       {
+        // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
         label: 'Register',
         route: '/auth/register',
         active: pathname === '/auth/register',
       },
       {
+        // Used to convert the 'Log in' tab's label into a Material UI icon
+        isLogin: true,
+        // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
         label: 'Log in',
         route: '/auth/login',
@@ -104,13 +126,6 @@ export function useMenu (): Array<TabProps[]> {
       },
       ...extensionsInitTabs,
     ].filter(Boolean)
-
-    if (settings.supportURL) {
-      entries.splice(2, 0, {
-        label: 'Support',
-        route: settings.supportURL,
-      })
-    }
 
     return setMenuActiveEntries(entries)
   }, [settings, extensionsInitTabs])
@@ -120,6 +135,14 @@ export function useMenu (): Array<TabProps[]> {
       {
         label: 'Home',
         route: '/',
+      },
+      {
+        label: 'API Products',
+        route: '/api-products',
+      },
+      {
+        label: 'Documentation',
+        route: settings.documentationURL || '/documentation',
       },
       {
         label: 'Support',
@@ -149,6 +172,8 @@ export function useMenu (): Array<TabProps[]> {
         ],
       },
       {
+        // Used to make the user's name or avatar access the 'Profile' tab
+        isProfileTab: true,
         label: 'Profile',
         route: '/profile',
         subTabs: [
@@ -170,13 +195,6 @@ export function useMenu (): Array<TabProps[]> {
       ...extensionsLoginTabs,
     ].filter(Boolean)
 
-    if (settings.documentationURL) {
-      entries.splice(1, 0, {
-        label: 'Documentation',
-        route: settings.documentationURL,
-      })
-    }
-
     return setMenuActiveEntries(entries)
   }, [
     settings,
@@ -189,6 +207,8 @@ export function useMenu (): Array<TabProps[]> {
   return [topTabs, initTabs, loginTabs]
 }
 
+// Navigation's 'back' buttons
+
 export const goBackConfig = [
   {
     path: '/dashboard/apps/create',
@@ -196,6 +216,10 @@ export const goBackConfig = [
   },
   {
     path: '/dashboard/apps/detail',
+    label: 'Back to overview',
+  },
+  {
+    path: '/api-products/details',
     label: 'Back to overview',
   },
 ]

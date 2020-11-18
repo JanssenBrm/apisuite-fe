@@ -2,6 +2,7 @@ export type CarouselSlideProps = {
   carouselSlideButton?: boolean,
   carouselSlideButtonCustomStyling?: string,
   carouselSlideButtonLabel?: string,
+  carouselSlideButtonLink?: string,
   carouselSlideButtonOnClick?: () => void,
   carouselSlideContentsPlacement?: string,
   carouselSlideImage?: string,
@@ -11,12 +12,13 @@ export type CarouselSlideProps = {
 export type SlideContentsObject = {
   slideButton?: boolean,
   slideButtonLabel?: string,
+  slideButtonLink?: string,
   slideContentsPlacement?: 'side-by-side' | 'top-to-bottom',
   slideForegroundImage?: string,
   slideText?: string,
 }
 
-export type NewCarouselProps = {
+export type CarouselProps = {
   carouselBackgroundColor?: string,
   carouselBackgroundImage?: string,
   carouselFadeIn?: boolean,

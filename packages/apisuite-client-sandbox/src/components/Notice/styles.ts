@@ -1,10 +1,12 @@
 import { makeStyles } from '@material-ui/styles'
 
+import { config } from 'constants/global'
+
 export default makeStyles({
   noticeContentsContainer: {
-    backgroundColor: '#BBECFF',
-    border: '1px solid #BBECFF',
-    borderRadius: '4px',
+    backgroundColor: config.palette.alert.success.background,
+    border: `1px solid ${config.palette.alert.success.background}`,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     padding: '12px',
     width: '100%',
@@ -12,7 +14,7 @@ export default makeStyles({
 
   noticeIcon: {
     alignItems: 'center',
-    color: '#19B3EE',
+    color: config.palette.info,
     display: 'flex',
     justifyContent: 'center',
     marginRight: '10px',

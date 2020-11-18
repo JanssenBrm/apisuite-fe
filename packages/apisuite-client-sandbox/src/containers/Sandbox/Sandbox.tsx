@@ -1,5 +1,7 @@
 import * as React from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import APICatalog from 'components/APICatalog'
 import Carousel from 'components/Carousel'
 import Notice from 'components/Notice'
@@ -7,54 +9,67 @@ import Notice from 'components/Notice'
 import Button from '@material-ui/core/Button'
 
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
-import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
 import ControlCameraRoundedIcon from '@material-ui/icons/ControlCameraRounded'
 import FlightLandRoundedIcon from '@material-ui/icons/FlightLandRounded'
 
 import useStyles from './styles'
 
+import { SandboxProps } from './types'
+
 import carouselBackground from 'assets/space-background.svg'
 import carouselSlide1 from 'assets/carousel-slide-1.svg'
 import carouselSlide2 from 'assets/carousel-slide-2.svg'
 
-const Sandbox: React.FC<{}> = () => {
+import { config, DEFAULT_SUPPORT_URL } from 'constants/global'
+
+const Sandbox: React.FC<SandboxProps> = ({
+  auth,
+  getApis,
+  settings,
+  subscriptions,
+}) => {
   const classes = useStyles()
 
-  // TODO: Add translation capabilities
-  // const [t] = useTranslation()
+  const [t] = useTranslation()
 
-  const recentlyAddedAPIs = [
-    {
-      id: 0,
-      apiName: 'Swagger Petstore - OpenAPI 3.0',
-      apiDescription: 'This is a sample Pet Store Server based on the OpenAPI 3.0 specification.',
-      apiVersion: 'v1.0.5',
-      apiAccess: 'Sandbox access',
-    },
-    {
-      id: 1,
-      apiName: 'Swagger Dragonstore - OpenAPI 3.0',
-      apiDescription: 'This is a sample Dragon Store Server based on the OpenAPI 3.0 specification.',
-      apiVersion: 'v1.0.5',
-      apiAccess: 'Production access',
-    },
-    {
-      id: 2,
-      apiName: 'Swagger Lizzardstore - OpenAPI 3.0',
-      apiDescription: 'This is a sample Lizzard Store Server based on the OpenAPI 3.0 specification.',
-      apiVersion: 'v1.0.5',
-      apiAccess: 'API Documentation',
-    },
-  ]
+  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = React.useState<any[]>([])
+
+  React.useEffect(() => {
+    /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
+    of all API-related information we presently have. */
+    getApis()
+  }, [])
+
+  React.useEffect(() => {
+    /* Once 'subscriptions' info is made available, we process it so as to display it
+    on our 'API Catalog' section. */
+    const allAvailableAPIs = subscriptions.apis
+
+    if (allAvailableAPIs.length) {
+      const newRecentlyAddedAPIs = allAvailableAPIs.map((api) => {
+        return {
+          /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
+          'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
+          link to its corresponding 'API Details' view if it has versions. */
+          hasMoreDetails: api.apiVersions.length > 0,
+          id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
+          apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
+          apiDescription: api?.docs?.info || 'No description presently available.',
+          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : 'No version available',
+          // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
+          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : '',
+          /* An API that is 'live' (i.e., 'production accessible') is one that has versions, and has
+          its 'live' property set to 'true'. Ones that do NOT meet any of the above criteria are ones
+          that, presently, only have 'API Documentation' to show for it. */
+          apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
+        }
+      })
+
+      setRecentlyAddedAPIs(newRecentlyAddedAPIs)
+    }
+  }, [subscriptions])
 
   return (
-  /* TODO:
-    1) Retrieve list of most recently added APIs
-    (https://api.develop.apisuite.io/api-docs#tag/API/paths/~1:apiId~1versions~1:id/get)
-
-    2) Pass that info to the 'API Catalog' section in array form (mock data, for now)
-    */
-
     <main className='page-container'>
       {/* Carousel section */}
       <section className={classes.slideShowSectionContainer}>
@@ -63,30 +78,24 @@ const Sandbox: React.FC<{}> = () => {
           iconsOfSliderButtonsArray={[
             <ControlCameraRoundedIcon key={1} />,
             <FlightLandRoundedIcon key={2} />,
-            <ChromeReaderModeRoundedIcon key={3} />,
           ]}
           slidesAutoPlay
           slidesArray={[
             {
               slideButton: true,
-              slideButtonLabel: 'Register',
+              slideButtonLabel: t('sandboxPage.newSlides.slideOne.slideButtonLabel', { config }),
+              slideButtonLink: '/auth/register',
               slideContentsPlacement: 'top-to-bottom',
               slideForegroundImage: carouselSlide1,
-              slideText: 'Sign up now to enjoy all portal features',
+              slideText: t('sandboxPage.newSlides.slideOne.slideText', { config }),
             },
             {
               slideButton: true,
-              slideButtonLabel: 'API Products',
+              slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel', { config }),
+              slideButtonLink: '/api-products',
               slideContentsPlacement: 'side-by-side',
               slideForegroundImage: carouselSlide2,
-              slideText: 'Take a look at our available APIs',
-            },
-            {
-              slideButton: true,
-              slideButtonLabel: 'Coming soon!',
-              slideContentsPlacement: 'side-by-side',
-              slideForegroundImage: carouselSlide2,
-              slideText: '3rd slide not yet available',
+              slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
             },
           ]}
           slidingAnimationDuration={1500}
@@ -97,33 +106,72 @@ const Sandbox: React.FC<{}> = () => {
       {/* 'Steps' section */}
       <section className={classes.stepsSectionContainer}>
         <h1 className={classes.sectionIntroHeading}>
-          Let's make things easy.
+          {t('sandboxPage.stepsSection.intro', { config })}
         </h1>
 
         <section className={classes.stepsSectionDescriptionsContainer}>
           <section className={classes.stepsDescriptionContainerOne}>
             <h3 className={classes.stepsDescriptionHeading}>
-              Create a developer account first.
+              {
+                !auth.user
+                  ? t('sandboxPage.stepsSection.notLoggedIn.heading', { config })
+                  : t('sandboxPage.stepsSection.loggedIn.heading', { config })
+              }
             </h3>
 
             <p className={classes.stepsDescriptionParagraphOne}>
-              Our API Portal enables you to register a free team-based account without on the fly.
+              {
+                !auth.user
+                  ? t('sandboxPage.stepsSection.notLoggedIn.paragraphOne', { config })
+                  : `${settings.portalName} ${t('sandboxPage.stepsSection.loggedIn.paragraphOne', { config })}`
+              }
             </p>
 
             <p className={classes.stepsDescriptionParagraphTwo}>
               <span>
-                Once activated, we assist you in 3 straightforward steps to start consuming our API products.
+                {
+                  !auth.user
+                    ? t('sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartOne', { config })
+                    : t('sandboxPage.stepsSection.loggedIn.paragraphTwoPartOne', { config })
+                }
               </span>
 
               <>
-                Not sure how to get there? The onboarding documentation will help you along.
+                {
+                  !auth.user
+                    ? t('sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartTwo', { config })
+                    : t('sandboxPage.stepsSection.loggedIn.paragraphTwoPartTwo', { config })
+                }
               </>
             </p>
 
             <Button
-              className={classes.stepsDescriptionRegisterButton}
+              className={
+                !auth.user
+                  ? classes.stepsDescriptionRegisterButton
+                  : classes.stepsDescriptionContactSupportButton
+              }
+              href={
+                !auth.user
+                  ? '/auth/register'
+                  : settings.supportURL || DEFAULT_SUPPORT_URL
+              }
+              rel={
+                auth.user
+                  ? 'noopener noreferrer'
+                  : ''
+              }
+              target={
+                auth.user
+                  ? '_blank'
+                  : ''
+              }
             >
-              Register now
+              {
+                !auth.user
+                  ? t('sandboxPage.stepsSection.notLoggedIn.buttonLabel', { config })
+                  : t('sandboxPage.stepsSection.loggedIn.buttonLabel', { config })
+              }
             </Button>
           </section>
 
@@ -132,59 +180,66 @@ const Sandbox: React.FC<{}> = () => {
               <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
                 <h1 style={{ color: '#7DD291' }}>1.</h1>
 
-                <h3 style={{ color: '#7DD291' }}>Add your app</h3>
+                <h3 style={{ color: '#7DD291' }}>
+                  {t('sandboxPage.stepsSection.individualSteps.stepOne.header', { config })}
+                </h3>
 
                 <p>
                   <span>
-                    You’ll need an app to send and receive API calls.
+                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartOne', { config })}
                   </span>
 
                   <>
-                    Adding your app details will help us to enable this flow.
+                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartTwo', { config })}
                   </>
                 </p>
 
                 <Button
                   className={classes.individualStepButton}
-                // TODO: Add 'href' attribute
+                  disabled={!auth.user}
+                  href='/dashboard/apps'
                 >
-                  Add app
+                  {t('sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel', { config })}
                 </Button>
               </div>
 
               <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
-                <h1 style={{ color: '#32C896' }}>2.</h1>
+                <h1 style={{ color: config.palette.primary }}>2.</h1>
 
-                <h3 style={{ color: '#32C896' }}>Select an API</h3>
+                <h3 style={{ color: config.palette.primary }}>
+                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.header', { config })}
+                </h3>
 
                 <p>
-                  In the "Subscriptions" section, we provide an overview of our available
-                  Sandbox APIs your apps can subscribe to.
+                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.paragraph', { config })}
                 </p>
 
                 <Button
                   className={classes.individualStepButton}
-                // TODO: Add 'href' attribute
+                  disabled={!auth.user}
+                  href='/dashboard/subscriptions'
                 >
-                  Subscribe to API
+                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.buttonLabel', { config })}
                 </Button>
               </div>
 
               <div className={classes.individualStep}>
                 <h1 style={{ color: '#007D7D' }}>3.</h1>
 
-                <h3 style={{ color: '#007D7D' }}>Get Started</h3>
+                <h3 style={{ color: '#007D7D' }}>
+                  {t('sandboxPage.stepsSection.individualSteps.stepThree.header', { config })}
+                </h3>
 
                 <p>
-                  Once your app and API subscriptions are all ready to go,
-                  head to our "Getting Started" documentation for lift-off.
+                  {t('sandboxPage.stepsSection.individualSteps.stepThree.paragraph', { config })}
                 </p>
 
                 <Button
                   className={classes.individualStepButton}
-                // TODO: Add 'href' attribute
+                  disabled={!auth.user}
+                  href='/dashboard/test'
                 >
-                  Documentation
+                  {t('sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel', { config })}
                 </Button>
               </div>
             </div>
@@ -197,21 +252,13 @@ const Sandbox: React.FC<{}> = () => {
       {/* 'API Catalog' section */}
       <section className={classes.apiCatalogSectionContainer}>
         <h1 className={classes.sectionIntroHeading}>
-          API Catalog recent additions
+          {t('sandboxPage.apiCatalog.intro', { config })}
         </h1>
 
-        {
-          /*
-          TODO: Add logic for when:
-          1) There's no API information to show;
-          2) API information is still being retrieved;
-          3) API information has been retrieved.
-          */
-        }
         <section className={classes.apiCatalogContainer}>
           {
             recentlyAddedAPIs.length === 0
-              ? <p>No APIs have been recently added.</p>
+              ? <p>{t('sandboxPage.apiCatalog.paragraph', { config })}</p>
               : <APICatalog recentlyAddedAPIs={recentlyAddedAPIs} />
           }
         </section>
@@ -225,15 +272,22 @@ const Sandbox: React.FC<{}> = () => {
           }
           noticeText={
             <p>
-              <>Cloudoki's Portal is maintained by Cloudoki. You can visit us at </>
-              <a
-                href='https://www.cloudoki.com'
-                rel='noopener noreferrer'
-                target='_blank'
-              >
-                https://www.cloudoki.com
-              </a>
-              <>.</>
+              <>{settings.portalName} {t('sandboxPage.notice.maintainedBy', { config })} {settings.clientName}.</>
+              {
+                settings.socialURLs.length && (
+                  <>
+                    <> {t('sandboxPage.notice.visitUs', { config })} </>
+                    <a
+                      href={settings.socialURLs[0].url}
+                      rel='noopener noreferrer'
+                      target='_blank'
+                    >
+                      {settings.socialURLs[0].url}
+                    </a>
+                    <>.</>
+                  </>
+                )
+              }
             </p>
           }
         />

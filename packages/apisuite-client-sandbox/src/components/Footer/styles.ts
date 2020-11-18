@@ -1,5 +1,7 @@
 import { makeStyles } from '@material-ui/styles'
 
+import { config } from 'constants/global'
+
 export default makeStyles(({
   copyrightContainer: {
     marginBottom: '22px',
@@ -19,7 +21,7 @@ export default makeStyles(({
   },
 
   footer: {
-    backgroundColor: '#374858',
+    backgroundColor: config.palette.newGreyScales['700'],
     color: 'white',
     paddingBottom: '50px',
     paddingTop: '40px',
@@ -74,7 +76,7 @@ export default makeStyles(({
   },
 
   logo: {
-    color: '#32c896',
+    color: config.palette.primary,
     height: 'auto',
     marginRight: '15px',
     width: '60px',
@@ -126,7 +128,7 @@ export default makeStyles(({
     },
 
     '& > p': {
-      color: '#bac0c6',
+      color: config.palette.newGreyScales['300'],
       fontSize: '16px',
       fontWeight: '300',
       lineHeight: '22px',

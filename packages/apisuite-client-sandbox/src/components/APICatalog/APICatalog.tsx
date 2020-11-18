@@ -1,17 +1,19 @@
 import * as React from 'react'
 
+import Link from 'components/Link'
+
 import Avatar from '@material-ui/core/Avatar'
 
 import useStyles from './styles'
 
-import { APICatalogProps } from './types'
+import { APICatalogProps, APIDetails } from './types'
 
 const APICatalog: React.FC<APICatalogProps> = ({
   recentlyAddedAPIs,
 }) => {
   const classes = useStyles()
 
-  const apiCatalogEntries = recentlyAddedAPIs.map((apiDetails, index) => {
+  const generateAPICatalogEntry = (apiDetails: APIDetails, index: number) => {
     const apiSplitName = apiDetails.apiName.split(' ')
     const apiInitials = apiSplitName.length >= 2
       ? `${apiSplitName[0].charAt(0)}${apiSplitName[1].charAt(0)}` : apiSplitName[0].slice(0, 2)
@@ -23,13 +25,11 @@ const APICatalog: React.FC<APICatalogProps> = ({
       >
         <div className={classes.apiCatalogEntryAvatar}>
           <Avatar
-            className={apiDetails.apiAccess === 'Production access'
+            className={apiDetails.apiAccess
               ? classes.colorsOfProductionAPI
-              : (apiDetails.apiAccess === 'Sandbox access'
-                ? classes.colorsOfSandboxAPI
-                : classes.colorsOfAPIDocumentation)}
+              : classes.colorsOfAPIDocumentation}
           >
-            {apiInitials}
+            {apiInitials.toUpperCase()}
           </Avatar>
         </div>
 
@@ -40,22 +40,17 @@ const APICatalog: React.FC<APICatalogProps> = ({
             <span
               className={
                 `
-                  ${classes.apiCatalogEntryVersion}
-                  ${(
-        apiDetails.apiAccess === 'Production access'
-          ? classes.colorsOfProductionAPI
-          : (
-            apiDetails.apiAccess === 'Sandbox access'
-              ? classes.colorsOfSandboxAPI
-              : classes.colorsOfAPIDocumentation
-          )
-      )}
-                `
+${classes.apiCatalogEntryVersion}
+${apiDetails.apiAccess
+        ? classes.colorsOfProductionAPI
+        : classes.colorsOfAPIDocumentation
+      }
+`
               }
             >
               {apiDetails.apiVersion}
             </span>
-            <>{apiDetails.apiAccess}</>
+            <>{apiDetails.apiAccess ? 'Production access' : 'API Documentation'}</>
           </p>
 
           <p className={classes.apiCatalogEntryDescription}>
@@ -64,6 +59,21 @@ const APICatalog: React.FC<APICatalogProps> = ({
         </div>
       </div>
     )
+  }
+
+  const apiCatalogEntries = recentlyAddedAPIs.map((apiDetails, index) => {
+    if (apiDetails.hasMoreDetails) {
+      return (
+        <Link
+          className={classes.apiCatalogEntryLink}
+          to={`/api-products/details/${apiDetails.id}/spec/${apiDetails.apiRoutingId}`}
+        >
+          {generateAPICatalogEntry(apiDetails, index)}
+        </Link>
+      )
+    } else {
+      return generateAPICatalogEntry(apiDetails, index)
+    }
   })
 
   return <>{apiCatalogEntries}</>

@@ -1,5 +1,58 @@
 {
   "sandboxPage": {
+    "newSlides": {
+      "slideOne": {
+        "slideText": "Sign up now to enjoy all portal features",
+        "slideButtonLabel": "Register"
+      },
+      "slideTwo": {
+        "slideText": "Take a look at our available APIs",
+        "slideButtonLabel": "API Products"
+      }
+    },
+    "stepsSection": {
+      "intro": "Let's make things easy.",
+      "notLoggedIn": {
+        "heading": "Create a developer account first.",
+        "paragraphOne": "Our API Portal enables you to register a free team-based account without on the fly.",
+        "paragraphTwoPartOne": "Once activated, we assist you in 3 straightforward steps to start consuming our API products.",
+        "paragraphTwoPartTwo": "Not sure how to get there? The onboarding documentation will help you along.",
+        "buttonLabel": "Register now"
+      },
+      "loggedIn": {
+        "heading": "We value you as an interested developer!",
+        "paragraphOne": "enables you to register your client apps and subscribe to our available API products.",
+        "paragraphTwoPartOne": "Whenever you are ready, we assist you in 3 straightforward steps to start consuming our API products.",
+        "paragraphTwoPartTwo": "Did you experience any issues with your account set-up?",
+        "buttonLabel": "Contact support"
+      },
+      "individualSteps": {
+        "stepOne": {
+          "header": "Add your app",
+          "paragraphPartOne": "You’ll need an app to send and receive API calls.",
+          "paragraphPartTwo": "Adding your app details will help us to enable this flow.",
+          "buttonLabel": "Add app"
+        },
+        "stepTwo": {
+          "header": "Select an API",
+          "paragraph": "In the \"Subscriptions\" section, we provide an overview of our available Sandbox APIs your apps can subscribe to.",
+          "buttonLabel": "Subscribe to API"
+        },
+        "stepThree": {
+          "header": "Get Started",
+          "paragraph": "Once your app and API subscriptions are all ready to go, head to our \"Getting Started\" documentation for lift-off.",
+          "buttonLabel": "Documentation"
+        }
+      }
+    },
+    "apiCatalog": {
+      "intro": "API Catalog recent additions",
+      "paragraph": "No APIs have been recently added."
+    },
+    "notice": {
+      "maintainedBy": "is maintained by",
+      "visitUs": "You can visit us at"
+    },
     "slides": {
       "one": {
         "title": "Experience the Sandbox",
