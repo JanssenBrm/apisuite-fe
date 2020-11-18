@@ -1,23 +1,29 @@
 import { makeStyles } from '@material-ui/styles'
 
+import { config } from 'constants/global'
+
 export default makeStyles(({
-  regularLogo: {
-    color: '#FFFFFF',
-    height: 'auto',
-    marginRight: '20px',
-    width: '60px',
+  activeTab: {
+    '& > span': {
+      fontWeight: 600,
+    },
   },
 
   alternativeLogo: {
-    color: '#32C896',
+    color: config.palette.primary,
     height: 'auto',
     marginRight: '20px',
     width: '60px',
   },
 
-  portalName: {
-    fontSize: '24px',
-    fontWeight: 400,
+  goBackButton: {
+    display: 'flex',
+    alignItems: 'center',
+    cursor: 'pointer',
+
+    '& > svg': {
+      marginRight: '8px',
+    },
   },
 
   headerContentsContainer: {
@@ -25,9 +31,26 @@ export default makeStyles(({
     alignItems: 'center',
   },
 
+  linkToProfile: {
+    alignSelf: 'center',
+    textDecoration: 'none',
+  },
+
+  logOutIcon: {
+    cursor: 'pointer',
+    marginLeft: '12px',
+  },
+
   logoAndNameContainer: {
     display: 'flex',
     alignItems: 'center',
+  },
+
+  opaqueMenuActiveTabOverLine: {
+    backgroundColor: config.palette.primary,
+    height: '3px',
+    top: 0,
+    transition: 'none !important',
   },
 
   opaqueMenuTab: {
@@ -40,14 +63,36 @@ export default makeStyles(({
     textTransform: 'none',
   },
 
-  transparentMenuTab: {
+  opaqueMenuUserAvatar: {
+    border: `2px solid ${config.palette.primary}`,
+    height: '33px',
+    width: '33px',
+  },
+
+  opaqueMenuUserNameAndAvatarContainer: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    position: 'relative',
+    right: 0,
+  },
+
+  opaqueSubMenuActiveTabUnderLine: {
+    backgroundColor: config.palette.tertiary,
+    height: '3px',
+    transition: 'none !important',
+  },
+
+  portalName: {
+    fontSize: '24px',
+    fontWeight: 400,
+  },
+
+  regularLogo: {
     color: '#FFFFFF',
-    fontSize: '18px',
-    fontWeight: 300,
-    minWidth: 'unset',
-    opacity: 1,
-    padding: '16px',
-    textTransform: 'none',
+    height: 'auto',
+    marginRight: '20px',
+    width: '60px',
   },
 
   subTab: {
@@ -60,38 +105,49 @@ export default makeStyles(({
     textTransform: 'none',
   },
 
-  yetToLogIn: {
-    display: 'none',
+  subTabs: {
+    display: 'flex',
   },
 
-  activeTab: {
-    '& > span': {
-      fontWeight: 600,
-    },
+  subTabsAndBackButton: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    width: '100%',
   },
 
   transparentMenuActiveTabOverLine: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: config.palette.background.default,
     height: '3px',
     top: 0,
     transition: 'none !important',
   },
 
-  opaqueMenuActiveTabOverLine: {
-    backgroundColor: '#32C896',
-    height: '3px',
-    top: 0,
-    transition: 'none !important',
+  transparentMenuTab: {
+    color: '#FFFFFF',
+    fontSize: '18px',
+    fontWeight: 300,
+    minWidth: 'unset',
+    opacity: 1,
+    padding: '16px',
+    textTransform: 'none',
+  },
+
+  transparentMenuUserAvatar: {
+    border: '2px solid #FFFFFF',
+    height: '33px',
+    width: '33px',
+  },
+
+  transparentMenuUserNameAndAvatarContainer: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'flex-end',
+    position: 'absolute',
+    right: 0,
   },
 
   transparentSubMenuActiveTabUnderLine: {
-    backgroundColor: '#19B3EE',
-    height: '3px',
-    transition: 'none !important',
-  },
-
-  opaqueSubMenuActiveTabUnderLine: {
-    backgroundColor: '#14283C',
+    backgroundColor: config.palette.focus,
     height: '3px',
     transition: 'none !important',
   },
@@ -102,29 +158,7 @@ export default makeStyles(({
     marginRight: '20px',
   },
 
-  transparentMenuUserAvatarContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    position: 'absolute',
-    right: 0,
-  },
-
-  opaqueMenuUserAvatarContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    position: 'relative',
-    right: 0,
-  },
-
-  transparentMenuUserAvatar: {
-    border: '2px solid #FFFFFF',
-    height: '33px',
-    width: '33px',
-  },
-
-  opaqueMenuUserAvatar: {
-    border: '2px solid #32C896',
-    height: '33px',
-    width: '33px',
+  yetToLogIn: {
+    display: 'none',
   },
 }))

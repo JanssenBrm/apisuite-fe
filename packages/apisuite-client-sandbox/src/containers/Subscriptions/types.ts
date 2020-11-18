@@ -4,11 +4,25 @@ import { AppData } from 'containers/Applications/types'
 
 /** State types */
 export interface Api {
-  id: number,
-  name: string,
+  apiVersions: {
+    apiId: number,
+    createdAt: string,
+    deprecated: boolean,
+    id: number,
+    live: boolean,
+    title: string,
+    updatedAt: string,
+    version: string,
+  }[],
   baseUri?: string,
   baseUriSandbox?: string,
+  createdAt: string,
   docs?: ApiDocs,
+  id: number,
+  name: string,
+  publishedAt: string,
+  type: string,
+  updatedAt: string,
 }
 
 export interface SubscriptionsStore {

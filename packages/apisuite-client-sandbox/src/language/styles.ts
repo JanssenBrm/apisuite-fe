@@ -1,10 +1,12 @@
 import { makeStyles } from '@material-ui/styles'
 
+import { config } from 'constants/global'
+
 export default makeStyles(({
   languageSelector: {
-    backgroundColor: '#85909A',
-    borderColor: '#85909A',
-    borderRadius: '4px',
+    backgroundColor: config.palette.newGreyScales['400'],
+    borderColor: config.palette.newGreyScales['400'],
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: '#FFFFFF !important',
     fontSize: '14px',
     fontWeight: 300,
@@ -18,11 +20,11 @@ export default makeStyles(({
     width: '180px',
 
     '&:disabled': {
-      backgroundColor: '#85909A',
+      backgroundColor: config.palette.newGreyScales['400'],
     },
 
     '&:hover': {
-      backgroundColor: '#85909A',
+      backgroundColor: config.palette.newGreyScales['400'],
     },
 
     '&::after': {

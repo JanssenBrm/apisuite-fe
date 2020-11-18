@@ -1,15 +1,18 @@
 import { makeStyles } from '@material-ui/styles'
 
+import { config } from 'constants/global'
+
 export default makeStyles({
   carouselSlideButtonStyling: {
-    backgroundColor: '#32C896',
-    borderRadius: '4px',
-    color: '#FFFFFF',
+    backgroundColor: config.palette.primary,
+    borderRadius: `${config.dimensions.borderRadius}px`,
+    color: '#FFFFFF !important',
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
     margin: '0px auto',
     padding: '17px 40px',
+    textDecoration: 'none',
     width: '200px',
   },
 
@@ -46,44 +49,46 @@ export default makeStyles({
 
     // Makes the slider truly full-width (do NOT remove)
     '& .react-Slidy': {
+      height: '550px',
       width: '100%',
     },
   },
 
-  carouselSliderButtons: {
+  carouselSliderIconButtons: {
     display: 'flex',
     justifyContent: 'center',
     transform: 'translateY(-20px)',
 
     '& > :first-child': {
-      borderBottomLeftRadius: '4px',
-      borderTopLeftRadius: '4px',
+      borderBottomLeftRadius: `${config.dimensions.borderRadius}px`,
+      borderTopLeftRadius: `${config.dimensions.borderRadius}px`,
     },
 
     '& > :last-child': {
-      borderBottomRightRadius: '4px',
-      borderTopRightRadius: '4px',
+      borderBottomRightRadius: `${config.dimensions.borderRadius}px`,
+      borderTopRightRadius: `${config.dimensions.borderRadius}px`,
     },
   },
 
-  notSelectedCarouselSliderButton: {
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #BAC0C6',
-    color: '#6a7884',
+  notSelectedCarouselSliderIconButton: {
+    backgroundColor: config.palette.background.default,
+    border: `1px solid ${config.palette.newGreyScales['300']}`,
+    color: '#6A7884',
     height: '40px',
     width: '40px',
   },
 
-  selectedCarouselSliderButton: {
+  selectedCarouselSliderIconButton: {
     backgroundColor: '#DCDFE3',
-    border: '1px solid #19B3EE',
-    color: '#19B3EE',
+    border: `1px solid ${config.palette.focus}`,
+    color: config.palette.focus,
     height: '40px',
     width: '40px',
   },
 
   sideBySideSlideContentsPlacement: {
     flexDirection: 'row',
+    minHeight: '550px',
 
     '& > :nth-child(1)': {
       padding: '165px 25px 0px 0px',
@@ -96,6 +101,7 @@ export default makeStyles({
 
   topToBottomSlideContentsPlacement: {
     flexDirection: 'column',
+    minHeight: '550px',
 
     '& > :nth-child(1)': {
       paddingBottom: '40px',

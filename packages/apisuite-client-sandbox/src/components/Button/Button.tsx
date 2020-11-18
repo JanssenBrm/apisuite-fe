@@ -1,21 +1,37 @@
 import * as React from 'react'
+
 import classnames from 'classnames'
+
 import useStyles from './styles'
 
 import './styles.scss'
 
+// TODO: Clean this up - I believe 'classes.dark' is not used anywhere on the app
+
 const Button: React.FC<{
-  label?: any,
-  type?: string,
-  fullWidth?: boolean,
-  href?: string,
-  loading?: boolean,
-  disabled?: boolean,
-  onClick?: any,
   background?: string,
   color?: string,
-  className?: string,
-}> = ({ label, type, fullWidth, href, loading, disabled, onClick, background, color, ...rest }) => {
+  customButtonClassName?: string,
+  disabled?: boolean,
+  fullWidth?: boolean,
+  href?: string,
+  label?: any,
+  loading?: boolean,
+  onClick?: any,
+  type?: string,
+}> = ({
+  background,
+  color,
+  customButtonClassName,
+  disabled,
+  fullWidth,
+  href,
+  label,
+  loading,
+  onClick,
+  type,
+  ...rest
+}) => {
   const classes = useStyles()
 
   return (
@@ -25,35 +41,45 @@ const Button: React.FC<{
           href={href}
           target='_blank'
           rel='noopener noreferrer'
-          className={classnames(
+          className={customButtonClassName || classnames(
             [classes.button],
             type,
-            { [classes.fullWidth]: fullWidth || false },
-            { [classes.disabled]: disabled || loading || false },
-            { [classes.loading]: loading || false },
+            // Background color
+            { [classes.dark]: background && background === 'dark' },
+            { [classes.secondary]: background && background === 'secondary' },
+            { [classes.tertiary]: background && background === 'tertiary' },
+            { [classes.transparent]: background && background === 'transparent' },
+            // Text color
             { [classes.primaryColor]: color && color === 'primary' },
             { [classes.secondaryColor]: color && color === 'secondary' },
-            { [classes.secondary]: background && background === 'secondary' },
-            { [classes.transparent]: background && background === 'transparent' },
-            { [classes.dark]: background && background === 'dark' },
+            // Status
+            { [classes.disabled]: disabled || loading || false },
+            { [classes.fullWidth]: fullWidth || false },
+            { [classes.loading]: loading || false },
           )}
+          {...rest}
         >
           {label}
         </a>
       )}
+
       {!href && (
         <div
-          className={classnames(
+          className={customButtonClassName || classnames(
             [classes.button],
             type,
-            { [classes.fullWidth]: fullWidth || false },
-            { [classes.disabled]: disabled || loading || false },
-            { [classes.loading]: loading || false },
+            // Background color
+            { [classes.dark]: background && background === 'dark' },
+            { [classes.secondary]: background && background === 'secondary' },
+            { [classes.tertiary]: background && background === 'tertiary' },
+            { [classes.transparent]: background && background === 'transparent' },
+            // Text color
             { [classes.primaryColor]: color && color === 'primary' },
             { [classes.secondaryColor]: color && color === 'secondary' },
-            { [classes.secondary]: background && background === 'secondary' },
-            { [classes.transparent]: background && background === 'transparent' },
-            { [classes.dark]: background && background === 'dark' },
+            // Status
+            { [classes.disabled]: disabled || loading || false },
+            { [classes.fullWidth]: fullWidth || false },
+            { [classes.loading]: loading || false },
           )}
           {...rest}
         >

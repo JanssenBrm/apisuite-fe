@@ -1,9 +1,11 @@
+// TODO: Clean this up - check what is still used, and convert it into JSS
+
 @import "styles/variables";
 
 .navigation {
   position: sticky;
   top: 0;
-  transition: 0.195s ease;
+  transition: 0.3s ease;
   width: 100%;
   color: white;
   background-color: #333333;

@@ -2,56 +2,80 @@ import { makeStyles } from '@material-ui/styles'
 import { config } from 'constants/global'
 
 const useStyles = makeStyles({
+  // a) Button's variant
+
   button: {
     backgroundColor: config.palette.primary,
     borderRadius: '5px',
-    padding: '6px 12px',
+    boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
+    color: config.palette.primaryContrastText,
     display: 'inline-block',
     fontSize: '14px',
-    boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
-    textDecoration: 'none',
-    color: '#fff !important',
-    textAlign: 'center',
-    position: 'relative',
     fontWeight: 600,
+    padding: '6px 12px',
+    position: 'relative',
+    textAlign: 'center',
+    textDecoration: 'none',
+
+    '&:active': {
+      boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
+    },
 
     '&:hover': {
       cursor: 'pointer',
       boxShadow: '0 4px 6px 0 rgba(0,0,0,0.35)',
     },
 
-    '&:active': {
-      boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
+    '&:link, &:visited': {
+      color: config.palette.primaryContrastText,
     },
   },
-  secondary: {
-    backgroundColor: config.palette.secondary,
-  },
+
   dark: {
     backgroundColor: config.palette.text.primary,
   },
+
+  secondary: {
+    backgroundColor: config.palette.secondary,
+  },
+
+  tertiary: {
+    backgroundColor: config.palette.tertiary,
+  },
+
   transparent: {
     background: 'none',
     borderWidth: 0,
     boxShadow: 'none',
+
     '&:hover': {
       boxShadow: 'none',
     },
   },
+
+  // b) Button's text color
+
   primaryColor: {
     color: `${config.palette.primary} !important`,
   },
+
   secondaryColor: {
     color: `${config.palette.secondary} !important`,
   },
+
+  // c) Button's status
+
+  disabled: {
+    backgroundColor: `${config.palette.newGreyScales['300']} !important`,
+    boxShadow: '0 2px 5px 0 rgba(0,0,0,0.05) !important',
+    cursor: 'default !important',
+    opacity: 0.6,
+  },
+
   fullWidth: {
     width: '100%',
   },
-  disabled: {
-    cursor: 'default !important',
-    opacity: 0.6,
-    boxShadow: '0 2px 5px 0 rgba(0,0,0,0.05) !important',
-  },
+
   loading: {
 
   },

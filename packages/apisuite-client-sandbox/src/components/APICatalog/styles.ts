@@ -1,12 +1,14 @@
 import { makeStyles } from '@material-ui/styles'
 
+import { config } from 'constants/global'
+
 export default makeStyles({
   apiCatalogEntry: {
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #BAC0C6',
-    borderRadius: '4px',
+    backgroundColor: config.palette.background.default,
+    border: `1px solid ${config.palette.newGreyScales['300']}`,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
-    height: '215px',
+    height: '200px',
     marginBottom: '20px',
     width: '440px',
   },
@@ -22,8 +24,19 @@ export default makeStyles({
     },
   },
 
+  apiCatalogEntryDescription: {
+    color: config.palette.newGreyScales['400'],
+    fontSize: '16px',
+    fontWeight: 300,
+    lineHeight: '20px',
+  },
+
+  apiCatalogEntryLink: {
+    textDecoration: 'none',
+  },
+
   apiCatalogEntryName: {
-    color: '#14283C',
+    color: config.palette.tertiary,
     fontSize: '22px',
     fontWeight: 400,
     marginBottom: '8px',
@@ -39,38 +52,31 @@ export default makeStyles({
     },
   },
 
-  apiCatalogEntryDescription: {
-    color: '#85909A',
-    fontSize: '16px',
-    fontWeight: 400,
-    lineHeight: '20px',
-  },
-
   apiCatalogEntryVersion: {
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     marginRight: '8px',
     padding: '5px 10px',
   },
 
   apiCatalogEntryVersionAndAccess: {
-    color: '#85909A',
+    color: config.palette.newGreyScales['400'],
     fontSize: '14px',
-    fontWeight: 400,
+    fontWeight: 300,
     marginBottom: '8px',
   },
 
   colorsOfAPIDocumentation: {
-    backgroundColor: '#51606E',
+    backgroundColor: config.palette.active,
     color: '#FFFFFF',
   },
 
   colorsOfProductionAPI: {
-    backgroundColor: '#19B3EE',
+    backgroundColor: config.palette.info,
     color: '#FFFFFF',
   },
 
   colorsOfSandboxAPI: {
-    backgroundColor: '#32C896',
+    backgroundColor: config.palette.primary,
     color: '#FFFFFF',
   },
 })
