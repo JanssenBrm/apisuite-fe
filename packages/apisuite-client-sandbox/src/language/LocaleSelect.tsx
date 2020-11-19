@@ -1,23 +1,46 @@
 import * as React from 'react'
+
 import { useTranslation } from 'react-i18next'
-import { localPut } from 'util/storage'
-import { config } from 'constants/global'
+
 import { LOCALE_KEY, changeLocale } from './i18n'
 
+import { config } from 'constants/global'
+
+import MenuItem from '@material-ui/core/MenuItem'
+import Select from '@material-ui/core/Select'
+
+import { localPut } from 'util/storage'
+
+import useStyles from './styles'
+
 const LocaleSelect: React.FC<{}> = () => {
+  const classes = useStyles()
+
   const { i18n } = useTranslation()
 
-  function handleLocaleChange ({ target: { value } }: React.ChangeEvent<HTMLSelectElement>) {
-    changeLocale(value)
-    localPut(LOCALE_KEY, value)
+  const handleLocaleChange = (event: React.ChangeEvent<any>) => {
+    changeLocale(event.target.value)
+    localPut(LOCALE_KEY, event.target.value)
   }
 
+  const selectionMenuItems = config.i18n.map((opt) => (
+    <MenuItem
+      key={opt.locale}
+      value={opt.locale}
+    >
+      {opt.label}
+    </MenuItem>
+  ))
+
   return (
-    <select value={i18n.language} onChange={handleLocaleChange} style={{ maxWidth: 140 }}>
-      {config.i18n.map((opt) => (
-        <option key={opt.locale} value={opt.locale}>{opt.label}</option>
-      ))}
-    </select>
+    <Select
+      className={classes.languageSelector}
+      id='selectionMenuLabel'
+      onChange={handleLocaleChange}
+      value={i18n.language}
+    >
+      {selectionMenuItems}
+    </Select>
   )
 }
 

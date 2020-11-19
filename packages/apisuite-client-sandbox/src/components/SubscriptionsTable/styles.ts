@@ -8,7 +8,7 @@ export default makeStyles(({
     alignItems: 'center',
     justifyContent: 'center',
     width: '100%',
-    cursor: 'pointer',
+    // cursor: 'pointer',
     borderRadius: config.dimensions.borderRadius,
     backgroundColor: 'white',
     overflow: 'hidden',
@@ -136,6 +136,15 @@ export default makeStyles(({
     borderRightWidth: 0,
     borderStyle: 'solid',
     borderColor: config.palette.greyScales[300],
+    '& *:hover': {
+      backgroundColor: config.palette.tertiary[50],
+    },
+  },
+  apiVersionLink: {
+    textDecoration: 'none',
+    '& *:hover': {
+      backgroundColor: config.palette.greyScales[50],
+    },
   },
   viewRow: {
     display: 'flex',

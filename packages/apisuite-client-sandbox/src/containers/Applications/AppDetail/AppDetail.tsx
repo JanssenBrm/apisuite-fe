@@ -172,6 +172,13 @@ const AppDetail: React.FC<AppDetailProps> = (
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
   }
 
+  function checkChanges (initInput = null) {
+    /* Comparing current inputs with those received (stored in 'currentApp') */
+    const inputChangesDetected = (JSON.stringify(initInput || initialInput) !== JSON.stringify(currentInput))
+
+    inputChangesDetected ? setInputsHaveChanged(true) : setInputsHaveChanged(false)
+  }
+
   function handleInputs (e: FormFieldEvent, err: any) {
     const newPubUrls = currentInput.pubUrls.length > 0
       ? [...currentInput.pubUrls]
@@ -214,11 +221,7 @@ const AppDetail: React.FC<AppDetailProps> = (
       })
     }
 
-    /* Comparing current inputs with those received (stored in 'currentApp') */
-
-    const inputChangesDetected = (JSON.stringify(initialInput) !== JSON.stringify(currentInput))
-
-    inputChangesDetected ? setInputsHaveChanged(true) : setInputsHaveChanged(false)
+    checkChanges()
 
     const eventTarget = e.target
 
@@ -262,12 +265,15 @@ const AppDetail: React.FC<AppDetailProps> = (
     })
 
     // 'initialInput' will hold a deep copy of app data that has NOT been changed yet.
-    setInitialInput(JSON.parse(JSON.stringify({ ...currentApp, pubUrls: newPubUrls })))
+    const initInput = JSON.parse(JSON.stringify({ ...currentApp, pubUrls: newPubUrls }))
+    setInitialInput(initInput)
 
     // 'currentInput' will hold app data that may, or may not be changed.
     setCurrentInput({ ...currentApp, pubUrls: newPubUrls })
 
     setActiveMenuItems(newActiveMenuItems)
+
+    checkChanges(initInput)
   }, [currentApp])
 
   return (
@@ -308,12 +314,12 @@ const AppDetail: React.FC<AppDetailProps> = (
                 placeholder='https://localhost'
                 name='clientUrl'
                 type='text'
-                value={currentInput.pubUrls[0].url}
+                value={currentInput.pubUrls[0]?.url}
                 onChange={handleInputs}
                 errorPlacing='bottom'
                 rules={[
                   {
-                    rule: currentInput.pubUrls[0].url.length > 0 ? isValidURL(currentInput.pubUrls[0].url) : true,
+                    rule: currentInput.pubUrls[0]?.url.length > 0 ? isValidURL(currentInput.pubUrls[0]?.url) : true,
                     message: 'Please provide a valid URL',
                   },
                 ]}

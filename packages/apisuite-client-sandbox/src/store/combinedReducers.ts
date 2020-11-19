@@ -14,6 +14,7 @@ import settings from 'containers/Settings/ducks'
 import subscriptions from 'containers/Subscriptions/ducks'
 import notifications from 'containers/NotificationStack/ducks'
 import profile from 'containers/Profile/ducks'
+import apiDetails from 'containers/APIDetails/ducks'
 import reduceReducers from './reduceReducers'
 
 export default (
@@ -29,6 +30,7 @@ export default (
     informDialog: [informDialog],
     notifications: [notifications],
     profile: [profile],
+    apiDetails: [apiDetails],
   }
 
   Object.keys(additionalReducers).map((key) => {
