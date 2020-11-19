@@ -3,33 +3,23 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-# [1.0.0-rc.4](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-rc.3...apisuite-client-sandbox@1.0.0-rc.4) (2020-10-29)
+## [1.0.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-rc.5...apisuite-client-sandbox@1.0.3) (2020-11-19)
 
-
-### Bug Fixes
-
-* **Portal:** Fix the Essential layout to have height 100% ([10c3eb9](https://github.com/Cloudoki/APISuite/commit/10c3eb96012bf6e9bb9657f9adf023357bb1ffdd))
-* **Portal:** Implement the LOGOUT action in all relevant reducers ([a93b702](https://github.com/Cloudoki/APISuite/commit/a93b702cc3a02f39d69c5e973bab1b68c8472b74))
-* **Portal:** Use the 'world' icon as default footer icon ([b917d63](https://github.com/Cloudoki/APISuite/commit/b917d63882008800743b79e965eba4373849030e))
-* **Portal:** Use the user's role name based on the Profile information. ([9c81520](https://github.com/Cloudoki/APISuite/commit/9c815205531f6aa2046a0295d5cd003f38059003))
-* **role-types:** reorder role name options ([70c427e](https://github.com/Cloudoki/APISuite/commit/70c427e409356347ae940a9bc69ee1d8b8d2fd86))
-* **team-role:** APIEC-211 APIEC-210 ([22de998](https://github.com/Cloudoki/APISuite/commit/22de998abf5cb1b652023d6ab49c11618dcbfdb2))
-* **teampage:** update team page feedback and validation, handle 401 requests ([f24fc38](https://github.com/Cloudoki/APISuite/commit/f24fc38e2502270e2e80463a6b8cd076fe0b3ce9))
-
-
-### Features
-
-* Add a base theme to the Portal core ([9a80cbb](https://github.com/Cloudoki/APISuite/commit/9a80cbbdd92885dce1ee87f7aa23da838495fe59))
-* Upgrade the Cloud Extension UI to v1.0.6 in the Cloud environment. ([0e7298b](https://github.com/Cloudoki/APISuite/commit/0e7298bd0a135846b323b3e0b6697812f96b9ad0))
-* **Portal:** Fixed the navigation and menu systems ([3777a6f](https://github.com/Cloudoki/APISuite/commit/3777a6f707cc8bc7dd1231a28e8825236049a677))
-* **Portal:** New layouts-based layout. ([f89f633](https://github.com/Cloudoki/APISuite/commit/f89f633d259dfb4a497ca92d038efe0ad021f4de))
-* **Portal:** Support receiving layout configuration for Extension pages. ([3ff9b19](https://github.com/Cloudoki/APISuite/commit/3ff9b1956eff0ab4982fedafe9ab3b9de2c07553))
+**Note:** Version bump only for package apisuite-client-sandbox
 
 
 
 
 
-# [1.0.0-rc.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.15...apisuite-client-sandbox@1.0.0-rc.3) (2020-10-20)
+## [1.0.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-rc.3...apisuite-client-sandbox@1.0.2) (2020-10-29)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+## [1.0.1](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-rc.2...apisuite-client-sandbox@1.0.1) (2020-10-15)
 
 
 ### Bug Fixes
@@ -55,17 +45,11 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 
 
-# [1.0.0-alpha.15](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.14...apisuite-client-sandbox@1.0.0-alpha.15) (2020-10-07)
-
-
-### Features
-
-* Automatically infer the API and Hydra hostnames ([82ff527](https://github.com/Cloudoki/APISuite/commit/82ff527dd70ece7df69898e9654d6c73a96c4d6b))
-
-
 # [1.0.0-rc.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.14...apisuite-client-sandbox@1.0.0-rc.2) (2020-10-02)
 
 **Note:** Version bump only for package apisuite-client-sandbox
+
+
 
 
 # [1.0.0-alpha.14](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.13...apisuite-client-sandbox@1.0.0-alpha.14) (2020-10-01)
