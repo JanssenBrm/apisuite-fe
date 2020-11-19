@@ -1,8 +1,12 @@
 import * as React from 'react'
 
+import { useTranslation } from 'react-i18next'
+
 import CookieConsent from 'react-cookie-consent'
 
 import useStyles from './styles'
+
+import { config } from 'constants/global'
 
 const CookiesBanner: React.FC = () => {
   /*
@@ -16,37 +20,40 @@ const CookiesBanner: React.FC = () => {
   */
   const classes = useStyles()
 
+  const [t] = useTranslation()
+
   return (
     <CookieConsent
       buttonClasses={classes.cookiesConsentButton}
       buttonText='I Accept'
       containerClasses={classes.cookiesConsentBannerContainer}
       cookieName='cookiesConsent'
+      debug
       location='bottom'
       overlay
     >
-      <h2 className={classes.cookiesConsentHeader}>Your Privacy.</h2>
+      <h2 className={classes.cookiesConsentHeader}>
+        {t('cookiesConsentBanner.intro', { config })}
+      </h2>
 
       <p className={classes.cookiesConsentParagraph}>
-        We only use cookies to enable essential website operations, and to ensure certain features work properly,
-        like the option to log in. We do not track. Any personal information you provide to us is removed when
-        you delete your account.
+        {t('cookiesConsentBanner.paragraphOne')}
       </p>
 
       <p className={classes.cookiesConsentParagraph}>
-        <>Read about </>
+        <>{t('cookiesConsentBanner.paragraphTwo.partOne')} </>
         <a
           href='#'
           rel='noopener noreferrer'
           target='_blank'
         >
-          our policies
+          {t('cookiesConsentBanner.paragraphTwo.partTwo')}
         </a>
-        <> for detailed questions and answers.</>
+        <> {t('cookiesConsentBanner.paragraphTwo.partThree')}</>
       </p>
 
       <p className={classes.cookiesConsentParagraph}>
-        By clicking "I Accept", you agree to essential cookie usage.
+        {t('cookiesConsentBanner.paragraphThree')}
       </p>
     </CookieConsent>
   )
