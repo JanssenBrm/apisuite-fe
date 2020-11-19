@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
 import Avatar from '@material-ui/core/Avatar'
 import Button from '@material-ui/core/Button'
-import { Sections } from 'apisuite-extension-ui-types'
+import { Sections } from '@apisuite/extension-ui-types'
 import Carousel from 'components/Carousel'
 
 import SvgIcon from 'components/SvgIcon'
@@ -31,7 +31,7 @@ const Sandbox: React.FC<{}> = () => {
   // }
 
   return (
-    <main className={classes.root} style={{ backgroundImage: `url(${themeBg})` }}>
+    <main className={`page-container ${classes.root}`} style={{ backgroundImage: `url(${themeBg})` }}>
 
       {getSections(Sections.HomepagePrecontent)}
 

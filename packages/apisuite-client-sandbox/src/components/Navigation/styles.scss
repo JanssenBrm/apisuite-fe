@@ -2,17 +2,47 @@
 $header-space: 50px;
 
 .navigation {
-  position: fixed;
+  position: sticky;
+  top: 0;
   transition: .195s ease;
   width: 100%;
   color: white;
-  background-color: transparent;
+  background-color: #333333;
   z-index: 4;
   display: flex;
   flex-direction: column;
 
-  &.scrolled {
-    background-color: #333333;
+  &.contractible:not(.scrolled) {
+    background-color: transparent;
+  }
+
+  &.contractible {
+    position: fixed;
+    top: unset;
+
+    header:not(.scrolled) {
+      padding: $header-space 0;
+      border-bottom: 1px solid white;
+    }
+
+    .container:not(.scrolled) {
+      transform: translateY(110px);
+      margin: 0;
+
+      .MuiTabs-indicator {
+        display: inline;
+      }
+    }
+
+    .sub-container:not(.scrolled) {
+      color: unset;
+      background-color: transparent;
+      transform: translateY(100%);
+
+      .MuiTabs-indicator {
+        display: none;
+      }
+    }
   }
 
   header {
@@ -20,15 +50,10 @@ $header-space: 50px;
     flex: 1;
     display: flex;
     flex-direction: row;
-    padding: $header-space 0;
     margin: 0 $header-space;
-    border-bottom: 1px solid white;
+    padding: 24px 0;
+    border-bottom: none;
     align-items: center;
-
-    &.scrolled {
-      padding: 24px 0;
-      border-bottom: none;
-    }
 
     h1 {
       font-size: 24px;
@@ -76,16 +101,13 @@ $header-space: 50px;
     justify-content: center;
     align-items: flex-end;
     flex-wrap: nowrap;
-    margin: 0;
-    transform: translateY(110px);
+    margin-right: 44px;
+    transform: translateY(0);
 
-    &.scrolled {
-      transform: translateY(0);
-      margin-right: 44px;
+    .MuiTabs-indicator {
+      display: none;
     }
   }
-
-
 
   .sub-container {
     flex: 1;
@@ -95,14 +117,11 @@ $header-space: 50px;
     align-items: flex-end;
     flex-wrap: nowrap;
     margin: 0;
-    transform: translateY(100%);
     padding: 0 $header-space;
 
-    &.scrolled {
-      transform: translateY(0);
-      background-color: #E3E3E3;
-      color: #333333;
-    }
+    color: #333333;
+    background-color: #E3E3E3;
+    transform: translateY(0);
   }
 
   .tabs {
@@ -119,14 +138,6 @@ $header-space: 50px;
 
     .space {
       flex: 1;
-    }
-
-    .tab {
-      margin: 16px;
-      transition: opacity .2s ease;
-      white-space: nowrap;
-
-      cursor: pointer;
     }
 
     .sub-tab {

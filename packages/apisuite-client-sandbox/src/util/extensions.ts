@@ -1,9 +1,9 @@
+import { Extension } from '@apisuite/extension-ui-types/v1'
 import {
-  Extension,
   MenuEntry,
   PageEntry,
   RoleRequirement,
-} from 'apisuite-extension-ui-types'
+} from '@apisuite/extension-ui-types'
 import extensions from '../../extensions'
 import { validateRoleConfig } from './roleSetup'
 

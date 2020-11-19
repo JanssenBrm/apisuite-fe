@@ -64,6 +64,7 @@
     "yup": "^0.29.3"
   },
   "devDependencies": {
+    "@apisuite/extension-ui-types": "^1.0.5",
     "@babel/cli": "7.7.4",
     "@babel/core": "7.7.4",
     "@babel/plugin-proposal-class-properties": "7.7.4",
@@ -86,7 +87,6 @@
     "@types/webpack-env": "1.14.1",
     "@typescript-eslint/eslint-plugin": "2.20.0",
     "@typescript-eslint/parser": "2.20.0",
-    "apisuite-extension-ui-types": "github:Cloudoki/apisuite-extension-ui-types#v1.0.3",
     "autoprefixer": "9.7.3",
     "babel-eslint": "10.0.3",
     "babel-jest": "24.9.0",

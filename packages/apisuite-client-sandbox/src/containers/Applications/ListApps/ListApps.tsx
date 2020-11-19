@@ -32,7 +32,7 @@ const ListApps: React.FC<ListAppsProps> = ({ history, user, userApps, getUserApp
   }, [])
 
   return (
-    <div className={commonClasses.root}>
+    <div className={`page-container ${commonClasses.root}`}>
       <section className={commonClasses.contentContainer}>
         <h1 className={classes.title}>{t('listApps.overview.title')}</h1>
 

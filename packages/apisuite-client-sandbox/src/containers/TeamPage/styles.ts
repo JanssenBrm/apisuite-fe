@@ -4,7 +4,6 @@ import { config } from 'constants/global'
 export default makeStyles(({
   root: {
     minHeight: '100%',
-    paddingTop: 200,
     backgroundColor: config.palette.greyScales[50],
   },
   contentContainer: {
@@ -71,6 +70,9 @@ export default makeStyles(({
     cursor: 'pointer',
     fontWeight: 500,
     marginRight: 16,
+    '&:disabled': {
+      backgroundColor: config.palette.greyScales[400],
+    },
   },
   inviteCard: {
     display: 'flex',
@@ -105,6 +107,11 @@ export default makeStyles(({
     top: 4,
     color: 'white',
     opacity: 0.5,
+  },
+  loadingPage: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   errorPlaceholder: {
     display: 'flex',

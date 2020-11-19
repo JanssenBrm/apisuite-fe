@@ -1,12 +1,11 @@
-import { Extension } from 'apisuite-extension-ui-types'
-// import Example from 'apisuite-extension-ui-example'
+import { Extension as ExtensionV1 } from '@apisuite/extension-ui-types/v1'
+// import { instanceExtension } from 'util/extensionsParams'
+// import Example from '@apisuite/extension-ui-example'
 
-type RegistryEntry = Extension[]
+type RegistryEntry = ExtensionV1[]
 
 const registry: RegistryEntry = [
-  // new Example({
-  //   someKey: 'Overriden value',
-  // }),
-]
+  // instanceExtension(Example, { someKey: 'Overriden value' }),
+].filter(Boolean)
 
 export default registry
