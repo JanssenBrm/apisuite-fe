@@ -40,7 +40,7 @@ export default makeStyles(({
     width: '100%',
     height: '50vh',
   },
-  redoc: {
+  swagger: {
     maxHeight: '90vh',
     overflowY: 'scroll',
     margin: '0 5% 40px 5%',
