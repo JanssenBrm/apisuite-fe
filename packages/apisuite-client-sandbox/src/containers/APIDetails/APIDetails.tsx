@@ -1,11 +1,12 @@
 import * as React from 'react'
 import { useParams } from 'react-router'
-import { RedocStandalone } from 'redoc'
 import useStyles from './styles'
 import { APIDetailParams, APIVersionProps } from './types'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { config } from 'constants/global'
 import { useTranslation } from 'react-i18next'
+import SwaggerUI from 'swagger-ui-react'
+import 'swagger-ui-react/swagger-ui.css'
 
 const APIDetails: React.FC<APIVersionProps> = ({
   getApiVersion,
@@ -52,32 +53,19 @@ const APIDetails: React.FC<APIVersionProps> = ({
                 <h3>{apiDetails.version.title}</h3>
                 <span className={`${classes.badge} ${getBadgeStyle()}`}>{apiDetails.version.version}</span>
               </div>
-              <div className={classes.redoc}>
-                <RedocStandalone
-                  spec={apiDetails.version.spec || {}}
-                  options={
-                    {
-                      scrollYOffset: 25,
-                      menuToggle: true,
-                      nativeScrollbars: true,
-                      theme: {
-                        colors: {
-                          primary: {
-                            main: apiDetails.version.live ? config.palette.primary : config.palette.newGreyScales[500],
-                          },
-                        },
-                      },
-                    }
-                  }
-                />
+              <div className={classes.swagger}>
+                <SwaggerUI spec={apiDetails.version.spec || {}} />
               </div>
             </>
           }
           {
             !hasSpec() &&
-            <div className={classes.centerVertical}>
-              <h2>{t('apidetails.notfound', { config })}</h2>
-            </div>
+            <>
+              <div className={`${classes.header} ${classes.docs}`}>&nbsp;</div>
+              <div className={classes.centerVertical}>
+                <h2>{t('apidetails.notfound', { config })}</h2>
+              </div>
+            </>
           }
         </>
       }

@@ -68,7 +68,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/forgot', exact: true, component: ForgotPasswordPage, layout: EssentialLayout },
   { path: '/terms', component: Terms },
   { path: '/privacy', component: Privacy },
-  { path: '/api-products/details/:apiId/spec/:versionId', exact: true, component: APIDetails, layoutProps: { contractibleMenu: true }  },
+  { path: '/api-products/details/:apiId/spec/:versionId', exact: true, component: APIDetails, layoutProps: { contractibleMenu: true } },
   ...extensionsRoutes,
   { render: () => <NotFound /> },
 ]
