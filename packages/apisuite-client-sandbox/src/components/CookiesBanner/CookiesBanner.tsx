@@ -25,9 +25,9 @@ const CookiesBanner: React.FC = () => {
   return (
     <CookieConsent
       buttonClasses={classes.cookiesConsentButton}
-      buttonText='I Accept'
+      buttonText={t('cookiesConsentBanner.buttonLabel')}
       containerClasses={classes.cookiesConsentBannerContainer}
-      cookieName='cookiesConsent'
+      cookieName='apiSuiteConsentCookie'
       location='bottom'
       overlay
     >

@@ -167,7 +167,8 @@
       "partTwo": "our policies",
       "partThree": "for detailed questions and answers."
     },
-    "paragraphThree": "By clicking \"I Accept\", you agree to essential cookie usage."
+    "paragraphThree": "By clicking \"I Accept\", you agree to essential cookie usage.",
+    "buttonLabel": "I Accept"
   },
   "loginForm": {
     "title": "Login",
