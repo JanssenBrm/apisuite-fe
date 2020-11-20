@@ -28,7 +28,6 @@ const CookiesBanner: React.FC = () => {
       buttonText='I Accept'
       containerClasses={classes.cookiesConsentBannerContainer}
       cookieName='cookiesConsent'
-      debug
       location='bottom'
       overlay
     >
@@ -43,7 +42,7 @@ const CookiesBanner: React.FC = () => {
       <p className={classes.cookiesConsentParagraph}>
         <>{t('cookiesConsentBanner.paragraphTwo.partOne')} </>
         <a
-          href='#'
+          href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/761004061/Legal'
           rel='noopener noreferrer'
           target='_blank'
         >
