@@ -69,6 +69,10 @@ const Sandbox: React.FC<SandboxProps> = ({
     }
   }, [subscriptions])
 
+  const hasSocials = () => {
+    return settings && settings.socialURLs && settings.socialURLs.length > 0
+  }
+
   return (
     <main className='page-container'>
       {/* Carousel section */}
@@ -265,33 +269,36 @@ const Sandbox: React.FC<SandboxProps> = ({
       </section>
 
       {/* Notice */}
-      <section className={classes.noticeContainer}>
-        <Notice
-          noticeIcon={
-            <CheckCircleOutlineRoundedIcon />
-          }
-          noticeText={
-            <p>
-              <>{settings.portalName} {t('sandboxPage.notice.maintainedBy', { config })} {settings.clientName}.</>
-              {
-                settings.socialURLs.length && (
-                  <>
-                    <> {t('sandboxPage.notice.visitUs', { config })} </>
-                    <a
-                      href={settings.socialURLs[0].url}
-                      rel='noopener noreferrer'
-                      target='_blank'
-                    >
-                      {settings.socialURLs[0].url}
-                    </a>
-                    <>.</>
-                  </>
-                )
-              }
-            </p>
-          }
-        />
-      </section>
+      {
+        hasSocials() &&
+        <section className={classes.noticeContainer}>
+          <Notice
+            noticeIcon={
+              <CheckCircleOutlineRoundedIcon />
+            }
+            noticeText={
+              <p>
+                <>{settings?.portalName} {t('sandboxPage.notice.maintainedBy', { config })} {settings?.clientName}.</>
+                {
+                  hasSocials() && (
+                    <>
+                      <> {t('sandboxPage.notice.visitUs', { config })} </>
+                      <a
+                        href={hasSocials() ? settings.socialURLs[0].url : '#'}
+                        rel='noopener noreferrer'
+                        target='_blank'
+                      >
+                        {hasSocials() ? settings.socialURLs[0].url : ''}
+                      </a>
+                      <>.</>
+                    </>
+                  )
+                }
+              </p>
+            }
+          />
+        </section>
+      }
     </main>
   )
 }
