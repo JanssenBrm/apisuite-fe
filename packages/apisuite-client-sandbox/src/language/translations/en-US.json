@@ -159,6 +159,17 @@
       }
     }
   },
+  "cookiesConsentBanner": {
+    "intro": "Your Privacy.",
+    "paragraphOne": "We only use cookies to enable essential website operations, and to ensure certain features work properly, like the option to log in. We do not track. Any personal information you provide to us is removed when you delete your account.",
+    "paragraphTwo": {
+      "partOne": "Read about",
+      "partTwo": "our policies",
+      "partThree": "for detailed questions and answers."
+    },
+    "paragraphThree": "By clicking \"I Accept\", you agree to essential cookie usage.",
+    "buttonLabel": "I Accept"
+  },
   "loginForm": {
     "title": "Login",
     "button": "LOG IN",
