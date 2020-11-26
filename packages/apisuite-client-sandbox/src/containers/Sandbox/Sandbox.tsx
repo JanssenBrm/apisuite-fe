@@ -9,6 +9,7 @@ import Notice from 'components/Notice'
 import Button from '@material-ui/core/Button'
 
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
+import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
 import ControlCameraRoundedIcon from '@material-ui/icons/ControlCameraRounded'
 import FlightLandRoundedIcon from '@material-ui/icons/FlightLandRounded'
 
@@ -19,6 +20,7 @@ import { SandboxProps } from './types'
 import carouselBackground from 'assets/space-background.svg'
 import carouselSlide1 from 'assets/carousel-slide-1.svg'
 import carouselSlide2 from 'assets/carousel-slide-2.svg'
+import carouselSlide3 from 'assets/carousel-slide-3.svg'
 
 import { config, DEFAULT_SUPPORT_URL } from 'constants/global'
 
@@ -78,6 +80,7 @@ const Sandbox: React.FC<SandboxProps> = ({
           iconsOfSliderButtonsArray={[
             <ControlCameraRoundedIcon key={1} />,
             <FlightLandRoundedIcon key={2} />,
+            <ChromeReaderModeRoundedIcon key={3} />,
           ]}
           slidesAutoPlay
           slidesArray={[
@@ -96,6 +99,14 @@ const Sandbox: React.FC<SandboxProps> = ({
               slideContentsPlacement: 'side-by-side',
               slideForegroundImage: carouselSlide2,
               slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
+            },
+            {
+              slideButton: true,
+              slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel', { config }),
+              slideButtonLink: '/documentation',
+              slideContentsPlacement: 'side-by-side',
+              slideForegroundImage: carouselSlide3,
+              slideText: t('sandboxPage.newSlides.slideThree.slideText', { config }),
             },
           ]}
           slidingAnimationDuration={1500}
