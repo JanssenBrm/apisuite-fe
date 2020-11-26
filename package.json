@@ -10,6 +10,8 @@
     "packages/*"
   ],
   "scripts": {
+    "common:build": "yarn workspace apisuite-common-components build",
+    "common:watch": "yarn workspace apisuite-common-components watch",
     "lerna": "lerna",
     "sandbox-dev": "yarn workspace apisuite-client-sandbox dev",
     "sandbox-build": "yarn workspace apisuite-client-sandbox build"
