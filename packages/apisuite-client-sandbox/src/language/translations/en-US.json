@@ -8,6 +8,10 @@
       "slideTwo": {
         "slideText": "Take a look at our available APIs",
         "slideButtonLabel": "API Products"
+      },
+      "slideThree": {
+        "slideText": "Read the manual for a successful launch",
+        "slideButtonLabel": "Documentation"
       }
     },
     "stepsSection": {
