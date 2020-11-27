@@ -7,7 +7,7 @@ export default {
 }
 
 export const Default = (): React.ReactNode => (
-  <Button variant="contained" btncolor="primary">
+  <Button variant="contained">
     Default
   </Button>
 )

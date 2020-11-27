@@ -14,7 +14,6 @@ export const $Overlay = styled(Overlay)<OverlayProps>`
 
 export const $Nav = styled.div`
   top: 0;
-  padding-top: 20px 30px;
   background-color: ${theme.palette.background.default};
   display: flex;
   justify-content: flex-end;
@@ -38,6 +37,7 @@ export const $LogoContainer = styled.div`
   align-items: center;
   flex-direction: row;
   font-weight: 600;
+  padding: 10px 0px 10px 30px;
 `
 
 export const $Logo = styled.div`
@@ -60,6 +60,7 @@ export const $Clickable = styled.div`
   display: flex;
   cursor: pointer;
   align-self: center;
+  padding: 10px 30px;
 
   :hover {
     text-decoration: underline;

@@ -114,6 +114,7 @@ export const WithLogoBlank = (): React.ReactElement => {
         open={isOpen}
         showLogo={true}
         blankLogo={true}
+        noTopBg={true}
         onClose={() => setIsOpen(false)}
       >
         <h1>Overlay</h1>

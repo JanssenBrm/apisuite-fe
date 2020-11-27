@@ -15,6 +15,7 @@ export const $Button = styled(Button)<$ButtonProps>`
       (btncolor === 'primary' && theme.palette.primaryContrastText) ||
       (btncolor === 'secondary' && theme.palette.secondaryContrastText) ||
       (btncolor === 'tertiary' && theme.palette.tertiaryContrastText) ||
+      (btncolor === 'warning' && theme.palette.primaryContrastText) ||
       theme.palette.newGreyScales[700]};
     border-color: ${({ btncolor }) =>
       (btncolor === 'primary' && theme.palette.primary) ||
