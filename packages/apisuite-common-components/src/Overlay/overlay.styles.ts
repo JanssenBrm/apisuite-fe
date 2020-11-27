@@ -8,14 +8,13 @@ export const $Overlay = styled(Overlay)<OverlayProps>`
     display: flex;
     background-color: ${theme.palette.background.default};
     width: 100%;
-    padding: 30px;
     flex-direction: column;
   }
 `
 
 export const $Nav = styled.div`
   top: 0;
-  padding-top: 20px;
+  padding-top: 20px 30px;
   background-color: ${theme.palette.background.default};
   display: flex;
   justify-content: flex-end;
@@ -38,6 +37,7 @@ export const $LogoContainer = styled.div`
   display: flex;
   align-items: center;
   flex-direction: row;
+  font-weight: 600;
 `
 
 export const $Logo = styled.div`
@@ -73,6 +73,7 @@ export const $Close = styled.div`
 `
 
 export const $Container = styled.div`
-  margin-top: 50px;
+  margin-top: 150px;
   margin-bottom: 100px;
+  padding: 30px;
 `

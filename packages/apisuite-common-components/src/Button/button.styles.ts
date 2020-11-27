@@ -10,12 +10,18 @@ export const $Button = styled(Button)<$ButtonProps>`
       (btncolor === 'secondary' && theme.palette.secondary) ||
       (btncolor === 'tertiary' && theme.palette.tertiary) ||
       (btncolor === 'warning' && theme.palette.warning) ||
-      theme.palette.primary};
+      theme.palette.background.default};
     color: ${({ btncolor }) =>
       (btncolor === 'primary' && theme.palette.primaryContrastText) ||
       (btncolor === 'secondary' && theme.palette.secondaryContrastText) ||
       (btncolor === 'tertiary' && theme.palette.tertiaryContrastText) ||
-      theme.palette.primaryContrastText};
+      theme.palette.newGreyScales[700]};
+    border-color: ${({ btncolor }) =>
+      (btncolor === 'primary' && theme.palette.primary) ||
+      (btncolor === 'secondary' && theme.palette.secondary) ||
+      (btncolor === 'tertiary' && theme.palette.tertiary) ||
+      (btncolor === 'warning' && theme.palette.warning) ||
+      theme.palette.newGreyScales[700]};
   }
 
   :disabled {
@@ -35,7 +41,7 @@ export const $Button = styled(Button)<$ButtonProps>`
         (btncolor === 'secondary' && theme.palette.secondary) ||
         (btncolor === 'tertiary' && theme.palette.tertiary) ||
         (btncolor === 'warning' && theme.palette.warning) ||
-        theme.palette.primary};
+        theme.palette.background.default};
     }
   }
 `
