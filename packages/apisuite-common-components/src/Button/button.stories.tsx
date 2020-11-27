@@ -7,9 +7,7 @@ export default {
 }
 
 export const Default = (): React.ReactNode => (
-  <Button variant="contained">
-    Default
-  </Button>
+  <Button variant="contained">Default</Button>
 )
 
 export const Primary = (): React.ReactNode => (

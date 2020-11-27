@@ -14,7 +14,7 @@
     "build-storybook": "build-storybook",
     "storybook": "start-storybook -p 6006",
     "format": "prettier --write \"src/{,**/}*.ts{,x}\"",
-    "lint": "eslint './src/**/*.{ts,tsx}' --fix && tsc",
+    "lint": "tsc --noEmit && eslint \"./src/{,**/}*.ts{,x}\"",
     "test": "jest",
     "test:watch": "jest --watch",
     "prepublishOnly": "npm run build",
