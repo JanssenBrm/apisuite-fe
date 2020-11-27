@@ -8,11 +8,6 @@ export const DEFAULT_SUPPORT_URL =
   'https://intercom.help/api-suite/en/articles/4586659-api-portal-users'
 
 export const ROLES: Roles = {
-  superadmin: {
-    label: 'SuperAdmin',
-    value: 'superadmin',
-    level: 1,
-  },
   admin: {
     label: 'Admin',
     value: 'admin',

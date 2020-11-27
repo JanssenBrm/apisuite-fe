@@ -12,7 +12,6 @@ import CircularProgress from '@material-ui/core/CircularProgress'
 import { ROLES } from 'constants/global'
 import { User } from 'containers/Auth/types'
 const AUTHORIZED_ROLES = [
-  ROLES.superadmin.value,
   ROLES.admin.value,
   ROLES.organizationOwner.value,
 ]
