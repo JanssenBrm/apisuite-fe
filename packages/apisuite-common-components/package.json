@@ -1,6 +1,6 @@
 {
   "name": "@apisuite/apisuite-common-components",
-  "version": "1.0.1-2",
+  "version": "1.0.1",
   "description": "apisuite common components lib",
   "main": "./build/index.js",
   "module": "./build/index.es.js",
