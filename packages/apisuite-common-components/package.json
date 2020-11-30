@@ -17,16 +17,7 @@
     "lint": "tsc --noEmit && eslint \"./src/{,**/}*.ts{,x}\"",
     "test": "jest",
     "test:watch": "jest --watch",
-    "prepublishOnly": "npm run build",
-    "version": "npm run build && git add -A build",
-    "postversion": "git push && git push --tags",
-    "precommit": "lint-staged"
-  },
-  "lint-staged": {
-    "{src,test}/{,**/}*.ts{,x}": [
-      "prettier --write",
-      "git add"
-    ]
+    "prepublishOnly": "npm run build"
   },
   "author": "a31859 <https://github.com/a31859>",
   "repository": {
