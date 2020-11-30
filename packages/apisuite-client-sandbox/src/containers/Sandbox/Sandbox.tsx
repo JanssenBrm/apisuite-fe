@@ -81,38 +81,62 @@ const Sandbox: React.FC<SandboxProps> = ({
       <section className={classes.slideShowSectionContainer}>
         <Carousel
           carouselBackgroundImage={carouselBackground}
-          iconsOfSliderButtonsArray={[
-            <ControlCameraRoundedIcon key={1} />,
-            <FlightLandRoundedIcon key={2} />,
-            <ChromeReaderModeRoundedIcon key={3} />,
-          ]}
+          iconsOfSliderButtonsArray={!auth.user
+            ? [
+              <FlightLandRoundedIcon key={1} />,
+              <ControlCameraRoundedIcon key={2} />,
+              <ChromeReaderModeRoundedIcon key={3} />,
+            ]
+            : [
+              <ControlCameraRoundedIcon key={1} />,
+              <ChromeReaderModeRoundedIcon key={2} />,
+            ]}
           slidesAutoPlay
-          slidesArray={[
-            {
-              slideButton: true,
-              slideButtonLabel: t('sandboxPage.newSlides.slideOne.slideButtonLabel', { config }),
-              slideButtonLink: '/auth/register',
-              slideContentsPlacement: 'top-to-bottom',
-              slideForegroundImage: carouselSlide1,
-              slideText: t('sandboxPage.newSlides.slideOne.slideText', { config }),
-            },
-            {
-              slideButton: true,
-              slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel', { config }),
-              slideButtonLink: '/api-products',
-              slideContentsPlacement: 'side-by-side',
-              slideForegroundImage: carouselSlide2,
-              slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
-            },
-            {
-              slideButton: true,
-              slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel', { config }),
-              slideButtonLink: '/documentation',
-              slideContentsPlacement: 'side-by-side',
-              slideForegroundImage: carouselSlide3,
-              slideText: t('sandboxPage.newSlides.slideThree.slideText', { config }),
-            },
-          ]}
+          slidesArray={!auth.user
+            ? [
+              {
+                slideButton: true,
+                slideButtonLabel: t('sandboxPage.newSlides.slideOne.slideButtonLabel', { config }),
+                slideButtonLink: '/auth/register',
+                slideContentsPlacement: 'top-to-bottom',
+                slideForegroundImage: carouselSlide1,
+                slideText: t('sandboxPage.newSlides.slideOne.slideText', { config }),
+              },
+              {
+                slideButton: true,
+                slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel', { config }),
+                slideButtonLink: '/api-products',
+                slideContentsPlacement: 'side-by-side',
+                slideForegroundImage: carouselSlide2,
+                slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
+              },
+              {
+                slideButton: true,
+                slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel', { config }),
+                slideButtonLink: '/documentation',
+                slideContentsPlacement: 'side-by-side',
+                slideForegroundImage: carouselSlide3,
+                slideText: t('sandboxPage.newSlides.slideThree.slideText', { config }),
+              },
+            ]
+            : [
+              {
+                slideButton: true,
+                slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel', { config }),
+                slideButtonLink: '/api-products',
+                slideContentsPlacement: 'side-by-side',
+                slideForegroundImage: carouselSlide2,
+                slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
+              },
+              {
+                slideButton: true,
+                slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel', { config }),
+                slideButtonLink: '/documentation',
+                slideContentsPlacement: 'side-by-side',
+                slideForegroundImage: carouselSlide3,
+                slideText: t('sandboxPage.newSlides.slideThree.slideText', { config }),
+              },
+            ]}
           slidingAnimationDuration={1500}
           timeBetweenSlides={4000}
         />
