@@ -71,12 +71,12 @@ export default makeStyles({
   },
 
   colorsOfProductionAPI: {
-    backgroundColor: config.palette.info,
+    backgroundColor: config.palette.primary,
     color: '#FFFFFF',
   },
 
-  colorsOfSandboxAPI: {
-    backgroundColor: config.palette.primary,
+  colorsOfSandboxExtensionAPI: {
+    backgroundColor: config.palette.info,
     color: '#FFFFFF',
   },
 })
