@@ -71,7 +71,9 @@ const PersonalDetailsForm: React.FC<{
       <FormCard
         buttonLabel='Next'
         buttonDisabled={!isFormValid}
-        handleSubmit={() => handleSubmit(input)}
+        handleSubmit={() => isFormValid ? handleSubmit(input) : () => {
+          // do nothing
+        }}
         loading={register.isRequesting}
       >
         <div className={classes.fieldContainer}>
@@ -160,7 +162,9 @@ const OrganisationDetailsForm: React.FC<{
       <FormCard
         buttonLabel='Next'
         buttonDisabled={!isFormValid}
-        handleSubmit={() => handleSubmit(input)}
+        handleSubmit={() => isFormValid ? handleSubmit(input) : () => {
+          // do nothing
+        }}
         loading={register.isRequesting}
       >
         <div className={classes.fieldContainer}>
@@ -270,7 +274,9 @@ const SecurityStepForm: React.FC<{
       <FormCard
         buttonLabel='Finish'
         buttonDisabled={!isFormValid}
-        handleSubmit={() => handleSubmit(input)}
+        handleSubmit={() => isFormValid ? handleSubmit(input) : () => {
+          // do nothing
+        }}
         loading={register.isRequesting}
       >
         <div className={classes.fieldContainer}>

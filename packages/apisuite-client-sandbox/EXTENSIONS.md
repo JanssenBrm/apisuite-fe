@@ -14,7 +14,7 @@ To include an extension to an APISuite portal instance, follow these steps:
 
 1. Install the extension
 
-       npm install Cloudoki/apisuite-extension-status-ui
+       npm install --save-dev @apisuite/extension-status-ui
 
 1. Register the extension
 

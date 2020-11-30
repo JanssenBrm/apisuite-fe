@@ -1,261 +1,297 @@
 import * as React from 'react'
-import clsx from 'clsx'
-import { useTranslation } from 'react-i18next'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import { Sections } from '@apisuite/extension-ui-types'
-import Carousel from 'components/Carousel'
 
-import SvgIcon from 'components/SvgIcon'
-import Panel from 'components/Panel'
-import ContentGenerator from 'components/ContentGenerator'
-import { getSections } from 'util/extensions'
+import { useTranslation } from 'react-i18next'
+
+import APICatalog from 'components/APICatalog'
+import Carousel from 'components/Carousel'
+import Notice from 'components/Notice'
+
+import Button from '@material-ui/core/Button'
+
+import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
+import ControlCameraRoundedIcon from '@material-ui/icons/ControlCameraRounded'
+import FlightLandRoundedIcon from '@material-ui/icons/FlightLandRounded'
 
 import useStyles from './styles'
-import { slidesConfig, featuresLeftConfig, featuresRightConfig, otherLeftConfig, otherRightConfig } from './config'
-import partnersUrl from 'assets/partners.png'
-import themeBg from 'theme/images/home_bg.png'
 
-const Sandbox: React.FC<{}> = () => {
+import { SandboxProps } from './types'
+
+import carouselBackground from 'assets/space-background.svg'
+import carouselSlide1 from 'assets/carousel-slide-1.svg'
+import carouselSlide2 from 'assets/carousel-slide-2.svg'
+
+import { config, DEFAULT_SUPPORT_URL } from 'constants/global'
+
+const Sandbox: React.FC<SandboxProps> = ({
+  auth,
+  getApis,
+  settings,
+  subscriptions,
+}) => {
   const classes = useStyles()
+
   const [t] = useTranslation()
 
-  // const [termsCheck, setTermsCheck] = React.useState(false)
+  const [recentlyAddedAPIs, setRecentlyAddedAPIs] = React.useState<any[]>([])
 
-  // function handleCheckboxClick () {
-  //   setTermsCheck(!termsCheck)
-  // }
+  React.useEffect(() => {
+    /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
+    of all API-related information we presently have. */
+    getApis()
+  }, [])
+
+  React.useEffect(() => {
+    /* Once 'subscriptions' info is made available, we process it so as to display it
+    on our 'API Catalog' section. */
+    const allAvailableAPIs = subscriptions.apis
+
+    if (allAvailableAPIs.length) {
+      const newRecentlyAddedAPIs = allAvailableAPIs.map((api) => {
+        return {
+          /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
+          'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
+          link to its corresponding 'API Details' view if it has versions. */
+          hasMoreDetails: api.apiVersions.length > 0,
+          id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
+          apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
+          apiDescription: api?.docs?.info || 'No description presently available.',
+          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : 'No version available',
+          // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
+          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : '',
+          /* An API that is 'live' (i.e., 'production accessible') is one that has versions, and has
+          its 'live' property set to 'true'. Ones that do NOT meet any of the above criteria are ones
+          that, presently, only have 'API Documentation' to show for it. */
+          apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
+        }
+      })
+
+      setRecentlyAddedAPIs(newRecentlyAddedAPIs)
+    }
+  }, [subscriptions])
 
   return (
-    <main className={`page-container ${classes.root}`} style={{ backgroundImage: `url(${themeBg})` }}>
-
-      {getSections(Sections.HomepagePrecontent)}
-
-      {/** #conditional-loader-start: instance */}
-      <ContentGenerator page='landing' />
-      {/** #conditional-loader-end */}
-
-      {/** #conditional-loader-start: demo */}
-      <section className={classes.section}>
-        <Carousel slideConfig={slidesConfig} />
-      </section>
-      <br /><br />
-
-      <Panel
-        title={t('sandboxPage.features.title')}
-        subtitle={t('sandboxPage.features.desc')}
-      >
-        <div className={classes.listContainer}>
-          <List className={classes.list}>
-            {featuresLeftConfig.map((item) => (
-              <ListItem key={item.key}>
-                <ListItemAvatar>
-                  <Avatar className={classes.featureAvatar}>
-                    <SvgIcon name={item.icon} color='white' />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
-              </ListItem>
-            ))}
-          </List>
-
-          <List className={classes.list}>
-            {featuresRightConfig.map((item) => (
-              <ListItem key={item.key}>
-                <ListItemAvatar>
-                  <Avatar className={classes.featureAvatar}>
-                    <SvgIcon name={item.icon} color='white' />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
-              </ListItem>
-            ))}
-          </List>
-        </div>
-
-        <div className={classes.cardContent}>
-          <h1 className={clsx(classes.featuresTitle, classes.otherTitle)}>
-            {t('sandboxPage.otherTreats.title')}
-          </h1>
-
-          <p className={classes.featuresDesc}>{t('sandboxPage.otherTreats.desc')}</p>
-        </div>
-
-        <div className={classes.listContainer}>
-          <List className={classes.list}>
-            {otherLeftConfig.map((item) => (
-              <ListItem key={item.key}>
-                <ListItemAvatar>
-                  <Avatar className={classes.otherAvatar}>
-                    <SvgIcon name={item.icon} color='white' />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
-              </ListItem>
-            ))}
-          </List>
-
-          <List className={classes.list}>
-            {otherRightConfig.map((item) => (
-              <ListItem key={item.key}>
-                <ListItemAvatar>
-                  <Avatar className={classes.otherAvatar}>
-                    <SvgIcon name={item.icon} color='white' />
-                  </Avatar>
-                </ListItemAvatar>
-                <ListItemText primary={t(item.title)} secondary={t(item.desc)} />
-              </ListItem>
-            ))}
-          </List>
-        </div>
-        <br />
-      </Panel>
-
-      <br />
-
-      <section className={classes.stepsContainer}>
-        <Panel>
-          <div className={classes.steps}>
-            <div className={clsx(classes.step, classes.stepDivider)}>
-              <h1 style={{ color: '#1BDF33' }}>1</h1>
-              <h3 style={{ color: '#37E34D' }}>Add your app</h3>
-              <p>You’ll need an app to send and recieve API calls.</p>
-              <p>Adding your app details will help us enabling this flow.</p>
-
-              <Button
-                className={classes.stepBtn}
-                variant='outlined'
-                disabled
-              >
-                Add app
-              </Button>
-            </div>
-
-            <div className={clsx(classes.step, classes.stepDivider)}>
-              <h1 style={{ color: '#37E34D' }}>2</h1>
-              <h3 style={{ color: '#14BC7D' }}>Select an API</h3>
-              <p>
-                In the “Subscriptions” section,
-                 we provide an overview of our available Sandbox API’s your apps can subscribe to.
-              </p>
-
-              <Button
-                className={classes.stepBtn}
-                variant='outlined'
-                disabled
-              >
-                Subscribe to API
-              </Button>
-            </div>
-
-            <div className={classes.step}>
-              <h1 style={{ color: '#43BEC1' }}>3</h1>
-              <h3 style={{ color: '#43BEC1' }}>Get Started</h3>
-              <p>
-                Once your app and API subscriptions are all ready to go,
-                 head to our “Getting Started” documentation for lift-off.
-              </p>
-
-              <Button
-                className={classes.stepBtn}
-                variant='outlined'
-                disabled
-              >
-                Documentation
-              </Button>
-            </div>
-          </div>
-        </Panel>
-
-        <aside className={classes.stepSide}>
-          <h1 className={classes.stepsideHeading}>Dive into the Sandbox</h1>
-          <p>
-            Our example API Products let you use emulated customer
-             data to test and enhance your digital products against.
-          </p>
-
-          <p>
-            Not sure how to get there? The <a href='#'>onboarding documentation</a> will help you along.
-          </p>
-
-          <div
-            role='button'
-            arial-label='register'
-            className={classes.btn}
-            style={{ backgroundColor: '#333333', color: 'white', marginTop: 16 }}
-          >
-            <a className={classes.buttonLink} href='/auth/register'>Register</a>
-          </div>
-        </aside>
+    <main className='page-container'>
+      {/* Carousel section */}
+      <section className={classes.slideShowSectionContainer}>
+        <Carousel
+          carouselBackgroundImage={carouselBackground}
+          iconsOfSliderButtonsArray={[
+            <ControlCameraRoundedIcon key={1} />,
+            <FlightLandRoundedIcon key={2} />,
+          ]}
+          slidesAutoPlay
+          slidesArray={[
+            {
+              slideButton: true,
+              slideButtonLabel: t('sandboxPage.newSlides.slideOne.slideButtonLabel', { config }),
+              slideButtonLink: '/auth/register',
+              slideContentsPlacement: 'top-to-bottom',
+              slideForegroundImage: carouselSlide1,
+              slideText: t('sandboxPage.newSlides.slideOne.slideText', { config }),
+            },
+            {
+              slideButton: true,
+              slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel', { config }),
+              slideButtonLink: '/api-products',
+              slideContentsPlacement: 'side-by-side',
+              slideForegroundImage: carouselSlide2,
+              slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
+            },
+          ]}
+          slidingAnimationDuration={1500}
+          timeBetweenSlides={4000}
+        />
       </section>
 
-      <br />
+      {/* 'Steps' section */}
+      <section className={classes.stepsSectionContainer}>
+        <h1 className={classes.sectionIntroHeading}>
+          {t('sandboxPage.stepsSection.intro', { config })}
+        </h1>
 
-      <Panel>
-        <div className={classes.partnersContainer}>
-          <h1 className={classes.partnersTitle}>Cloudoki customers & partners</h1>
-          <img src={partnersUrl} alt='partners' className={classes.partnersImg} />
-          <p className={classes.partnersLink}>View more on <a href='https://cloudoki.com'>cloudoki.com</a></p>
-        </div>
-      </Panel>
+        <section className={classes.stepsSectionDescriptionsContainer}>
+          <section className={classes.stepsDescriptionContainerOne}>
+            <h3 className={classes.stepsDescriptionHeading}>
+              {
+                !auth.user
+                  ? t('sandboxPage.stepsSection.notLoggedIn.heading', { config })
+                  : t('sandboxPage.stepsSection.loggedIn.heading', { config })
+              }
+            </h3>
 
-      <br />
-      {/** #conditional-loader-end */}
+            <p className={classes.stepsDescriptionParagraphOne}>
+              {
+                !auth.user
+                  ? t('sandboxPage.stepsSection.notLoggedIn.paragraphOne', { config })
+                  : `${settings.portalName} ${t('sandboxPage.stepsSection.loggedIn.paragraphOne', { config })}`
+              }
+            </p>
 
-      {/* <section className={classes.subscribeContainer}>
-        <div className={classes.wheelContainer}>
-          <Wheel selected='br' />
-        </div>
-        <div className={classes.emailContainer}>
-          <h1>Fly with us</h1>
-          <p>Subscribe to our newsletter to keep up with updates, events and more.</p>
-          <form noValidate autoComplete='off'>
-            <div className={classes.email}>
-              <TextField
-                placeholder='E-mail address'
-                variant='outlined'
-                margin='dense'
-                type='email'
-                fullWidth
-                className={classes.emailTextfield}
-              />
-              <Button
-                // arial-label='register'
-                // type='submit'
-                disabled={!termsCheck}
-                className={classes.btn4}
-                // onClick={inform}
-                // style={{ backgroundColor: '#2DB7BA', color: '#333333', marginLeft: 12, maxHeight: 40 }}
-              >
-                Subscribe
-              </Button>
-            </div>
-            <br />
-            <FormGroup row>
-              <FormControlLabel
-                classes={{ label: classes.checkBoxLabel }}
-                label={
-                  <>
-                    I agree that Cloudoki sends me newsletters about API related news. I can withdraw my consent at any
-                     time by sending an e-mail to <Link href='#'>unsubscribe@cloudoki.com</Link>
-                  </>
-                } control={
-                  <Checkbox
-                    checked={termsCheck}
-                    color='primary'
-                    classes={{ root: classes.checkbox }}
-                    onClick={handleCheckboxClick}
-                  />
+            <p className={classes.stepsDescriptionParagraphTwo}>
+              <span>
+                {
+                  !auth.user
+                    ? t('sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartOne', { config })
+                    : t('sandboxPage.stepsSection.loggedIn.paragraphTwoPartOne', { config })
                 }
-              />
-            </FormGroup>
-          </form>
-        </div>
-      </section> */}
+              </span>
+
+              <>
+                {
+                  !auth.user
+                    ? t('sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartTwo', { config })
+                    : t('sandboxPage.stepsSection.loggedIn.paragraphTwoPartTwo', { config })
+                }
+              </>
+            </p>
+
+            <Button
+              className={
+                !auth.user
+                  ? classes.stepsDescriptionRegisterButton
+                  : classes.stepsDescriptionContactSupportButton
+              }
+              href={
+                !auth.user
+                  ? '/auth/register'
+                  : settings.supportURL || DEFAULT_SUPPORT_URL
+              }
+              rel={
+                auth.user
+                  ? 'noopener noreferrer'
+                  : ''
+              }
+              target={
+                auth.user
+                  ? '_blank'
+                  : ''
+              }
+            >
+              {
+                !auth.user
+                  ? t('sandboxPage.stepsSection.notLoggedIn.buttonLabel', { config })
+                  : t('sandboxPage.stepsSection.loggedIn.buttonLabel', { config })
+              }
+            </Button>
+          </section>
+
+          <section className={classes.stepsDescriptionContainerTwo}>
+            <div className={classes.individualStepsContainer}>
+              <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
+                <h1 style={{ color: '#7DD291' }}>1.</h1>
+
+                <h3 style={{ color: '#7DD291' }}>
+                  {t('sandboxPage.stepsSection.individualSteps.stepOne.header', { config })}
+                </h3>
+
+                <p>
+                  <span>
+                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartOne', { config })}
+                  </span>
+
+                  <>
+                    {t('sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartTwo', { config })}
+                  </>
+                </p>
+
+                <Button
+                  className={classes.individualStepButton}
+                  disabled={!auth.user}
+                  href='/dashboard/apps'
+                >
+                  {t('sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel', { config })}
+                </Button>
+              </div>
+
+              <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
+                <h1 style={{ color: config.palette.primary }}>2.</h1>
+
+                <h3 style={{ color: config.palette.primary }}>
+                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.header', { config })}
+                </h3>
+
+                <p>
+                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.paragraph', { config })}
+                </p>
+
+                <Button
+                  className={classes.individualStepButton}
+                  disabled={!auth.user}
+                  href='/dashboard/subscriptions'
+                >
+                  {t('sandboxPage.stepsSection.individualSteps.stepTwo.buttonLabel', { config })}
+                </Button>
+              </div>
+
+              <div className={classes.individualStep}>
+                <h1 style={{ color: '#007D7D' }}>3.</h1>
+
+                <h3 style={{ color: '#007D7D' }}>
+                  {t('sandboxPage.stepsSection.individualSteps.stepThree.header', { config })}
+                </h3>
+
+                <p>
+                  {t('sandboxPage.stepsSection.individualSteps.stepThree.paragraph', { config })}
+                </p>
+
+                <Button
+                  className={classes.individualStepButton}
+                  disabled={!auth.user}
+                  href='/dashboard/test'
+                >
+                  {t('sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel', { config })}
+                </Button>
+              </div>
+            </div>
+          </section>
+        </section>
+      </section>
+
+      <hr className={classes.sectionSeparator} />
+
+      {/* 'API Catalog' section */}
+      <section className={classes.apiCatalogSectionContainer}>
+        <h1 className={classes.sectionIntroHeading}>
+          {t('sandboxPage.apiCatalog.intro', { config })}
+        </h1>
+
+        <section className={classes.apiCatalogContainer}>
+          {
+            recentlyAddedAPIs.length === 0
+              ? <p>{t('sandboxPage.apiCatalog.paragraph', { config })}</p>
+              : <APICatalog recentlyAddedAPIs={recentlyAddedAPIs} />
+          }
+        </section>
+      </section>
+
+      {/* Notice */}
+      <section className={classes.noticeContainer}>
+        <Notice
+          noticeIcon={
+            <CheckCircleOutlineRoundedIcon />
+          }
+          noticeText={
+            <p>
+              <>{settings.portalName} {t('sandboxPage.notice.maintainedBy', { config })} {settings.clientName}.</>
+              {
+                settings.socialURLs.length && (
+                  <>
+                    <> {t('sandboxPage.notice.visitUs', { config })} </>
+                    <a
+                      href={settings.socialURLs[0].url}
+                      rel='noopener noreferrer'
+                      target='_blank'
+                    >
+                      {settings.socialURLs[0].url}
+                    </a>
+                    <>.</>
+                  </>
+                )
+              }
+            </p>
+          }
+        />
+      </section>
     </main>
   )
 }

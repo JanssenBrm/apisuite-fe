@@ -14,6 +14,7 @@ export interface AuthStore {
 }
 
 export interface User {
+  photo?: string,
   fName: string,
   lName: string,
   id: number,
@@ -76,6 +77,7 @@ export interface AuthStoreActionCreators {
 }
 
 export interface RequireAuthProps {
+  requireAuth: boolean,
   component: JSX.Element,
   auth?: AuthStore,
   role?: RoleRequirement,

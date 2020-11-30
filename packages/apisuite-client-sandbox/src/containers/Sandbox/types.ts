@@ -1,6 +1,15 @@
 import { SvgIconProps } from 'components/SvgIcon/types'
-import { InformStorePayloads } from 'components/InformDialog/types'
-import { AnyAction } from 'redux'
+
+import { AuthStore } from 'containers/Auth/types'
+import { SettingsStore } from 'containers/Settings/types'
+import { SubscriptionsStore } from 'containers/Subscriptions/types'
+
+export interface SandboxProps extends React.HTMLAttributes<HTMLDivElement> {
+  auth: AuthStore,
+  getApis: () => void,
+  settings: SettingsStore,
+  subscriptions: SubscriptionsStore,
+}
 
 export interface SlideConfig {
   /** key should be unique to leverage render optimization */
@@ -20,10 +29,4 @@ export interface ListConfig {
   title: string,
   desc: string,
   icon: SvgIconProps['name'],
-}
-
-export interface SandboxProps {
-  inform: AnyAction & { payload: InformStorePayloads['inform'] },
-  requesting: boolean,
-  requestError: any,
 }
