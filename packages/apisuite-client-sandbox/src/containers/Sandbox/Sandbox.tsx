@@ -9,6 +9,7 @@ import Notice from 'components/Notice'
 import Button from '@material-ui/core/Button'
 
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded'
+import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
 import ControlCameraRoundedIcon from '@material-ui/icons/ControlCameraRounded'
 import FlightLandRoundedIcon from '@material-ui/icons/FlightLandRounded'
 
@@ -19,6 +20,7 @@ import { SandboxProps } from './types'
 import carouselBackground from 'assets/space-background.svg'
 import carouselSlide1 from 'assets/carousel-slide-1.svg'
 import carouselSlide2 from 'assets/carousel-slide-2.svg'
+import carouselSlide3 from 'assets/carousel-slide-3.svg'
 
 import { config, DEFAULT_SUPPORT_URL } from 'constants/global'
 
@@ -69,35 +71,72 @@ const Sandbox: React.FC<SandboxProps> = ({
     }
   }, [subscriptions])
 
+  const hasSocials = () => {
+    return settings && settings.socialURLs && settings.socialURLs.length > 0
+  }
+
   return (
     <main className='page-container'>
       {/* Carousel section */}
       <section className={classes.slideShowSectionContainer}>
         <Carousel
           carouselBackgroundImage={carouselBackground}
-          iconsOfSliderButtonsArray={[
-            <ControlCameraRoundedIcon key={1} />,
-            <FlightLandRoundedIcon key={2} />,
-          ]}
+          iconsOfSliderButtonsArray={!auth.user
+            ? [
+              <FlightLandRoundedIcon key={1} />,
+              <ControlCameraRoundedIcon key={2} />,
+              <ChromeReaderModeRoundedIcon key={3} />,
+            ]
+            : [
+              <ControlCameraRoundedIcon key={1} />,
+              <ChromeReaderModeRoundedIcon key={2} />,
+            ]}
           slidesAutoPlay
-          slidesArray={[
-            {
-              slideButton: true,
-              slideButtonLabel: t('sandboxPage.newSlides.slideOne.slideButtonLabel', { config }),
-              slideButtonLink: '/auth/register',
-              slideContentsPlacement: 'top-to-bottom',
-              slideForegroundImage: carouselSlide1,
-              slideText: t('sandboxPage.newSlides.slideOne.slideText', { config }),
-            },
-            {
-              slideButton: true,
-              slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel', { config }),
-              slideButtonLink: '/api-products',
-              slideContentsPlacement: 'side-by-side',
-              slideForegroundImage: carouselSlide2,
-              slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
-            },
-          ]}
+          slidesArray={!auth.user
+            ? [
+              {
+                slideButton: true,
+                slideButtonLabel: t('sandboxPage.newSlides.slideOne.slideButtonLabel', { config }),
+                slideButtonLink: '/auth/register',
+                slideContentsPlacement: 'top-to-bottom',
+                slideForegroundImage: carouselSlide1,
+                slideText: t('sandboxPage.newSlides.slideOne.slideText', { config }),
+              },
+              {
+                slideButton: true,
+                slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel', { config }),
+                slideButtonLink: '/api-products',
+                slideContentsPlacement: 'side-by-side',
+                slideForegroundImage: carouselSlide2,
+                slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
+              },
+              {
+                slideButton: true,
+                slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel', { config }),
+                slideButtonLink: '/documentation',
+                slideContentsPlacement: 'side-by-side',
+                slideForegroundImage: carouselSlide3,
+                slideText: t('sandboxPage.newSlides.slideThree.slideText', { config }),
+              },
+            ]
+            : [
+              {
+                slideButton: true,
+                slideButtonLabel: t('sandboxPage.newSlides.slideTwo.slideButtonLabel', { config }),
+                slideButtonLink: '/api-products',
+                slideContentsPlacement: 'side-by-side',
+                slideForegroundImage: carouselSlide2,
+                slideText: t('sandboxPage.newSlides.slideTwo.slideText', { config }),
+              },
+              {
+                slideButton: true,
+                slideButtonLabel: t('sandboxPage.newSlides.slideThree.slideButtonLabel', { config }),
+                slideButtonLink: '/documentation',
+                slideContentsPlacement: 'side-by-side',
+                slideForegroundImage: carouselSlide3,
+                slideText: t('sandboxPage.newSlides.slideThree.slideText', { config }),
+              },
+            ]}
           slidingAnimationDuration={1500}
           timeBetweenSlides={4000}
         />
@@ -265,33 +304,36 @@ const Sandbox: React.FC<SandboxProps> = ({
       </section>
 
       {/* Notice */}
-      <section className={classes.noticeContainer}>
-        <Notice
-          noticeIcon={
-            <CheckCircleOutlineRoundedIcon />
-          }
-          noticeText={
-            <p>
-              <>{settings.portalName} {t('sandboxPage.notice.maintainedBy', { config })} {settings.clientName}.</>
-              {
-                settings.socialURLs.length && (
-                  <>
-                    <> {t('sandboxPage.notice.visitUs', { config })} </>
-                    <a
-                      href={settings.socialURLs[0].url}
-                      rel='noopener noreferrer'
-                      target='_blank'
-                    >
-                      {settings.socialURLs[0].url}
-                    </a>
-                    <>.</>
-                  </>
-                )
-              }
-            </p>
-          }
-        />
-      </section>
+      {
+        hasSocials() &&
+        <section className={classes.noticeContainer}>
+          <Notice
+            noticeIcon={
+              <CheckCircleOutlineRoundedIcon />
+            }
+            noticeText={
+              <p>
+                <>{settings?.portalName} {t('sandboxPage.notice.maintainedBy', { config })} {settings?.clientName}.</>
+                {
+                  hasSocials() && (
+                    <>
+                      <> {t('sandboxPage.notice.visitUs', { config })} </>
+                      <a
+                        href={hasSocials() ? settings.socialURLs[0].url : '#'}
+                        rel='noopener noreferrer'
+                        target='_blank'
+                      >
+                        {hasSocials() ? settings.socialURLs[0].url : ''}
+                      </a>
+                      <>.</>
+                    </>
+                  )
+                }
+              </p>
+            }
+          />
+        </section>
+      }
     </main>
   )
 }

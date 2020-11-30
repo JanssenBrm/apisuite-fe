@@ -8,6 +8,10 @@
       "slideTwo": {
         "slideText": "Take a look at our available APIs",
         "slideButtonLabel": "API Products"
+      },
+      "slideThree": {
+        "slideText": "Read the manual for a successful launch",
+        "slideButtonLabel": "Documentation"
       }
     },
     "stepsSection": {
@@ -52,123 +56,29 @@
     "notice": {
       "maintainedBy": "is maintained by",
       "visitUs": "You can visit us at"
-    },
-    "slides": {
-      "one": {
-        "title": "Experience the Sandbox",
-        "subtitle": "We have released a <b>Live Demo</b> of our Sandbox product. Browse through the features below to see what you can expect.",
-        "content": "The proof of the pudding is, as they say, in the eating.",
-        "button": "Register"
-      },
-      "two": {
-        "title": "Secure Proof of Concepts",
-        "subtitle": "With {{clientName}} Sandbox, secure <b>proof of concepts</b> are as easy to manage as calling an Uber. (We have an app for that.)",
-        "content": "Talk to one of our humans for more information.",
-        "button": "Contact"
-      },
-      "three": {
-        "title": "Sail the Seas of Innovation",
-        "subtitle": "{{clientName}} <b>Sandbox</b> is built on open source technology, just ahead of the curve, in order to give you a long and smooth lifetime cycle.",
-        "content": "Docker, Kubernetes, Kong, it is all there.",
-        "button": "Features"
-      },
-      "four": {
-        "title": "Extend and Customize",
-        "subtitle": "The {{clientName}} Sandbox is purpose-built for customization. Do you need a manual onboarding process? <b>Extend</b>. Send your 2FA sms’es through Twillio? <b>Configure</b>. Support Korean i18n? <b>Customize</b>.",
-        "button": "Documentation"
-      }
-    },
-    "features": {
-      "title": "Sandbox Features",
-      "desc": "Focus on your product. No matter where you are, from ideation to POC design, assign all your resources to the creative process!",
-      "left": {
-        "one": {
-          "title": "Automated onboarding",
-          "desc": "Let your customers set up an account without delays"
-        },
-        "two": {
-          "title": "Configured by OpenAPI contracts",
-          "desc": "Swagger definitions is all your sandbox needs"
-        },
-        "three": {
-          "title": "Unlimited API’s and versions",
-          "desc": "Gracefully test or deprecate without worrying about cost"
-        },
-        "four": {
-          "title": "Live Sandbox with data storage",
-          "desc": "Build persistent interaction with your users, over multiple API's"
-        },
-        "five": {
-          "title": "Sandbox silo per account",
-          "desc": "Each customer gets a mini-you. No leaks, no performance impact"
-        }
-      },
-      "right": {
-        "one": {
-          "title": "Dockerised on any cloud",
-          "desc": "All you need is Docker. Sandbox is \"cloud agnostic\""
-        },
-        "two": {
-          "title": "Managed test users (Oauth2)",
-          "desc": "Depth of test data and PSU emulation, out of the box"
-        },
-        "three": {
-          "title": "Two-factor authentication (2FA)",
-          "desc": "Allow a leveled security grade throughout your ecosystem"
-        },
-        "four": {
-          "title": "Multiple users per account",
-          "desc": "Sandbox enables account RBAC for customer self-service"
-        },
-        "five": {
-          "title": "100% Open Source",
-          "desc": "MIT license, no lock-in. Sandbox is simply open source."
-        }
-      }
-    },
-    "otherTreats": {
-      "title": "Other Treats",
-      "desc": "And there are even more cool features under the hood…",
-      "left": {
-        "one": {
-          "title": "Secure account access (OAuth2)",
-          "desc": "Prove your salt, certainly in your Sandbox environment"
-        },
-        "two": {
-          "title": "Live API reference docs",
-          "desc": "You focus on proper API contracts, your sandbox generates the output"
-        },
-        "three": {
-          "title": "Integrated Support",
-          "desc": "Integrate your favourite support service where your user needs it"
-        }
-      },
-      "right": {
-        "one": {
-          "title": "Optimised for SaaS",
-          "desc": "Cloudoki is a SaaS provider. It shows in the Sandbox DNA."
-        },
-        "two": {
-          "title": "Scalable Portal",
-          "desc": "Read more about the Cloudoki Developer Portal features"
-        },
-        "three": {
-          "title": "Ready for SSO and SCA",
-          "desc": "Read more about the Cloudoki SSO features"
-        }
-      }
     }
   },
+  "cookiesConsentBanner": {
+    "intro": "Your Privacy.",
+    "paragraphOne": "We only use cookies to enable essential website operations, and to ensure certain features work properly, like the option to log in. We do not track. Any personal information you provide to us is removed when you delete your account.",
+    "paragraphTwo": {
+      "partOne": "Read about",
+      "partTwo": "our policies",
+      "partThree": "for detailed questions and answers."
+    },
+    "paragraphThree": "By clicking \"I Accept\", you agree to essential cookie usage.",
+    "buttonLabel": "I Accept"
+  },
   "loginForm": {
-    "title": "Login",
-    "button": "LOG IN",
+    "title": "Log in",
+    "button": "Log in",
     "warnings": {
       "email": "Please enter a valid e-mail address.",
-      "password": "Please fill in your pass phrase."
+      "password": "Please fill in your password."
     },
     "fields": {
       "email": "E-mail address",
-      "password": "Pass Phrase"
+      "password": "Password"
     }
   },
   "registerForm": {
@@ -179,12 +89,40 @@
       "organisationName": "Please enter the name of your organisation.",
       "website": "Please enter a valid website for your organisation.",
       "vat": "Please enter your organisations' VAT.",
-      "password": "Password must have one lowercase, one uppercase, one symbol and be at least 12 characters long."
+      "password": "Password must have one lowercase, one uppercase, one symbol, and be at least 12 characters long."
     },
     "steps": {
       "personalDetails": "Personal Details",
       "organisationDetails": "Organisation Details",
       "securityStep": "Security Step"
+    }
+  },
+  "dashboardTab": {
+    "testSubTab": {
+      "instructions": {
+        "stepOne": {
+          "stepTitle": "Get the app's token",
+          "stepText": "We begin by retrieving a unique token ID. We will use this token in the following requests so the API can verify your identity. Make a POST request with the parameters as shown below. Replace the variables with the Client ID and Client Secret of one of your Apps.",
+          "stepNote": "Manage and see each of your Apps' details by navigating to the \"Client Applications\" tab. You can find the Client ID and Client Secret under the \"Access Details\" section on the app's page."
+        },
+        "stepTwo": {
+          "stepTitle": "Upload data to your API",
+          "stepText": "Let's upload some data to the API by making another POST request with a JSON containing our cat's Jack data.",
+          "stepNote": ""
+        },
+        "stepThree": {
+          "stepTitle": "Fetching data from the API",
+          "stepText": "Now we can test the API using a simplet GET request to retrieve some data.",
+          "stepNote": "",
+          "response": "The response should look like this:",
+          "responseCode": "[{\n    \"desc\": \"My cat\",\n    \"name\": \"Jack Daniels\",\n    \"tag\": \"cat\",\n    \"id\": 11582904187752\n}]"
+        }
+      },
+      "title": "How to use and test your API",
+      "description": "These are some quick instructions on how you can upload data to your API, and test it.",
+      "stepIntro": "Step",
+      "finalRemarksPartOne": "Congratulations!",
+      "finalRemarksPartTwo": "Now you know how to do it. That's how easy it is to get your API up and running!"
     }
   },
   "listApps": {
@@ -210,7 +148,7 @@
     "addApplication": "Subscribe applications..."
   },
   "subscriptionsTable": {
-    "header": "Available API's",
+    "header": "Available APIs",
     "actions": "actions"
   },
   "login": {
@@ -221,7 +159,7 @@
   },
   "registerConfirmation": {
     "messageTitle": "Thanks for joining us!",
-    "message": "A verification link has been sent to your email address. Please follow the instruction to finish your registration!"
+    "message": "A verification link has been sent to your e-mail address. Please follow the instructions to finish your registration!"
   },
   "forgotPassword": {
     "messageTitle": "Forgot your password?",
@@ -262,7 +200,9 @@
   "actions": {
     "save": "Save",
     "saveDisabled": "Nothing to save",
-    "send": "Send"
+    "send": "Send",
+    "remove": "Remove Account",
+    "delete": "Delete"
   },
   "copyright": "© {{clientName}} {{year}}.\nAll rights reserved.",
   "apidetails": {

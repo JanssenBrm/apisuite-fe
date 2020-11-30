@@ -9,7 +9,8 @@
   "clientName": "API Suite",
   "infra": {
     "hydra": "hydraauth.develop.apisuite.io",
-    "sandbox": "sandbox.develop.apisuite.io"
+    "sandbox": "sandbox.develop.apisuite.io",
+    "remoteAPI": "remoteAPI"
   },
   "social": {
     "web": "https://cloudoki.com/",
