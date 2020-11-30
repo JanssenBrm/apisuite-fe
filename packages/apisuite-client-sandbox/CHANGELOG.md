@@ -3,6 +3,35 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-rc.0](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.3...apisuite-client-sandbox@1.1.0-rc.0) (2020-11-19)
+
+
+### Bug Fixes
+
+* **api-spec-design:** update navigation and fix colors ([ae3fb3a](https://github.com/Cloudoki/APISuite/commit/ae3fb3ae3cb4d88c04316ca309fcc6576fd1c13d))
+* **build:** replace redoc with swagger ui due to build issues ([8055c9c](https://github.com/Cloudoki/APISuite/commit/8055c9ce5afbbe9bb1843b952e736e7331830bb1))
+* Fix the `primary` and the `success` theme colors. ([e78db81](https://github.com/Cloudoki/APISuite/commit/e78db815eee2a1408ae3def96e69224179e37a95))
+* Linting issues. ([3c56226](https://github.com/Cloudoki/APISuite/commit/3c562269999f5561ae9f23a03683f99de4647780))
+* Revert to overriding the `className` prop for the Button component. ([394252c](https://github.com/Cloudoki/APISuite/commit/394252c276b999cd46abbdbd3f3e1cf706e74b84))
+* **app-details:** fix update description chnages app name, update session validation ([e8d2ad1](https://github.com/Cloudoki/APISuite/commit/e8d2ad157d9988cb9f756b3967ff56e4b4b1814b))
+* Navigation menu is not re-mounted when navigating to another page. ([a013727](https://github.com/Cloudoki/APISuite/commit/a01372739d1fbaaa56d1dfd4f8cc6a9f55d6c1e4))
+* Set layout height to 100% again. ([c0d844c](https://github.com/Cloudoki/APISuite/commit/c0d844c149a56f1f65f949a577f8aa6bfe6da0de))
+
+
+### Features
+
+* **spec-visualisation:** add api product spec page with redoc, fix subscriptions view, try to fix form submit on enter ([404257e](https://github.com/Cloudoki/APISuite/commit/404257ee19c8d6b78ccb547547131ff2e107c77c))
+* Add a default Support URL when none was provided yet by the admin. ([b71e650](https://github.com/Cloudoki/APISuite/commit/b71e650477f021c6a936da82bb43de744bde1ba0))
+* Improved new theming ([a7d268a](https://github.com/Cloudoki/APISuite/commit/a7d268a81f7b95831a406a71debd703e6f69d7f4))
+* Partial implementation of the new navigation ([4943f6f](https://github.com/Cloudoki/APISuite/commit/4943f6ff40ca97ff140d748f17e3183677c63d81))
+* Redesigned most of the Portal's homepage (pre-merge of Tiago's most recent Navigation changes) ([18ba7e4](https://github.com/Cloudoki/APISuite/commit/18ba7e41ee5b86231afa0f86205c2c4660f45586))
+* Upgrade Cloud Extension to v1.0.10. ([5fd84e7](https://github.com/Cloudoki/APISuite/commit/5fd84e77e81c6271f2f1dc680341ffb70f7a80a5))
+* Wrapped up the Core's landing page, fixed some visual bugs, and added links to API Catalog entries that have more details to be shown ([3e2d562](https://github.com/Cloudoki/APISuite/commit/3e2d562f92888a0825393bb6a66af55788c267ea))
+
+
+
+
+
 ## [1.0.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-rc.5...apisuite-client-sandbox@1.0.3) (2020-11-19)
 
 **Note:** Version bump only for package apisuite-client-sandbox
