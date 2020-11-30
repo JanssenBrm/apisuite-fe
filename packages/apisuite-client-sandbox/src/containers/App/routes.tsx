@@ -1,32 +1,39 @@
 import * as React from 'react'
+
 import {
   Route,
   Switch,
 } from 'react-router'
+
 import { Layouts } from '@apisuite/extension-ui-types'
+
+import { getRoutes } from 'util/extensions'
+
 import MainLayout from 'layouts/Main'
 import EssentialLayout from 'layouts/Essential'
-import NotFound from 'components/NotFound'
-import Terms from 'components/Terms'
-import Privacy from 'components/Privacy'
-import Sandbox from 'containers/Sandbox'
+
+import APIDetails from 'containers/APIDetails'
+import AppDetail from 'containers/Applications/AppDetail'
+import CreateApp from 'containers/Applications/CreateApp'
+import ForgotPasswordPage from 'containers/ForgotPasswordPage'
+import Instructions from 'containers/Instructions'
 import LandingPage from 'containers/LandingPage'
 import ListApps from 'containers/Applications/ListApps'
-import CreateApp from 'containers/Applications/CreateApp'
-import AppDetail from 'containers/Applications/AppDetail'
-import Subscriptions from 'containers/Subscriptions'
 import Login from 'containers/Login'
-import { AppRouteProps } from './types'
-import RequireAuth from 'containers/Auth'
-import Instructions from 'containers/Instructions'
-import RegisterConfirmation from 'containers/RegisterConfirmation'
-import RedirectPage from 'containers/RedirectPage'
-import ForgotPasswordPage from 'containers/ForgotPasswordPage'
-import TeamPage from 'containers/TeamPage'
-import Profile from 'containers/Profile'
 import OrganizationPage from 'containers/OrganizationPage'
-import { getRoutes } from 'util/extensions'
-import APIDetails from 'containers/APIDetails'
+import Profile from 'containers/Profile'
+import RedirectPage from 'containers/RedirectPage'
+import RegisterConfirmation from 'containers/RegisterConfirmation'
+import RequireAuth from 'containers/Auth'
+import Sandbox from 'containers/Sandbox'
+import Subscriptions from 'containers/Subscriptions'
+import TeamPage from 'containers/TeamPage'
+
+import NotFound from 'components/NotFound'
+import Privacy from 'components/Privacy'
+import Terms from 'components/Terms'
+
+import { AppRouteProps } from './types'
 
 const layouts: Record<string, React.ComponentType<any>> = {
   [Layouts.Main]: MainLayout,
@@ -38,12 +45,13 @@ const extensionsRoutes = getRoutes().map(
     if (!route.auth) {
       return route
     }
+
     return {
       ...route,
       auth: true,
+      component: route.component,
       layout: layouts[route.layout] || MainLayout,
       layoutProps: route.layoutProps,
-      component: route.component,
       roleReq: route.role,
     }
   },
@@ -52,6 +60,9 @@ const extensionsRoutes = getRoutes().map(
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox, layoutProps: { contractibleMenu: true } },
   { path: '/api-products', exact: true, auth: true, component: Subscriptions },
+  { path: '/api-products/details/:apiId/spec/:versionId', exact: true, component: APIDetails, layoutProps: { contractibleMenu: true } },
+  { path: '/auth/:view?/:email?', exact: true, component: Login, layout: EssentialLayout },
+  { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation, layout: EssentialLayout },
   { path: '/dashboard', exact: true, auth: true, component: LandingPage, layoutProps: { contractibleMenu: true } },
   { path: '/dashboard/apps', exact: true, auth: true, component: ListApps },
   { path: '/dashboard/apps/create', exact: true, auth: true, component: CreateApp },
@@ -59,26 +70,23 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/dashboard/subscriptions', exact: true, auth: true, component: Subscriptions },
   { path: '/dashboard/test', exact: true, auth: true, component: Instructions },
   { path: '/documentation', exact: true, auth: true, component: Instructions },
+  { path: '/forgot', exact: true, component: ForgotPasswordPage, layout: EssentialLayout },
+  { path: '/privacy', component: Privacy },
   { path: '/profile', exact: true, auth: true, component: Profile },
   { path: '/profile/team', exact: true, auth: true, component: TeamPage },
   { path: '/profile/organisation', exact: true, auth: true, component: OrganizationPage },
-  { path: '/auth/:view?/:email?', exact: true, component: Login, layout: EssentialLayout },
   { path: ['/:redirect/confirm', '/:redirect/reset'], exact: true, component: RedirectPage },
-  { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation, layout: EssentialLayout },
-  { path: '/forgot', exact: true, component: ForgotPasswordPage, layout: EssentialLayout },
   { path: '/terms', component: Terms },
-  { path: '/privacy', component: Privacy },
-  { path: '/api-products/details/:apiId/spec/:versionId', exact: true, component: APIDetails, layoutProps: { contractibleMenu: true } },
   ...extensionsRoutes,
   { render: () => <NotFound /> },
 ]
 
 function RouteWrapper ({
+  auth,
+  component: Component,
   layout: Layout = MainLayout,
   layoutProps,
-  component: Component,
   render,
-  auth,
   role,
   ...rest
 }: AppRouteProps) {
@@ -87,6 +95,7 @@ function RouteWrapper ({
       if (!Component) {
         return <NotFound />
       }
+
       const LayoutContainer = (
         <Layout
           {...layoutProps}
@@ -97,9 +106,9 @@ function RouteWrapper ({
 
       return (
         <RequireAuth
+          component={LayoutContainer}
           requireAuth={auth}
           role={role}
-          component={LayoutContainer}
           {...props}
         />
       )
@@ -116,15 +125,15 @@ export default () => {
     <Switch key='routes'>
       {routesConfig.map((route) =>
         <RouteWrapper
-          key='route-wrapper-keep-same-key-for-all-please'
           auth={route.auth}
-          role={route.role}
+          component={route.component}
+          exact={route.exact}
+          key='route-wrapper-keep-same-key-for-all-please'
           layout={route.layout}
           layoutProps={route.layoutProps}
           path={route.path}
-          exact={route.exact}
-          component={route.component}
           render={route.render}
+          role={route.role}
         />,
       )}
     </Switch>
