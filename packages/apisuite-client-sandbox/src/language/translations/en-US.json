@@ -274,7 +274,8 @@
     "save": "Save",
     "saveDisabled": "Nothing to save",
     "send": "Send",
-    "remove": "Remove Account"
+    "remove": "Remove Account",
+    "delete": "Delete"
   },
   "copyright": "© {{clientName}} {{year}}.\nAll rights reserved.",
   "apidetails": {
