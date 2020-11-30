@@ -200,7 +200,9 @@
   "actions": {
     "save": "Save",
     "saveDisabled": "Nothing to save",
-    "send": "Send"
+    "send": "Send",
+    "remove": "Remove Account",
+    "delete": "Delete"
   },
   "copyright": "© {{clientName}} {{year}}.\nAll rights reserved.",
   "apidetails": {
