@@ -9,11 +9,43 @@ export default makeStyles(({
     },
   },
 
+  alternativeAssistantAmountOfNotifications: {
+    backgroundColor: config.palette.primary,
+    borderRadius: '4px',
+    height: '24px',
+    pointerEvents: 'none',
+    textAlign: 'center',
+    width: '24px',
+
+    '& > p': {
+      color: config.palette.text.primary,
+      fontSize: '14px',
+      fontWeight: 400,
+      height: '24px',
+      lineHeight: '24px',
+      width: '24px',
+    },
+  },
+
+  alternativeAssistantButton: {
+    backgroundColor: 'transparent',
+    borderRadius: '50%',
+    color: config.palette.active,
+    height: '32px',
+    paddingTop: '1.5px',
+    textAlign: 'center',
+    width: '32px',
+  },
+
   alternativeLogo: {
     color: config.palette.primary,
     height: 'auto',
     marginRight: '20px',
     width: '60px',
+  },
+
+  assistantContainer: {
+    display: 'flex',
   },
 
   goBackButton: {
@@ -88,6 +120,35 @@ export default makeStyles(({
     fontWeight: 400,
   },
 
+  regularAssistantAmountOfNotifications: {
+    backgroundColor: config.palette.primary,
+    borderRadius: '4px',
+    height: '24px',
+    pointerEvents: 'none',
+    textAlign: 'center',
+    transform: 'translate(-7px, -12.5px)',
+    width: '24px',
+
+    '& > p': {
+      color: config.palette.background.default,
+      fontSize: '14px',
+      fontWeight: 400,
+      height: '24px',
+      lineHeight: '24px',
+      width: '24px',
+    },
+  },
+
+  regularAssistantButton: {
+    backgroundColor: config.palette.background.default,
+    borderRadius: '50%',
+    color: config.palette.tertiary,
+    height: '32px',
+    paddingTop: '1.5px',
+    textAlign: 'center',
+    width: '32px',
+  },
+
   regularLogo: {
     color: '#FFFFFF',
     height: 'auto',
@@ -109,7 +170,7 @@ export default makeStyles(({
     display: 'flex',
   },
 
-  subTabsAndBackButton: {
+  subTabsAndExtraButton: {
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',

@@ -17,6 +17,7 @@ import Tabs from '@material-ui/core/Tabs'
 
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded'
+import RoomServiceRoundedIcon from '@material-ui/icons/RoomServiceRounded'
 
 import { getAuth } from 'containers/Auth/selectors'
 
@@ -29,10 +30,14 @@ import { TabMenus, NavigationProps } from './types'
 const Navigation: React.FC<NavigationProps> = ({
   contractible = false,
   logout,
+  // Temporary until notification cards become clearer
+  notificationCards,
   profile,
   settings,
   title,
   toggleInform,
+  // Temporary until notification cards become clearer
+  toggleNotificationCards,
   ...rest
 }) => {
   const classes = useStyles()
@@ -104,6 +109,14 @@ const Navigation: React.FC<NavigationProps> = ({
       window.removeEventListener('scroll', scrollHandler)
     }
   }, [contractible])
+
+  const [amountOfNotifications, setAmountOfNotifications] = React.useState(0)
+
+  React.useEffect(() => {
+    if (amountOfNotifications !== notificationCards.notificationCardsData.length) {
+      setAmountOfNotifications(notificationCards.notificationCardsData.length)
+    }
+  }, [notificationCards])
 
   return (
     <div
@@ -222,9 +235,6 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
               {
                 userProfile.avatar !== ''
                   ? (
-                    /* TODO: Using Gonçalo's picture as a placeholder - change logic to
-                    use actual picture of user, whose source should be stored somewhere
-                    in the app's Store */
                     <Link
                       className={classes.linkToProfile}
                       to='/profile'
@@ -270,8 +280,49 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
       {!!subTabs && (
         <div className={clsx('sub-container', { scrolled })}>
           <div
-            className={`tabs ${goBackLabel ? classes.subTabsAndBackButton : classes.subTabs}`}
+            className={
+              `
+tabs
+${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
+          ? ` ${classes.subTabsAndExtraButton}`
+          : ` ${classes.subTabs}`
+        }
+`
+            }
           >
+            {/* Assistant icon (to be shown on the 'Overview' sub-tab of the 'Dashboard' tab) */}
+            {
+              activeSubTab && activeSubTab.label === 'Overview' && (
+                <div className={classes.assistantContainer}>
+                  <div
+                    className={
+                      (contractible && !scrolled)
+                        ? classes.regularAssistantButton
+                        : classes.alternativeAssistantButton
+                    }
+                    onClick={toggleNotificationCards}
+                    role='button'
+                  >
+                    <RoomServiceRoundedIcon />
+                  </div>
+
+                  {
+                    (amountOfNotifications && !notificationCards.showNotificationCards) &&
+                    <div
+                      className={
+                        (contractible && !scrolled)
+                          ? classes.regularAssistantAmountOfNotifications
+                          : classes.alternativeAssistantAmountOfNotifications
+                      }
+                    >
+                      <p>{amountOfNotifications}</p>
+                    </div>
+                  }
+                </div>
+              )
+            }
+
+            {/* Navigation's 'back to (...)' button (if there is one to be shown on a particular sub-tab) */}
             {
               !!goBackLabel && (
                 <div

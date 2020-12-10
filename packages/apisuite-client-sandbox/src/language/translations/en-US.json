@@ -98,6 +98,56 @@
     }
   },
   "dashboardTab": {
+    "landingPageSubTab": {
+      "adminUser": {
+        "notificationCards": {},
+        "actionsCatalog": {
+          "api": "Manage your API Products",
+          "dataCloud": "Manage client access",
+          "settings": "Go to general settings",
+          "billing": "Go to Billing",
+          "team": "Manage your team",
+          "support": "APISuite Support"
+        },
+        "greetingCard": {
+          "greetingCardTextPartOne": "Hi",
+          "greetingCardTextPartTwo": "As Account owner, you have a personalised administrator dashboard. You also have access to account management and a slightly different navigation.",
+          "greetingCardButtonLabel": "Go to Admin area"
+        },
+        "notificationBanner": {
+          "title": "Don’t forget to connect your gateway",
+          "textPartOne": "The usability of your API Portal cloud account will increase dramatically by connecting it to your gateway.",
+          "textPartTwo": "Let’s start!"
+        }
+      },
+      "regularUser": {
+        "notificationCards": {
+          "completeYourTeam": {
+            "notificationCardTitle": "Complete your team",
+            "notificationCardText": "Add information about your Organisation and invite team members to collaborate!",
+            "notificationCardButtonLabel": "Go to Team"
+          }
+        },
+        "actionsCatalog": {
+          "team": "Manage your team",
+          "sandbox": "Add a client application",
+          "shield": "Request OAuth 2.0 access",
+          "fingerprint": "Update your password",
+          "api": "Read up about our APIs",
+          "support": "Solve a problem"
+        },
+        "greetingCard": {
+          "greetingCardTextPartOne": "Hi",
+          "greetingCardTextPartTwo": "You're at the right place if you want to set up a new client app, get informed about our API products, or have a technical question.",
+          "greetingCardTextPartThree": "Don't find what you're looking for? Let us know, we're happy to accomodate!",
+          "greetingCardButtonLabel": "Contact"
+        },
+        "notificationBanner": {
+          "title": "We have an important notification for you",
+          "text": "is sending an important notification for you here - too important to be dumped into the Assistant!"
+        }
+      }
+    },
     "testSubTab": {
       "instructions": {
         "stepOne": {
@@ -107,7 +157,7 @@
         },
         "stepTwo": {
           "stepTitle": "Upload data to your API",
-          "stepText": "Let's upload some data to the API by making another POST request with a JSON containing our cat's Jack data.",
+          "stepText": "Let's upload some data to the API by making another POST request with a JSON containing our cat's (i.e., Jack) data.",
           "stepNote": ""
         },
         "stepThree": {

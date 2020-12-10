@@ -1,36 +1,42 @@
 /*
- * Combine all reducers in the this file and export them.
- */
+* Combine all reducers in the this file and export them.
+*/
 
 import { combineReducers } from 'redux'
+
 import { connectRouter } from 'connected-react-router'
+
 import { History } from 'history'
 
-import register from 'components/RegisterForm/ducks'
-import informDialog from 'components/InformDialog/ducks'
-import auth from 'containers/Auth/ducks'
+import apiDetails from 'containers/APIDetails/ducks'
 import applications from 'containers/Applications/ducks'
+import auth from 'containers/Auth/ducks'
+import informDialog from 'components/InformDialog/ducks'
+// Temporary until notification cards become clearer
+import notifications from 'containers/NotificationStack/ducks'
+import notificationCards from 'containers/NotificationCards/ducks'
+import profile from 'containers/Profile/ducks'
+import reduceReducers from './reduceReducers'
+import register from 'components/RegisterForm/ducks'
 import settings from 'containers/Settings/ducks'
 import subscriptions from 'containers/Subscriptions/ducks'
-import notifications from 'containers/NotificationStack/ducks'
-import profile from 'containers/Profile/ducks'
-import apiDetails from 'containers/APIDetails/ducks'
-import reduceReducers from './reduceReducers'
 
 export default (
   history: History<any>, additionalReducers: Record<string, any[]> = {},
 ) => {
   const reducers: Record<string, any[]> = {
-    router: [connectRouter(history)],
-    auth: [auth],
-    register: [register],
+    apiDetails: [apiDetails],
     applications: [applications],
-    settings: [settings],
-    subscriptions: [subscriptions],
+    auth: [auth],
     informDialog: [informDialog],
     notifications: [notifications],
+    // Temporary until notification cards become clearer
+    notificationCards: [notificationCards],
     profile: [profile],
-    apiDetails: [apiDetails],
+    register: [register],
+    router: [connectRouter(history)],
+    settings: [settings],
+    subscriptions: [subscriptions],
   }
 
   Object.keys(additionalReducers).map((key) => {

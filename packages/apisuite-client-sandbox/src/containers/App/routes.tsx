@@ -17,7 +17,7 @@ import AppDetail from 'containers/Applications/AppDetail'
 import CreateApp from 'containers/Applications/CreateApp'
 import ForgotPasswordPage from 'containers/ForgotPasswordPage'
 import Instructions from 'containers/Instructions'
-import LandingPage from 'containers/LandingPage'
+import Dashboard from 'containers/Dashboard'
 import ListApps from 'containers/Applications/ListApps'
 import Login from 'containers/Login'
 import OrganizationPage from 'containers/OrganizationPage'
@@ -63,7 +63,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/api-products/details/:apiId/spec/:versionId', exact: true, component: APIDetails, layoutProps: { contractibleMenu: true } },
   { path: '/auth/:view?/:email?', exact: true, component: Login, layout: EssentialLayout },
   { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation, layout: EssentialLayout },
-  { path: '/dashboard', exact: true, auth: true, component: LandingPage, layoutProps: { contractibleMenu: true } },
+  { path: '/dashboard', exact: true, auth: true, component: Dashboard, layoutProps: { contractibleMenu: true } },
   { path: '/dashboard/apps', exact: true, auth: true, component: ListApps },
   { path: '/dashboard/apps/create', exact: true, auth: true, component: CreateApp },
   { path: '/dashboard/apps/detail/:id', exact: true, auth: true, component: AppDetail },

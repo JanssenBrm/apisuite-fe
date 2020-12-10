@@ -154,20 +154,20 @@ export function useMenu (): Array<TabProps[]> {
         route: '/dashboard',
         subTabs: [
           {
-            label: 'Landing page',
+            label: 'Overview',
             route: '/dashboard',
+          },
+          {
+            label: 'Team',
+            route: '/profile/team',
           },
           {
             label: 'Subscriptions',
             route: '/dashboard/subscriptions',
           },
           {
-            label: 'Client Applications',
+            label: 'Applications',
             route: '/dashboard/apps',
-          },
-          {
-            label: 'Test',
-            route: '/dashboard/test',
           },
           ...extensionsLoginDashboardTabs,
         ],
@@ -220,7 +220,7 @@ export const goBackConfig = [
     label: 'Back to overview',
   },
   {
-    path: '/api-products',
+    path: '/api-products/details',
     label: 'Back to overview',
   },
 ]

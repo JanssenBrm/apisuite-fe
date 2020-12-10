@@ -52,6 +52,7 @@ const Button: React.FC<{
             // Text color
             { [classes.primaryColor]: color && color === 'primary' },
             { [classes.secondaryColor]: color && color === 'secondary' },
+            { [classes.tertiaryColor]: color && color === 'tertiary' },
             // Status
             { [classes.disabled]: disabled || loading || false },
             { [classes.fullWidth]: fullWidth || false },
@@ -76,6 +77,7 @@ const Button: React.FC<{
             // Text color
             { [classes.primaryColor]: color && color === 'primary' },
             { [classes.secondaryColor]: color && color === 'secondary' },
+            { [classes.tertiaryColor]: color && color === 'tertiary' },
             // Status
             { [classes.disabled]: disabled || loading || false },
             { [classes.fullWidth]: fullWidth || false },
