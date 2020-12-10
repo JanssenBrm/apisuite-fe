@@ -145,8 +145,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   },
                   {
                     actionImage: apiSVG,
-                    // TODO: Create a view for this, and link to it
-                    actionLink: '',
+                    actionLink: '/dashboard/subscriptions',
                     actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.api', { config }),
                   },
                   {
