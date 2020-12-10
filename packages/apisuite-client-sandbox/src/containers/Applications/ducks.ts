@@ -37,6 +37,10 @@ const initialState: ApplicationsStore = {
     isRequesting: false,
     isError: false,
   },
+  subscribing: {
+    isRequesting: false,
+    isError: false,
+  },
 }
 
 /** Action types */
@@ -176,22 +180,44 @@ export default function reducer (
 
     /** Actions related to adding and removing app subscriptions to APIs */
     case SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION: {
-      return state
+      return update(state, {
+        subscribing: {
+          isRequesting: { $set: true },
+        },
+      })
     }
 
     case SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS: {
       return update(state, {
         userApps: { [action.updatedAppIndx]: { $set: action.updatedApp } },
+        subscribing: { isRequesting: { $set: false } },
+      })
+    }
+
+    case SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_ERROR: {
+      return update(state, {
+        subscribing: { isRequesting: { $set: false } },
       })
     }
 
     case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION: {
-      return state
+      return update(state, {
+        subscribing: {
+          isRequesting: { $set: true },
+        },
+      })
     }
 
     case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS: {
       return update(state, {
         userApps: { [action.updatedAppIndx]: { $set: action.updatedApp } },
+        subscribing: { isRequesting: { $set: false } },
+      })
+    }
+
+    case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_ERROR: {
+      return update(state, {
+        subscribing: { isRequesting: { $set: false } },
       })
     }
 
@@ -261,10 +287,18 @@ export function addAppSubscriptionSuccess (updatedApp: AppData, updatedAppIndx: 
   return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS, updatedAppIndx, updatedApp }
 }
 
+export function addAppSubscriptionError () {
+  return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_ERROR }
+}
+
 export function removeAppSubscription (appId: number, apiName: string) {
   return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION, appId, apiName }
 }
 
 export function removeAppSubscriptionSuccess (updatedApp: AppData, updatedAppIndx: number) {
   return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS, updatedAppIndx, updatedApp }
+}
+
+export function removeAppSubscriptionError () {
+  return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_ERROR }
 }

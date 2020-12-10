@@ -17,6 +17,7 @@ export interface ApplicationsStore {
   resCreate: Response,
   resUpdate: Response,
   resDelete: Response,
+  subscribing: Response,
 }
 
 export interface RouteParams {
