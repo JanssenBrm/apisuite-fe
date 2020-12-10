@@ -4,7 +4,10 @@ import { SandboxConfig, Roles } from './types.js'
 
 export const config: SandboxConfig = sandboxConfig
 
-export const DEFAULT_SUPPORT_URL =
+export const DEFAULT_INSTANCE_OWNER_SUPPORT_URL =
+  'https://intercom.help/api-suite/en/articles/4710860-api-portal-owners'
+
+export const DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL =
   'https://intercom.help/api-suite/en/articles/4586659-api-portal-users'
 
 export const ROLES: Roles = {

@@ -13,12 +13,17 @@ import { useSettings } from 'util/useSetting'
 
 import { TabProps } from './types'
 
-import { DEFAULT_SUPPORT_URL } from 'constants/global'
+import {
+  DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
+  DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
+} from 'constants/global'
 
 export function useMenu (): Array<TabProps[]> {
   const [settings] = useSettings()
   const roleName = useSelector(getRoleName)
   const { pathname } = useLocation()
+
+  console.log('roleName', roleName)
 
   /*
   Create an array for each accumulated level of pathnames of the current URI.
@@ -106,7 +111,11 @@ export function useMenu (): Array<TabProps[]> {
       },
       {
         label: 'Support',
-        route: settings.supportURL || DEFAULT_SUPPORT_URL,
+        route: settings.supportURL || (
+          roleName === 'admin'
+            ? DEFAULT_INSTANCE_OWNER_SUPPORT_URL
+            : DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
+        ),
       },
       {
         // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
@@ -147,7 +156,11 @@ export function useMenu (): Array<TabProps[]> {
       },
       {
         label: 'Support',
-        route: settings.supportURL || DEFAULT_SUPPORT_URL,
+        route: settings.supportURL || (
+          roleName === 'admin'
+            ? DEFAULT_INSTANCE_OWNER_SUPPORT_URL
+            : DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
+        ),
       },
       {
         label: 'Dashboard',

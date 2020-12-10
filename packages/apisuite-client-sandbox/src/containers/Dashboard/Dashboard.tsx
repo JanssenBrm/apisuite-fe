@@ -25,7 +25,11 @@ import useStyles from './styles'
 
 import { DashboardProps } from './types'
 
-import { config } from 'constants/global'
+import {
+  config,
+  DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
+  DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
+} from 'constants/global'
 
 const Dashboard: React.FC<DashboardProps> = ({
   auth,
@@ -147,8 +151,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   },
                   {
                     actionImage: supportSVG,
-                    // TODO: Create a view for this, and link to it
-                    actionLink: settings.supportURL || '',
+                    actionLink: settings.supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
                     actionText: t('dashboardTab.landingPageSubTab.regularUser.actionsCatalog.support', { config }),
                   },
                 ]
@@ -160,7 +163,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   },
                   {
                     actionImage: dataCloudSVG,
-                    actionLink: '/dashboard/admin/organisations',
+                    actionLink: '/dashboard/admin/integrations',
                     actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.dataCloud', { config }),
                   },
                   {
@@ -181,8 +184,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   },
                   {
                     actionImage: supportSVG,
-                    // TODO: Create a view for this, and link to it
-                    actionLink: settings.supportURL || '',
+                    actionLink: settings.supportURL || DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
                     actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.support', { config }),
                   },
                 ]
