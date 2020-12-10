@@ -20,8 +20,6 @@ const NotificationBanner: React.FC<NotificationBannerProps> = ({
     setShowing(false)
   }
 
-  console.log('customNotificationBannerContents', customNotificationBannerContents)
-
   return (
     showing
       ? (

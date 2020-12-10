@@ -14,7 +14,7 @@ export default makeStyles({
     /* This outline (and its offset) allows us to hide every catalog entry's
     outermost border. It should always be of the same color as the background. */
     outline: `5px solid ${config.palette.background.default}`,
-    outlineOffset: '-1.5px',
+    outlineOffset: '-2.5px',
   },
 
   actionsCatalogEntry: {

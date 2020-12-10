@@ -176,14 +176,13 @@ const Dashboard: React.FC<DashboardProps> = ({
                   },
                   {
                     actionImage: teamSVG,
-                    // TODO: Create a view for this, and link to it
-                    actionLink: '',
+                    actionLink: '/profile/team',
                     actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.team', { config }),
                   },
                   {
                     actionImage: supportSVG,
                     // TODO: Create a view for this, and link to it
-                    actionLink: '',
+                    actionLink: settings.supportURL || '',
                     actionText: t('dashboardTab.landingPageSubTab.adminUser.actionsCatalog.support', { config }),
                   },
                 ]
