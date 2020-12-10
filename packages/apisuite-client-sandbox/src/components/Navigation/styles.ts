@@ -15,6 +15,7 @@ export default makeStyles(({
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
+    transform: 'translate(-7px, -13.5px)',
     width: '24px',
 
     '& > p': {
@@ -126,7 +127,7 @@ export default makeStyles(({
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
-    transform: 'translate(-7px, -12.5px)',
+    transform: 'translate(-7px, -13.5px)',
     width: '24px',
 
     '& > p': {

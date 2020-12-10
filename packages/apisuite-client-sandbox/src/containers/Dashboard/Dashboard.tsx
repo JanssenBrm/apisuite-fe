@@ -238,7 +238,7 @@ const Dashboard: React.FC<DashboardProps> = ({
             }
             greetingCardButtonLink={
               typeOfUser !== 'admin'
-                ? settings.supportURL || ''
+                ? (settings.supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL)
                 : '/dashboard/admin'
             }
           />
