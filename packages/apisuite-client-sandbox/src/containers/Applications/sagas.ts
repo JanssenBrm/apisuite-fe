@@ -111,7 +111,7 @@ export function * updateApp (action: UpdateAppAction) {
       description: action.appData.description,
       redirectUrl: action.appData.redirectUrl,
       logo: action.appData.logo,
-      orgId: action.appData.org_id,
+      orgId: action.appData.orgId,
       visibility: action.appData.visibility,
       subscriptions: action.appData.subscriptions,
       pubUrls: action.appData.pubUrls,
@@ -127,7 +127,7 @@ export function * updateApp (action: UpdateAppAction) {
 
 export function * getUsersApps (action: GetUserAppsAction) {
   try {
-    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
+    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.orgId}`
     const accessToken = yield select(
       (state: Store) => state.auth.authToken)
     const response = yield call(request, {
@@ -146,7 +146,7 @@ export function * getUsersApps (action: GetUserAppsAction) {
         description: userApp.description,
         redirectUrl: userApp.redirect_url,
         logo: userApp.logo,
-        userId: userApp.userId,
+        orgId: userApp.orgId,
         subscriptions: userApp.subscriptions,
         pubUrls: userApp.pub_urls,
         enable: userApp.enable,
@@ -178,8 +178,8 @@ export function * deleteApp (action: DeleteAppAction) {
       },
     })
     yield put(deleteAppSuccess())
-    if (action.userId) {
-      yield put(getUserApps(action.userId))
+    if (action.orgId) {
+      yield put(getUserApps(action.orgId))
     }
     yield put(push('/dashboard/apps'))
   } catch (error) {
@@ -189,8 +189,8 @@ export function * deleteApp (action: DeleteAppAction) {
     if (error.status === 204) {
       yield put(deleteAppSuccess())
 
-      if (action.userId) {
-        yield put(getUserApps(action.userId))
+      if (action.orgId) {
+        yield put(getUserApps(action.orgId))
       }
 
       yield put(push('/dashboard/apps'))
@@ -202,7 +202,7 @@ export function * deleteApp (action: DeleteAppAction) {
 }
 
 export function * getAppDetails (action: GetAppDetails) {
-  const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
+  const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.orgId}`
   const accessToken = yield select(
     (state: Store) => state.auth.authToken)
 
@@ -223,7 +223,7 @@ export function * getAppDetails (action: GetAppDetails) {
       description: userApp.description,
       redirectUrl: userApp.redirect_url,
       logo: userApp.logo,
-      userId: userApp.userId,
+      orgId: userApp.orgId,
       subscriptions: userApp.subscriptions,
       pubUrls: userApp.pub_urls,
       enable: userApp.enable,

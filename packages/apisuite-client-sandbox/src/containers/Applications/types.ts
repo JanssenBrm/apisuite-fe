@@ -49,7 +49,7 @@ export interface PubUrl {
 export interface CreateAppAction extends Action {
   type: typeof CREATE_APP,
   appData: AppData,
-  userId: number,
+  orgId: number,
 }
 
 export interface CreateAppSuccessAction extends Action {
@@ -78,7 +78,7 @@ export interface UpdateAppErrorAction extends Action {
 export interface DeleteAppAction extends Action {
   type: typeof DELETE_APP,
   appId: number,
-  userId?: number,
+  orgId?: number,
 }
 
 export interface DeleteAppSuccessAction extends Action {
@@ -92,7 +92,7 @@ export interface DeleteAppErrorAction extends Action {
 export interface GetAppDetails extends Action {
   type: typeof GET_APP_DETAILS,
   appId: number,
-  userId: number,
+  orgId: number,
 }
 
 export interface GetAppDetailsSuccess extends Action {
@@ -102,7 +102,7 @@ export interface GetAppDetailsSuccess extends Action {
 
 export interface GetUserAppsAction extends Action {
   type: typeof GET_USER_APPS,
-  userId: number,
+  orgId: number,
 }
 
 export interface GetUserAppsActionSuccess extends Action {

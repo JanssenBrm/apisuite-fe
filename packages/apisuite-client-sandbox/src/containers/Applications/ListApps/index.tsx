@@ -10,7 +10,7 @@ const mapStateToProps = ({ auth, applications }: Store) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getUserApps: (userId: number) => dispatch(getUserApps(userId)),
+  getUserApps: (orgId: number) => dispatch(getUserApps(orgId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ListApps)

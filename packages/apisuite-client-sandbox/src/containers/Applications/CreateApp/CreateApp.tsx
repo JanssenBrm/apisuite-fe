@@ -20,7 +20,7 @@ import clsx from 'clsx'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 
-type Input = Pick<AppData, 'name' | 'description' | 'redirectUrl' | 'logo' | 'userId' | 'visibility' | 'subscriptions' | 'pubUrls'>
+type Input = Pick<AppData, 'name' | 'description' | 'redirectUrl' | 'logo' | 'orgId' | 'visibility' | 'subscriptions' | 'pubUrls'>
 
 const CreateApp: React.FC<CreateAppProps> = ({
   history,
@@ -40,7 +40,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
     description: '',
     redirectUrl: '',
     logo: 'http://logo.png',
-    userId: 0,
+    orgId: 0,
     // visibility: visible ? 'public' : 'private',
     visibility: 'private',
     subscriptions: [],
@@ -216,7 +216,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
       redirectUrl: input.redirectUrl,
       logo: input.logo,
       visibility: 'private',
-      userId: userId,
+      orgId: userId,
       subscriptions: input.subscriptions,
       pubUrls: finalPubUrls,
       enable: true,
