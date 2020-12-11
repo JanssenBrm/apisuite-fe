@@ -13,7 +13,7 @@ const initialState: ApplicationsStore = {
     description: '',
     redirectUrl: '',
     logo: 'http://logo.png',
-    userId: 0,
+    orgId: 0,
     subscriptions: [],
     visibility: 'private',
     pubUrls: [{
@@ -111,7 +111,7 @@ export default function reducer (
           description: { $set: action.appData.description },
           redirectUrl: { $set: action.appData.redirectUrl },
           logo: { $set: action.appData.logo },
-          userId: { $set: action.appData.userId },
+          orgId: { $set: action.appData.orgId },
           pubUrls: { $set: action.appData.pubUrls },
           enable: { $set: action.appData.enable },
         },
@@ -159,7 +159,7 @@ export default function reducer (
           description: { $set: action.appData.description },
           redirectUrl: { $set: action.appData.redirectUrl },
           logo: { $set: action.appData.logo },
-          userId: { $set: action.appData.userId },
+          orgId: { $set: action.appData.orgId },
           subscriptions: { $set: action.appData.subscriptions },
           pubUrls: { $set: action.appData.pubUrls },
           createdAt: { $set: action.appData.createdAt },
@@ -251,8 +251,8 @@ export function updateAppError () {
   return { type: UPDATE_APP_ERROR }
 }
 
-export function deleteApp (appId: number, userId?: number) {
-  return { type: DELETE_APP, appId, userId }
+export function deleteApp (appId: number, orgId?: number) {
+  return { type: DELETE_APP, appId, orgId }
 }
 
 export function deleteAppSuccess () {
@@ -263,16 +263,16 @@ export function deleteAppError () {
   return { type: DELETE_APP_ERROR }
 }
 
-export function getAppDetails (appId: number, userId: number) {
-  return { type: GET_APP_DETAILS, appId, userId }
+export function getAppDetails (appId: number, orgId: number) {
+  return { type: GET_APP_DETAILS, appId, orgId }
 }
 
 export function getAppDetailsSuccess (appData: AppData) {
   return { type: GET_APP_DETAILS_SUCCESS, appData }
 }
 
-export function getUserApps (userId: number) {
-  return { type: GET_USER_APPS, userId }
+export function getUserApps (orgId: number) {
+  return { type: GET_USER_APPS, orgId }
 }
 
 export function getUserAppsSuccess (userApps: AppData[]) {
