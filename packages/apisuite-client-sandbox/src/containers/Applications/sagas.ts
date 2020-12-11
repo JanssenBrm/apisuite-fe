@@ -14,7 +14,9 @@ import {
   updateAppSuccess,
   createAppSuccess,
   addAppSubscriptionSuccess,
+  addAppSubscriptionError,
   removeAppSubscriptionSuccess,
+  removeAppSubscriptionError,
 } from './ducks'
 import { SubscriptionsActionTypes } from 'containers/Subscriptions/ducks'
 import {
@@ -45,6 +47,7 @@ import { push } from 'connected-react-router'
 import { Store } from 'store/types'
 import qs from 'qs'
 import { authActions } from 'containers/Auth/ducks'
+import { openNotification } from 'containers/NotificationStack/ducks'
 
 export function * createApp (action: CreateAppAction) {
   try {
@@ -287,7 +290,9 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
     yield put(addAppSubscriptionSuccess(updatedApp, appIndx))
   } catch (error) {
-    console.log('Error adding subscription')
+    console.log('Error adding subscription', error)
+    yield put(openNotification('error', 'Error subscribing.', 3000))
+    yield put(addAppSubscriptionError())
     yield put(authActions.handleSessionExpire())
   }
 }
@@ -339,6 +344,8 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
     yield put(removeAppSubscriptionSuccess(updatedApp, appIndx))
   } catch (error) {
     console.log('Error removing subscription')
+    yield put(openNotification('error', 'Error removing subscription.', 3000))
+    yield put(removeAppSubscriptionError())
     yield put(authActions.handleSessionExpire())
   }
 }
