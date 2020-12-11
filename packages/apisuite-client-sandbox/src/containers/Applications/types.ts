@@ -30,7 +30,7 @@ export interface AppData {
   description: string,
   redirectUrl: string,
   logo: string,
-  userId: number,
+  orgId: number,
   subscriptions: any[],
   visibility: 'public' | 'private',
   pubUrls: PubUrl[],

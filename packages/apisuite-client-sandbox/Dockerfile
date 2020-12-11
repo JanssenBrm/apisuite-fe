@@ -11,6 +11,7 @@ RUN mkdir /root/.ssh/ &&\
     touch /root/.ssh/known_hosts &&\
     ssh-keyscan github.com >> /root/.ssh/known_hosts
 RUN node scripts/extensions-installer.js
+RUN npm install -g yarn
 RUN npm install
 RUN npm run build
 

@@ -57,7 +57,6 @@ export function * createApp (action: CreateAppAction) {
       'redirect_url': action.appData.redirectUrl,
       logo: action.appData.logo,
       visibility: action.appData.visibility,
-      'user_id': action.appData.userId,
       subscriptions: action.appData.subscriptions,
       'pub_urls': action.appData.pubUrls,
     }
@@ -91,8 +90,6 @@ export function * updateApp (action: UpdateAppAction) {
       'redirect_url': action.appData.redirectUrl,
       logo: action.appData.logo,
       visibility: action.appData.visibility,
-      'user_id': action.appData.userId,
-      'sandbox_id': '1',
       'pub_urls': action.appData.pubUrls,
     }
     const accessToken = yield select(
@@ -114,7 +111,7 @@ export function * updateApp (action: UpdateAppAction) {
       description: action.appData.description,
       redirectUrl: action.appData.redirectUrl,
       logo: action.appData.logo,
-      userId: action.appData.userId,
+      orgId: action.appData.org_id,
       visibility: action.appData.visibility,
       subscriptions: action.appData.subscriptions,
       pubUrls: action.appData.pubUrls,
@@ -264,27 +261,27 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
       url: addAppSubscriptionUrl,
       method: 'PUT',
       headers: {
-        'content-type': 'application/x-www-form-urlencoded',
+        'content-type': 'application/json',
         'x-access-token': accessToken,
       },
-      data: qs.stringify(data),
+      data: JSON.stringify(data),
     })
 
     const updatedApp = {
-      appId: response.app.id,
-      name: response.app.name,
-      description: response.app.description,
-      redirectUrl: response.app.redirect_url,
-      logo: response.app.logo,
-      userId: response.app.userId,
-      subscriptions: response.app.subscriptions,
-      pubUrls: response.app.pub_urls,
-      visibility: response.app.visibility,
-      enable: response.app.enable,
-      createdAt: response.app.createdAt,
-      updatedAt: response.app.updatedAt,
-      clientId: response.app.clientId,
-      clientSecret: response.app.clientSecret,
+      appId: response.id,
+      name: response.name,
+      description: response.description,
+      redirectUrl: response.redirect_url,
+      logo: response.logo,
+      orgId: response.org_id,
+      subscriptions: response.subscriptions,
+      pubUrls: response.pub_urls,
+      visibility: response.visibility,
+      enable: response.enable,
+      createdAt: response.createdAt,
+      updatedAt: response.updatedAt,
+      clientId: response.clientId,
+      clientSecret: response.clientSecret,
     }
 
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
@@ -317,27 +314,27 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
       url: addAppSubscriptionUrl,
       method: 'PUT',
       headers: {
-        'content-type': 'application/x-www-form-urlencoded',
+        'content-type': 'application/json',
         'x-access-token': accessToken,
       },
-      data: qs.stringify(data),
+      data: JSON.stringify(data),
     })
 
     const updatedApp = {
-      appId: response.app.id,
-      name: response.app.name,
-      description: response.app.description,
-      redirectUrl: response.app.redirect_url,
-      logo: response.app.logo,
-      userId: response.app.userId,
-      subscriptions: response.app.subscriptions,
-      pubUrls: response.app.pub_urls,
-      visibility: response.app.visibility,
-      enable: response.app.enable,
-      createdAt: response.app.createdAt,
-      updatedAt: response.app.updatedAt,
-      clientId: response.app.clientId,
-      clientSecret: response.app.clientSecret,
+      appId: response.id,
+      name: response.name,
+      description: response.description,
+      redirectUrl: response.redirect_url,
+      logo: response.logo,
+      orgId: response.org_id,
+      subscriptions: response.subscriptions,
+      pubUrls: response.pub_urls,
+      visibility: response.visibility,
+      enable: response.enable,
+      createdAt: response.createdAt,
+      updatedAt: response.updatedAt,
+      clientId: response.clientId,
+      clientSecret: response.clientSecret,
     }
 
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
