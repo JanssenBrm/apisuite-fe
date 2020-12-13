@@ -23,8 +23,6 @@ export function useMenu (): Array<TabProps[]> {
   const roleName = useSelector(getRoleName)
   const { pathname } = useLocation()
 
-  console.log('roleName', roleName)
-
   /*
   Create an array for each accumulated level of pathnames of the current URI.
   E.g.: '/dashboard/subscriptions' -> ['/dashboard', '/dashboard/subscriptions']

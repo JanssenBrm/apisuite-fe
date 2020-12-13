@@ -18,15 +18,27 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
   notificationCardButtonLabel,
   notificationCardButtonLink,
   // Temporary until notification cards become clearer
-  toggleNotificationCards,
+  toggleInstanceOwnerNotificationCards,
+  toggleNonInstanceOwnerNotificationCards,
+  typeOfUser,
 }) => {
   const classes = useStyles()
 
-  const [showing, setShowing] = React.useState(notificationCards.showNotificationCards)
+  const [showing, setShowing] = React.useState(
+    typeOfUser !== 'admin'
+      ? notificationCards.showNonInstanceOwnerNotificationCards
+      : notificationCards.showInstanceOwnerNotificationCards,
+  )
 
   React.useEffect(() => {
-    if (showing !== notificationCards.showNotificationCards) {
-      setShowing(notificationCards.showNotificationCards)
+    if (typeOfUser !== 'admin') {
+      if (showing !== notificationCards.showNonInstanceOwnerNotificationCards) {
+        setShowing(notificationCards.showNonInstanceOwnerNotificationCards)
+      }
+    } else {
+      if (showing !== notificationCards.showInstanceOwnerNotificationCards) {
+        setShowing(notificationCards.showInstanceOwnerNotificationCards)
+      }
     }
   }, [notificationCards])
 
@@ -74,7 +86,11 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
 
           <CloseRoundedIcon
             className={classes.notificationCardCloseButton}
-            onClick={toggleNotificationCards}
+            onClick={
+              typeOfUser !== 'admin'
+                ? toggleNonInstanceOwnerNotificationCards
+                : toggleInstanceOwnerNotificationCards
+            }
           />
         </section>
       )

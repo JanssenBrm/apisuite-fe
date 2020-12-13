@@ -37,7 +37,8 @@ const Navigation: React.FC<NavigationProps> = ({
   title,
   toggleInform,
   // Temporary until notification cards become clearer
-  toggleNotificationCards,
+  toggleInstanceOwnerNotificationCards,
+  toggleNonInstanceOwnerNotificationCards,
   ...rest
 }) => {
   const classes = useStyles()
@@ -84,8 +85,8 @@ const Navigation: React.FC<NavigationProps> = ({
   const handleGobackClick = React.useCallback(() => history.goBack(), [])
 
   React.useEffect(() => {
-    setActiveMenuName(auth.user ? 'login' : 'init')
-  }, [auth.user])
+    setActiveMenuName(user ? 'login' : 'init')
+  }, [user])
 
   React.useEffect(() => {
     const { pathname } = history.location
@@ -113,8 +114,14 @@ const Navigation: React.FC<NavigationProps> = ({
   const [amountOfNotifications, setAmountOfNotifications] = React.useState(0)
 
   React.useEffect(() => {
-    if (amountOfNotifications !== notificationCards.notificationCardsData.length) {
-      setAmountOfNotifications(notificationCards.notificationCardsData.length)
+    if (user?.role.name !== 'admin') {
+      if (amountOfNotifications !== notificationCards.instanceOwnerNotificationCardsData.length) {
+        setAmountOfNotifications(notificationCards.instanceOwnerNotificationCardsData.length)
+      }
+    } else {
+      if (amountOfNotifications !== notificationCards.nonInstanceOwnerNotificationCardsData.length) {
+        setAmountOfNotifications(notificationCards.nonInstanceOwnerNotificationCardsData.length)
+      }
     }
   }, [notificationCards])
 
@@ -300,23 +307,73 @@ ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
                         ? classes.regularAssistantButton
                         : classes.alternativeAssistantButton
                     }
-                    onClick={toggleNotificationCards}
+                    onClick={
+                      user?.role.name !== 'admin'
+                        ? () => {
+                          // If the user has scrolled, (...)
+                          if (scrolled) {
+                            // (...) scroll all the way to the top, (...)
+                            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+
+                            // (...) and if notification cards are not being shown, display them.
+                            if (!(notificationCards.showNonInstanceOwnerNotificationCards)) {
+                              toggleNonInstanceOwnerNotificationCards()
+                            }
+                          } else {
+                            /* If the user has NOT scrolled, then he's already at the top,
+                              so we toggle notification cards as regular. */
+                            toggleNonInstanceOwnerNotificationCards()
+                          }
+                        }
+
+                        : () => {
+                          // If the user has scrolled, (...)
+                          if (scrolled) {
+                            // (...) scroll all the way to the top, (...)
+                            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
+
+                            // (...) and if notification cards are not being shown, display them.
+                            if (!(notificationCards.showInstanceOwnerNotificationCards)) {
+                              toggleInstanceOwnerNotificationCards()
+                            }
+                          } else {
+                            /* If the user has NOT scrolled, then he's already at the top,
+                              so we toggle notification cards as regular. */
+                            toggleInstanceOwnerNotificationCards()
+                          }
+                        }
+
+                    }
                     role='button'
                   >
                     <RoomServiceRoundedIcon />
                   </div>
 
                   {
-                    (amountOfNotifications && !notificationCards.showNotificationCards) &&
-                    <div
-                      className={
-                        (contractible && !scrolled)
-                          ? classes.regularAssistantAmountOfNotifications
-                          : classes.alternativeAssistantAmountOfNotifications
-                      }
-                    >
-                      <p>{amountOfNotifications}</p>
-                    </div>
+                    user?.role.name !== 'admin'
+                      ? (
+                        (amountOfNotifications && !notificationCards.showNonInstanceOwnerNotificationCards) &&
+                        <div
+                          className={
+                            (contractible && !scrolled)
+                              ? classes.regularAssistantAmountOfNotifications
+                              : classes.alternativeAssistantAmountOfNotifications
+                          }
+                        >
+                          <p>{amountOfNotifications}</p>
+                        </div>
+                      ) : (
+                        (amountOfNotifications && !notificationCards.showInstanceOwnerNotificationCards) &&
+                        <div
+                          className={
+                            (contractible && !scrolled)
+                              ? classes.regularAssistantAmountOfNotifications
+                              : classes.alternativeAssistantAmountOfNotifications
+                          }
+                        >
+                          <p>{amountOfNotifications}</p>
+                        </div>
+                      )
                   }
                 </div>
               )

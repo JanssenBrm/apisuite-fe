@@ -2,7 +2,10 @@ import { Dispatch } from 'redux'
 
 import { connect } from 'react-redux'
 
-import { toggleNotificationCards } from 'containers/NotificationCards/ducks'
+import {
+  toggleInstanceOwnerNotificationCards,
+  toggleNonInstanceOwnerNotificationCards,
+} from 'containers/NotificationCards/ducks'
 
 import { Store } from 'store/types'
 
@@ -15,7 +18,8 @@ const mapStateToProps = ({ notificationCards }: Store) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   // Temporary until notification cards become clearer
-  toggleNotificationCards: () => dispatch(toggleNotificationCards()),
+  toggleInstanceOwnerNotificationCards: () => dispatch(toggleInstanceOwnerNotificationCards()),
+  toggleNonInstanceOwnerNotificationCards: () => dispatch(toggleNonInstanceOwnerNotificationCards()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationCard)

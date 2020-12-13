@@ -13,7 +13,8 @@ export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
   showBackButton?: boolean,
   toggleInform: any,
   // Temporary until notification cards become clearer
-  toggleNotificationCards: () => void,
+  toggleInstanceOwnerNotificationCards: () => void,
+  toggleNonInstanceOwnerNotificationCards: () => void,
 }
 
 export interface TabMenus {

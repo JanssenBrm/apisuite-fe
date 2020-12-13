@@ -8,13 +8,24 @@ import { NotificationCardsStore } from './types'
 
 /** Initial state */
 const initialState: NotificationCardsStore = {
-  notificationCardsData: [{}],
-  showNotificationCards: false,
+  instanceOwnerNotificationCardsData: [{}],
+  nonInstanceOwnerNotificationCardsData: [{}],
+  showInstanceOwnerNotificationCards: false,
+  showNonInstanceOwnerNotificationCards: true,
 }
 
 /** Action types */
-export const GET_NOTIFICATION_CARDS = 'NotificationCards/GET_NOTIFICATION_CARDS'
-export const TOGGLE_NOTIFICATION_CARDS = 'NotificationCards/TOGGLE_NOTIFICATION_CARDS'
+export const GET_INSTANCE_OWNER_NOTIFICATION_CARDS =
+  'NotificationCards/GET_INSTANCE_OWNER_NOTIFICATION_CARDS'
+
+export const GET_NON_INSTANCE_OWNER_NOTIFICATION_CARDS =
+  'NotificationCards/GET_NON_INSTANCE_OWNER_NOTIFICATION_CARDS'
+
+export const TOGGLE_INSTANCE_OWNER_NOTIFICATION_CARDS =
+  'NotificationCards/TOGGLE_INSTANCE_OWNER_NOTIFICATION_CARDS'
+
+export const TOGGLE_NON_INSTANCE_OWNER_NOTIFICATION_CARDS =
+  'NotificationCards/TOGGLE_NON_INSTANCE_OWNER_NOTIFICATION_CARDS'
 
 /** Reducer */
 const reducer: Reducer<NotificationCardsStore, AnyAction> = (
@@ -22,15 +33,27 @@ const reducer: Reducer<NotificationCardsStore, AnyAction> = (
   action,
 ) => {
   switch (action.type) {
-    case GET_NOTIFICATION_CARDS: {
-      return state
+    case GET_INSTANCE_OWNER_NOTIFICATION_CARDS: {
+      return state.instanceOwnerNotificationCardsData
     }
 
-    case TOGGLE_NOTIFICATION_CARDS: {
-      const newValueOfShowNotificationCards = !(state.showNotificationCards)
+    case GET_NON_INSTANCE_OWNER_NOTIFICATION_CARDS: {
+      return state.nonInstanceOwnerNotificationCardsData
+    }
+
+    case TOGGLE_INSTANCE_OWNER_NOTIFICATION_CARDS: {
+      const newValueOfShowNotificationCards = !(state.showInstanceOwnerNotificationCards)
 
       return update(state, {
-        showNotificationCards: { $set: newValueOfShowNotificationCards },
+        showInstanceOwnerNotificationCards: { $set: newValueOfShowNotificationCards },
+      })
+    }
+
+    case TOGGLE_NON_INSTANCE_OWNER_NOTIFICATION_CARDS: {
+      const newValueOfShowNotificationCards = !(state.showNonInstanceOwnerNotificationCards)
+
+      return update(state, {
+        showNonInstanceOwnerNotificationCards: { $set: newValueOfShowNotificationCards },
       })
     }
 
@@ -40,12 +63,20 @@ const reducer: Reducer<NotificationCardsStore, AnyAction> = (
 }
 
 /** Action builders */
-export function getNotificationCards () {
-  return { type: GET_NOTIFICATION_CARDS }
+export function getInstanceOwnerNotificationCards () {
+  return { type: GET_INSTANCE_OWNER_NOTIFICATION_CARDS }
 }
 
-export function toggleNotificationCards () {
-  return { type: TOGGLE_NOTIFICATION_CARDS }
+export function getNonInstanceOwnerNotificationCards () {
+  return { type: GET_NON_INSTANCE_OWNER_NOTIFICATION_CARDS }
+}
+
+export function toggleInstanceOwnerNotificationCards () {
+  return { type: TOGGLE_INSTANCE_OWNER_NOTIFICATION_CARDS }
+}
+
+export function toggleNonInstanceOwnerNotificationCards () {
+  return { type: TOGGLE_NON_INSTANCE_OWNER_NOTIFICATION_CARDS }
 }
 
 export default reducer

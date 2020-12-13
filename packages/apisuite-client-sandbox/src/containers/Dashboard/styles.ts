@@ -64,10 +64,9 @@ export default makeStyles(({
 
   notificationCardSection: {
     left: '50%',
-    position: 'fixed',
+    position: 'absolute',
     transform: 'translate(-50%, -90.75px)',
     width: '100%',
-    zIndex: 4,
   },
 
   // JSS for the 'Actions Catalog' section

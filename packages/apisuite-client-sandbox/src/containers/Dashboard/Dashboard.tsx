@@ -44,7 +44,7 @@ const Dashboard: React.FC<DashboardProps> = ({
 
   const [t] = useTranslation()
 
-  const typeOfUser = auth.user?.role.name
+  const typeOfUser = auth.user!.role.name
 
   const [recentlyAddedAPIs, setRecentlyAddedAPIs] = React.useState<any[]>([])
 
@@ -93,9 +93,11 @@ const Dashboard: React.FC<DashboardProps> = ({
         {/* 'Dashboard' page's header image */}
         <section
           className={
-            notificationCards.showNotificationCards
+            (typeOfUser === 'admin' && notificationCards.showInstanceOwnerNotificationCards)
               ? classes.expandedHeaderImageSection
-              : classes.regularHeaderImageSection
+              : (typeOfUser !== 'admin' && notificationCards.showNonInstanceOwnerNotificationCards)
+                ? classes.expandedHeaderImageSection
+                : classes.regularHeaderImageSection
           }
         />
 
@@ -107,15 +109,18 @@ const Dashboard: React.FC<DashboardProps> = ({
             notificationCardButtonClassName={classes.customNotificationCardButton}
             notificationCardButtonLabel={t('dashboardTab.landingPageSubTab.regularUser.notificationCards.completeYourTeam.notificationCardButtonLabel', { config })}
             notificationCardButtonLink='/profile/team'
+            typeOfUser={typeOfUser}
           />
         </section>
 
         {/* 'Actions Catalog' section */}
         <section
           className={
-            notificationCards.showNotificationCards
+            (typeOfUser === 'admin' && notificationCards.showInstanceOwnerNotificationCards)
               ? classes.actionsCatalogSectionWithNotificationCards
-              : classes.actionsCatalogSectionWithoutNotificationCards
+              : (typeOfUser !== 'admin' && notificationCards.showNonInstanceOwnerNotificationCards)
+                ? classes.actionsCatalogSectionWithNotificationCards
+                : classes.actionsCatalogSectionWithoutNotificationCards
           }
         >
           <ActionsCatalog
@@ -303,18 +308,7 @@ const Dashboard: React.FC<DashboardProps> = ({
       {/* Notification banner */}
       {
         typeOfUser !== 'admin'
-          ? (
-            <NotificationBanner
-              notificationBannerTitle={
-                t('dashboardTab.landingPageSubTab.regularUser.notificationBanner.title', { config })
-              }
-              notificationBannerText={
-                `${settings?.portalName} ` +
-                t('dashboardTab.landingPageSubTab.regularUser.notificationBanner.text', { config })
-              }
-              showNotificationBanner
-            />
-          )
+          ? null
           : (
             <NotificationBanner
               customNotificationBannerContents={

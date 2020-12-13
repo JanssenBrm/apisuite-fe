@@ -44,5 +44,6 @@ export default makeStyles({
 
   disabledAction: {
     filter: 'grayscale(1)',
+    opacity: 0.5,
   },
 })

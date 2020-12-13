@@ -12,5 +12,7 @@ export type NotificationCardProps = {
   // (...) or a link to some place
   notificationCardButtonLink?: string,
   // Temporary until notification cards become clearer
-  toggleNotificationCards: () => void,
+  toggleInstanceOwnerNotificationCards: () => void,
+  toggleNonInstanceOwnerNotificationCards: () => void,
+  typeOfUser: string,
 }
