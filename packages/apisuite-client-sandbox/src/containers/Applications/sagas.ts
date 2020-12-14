@@ -14,7 +14,9 @@ import {
   updateAppSuccess,
   createAppSuccess,
   addAppSubscriptionSuccess,
+  addAppSubscriptionError,
   removeAppSubscriptionSuccess,
+  removeAppSubscriptionError,
 } from './ducks'
 import { SubscriptionsActionTypes } from 'containers/Subscriptions/ducks'
 import {
@@ -45,6 +47,7 @@ import { push } from 'connected-react-router'
 import { Store } from 'store/types'
 import qs from 'qs'
 import { authActions } from 'containers/Auth/ducks'
+import { openNotification } from 'containers/NotificationStack/ducks'
 
 export function * createApp (action: CreateAppAction) {
   try {
@@ -54,7 +57,6 @@ export function * createApp (action: CreateAppAction) {
       'redirect_url': action.appData.redirectUrl,
       logo: action.appData.logo,
       visibility: action.appData.visibility,
-      'user_id': action.appData.userId,
       subscriptions: action.appData.subscriptions,
       'pub_urls': action.appData.pubUrls,
     }
@@ -88,8 +90,6 @@ export function * updateApp (action: UpdateAppAction) {
       'redirect_url': action.appData.redirectUrl,
       logo: action.appData.logo,
       visibility: action.appData.visibility,
-      'user_id': action.appData.userId,
-      'sandbox_id': '1',
       'pub_urls': action.appData.pubUrls,
     }
     const accessToken = yield select(
@@ -111,7 +111,7 @@ export function * updateApp (action: UpdateAppAction) {
       description: action.appData.description,
       redirectUrl: action.appData.redirectUrl,
       logo: action.appData.logo,
-      userId: action.appData.userId,
+      orgId: action.appData.orgId,
       visibility: action.appData.visibility,
       subscriptions: action.appData.subscriptions,
       pubUrls: action.appData.pubUrls,
@@ -127,7 +127,7 @@ export function * updateApp (action: UpdateAppAction) {
 
 export function * getUsersApps (action: GetUserAppsAction) {
   try {
-    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
+    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.orgId}`
     const accessToken = yield select(
       (state: Store) => state.auth.authToken)
     const response = yield call(request, {
@@ -146,7 +146,7 @@ export function * getUsersApps (action: GetUserAppsAction) {
         description: userApp.description,
         redirectUrl: userApp.redirect_url,
         logo: userApp.logo,
-        userId: userApp.userId,
+        orgId: userApp.orgId,
         subscriptions: userApp.subscriptions,
         pubUrls: userApp.pub_urls,
         enable: userApp.enable,
@@ -178,8 +178,8 @@ export function * deleteApp (action: DeleteAppAction) {
       },
     })
     yield put(deleteAppSuccess())
-    if (action.userId) {
-      yield put(getUserApps(action.userId))
+    if (action.orgId) {
+      yield put(getUserApps(action.orgId))
     }
     yield put(push('/dashboard/apps'))
   } catch (error) {
@@ -189,8 +189,8 @@ export function * deleteApp (action: DeleteAppAction) {
     if (error.status === 204) {
       yield put(deleteAppSuccess())
 
-      if (action.userId) {
-        yield put(getUserApps(action.userId))
+      if (action.orgId) {
+        yield put(getUserApps(action.orgId))
       }
 
       yield put(push('/dashboard/apps'))
@@ -202,7 +202,7 @@ export function * deleteApp (action: DeleteAppAction) {
 }
 
 export function * getAppDetails (action: GetAppDetails) {
-  const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
+  const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.orgId}`
   const accessToken = yield select(
     (state: Store) => state.auth.authToken)
 
@@ -223,7 +223,7 @@ export function * getAppDetails (action: GetAppDetails) {
       description: userApp.description,
       redirectUrl: userApp.redirect_url,
       logo: userApp.logo,
-      userId: userApp.userId,
+      orgId: userApp.orgId,
       subscriptions: userApp.subscriptions,
       pubUrls: userApp.pub_urls,
       enable: userApp.enable,
@@ -261,33 +261,35 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
       url: addAppSubscriptionUrl,
       method: 'PUT',
       headers: {
-        'content-type': 'application/x-www-form-urlencoded',
+        'content-type': 'application/json',
         'x-access-token': accessToken,
       },
-      data: qs.stringify(data),
+      data: JSON.stringify(data),
     })
 
     const updatedApp = {
-      appId: response.app.id,
-      name: response.app.name,
-      description: response.app.description,
-      redirectUrl: response.app.redirect_url,
-      logo: response.app.logo,
-      userId: response.app.userId,
-      subscriptions: response.app.subscriptions,
-      pubUrls: response.app.pub_urls,
-      visibility: response.app.visibility,
-      enable: response.app.enable,
-      createdAt: response.app.createdAt,
-      updatedAt: response.app.updatedAt,
-      clientId: response.app.clientId,
-      clientSecret: response.app.clientSecret,
+      appId: response.id,
+      name: response.name,
+      description: response.description,
+      redirectUrl: response.redirect_url,
+      logo: response.logo,
+      orgId: response.org_id,
+      subscriptions: response.subscriptions,
+      pubUrls: response.pub_urls,
+      visibility: response.visibility,
+      enable: response.enable,
+      createdAt: response.createdAt,
+      updatedAt: response.updatedAt,
+      clientId: response.clientId,
+      clientSecret: response.clientSecret,
     }
 
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
     yield put(addAppSubscriptionSuccess(updatedApp, appIndx))
   } catch (error) {
-    console.log('Error adding subscription')
+    console.log('Error adding subscription', error)
+    yield put(openNotification('error', 'Error subscribing.', 3000))
+    yield put(addAppSubscriptionError())
     yield put(authActions.handleSessionExpire())
   }
 }
@@ -312,33 +314,35 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
       url: addAppSubscriptionUrl,
       method: 'PUT',
       headers: {
-        'content-type': 'application/x-www-form-urlencoded',
+        'content-type': 'application/json',
         'x-access-token': accessToken,
       },
-      data: qs.stringify(data),
+      data: JSON.stringify(data),
     })
 
     const updatedApp = {
-      appId: response.app.id,
-      name: response.app.name,
-      description: response.app.description,
-      redirectUrl: response.app.redirect_url,
-      logo: response.app.logo,
-      userId: response.app.userId,
-      subscriptions: response.app.subscriptions,
-      pubUrls: response.app.pub_urls,
-      visibility: response.app.visibility,
-      enable: response.app.enable,
-      createdAt: response.app.createdAt,
-      updatedAt: response.app.updatedAt,
-      clientId: response.app.clientId,
-      clientSecret: response.app.clientSecret,
+      appId: response.id,
+      name: response.name,
+      description: response.description,
+      redirectUrl: response.redirect_url,
+      logo: response.logo,
+      orgId: response.org_id,
+      subscriptions: response.subscriptions,
+      pubUrls: response.pub_urls,
+      visibility: response.visibility,
+      enable: response.enable,
+      createdAt: response.createdAt,
+      updatedAt: response.updatedAt,
+      clientId: response.clientId,
+      clientSecret: response.clientSecret,
     }
 
     const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
     yield put(removeAppSubscriptionSuccess(updatedApp, appIndx))
   } catch (error) {
     console.log('Error removing subscription')
+    yield put(openNotification('error', 'Error removing subscription.', 3000))
+    yield put(removeAppSubscriptionError())
     yield put(authActions.handleSessionExpire())
   }
 }
