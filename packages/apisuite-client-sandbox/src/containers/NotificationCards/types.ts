@@ -12,8 +12,8 @@ import {
 export type NotificationCardsStore = NotificationCardsData
 
 export interface NotificationCardsData {
-  instanceOwnerNotificationCardsData: {}[],
-  nonInstanceOwnerNotificationCardsData: {}[],
+  instanceOwnerNotificationCardsData: any,
+  nonInstanceOwnerNotificationCardsData: any,
   showInstanceOwnerNotificationCards: boolean,
   showNonInstanceOwnerNotificationCards: boolean,
 }
