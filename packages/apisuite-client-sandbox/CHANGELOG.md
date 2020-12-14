@@ -3,6 +3,39 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-rc.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.1...apisuite-client-sandbox@1.1.0-rc.2) (2020-12-14)
+
+
+### Bug Fixes
+
+* **app-sub:** fix app subscription wrong request ([677a1ba](https://github.com/Cloudoki/APISuite/commit/677a1ba55e02e5951f0a79b98a1c6bcb4213b759))
+* **build:** use npm instead of yarn ([4f1f443](https://github.com/Cloudoki/APISuite/commit/4f1f443c9ea84811bac3a969b6334d8a9a611eda))
+* **commons-build:** fix build by removining styled components dependency ([1730414](https://github.com/Cloudoki/APISuite/commit/17304143657d5241d70c8a65a427662ba4dff1f0))
+* **empty-subscriptions:** add empty subscriptions message and error subscribe feedback ([83af035](https://github.com/Cloudoki/APISuite/commit/83af0357c839f97b2fc64da309f93e369d1061ec))
+* **linter:** linter fixes ([291c6ac](https://github.com/Cloudoki/APISuite/commit/291c6ac7f16b8bbc31660a4644c13b1643b136d5))
+
+
+
+
+
+# [1.1.0-rc.1](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.0...apisuite-client-sandbox@1.1.0-rc.1) (2020-11-30)
+
+
+### Bug Fixes
+
+* **settings:** empty settings no longer break the home page ([9952f11](https://github.com/Cloudoki/APISuite/commit/9952f1106bf925b027f36ab392bbbbfb3097e2f6))
+
+
+### Features
+
+* **common-lib:** implement common components library for apisuite ([ebe65e8](https://github.com/Cloudoki/APISuite/commit/ebe65e8281f06269d352c8338c208869c6d7f4a5))
+* **translations:** add admin action button translations ([93f59a5](https://github.com/Cloudoki/APISuite/commit/93f59a5b6ece32e526cf4e4cbc865b6348d185b0))
+* Implemented API Suite's 'cookies consent' banner ([31ae5a0](https://github.com/Cloudoki/APISuite/commit/31ae5a0b146b68c893c5e59bda6e6af1e4dcade1))
+
+
+
+
+
 # [1.1.0-rc.0](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.3...apisuite-client-sandbox@1.1.0-rc.0) (2020-11-19)
 
 
