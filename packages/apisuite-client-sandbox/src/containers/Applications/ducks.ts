@@ -13,7 +13,7 @@ const initialState: ApplicationsStore = {
     description: '',
     redirectUrl: '',
     logo: 'http://logo.png',
-    userId: 0,
+    orgId: 0,
     subscriptions: [],
     visibility: 'private',
     pubUrls: [{
@@ -34,6 +34,10 @@ const initialState: ApplicationsStore = {
     isError: false,
   },
   resDelete: {
+    isRequesting: false,
+    isError: false,
+  },
+  subscribing: {
     isRequesting: false,
     isError: false,
   },
@@ -107,7 +111,7 @@ export default function reducer (
           description: { $set: action.appData.description },
           redirectUrl: { $set: action.appData.redirectUrl },
           logo: { $set: action.appData.logo },
-          userId: { $set: action.appData.userId },
+          orgId: { $set: action.appData.orgId },
           pubUrls: { $set: action.appData.pubUrls },
           enable: { $set: action.appData.enable },
         },
@@ -155,7 +159,7 @@ export default function reducer (
           description: { $set: action.appData.description },
           redirectUrl: { $set: action.appData.redirectUrl },
           logo: { $set: action.appData.logo },
-          userId: { $set: action.appData.userId },
+          orgId: { $set: action.appData.orgId },
           subscriptions: { $set: action.appData.subscriptions },
           pubUrls: { $set: action.appData.pubUrls },
           createdAt: { $set: action.appData.createdAt },
@@ -176,22 +180,44 @@ export default function reducer (
 
     /** Actions related to adding and removing app subscriptions to APIs */
     case SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION: {
-      return state
+      return update(state, {
+        subscribing: {
+          isRequesting: { $set: true },
+        },
+      })
     }
 
     case SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS: {
       return update(state, {
         userApps: { [action.updatedAppIndx]: { $set: action.updatedApp } },
+        subscribing: { isRequesting: { $set: false } },
+      })
+    }
+
+    case SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_ERROR: {
+      return update(state, {
+        subscribing: { isRequesting: { $set: false } },
       })
     }
 
     case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION: {
-      return state
+      return update(state, {
+        subscribing: {
+          isRequesting: { $set: true },
+        },
+      })
     }
 
     case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS: {
       return update(state, {
         userApps: { [action.updatedAppIndx]: { $set: action.updatedApp } },
+        subscribing: { isRequesting: { $set: false } },
+      })
+    }
+
+    case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_ERROR: {
+      return update(state, {
+        subscribing: { isRequesting: { $set: false } },
       })
     }
 
@@ -225,8 +251,8 @@ export function updateAppError () {
   return { type: UPDATE_APP_ERROR }
 }
 
-export function deleteApp (appId: number, userId?: number) {
-  return { type: DELETE_APP, appId, userId }
+export function deleteApp (appId: number, orgId?: number) {
+  return { type: DELETE_APP, appId, orgId }
 }
 
 export function deleteAppSuccess () {
@@ -237,16 +263,16 @@ export function deleteAppError () {
   return { type: DELETE_APP_ERROR }
 }
 
-export function getAppDetails (appId: number, userId: number) {
-  return { type: GET_APP_DETAILS, appId, userId }
+export function getAppDetails (appId: number, orgId: number) {
+  return { type: GET_APP_DETAILS, appId, orgId }
 }
 
 export function getAppDetailsSuccess (appData: AppData) {
   return { type: GET_APP_DETAILS_SUCCESS, appData }
 }
 
-export function getUserApps (userId: number) {
-  return { type: GET_USER_APPS, userId }
+export function getUserApps (orgId: number) {
+  return { type: GET_USER_APPS, orgId }
 }
 
 export function getUserAppsSuccess (userApps: AppData[]) {
@@ -261,10 +287,18 @@ export function addAppSubscriptionSuccess (updatedApp: AppData, updatedAppIndx: 
   return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS, updatedAppIndx, updatedApp }
 }
 
+export function addAppSubscriptionError () {
+  return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_ERROR }
+}
+
 export function removeAppSubscription (appId: number, apiName: string) {
   return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION, appId, apiName }
 }
 
 export function removeAppSubscriptionSuccess (updatedApp: AppData, updatedAppIndx: number) {
   return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS, updatedAppIndx, updatedApp }
+}
+
+export function removeAppSubscriptionError () {
+  return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_ERROR }
 }

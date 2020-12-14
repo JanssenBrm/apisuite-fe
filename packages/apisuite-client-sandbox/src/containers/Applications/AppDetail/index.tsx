@@ -15,8 +15,8 @@ const mapStateToProps = ({ applications, auth }: Store) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   updateApp: (appData: AppData) => dispatch(updateApp(appData)),
-  deleteApp: (appId: number, userId?: number) => dispatch(deleteApp(appId, userId)),
-  getAppDetails: (appId: number, userId: number) => dispatch(getAppDetails(appId, userId)),
+  deleteApp: (appId: number, orgId?: number) => dispatch(deleteApp(appId, orgId)),
+  getAppDetails: (appId: number, orgId: number) => dispatch(getAppDetails(appId, orgId)),
   toggleInform: () => dispatch(appStoreActionCreators.informOpen()),
 })
 

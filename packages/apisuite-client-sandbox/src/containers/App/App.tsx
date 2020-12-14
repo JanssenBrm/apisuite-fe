@@ -5,6 +5,7 @@ import NotificationStack from 'containers/NotificationStack'
 import routes from './routes'
 import { AppProps } from './types'
 import useStyles from './styles'
+import CookiesBanner from 'components/CookiesBanner'
 
 const App: React.FC<AppProps> = ({
   auth,
@@ -35,6 +36,7 @@ const App: React.FC<AppProps> = ({
   return (
     <div className={classes.root}>
       {routes()}
+      <CookiesBanner />
       <InformDialog />
       <NotificationStack />
     </div>

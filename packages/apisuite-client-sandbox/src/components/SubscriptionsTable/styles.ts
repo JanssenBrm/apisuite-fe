@@ -206,4 +206,22 @@ export default makeStyles(({
   vNumber: {
     color: config.palette.greyScales[400],
   },
+  empty: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    flexFlow: 'column',
+    height: '100%',
+  },
+  emptyURL: {
+    fontSize: '0.8em',
+  },
+  loadingContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  loading: {
+    color: config.palette.primary,
+  },
 }))
