@@ -1,48 +1,49 @@
-import styled from 'styled-components'
-import { Button } from '@material-ui/core'
-import { $ButtonProps } from './button.types'
+import { makeStyles } from '@material-ui/styles'
+import { ButtonProps } from './button.types'
 import { theme } from '../theme'
 
-export const $Button = styled(Button)<$ButtonProps>`
-  &.MuiButton-contained {
-    background-color: ${({ btncolor }) =>
-      (btncolor === 'primary' && theme.palette.primary) ||
-      (btncolor === 'secondary' && theme.palette.secondary) ||
-      (btncolor === 'tertiary' && theme.palette.tertiary) ||
-      (btncolor === 'warning' && theme.palette.warning) ||
-      theme.palette.background.default};
-    color: ${({ btncolor }) =>
-      (btncolor === 'primary' && theme.palette.primaryContrastText) ||
-      (btncolor === 'secondary' && theme.palette.secondaryContrastText) ||
-      (btncolor === 'tertiary' && theme.palette.tertiaryContrastText) ||
-      (btncolor === 'warning' && theme.palette.primaryContrastText) ||
-      theme.palette.newGreyScales[700]};
-    border-color: ${({ btncolor }) =>
-      (btncolor === 'primary' && theme.palette.primary) ||
-      (btncolor === 'secondary' && theme.palette.secondary) ||
-      (btncolor === 'tertiary' && theme.palette.tertiary) ||
-      (btncolor === 'warning' && theme.palette.warning) ||
-      theme.palette.newGreyScales[700]};
-  }
+export default makeStyles({
+  button: {
+    '&.MuiButton-contained': {
+      backgroundColor: (props: ButtonProps) =>
+        (props.btncolor === 'primary' && theme.palette.primary) ||
+        (props.btncolor === 'secondary' && theme.palette.secondary) ||
+        (props.btncolor === 'tertiary' && theme.palette.tertiary) ||
+        (props.btncolor === 'warning' && theme.palette.warning) ||
+        theme.palette.background.default,
+      color: (props: ButtonProps) =>
+        (props.btncolor === 'primary' && theme.palette.primaryContrastText) ||
+        (props.btncolor === 'secondary' &&
+          theme.palette.secondaryContrastText) ||
+        (props.btncolor === 'tertiary' && theme.palette.tertiaryContrastText) ||
+        (props.btncolor === 'warning' && theme.palette.primaryContrastText) ||
+        theme.palette.newGreyScales[700],
+      borderColor: (props: ButtonProps) =>
+        (props.btncolor === 'primary' && theme.palette.primary) ||
+        (props.btncolor === 'secondary' && theme.palette.secondary) ||
+        (props.btncolor === 'tertiary' && theme.palette.tertiary) ||
+        (props.btncolor === 'warning' && theme.palette.warning) ||
+        theme.palette.newGreyScales[700],
+    },
 
-  :disabled {
-    &.MuiButton-contained.Mui-disabled {
-      background-color: ${theme.palette.newGreyScales['300']};
-      cursor: default;
-      opacity: 0.6;
-      boxshadow: '0 2px 5px 0 rgba(0,0,0,0.05) !important';
-    }
-  }
+    '&:disabled': {
+      '&.MuiButton-contained.Mui-disabled': {
+        backgroundColor: theme.palette.newGreyScales['300'],
+        cursor: 'default',
+        opacity: '0.6',
+      },
+    },
 
-  :hover {
-    &.MuiButton-contained {
-      boxshadow: '0 4px 6px 0 rgba(0,0,0,0.35) !important';
-      background-color: ${({ btncolor }) =>
-        (btncolor === 'primary' && theme.palette.primary) ||
-        (btncolor === 'secondary' && theme.palette.secondary) ||
-        (btncolor === 'tertiary' && theme.palette.tertiary) ||
-        (btncolor === 'warning' && theme.palette.warning) ||
-        theme.palette.background.default};
-    }
-  }
-`
+    '&:hover': {
+      '&.MuiButton-contained': {
+        filter: 'brightness(90%)',
+        backgroundColor: (props: ButtonProps) =>
+          (props.btncolor === 'primary' && theme.palette.primary) ||
+          (props.btncolor === 'secondary' && theme.palette.secondary) ||
+          (props.btncolor === 'tertiary' && theme.palette.tertiary) ||
+          (props.btncolor === 'warning' && theme.palette.warning) ||
+          theme.palette.background.default,
+      },
+    },
+  },
+})
