@@ -3,6 +3,24 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-rc.1](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.0...apisuite-client-sandbox@1.1.0-rc.1) (2020-11-30)
+
+
+### Bug Fixes
+
+* **settings:** empty settings no longer break the home page ([9952f11](https://github.com/Cloudoki/APISuite/commit/9952f1106bf925b027f36ab392bbbbfb3097e2f6))
+
+
+### Features
+
+* **common-lib:** implement common components library for apisuite ([ebe65e8](https://github.com/Cloudoki/APISuite/commit/ebe65e8281f06269d352c8338c208869c6d7f4a5))
+* **translations:** add admin action button translations ([93f59a5](https://github.com/Cloudoki/APISuite/commit/93f59a5b6ece32e526cf4e4cbc865b6348d185b0))
+* Implemented API Suite's 'cookies consent' banner ([31ae5a0](https://github.com/Cloudoki/APISuite/commit/31ae5a0b146b68c893c5e59bda6e6af1e4dcade1))
+
+
+
+
+
 # [1.1.0-rc.0](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.3...apisuite-client-sandbox@1.1.0-rc.0) (2020-11-19)
 
 
