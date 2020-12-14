@@ -7,7 +7,7 @@ const $Button: FC<Props> = ({ children, ...rest }) => {
   const classes = useStyles(rest)
 
   return (
-    <Button className={classes.button} variant="contained" {...rest}>
+    <Button className={classes.apisButton} variant="contained" {...rest}>
       {children}
     </Button>
   )

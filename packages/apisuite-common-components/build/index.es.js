@@ -5595,7 +5595,7 @@ var theme = {
 };
 
 var useStyles = makeStyles({
-    button: {
+    apisButton: {
         '&.MuiButton-contained': {
             backgroundColor: function (props) {
                 return (props.btncolor === 'primary' && theme.palette.primary) ||
@@ -5645,7 +5645,7 @@ var useStyles = makeStyles({
 var $Button = function (_a) {
     var children = _a.children, rest = __rest(_a, ["children"]);
     var classes = useStyles(rest);
-    return (React.createElement(Button, __assign({ className: classes.button, variant: "contained" }, rest), children));
+    return (React.createElement(Button, __assign({ className: classes.apisButton, variant: "contained" }, rest), children));
 };
 
 /*

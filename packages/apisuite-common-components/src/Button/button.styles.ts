@@ -3,7 +3,7 @@ import { ButtonProps } from './button.types'
 import { theme } from '../theme'
 
 export default makeStyles({
-  button: {
+  apisButton: {
     '&.MuiButton-contained': {
       backgroundColor: (props: ButtonProps) =>
         (props.btncolor === 'primary' && theme.palette.primary) ||
