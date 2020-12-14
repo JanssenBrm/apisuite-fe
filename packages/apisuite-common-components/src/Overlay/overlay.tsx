@@ -1,18 +1,11 @@
 import React, { FC } from 'react'
-import {
-  $Overlay,
-  $Nav,
-  $Logo,
-  $LogoContainer,
-  $Clickable,
-  $Close,
-  $Container,
-} from './overlay.styles'
-import { OverlayProps } from './overlay.types'
+import { Overlay } from 'react-portal-overlay'
 import CloseIcon from '@material-ui/icons/Close'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
+import useStyles from './overlay.styles'
+import { OverlayProps } from './overlay.types'
 
-const Overlay: FC<OverlayProps> = ({
+const $Overlay: FC<OverlayProps> = ({
   children,
   showLogo,
   noTopBg,
@@ -21,31 +14,33 @@ const Overlay: FC<OverlayProps> = ({
   onClose,
   ...rest
 }) => {
+  const classes = useStyles(rest)
+
   return (
-    <$Overlay className="overlay" {...rest}>
-      <$Nav
-        className={`${showLogo ? 'spaced' : ''} ${
+    <Overlay className={classes.overlay} {...rest}>
+      <div
+        className={`${classes.nav} ${showLogo ? 'spaced' : ''} ${
           noTopBg ? 'transparent' : ''
         }`}
       >
-        <$LogoContainer>
+        <div className={classes.logoContainer}>
           {showLogo && (
             <>
-              <$Logo className={`${blankLogo ? 'blank' : ''}`}>
+              <div className={`${classes.logo} ${blankLogo ? 'blank' : ''}`}>
                 <AmpStoriesRoundedIcon className="big-logo" />
-              </$Logo>
+              </div>
               {title}
             </>
           )}
-        </$LogoContainer>
-        <$Clickable onClick={() => onClose()}>
-          <$Close>close</$Close>
+        </div>
+        <div className={classes.clickable} onClick={() => onClose()}>
+          <div className={classes.close}>close</div>
           <CloseIcon />
-        </$Clickable>
-      </$Nav>
-      <$Container>{children}</$Container>
-    </$Overlay>
+        </div>
+      </div>
+      <div className={classes.container}>{children}</div>
+    </Overlay>
   )
 }
 
-export default Overlay
+export default $Overlay
