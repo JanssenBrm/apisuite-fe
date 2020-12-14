@@ -3,6 +3,22 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-rc.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.2...apisuite-client-sandbox@1.1.0-rc.3) (2020-12-14)
+
+
+### Bug Fixes
+
+* **notification-cards:** linter fixes ([e9dc2c4](https://github.com/Cloudoki/APISuite/commit/e9dc2c43bc6381cbd971981f7e4543c2139b4387))
+
+
+### Features
+
+* Implemented the Dasboard's new 'Overview' UI ([2b8f2fa](https://github.com/Cloudoki/APISuite/commit/2b8f2fab7dc0d73c3564cda847573514916e15c5))
+
+
+
+
+
 # [1.1.0-rc.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.1...apisuite-client-sandbox@1.1.0-rc.2) (2020-12-14)
 
 
