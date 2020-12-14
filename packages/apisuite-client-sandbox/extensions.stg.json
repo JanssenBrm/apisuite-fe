@@ -1,12 +1,12 @@
 {
   "extensions": [
     {
-      "name": "@apisuite/extension-status-ui",
-      "version": "^1.0.4",
-      "path": "",
-      "className": "Status",
+      "path": "github:Cloudoki/apisuite-cloud-extension-ui#v1.0.14",
+      "name": "@apisuite/extension-cloud-extension-ui",
+      "className": "CloudExtension",
       "config": {
-        "servicesStatusDataUrl": "https://gateway.staging.apisuite.io/services"
+        "cloudExtensionSubdomain": "cloudextapi",
+        "cloudExtensionUrl": "https://cloudextapi.apisuite.io"
       }
     }
   ]

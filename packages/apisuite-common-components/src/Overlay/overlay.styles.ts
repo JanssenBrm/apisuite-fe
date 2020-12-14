@@ -1,80 +1,78 @@
-import styled from 'styled-components'
-import { Overlay } from 'react-portal-overlay'
-import { OverlayProps } from './overlay.types'
+import { makeStyles } from '@material-ui/styles'
 import { theme } from '../theme'
 
-export const $Overlay = styled(Overlay)<OverlayProps>`
-  &.overlay {
-    display: flex;
-    background-color: ${theme.palette.background.default};
-    width: 100%;
-    flex-direction: column;
-  }
-`
+export default makeStyles({
+  overlay: {
+    display: 'flex',
+    backgroundColor: theme.palette.background.default,
+    width: '100%',
+    flexDirection: 'column',
+  },
 
-export const $Nav = styled.div`
-  top: 0;
-  background-color: ${theme.palette.background.default};
-  display: flex;
-  justify-content: flex-end;
-  position: fixed;
-  width: inherit;
-  flex-direction: rows;
+  nav: {
+    top: '0',
+    backgroundColor: theme.palette.background.default,
+    display: 'flex',
+    justifyContent: 'flex-end',
+    position: 'fixed',
+    width: 'inherit',
+    flexDirection: 'row',
 
-  &.transparent {
-    background-color: transparent !important;
-  }
+    '&.transparent': {
+      backgroundColor: 'transparent !important',
+    },
 
-  &.spaced {
-    justify-content: space-between !important;
-  }
-`
+    '&.spaced': {
+      justifyContent: 'space-between !important',
+    },
+  },
 
-export const $LogoContainer = styled.div`
-  color: ${theme.palette.greyScales[900]};
-  height: auto;
-  display: flex;
-  align-items: center;
-  flex-direction: row;
-  font-weight: 600;
-  padding: 10px 0px 10px 30px;
-`
+  logoContainer: {
+    color: theme.palette.greyScales[900],
+    height: 'auto',
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'row',
+    fontWeight: 600,
+    padding: '10px 0px 10px 30px',
+  },
 
-export const $Logo = styled.div`
-  color: ${theme.palette.primary};
-  height: auto;
-  margin-right: 20px;
-  width: 60px;
+  logo: {
+    color: theme.palette.primary,
+    height: 'auto',
+    marginRight: '20px',
+    width: '60px',
 
-  &.blank {
-    color: #ffffff;
-  }
+    '&.blank': {
+      color: '#ffffff',
+    },
 
-  .big-logo {
-    font-size: 4em;
-  }
-`
+    '& > .big-logo': {
+      fontSize: '4em',
+    },
+  },
 
-export const $Clickable = styled.div`
-  color: ${theme.palette.newGreyScales[400]};
-  display: flex;
-  cursor: pointer;
-  align-self: center;
-  padding: 10px 30px;
+  clickable: {
+    color: theme.palette.newGreyScales[400],
+    display: 'flex',
+    cursor: 'pointer',
+    alignSelf: 'center',
+    padding: '10px 30px',
 
-  :hover {
-    text-decoration: underline;
-  }
-`
+    '&:hover': {
+      textDecoration: 'underline',
+    },
+  },
 
-export const $Close = styled.div`
-  font-size: 0.9em;
-  margin-right: 10px;
-  align-self: center;
-`
+  close: {
+    fontSize: '0.9em',
+    marginRight: '10px',
+    alignSelf: 'center',
+  },
 
-export const $Container = styled.div`
-  margin-top: 150px;
-  margin-bottom: 100px;
-  padding: 30px;
-`
+  container: {
+    marginTop: '150px',
+    marginBottom: '100px',
+    padding: '30px',
+  },
+})

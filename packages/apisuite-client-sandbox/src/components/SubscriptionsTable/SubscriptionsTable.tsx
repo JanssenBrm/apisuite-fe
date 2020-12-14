@@ -13,6 +13,7 @@ import Popover from '@material-ui/core/Popover'
 import MenuItem from '@material-ui/core/MenuItem'
 import { useTranslation } from 'react-i18next'
 import Link from 'components/Link'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
   apisByName,
@@ -22,6 +23,7 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
   removeAppSubscription,
   addAppSubscription,
   userApps,
+  subscribing,
 }) => {
   const classes = useStyles()
   const [t] = useTranslation()
@@ -223,6 +225,28 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
     }
   }
 
+  const showEmptyMsg = () => {
+    return (
+      <div className={classes.empty}>
+        <p>No subscriptions available</p>
+        <Link
+          className={classes.emptyURL}
+          to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions'
+        >
+          What are subscriptions all about
+        </Link>
+      </div>
+    )
+  }
+
+  const loadingView = () => {
+    return (
+      <div className={classes.loadingContainer}>
+        <CircularProgress size={50} className={classes.loading} />
+      </div>
+    )
+  }
+
   return (
     <div className={classes.viewContainer}>
       <div className={classes.viewRow}>
@@ -260,7 +284,9 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
         ))}
       </Popover>
 
-      {subscriptionsView()}
+      {subscribing.isRequesting && loadingView()}
+
+      {apisByName.length > 0 ? subscriptionsView() : showEmptyMsg()}
     </div>
   )
 }

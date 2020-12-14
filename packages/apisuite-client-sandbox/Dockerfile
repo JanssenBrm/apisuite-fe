@@ -12,8 +12,8 @@ RUN mkdir /root/.ssh/ &&\
     ssh-keyscan github.com >> /root/.ssh/known_hosts
 RUN node scripts/extensions-installer.js
 RUN npm install -g yarn
-RUN yarn install
-RUN yarn run build
+RUN npm install
+RUN npm run build
 
 # This results in a single layer image
 FROM nginx:1.17.3-alpine

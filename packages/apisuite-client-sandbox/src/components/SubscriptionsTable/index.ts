@@ -10,6 +10,7 @@ const mapStateToProps = (store: Store) => ({
   apisByName: getApisByName(store),
   user: store.auth.user,
   userApps: store.applications.userApps,
+  subscribing: store.applications.subscribing,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
