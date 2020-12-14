@@ -2,31 +2,24 @@ import { Dispatch } from 'redux'
 
 import { connect } from 'react-redux'
 
-import { authActions } from 'containers/Auth/ducks'
 import {
   toggleInstanceOwnerNotificationCards,
   toggleNonInstanceOwnerNotificationCards,
 } from 'containers/NotificationCards/ducks'
 
-import { appStoreActionCreators } from 'components/InformDialog/ducks'
-
 import { Store } from 'store/types'
 
-import Navigation from './Navigation'
+import NotificationCard from './NotificationCard'
 
-const mapStateToProps = ({ notificationCards, profile, settings }: Store) => ({
+const mapStateToProps = ({ notificationCards }: Store) => ({
   // Temporary until notification cards become clearer
   notificationCards: notificationCards,
-  profile: profile,
-  settings: settings,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  logout: () => dispatch(authActions.logout()),
-  toggleInform: () => dispatch(appStoreActionCreators.informOpen()),
   // Temporary until notification cards become clearer
   toggleInstanceOwnerNotificationCards: () => dispatch(toggleInstanceOwnerNotificationCards()),
   toggleNonInstanceOwnerNotificationCards: () => dispatch(toggleNonInstanceOwnerNotificationCards()),
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Navigation)
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationCard)
