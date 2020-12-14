@@ -18,12 +18,16 @@ const useStyles = makeStyles(({
   },
 
   cookiesConsentHeader: {
+    color: config.palette.primaryContrastText,
+    fontSize: '24px',
     fontWeight: 400,
     margin: '0px 80px 12px 0px',
   },
 
   cookiesConsentParagraph: {
+    color: config.palette.primaryContrastText,
     fontSize: '16px',
+    fontWeight: 300,
     lineHeight: '22px',
     marginRight: '80px',
 

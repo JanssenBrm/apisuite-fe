@@ -13,7 +13,10 @@ import { useSettings } from 'util/useSetting'
 
 import { TabProps } from './types'
 
-import { DEFAULT_SUPPORT_URL } from 'constants/global'
+import {
+  DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
+  DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
+} from 'constants/global'
 
 export function useMenu (): Array<TabProps[]> {
   const [settings] = useSettings()
@@ -106,7 +109,11 @@ export function useMenu (): Array<TabProps[]> {
       },
       {
         label: 'Support',
-        route: settings.supportURL || DEFAULT_SUPPORT_URL,
+        route: settings.supportURL || (
+          roleName === 'admin'
+            ? DEFAULT_INSTANCE_OWNER_SUPPORT_URL
+            : DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
+        ),
       },
       {
         // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
@@ -147,27 +154,31 @@ export function useMenu (): Array<TabProps[]> {
       },
       {
         label: 'Support',
-        route: settings.supportURL || DEFAULT_SUPPORT_URL,
+        route: settings.supportURL || (
+          roleName === 'admin'
+            ? DEFAULT_INSTANCE_OWNER_SUPPORT_URL
+            : DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
+        ),
       },
       {
         label: 'Dashboard',
         route: '/dashboard',
         subTabs: [
           {
-            label: 'Landing page',
+            label: 'Overview',
             route: '/dashboard',
+          },
+          {
+            label: 'Team',
+            route: '/profile/team',
           },
           {
             label: 'Subscriptions',
             route: '/dashboard/subscriptions',
           },
           {
-            label: 'Client Applications',
+            label: 'Applications',
             route: '/dashboard/apps',
-          },
-          {
-            label: 'Test',
-            route: '/dashboard/test',
           },
           ...extensionsLoginDashboardTabs,
         ],
@@ -220,7 +231,7 @@ export const goBackConfig = [
     label: 'Back to overview',
   },
   {
-    path: '/api-products',
+    path: '/api-products/details',
     label: 'Back to overview',
   },
 ]
