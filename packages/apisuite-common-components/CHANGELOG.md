@@ -3,6 +3,18 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.0.5-rc.0](https://github.com/Cloudoki/APISuite/compare/@apisuite/apisuite-common-components@1.1.0-rc.0...@apisuite/apisuite-common-components@1.0.5-rc.0) (2020-12-14)
+
+
+### Bug Fixes
+
+* **commons-build:** fix build by removining styled components dependency ([1730414](https://github.com/Cloudoki/APISuite/commit/17304143657d5241d70c8a65a427662ba4dff1f0))
+* **commons-lib:** use same versions ([f525ede](https://github.com/Cloudoki/APISuite/commit/f525edef3dd3fab12328f4c6e465d58d39d18599))
+
+
+
+
+
 # 1.1.0-rc.0 (2020-11-30)
 
 

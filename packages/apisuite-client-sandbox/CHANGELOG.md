@@ -3,6 +3,21 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-rc.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.1...apisuite-client-sandbox@1.1.0-rc.2) (2020-12-14)
+
+
+### Bug Fixes
+
+* **app-sub:** fix app subscription wrong request ([677a1ba](https://github.com/Cloudoki/APISuite/commit/677a1ba55e02e5951f0a79b98a1c6bcb4213b759))
+* **build:** use npm instead of yarn ([4f1f443](https://github.com/Cloudoki/APISuite/commit/4f1f443c9ea84811bac3a969b6334d8a9a611eda))
+* **commons-build:** fix build by removining styled components dependency ([1730414](https://github.com/Cloudoki/APISuite/commit/17304143657d5241d70c8a65a427662ba4dff1f0))
+* **empty-subscriptions:** add empty subscriptions message and error subscribe feedback ([83af035](https://github.com/Cloudoki/APISuite/commit/83af0357c839f97b2fc64da309f93e369d1061ec))
+* **linter:** linter fixes ([291c6ac](https://github.com/Cloudoki/APISuite/commit/291c6ac7f16b8bbc31660a4644c13b1643b136d5))
+
+
+
+
+
 # [1.1.0-rc.1](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.0...apisuite-client-sandbox@1.1.0-rc.1) (2020-11-30)
 
 
