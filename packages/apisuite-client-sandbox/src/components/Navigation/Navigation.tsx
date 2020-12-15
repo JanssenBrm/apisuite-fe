@@ -188,6 +188,8 @@ const Navigation: React.FC<NavigationProps> = ({
             >
               {
                 tabs.map((tab, idx) => {
+                  if (tab.hideFromInstanceOwner && user?.role.name === 'admin') return
+
                   if (tab.isProfileTab) return
 
                   return !(contractible && !scrolled && tab.yetToLogIn)

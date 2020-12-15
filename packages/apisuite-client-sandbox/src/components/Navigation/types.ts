@@ -22,6 +22,7 @@ export interface TabMenus {
 }
 
 export interface TabProps {
+  hideFromInstanceOwner?: boolean,
   isLogin?: boolean,
   isProfileTab?: boolean,
   yetToLogIn?: boolean,

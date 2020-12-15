@@ -142,6 +142,7 @@ export function useMenu (): Array<TabProps[]> {
       {
         label: 'Home',
         route: '/',
+        hideFromInstanceOwner: true,
       },
       {
         label: 'API Products',
