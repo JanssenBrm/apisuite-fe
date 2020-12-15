@@ -96,12 +96,6 @@ export default makeStyles(({
     textTransform: 'none',
   },
 
-  opaqueMenuUserAvatar: {
-    border: `2px solid ${config.palette.primary}`,
-    height: '33px',
-    width: '33px',
-  },
-
   opaqueMenuUserNameAndAvatarContainer: {
     alignItems: 'center',
     display: 'flex',
@@ -194,10 +188,14 @@ export default makeStyles(({
     textTransform: 'none',
   },
 
-  transparentMenuUserAvatar: {
+  userAvatar: {
     border: '2px solid #FFFFFF',
     height: '33px',
     width: '33px',
+
+    '&:hover': {
+      border: `2px solid ${config.palette.primary}`,
+    }
   },
 
   transparentMenuUserNameAndAvatarContainer: {
