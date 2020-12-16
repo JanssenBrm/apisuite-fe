@@ -146,8 +146,6 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
   } else if (action.type === LOGIN_USER_SUCCESS) {
     const location = history.location
 
-    console.log('action ----->', action)
-
     if (location.pathname.startsWith('/auth')) {
       if (action.payload.user.role.name === 'admin') {
         history.replace('/dashboard')
