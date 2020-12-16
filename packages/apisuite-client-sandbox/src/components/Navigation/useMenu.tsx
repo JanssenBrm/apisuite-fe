@@ -104,10 +104,6 @@ export function useMenu (): Array<TabProps[]> {
   const initTabs = React.useMemo((): TabProps[] => {
     const entries = [
       {
-        label: 'Home',
-        route: '/',
-      },
-      {
         label: 'Support',
         route: settings.supportURL || (
           roleName === 'admin'
@@ -139,11 +135,6 @@ export function useMenu (): Array<TabProps[]> {
 
   const loginTabs = React.useMemo((): TabProps[] => {
     const entries = [
-      {
-        label: 'Home',
-        route: '/',
-        hideFromInstanceOwner: true,
-      },
       {
         label: 'API Products',
         route: '/api-products',

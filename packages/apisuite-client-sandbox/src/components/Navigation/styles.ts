@@ -77,6 +77,7 @@ export default makeStyles(({
   logoAndNameContainer: {
     display: 'flex',
     alignItems: 'center',
+    textDecoration: 'none',
   },
 
   opaqueMenuActiveTabOverLine: {

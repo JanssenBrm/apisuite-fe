@@ -135,7 +135,10 @@ const Navigation: React.FC<NavigationProps> = ({
     >
       <header className={clsx({ scrolled })}>
         <div className={classes.headerContentsContainer}>
-          <div className={classes.logoAndNameContainer}>
+          <Link
+            className={classes.logoAndNameContainer}
+            to={user?.role.name !== 'admin' ? '/' : '/dashboard'}
+          >
             <AmpStoriesRoundedIcon
               className={
                 !scrolled
@@ -147,7 +150,7 @@ const Navigation: React.FC<NavigationProps> = ({
             <h3 className={classes.portalName}>
               {settings.portalName}
             </h3>
-          </div>
+          </Link>
 
           {!user && (
             <div className='tabs pretabs'>
@@ -188,8 +191,6 @@ const Navigation: React.FC<NavigationProps> = ({
             >
               {
                 tabs.map((tab, idx) => {
-                  if (tab.hideFromInstanceOwner && user?.role.name === 'admin') return
-
                   if (tab.isProfileTab) return
 
                   return !(contractible && !scrolled && tab.yetToLogIn)
@@ -323,7 +324,7 @@ ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
                             }
                           } else {
                             /* If the user has NOT scrolled, then he's already at the top,
-                              so we toggle notification cards as regular. */
+                            so we toggle notification cards as regular. */
                             toggleNonInstanceOwnerNotificationCards()
                           }
                         }
@@ -340,7 +341,7 @@ ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
                             }
                           } else {
                             /* If the user has NOT scrolled, then he's already at the top,
-                              so we toggle notification cards as regular. */
+                            so we toggle notification cards as regular. */
                             toggleInstanceOwnerNotificationCards()
                           }
                         }
