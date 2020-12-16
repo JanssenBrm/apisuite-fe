@@ -147,11 +147,7 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
     const location = history.location
 
     if (location.pathname.startsWith('/auth')) {
-      if (action.payload.user.role.name === 'admin') {
-        history.replace('/dashboard')
-      } else {
-        history.replace('/')
-      }
+      history.replace('/dashboard')
     }
   } else if (action.type === LOGIN_ERROR || action.type === LOGIN_USER_ERROR) {
     cookie.remove(TOKEN_KEY, { path: '/' })
