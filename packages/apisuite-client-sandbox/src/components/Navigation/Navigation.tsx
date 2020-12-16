@@ -29,7 +29,6 @@ import { TabMenus, NavigationProps } from './types'
 
 const Navigation: React.FC<NavigationProps> = ({
   contractible = false,
-  logout,
   // Temporary until notification cards become clearer
   notificationCards,
   profile,
@@ -274,11 +273,6 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
                     </Link>
                   )
               }
-
-              <PowerSettingsNewRoundedIcon
-                className={classes.logOutIcon}
-                onClick={logout}
-              />
             </div>
           )
         }
@@ -321,7 +315,7 @@ ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
                             }
                           } else {
                             /* If the user has NOT scrolled, then he's already at the top,
-                              so we toggle notification cards as regular. */
+                            so we toggle notification cards as regular. */
                             toggleNonInstanceOwnerNotificationCards()
                           }
                         }
@@ -338,7 +332,7 @@ ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
                             }
                           } else {
                             /* If the user has NOT scrolled, then he's already at the top,
-                              so we toggle notification cards as regular. */
+                            so we toggle notification cards as regular. */
                             toggleInstanceOwnerNotificationCards()
                           }
                         }

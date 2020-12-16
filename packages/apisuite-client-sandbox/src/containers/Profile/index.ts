@@ -1,26 +1,25 @@
 import { connect } from 'react-redux'
+
+import { bindActionCreators, Dispatch } from 'redux'
+
+import { authActions } from 'containers/Auth/ducks'
+import { getProfileActions, resetErrorAction, updateProfileActions } from 'containers/Profile/ducks'
+
 import Profile from './Profile'
+
 import { Store } from 'store/types'
-import {
-  Dispatch,
-  bindActionCreators,
-} from 'redux'
-import {
-  getProfileActions,
-  updateProfileActions,
-  resetErrorAction,
-} from 'containers/Profile/ducks'
 
 export const mapStateToProps = ({ auth, profile }: Store) => ({
-  user: auth.user,
   profile: profile.profile,
   requestStatutes: profile.requestStatuses,
+  user: auth.user,
 })
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   getProfile: getProfileActions.request,
-  updateProfile: updateProfileActions.request,
+  logout: () => dispatch(authActions.logout()),
   resetErrors: resetErrorAction,
+  updateProfile: updateProfileActions.request,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile)
