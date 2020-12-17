@@ -199,9 +199,9 @@ const Navigation: React.FC<NavigationProps> = ({
                         className={
                           `
 ${(contractible && !scrolled)
-                        ? classes.transparentMenuTab
-                        : classes.opaqueMenuTab
-                      }
+                            ? classes.transparentMenuTab
+                            : classes.opaqueMenuTab
+                          }
 ${tab.active ? ' ' + classes.activeTab : ''}
 ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
 `
@@ -251,11 +251,7 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
                     >
                       <Avatar
                         alt="User's photo"
-                        className={
-                          (contractible && !scrolled)
-                            ? classes.transparentMenuUserAvatar
-                            : classes.opaqueMenuUserAvatar
-                        }
+                        className={classes.userAvatar}
                         src={userProfile.avatar}
                       />
                     </Link>
@@ -266,11 +262,7 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
                       to='/profile'
                     >
                       <Avatar
-                        className={
-                          (contractible && !scrolled)
-                            ? classes.transparentMenuUserAvatar
-                            : classes.opaqueMenuUserAvatar
-                        }
+                        className={classes.userAvatar}
                       >
                         {initials}
                       </Avatar>
@@ -294,9 +286,9 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
               `
 tabs
 ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
-          ? ` ${classes.subTabsAndExtraButton}`
-          : ` ${classes.subTabs}`
-        }
+                ? ` ${classes.subTabsAndExtraButton}`
+                : ` ${classes.subTabs}`
+              }
 `
             }
           >
