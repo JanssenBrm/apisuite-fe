@@ -137,6 +137,7 @@ export const authActions = {
 
 export const createAuthMiddleware = (history: History) => () => (next: Dispatch) => (action: AnyAction) => {
   next(action)
+
   if (action.type === LOGIN_SUCCESS) {
     cookie.set(TOKEN_KEY, action.payload.token, {
       expires: TOKEN_MAX_AGE,
@@ -146,8 +147,11 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
     const location = history.location
 
     if (location.pathname.startsWith('/auth')) {
-      // let nextPath = location.state && location.state.onSuccess ? location.state.onSuccess : '/'
-      history.replace('/')
+      if (action.payload.user?.role?.name === 'admin') {
+        history.replace('/dashboard')
+      } else {
+        history.replace('/')
+      }
     }
   } else if (action.type === LOGIN_ERROR || action.type === LOGIN_USER_ERROR) {
     cookie.remove(TOKEN_KEY, { path: '/' })

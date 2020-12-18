@@ -28,30 +28,30 @@ import { config } from 'constants/global'
 
 import 'util/extensions'
 
-interface customTheme extends Theme {
+interface CustomTheme extends Theme {
   alert: {
     success: {
-      background: string
-    }
-  }
+      background: string,
+    },
+  },
   dimensions: {
-    borderRadius: number
-  }
+    borderRadius: number,
+  },
   feedback: {
-    error: string
-  }
+    error: string,
+  },
 }
 
 const defaultTheme = createMuiTheme(theme)
 
-const apiSuiteCustomTheme: customTheme = {
+const apiSuiteCustomTheme: CustomTheme = {
   alert: config?.palette?.alert,
   dimensions: config?.dimensions,
   feedback: config?.palette?.feedback,
-  ...defaultTheme
+  ...defaultTheme,
 }
 
-function render(Component: any) {
+function render (Component: any) {
   // @ts-ignore
   ReactDOM.render(
     <ErrorMonitor>
