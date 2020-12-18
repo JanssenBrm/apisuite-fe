@@ -43,58 +43,60 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
   }, [notificationCards])
 
   return (
-    showing
-      ? (
-        <section className={classes.notificationCardContentsContainer}>
-          <div>
-            <p className={classes.notificationCardTitle}>
-              {notificationCardTitle}
-            </p>
+    <section
+      className={
+        showing
+          ? classes.showNotificationCardContentsContainer
+          : classes.hideNotificationCardContentsContainer
+      }
+    >
+      <div>
+        <p className={classes.notificationCardTitle}>
+          {notificationCardTitle}
+        </p>
 
-            {
-              typeof notificationCardText === 'string'
-                ? (
-                  <p className={classes.notificationCardText}>
-                    {notificationCardText}
-                  </p>
-                )
-                : notificationCardText
-            }
-          </div>
+        {
+          typeof notificationCardText === 'string'
+            ? (
+              <p className={classes.notificationCardText}>
+                {notificationCardText}
+              </p>
+            )
+            : notificationCardText
+        }
+      </div>
 
-          {
-            notificationCardButtonClassName
-              ? (
-                <Button
-                  customButtonClassName={notificationCardButtonClassName}
-                  href={notificationCardButtonLink}
-                  label={notificationCardButtonLabel}
-                  onClick={notificationCardButtonAction}
-                />
-              )
-              : (
-                <Button
-                  background='tertiary'
-                  color='tertiary'
-                  fullWidth
-                  href={notificationCardButtonLink}
-                  label={notificationCardButtonLabel}
-                  onClick={notificationCardButtonAction}
-                />
-              )
-          }
+      {
+        notificationCardButtonClassName
+          ? (
+            <Button
+              customButtonClassName={notificationCardButtonClassName}
+              href={notificationCardButtonLink}
+              label={notificationCardButtonLabel}
+              onClick={notificationCardButtonAction}
+            />
+          )
+          : (
+            <Button
+              background='tertiary'
+              color='tertiary'
+              fullWidth
+              href={notificationCardButtonLink}
+              label={notificationCardButtonLabel}
+              onClick={notificationCardButtonAction}
+            />
+          )
+      }
 
-          <CloseRoundedIcon
-            className={classes.notificationCardCloseButton}
-            onClick={
-              typeOfUser !== 'admin'
-                ? toggleNonInstanceOwnerNotificationCards
-                : toggleInstanceOwnerNotificationCards
-            }
-          />
-        </section>
-      )
-      : null
+      <CloseRoundedIcon
+        className={classes.notificationCardCloseButton}
+        onClick={
+          typeOfUser !== 'admin'
+            ? toggleNonInstanceOwnerNotificationCards
+            : toggleInstanceOwnerNotificationCards
+        }
+      />
+    </section>
   )
 }
 

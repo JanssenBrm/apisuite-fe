@@ -76,11 +76,13 @@ export default makeStyles(({
   actionsCatalogSectionWithNotificationCards: {
     marginBottom: '40px',
     marginTop: '80px',
+    transition: 'margin 0.5s',
   },
 
   actionsCatalogSectionWithoutNotificationCards: {
     marginBottom: '40px',
     marginTop: '-80px',
+    transition: 'margin 0.5s',
   },
 
   // JSS for the 'Greeting card' section
