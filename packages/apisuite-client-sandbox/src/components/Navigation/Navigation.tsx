@@ -29,7 +29,6 @@ import { TabMenus, NavigationProps } from './types'
 
 const Navigation: React.FC<NavigationProps> = ({
   contractible = false,
-  logout,
   // Temporary until notification cards become clearer
   notificationCards,
   profile,
@@ -199,9 +198,9 @@ const Navigation: React.FC<NavigationProps> = ({
                         className={
                           `
 ${(contractible && !scrolled)
-                            ? classes.transparentMenuTab
-                            : classes.opaqueMenuTab
-                          }
+                        ? classes.transparentMenuTab
+                        : classes.opaqueMenuTab
+                      }
 ${tab.active ? ' ' + classes.activeTab : ''}
 ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
 `
@@ -269,11 +268,6 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
                     </Link>
                   )
               }
-
-              <PowerSettingsNewRoundedIcon
-                className={classes.logOutIcon}
-                onClick={logout}
-              />
             </div>
           )
         }
@@ -286,9 +280,9 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
               `
 tabs
 ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
-                ? ` ${classes.subTabsAndExtraButton}`
-                : ` ${classes.subTabs}`
-              }
+          ? ` ${classes.subTabsAndExtraButton}`
+          : ` ${classes.subTabs}`
+        }
 `
             }
           >

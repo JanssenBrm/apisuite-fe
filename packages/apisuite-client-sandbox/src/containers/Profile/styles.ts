@@ -92,4 +92,19 @@ export default makeStyles(({
     borderRadius: config.dimensions.borderRadius,
     minHeight: 20,
   },
+
+  // Logout stuff, temporary
+  buttonContentsContainer: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
+  logOutIcon: {
+    cursor: 'pointer',
+  },
+
+  logOutText: {
+    marginRight: '10px',
+  },
 }))

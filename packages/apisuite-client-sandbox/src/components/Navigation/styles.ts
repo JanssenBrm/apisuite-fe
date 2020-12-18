@@ -196,7 +196,7 @@ export default makeStyles(({
 
     '&:hover': {
       border: `2px solid ${config.palette.primary}`,
-    }
+    },
   },
 
   transparentMenuUserNameAndAvatarContainer: {
