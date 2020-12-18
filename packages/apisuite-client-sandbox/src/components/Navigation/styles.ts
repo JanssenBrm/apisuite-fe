@@ -47,6 +47,7 @@ export default makeStyles(({
 
   assistantContainer: {
     display: 'flex',
+    cursor: 'pointer',
   },
 
   goBackButton: {
