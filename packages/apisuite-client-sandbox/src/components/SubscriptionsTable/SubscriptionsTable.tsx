@@ -19,8 +19,9 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
 
   const [t] = useTranslation()
 
-  const generateAppIcons = (appNamesArray: string[]) => {
-    const sortedAppNamesArray = appNamesArray.sort()
+  const generateAppIcons = (appNamesArray: any[]) => {
+    // TODO: Remove ".concat('Test App 1')" from the line below. This is for Demo purposes only.
+    const sortedAppNamesArray = appNamesArray.concat('Test App 1').sort()
 
     const appIconsArray = sortedAppNamesArray.map((appName, key) => {
       const appSplitName = appName.split(' ')
@@ -43,6 +44,7 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
 
   const generateTableEntries = () => {
     const tableEntriesArray = apisByName.map((api, index) => {
+      console.log('api', api)
       return (
         // Will contain a particular API's details (its name, subscribed apps, and versions)
         <div key={`apiDetailsContainer${index}`}>
@@ -56,10 +58,10 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
               {
                 api.apps
                   ? (
-                    <p className={classes.noSubsMessage}>Subscribe applications...</p>
+                    generateAppIcons(api.apps)
                   )
                   : (
-                    generateAppIcons(api.apps)
+                    <p className={classes.noSubsMessage}>Subscribe applications...</p>
                   )
               }
             </div>

@@ -91,6 +91,8 @@ export default makeStyles(({
     fontSize: '14px',
     fontWeight: 300,
     justifyContent: 'center',
+    marginLeft: '12px',
+    textAlign: 'center',
     width: '35px',
   },
 
