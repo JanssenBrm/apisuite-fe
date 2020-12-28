@@ -23,7 +23,7 @@ export default makeStyles(({
     height: '300px',
     position: 'absolute',
     top: 0,
-    transition: 'height 0.35s',
+    transition: 'height 0.5s',
     width: '100%',
   },
 
@@ -36,7 +36,7 @@ export default makeStyles(({
     height: '208.5px',
     position: 'absolute',
     top: 0,
-    transition: 'height 0.35s',
+    transition: 'height 0.5s',
     width: '100%',
   },
 
@@ -76,11 +76,13 @@ export default makeStyles(({
   actionsCatalogSectionWithNotificationCards: {
     marginBottom: '40px',
     marginTop: '80px',
+    transition: 'margin 0.5s',
   },
 
   actionsCatalogSectionWithoutNotificationCards: {
     marginBottom: '40px',
     marginTop: '-80px',
+    transition: 'margin 0.5s',
   },
 
   // JSS for the 'Greeting card' section
