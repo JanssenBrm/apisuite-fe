@@ -29,7 +29,6 @@ import { TabMenus, NavigationProps } from './types'
 
 const Navigation: React.FC<NavigationProps> = ({
   contractible = false,
-  logout,
   // Temporary until notification cards become clearer
   notificationCards,
   profile,
@@ -135,7 +134,10 @@ const Navigation: React.FC<NavigationProps> = ({
     >
       <header className={clsx({ scrolled })}>
         <div className={classes.headerContentsContainer}>
-          <div className={classes.logoAndNameContainer}>
+          <Link
+            className={classes.logoAndNameContainer}
+            to={user?.role.name !== 'admin' ? '/' : '/dashboard'}
+          >
             <AmpStoriesRoundedIcon
               className={
                 !scrolled
@@ -147,7 +149,7 @@ const Navigation: React.FC<NavigationProps> = ({
             <h3 className={classes.portalName}>
               {settings.portalName}
             </h3>
-          </div>
+          </Link>
 
           {!user && (
             <div className='tabs pretabs'>
@@ -266,11 +268,6 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
                     </Link>
                   )
               }
-
-              <PowerSettingsNewRoundedIcon
-                className={classes.logOutIcon}
-                onClick={logout}
-              />
             </div>
           )
         }

@@ -32,6 +32,7 @@ export default makeStyles(({
     backgroundColor: 'transparent',
     borderRadius: '50%',
     color: config.palette.active,
+    cursor: 'pointer',
     height: '32px',
     paddingTop: '1.5px',
     textAlign: 'center',
@@ -77,6 +78,7 @@ export default makeStyles(({
   logoAndNameContainer: {
     display: 'flex',
     alignItems: 'center',
+    textDecoration: 'none',
   },
 
   opaqueMenuActiveTabOverLine: {
@@ -138,6 +140,7 @@ export default makeStyles(({
     backgroundColor: config.palette.background.default,
     borderRadius: '50%',
     color: config.palette.tertiary,
+    cursor: 'pointer',
     height: '32px',
     paddingTop: '1.5px',
     textAlign: 'center',
