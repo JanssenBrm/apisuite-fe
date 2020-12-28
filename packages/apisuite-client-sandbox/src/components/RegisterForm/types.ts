@@ -41,11 +41,13 @@ export type OrganisationDetails = {
   name: string,
   website: string,
   vat?: string,
+  registrationToken?: string,
 }
 
 export type SecurityStep = {
   password: string,
   token?: string,
+  registrationToken?: string,
 }
 
 export type InvitationResponse = {

@@ -27,11 +27,6 @@ export function * submitPersonalDetailsSaga (
     const headers = {
       'Content-Type': 'application/json',
     }
-    if (action.payload.token) {
-      // @ts-ignore
-      headers.Authorization = `Bearer ${action.payload.token}`
-    }
-    delete action.payload.token
     const response = yield call(request, {
       url: `${API_URL}/registration/user`,
       method: 'POST',
@@ -50,13 +45,12 @@ export function * submitOrganisationDetailsSaga (
   action: ReturnType<typeof submitOrganisationDetailsActions.request>,
 ) {
   try {
-    const registrationToken = yield select(
+    action.payload.registrationToken = yield select(
       (state: Store) => state.register.registrationToken)
     yield call(request, {
       url: `${API_URL}/registration/organization`,
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${registrationToken}`,
         'Content-Type': 'application/json',
       },
       data: JSON.stringify(action.payload),
@@ -73,16 +67,15 @@ export function * submitSecurityStepSaga (
   action: ReturnType<typeof submitSecurityStepActions.request>,
 ) {
   try {
-    const registrationToken = yield select((state: Store) => state.register.registrationToken)
+    action.payload.registrationToken = yield select((state: Store) => state.register.registrationToken)
+    if (action.payload.token) {
+      action.payload.registrationToken = action.payload.token
+      delete action.payload.token
+    }
 
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${registrationToken}`,
     }
-    if (action.payload.token) {
-      headers.Authorization = `Bearer ${action.payload.token}`
-    }
-    delete action.payload.token
     yield call(request, {
       url: `${API_URL}/registration/security`,
       method: 'POST',
@@ -126,7 +119,6 @@ export function * validateRegisterTokenSaga (
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${action.payload.token}`,
       },
       data: JSON.stringify(action.payload),
     })

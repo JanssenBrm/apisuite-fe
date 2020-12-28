@@ -1,11 +1,16 @@
 
 import * as React from 'react'
+
 import ReactDOM from 'react-dom'
+
 import { Provider } from 'react-redux'
+
 import { ConnectedRouter } from 'connected-react-router'
-import { createMuiTheme } from '@material-ui/core/styles'
+
+import { createMuiTheme, Theme } from '@material-ui/core/styles'
 import { ThemeProvider } from '@material-ui/styles'
 import theme from 'theme'
+
 import store, { history } from 'store'
 
 // Translations
@@ -16,9 +21,35 @@ import 'typeface-roboto'
 import 'styles/app.scss'
 
 import App from 'containers/App'
+
 import ErrorMonitor from 'components/ErrorMonitor'
 
+import { config } from 'constants/global'
+
 import 'util/extensions'
+
+interface CustomTheme extends Theme {
+  alert: {
+    success: {
+      background: string,
+    },
+  },
+  dimensions: {
+    borderRadius: number,
+  },
+  feedback: {
+    error: string,
+  },
+}
+
+const defaultTheme = createMuiTheme(theme)
+
+const apiSuiteCustomTheme: CustomTheme = {
+  alert: config?.palette?.alert,
+  dimensions: config?.dimensions,
+  feedback: config?.palette?.feedback,
+  ...defaultTheme,
+}
 
 function render (Component: any) {
   // @ts-ignore
@@ -26,7 +57,7 @@ function render (Component: any) {
     <ErrorMonitor>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <ThemeProvider theme={createMuiTheme(theme)}>
+          <ThemeProvider theme={apiSuiteCustomTheme}>
             <Component />
           </ThemeProvider>
         </ConnectedRouter>

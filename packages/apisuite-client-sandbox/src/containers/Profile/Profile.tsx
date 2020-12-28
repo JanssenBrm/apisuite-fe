@@ -1,62 +1,76 @@
 import * as React from 'react'
-import useStyles from './styles'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
+
+import clsx from 'clsx'
+
+import i18n from 'i18next'
+import { useTranslation } from 'react-i18next'
+
 import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
+import InputLabel from '@material-ui/core/InputLabel'
+import TextField from '@material-ui/core/TextField'
+
+import Close from '@material-ui/icons/Close'
+import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded'
+
+import { isValidURL, isValidPhoneNumber } from 'components/FormField/index'
 import Select from 'components/Select'
 import { SelectOption } from 'components/Select/types'
-import InputLabel from '@material-ui/core/InputLabel'
-import {
-  isValidURL,
-  isValidPhoneNumber,
-} from 'components/FormField/index'
+
+import { ProfileProps, Organization } from './types'
+
 import { useForm } from 'util/useForm'
-import { useTranslation } from 'react-i18next'
-import i18n from 'i18next'
-import clsx from 'clsx'
-import Close from '@material-ui/icons/Close'
-import {
-  ProfileProps,
-  Organization,
-} from './types'
+
+import useStyles from './styles'
+
 import { ROLES } from 'constants/global'
 
 const Profile: React.FC<ProfileProps> = ({
   getProfile,
+  logout,
   profile,
-  updateProfile,
   requestStatutes,
   resetErrors,
+  updateProfile,
 }) => {
-  let initials = ''
   const classes = useStyles()
+
   const [t] = useTranslation()
-  const { formState, handleFocus, handleChange, resetForm } = useForm({
-    name: '',
-    bio: '',
-    email: '',
-    mobileNumber: '',
-    avatarUrl: '',
-  }, {
-    avatarUrl: {
-      rules: [(uri) => {
-        const stringURI = uri.toString()
-        if (stringURI.length === 0) return true
-        if (stringURI.length > 0) return isValidURL(uri)
-        return false
-      }],
-      message: t('warnings.url'),
+
+  const {
+    formState,
+    handleFocus,
+    handleChange,
+    resetForm,
+  } = useForm(
+    {
+      name: '',
+      bio: '',
+      email: '',
+      mobileNumber: '',
+      avatarUrl: '',
     },
-    mobileNumber: {
-      rules: [(phone) => {
-        const stringPhone = phone.toString()
-        if (stringPhone.length === 0) return true
-        if (stringPhone.length > 0) return isValidPhoneNumber(phone)
-        return false
-      }],
-      message: t('warnings.mobileNumber'),
-    },
-  })
+    {
+      avatarUrl: {
+        rules: [(uri) => {
+          const stringURI = uri.toString()
+          if (stringURI.length === 0) return true
+          if (stringURI.length > 0) return isValidURL(uri)
+          return false
+        }],
+        message: t('warnings.url'),
+      },
+      mobileNumber: {
+        rules: [(phone) => {
+          const stringPhone = phone.toString()
+          if (stringPhone.length === 0) return true
+          if (stringPhone.length > 0) return isValidPhoneNumber(phone)
+          return false
+        }],
+        message: t('warnings.mobileNumber'),
+      },
+    })
+
   const dateOptions = {
     year: 'numeric',
     month: 'long',
@@ -64,6 +78,8 @@ const Profile: React.FC<ProfileProps> = ({
     hour12: false,
     timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
   }
+
+  let initials = ''
 
   if (profile) {
     const initialsArray = profile.user.name.split(' ')
@@ -137,13 +153,14 @@ const Profile: React.FC<ProfileProps> = ({
             <InputLabel shrink>Last login</InputLabel>
             <div>
               {profile.user.last_login &&
-              new Intl.DateTimeFormat(i18n.language, dateOptions).format(Date.parse(profile.user.last_login))}
+                new Intl.DateTimeFormat(i18n.language, dateOptions).format(Date.parse(profile.user.last_login))}
             </div>
 
             <InputLabel shrink>Member since</InputLabel>
             <div>
               {profile.current_org.member_since &&
-              new Intl.DateTimeFormat(i18n.language, dateOptions).format(Date.parse(profile.current_org.member_since))}
+                new Intl.DateTimeFormat(i18n.language, dateOptions)
+                  .format(Date.parse(profile.current_org.member_since))}
             </div>
 
             <InputLabel className={classes.inputLabel} shrink>Organisation</InputLabel>
@@ -162,7 +179,7 @@ const Profile: React.FC<ProfileProps> = ({
                 classes.btn,
                 classes.btn2,
                 (!(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)) &&
-                classes.disabled))}
+                  classes.disabled))}
             >
               {formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0) ? t('actions.save') : t('actions.saveDisabled')}
             </Button>
@@ -172,6 +189,21 @@ const Profile: React.FC<ProfileProps> = ({
                 <div className={classes.errorAlert}>{requestStatutes.updateProfileRequest.error}</div>
                 <Close onClick={resetErrors} />
               </div>}
+
+            <br />
+
+            <Button
+              className={`${classes.btn} ${classes.btn2}`}
+              onClick={logout}
+            >
+              <div className={classes.buttonContentsContainer}>
+                <p className={classes.logOutText}>Log out</p>
+
+                <PowerSettingsNewRoundedIcon
+                  className={classes.logOutIcon}
+                />
+              </div>
+            </Button>
           </aside>
 
           <main className={classes.main}>

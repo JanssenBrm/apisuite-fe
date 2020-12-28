@@ -32,6 +32,7 @@ export default makeStyles(({
     backgroundColor: 'transparent',
     borderRadius: '50%',
     color: config.palette.active,
+    cursor: 'pointer',
     height: '32px',
     paddingTop: '1.5px',
     textAlign: 'center',
@@ -77,6 +78,7 @@ export default makeStyles(({
   logoAndNameContainer: {
     display: 'flex',
     alignItems: 'center',
+    textDecoration: 'none',
   },
 
   opaqueMenuActiveTabOverLine: {
@@ -94,12 +96,6 @@ export default makeStyles(({
     opacity: 1,
     padding: '40px 16px',
     textTransform: 'none',
-  },
-
-  opaqueMenuUserAvatar: {
-    border: `2px solid ${config.palette.primary}`,
-    height: '33px',
-    width: '33px',
   },
 
   opaqueMenuUserNameAndAvatarContainer: {
@@ -144,6 +140,7 @@ export default makeStyles(({
     backgroundColor: config.palette.background.default,
     borderRadius: '50%',
     color: config.palette.tertiary,
+    cursor: 'pointer',
     height: '32px',
     paddingTop: '1.5px',
     textAlign: 'center',
@@ -194,10 +191,14 @@ export default makeStyles(({
     textTransform: 'none',
   },
 
-  transparentMenuUserAvatar: {
+  userAvatar: {
     border: '2px solid #FFFFFF',
     height: '33px',
     width: '33px',
+
+    '&:hover': {
+      border: `2px solid ${config.palette.primary}`,
+    },
   },
 
   transparentMenuUserNameAndAvatarContainer: {
