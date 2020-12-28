@@ -56,11 +56,15 @@ const useStyles = makeStyles({
   // b) Button's text color
 
   primaryColor: {
-    color: `${config.palette.primary} !important`,
+    color: `${config.palette.primaryContrastText} !important`,
   },
 
   secondaryColor: {
-    color: `${config.palette.secondary} !important`,
+    color: `${config.palette.secondaryContrastText} !important`,
+  },
+
+  tertiaryColor: {
+    color: `${config.palette.tertiaryContrastText} !important`,
   },
 
   // c) Button's status

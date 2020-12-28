@@ -22,7 +22,7 @@ import carouselSlide1 from 'assets/carousel-slide-1.svg'
 import carouselSlide2 from 'assets/carousel-slide-2.svg'
 import carouselSlide3 from 'assets/carousel-slide-3.svg'
 
-import { config, DEFAULT_SUPPORT_URL } from 'constants/global'
+import { config, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
 
 const Sandbox: React.FC<SandboxProps> = ({
   auth,
@@ -193,7 +193,7 @@ const Sandbox: React.FC<SandboxProps> = ({
               href={
                 !auth.user
                   ? '/auth/register'
-                  : settings.supportURL || DEFAULT_SUPPORT_URL
+                  : settings.supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
               }
               rel={
                 auth.user
