@@ -196,9 +196,9 @@ const Navigation: React.FC<NavigationProps> = ({
                         className={
                           `
 ${(contractible && !scrolled)
-                            ? classes.transparentMenuTab
-                            : classes.opaqueMenuTab
-                          }
+                        ? classes.transparentMenuTab
+                        : classes.opaqueMenuTab
+                      }
 ${tab.active ? ' ' + classes.activeTab : ''}
 ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
 `
@@ -283,9 +283,9 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
               `
 tabs
 ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
-                ? ` ${classes.subTabsAndExtraButton}`
-                : ` ${classes.subTabs}`
-              }
+          ? ` ${classes.subTabsAndExtraButton}`
+          : ` ${classes.subTabs}`
+        }
 `
             }
           >

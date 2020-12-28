@@ -148,6 +148,61 @@
         }
       }
     },
+    "subscriptionsSubTab": {
+      "hasDataToShow": {
+        "title": "Subscriptions",
+        "description": "By subscribing to an API product, we can inform you about any changes.",
+        "subscriptionsTable": {
+          "title": "Available APIs",
+          "subtitle": "actions"
+        },
+        "notificationTextPartOne": "API Subscriptions allow you to control access and to stay informed. But there’s more. Read ",
+        "notificationTextPartTwo": "API Subscriptions explained"
+      },
+      "hasNoDataToShow": {
+        "buttonLabel": "Add Subscription",
+        "linkText": "What are subscriptions all about?"
+      },
+      "subsModal": {
+        "modalHeader": {
+          "closeButtonLabel": "close"
+        },
+        "modalBody": {
+          "header": "API Subscription",
+          "steps": {
+            "stepOne": "Make sure all provided Organisation information is accurate",
+            "stepTwo": "Before you request the subscription, review all provided application data",
+            "stepThree": "Select your target client application",
+            "stepFour": "If you revoke the subscription, make sure your app will not be impacted"
+          },
+          "clientApps": {
+            "title": "Client Application",
+            "subtitle": "Select target application",
+            "selectorLabel": {
+              "moreThanOneApp": "Select an app",
+              "noApps": "No apps to display"
+            },
+            "infoBoxNotificationText": "Subscriptions provide production access. This access request will be reviewed by Cloudoki first.",
+            "warningBoxNotificationText": "If you revoke the subscription of the client application, access will automatically be removed."
+          },
+          "apiProductSubsContainer": {
+            "title": "API product subscriptions",
+            "subtitle": "An API product groups multiple API versions. Each time we update a checked API product, we’ll inform you about it.",
+            "apiProductsTable": {
+              "title": "API Products",
+              "subtitle": "latest version"
+            }
+          },
+          "buttons": {
+            "requestAccess": "Request access",
+            "revokeAccess": "Revoke access",
+            "reviewOrganisation": "Review organisation",
+            "reviewApp": "Review app",
+            "cancel": "Cancel"
+          }
+        }
+      }
+    },
     "testSubTab": {
       "instructions": {
         "stepOne": {

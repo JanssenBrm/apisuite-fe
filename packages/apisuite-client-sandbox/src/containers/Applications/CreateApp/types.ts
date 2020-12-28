@@ -8,5 +8,5 @@ export type CreateAppProps = ApplicationRouteProps & {
   history: History,
   resCreate: Response,
   apis: Api[],
-  getApis: () => void,
+  getAPIs: () => void,
 }
