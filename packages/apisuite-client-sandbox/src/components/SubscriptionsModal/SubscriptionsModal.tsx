@@ -245,7 +245,9 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                         <QueryBuilderRoundedIcon className={classes.infoBoxIcon} />
 
                         <p className={classes.infoBoxText}>
-                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationText', { config })}
+                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartOne', { config })}
+                          {settings.clientName}
+                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartTwo', { config })}
                         </p>
                       </div>
                     )

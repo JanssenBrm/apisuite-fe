@@ -20,8 +20,7 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
   const [t] = useTranslation()
 
   const generateAppIcons = (appNamesArray: any[]) => {
-    // TODO: Remove ".concat('Test App 1')" from the line below. This is for Demo purposes only.
-    const sortedAppNamesArray = appNamesArray.concat('Test App 1').sort()
+    const sortedAppNamesArray = appNamesArray.sort()
 
     const appIconsArray = sortedAppNamesArray.map((appName, key) => {
       const appSplitName = appName.split(' ')

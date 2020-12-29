@@ -169,7 +169,8 @@ export default makeStyles(({
     backgroundColor: config.palette.alert.success.background,
     borderRadius: '4px',
     display: 'flex',
-    height: '55px',
+    height: '100%',
+    maxHeight: '65px',
     textAlign: 'left',
   },
 
@@ -255,7 +256,7 @@ export default makeStyles(({
     width: '100%',
 
     '& > :first-child': {
-      color: '#85909A',
+      color: config.palette.newGreyScales['400'],
       fontSize: '16px',
       fontWeight: 300,
     },
