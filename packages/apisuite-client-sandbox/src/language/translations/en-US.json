@@ -175,6 +175,36 @@
       "finalRemarksPartTwo": "Now you know how to do it. That's how easy it is to get your API up and running!"
     }
   },
+  "profileTab": {
+    "subtitle": "We've selected some profile-specific actions for you.",
+    "orgRelatedLabels": {
+      "selectorTitle": "Linked organisation",
+      "selectorLabel": "Organisations",
+      "createOrgButtonLabel": "Create your organisation"
+    },
+    "otherActionsLabels": {
+      "changePassword": "Change password",
+      "viewTeam": "View team",
+      "updateProfileDetails": "Update",
+      "logOut": "Log out",
+      "deleteProfile": "Delete profile"
+    },
+    "roleRelatedLabels": {
+      "admin": "Admin",
+      "orgOwner": "Organisation owner",
+      "developer": "Developer"
+    },
+    "userRelatedLabels": {
+      "userAvatarURL": "Avatar URL",
+      "userEmailAddress": "E-mail address",
+      "userName": "Profile name",
+      "userPhoneNumber": "Phone number (international)"
+    },
+    "warningLabels": {
+      "userAvatarURL": "The provided URL is not valid, or the image does not exist.",
+      "userPhoneNumber": "Please enter a valid phone number."
+    }
+  },
   "listApps": {
     "overview": {
       "title": "Apps overview"
@@ -231,15 +261,15 @@
     }
   },
   "warnings": {
-    "url": "Please enter a valid URL.",
-    "mobileNumber": "Please enter a valid mobile number."
+    "userAvatarURL": "The provided URL is not valid, or the image does not exist.",
+    "userPhoneNumber": "Please enter a valid phone number."
   },
   "labels": {
-    "name": "Name",
-    "email": "E-mail address",
-    "bio": "Bio",
-    "mobileNumber": "Mobile number (international)",
-    "avatarUrl": "Avatar URL",
+    "userAvatarURL": "Avatar URL",
+    "userBio": "Bio",
+    "userEmailAddress": "E-mail address",
+    "userName": "Name",
+    "userPhoneNumber": "Phone number (international)",
     "organization": "Organisation",
     "organizationDescription": "Organisation description",
     "organizationWebsite": "Organisation website",
