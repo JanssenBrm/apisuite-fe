@@ -26,7 +26,7 @@ import { config, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global
 
 const Sandbox: React.FC<SandboxProps> = ({
   auth,
-  getApis,
+  getAPIs,
   settings,
   subscriptions,
 }) => {
@@ -39,7 +39,7 @@ const Sandbox: React.FC<SandboxProps> = ({
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */
-    getApis()
+    getAPIs()
   }, [])
 
   React.useEffect(() => {
