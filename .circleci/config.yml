@@ -177,7 +177,6 @@ workflows:
             filters:
                 branches:
                   only:
-                    - develop
                     - staging
                     - production
             requires:
