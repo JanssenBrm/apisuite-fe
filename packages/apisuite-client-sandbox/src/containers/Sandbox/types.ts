@@ -6,7 +6,7 @@ import { SubscriptionsStore } from 'containers/Subscriptions/types'
 
 export interface SandboxProps extends React.HTMLAttributes<HTMLDivElement> {
   auth: AuthStore,
-  getApis: () => void,
+  getAPIs: () => void,
   settings: SettingsStore,
   subscriptions: SubscriptionsStore,
 }

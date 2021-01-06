@@ -1,13 +1,15 @@
 import update from 'immutability-helper'
-import { AuthStoreActionTypes } from 'containers/Auth/types'
+
 import { LOGOUT } from 'containers/Auth/ducks'
+import { AuthStoreActionTypes } from 'containers/Auth/types'
+
 import {
-  SubscriptionsStore,
-  SubscriptionsActions,
   ApiResponse,
-  GetApisAction,
-  GetApisSuccessAction,
-  GetApisErrorAction,
+  GetAPIsAction,
+  GetAPIsErrorAction,
+  GetAPIsSuccessAction,
+  SubscriptionsActions,
+  SubscriptionsStore,
 } from './types'
 
 /** Initial state */
@@ -17,15 +19,15 @@ const initialState: SubscriptionsStore = {
 
 /** Action types */
 export enum SubscriptionsActionTypes {
-  GET_APIS = 'GET_APIS',
-  GET_APIS_SUCCESS = 'GET_APIS_SUCCESS',
-  GET_APIS_ERROR = 'GET_APIS_ERROR',
   ADD_APP_SUBSCRIPTION = 'ADD_APP_SUBSCRIPTION',
-  ADD_APP_SUBSCRIPTION_SUCCESS = 'ADD_APP_SUBSCRIPTION_SUCCESS',
   ADD_APP_SUBSCRIPTION_ERROR = 'ADD_APP_SUBSCRIPTION_ERROR',
+  ADD_APP_SUBSCRIPTION_SUCCESS = 'ADD_APP_SUBSCRIPTION_SUCCESS',
+  GET_APIS = 'GET_APIS',
+  GET_APIS_ERROR = 'GET_APIS_ERROR',
+  GET_APIS_SUCCESS = 'GET_APIS_SUCCESS',
   REMOVE_APP_SUBSCRIPTION = 'REMOVE_APP_SUBSCRIPTION',
-  REMOVE_APP_SUBSCRIPTION_SUCCESS = 'REMOVE_APP_SUBSCRIPTION_SUCCESS',
   REMOVE_APP_SUBSCRIPTION_ERROR = 'REMOVE_APP_SUBSCRIPTION_ERROR',
+  REMOVE_APP_SUBSCRIPTION_SUCCESS = 'REMOVE_APP_SUBSCRIPTION_SUCCESS',
 }
 
 // TODO: name all reducers according to feature and change them to named exports
@@ -59,15 +61,15 @@ export default function subscriptionsReducer (
 }
 
 /** Action builders */
-export const getApis = (): GetApisAction => ({
+export const getAPIs = (): GetAPIsAction => ({
   type: SubscriptionsActionTypes.GET_APIS,
 })
 
-export const getApisSuccess = (apis: ApiResponse[]): GetApisSuccessAction => ({
+export const getAPIsSuccess = (apis: ApiResponse[]): GetAPIsSuccessAction => ({
   type: SubscriptionsActionTypes.GET_APIS_SUCCESS,
   apis: apis,
 })
 
-export const getApisError = (): GetApisErrorAction => ({
+export const getAPIsError = (): GetAPIsErrorAction => ({
   type: SubscriptionsActionTypes.GET_APIS_ERROR,
 })

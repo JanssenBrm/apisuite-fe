@@ -53,7 +53,7 @@ for project in ${PROJECTS_LIST}; do
   CLEAN_PROJECT_SUFFIX=${CLEAN_PROJECT_PREFIX%$SUFFIX_FILTER}
 
   if [ "${CLOUD_BUILD}" == "true" ]; then
-    echo "$(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG=${CLEAN_PROJECT_SUFFIX}-cloud" >> .env
+    echo "$(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG=${CLEAN_PROJECT_SUFFIX}-cloud-${CIRCLE_BRANCH}" >> .env
   else
     echo "$(echo $project | tr '[:lower:]' '[:upper:]' | tr '-' '_')_TAG=${CLEAN_PROJECT_SUFFIX}-${PROJECT_PACKAGE_VERSION}" >> .env
   fi
