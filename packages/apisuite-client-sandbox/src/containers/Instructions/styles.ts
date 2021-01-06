@@ -3,7 +3,7 @@ import { config } from 'constants/global'
 
 export default makeStyles(({
   root: {
-    backgroundColor: config.palette.background.default,
+    backgroundColor: config.palette.newGreyScales['25'],
     minHeight: '100%',
   },
 

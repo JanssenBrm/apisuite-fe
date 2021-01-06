@@ -1,16 +1,12 @@
-import { getApisByName } from 'containers/Subscriptions/selectors'
-import { User } from 'containers/Auth/types'
-import { AppData, Response } from 'containers/Applications/types'
-
-export type ViewType = 'list' | 'cards'
+import { APIVersion, AppInfo } from 'containers/Subscriptions/types'
 
 export type SubscriptionsTableProps = {
-  subscribing: Response,
-  apisByName: ReturnType<typeof getApisByName>,
-  user?: User,
-  userApps: AppData[],
-  getApis: () => void,
-  getUserApps: (userId: number) => void,
-  addAppSubscription: (appId: number, apiName: string) => void,
-  removeAppSubscription: (appId: number, apiName: string) => void,
+  apisByName: APIData[],
+}
+
+export interface APIData {
+  name: string,
+  versions: APIVersion[],
+  apps: AppInfo[],
+  description: string,
 }

@@ -1,28 +1,92 @@
 import { makeStyles } from '@material-ui/styles'
+
 import { config } from 'constants/global'
 
 export default makeStyles(({
-  root: {
-    minHeight: '100%',
-    backgroundColor: config.palette.background.default,
+  addSubscriptionButton: {
+    backgroundColor: config.palette.primary,
+    borderRadius: `${config.dimensions.borderRadius}px`,
+    color: '#FFFFFF !important',
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: 500,
+    padding: '12px 21px',
+    textDecoration: 'none',
   },
-  contentContainer: {
-    maxWidth: 900,
-    margin: '0 auto',
-    transform: 'translateX(-8px)',
+
+  addSubscriptionButtonContainer: {
+    marginBottom: '30px',
   },
-  title: {
-    fontSize: 26,
+
+  dataToShowContentContainer: {
+    margin: '0px auto',
+    maxWidth: '900px',
+    width: '100%',
+  },
+
+  dataToShowDescription: {
+    color: config.palette.newGreyScales['400'],
+    fontSize: '16px',
     fontWeight: 300,
+    marginBottom: '24px',
   },
-  subscriptionsContainer: {
+
+  dataToShowSubscriptionsTable: {
     display: 'flex',
     flexDirection: 'row',
-    paddingBottom: 100,
+    marginBottom: '35px',
   },
-  description: {
+
+  dataToShowTitle: {
+    color: config.palette.tertiary,
+    fontSize: '32px',
+    fontWeight: 300,
+    marginBottom: '12px',
+  },
+
+  infoBox: {
+    alignItems: 'center',
+    backgroundColor: config.palette.alert.success.background,
+    borderRadius: '4px',
     display: 'flex',
-    paddingTop: 10,
-    paddingBottom: 10,
+    height: '75px',
+    marginLeft: 'auto',
+    textAlign: 'left',
+    width: '435px',
+  },
+
+  infoBoxIcon: {
+    fill: '#46b5ef',
+    transform: 'translate(7px, -17.5px)',
+  },
+
+  infoBoxText: {
+    color: '#035E86',
+    fontSize: '14px',
+    fontWeight: 400,
+    lineHeight: '18px',
+    margin: '0px 10px 0px 15px',
+  },
+
+  noDataToShowContentContainer: {
+    margin: '70px auto',
+    maxWidth: '900px',
+    textAlign: 'center',
+    width: '100%',
+  },
+
+  noDataToShowImage: {
+    filter: 'grayscale(100%)',
+    height: '185px',
+    opacity: 0.35,
+  },
+
+  noDataToShowImageContainer: {
+    marginBottom: '40px',
+  },
+
+  noDataToShowLink: {
+    color: `${config.palette.newGreyScales['300']} !important`,
+    marginTop: '15px',
   },
 }))

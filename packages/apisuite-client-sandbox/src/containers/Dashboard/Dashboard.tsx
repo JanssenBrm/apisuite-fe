@@ -33,7 +33,7 @@ import {
 
 const Dashboard: React.FC<DashboardProps> = ({
   auth,
-  getApis,
+  getAPIs,
   // Temporary until notification cards become clearer
   notificationCards,
   profile,
@@ -51,7 +51,7 @@ const Dashboard: React.FC<DashboardProps> = ({
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */
-    getApis()
+    getAPIs()
   }, [])
 
   React.useEffect(() => {

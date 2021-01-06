@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 
 import { appStoreActionCreators } from 'components/InformDialog/ducks'
 
-import { getApis } from 'containers/Subscriptions/ducks'
+import { getAPIs } from 'containers/Subscriptions/ducks'
 
 import { Store } from 'store/types'
 
@@ -17,7 +17,7 @@ const mapStateToProps = ({ auth, settings, subscriptions }: Store) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getApis: () => dispatch(getApis()),
+  getAPIs: () => dispatch(getAPIs()),
   toggleInform: () => dispatch(appStoreActionCreators.informOpen()),
 })
 
