@@ -2,7 +2,7 @@ import { Dispatch } from 'redux'
 
 import { connect } from 'react-redux'
 
-import { getApis } from 'containers/Subscriptions/ducks'
+import { getAPIs } from 'containers/Subscriptions/ducks'
 
 import { Store } from 'store/types'
 
@@ -17,7 +17,7 @@ const mapStateToProps = ({ auth, notificationCards, profile, settings, subscript
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  getApis: () => dispatch(getApis()),
+  getAPIs: () => dispatch(getAPIs()),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
