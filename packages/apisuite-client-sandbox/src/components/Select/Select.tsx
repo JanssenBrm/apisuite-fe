@@ -1,38 +1,48 @@
 import * as React from 'react'
-import Autocomplete from '@material-ui/lab/Autocomplete'
+
 import TextField from '@material-ui/core/TextField'
+
+import Autocomplete from '@material-ui/lab/Autocomplete'
+
 import { SelectProps, SelectOption } from './types'
+
 import useStyles from './styles'
 
 const Select: React.FC<SelectProps> = ({
+  className,
+  customCloseIcon,
+  customOpenIcon,
+  disabled,
+  fieldLabel,
+  onChange,
   options,
   selected,
-  onChange,
-  className,
-  disabled,
 }) => {
   const classes = useStyles()
 
   return (
     <Autocomplete
       className={className}
-      options={options.sort((a, b) => -b.group.localeCompare(a.group))}
-      groupBy={(option: SelectOption) => option.group}
-      getOptionLabel={(option: SelectOption) => option.label}
-      defaultValue={selected ? options.find((opt) => opt.value === selected.value) : undefined}
-      value={selected}
-      onChange={onChange}
+      closeIcon={customCloseIcon}
+      defaultValue={selected ? options.find((option) => option.value === selected.value) : undefined}
+      disableClearable
       disabled={disabled}
-      renderInput={params => (
+      getOptionLabel={(option: SelectOption) => option.label}
+      groupBy={(option: SelectOption) => option.group}
+      onChange={onChange}
+      options={options.sort((optionA, optionB) => -optionB.group.localeCompare(optionA.group))}
+      popupIcon={customOpenIcon}
+      renderInput={(params) => (
         <TextField
           {...params}
-          name={name}
           className={classes.textField}
-          placeholder='Select...'
-          variant='outlined'
           fullWidth
+          label={fieldLabel}
+          placeholder='Make your selection'
+          variant='outlined'
         />
       )}
+      value={selected}
     />
   )
 }

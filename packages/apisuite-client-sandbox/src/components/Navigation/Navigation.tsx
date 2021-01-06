@@ -29,6 +29,7 @@ import { TabMenus, NavigationProps } from './types'
 
 const Navigation: React.FC<NavigationProps> = ({
   contractible = false,
+  logout,
   // Temporary until notification cards become clearer
   notificationCards,
   profile,
@@ -53,8 +54,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
   if (user) {
     splitName = userProfile.name.split(' ')
-    initials = splitName.length >= 2
-      ? `${splitName[0][0] + splitName[1][0]}` : splitName[0].slice(0, 1)
+    initials = splitName[0].charAt(0).toLocaleUpperCase()
   }
 
   const [scrollPos, setScrollPos] = React.useState(0)
@@ -397,12 +397,14 @@ ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
                     `
 ${classes.subTab}
 ${tab.active ? ' ' + classes.activeTab : ''}
+${tab.isLogout ? ' ' + classes.logOutTab : ''}
 `
                   }
                   component={Link}
                   disableRipple
                   key={`nav-sub-tab-${idx}`}
-                  label={tab.label}
+                  label={tab.isLogout ? <PowerSettingsNewRoundedIcon /> : tab.label}
+                  onClick={tab.isLogout ? logout : () => null}
                   to={tab.route}
                   value={tab.route}
                 />,
