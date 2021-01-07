@@ -533,7 +533,7 @@ export const getProfileActions = {
 }
 
 export const updateProfileActions = {
-  request: (name: string, bio: string, avatar: string, mobile: number, orgId: string) => {
+  request: (name: string, bio: string, avatar: string, mobile: string, orgId: string) => {
     return {
       type: ProfileActionTypes.UPDATE_PROFILE_REQUEST,
       payload: {

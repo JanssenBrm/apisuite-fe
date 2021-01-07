@@ -54,8 +54,7 @@ const Navigation: React.FC<NavigationProps> = ({
 
   if (user) {
     splitName = userProfile.name.split(' ')
-    initials = splitName.length >= 2
-      ? `${splitName[0][0] + splitName[1][0]}` : splitName[0].slice(0, 1)
+    initials = splitName[0].charAt(0).toLocaleUpperCase()
   }
 
   const [scrollPos, setScrollPos] = React.useState(0)
@@ -135,7 +134,10 @@ const Navigation: React.FC<NavigationProps> = ({
     >
       <header className={clsx({ scrolled })}>
         <div className={classes.headerContentsContainer}>
-          <div className={classes.logoAndNameContainer}>
+          <Link
+            className={classes.logoAndNameContainer}
+            to={user?.role.name !== 'admin' ? '/' : '/dashboard'}
+          >
             <AmpStoriesRoundedIcon
               className={
                 !scrolled
@@ -147,7 +149,7 @@ const Navigation: React.FC<NavigationProps> = ({
             <h3 className={classes.portalName}>
               {settings.portalName}
             </h3>
-          </div>
+          </Link>
 
           {!user && (
             <div className='tabs pretabs'>
@@ -248,11 +250,7 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
                     >
                       <Avatar
                         alt="User's photo"
-                        className={
-                          (contractible && !scrolled)
-                            ? classes.transparentMenuUserAvatar
-                            : classes.opaqueMenuUserAvatar
-                        }
+                        className={classes.userAvatar}
                         src={userProfile.avatar}
                       />
                     </Link>
@@ -263,22 +261,13 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
                       to='/profile'
                     >
                       <Avatar
-                        className={
-                          (contractible && !scrolled)
-                            ? classes.transparentMenuUserAvatar
-                            : classes.opaqueMenuUserAvatar
-                        }
+                        className={classes.userAvatar}
                       >
                         {initials}
                       </Avatar>
                     </Link>
                   )
               }
-
-              <PowerSettingsNewRoundedIcon
-                className={classes.logOutIcon}
-                onClick={logout}
-              />
             </div>
           )
         }
@@ -321,7 +310,7 @@ ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
                             }
                           } else {
                             /* If the user has NOT scrolled, then he's already at the top,
-                              so we toggle notification cards as regular. */
+                            so we toggle notification cards as regular. */
                             toggleNonInstanceOwnerNotificationCards()
                           }
                         }
@@ -338,7 +327,7 @@ ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
                             }
                           } else {
                             /* If the user has NOT scrolled, then he's already at the top,
-                              so we toggle notification cards as regular. */
+                            so we toggle notification cards as regular. */
                             toggleInstanceOwnerNotificationCards()
                           }
                         }
@@ -408,12 +397,14 @@ ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
                     `
 ${classes.subTab}
 ${tab.active ? ' ' + classes.activeTab : ''}
+${tab.isLogout ? ' ' + classes.logOutTab : ''}
 `
                   }
                   component={Link}
                   disableRipple
                   key={`nav-sub-tab-${idx}`}
-                  label={tab.label}
+                  label={tab.isLogout ? <PowerSettingsNewRoundedIcon /> : tab.label}
+                  onClick={tab.isLogout ? logout : () => null}
                   to={tab.route}
                   value={tab.route}
                 />,

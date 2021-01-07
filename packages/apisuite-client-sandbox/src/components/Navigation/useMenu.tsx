@@ -104,10 +104,6 @@ export function useMenu (): Array<TabProps[]> {
   const initTabs = React.useMemo((): TabProps[] => {
     const entries = [
       {
-        label: 'Home',
-        route: '/',
-      },
-      {
         label: 'Support',
         route: settings.supportURL || (
           roleName === 'admin'
@@ -139,10 +135,6 @@ export function useMenu (): Array<TabProps[]> {
 
   const loginTabs = React.useMemo((): TabProps[] => {
     const entries = [
-      {
-        label: 'Home',
-        route: '/',
-      },
       {
         label: 'API Products',
         route: '/api-products',
@@ -190,16 +182,24 @@ export function useMenu (): Array<TabProps[]> {
         route: '/profile',
         subTabs: [
           {
-            label: 'Profile',
+            label: 'Overview',
             route: '/profile',
           },
-          {
-            label: 'Team',
-            route: '/profile/team',
-          },
+          // Hidden until 'Security' view is implemented
+          // {
+          //   label: 'Security',
+          //   route: '/profile/security',
+          // },
           {
             label: 'Organisation',
             route: '/profile/organisation',
+          },
+          {
+            // Used to convert the 'Log out' sub-tab's label into a Material UI icon
+            isLogout: true,
+            label: 'Log out',
+            route: '',
+            active: false,
           },
           ...extensionsLoginProfileTabs,
         ],

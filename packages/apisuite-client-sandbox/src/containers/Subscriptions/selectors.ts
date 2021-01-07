@@ -1,29 +1,39 @@
 import { createSelector } from 'reselect'
-import { Store } from 'store/types'
-import { Api, SubscriptionsStore, APIVersion, AppInfo } from './types'
+
 import { ApplicationsStore } from 'containers/Applications/types'
 
-const getApis = ({ subscriptions }: Store) => subscriptions
+import {
+  APIVersion,
+  Api,
+  AppInfo,
+  SubscriptionsStore,
+} from './types'
+
+import { Store } from 'store/types'
+
+const getAPIs = ({ subscriptions }: Store) => subscriptions
 const getApps = ({ applications }: Store) => applications
 
-export const getApisByName = createSelector(
-  [getApis, getApps],
+export const getAPIsByName = createSelector(
+  [getAPIs, getApps],
   (subscriptions: SubscriptionsStore, applications: ApplicationsStore) => {
     const apiNames = [...new Set(subscriptions.apis.map((api: Api) => api.name))]
-    return apiNames.map(apiName => {
+
+    return apiNames.map((apiName) => {
       let getVersions: APIVersion[] = []
       const getApps: AppInfo[] = []
 
-      /** For each API(version) gets the version, title, and id */
+      // For each API, get its ID, title, and version.
       subscriptions.apis.forEach((api) => {
         if (apiName === api.name) {
           getVersions = api.apiVersions
         }
       })
 
-      /** For each API(name) gets the apps which are subscribed to it  */
+      // For each API, get all apps subscribed to it.
       applications.userApps.forEach((app) => {
-        const appSubs = [...new Set(app.subscriptions.map(api => api.name))]
+        const appSubs = [...new Set(app.subscriptions.map((api) => api.name))]
+
         if (appSubs.includes(apiName)) {
           getApps.push({
             appName: app.name,

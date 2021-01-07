@@ -11,7 +11,7 @@ export default makeStyles(({
 
   alternativeAssistantAmountOfNotifications: {
     backgroundColor: config.palette.primary,
-    borderRadius: '4px',
+    borderRadius: config.dimensions.borderRadius,
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
@@ -32,6 +32,7 @@ export default makeStyles(({
     backgroundColor: 'transparent',
     borderRadius: '50%',
     color: config.palette.active,
+    cursor: 'pointer',
     height: '32px',
     paddingTop: '1.5px',
     textAlign: 'center',
@@ -74,9 +75,14 @@ export default makeStyles(({
     marginLeft: '12px',
   },
 
+  logOutTab: {
+    padding: '4.5px !important',
+  },
+
   logoAndNameContainer: {
     display: 'flex',
     alignItems: 'center',
+    textDecoration: 'none',
   },
 
   opaqueMenuActiveTabOverLine: {
@@ -87,19 +93,13 @@ export default makeStyles(({
   },
 
   opaqueMenuTab: {
-    color: '#FFFFFF',
+    color: config.palette.primaryContrastText,
     fontSize: '18px',
     fontWeight: 300,
     minWidth: 'unset',
     opacity: 1,
     padding: '40px 16px',
     textTransform: 'none',
-  },
-
-  opaqueMenuUserAvatar: {
-    border: `2px solid ${config.palette.primary}`,
-    height: '33px',
-    width: '33px',
   },
 
   opaqueMenuUserNameAndAvatarContainer: {
@@ -123,7 +123,7 @@ export default makeStyles(({
 
   regularAssistantAmountOfNotifications: {
     backgroundColor: config.palette.primary,
-    borderRadius: '4px',
+    borderRadius: config.dimensions.borderRadius,
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
@@ -144,6 +144,7 @@ export default makeStyles(({
     backgroundColor: config.palette.background.default,
     borderRadius: '50%',
     color: config.palette.tertiary,
+    cursor: 'pointer',
     height: '32px',
     paddingTop: '1.5px',
     textAlign: 'center',
@@ -151,14 +152,14 @@ export default makeStyles(({
   },
 
   regularLogo: {
-    color: '#FFFFFF',
+    color: config.palette.primaryContrastText,
     height: 'auto',
     marginRight: '20px',
     width: '60px',
   },
 
   subTab: {
-    color: '#FFFFFF',
+    color: config.palette.primaryContrastText,
     fontSize: '16px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -185,7 +186,7 @@ export default makeStyles(({
   },
 
   transparentMenuTab: {
-    color: '#FFFFFF',
+    color: config.palette.primaryContrastText,
     fontSize: '18px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -194,10 +195,16 @@ export default makeStyles(({
     textTransform: 'none',
   },
 
-  transparentMenuUserAvatar: {
-    border: '2px solid #FFFFFF',
+  userAvatar: {
+    border: `2px solid ${config.palette.primaryContrastText}`,
+    fontSize: '20px',
+    fontWeight: 300,
     height: '33px',
     width: '33px',
+
+    '&:hover': {
+      border: `2px solid ${config.palette.primary}`,
+    },
   },
 
   transparentMenuUserNameAndAvatarContainer: {

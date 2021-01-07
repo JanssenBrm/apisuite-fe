@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-rc.4](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.3...apisuite-client-sandbox@1.1.0-rc.4) (2020-12-28)
+
+
+### Bug Fixes
+
+* **lint:** linter fixes ([dd696ea](https://github.com/Cloudoki/APISuite/commit/dd696ea6114c7c928035f8f0a5e9bfcdf2136dc8))
+* Changed the background color of the navigation to meet the design ([010d79e](https://github.com/Cloudoki/APISuite/commit/010d79ecf8cb6c912de4371b4330568ddf55df79))
+
+
+### Features
+
+* Animated the assistant's 'toggle' action ([8df8e68](https://github.com/Cloudoki/APISuite/commit/8df8e68f5121e56c18f618bf26eca60a3eaf9839))
+* Removed the 'ON/OFF' icon from the navigation, and added a 'Logout' button to the user's profile ([9cc0575](https://github.com/Cloudoki/APISuite/commit/9cc05758e518d9646afefbc525c7a3dc3ffd8fc1))
+* send registration token on payloads instead of headers ([d9f06ec](https://github.com/Cloudoki/APISuite/commit/d9f06ecddbb8e434d05eb479c23df507135b2fa2))
+
+
+
+
+# [1.1.0-rc.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.2...apisuite-client-sandbox@1.1.0-rc.3) (2020-12-14)
+
+
+### Bug Fixes
+
+* **notification-cards:** linter fixes ([e9dc2c4](https://github.com/Cloudoki/APISuite/commit/e9dc2c43bc6381cbd971981f7e4543c2139b4387))
+
+
+### Features
+
+* Implemented the Dasboard's new 'Overview' UI ([2b8f2fa](https://github.com/Cloudoki/APISuite/commit/2b8f2fab7dc0d73c3564cda847573514916e15c5))
+
+
+
+
+
 # [1.1.0-rc.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.1...apisuite-client-sandbox@1.1.0-rc.2) (2020-12-14)
 
 
@@ -31,6 +65,10 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 * **common-lib:** implement common components library for apisuite ([ebe65e8](https://github.com/Cloudoki/APISuite/commit/ebe65e8281f06269d352c8338c208869c6d7f4a5))
 * **translations:** add admin action button translations ([93f59a5](https://github.com/Cloudoki/APISuite/commit/93f59a5b6ece32e526cf4e4cbc865b6348d185b0))
 * Implemented API Suite's 'cookies consent' banner ([31ae5a0](https://github.com/Cloudoki/APISuite/commit/31ae5a0b146b68c893c5e59bda6e6af1e4dcade1))
+
+# [1.1.0](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.0...apisuite-client-sandbox@1.1.0) (2020-11-30)
+
+**Note:** Version bump only for package apisuite-client-sandbox
 
 
 

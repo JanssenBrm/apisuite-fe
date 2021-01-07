@@ -5,21 +5,27 @@ export const isValidEmail = (email: any) => {
 
 export const isValidURL = (url: any) => {
   /*
-    The following regular expression was changed from
+  The following regular expression was changed from
 
-    /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
-    (where 'http://' and 'https://' are optional)
+  /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,=.]+$/
+  (where 'http://' and 'https://' are optional)
 
-    to
+  to
 
-    /^(http:\/\/|https:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
-    (where 'http://' and 'https://' are mandatory)
+  /^(http:\/\/|https:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,=.]+$/
+  (where 'http://' and 'https://' are mandatory)
 
-    because the BE requires the presence of 'http://' or 'https://' in its
-    URLs in order to create an app.
+  because the BE requires the presence of 'http://' or 'https://' in its
+  URLs in order to create an app.
   */
-  const re = /^(http:\/\/|https:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,;=.]+$/
+  const re = /^(http:\/\/|https:\/\/)[\w.-]+(?:\.[\w.-]+)+[\w\-._~:/?#[\]@!$&'()*+,=.]+$/
   return re.test(String(url).toLowerCase())
+}
+
+export const isValidImage = async (imageURL: any) => {
+  const requestResponse = await fetch(imageURL)
+
+  return !!requestResponse.ok
 }
 
 export const isValidPhoneNumber = (number: any) => {

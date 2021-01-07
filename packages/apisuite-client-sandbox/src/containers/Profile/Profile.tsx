@@ -1,268 +1,465 @@
 import * as React from 'react'
-import useStyles from './styles'
-import TextField from '@material-ui/core/TextField'
-import Button from '@material-ui/core/Button'
-import Avatar from '@material-ui/core/Avatar'
+
+import { useTranslation } from 'react-i18next'
+
+import Button from 'components/Button'
 import Select from 'components/Select'
 import { SelectOption } from 'components/Select/types'
-import InputLabel from '@material-ui/core/InputLabel'
-import {
-  isValidURL,
-  isValidPhoneNumber,
-} from 'components/FormField/index'
-import { useForm } from 'util/useForm'
-import { useTranslation } from 'react-i18next'
-import i18n from 'i18next'
-import clsx from 'clsx'
+import { isValidImage, isValidPhoneNumber, isValidURL } from 'components/FormField/index'
+
+import Avatar from '@material-ui/core/Avatar'
+import TextField from '@material-ui/core/TextField'
+
 import Close from '@material-ui/icons/Close'
-import {
-  ProfileProps,
-  Organization,
-} from './types'
-import { ROLES } from 'constants/global'
+import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded'
+import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
+import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
+
+import { Organization, ProfileProps } from './types'
+
+import useStyles from './styles'
+
+import { config } from 'constants/global'
+
+import { useForm } from 'util/useForm'
 
 const Profile: React.FC<ProfileProps> = ({
   getProfile,
+  logout,
   profile,
   updateProfile,
-  requestStatutes,
-  resetErrors,
 }) => {
-  let initials = ''
   const classes = useStyles()
+
   const [t] = useTranslation()
-  const { formState, handleFocus, handleChange, resetForm } = useForm({
-    name: '',
-    bio: '',
-    email: '',
-    mobileNumber: '',
-    avatarUrl: '',
-  }, {
-    avatarUrl: {
-      rules: [(uri) => {
-        const stringURI = uri.toString()
-        if (stringURI.length === 0) return true
-        if (stringURI.length > 0) return isValidURL(uri)
-        return false
-      }],
-      message: t('warnings.url'),
-    },
-    mobileNumber: {
-      rules: [(phone) => {
-        const stringPhone = phone.toString()
-        if (stringPhone.length === 0) return true
-        if (stringPhone.length > 0) return isValidPhoneNumber(phone)
-        return false
-      }],
-      message: t('warnings.mobileNumber'),
-    },
-  })
-  const dateOptions = {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour12: false,
-    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
-  }
 
-  if (profile) {
-    const initialsArray = profile.user.name.split(' ')
-
-    initials = initialsArray.length > 1
-      ? `${initialsArray[0].charAt(0)}${initialsArray[1].charAt(0)}`
-      : `${initialsArray[0].charAt(0)}${initialsArray[0].charAt(0)}`
-  }
+  const [validImage, setValidImage] = React.useState<boolean>(false)
 
   React.useEffect(() => {
+    /* Triggers the retrieval and storage (on the app's Store, under 'profile')
+    of all user-related information we presently have. */
     getProfile()
   }, [getProfile])
 
-  React.useEffect(() => {
-    resetForm({
-      name: profile.user.name,
-      bio: profile.user.bio ?? '',
-      email: profile.user.email,
-      mobileNumber: (profile.user.mobile && profile.user.mobile !== '0') ? profile.user.mobile : '',
-      avatarUrl: profile.user.avatar ?? '',
-    })
-  }, [profile])
+  /*
+  User details
 
-  const selectOptions = (orgs: Organization[]) => {
-    return orgs.map(org => ({
-      label: org.name,
-      value: org.id,
-      group: 'Organization',
-    }))
+  Note:
+  - 'formState' refers to our own, local copy of a user's details.
+  - 'profile' refers to our stored, back-end approved copy of a user's details.
+  */
+
+  const {
+    formState,
+    handleChange,
+    handleFocus,
+    resetForm,
+  } = useForm(
+    // Initial user details
+    {
+      userAvatarURL: '',
+      userBio: '',
+      userEmailAddress: '',
+      userName: '',
+      userPhoneNumber: '',
+    },
+    // Rules for the user details
+    {
+      userAvatarURL: {
+        rules: [
+          (URI) => {
+            const stringURI = URI.toString()
+
+            if (stringURI.length === 0) {
+              /* Empty URI? That's okay - it just means we don't want,
+              or have an image to display on the user's Avatar. */
+              return true
+            } else {
+              /* Non-empty URI? Cool! First, we determine if that URI is valid,
+              and then we need to check if the URI points to an actual image.
+              If any of these conditions are not met, we display an error message. */
+              const doesImageExist = isValidURL(URI) && validImage
+
+              return doesImageExist
+            }
+          },
+        ],
+        message: t('profileTab.warningLabels.userAvatarURL', { config }),
+      },
+
+      userPhoneNumber: {
+        rules: [
+          (phoneNumber) => {
+            const stringPhoneNumber = phoneNumber.toString()
+
+            if (stringPhoneNumber.length === 0) {
+              return true
+            } else {
+              return isValidPhoneNumber(phoneNumber)
+            }
+          },
+        ],
+        message: t('profileTab.warningLabels.userPhoneNumber', { config }),
+      },
+    })
+
+  let userNameInitials = ''
+
+  if (profile) {
+    const userNameInitialsArray = profile.user.name.split(' ')
+
+    userNameInitials = userNameInitialsArray[0].charAt(0).toLocaleUpperCase()
   }
 
-  function updateFormProfile (e: React.ChangeEvent<{}>, option?: SelectOption) {
-    e.preventDefault()
-    let number = parseInt(formState.values.mobileNumber)
-    let org = profile.current_org.id
-    if (!formState.values.mobileNumber) number = 0
-    if (option && option.value) {
-      const name = profile.user.name
-      const bio = profile.user.bio ?? ''
-      const phone = Number(profile.user.mobile) ?? 0
-      const avatarUrl = profile.user.avatar ?? ''
-      org = option.value.toString()
-      updateProfile(name, bio, avatarUrl, phone, org)
-    } else {
-      updateProfile(formState.values.name, formState.values.bio, formState.values.avatarUrl, number, org.toString())
+  const [avatarHasBeenClicked, setAvatarHasBeenClicked] = React.useState(false)
+
+  React.useEffect(() => {
+    resetForm(
+      {
+        userAvatarURL: profile.user.avatar ? profile.user.avatar : '',
+        userBio: '',
+        userEmailAddress: profile.user.email,
+        userName: profile.user.name,
+        userPhoneNumber: (profile.user.mobile && profile.user.mobile !== '0')
+          ? profile.user.mobile
+          : '',
+      },
+    )
+  }, [profile])
+
+  const validateAvatar = (avatar: string) => {
+    if (avatar !== '') {
+      (async () => {
+        const valid = await isValidImage(avatar)
+        setValidImage(valid)
+      })()
     }
   }
 
-  const shouldUpdateProfile = (e: React.ChangeEvent<{}>, option?: SelectOption) => {
-    e.preventDefault()
-    if (option && option.value && option.value !== profile.current_org.id) {
-      updateFormProfile(e, option)
+  /* Organisation details */
+
+  const [currentlySelectedOrganisation, setCurrentlySelectedOrganisation] = React.useState({
+    group: '',
+    label: '',
+    value: '',
+  })
+
+  const organisationSelector = (organisations: Organization[]) => {
+    return organisations.map((organisation) => ({
+      group: '',
+      label: organisation.name,
+      value: organisation.id,
+    }))
+  }
+
+  const handleOrganisationSelection = (event: React.ChangeEvent<{}>, selectedOrganisation: SelectOption) => {
+    event.preventDefault()
+
+    const newlySelectedOrganisation = {
+      group: '',
+      label: selectedOrganisation.label,
+      value: selectedOrganisation.value,
+    }
+
+    setCurrentlySelectedOrganisation(newlySelectedOrganisation)
+  }
+
+  React.useEffect(() => {
+    // Once our store's 'profile' details load, we store them locally
+    setCurrentlySelectedOrganisation({
+      group: '',
+      label: profile.current_org.name,
+      value: profile.current_org.id,
+    })
+  }, [profile])
+
+  /* All details (i.e., user & organisation details) */
+
+  const updateProfileDetails = (event: React.ChangeEvent<{}>, selectedOrganisation?: SelectOption) => {
+    event.preventDefault()
+
+    if (selectedOrganisation && selectedOrganisation.value) {
+      const userAvatarURL = profile.user.avatar ? profile.user.avatar : ''
+      const userBio = ''
+      const userName = profile.user.name
+      const userOrganisation = selectedOrganisation.value.toString()
+      const userPhoneNumber = profile.user.mobile ? profile.user.mobile : '0'
+
+      updateProfile(userName, userBio, userAvatarURL, userPhoneNumber, userOrganisation)
+    } else {
+      const userAvatarURL = formState.values.userAvatarURL
+      const userBio = formState.values.userBio
+      const userName = formState.values.userName
+      const userOrganisation = profile.current_org.id.toString()
+      const userPhoneNumber = formState.values.userPhoneNumber
+        ? formState.values.userPhoneNumber
+        : '0'
+
+      updateProfile(userName, userBio, userAvatarURL, userPhoneNumber, userOrganisation)
+    }
+  }
+
+  const shouldUpdateProfileDetails = (event: React.ChangeEvent<{}>) => {
+    event.preventDefault()
+
+    if (
+      currentlySelectedOrganisation &&
+      currentlySelectedOrganisation.value &&
+      currentlySelectedOrganisation.value !== profile.current_org.id
+    ) {
+      updateProfileDetails(event, currentlySelectedOrganisation)
     }
   }
 
   return (
-    <div className={`page-container ${classes.root}`}>
-      <section className={classes.contentContainer}>
-        <form
-          className={classes.form}
-          onSubmit={(e) => updateFormProfile(e)}
-        >
-          <aside className={classes.aside}>
-            {formState.values.avatarUrl
-              ? <img src={formState.values.avatarUrl} alt='profile picture' className={classes.img} />
-              : <Avatar className={classes.avatar}>{initials.toLocaleUpperCase()}</Avatar>}
+    <main className='page-container'>
+      <section className={classes.allUserDetailsContainer}>
+        <div className={classes.leftSideDetailsContainer}>
+          <div className={classes.userNameAndRoleContainer}>
+            <p className={classes.userName}>{profile.user.name}</p>
 
-            <InputLabel shrink>Access level</InputLabel>
-            <div>{ROLES[profile.current_org.role.name]?.label}</div>
+            <p className={classes.userRole}>
+              {
+                profile.current_org.role.name === 'admin'
+                  ? t('profileTab.roleRelatedLabels.admin', { config })
+                  : (profile.current_org.role.name === 'organizationOwner')
+                    ? t('profileTab.roleRelatedLabels.orgOwner', { config })
+                    : t('profileTab.roleRelatedLabels.developer', { config })
+              }
+            </p>
+          </div>
 
-            <InputLabel shrink>Last login</InputLabel>
-            <div>
-              {profile.user.last_login &&
-              new Intl.DateTimeFormat(i18n.language, dateOptions).format(Date.parse(profile.user.last_login))}
-            </div>
+          <p className={classes.subtitle}>
+            {t('profileTab.subtitle', { config })}
+          </p>
 
-            <InputLabel shrink>Member since</InputLabel>
-            <div>
-              {profile.current_org.member_since &&
-              new Intl.DateTimeFormat(i18n.language, dateOptions).format(Date.parse(profile.current_org.member_since))}
-            </div>
-
-            <InputLabel className={classes.inputLabel} shrink>Organisation</InputLabel>
-            <Select
-              options={selectOptions(profile.orgs_member)}
-              onChange={shouldUpdateProfile}
-              selected={selectOptions(profile.orgs_member).find(
-                option => option.value === profile.current_org.id)}
-            />
-
-            <InputLabel className={classes.inputLabel} shrink>Actions</InputLabel>
-            <Button
-              type='submit'
-              disabled={!(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0))}
-              className={clsx(
-                classes.btn,
-                classes.btn2,
-                (!(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)) &&
-                classes.disabled))}
+          <div>
+            <p
+              className={
+                profile.orgs_member.length !== 0
+                  ? classes.regularOrganisationDetailsTitle
+                  : classes.alternativeOrganisationDetailsTitle
+              }
             >
-              {formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0) ? t('actions.save') : t('actions.saveDisabled')}
-            </Button>
+              <>{t('profileTab.orgRelatedLabels.selectorTitle', { config })}</>
+            </p>
 
-            {requestStatutes.updateProfileRequest.error !== '' &&
-              <div className={classes.errorPlaceholder}>
-                <div className={classes.errorAlert}>{requestStatutes.updateProfileRequest.error}</div>
-                <Close onClick={resetErrors} />
-              </div>}
-          </aside>
+            {
+              profile.orgs_member.length !== 0
+                ? (
+                  <>
+                    <Select
+                      className={classes.organisationSelector}
+                      customCloseIcon={<ExpandLessRoundedIcon />}
+                      customOpenIcon={<ExpandMoreRoundedIcon />}
+                      fieldLabel={t('profileTab.orgRelatedLabels.selectorLabel', { config })}
+                      onChange={handleOrganisationSelection}
+                      options={organisationSelector(profile.orgs_member)}
+                      selected={
+                        organisationSelector(profile.orgs_member).find((selectedOrganisation) => {
+                          return selectedOrganisation.value === profile.current_org.id
+                        })
+                      }
+                    />
 
-          <main className={classes.main}>
-            <TextField
-              className={classes.textField}
-              label={t('labels.name')}
-              type='text'
-              name='name'
-              onChange={handleChange}
-              onFocus={handleFocus}
-              value={formState.values.name}
-              variant='outlined'
-              margin='dense'
-              fullWidth
+                    {console.log(currentlySelectedOrganisation, profile.current_org)}
+
+                    <Button
+                      customButtonClassName={
+                        currentlySelectedOrganisation.value !== profile.current_org.id
+                          ? classes.enabledOrganisationButton
+                          : classes.disabledOrganisationButton
+                      }
+                      href='profile/organisation'
+                      label='Switch'
+                      onClick={shouldUpdateProfileDetails}
+                    />
+                  </>
+                )
+                : (
+                  <Button
+                    customButtonClassName={classes.enabledOrganisationButton}
+                    href='profile/organisation'
+                    label={t('profileTab.orgRelatedLabels.createOrgButtonLabel', { config })}
+                  />
+                )
+            }
+          </div>
+
+          <hr
+            className={
+              profile.orgs_member.length !== 0
+                ? classes.regularSectionSeparator
+                : classes.alternativeSectionSeparator
+            }
+          />
+
+          <div className={classes.otherActionsContainer}>
+            <Button
+              customButtonClassName={classes.otherActionsButtons}
+              href='#'
+              label={t('profileTab.otherActionsLabels.changePassword', { config })}
             />
 
-            <br />
+            <Button
+              customButtonClassName={classes.otherActionsButtons}
+              href='profile/team'
+              label={t('profileTab.otherActionsLabels.viewTeam', { config })}
+            />
+          </div>
+        </div>
+
+        <div className={classes.rightSideDetailsContainer}>
+          {/* 'Form' div */}
+          <div className={classes.formFieldsContainer}>
+            <div>
+              {
+                avatarHasBeenClicked
+                  ? (
+                    <Close
+                      className={classes.avatarIcons}
+                      onClick={() => setAvatarHasBeenClicked(!avatarHasBeenClicked)}
+                    />
+                  )
+                  : (
+                    <ImageSearchRoundedIcon
+                      className={classes.avatarIcons}
+                      onClick={() => setAvatarHasBeenClicked(!avatarHasBeenClicked)}
+                    />
+                  )
+              }
+
+              <Avatar
+                className={classes.avatar}
+                src={formState.values.userAvatarURL}
+                onClick={() => setAvatarHasBeenClicked(!avatarHasBeenClicked)}
+              >
+                {userNameInitials}
+              </Avatar>
+
+              {
+                avatarHasBeenClicked
+                  ? (
+                    <TextField
+                      className={classes.inputFields}
+                      error={formState.touched.userAvatarURL && formState.errors.userAvatarURL}
+                      fullWidth
+                      helperText={
+                        formState.touched.userAvatarURL &&
+                        formState.errors.userAvatarURL &&
+                        formState.errorMsgs.userAvatarURL
+                      }
+                      label={t('profileTab.userRelatedLabels.userAvatarURL', { config })}
+                      margin='dense'
+                      name='userAvatarURL'
+                      onChange={(e) => {
+                        validateAvatar(formState.values.userAvatarURL)
+                        handleChange(e)
+                      }}
+                      onFocus={(e) => {
+                        validateAvatar(formState.values.userAvatarURL)
+                        handleFocus(e)
+                      }}
+                      type='url'
+                      value={formState.values.userAvatarURL}
+                      variant='outlined'
+                    />
+                  )
+                  : null
+              }
+            </div>
+
+            <hr className={classes.formSectionSeparator} />
 
             <TextField
-              className={classes.textField}
-              label={t('labels.bio')}
-              type='text'
-              name='bio'
+              className={classes.inputFields}
+              fullWidth
+              label={t('profileTab.userRelatedLabels.userName', { config })}
+              margin='dense'
+              name='userName'
               onChange={handleChange}
               onFocus={handleFocus}
-              value={formState.values.bio}
-              autoFocus
-              multiline
-              rows={5}
+              type='text'
+              value={formState.values.userName}
               variant='outlined'
-              margin='dense'
-              fullWidth
             />
 
-            <br />
-
             <TextField
-              className={classes.textField}
-              label={t('labels.email')}
+              className={classes.inputFields}
+              fullWidth
+              label={t('profileTab.userRelatedLabels.userEmailAddress', { config })}
+              margin='dense'
+              name='userEmailAddress'
+              onChange={handleChange}
+              onFocus={handleFocus}
               type='email'
-              name='email'
-              onChange={handleChange}
-              onFocus={handleFocus}
-              value={formState.values.email}
+              value={formState.values.userEmailAddress}
               variant='outlined'
-              margin='dense'
-              fullWidth
-              disabled
             />
 
-            <br />
-
             <TextField
-              className={classes.textField}
-              label={t('labels.mobileNumber')}
+              className={classes.inputFields}
+              error={formState.touched.userPhoneNumber && formState.errors.userPhoneNumber}
+              fullWidth
+              helperText={
+                formState.touched.userPhoneNumber &&
+                formState.errors.userPhoneNumber &&
+                formState.errorMsgs.userPhoneNumber
+              }
+              label={t('profileTab.userRelatedLabels.userPhoneNumber', { config })}
+              margin='dense'
+              name='userPhoneNumber'
+              onChange={handleChange}
+              onFocus={handleFocus}
               type='tel'
-              name='mobileNumber'
-              onChange={handleChange}
-              onFocus={handleFocus}
-              value={formState.values.mobileNumber}
+              value={formState.values.userPhoneNumber}
               variant='outlined'
-              margin='dense'
-              fullWidth
-              error={formState.touched.mobileNumber && formState.errors.mobileNumber}
-              helperText={
-                formState.touched.mobileNumber && formState.errors.mobileNumber && formState.errorMsgs.mobileNumber
-              }
             />
 
-            <br />
-
-            <TextField
-              className={classes.textField}
-              label={t('labels.avatarUrl')}
-              type='url'
-              name='avatarUrl'
-              onChange={handleChange}
-              onFocus={handleFocus}
-              value={formState.values.avatarUrl}
-              variant='outlined'
-              margin='dense'
-              fullWidth
-              error={formState.touched.avatarUrl && formState.errors.avatarUrl}
-              helperText={
-                formState.touched.avatarUrl && formState.errors.avatarUrl && formState.errorMsgs.avatarUrl
+            <Button
+              customButtonClassName={
+                formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
+                  ? classes.enabledUpdateDetailsButton
+                  : classes.disabledUpdateDetailsButton
               }
+              label={t('profileTab.otherActionsLabels.updateProfileDetails', { config })}
+              onClick={updateProfileDetails}
             />
-          </main>
-        </form>
+
+            <div className={classes.userStatusAndType}>
+              {/* A mere dot */}
+              <span>&#9679;</span>
+
+              <p>
+                {
+                  profile.current_org.role.name === 'admin'
+                    ? t('profileTab.roleRelatedLabels.admin', { config })
+                    : (profile.current_org.role.name === 'organizationOwner')
+                      ? t('profileTab.roleRelatedLabels.orgOwner', { config })
+                      : t('profileTab.roleRelatedLabels.developer', { config })
+                }
+              </p>
+            </div>
+          </div>
+
+          {/* 'Logout' and 'Delete' buttons div */}
+          <div className={classes.otherActionsContainer}>
+            <Button
+              customButtonClassName={classes.otherActionsButtons}
+              href='#'
+              label={t('profileTab.otherActionsLabels.logOut', { config })}
+              onClick={logout}
+            />
+
+            <Button
+              customButtonClassName={classes.deleteProfileButton}
+              href='#'
+              label={t('profileTab.otherActionsLabels.deleteProfile', { config })}
+            />
+          </div>
+        </div>
       </section>
-    </div>
+    </main>
   )
 }
 

@@ -148,6 +148,62 @@
         }
       }
     },
+    "subscriptionsSubTab": {
+      "hasDataToShow": {
+        "title": "Subscriptions",
+        "description": "By subscribing to an API product, we can inform you about any changes.",
+        "subscriptionsTable": {
+          "title": "Available APIs",
+          "subtitle": "actions"
+        },
+        "notificationTextPartOne": "API Subscriptions allow you to control access and to stay informed. But there’s more. Read ",
+        "notificationTextPartTwo": "API Subscriptions explained"
+      },
+      "hasNoDataToShow": {
+        "buttonLabel": "Add Subscription",
+        "linkText": "What are subscriptions all about?"
+      },
+      "subsModal": {
+        "modalHeader": {
+          "closeButtonLabel": "close"
+        },
+        "modalBody": {
+          "header": "API Subscription",
+          "steps": {
+            "stepOne": "Make sure all provided Organisation information is accurate",
+            "stepTwo": "Before you request the subscription, review all provided application data",
+            "stepThree": "Select your target client application",
+            "stepFour": "If you revoke the subscription, make sure your app will not be impacted"
+          },
+          "clientApps": {
+            "title": "Client Application",
+            "subtitle": "Select target application",
+            "selectorLabel": {
+              "moreThanOneApp": "Select an app",
+              "noApps": "No apps to display"
+            },
+            "infoBoxNotificationTextPartOne": "Subscriptions provide production access. This access request will be reviewed by ",
+            "infoBoxNotificationTextPartTwo": " first.",
+            "warningBoxNotificationText": "If you revoke the subscription of the client application, access will automatically be removed."
+          },
+          "apiProductSubsContainer": {
+            "title": "API product subscriptions",
+            "subtitle": "An API product groups multiple API versions. Each time we update a checked API product, we’ll inform you about it.",
+            "apiProductsTable": {
+              "title": "API Products",
+              "subtitle": "latest version"
+            }
+          },
+          "buttons": {
+            "requestAccess": "Request access",
+            "revokeAccess": "Revoke access",
+            "reviewOrganisation": "Review organisation",
+            "reviewApp": "Review app",
+            "cancel": "Cancel"
+          }
+        }
+      }
+    },
     "testSubTab": {
       "instructions": {
         "stepOne": {
@@ -173,6 +229,36 @@
       "stepIntro": "Step",
       "finalRemarksPartOne": "Congratulations!",
       "finalRemarksPartTwo": "Now you know how to do it. That's how easy it is to get your API up and running!"
+    }
+  },
+  "profileTab": {
+    "subtitle": "We've selected some profile-specific actions for you.",
+    "orgRelatedLabels": {
+      "selectorTitle": "Linked organisation",
+      "selectorLabel": "Organisations",
+      "createOrgButtonLabel": "Create your organisation"
+    },
+    "otherActionsLabels": {
+      "changePassword": "Change password",
+      "viewTeam": "View team",
+      "updateProfileDetails": "Update",
+      "logOut": "Log out",
+      "deleteProfile": "Delete profile"
+    },
+    "roleRelatedLabels": {
+      "admin": "Admin",
+      "orgOwner": "Organisation owner",
+      "developer": "Developer"
+    },
+    "userRelatedLabels": {
+      "userAvatarURL": "Avatar URL",
+      "userEmailAddress": "E-mail address",
+      "userName": "Profile name",
+      "userPhoneNumber": "Phone number (international)"
+    },
+    "warningLabels": {
+      "userAvatarURL": "The provided URL is not valid, or the image does not exist.",
+      "userPhoneNumber": "Please enter a valid phone number."
     }
   },
   "listApps": {
@@ -231,15 +317,15 @@
     }
   },
   "warnings": {
-    "url": "Please enter a valid URL.",
-    "mobileNumber": "Please enter a valid mobile number."
+    "userAvatarURL": "The provided URL is not valid, or the image does not exist.",
+    "userPhoneNumber": "Please enter a valid phone number."
   },
   "labels": {
-    "name": "Name",
-    "email": "E-mail address",
-    "bio": "Bio",
-    "mobileNumber": "Mobile number (international)",
-    "avatarUrl": "Avatar URL",
+    "userAvatarURL": "Avatar URL",
+    "userBio": "Bio",
+    "userEmailAddress": "E-mail address",
+    "userName": "Name",
+    "userPhoneNumber": "Phone number (international)",
     "organization": "Organisation",
     "organizationDescription": "Organisation description",
     "organizationWebsite": "Organisation website",
