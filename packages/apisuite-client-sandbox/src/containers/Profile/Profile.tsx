@@ -130,7 +130,7 @@ const Profile: React.FC<ProfileProps> = ({
   const validateAvatar = (avatar: string) => {
     if (avatar !== '') {
       (async () => {
-        let valid = await isValidImage(avatar)
+        const valid = await isValidImage(avatar)
         setValidImage(valid)
       })()
     }
