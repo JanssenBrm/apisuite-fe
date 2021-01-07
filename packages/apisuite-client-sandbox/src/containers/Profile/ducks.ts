@@ -90,6 +90,10 @@ const initialState: ProfileStore = {
       isRequesting: false,
       error: '',
     },
+    deleteAccount: {
+      isRequesting: false,
+      error: '',
+    },
   },
 }
 
@@ -131,6 +135,8 @@ export enum ProfileActionTypes {
   UPDATE_ORG_ERROR = 'UPDATE_ORG_ERROR',
 
   RESET_ERRORS = 'RESET_ERRORS',
+
+  DELETE_ACCOUNT_REQUEST = 'DELETE_ACCOUNT_REQUEST',
 }
 
 export default function profileReducer (
@@ -381,6 +387,16 @@ export default function profileReducer (
       })
     }
 
+    case ProfileActionTypes.DELETE_ACCOUNT_REQUEST: {
+      return update(state, {
+        requestStatuses: {
+          deleteAccount: {
+            isRequesting: { $set: true },
+          },
+        },
+      })
+    }
+
     default:
       return state
   }
@@ -593,3 +609,11 @@ export const resetErrorAction = () =>
     type: ProfileActionTypes.RESET_ERRORS,
   } as const
   )
+
+export const deleteAccountActions = {
+  request: () => {
+    return {
+      type: ProfileActionTypes.DELETE_ACCOUNT_REQUEST,
+    } as const
+  },
+}
