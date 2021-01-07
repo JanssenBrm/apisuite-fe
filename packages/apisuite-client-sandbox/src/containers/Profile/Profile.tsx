@@ -33,6 +33,8 @@ const Profile: React.FC<ProfileProps> = ({
 
   const [t] = useTranslation()
 
+  const [validImage, setValidImage] = React.useState<boolean>(false)
+
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile')
     of all user-related information we presently have. */
@@ -65,8 +67,7 @@ const Profile: React.FC<ProfileProps> = ({
     {
       userAvatarURL: {
         rules: [
-          // TODO: Look into why TypeScript complains about this
-          async (URI) => {
+          (URI) => {
             const stringURI = URI.toString()
 
             if (stringURI.length === 0) {
@@ -77,7 +78,7 @@ const Profile: React.FC<ProfileProps> = ({
               /* Non-empty URI? Cool! First, we determine if that URI is valid,
               and then we need to check if the URI points to an actual image.
               If any of these conditions are not met, we display an error message. */
-              const doesImageExist = isValidURL(URI) && await (isValidImage(URI))
+              const doesImageExist = isValidURL(URI) && validImage
 
               return doesImageExist
             }
@@ -125,6 +126,15 @@ const Profile: React.FC<ProfileProps> = ({
       },
     )
   }, [profile])
+
+  const validateAvatar = (avatar: string) => {
+    if (avatar !== '') {
+      (async () => {
+        let valid = await isValidImage(avatar)
+        setValidImage(valid)
+      })()
+    }
+  }
 
   /* Organisation details */
 
@@ -342,8 +352,14 @@ const Profile: React.FC<ProfileProps> = ({
                       label={t('profileTab.userRelatedLabels.userAvatarURL', { config })}
                       margin='dense'
                       name='userAvatarURL'
-                      onChange={handleChange}
-                      onFocus={handleFocus}
+                      onChange={(e) => {
+                        validateAvatar(formState.values.userAvatarURL)
+                        handleChange(e)
+                      }}
+                      onFocus={(e) => {
+                        validateAvatar(formState.values.userAvatarURL)
+                        handleFocus(e)
+                      }}
                       type='url'
                       value={formState.values.userAvatarURL}
                       variant='outlined'
