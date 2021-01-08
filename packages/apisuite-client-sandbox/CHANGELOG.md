@@ -16,15 +16,33 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [1.1.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.3...apisuite-client-sandbox@1.1.2) (2020-12-28)
 
-**Note:** Version bump only for package apisuite-client-sandbox
+
+### Bug Fixes
+
+* bump cloud ext ui version ([5614d1e](https://github.com/Cloudoki/APISuite/commit/5614d1ec6c92aa8139823583357ca3faf3abb442))
 
 
 
 
 
-## [1.1.1](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.2...apisuite-client-sandbox@1.1.1) (2020-12-14)
+# [1.1.0-rc.4](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.3...apisuite-client-sandbox@1.1.0-rc.4) (2020-12-28)
 
-**Note:** Version bump only for package apisuite-client-sandbox
+
+### Bug Fixes
+
+* **lint:** linter fixes ([dd696ea](https://github.com/Cloudoki/APISuite/commit/dd696ea6114c7c928035f8f0a5e9bfcdf2136dc8))
+* Changed the background color of the navigation to meet the design ([010d79e](https://github.com/Cloudoki/APISuite/commit/010d79ecf8cb6c912de4371b4330568ddf55df79))
+
+
+### Features
+
+* Animated the assistant's 'toggle' action ([8df8e68](https://github.com/Cloudoki/APISuite/commit/8df8e68f5121e56c18f618bf26eca60a3eaf9839))
+* Removed the 'ON/OFF' icon from the navigation, and added a 'Logout' button to the user's profile ([9cc0575](https://github.com/Cloudoki/APISuite/commit/9cc05758e518d9646afefbc525c7a3dc3ffd8fc1))
+* send registration token on payloads instead of headers ([d9f06ec](https://github.com/Cloudoki/APISuite/commit/d9f06ecddbb8e434d05eb479c23df507135b2fa2))
+
+
+
+
 # [1.1.0-rc.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.2...apisuite-client-sandbox@1.1.0-rc.3) (2020-12-14)
 
 
