@@ -7,6 +7,7 @@ import {
   getProfileActions,
   resetErrorAction,
   updateProfileActions,
+  deleteAccountActions,
 } from 'containers/Profile/ducks'
 
 import Profile from './Profile'
@@ -25,6 +26,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators(
     logout: () => dispatch(authActions.logout()),
     resetErrors: resetErrorAction,
     updateProfile: updateProfileActions.request,
+    deleteAccount: deleteAccountActions.request,
   },
   dispatch,
 )

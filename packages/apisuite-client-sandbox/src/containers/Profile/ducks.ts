@@ -137,6 +137,8 @@ export enum ProfileActionTypes {
   RESET_ERRORS = 'RESET_ERRORS',
 
   DELETE_ACCOUNT_REQUEST = 'DELETE_ACCOUNT_REQUEST',
+  DELETE_ACCOUNT_SUCCESS = 'DELETE_ACCOUNT_SUCCESS',
+  DELETE_ACCOUNT_ERROR = 'DELETE_ACCOUNT_ERROR',
 }
 
 export default function profileReducer (
@@ -397,6 +399,17 @@ export default function profileReducer (
       })
     }
 
+    case ProfileActionTypes.DELETE_ACCOUNT_SUCCESS:
+    case ProfileActionTypes.DELETE_ACCOUNT_ERROR: {
+      return update(state, {
+        requestStatuses: {
+          deleteAccount: {
+            isRequesting: { $set: false },
+          },
+        },
+      })
+    }
+
     default:
       return state
   }
@@ -614,6 +627,16 @@ export const deleteAccountActions = {
   request: () => {
     return {
       type: ProfileActionTypes.DELETE_ACCOUNT_REQUEST,
+    } as const
+  },
+  success: () => {
+    return {
+      type: ProfileActionTypes.DELETE_ACCOUNT_SUCCESS,
+    } as const
+  },
+  error: () => {
+    return {
+      type: ProfileActionTypes.DELETE_ACCOUNT_ERROR,
     } as const
   },
 }

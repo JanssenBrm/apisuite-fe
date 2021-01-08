@@ -13,7 +13,7 @@ const RegisterConfirmation: React.FC<RegisterConfirmationProps> = ({
   our registration process), we dispatch a 'NEXT_STEP' type of action so as to
   reset the 'steps' property of our app's store back to 1. */
   React.useEffect(() => {
-    nextStep()
+    nextStep({})
   }, [nextStep])
 
   return (

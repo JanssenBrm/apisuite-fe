@@ -10,6 +10,7 @@ import {
   submitOrganisationDetailsActions,
   submitSecurityStepActions,
   validateRegisterTokenActions,
+  previousStepAction,
 } from './ducks'
 
 export type RegisterFormProps =
@@ -19,6 +20,11 @@ export type RegisterFormProps =
   }
 
 export type Step = keyof typeof steps
+
+export type PreviousData = {
+  personal?: PersonalDetails,
+  org?: OrganisationDetails,
+}
 
 export type PersonalDetails = {
   name: string,
@@ -32,9 +38,7 @@ export type PersonalDetailsResponse = {
 }
 
 export type PersonalDetailsResponseErrorObject = {
-  response: {
-    status: number,
-  },
+  status: number,
 }
 
 export type OrganisationDetails = {
@@ -63,9 +67,12 @@ export type RegisterFormStore = {
   submittedEmail: string,
   invitation?: InvitationResponse,
   invitationError?: string,
+  back?: boolean,
+  previousData?: PreviousData,
 }
 
 export type RegisterFormActions =
+  ReturnType<typeof previousStepAction> |
   ReturnType<typeof nextStepAction> |
   ReturnNestedType<typeof submitPersonalDetailsActions> |
   ReturnNestedType<typeof submitOrganisationDetailsActions> |
