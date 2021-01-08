@@ -30,6 +30,9 @@ const useStyles = makeStyles(({
     border: '1px solid white',
     borderRadius: config.dimensions.borderRadius,
   },
+  backBtn: {
+    margin: '20px 0px',
+  },
   loading: {
     position: 'relative',
     top: 4,

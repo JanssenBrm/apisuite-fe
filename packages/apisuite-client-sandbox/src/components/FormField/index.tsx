@@ -23,7 +23,9 @@ export const isValidURL = (url: any) => {
 }
 
 export const isValidImage = async (imageURL: any) => {
-  const requestResponse = await fetch(imageURL)
+  const requestResponse = await fetch(imageURL, {
+    mode: 'no-cors',
+  })
 
   return !!requestResponse.ok
 }

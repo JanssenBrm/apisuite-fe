@@ -34,8 +34,12 @@ export function * submitPersonalDetailsSaga (
       data: JSON.stringify(action.payload),
     })
 
+    const previousData = {
+      personal: action.payload,
+    }
+
     yield put(submitPersonalDetailsActions.success(response))
-    yield put(nextStepAction())
+    yield put(nextStepAction(previousData))
   } catch (error) {
     yield put(submitPersonalDetailsActions.error(error))
   }
@@ -56,8 +60,12 @@ export function * submitOrganisationDetailsSaga (
       data: JSON.stringify(action.payload),
     })
 
+    const previousData = {
+      org: action.payload,
+    }
+
     yield put(submitOrganisationDetailsActions.success())
-    yield put(nextStepAction())
+    yield put(nextStepAction(previousData))
   } catch (error) {
     yield put(submitOrganisationDetailsActions.error(error))
   }
@@ -84,7 +92,7 @@ export function * submitSecurityStepSaga (
     })
 
     yield put(submitSecurityStepActions.success())
-    yield put(nextStepAction())
+    yield put(nextStepAction({}))
   } catch (error) {
     yield put(submitSecurityStepActions.error(error))
   }
@@ -125,7 +133,7 @@ export function * validateRegisterTokenSaga (
 
     yield put(validateRegisterTokenActions.success(response))
   } catch (error) {
-    yield put(validateRegisterTokenActions.error(error))
+    yield put(validateRegisterTokenActions.error(error.message))
   }
 }
 

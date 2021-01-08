@@ -14,6 +14,7 @@ import Close from '@material-ui/icons/Close'
 import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
+import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 
 import { Organization, ProfileProps } from './types'
 
@@ -28,12 +29,14 @@ const Profile: React.FC<ProfileProps> = ({
   logout,
   profile,
   updateProfile,
+  deleteAccount,
 }) => {
   const classes = useStyles()
 
   const [t] = useTranslation()
 
   const [validImage, setValidImage] = React.useState<boolean>(false)
+  const [openDialog, setOpenDialog] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile')
@@ -209,6 +212,14 @@ const Profile: React.FC<ProfileProps> = ({
     ) {
       updateProfileDetails(event, currentlySelectedOrganisation)
     }
+  }
+
+  const handleDelete = () => {
+    setOpenDialog(true)
+  }
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false)
   }
 
   return (
@@ -446,18 +457,29 @@ const Profile: React.FC<ProfileProps> = ({
           <div className={classes.otherActionsContainer}>
             <Button
               customButtonClassName={classes.otherActionsButtons}
-              href='#'
               label={t('profileTab.otherActionsLabels.logOut', { config })}
               onClick={logout}
             />
 
             <Button
               customButtonClassName={classes.deleteProfileButton}
-              href='#'
               label={t('profileTab.otherActionsLabels.deleteProfile', { config })}
+              onClick={handleDelete}
             />
           </div>
         </div>
+
+        {
+          openDialog &&
+          <CustomizableDialog
+            open={openDialog}
+            providedTitle='Delete Account'
+            providedText='Are you sure you want to delete the account? This action is not reversible.'
+            closeDialogCallback={handleCloseDialog}
+            confirmButtonLabel='Delete'
+            confirmButtonCallback={deleteAccount}
+          />
+        }
       </section>
     </main>
   )

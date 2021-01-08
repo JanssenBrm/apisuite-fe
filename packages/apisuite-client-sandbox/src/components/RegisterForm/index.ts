@@ -4,6 +4,7 @@ import {
   submitOrganisationDetailsActions,
   submitSecurityStepActions,
   validateRegisterTokenActions,
+  previousStepAction,
 } from './ducks'
 import RegisterForm from './RegisterForm'
 import {
@@ -21,6 +22,7 @@ export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   submitPersonalDetails: submitPersonalDetailsActions.request,
   submitSecurityStep: submitSecurityStepActions.request,
   validateToken: validateRegisterTokenActions.request,
+  previousStep: previousStepAction,
 }, dispatch)
 
 export default connect(mapStateToProps, mapDispatchToProps)(RegisterForm)

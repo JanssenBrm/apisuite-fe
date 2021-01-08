@@ -59,8 +59,7 @@ function * loginWorker (action: AnyAction) {
       token,
     }))
   } catch (error) {
-    const errorMessage = error.response.data.error
-    yield put(authActions.loginError(errorMessage))
+    yield put(authActions.loginError(error.message.error))
   }
 }
 
@@ -96,7 +95,7 @@ function * loginUWorker (action: AnyAction) {
       },
     }))
   } catch (error) {
-    yield put(authActions.loginUserError(error))
+    yield put(authActions.loginUserError(error.message.error))
   }
 }
 
@@ -159,8 +158,7 @@ function * logoutWorker () {
 
     yield put(authActions.logoutSuccess())
   } catch (error) {
-    const errorMessage = error ? error.response.data.error : undefined
-    yield put(authActions.logoutError({ error: errorMessage || 'Unknown error occurred.' }))
+    yield put(authActions.logoutError({ error: error.message || 'Unknown error occurred.' }))
   }
 }
 
@@ -179,7 +177,7 @@ function * expiredSessionWorker () {
     })
   } catch (error) {
     // if token expired logout
-    if (error && error.response && error.response.status === 401) {
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(openNotification('error', 'Your session has expired, you need to login again.', 5000))
       yield delay(1000)
       yield put(authActions.logout())
