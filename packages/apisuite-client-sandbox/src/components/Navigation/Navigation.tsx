@@ -241,33 +241,18 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
                 </Link>
               }
 
-              {
-                userProfile.avatar !== ''
-                  ? (
-                    <Link
-                      className={classes.linkToProfile}
-                      to='/profile'
-                    >
-                      <Avatar
-                        alt="User's photo"
-                        className={classes.userAvatar}
-                        src={userProfile.avatar}
-                      />
-                    </Link>
-                  )
-                  : (
-                    <Link
-                      className={classes.linkToProfile}
-                      to='/profile'
-                    >
-                      <Avatar
-                        className={classes.userAvatar}
-                      >
-                        {initials}
-                      </Avatar>
-                    </Link>
-                  )
-              }
+              <Link
+                className={classes.linkToProfile}
+                to='/profile'
+              >
+                <Avatar
+                  alt="User's photo"
+                  className={classes.userAvatar}
+                  src={userProfile.avatar}
+                >
+                  {initials}
+                </Avatar>
+              </Link>
             </div>
           )
         }

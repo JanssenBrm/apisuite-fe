@@ -185,11 +185,10 @@ export function useMenu (): Array<TabProps[]> {
             label: 'Overview',
             route: '/profile',
           },
-          // Hidden until 'Security' view is implemented
-          // {
-          //   label: 'Security',
-          //   route: '/profile/security',
-          // },
+          {
+            label: 'Security',
+            route: '/profile/security',
+          },
           {
             label: 'Organisation',
             route: '/profile/organisation',
