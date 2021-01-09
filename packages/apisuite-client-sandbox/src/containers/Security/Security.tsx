@@ -50,6 +50,12 @@ const Security: React.FC<SecurityProps> = ({
     setProvidedPasswords(newPasswords)
   }
 
+  const handlePasswordChangeRequest = () => {
+    updatePasswordRequest(providedPasswords[0], providedPasswords[1])
+
+    setProvidedPasswords(['', ''])
+  }
+
   return (
     <main className='page-container'>
       <section className={classes.updatePasswordContainer}>
@@ -166,7 +172,7 @@ const Security: React.FC<SecurityProps> = ({
             }
             href='#'
             label={t('profileTab.securitySubTab.updatePasswordButtonLabel', { config })}
-            onClick={() => updatePasswordRequest(providedPasswords[0], providedPasswords[1])}
+            onClick={handlePasswordChangeRequest}
           />
 
           <Button
