@@ -14,6 +14,7 @@ import Close from '@material-ui/icons/Close'
 import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
+import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 
 import { Organization, ProfileProps } from './types'
 
@@ -28,10 +29,14 @@ const Profile: React.FC<ProfileProps> = ({
   logout,
   profile,
   updateProfile,
+  deleteAccount,
 }) => {
   const classes = useStyles()
 
   const [t] = useTranslation()
+
+  const [validImage, setValidImage] = React.useState<boolean>(false)
+  const [openDialog, setOpenDialog] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile')
@@ -65,8 +70,7 @@ const Profile: React.FC<ProfileProps> = ({
     {
       userAvatarURL: {
         rules: [
-          // TODO: Look into why TypeScript complains about this
-          async (URI) => {
+          (URI) => {
             const stringURI = URI.toString()
 
             if (stringURI.length === 0) {
@@ -77,7 +81,7 @@ const Profile: React.FC<ProfileProps> = ({
               /* Non-empty URI? Cool! First, we determine if that URI is valid,
               and then we need to check if the URI points to an actual image.
               If any of these conditions are not met, we display an error message. */
-              const doesImageExist = isValidURL(URI) && await (isValidImage(URI))
+              const doesImageExist = isValidURL(URI) && validImage
 
               return doesImageExist
             }
@@ -125,6 +129,15 @@ const Profile: React.FC<ProfileProps> = ({
       },
     )
   }, [profile])
+
+  const validateAvatar = (avatar: string) => {
+    if (avatar !== '') {
+      (async () => {
+        const valid = await isValidImage(avatar)
+        setValidImage(valid)
+      })()
+    }
+  }
 
   /* Organisation details */
 
@@ -199,6 +212,14 @@ const Profile: React.FC<ProfileProps> = ({
     ) {
       updateProfileDetails(event, currentlySelectedOrganisation)
     }
+  }
+
+  const handleDelete = () => {
+    setOpenDialog(true)
+  }
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false)
   }
 
   return (
@@ -342,8 +363,14 @@ const Profile: React.FC<ProfileProps> = ({
                       label={t('profileTab.overviewTab.userRelatedLabels.userAvatarURL', { config })}
                       margin='dense'
                       name='userAvatarURL'
-                      onChange={handleChange}
-                      onFocus={handleFocus}
+                      onChange={(e) => {
+                        validateAvatar(formState.values.userAvatarURL)
+                        handleChange(e)
+                      }}
+                      onFocus={(e) => {
+                        validateAvatar(formState.values.userAvatarURL)
+                        handleFocus(e)
+                      }}
                       type='url'
                       value={formState.values.userAvatarURL}
                       variant='outlined'
@@ -439,9 +466,22 @@ const Profile: React.FC<ProfileProps> = ({
               customButtonClassName={classes.deleteProfileButton}
               href='#'
               label={t('profileTab.overviewTab.otherActionsLabels.deleteProfile', { config })}
+              onClick={handleDelete}
             />
           </div>
         </div>
+
+        {
+          openDialog &&
+          <CustomizableDialog
+            open={openDialog}
+            providedTitle='Delete Account'
+            providedText='Are you sure you want to delete the account? This action is not reversible.'
+            closeDialogCallback={handleCloseDialog}
+            confirmButtonLabel='Delete'
+            confirmButtonCallback={deleteAccount}
+          />
+        }
       </section>
     </main>
   )

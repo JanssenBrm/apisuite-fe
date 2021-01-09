@@ -10,6 +10,7 @@ import {
   SecurityStep,
   PersonalDetailsResponse,
   PersonalDetailsResponseErrorObject,
+  PreviousData,
 } from './types'
 
 export enum RegisterFormActionTypes {
@@ -33,7 +34,8 @@ export enum RegisterFormActionTypes {
   VALIDATE_REGISTRATION_TOKEN_SUCCESS = 'VALIDATE_REGISTRATION_TOKEN_SUCCESS',
   VALIDATE_REGISTRATION_TOKEN_ERROR = 'VALIDATE_REGISTRATION_TOKEN_ERROR',
 
-  NEXT_STEP = 'NEXT_STEP'
+  NEXT_STEP = 'NEXT_STEP',
+  PREVIOUS_STEP = 'PREVIOUS_STEP'
 }
 
 const initialState: RegisterFormStore = {
@@ -46,6 +48,11 @@ const initialState: RegisterFormStore = {
     email: undefined,
   },
   invitationError: undefined,
+  back: false,
+  previousData: {
+    personal: undefined,
+    org: undefined,
+  },
 }
 
 export default function registerFormReducer (
@@ -60,12 +67,25 @@ export default function registerFormReducer (
     case RegisterFormActionTypes.NEXT_STEP: {
       const nextStep = state.step + 1
 
-      // if we have an invitation skip setp 2
+      let previousData = {}
+
+      if (JSON.stringify(action.previousData) !== JSON.stringify(previousData)) {
+        previousData = {
+          personal: {
+            $set: action.previousData?.personal ? action.previousData.personal : state.previousData?.personal,
+          },
+          org: { $set: action.previousData?.org ? action.previousData.org : state.previousData?.org },
+        }
+      }
+
+      // if we have an invitation skip step 2
       if (state.invitation && state.invitation.email && nextStep === 2) {
         const skipedStep = nextStep + 1
         return update(state, {
           // @ts-ignore
           step: { $set: skipedStep },
+          back: { $set: false },
+          previousData,
         })
       }
 
@@ -73,12 +93,47 @@ export default function registerFormReducer (
       if (nextStep === 5) {
         return update(state, {
           step: { $set: 1 },
+          back: { $set: false },
+          previousData,
         })
       }
 
       if (isStep(nextStep)) {
         return update(state, {
           step: { $set: nextStep },
+          back: { $set: false },
+          previousData,
+        })
+      }
+
+      return state
+    }
+
+    case RegisterFormActionTypes.PREVIOUS_STEP: {
+      const previousStep = state.step - 1
+
+      // if we have an invitation skip step 2
+      if (state.invitation && state.invitation.email && previousStep === 2) {
+        const skipedStep = previousStep - 1
+        return update(state, {
+          // @ts-ignore
+          step: { $set: skipedStep },
+          back: { $set: true },
+        })
+      }
+
+      // If 'previousStep' goes to '0', it means we have reached the 'Personal details' view.
+      if (previousStep === 0) {
+        return update(state, {
+          step: { $set: 1 },
+          back: { $set: true },
+        })
+      }
+
+      if (isStep(previousStep)) {
+        return update(state, {
+          step: { $set: previousStep },
+          back: { $set: true },
         })
       }
 
@@ -114,7 +169,7 @@ export default function registerFormReducer (
       the back-end's response status is '409'. */
       return update(state, {
         isRequesting: { $set: false },
-        error: { $set: `${action.error.response.status}` },
+        error: { $set: `${action.error.status}` },
       })
 
     case RegisterFormActionTypes.SUBMIT_ORGANISATION_DETAILS_SUCCESS:
@@ -144,8 +199,13 @@ export default function registerFormReducer (
   }
 }
 
-export const nextStepAction = () => ({
+export const nextStepAction = (previousData: PreviousData) => ({
   type: RegisterFormActionTypes.NEXT_STEP,
+  previousData,
+} as const)
+
+export const previousStepAction = () => ({
+  type: RegisterFormActionTypes.PREVIOUS_STEP,
 } as const)
 
 export const submitPersonalDetailsActions = {

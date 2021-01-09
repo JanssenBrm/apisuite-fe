@@ -11,6 +11,7 @@ import {
   updateOrgActions,
   changeRoleActions,
   resetErrorAction,
+  deleteAccountActions,
 } from './ducks'
 import {
   mapStateToProps,
@@ -47,6 +48,7 @@ export type ProfileStore = {
     updateProfileRequest: RequestStatus,
     updateOrgRequest: RequestStatus,
     changeRoleRequest: RequestStatus,
+    deleteAccount: RequestStatus,
   },
 }
 
@@ -116,4 +118,5 @@ export type ProfileActions =
   ReturnNestedType<typeof updateOrgActions> |
   ReturnNestedType<typeof changeRoleActions> |
   ReturnNestedType<typeof fetchOrgActions> |
+  ReturnNestedType<typeof deleteAccountActions> |
   ReturnType<typeof resetErrorAction>
