@@ -1,3 +1,4 @@
+import update from 'immutability-helper'
 import {
   SecurityActions,
   UpdatePasswordRequestAction,
@@ -6,12 +7,14 @@ import {
 } from 'containers/Security/types'
 
 // Initial state
-const initialState = {}
+const initialState = {
+  isRequesting: false,
+}
 
 // Action types
-export const UPDATE_PASSWORD_REQUEST = 'UPDATE_PASSWORD_REQUEST'
-export const UPDATE_PASSWORD_REQUEST_SUCCESS = 'UPDATE_PASSWORD_REQUEST_SUCCESS'
-export const UPDATE_PASSWORD_REQUEST_ERROR = 'UPDATE_PASSWORD_REQUEST_ERROR'
+export const UPDATE_PASSWORD_REQUEST = 'SECURITY/UPDATE_PASSWORD_REQUEST'
+export const UPDATE_PASSWORD_REQUEST_SUCCESS = 'SECURITY/UPDATE_PASSWORD_REQUEST_SUCCESS'
+export const UPDATE_PASSWORD_REQUEST_ERROR = 'SECURITY/UPDATE_PASSWORD_REQUEST_ERROR'
 
 // Reducer
 export default function securityReducer (
@@ -20,12 +23,15 @@ export default function securityReducer (
 ) {
   switch (action.type) {
     case UPDATE_PASSWORD_REQUEST:
-      console.log('"UPDATE_PASSWORD_REQUEST" action is being called')
-      return state
+      return update(state, {
+        isRequesting: { $set: true },
+      })
     case UPDATE_PASSWORD_REQUEST_SUCCESS:
     case UPDATE_PASSWORD_REQUEST_ERROR:
     default:
-      return state
+      return update(state, {
+        isRequesting: { $set: true },
+      })
   }
 }
 

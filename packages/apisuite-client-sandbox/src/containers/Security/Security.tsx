@@ -129,7 +129,7 @@ const Security: React.FC<SecurityProps> = ({
               ? ''
               : (
                 providedPasswords[0] === providedPasswords[1]
-                  ? 'The provided passwords should not match.'
+                  ? 'The new password should not be the same as the current password.'
                   : (
                     isValidPass(providedPasswords[1])
                       ? ''

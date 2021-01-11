@@ -10,6 +10,7 @@ import applications from 'containers/Applications/sagas'
 import subscriptions from 'containers/Subscriptions/sagas'
 import profile from 'containers/Profile/sagas'
 import apiDetails from 'containers/APIDetails/sagas'
+import security from 'containers/Security/sagas'
 
 const sagas = [
   auth,
@@ -20,6 +21,7 @@ const sagas = [
   informDialog,
   profile,
   apiDetails,
+  security,
 ]
 
 export default sagas

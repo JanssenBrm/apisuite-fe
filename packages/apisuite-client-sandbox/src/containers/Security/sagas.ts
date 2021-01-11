@@ -1,5 +1,3 @@
-import { useTranslation } from 'react-i18next'
-
 import { call, put, select, takeLatest } from 'redux-saga/effects'
 
 import { openNotification } from 'containers/NotificationStack/ducks'
@@ -11,15 +9,12 @@ import {
 } from './ducks'
 
 import { API_URL } from 'constants/endpoints'
-import { config } from 'constants/global'
 
 import { Store } from 'store/types'
 
 import { UpdatePasswordRequestAction } from './types'
 
 import request from 'util/request'
-
-const [t] = useTranslation()
 
 export function * updatePasswordRequestSaga (action: UpdatePasswordRequestAction) {
   try {
@@ -29,8 +24,6 @@ export function * updatePasswordRequestSaga (action: UpdatePasswordRequestAction
       'old_password': action.payload.oldPassword,
       'new_password': action.payload.newPassword,
     }
-
-    console.log('updatePasswordRequestData', updatePasswordRequestData)
 
     const authToken = yield select((state: Store) => state.auth.authToken)
 
@@ -45,10 +38,10 @@ export function * updatePasswordRequestSaga (action: UpdatePasswordRequestAction
     })
 
     yield put(updatePasswordRequestSuccessAction())
-    yield put(openNotification('success', t('profileTab.securitySubTab.successNotification', { config }), 3000))
+    yield put(openNotification('success', 'Your password was updated successfully!', 3000))
   } catch (error) {
     yield put(updatePasswordRequestErrorAction())
-    yield put(openNotification('error', t('profileTab.securitySubTab.errorNotification', { config }), 3000))
+    yield put(openNotification('error', `Could not update your password. Please try again. ${error.message}`, 3000))
   }
 }
 
