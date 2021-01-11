@@ -232,33 +232,46 @@
     }
   },
   "profileTab": {
-    "subtitle": "We've selected some profile-specific actions for you.",
-    "orgRelatedLabels": {
-      "selectorTitle": "Linked organisation",
-      "selectorLabel": "Organisations",
-      "createOrgButtonLabel": "Create your organisation"
+    "overviewTab": {
+      "subtitle": "We've selected some profile-specific actions for you.",
+      "orgRelatedLabels": {
+        "selectorTitle": "Linked organisation",
+        "selectorLabel": "Organisations",
+        "createOrgButtonLabel": "Create your organisation"
+      },
+      "otherActionsLabels": {
+        "changePassword": "Change password",
+        "viewTeam": "View team",
+        "updateProfileDetails": "Update",
+        "logOut": "Log out",
+        "deleteProfile": "Delete profile"
+      },
+      "roleRelatedLabels": {
+        "admin": "Admin",
+        "orgOwner": "Organisation owner",
+        "developer": "Developer"
+      },
+      "userRelatedLabels": {
+        "userAvatarURL": "Avatar URL",
+        "userEmailAddress": "E-mail address",
+        "userName": "Profile name",
+        "userPhoneNumber": "Phone number (international)"
+      },
+      "warningLabels": {
+        "userAvatarURL": "The provided URL is not valid, or the image does not exist.",
+        "userPhoneNumber": "Please enter a valid phone number."
+      }
     },
-    "otherActionsLabels": {
-      "changePassword": "Change password",
-      "viewTeam": "View team",
-      "updateProfileDetails": "Update",
-      "logOut": "Log out",
-      "deleteProfile": "Delete profile"
-    },
-    "roleRelatedLabels": {
-      "admin": "Admin",
-      "orgOwner": "Organisation owner",
-      "developer": "Developer"
-    },
-    "userRelatedLabels": {
-      "userAvatarURL": "Avatar URL",
-      "userEmailAddress": "E-mail address",
-      "userName": "Profile name",
-      "userPhoneNumber": "Phone number (international)"
-    },
-    "warningLabels": {
-      "userAvatarURL": "The provided URL is not valid, or the image does not exist.",
-      "userPhoneNumber": "Please enter a valid phone number."
+    "securitySubTab": {
+      "currentPasswordFieldLabel": "Current password",
+      "forgotPasswordButtonLabel": "Forgot password",
+      "newPasswordFieldLabel": "New password",
+      "securityTitle": "Security",
+      "updatePasswordButtonLabel": "Update",
+      "updatePasswordTitle": "Update password",
+      "userActivityTitle": "User activity",
+      "errorNotification": "Could not update your password. Please try again.",
+      "successNotification": "Your password was updated successfully!"
     }
   },
   "listApps": {

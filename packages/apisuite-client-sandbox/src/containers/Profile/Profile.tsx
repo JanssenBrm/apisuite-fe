@@ -87,7 +87,7 @@ const Profile: React.FC<ProfileProps> = ({
             }
           },
         ],
-        message: t('profileTab.warningLabels.userAvatarURL', { config }),
+        message: t('profileTab.overviewTab.warningLabels.userAvatarURL', { config }),
       },
 
       userPhoneNumber: {
@@ -102,7 +102,7 @@ const Profile: React.FC<ProfileProps> = ({
             }
           },
         ],
-        message: t('profileTab.warningLabels.userPhoneNumber', { config }),
+        message: t('profileTab.overviewTab.warningLabels.userPhoneNumber', { config }),
       },
     })
 
@@ -232,16 +232,16 @@ const Profile: React.FC<ProfileProps> = ({
             <p className={classes.userRole}>
               {
                 profile.current_org.role.name === 'admin'
-                  ? t('profileTab.roleRelatedLabels.admin', { config })
+                  ? t('profileTab.overviewTab.roleRelatedLabels.admin', { config })
                   : (profile.current_org.role.name === 'organizationOwner')
-                    ? t('profileTab.roleRelatedLabels.orgOwner', { config })
-                    : t('profileTab.roleRelatedLabels.developer', { config })
+                    ? t('profileTab.overviewTab.roleRelatedLabels.orgOwner', { config })
+                    : t('profileTab.overviewTab.roleRelatedLabels.developer', { config })
               }
             </p>
           </div>
 
           <p className={classes.subtitle}>
-            {t('profileTab.subtitle', { config })}
+            {t('profileTab.overviewTab.subtitle', { config })}
           </p>
 
           <div>
@@ -252,7 +252,7 @@ const Profile: React.FC<ProfileProps> = ({
                   : classes.alternativeOrganisationDetailsTitle
               }
             >
-              <>{t('profileTab.orgRelatedLabels.selectorTitle', { config })}</>
+              <>{t('profileTab.overviewTab.orgRelatedLabels.selectorTitle', { config })}</>
             </p>
 
             {
@@ -263,7 +263,7 @@ const Profile: React.FC<ProfileProps> = ({
                       className={classes.organisationSelector}
                       customCloseIcon={<ExpandLessRoundedIcon />}
                       customOpenIcon={<ExpandMoreRoundedIcon />}
-                      fieldLabel={t('profileTab.orgRelatedLabels.selectorLabel', { config })}
+                      fieldLabel={t('profileTab.overviewTab.orgRelatedLabels.selectorLabel', { config })}
                       onChange={handleOrganisationSelection}
                       options={organisationSelector(profile.orgs_member)}
                       selected={
@@ -291,7 +291,7 @@ const Profile: React.FC<ProfileProps> = ({
                   <Button
                     customButtonClassName={classes.enabledOrganisationButton}
                     href='profile/organisation'
-                    label={t('profileTab.orgRelatedLabels.createOrgButtonLabel', { config })}
+                    label={t('profileTab.overviewTab.orgRelatedLabels.createOrgButtonLabel', { config })}
                   />
                 )
             }
@@ -308,14 +308,14 @@ const Profile: React.FC<ProfileProps> = ({
           <div className={classes.otherActionsContainer}>
             <Button
               customButtonClassName={classes.otherActionsButtons}
-              href='#'
-              label={t('profileTab.otherActionsLabels.changePassword', { config })}
+              href='profile/security'
+              label={t('profileTab.overviewTab.otherActionsLabels.changePassword', { config })}
             />
 
             <Button
               customButtonClassName={classes.otherActionsButtons}
               href='profile/team'
-              label={t('profileTab.otherActionsLabels.viewTeam', { config })}
+              label={t('profileTab.overviewTab.otherActionsLabels.viewTeam', { config })}
             />
           </div>
         </div>
@@ -360,7 +360,7 @@ const Profile: React.FC<ProfileProps> = ({
                         formState.errors.userAvatarURL &&
                         formState.errorMsgs.userAvatarURL
                       }
-                      label={t('profileTab.userRelatedLabels.userAvatarURL', { config })}
+                      label={t('profileTab.overviewTab.userRelatedLabels.userAvatarURL', { config })}
                       margin='dense'
                       name='userAvatarURL'
                       onChange={(e) => {
@@ -385,7 +385,7 @@ const Profile: React.FC<ProfileProps> = ({
             <TextField
               className={classes.inputFields}
               fullWidth
-              label={t('profileTab.userRelatedLabels.userName', { config })}
+              label={t('profileTab.overviewTab.userRelatedLabels.userName', { config })}
               margin='dense'
               name='userName'
               onChange={handleChange}
@@ -398,7 +398,7 @@ const Profile: React.FC<ProfileProps> = ({
             <TextField
               className={classes.inputFields}
               fullWidth
-              label={t('profileTab.userRelatedLabels.userEmailAddress', { config })}
+              label={t('profileTab.overviewTab.userRelatedLabels.userEmailAddress', { config })}
               margin='dense'
               name='userEmailAddress'
               onChange={handleChange}
@@ -417,7 +417,7 @@ const Profile: React.FC<ProfileProps> = ({
                 formState.errors.userPhoneNumber &&
                 formState.errorMsgs.userPhoneNumber
               }
-              label={t('profileTab.userRelatedLabels.userPhoneNumber', { config })}
+              label={t('profileTab.overviewTab.userRelatedLabels.userPhoneNumber', { config })}
               margin='dense'
               name='userPhoneNumber'
               onChange={handleChange}
@@ -433,7 +433,7 @@ const Profile: React.FC<ProfileProps> = ({
                   ? classes.enabledUpdateDetailsButton
                   : classes.disabledUpdateDetailsButton
               }
-              label={t('profileTab.otherActionsLabels.updateProfileDetails', { config })}
+              label={t('profileTab.overviewTab.otherActionsLabels.updateProfileDetails', { config })}
               onClick={updateProfileDetails}
             />
 
@@ -444,10 +444,10 @@ const Profile: React.FC<ProfileProps> = ({
               <p>
                 {
                   profile.current_org.role.name === 'admin'
-                    ? t('profileTab.roleRelatedLabels.admin', { config })
+                    ? t('profileTab.overviewTab.roleRelatedLabels.admin', { config })
                     : (profile.current_org.role.name === 'organizationOwner')
-                      ? t('profileTab.roleRelatedLabels.orgOwner', { config })
-                      : t('profileTab.roleRelatedLabels.developer', { config })
+                      ? t('profileTab.overviewTab.roleRelatedLabels.orgOwner', { config })
+                      : t('profileTab.overviewTab.roleRelatedLabels.developer', { config })
                 }
               </p>
             </div>
@@ -457,13 +457,15 @@ const Profile: React.FC<ProfileProps> = ({
           <div className={classes.otherActionsContainer}>
             <Button
               customButtonClassName={classes.otherActionsButtons}
-              label={t('profileTab.otherActionsLabels.logOut', { config })}
+              href='#'
+              label={t('profileTab.overviewTab.otherActionsLabels.logOut', { config })}
               onClick={logout}
             />
 
             <Button
               customButtonClassName={classes.deleteProfileButton}
-              label={t('profileTab.otherActionsLabels.deleteProfile', { config })}
+              href='#'
+              label={t('profileTab.overviewTab.otherActionsLabels.deleteProfile', { config })}
               onClick={handleDelete}
             />
           </div>
