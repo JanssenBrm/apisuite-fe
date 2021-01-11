@@ -69,23 +69,7 @@ const Security: React.FC<SecurityProps> = ({
 
         <TextField
           className={classes.inputFields}
-          error={
-            providedPasswords[0].length === 0
-              ? false
-              : (
-                !isValidPass(providedPasswords[0])
-              )
-          }
           fullWidth
-          helperText={
-            providedPasswords[0].length === 0
-              ? ''
-              : (
-                isValidPass(providedPasswords[0])
-                  ? ''
-                  : t('profileTab.securitySubTab.notValidPasswordErrorMessage', { config })
-              )
-          }
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
@@ -166,7 +150,7 @@ const Security: React.FC<SecurityProps> = ({
             customButtonClassName={
               (providedPasswords[0] !== providedPasswords[1]) &&
                 (providedPasswords[0].length && providedPasswords[1].length) &&
-                (isValidPass(providedPasswords[0]) && isValidPass(providedPasswords[1]))
+                (isValidPass(providedPasswords[1]))
                 ? classes.enabledUpdatePasswordButton
                 : classes.disabledUpdatePasswordButton
             }
