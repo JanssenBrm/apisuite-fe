@@ -83,7 +83,7 @@ const Security: React.FC<SecurityProps> = ({
               : (
                 isValidPass(providedPasswords[0])
                   ? ''
-                  : 'The provided password is not valid.'
+                  : t('profileTab.securitySubTab.notValidPasswordErrorMessage', { config })
               )
           }
           InputProps={{
@@ -129,11 +129,11 @@ const Security: React.FC<SecurityProps> = ({
               ? ''
               : (
                 providedPasswords[0] === providedPasswords[1]
-                  ? 'The new password should not be the same as the current password.'
+                  ? t('profileTab.securitySubTab.samePasswordErrorMessage', { config })
                   : (
                     isValidPass(providedPasswords[1])
                       ? ''
-                      : 'The provided password is not valid.'
+                      : t('profileTab.securitySubTab.tooWeakPasswordErrorMessage', { config })
                   )
               )
           }
@@ -173,12 +173,6 @@ const Security: React.FC<SecurityProps> = ({
             href='#'
             label={t('profileTab.securitySubTab.updatePasswordButtonLabel', { config })}
             onClick={handlePasswordChangeRequest}
-          />
-
-          <Button
-            customButtonClassName={classes.forgotPasswordButton}
-            href='/forgot'
-            label={t('profileTab.securitySubTab.forgotPasswordButtonLabel', { config })}
           />
         </div>
 

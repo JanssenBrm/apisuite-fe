@@ -41,7 +41,7 @@ export function * updatePasswordRequestSaga (action: UpdatePasswordRequestAction
     yield put(openNotification('success', 'Your password was updated successfully!', 3000))
   } catch (error) {
     yield put(updatePasswordRequestErrorAction())
-    yield put(openNotification('error', `Could not update your password. Please try again. ${error.message}`, 3000))
+    yield put(openNotification('error', 'Could not update your password. Please try again.', 3000))
   }
 }
 
