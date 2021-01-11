@@ -69,23 +69,7 @@ const Security: React.FC<SecurityProps> = ({
 
         <TextField
           className={classes.inputFields}
-          error={
-            providedPasswords[0].length === 0
-              ? false
-              : (
-                !isValidPass(providedPasswords[0])
-              )
-          }
           fullWidth
-          helperText={
-            providedPasswords[0].length === 0
-              ? ''
-              : (
-                isValidPass(providedPasswords[0])
-                  ? ''
-                  : 'The provided password is not valid.'
-              )
-          }
           InputProps={{
             endAdornment: (
               <InputAdornment position='end'>
@@ -129,11 +113,11 @@ const Security: React.FC<SecurityProps> = ({
               ? ''
               : (
                 providedPasswords[0] === providedPasswords[1]
-                  ? 'The new password should not be the same as the current password.'
+                  ? t('profileTab.securitySubTab.samePasswordErrorMessage', { config })
                   : (
                     isValidPass(providedPasswords[1])
                       ? ''
-                      : 'The provided password is not valid.'
+                      : t('profileTab.securitySubTab.tooWeakPasswordErrorMessage', { config })
                   )
               )
           }
@@ -166,19 +150,13 @@ const Security: React.FC<SecurityProps> = ({
             customButtonClassName={
               (providedPasswords[0] !== providedPasswords[1]) &&
                 (providedPasswords[0].length && providedPasswords[1].length) &&
-                (isValidPass(providedPasswords[0]) && isValidPass(providedPasswords[1]))
+                (isValidPass(providedPasswords[1]))
                 ? classes.enabledUpdatePasswordButton
                 : classes.disabledUpdatePasswordButton
             }
             href='#'
             label={t('profileTab.securitySubTab.updatePasswordButtonLabel', { config })}
             onClick={handlePasswordChangeRequest}
-          />
-
-          <Button
-            customButtonClassName={classes.forgotPasswordButton}
-            href='/forgot'
-            label={t('profileTab.securitySubTab.forgotPasswordButtonLabel', { config })}
           />
         </div>
 

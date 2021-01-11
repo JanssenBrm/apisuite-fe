@@ -264,14 +264,16 @@
     },
     "securitySubTab": {
       "currentPasswordFieldLabel": "Current password",
+      "errorNotification": "Could not update your password. Please try again.",
       "forgotPasswordButtonLabel": "Forgot password",
       "newPasswordFieldLabel": "New password",
+      "samePasswordErrorMessage": "The new password should not be the same as the current one.",
       "securityTitle": "Security",
+      "successNotification": "Your password was updated successfully!",
+      "tooWeakPasswordErrorMessage": "The provided password is too weak.",
       "updatePasswordButtonLabel": "Update",
       "updatePasswordTitle": "Update password",
-      "userActivityTitle": "User activity",
-      "errorNotification": "Could not update your password. Please try again.",
-      "successNotification": "Your password was updated successfully!"
+      "userActivityTitle": "User activity"
     }
   },
   "listApps": {
