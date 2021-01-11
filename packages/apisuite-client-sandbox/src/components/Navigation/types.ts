@@ -5,6 +5,7 @@ import { SettingsStore } from 'containers/Settings/types'
 export interface NavigationProps extends React.HTMLAttributes<HTMLDivElement> {
   backButtonLabel?: string,
   contractible?: boolean,
+  logout: () => void,
   // Temporary until notification cards become clearer
   notificationCards: NotificationCardsStore,
   profile: ProfileStore,
@@ -33,6 +34,7 @@ export interface TabProps {
 }
 
 export interface SubTabProps {
+  isLogout?: boolean,
   label: any,
   route: string,
   disabled?: boolean,

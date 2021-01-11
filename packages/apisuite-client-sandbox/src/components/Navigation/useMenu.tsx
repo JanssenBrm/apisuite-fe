@@ -182,16 +182,23 @@ export function useMenu (): Array<TabProps[]> {
         route: '/profile',
         subTabs: [
           {
-            label: 'Profile',
+            label: 'Overview',
             route: '/profile',
           },
           {
-            label: 'Team',
-            route: '/profile/team',
+            label: 'Security',
+            route: '/profile/security',
           },
           {
             label: 'Organisation',
             route: '/profile/organisation',
+          },
+          {
+            // Used to convert the 'Log out' sub-tab's label into a Material UI icon
+            isLogout: true,
+            label: 'Log out',
+            route: '',
+            active: false,
           },
           ...extensionsLoginProfileTabs,
         ],

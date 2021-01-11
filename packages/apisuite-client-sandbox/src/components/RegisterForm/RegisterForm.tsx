@@ -66,15 +66,26 @@ const PersonalDetailsForm: React.FC<{
     setFormValid(errors && errors.length === 0)
   }, [errors, hasEmail, input, register])
 
+  React.useEffect(() => {
+    if (register.back && input.email === '') {
+      setInput({
+        ...input,
+        name: register.previousData?.personal?.name,
+        email: register.previousData?.personal?.email,
+      })
+    }
+  })
+
   return (
     <div className={classes.registerContainer}>
       <FormCard
         buttonLabel='Next'
-        buttonDisabled={!isFormValid}
+        buttonDisabled={!isFormValid || (register.error === '409' && input.email === register.submittedEmail)}
         handleSubmit={() => isFormValid ? handleSubmit(input) : () => {
           // do nothing
         }}
         loading={register.isRequesting}
+        showBack={false}
       >
         <div className={classes.fieldContainer}>
           <FormField
@@ -130,7 +141,8 @@ const PersonalDetailsForm: React.FC<{
 const OrganisationDetailsForm: React.FC<{
   handleSubmit: (organisationDetails: OrganisationDetails) => void,
   register: any,
-}> = ({ handleSubmit, register }) => {
+  previousStep: () => void,
+}> = ({ handleSubmit, register, previousStep }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -140,6 +152,16 @@ const OrganisationDetailsForm: React.FC<{
     name: '',
     website: '',
     // vat: '',
+  })
+
+  React.useEffect(() => {
+    if (register.back && input.name === '') {
+      setInput({
+        ...input,
+        name: register.previousData?.org?.name,
+        website: register.previousData?.org?.website,
+      })
+    }
   })
 
   const handleInputs = (e: FormFieldEvent, err: any) => {
@@ -166,6 +188,13 @@ const OrganisationDetailsForm: React.FC<{
           // do nothing
         }}
         loading={register.isRequesting}
+        showBack
+        backLabel='Back'
+        backDisabled={false}
+        handleBackClick={(e) => {
+          e.preventDefault()
+          previousStep()
+        }}
       >
         <div className={classes.fieldContainer}>
           <FormField
@@ -238,6 +267,7 @@ const SecurityStepForm: React.FC<{
   handleSubmit: (securityStep: SecurityStep) => void,
   register: any,
   token: string|undefined,
+  previousStep: () => void,
 }> = ({ handleSubmit, register, token }) => {
   const classes = useStyles()
   const [t] = useTranslation()
@@ -278,6 +308,7 @@ const SecurityStepForm: React.FC<{
           // do nothing
         }}
         loading={register.isRequesting}
+        showBack={false}
       >
         <div className={classes.fieldContainer}>
           <div>
@@ -328,6 +359,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   submitOrganisationDetails,
   submitSecurityStep,
   validateToken,
+  previousStep,
 }) => {
   // get token from url
   const invitationToken = qs.parse(window.location.search.slice(1)).token || undefined
@@ -355,13 +387,13 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
   const formStep = (step: keyof typeof steps) => {
     switch (step) {
       case 1:
-        return <PersonalDetailsForm register={register} token={invitationToken} handleSubmit={submitPersonalDetails} />
+        return <PersonalDetailsForm key='personal-details-1' register={register} token={invitationToken} handleSubmit={submitPersonalDetails} />
       case 2:
-        return <OrganisationDetailsForm register={register} handleSubmit={submitOrganisationDetails} />
+        return <OrganisationDetailsForm key='organisation-details-2' register={register} previousStep={previousStep} handleSubmit={submitOrganisationDetails} />
       case 3:
-        return <SecurityStepForm register={register} token={invitationToken} handleSubmit={submitSecurityStep} />
+        return <SecurityStepForm key='security-details-3' register={register} token={invitationToken} previousStep={previousStep} handleSubmit={submitSecurityStep} />
       case 4:
-        return <Redirect to='/confirmation' />
+        return <Redirect key='redirect-4' to='/confirmation' />
     }
   }
 

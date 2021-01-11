@@ -6,7 +6,7 @@ import { SubscriptionsStore } from 'containers/Subscriptions/types'
 
 export interface DashboardProps {
   auth: AuthStore,
-  getApis: () => void,
+  getAPIs: () => void,
   notificationCards: NotificationCardsStore,
   profile: ProfileStore,
   settings: SettingsStore,

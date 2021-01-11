@@ -28,7 +28,7 @@ const CreateApp: React.FC<CreateAppProps> = ({
   user,
   resCreate,
   apis,
-  getApis,
+  getAPIs,
 }) => {
   const commonClasses = useCommonStyles()
   const classes = useStyles()
@@ -193,8 +193,8 @@ const CreateApp: React.FC<CreateAppProps> = ({
   }
 
   React.useEffect(() => {
-    getApis()
-  }, [getApis])
+    getAPIs()
+  }, [getAPIs])
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -351,114 +351,114 @@ const CreateApp: React.FC<CreateAppProps> = ({
 
           {
             isActiveMenuItems[0] &&
-              <div
-                id='tosUrlFieldWrapper'
-                className={classes.fieldWrapper}
-              >
-                <FormField
-                  label='Terms of service URL (optional)'
-                  placeholder='Terms of service URL'
-                  name='tosUrl'
-                  type='text'
-                  value={input.pubUrls[1].url}
-                  onChange={handleInputs}
-                  errorPlacing='bottom'
-                  rules={[
-                    {
-                      rule: input.pubUrls[1].url.length > 0 ? isValidURL(input.pubUrls[1].url) : true,
-                      message: 'Please provide a valid URL',
-                    },
-                  ]}
-                />
+            <div
+              id='tosUrlFieldWrapper'
+              className={classes.fieldWrapper}
+            >
+              <FormField
+                label='Terms of service URL (optional)'
+                placeholder='Terms of service URL'
+                name='tosUrl'
+                type='text'
+                value={input.pubUrls[1].url}
+                onChange={handleInputs}
+                errorPlacing='bottom'
+                rules={[
+                  {
+                    rule: input.pubUrls[1].url.length > 0 ? isValidURL(input.pubUrls[1].url) : true,
+                    message: 'Please provide a valid URL',
+                  },
+                ]}
+              />
 
-                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
-                  <SvgIcon name='close' size='24' />
-                </Button>
-              </div>
+              <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                <SvgIcon name='close' size='24' />
+              </Button>
+            </div>
           }
 
           {
             isActiveMenuItems[1] &&
-              <div
-                id='policyUrlFieldWrapper'
-                className={classes.fieldWrapper}
-              >
-                <FormField
-                  label='Policy URL (optional)'
-                  placeholder='Policy URL'
-                  name='policyUrl'
-                  type='text'
-                  value={input.pubUrls[2].url}
-                  onChange={handleInputs}
-                  errorPlacing='bottom'
-                  rules={[
-                    {
-                      rule: input.pubUrls[2].url.length > 0 ? isValidURL(input.pubUrls[2].url) : true,
-                      message: 'Please provide a valid URL',
-                    },
-                  ]}
-                />
+            <div
+              id='policyUrlFieldWrapper'
+              className={classes.fieldWrapper}
+            >
+              <FormField
+                label='Policy URL (optional)'
+                placeholder='Policy URL'
+                name='policyUrl'
+                type='text'
+                value={input.pubUrls[2].url}
+                onChange={handleInputs}
+                errorPlacing='bottom'
+                rules={[
+                  {
+                    rule: input.pubUrls[2].url.length > 0 ? isValidURL(input.pubUrls[2].url) : true,
+                    message: 'Please provide a valid URL',
+                  },
+                ]}
+              />
 
-                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
-                  <SvgIcon name='close' size='24' />
-                </Button>
-              </div>
+              <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                <SvgIcon name='close' size='24' />
+              </Button>
+            </div>
           }
 
           {
             isActiveMenuItems[2] &&
-              <div
-                id='supportUrlFieldWrapper'
-                className={classes.fieldWrapper}
-              >
-                <FormField
-                  label='Support URL (optional)'
-                  placeholder='Support URL'
-                  name='supportUrl'
-                  type='text'
-                  value={input.pubUrls[3].url}
-                  onChange={handleInputs}
-                  errorPlacing='bottom'
-                  rules={[
-                    {
-                      rule: input.pubUrls[3].url.length > 0 ? isValidURL(input.pubUrls[3].url) : true,
-                      message: 'Please provide a valid URL',
-                    },
-                  ]}
-                />
+            <div
+              id='supportUrlFieldWrapper'
+              className={classes.fieldWrapper}
+            >
+              <FormField
+                label='Support URL (optional)'
+                placeholder='Support URL'
+                name='supportUrl'
+                type='text'
+                value={input.pubUrls[3].url}
+                onChange={handleInputs}
+                errorPlacing='bottom'
+                rules={[
+                  {
+                    rule: input.pubUrls[3].url.length > 0 ? isValidURL(input.pubUrls[3].url) : true,
+                    message: 'Please provide a valid URL',
+                  },
+                ]}
+              />
 
-                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
-                  <SvgIcon name='close' size='24' />
-                </Button>
-              </div>
+              <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                <SvgIcon name='close' size='24' />
+              </Button>
+            </div>
           }
 
           {
             isActiveMenuItems[3] &&
-              <div
-                id='supportEmailFieldWrapper'
-                className={classes.fieldWrapper}
-              >
-                <FormField
-                  label='Support e-mail (optional)'
-                  placeholder='Support e-mail'
-                  name='supportEmail'
-                  type='text'
-                  value={input.pubUrls[4].url}
-                  onChange={handleInputs}
-                  errorPlacing='bottom'
-                  rules={[
-                    {
-                      rule: input.pubUrls[4].url.length > 0 ? isValidEmail(input.pubUrls[4].url) : true,
-                      message: 'Please provide a valid e-mail address',
-                    },
-                  ]}
-                />
+            <div
+              id='supportEmailFieldWrapper'
+              className={classes.fieldWrapper}
+            >
+              <FormField
+                label='Support e-mail (optional)'
+                placeholder='Support e-mail'
+                name='supportEmail'
+                type='text'
+                value={input.pubUrls[4].url}
+                onChange={handleInputs}
+                errorPlacing='bottom'
+                rules={[
+                  {
+                    rule: input.pubUrls[4].url.length > 0 ? isValidEmail(input.pubUrls[4].url) : true,
+                    message: 'Please provide a valid e-mail address',
+                  },
+                ]}
+              />
 
-                <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
-                  <SvgIcon name='close' size='24' />
-                </Button>
-              </div>
+              <Button variant='outlined' className={classes.iconBtn} onClick={handleRemoveOtherFormField}>
+                <SvgIcon name='close' size='24' />
+              </Button>
+            </div>
           }
 
           <br />

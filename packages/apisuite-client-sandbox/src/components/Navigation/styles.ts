@@ -11,7 +11,7 @@ export default makeStyles(({
 
   alternativeAssistantAmountOfNotifications: {
     backgroundColor: config.palette.primary,
-    borderRadius: '4px',
+    borderRadius: config.dimensions.borderRadius,
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
@@ -75,6 +75,10 @@ export default makeStyles(({
     marginLeft: '12px',
   },
 
+  logOutTab: {
+    padding: '4.5px !important',
+  },
+
   logoAndNameContainer: {
     display: 'flex',
     alignItems: 'center',
@@ -89,7 +93,7 @@ export default makeStyles(({
   },
 
   opaqueMenuTab: {
-    color: '#FFFFFF',
+    color: config.palette.primaryContrastText,
     fontSize: '18px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -119,7 +123,7 @@ export default makeStyles(({
 
   regularAssistantAmountOfNotifications: {
     backgroundColor: config.palette.primary,
-    borderRadius: '4px',
+    borderRadius: config.dimensions.borderRadius,
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
@@ -148,14 +152,14 @@ export default makeStyles(({
   },
 
   regularLogo: {
-    color: '#FFFFFF',
+    color: config.palette.primaryContrastText,
     height: 'auto',
     marginRight: '20px',
     width: '60px',
   },
 
   subTab: {
-    color: '#FFFFFF',
+    color: config.palette.primaryContrastText,
     fontSize: '16px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -182,7 +186,7 @@ export default makeStyles(({
   },
 
   transparentMenuTab: {
-    color: '#FFFFFF',
+    color: config.palette.primaryContrastText,
     fontSize: '18px',
     fontWeight: 300,
     minWidth: 'unset',
@@ -192,7 +196,9 @@ export default makeStyles(({
   },
 
   userAvatar: {
-    border: '2px solid #FFFFFF',
+    border: `2px solid ${config.palette.primaryContrastText}`,
+    fontSize: '20px',
+    fontWeight: 300,
     height: '33px',
     width: '33px',
 

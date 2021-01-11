@@ -12,6 +12,10 @@ const FormCard: React.FC<FormCardProps> = ({
   loading,
   error,
   children,
+  showBack = false,
+  backLabel,
+  backDisabled,
+  handleBackClick,
 }) => {
   const classes = useStyles()
 
@@ -20,6 +24,18 @@ const FormCard: React.FC<FormCardProps> = ({
       <h2 className={classes.formTitle}>{title}</h2>
       <form onSubmit={handleSubmit}>
         {children}
+        {
+          showBack &&
+          <div className={classes.backBtn}>
+            <Button
+              label={backLabel}
+              onClick={handleBackClick}
+              fullWidth
+              type='button'
+              disabled={backDisabled}
+            />
+          </div>
+        }
         <Button
           label={loading ? <CircularProgress size={20} className={classes.loading} /> : buttonLabel}
           onClick={handleSubmit}

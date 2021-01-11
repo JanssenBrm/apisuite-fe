@@ -1,14 +1,16 @@
-
 export interface SelectProps {
+  className?: string,
+  customCloseIcon?: any,
+  customOpenIcon?: any,
+  disabled?: boolean,
+  fieldLabel?: string,
+  onChange?: (event: React.ChangeEvent<{}>, value: any) => void,
   options: SelectOption[],
   selected?: SelectOption,
-  onChange?: (event: React.ChangeEvent<{}>, value: any) => void,
-  className?: string,
-  disabled?: boolean,
 }
 
 export interface SelectOption {
-  label: string,
   group: string,
+  label: string,
   value: any,
 }

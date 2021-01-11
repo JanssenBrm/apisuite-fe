@@ -26,6 +26,7 @@ import RedirectPage from 'containers/RedirectPage'
 import RegisterConfirmation from 'containers/RegisterConfirmation'
 import RequireAuth from 'containers/Auth'
 import Sandbox from 'containers/Sandbox'
+import Security from 'containers/Security'
 import Subscriptions from 'containers/Subscriptions'
 import TeamPage from 'containers/TeamPage'
 
@@ -75,6 +76,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/profile', exact: true, auth: true, component: Profile },
   { path: '/profile/team', exact: true, auth: true, component: TeamPage },
   { path: '/profile/organisation', exact: true, auth: true, component: OrganizationPage },
+  { path: '/profile/security', exact: true, auth: true, component: Security },
   { path: ['/:redirect/confirm', '/:redirect/reset'], exact: true, component: RedirectPage },
   { path: '/terms', component: Terms },
   ...extensionsRoutes,

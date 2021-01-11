@@ -7,4 +7,8 @@ export interface FormCardProps extends React.HTMLAttributes<HTMLDivElement> {
   error?: string | Error,
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
   children: React.ReactNode,
+  showBack?: boolean,
+  backLabel?: string,
+  backDisabled?: boolean,
+  handleBackClick?: (e: React.FormEvent<HTMLFormElement>) => void,
 }

@@ -1,227 +1,161 @@
 import { makeStyles } from '@material-ui/styles'
+
 import { config } from 'constants/global'
 
 export default makeStyles(({
-  table: {
-    display: 'flex',
-    flexDirection: 'column',
+  apiAppsContainer: {
     alignItems: 'center',
+    borderLeft: `1px solid ${config.palette.newGreyScales['100']}`,
+    display: 'flex',
+    width: '405px',
+  },
+
+  apiDetailsLinkContainer: {
+    alignItems: 'center',
+    borderLeft: `1px solid ${config.palette.newGreyScales['100']}`,
+    display: 'flex',
     justifyContent: 'center',
-    width: '100%',
-    // cursor: 'pointer',
-    borderRadius: config.dimensions.borderRadius,
-    backgroundColor: 'white',
-    overflow: 'hidden',
-    borderStyle: 'solid',
-    borderColor: config.palette.greyScales[300],
-    border: 1,
-    borderTopWidth: 0,
-  },
-  header: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 42,
-    paddingLeft: 10,
-    color: config.palette.greyScales[400],
-  },
-  actions: {
-    paddingRight: 30,
-  },
-  cards: {
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  apiCard: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '100%',
-    fontWeight: 400,
-    borderStyle: 'solid',
-    borderTopWidth: 1,
-    borderBottomWidth: 0,
-    borderRightWidth: 0,
-    borderLeftWidth: 0,
-    borderColor: config.palette.greyScales[300],
-  },
-  apiContainer: {
-    width: '100%',
-  },
-  apiTitle: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    height: 42,
-    width: '60%',
-    paddingLeft: 10,
-    fontSize: 16,
-  },
-  appsListContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '40%',
-    borderStyle: 'solid',
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
-    borderRightWidth: 1,
-    borderLeftWidth: 1,
-    borderColor: config.palette.greyScales[300],
-  },
-  appsListCardContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: '100%',
-    minHeight: 42,
-    borderStyle: 'solid',
-    borderRadius: config.dimensions.borderRadius,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderRightWidth: 1,
-    borderLeftWidth: 1,
-    borderColor: config.palette.greyScales[300],
-  },
-  icons: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 42,
-    height: 42,
-    color: config.palette.text.primary,
-  },
-  cardContainer: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    minHeight: 438,
-    width: 289,
-    backgroundColor: 'white',
-    borderRadius: config.dimensions.borderRadius,
-    borderStyle: 'solid',
-    borderColor: config.palette.greyScales[300],
-    borderWidth: 1,
-    overflow: 'hidden',
-  },
-  apiDetail: {
-    height: '100%',
-    padding: 15,
-  },
-  cardTitle: {
-    fontSize: 22,
-    margin: 0,
-  },
-  description: {
-    fontSize: 16,
-  },
-  appsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  apiVersionCard: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    fontSize: 14,
-    width: '100%',
-    height: 36,
-    padding: 15,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderBottomWidth: 0,
-    borderLeftWidth: 0,
-    borderRightWidth: 0,
-    borderStyle: 'solid',
-    borderColor: config.palette.greyScales[300],
-    '& *:hover': {
-      backgroundColor: config.palette.tertiary[50],
+    width: '40px',
+
+    '& > a': {
+      color: config.palette.active,
+      height: '24px',
+      transform: 'scaleX(-1)',
+      width: '24px',
     },
   },
+
+  apiName: {
+    alignItems: 'center',
+    color: config.palette.active,
+    display: 'flex',
+    fontSize: '16px',
+    fontWeight: 400,
+    paddingLeft: '40px',
+  },
+
+  apiNameAndAppsContainer: {
+    backgroundColor: config.palette.background.default,
+    borderTop: `1px solid ${config.palette.newGreyScales['100']}`,
+    display: 'flex',
+    height: '40px',
+    justifyContent: 'space-between',
+    width: '100%',
+  },
+
+  apiNameContainer: {
+    alignItems: 'center',
+    display: 'flex',
+    width: '455px',
+  },
+
+  apiVersionDetailsContainer: {
+    alignItems: 'center',
+    borderTop: `1px solid ${config.palette.newGreyScales['100']}`,
+    display: 'flex',
+    height: '35px',
+    justifyContent: 'space-between',
+    padding: '0px 7.5px 00px 40px',
+  },
+
+  apiVersionIconsContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    width: '300px',
+  },
+
   apiVersionLink: {
     textDecoration: 'none',
-    '& *:hover': {
-      backgroundColor: config.palette.greyScales[50],
+  },
+
+  apiVersionName: {
+    color: config.palette.newGreyScales['400'],
+    fontSize: '14px',
+    fontWeight: 300,
+    textAlign: 'center',
+    width: '300px',
+  },
+
+  apiVersionNumber: {
+    color: config.palette.tertiary,
+    fontSize: '14px',
+    fontWeight: 300,
+    textAlign: 'left',
+    width: '300px',
+  },
+
+  appNameIcon: {
+    backgroundColor: config.palette.primary,
+    borderRadius: '4px',
+    color: config.palette.primaryContrastText,
+    fontSize: '14px',
+    fontWeight: 300,
+    justifyContent: 'center',
+    marginLeft: '12px',
+    textAlign: 'center',
+    width: '35px',
+  },
+
+  chevronIcon: {
+    color: config.palette.newGreyScales['400'],
+  },
+
+  deprecatedIcon: {
+    backgroundColor: config.palette.warning,
+    borderRadius: '4px',
+    color: config.palette.primaryContrastText,
+    marginRight: '20px',
+    padding: '5px',
+  },
+
+  mostRecentAPIVersionLink: {
+    color: config.palette.active,
+    height: '24px',
+    textDecoration: 'none',
+    transform: 'scaleX(-1)',
+    width: '24px',
+  },
+
+  noSubsMessage: {
+    color: config.palette.newGreyScales['400'],
+    fontSize: '14px',
+    fontWeight: 300,
+    padding: '10px 0px 10px 12px',
+  },
+
+  tableBody: {
+    backgroundColor: config.palette.newGreyScales['25'],
+    border: `1px solid ${config.palette.newGreyScales['300']}`,
+    borderBottomLeftRadius: `${config.dimensions.borderRadius}px`,
+    borderBottomRightRadius: `${config.dimensions.borderRadius}px`,
+    borderTop: 'none',
+    width: '100%',
+  },
+
+  tableContentsContainer: {
+    width: '900px',
+  },
+
+  tableHeader: {
+    backgroundColor: config.palette.background.default,
+    border: `1px solid ${config.palette.newGreyScales['300']}`,
+    borderTopLeftRadius: `${config.dimensions.borderRadius}px`,
+    borderTopRightRadius: `${config.dimensions.borderRadius}px`,
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '10px 47.5px 10px 40px',
+    width: '100%',
+
+    '& > :first-child': {
+      color: config.palette.active,
+      fontSize: '16px',
+      fontWeight: 300,
     },
-  },
-  viewRow: {
-    display: 'flex',
-    flexDirection: 'row',
-    justifyContent: 'flex-end',
-    width: '100%',
-  },
-  optionsContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: 20,
-    borderWidth: 1,
-    borderRadius: config.dimensions.borderRadius,
-    borderColor: config.palette.greyScales[300],
-    borderStyle: 'solid',
-    cursor: 'pointer',
-    overflow: 'hidden',
-  },
-  filter: {
-    display: 'flex',
-    flexDirection: 'row',
-    fontSize: 16,
-    fontFamily: 'inherit',
-    height: '100%',
-    alignItems: 'center',
-    justifyContent: 'flex-start',
-    width: 200,
-    padding: 10,
-    color: config.palette.greyScales[400],
-    backgroundColor: '#fff',
-    borderStyle: 'none',
-  },
-  icon: {
-    color: config.palette.greyScales[400],
-    backgroundColor: '#fff',
-    height: '100%',
-    cursor: 'pointer',
-  },
-  viewIconContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: 42,
-    height: 42,
-    color: config.palette.text.primary,
-    backgroundColor: 'white',
-    borderLeftWidth: 1,
-    borderTopWidth: 0,
-    borderBottomWidth: 0,
-    borderRightWidth: 0,
-    borderColor: config.palette.greyScales[300],
-    borderStyle: 'solid',
-    cursor: 'pointer',
-  },
-  viewContainer: {
-    width: '100%',
-  },
-  vNumber: {
-    color: config.palette.greyScales[400],
-  },
-  empty: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    flexFlow: 'column',
-    height: '100%',
-  },
-  emptyURL: {
-    fontSize: '0.8em',
-  },
-  loadingContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  loading: {
-    color: config.palette.primary,
+
+    '& > :last-child': {
+      color: config.palette.newGreyScales['400'],
+      fontSize: '16px',
+      fontWeight: 300,
+    },
   },
 }))
