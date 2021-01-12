@@ -2,6 +2,8 @@ import * as React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
+import { AppInfo } from 'containers/Subscriptions/types'
+
 import Link from 'components/Link'
 
 import ChevronRightRoundedIcon from '@material-ui/icons/ChevronRightRounded'
@@ -19,11 +21,11 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
 
   const [t] = useTranslation()
 
-  const generateAppIcons = (appNamesArray: any[]) => {
+  const generateAppIcons = (appNamesArray: AppInfo[]) => {
     const sortedAppNamesArray = appNamesArray.sort()
 
     const appIconsArray = sortedAppNamesArray.map((appName, key) => {
-      const appSplitName = appName.split(' ')
+      const appSplitName = appName.appName.split(' ')
       const appInitials = appSplitName.length >= 2
         ? `${appSplitName[0].charAt(0)}${appSplitName[1].charAt(0)}`
         : appSplitName[0].slice(0, 2)
