@@ -43,7 +43,6 @@ const SubscriptionsTable: React.FC<SubscriptionsTableProps> = ({
 
   const generateTableEntries = () => {
     const tableEntriesArray = apisByName.map((api, index) => {
-      console.log('api', api)
       return (
         // Will contain a particular API's details (its name, subscribed apps, and versions)
         <div key={`apiDetailsContainer${index}`}>

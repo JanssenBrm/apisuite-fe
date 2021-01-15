@@ -35,9 +35,6 @@ const Profile: React.FC<ProfileProps> = ({
 
   const [t] = useTranslation()
 
-  const [validImage, setValidImage] = React.useState<boolean>(false)
-  const [openDialog, setOpenDialog] = React.useState<boolean>(false)
-
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile')
     of all user-related information we presently have. */
@@ -51,6 +48,28 @@ const Profile: React.FC<ProfileProps> = ({
   - 'formState' refers to our own, local copy of a user's details.
   - 'profile' refers to our stored, back-end approved copy of a user's details.
   */
+
+  let userNameInitials = '...'
+
+  if (profile.user.name) {
+    const userNameInitialsArray = profile.user.name.split(' ')
+
+    userNameInitials = userNameInitialsArray[0].charAt(0).toLocaleUpperCase()
+  }
+
+  const [avatarHasBeenClicked, setAvatarHasBeenClicked] = React.useState(false)
+  const [validImage, setValidImage] = React.useState<boolean>(false)
+
+  const validateAvatar = (avatar: string) => {
+    if (avatar !== '') {
+      (
+        async () => {
+          const valid = await isValidImage(avatar)
+          setValidImage(valid)
+        }
+      )()
+    }
+  }
 
   const {
     formState,
@@ -106,16 +125,9 @@ const Profile: React.FC<ProfileProps> = ({
       },
     })
 
-  let userNameInitials = ''
-
-  if (profile) {
-    const userNameInitialsArray = profile.user.name.split(' ')
-
-    userNameInitials = userNameInitialsArray[0].charAt(0).toLocaleUpperCase()
-  }
-
-  const [avatarHasBeenClicked, setAvatarHasBeenClicked] = React.useState(false)
-
+  /* Whenever the store's 'profile' changes (i.e., upon mounting this component,
+  and immediately after saving one's details), our form's values are 'reset'
+  to whatever is in 'profile'. */
   React.useEffect(() => {
     resetForm(
       {
@@ -129,15 +141,6 @@ const Profile: React.FC<ProfileProps> = ({
       },
     )
   }, [profile])
-
-  const validateAvatar = (avatar: string) => {
-    if (avatar !== '') {
-      (async () => {
-        const valid = await isValidImage(avatar)
-        setValidImage(valid)
-      })()
-    }
-  }
 
   /* Organisation details */
 
@@ -214,6 +217,10 @@ const Profile: React.FC<ProfileProps> = ({
     }
   }
 
+  /* Account deletion */
+
+  const [openDialog, setOpenDialog] = React.useState<boolean>(false)
+
   const handleDelete = () => {
     setOpenDialog(true)
   }
@@ -268,12 +275,12 @@ const Profile: React.FC<ProfileProps> = ({
                       options={organisationSelector(profile.orgs_member)}
                       selected={
                         organisationSelector(profile.orgs_member).find((selectedOrganisation) => {
-                          return selectedOrganisation.value === profile.current_org.id
+                          return currentlySelectedOrganisation.value === ''
+                            ? (selectedOrganisation.value === profile.current_org.id)
+                            : (selectedOrganisation.value === currentlySelectedOrganisation.value)
                         })
                       }
                     />
-
-                    {console.log(currentlySelectedOrganisation, profile.current_org)}
 
                     <Button
                       customButtonClassName={
@@ -363,13 +370,13 @@ const Profile: React.FC<ProfileProps> = ({
                       label={t('profileTab.overviewTab.userRelatedLabels.userAvatarURL', { config })}
                       margin='dense'
                       name='userAvatarURL'
-                      onChange={(e) => {
+                      onChange={(changeEvent) => {
+                        handleChange(changeEvent)
                         validateAvatar(formState.values.userAvatarURL)
-                        handleChange(e)
                       }}
-                      onFocus={(e) => {
+                      onFocus={(focusEvent) => {
+                        handleFocus(focusEvent)
                         validateAvatar(formState.values.userAvatarURL)
-                        handleFocus(e)
                       }}
                       type='url'
                       value={formState.values.userAvatarURL}
@@ -474,12 +481,12 @@ const Profile: React.FC<ProfileProps> = ({
         {
           openDialog &&
           <CustomizableDialog
-            open={openDialog}
-            providedTitle='Delete Account'
-            providedText='Are you sure you want to delete the account? This action is not reversible.'
             closeDialogCallback={handleCloseDialog}
-            confirmButtonLabel='Delete'
             confirmButtonCallback={deleteAccount}
+            confirmButtonLabel={t('profileTab.overviewTab.otherActionsLabels.deleteProfileModalConfirmButton', { config })}
+            open={openDialog}
+            providedText={t('profileTab.overviewTab.otherActionsLabels.deleteProfileModalWarningText', { config })}
+            providedTitle={t('profileTab.overviewTab.otherActionsLabels.deleteProfileModalTitle', { config })}
           />
         }
       </section>

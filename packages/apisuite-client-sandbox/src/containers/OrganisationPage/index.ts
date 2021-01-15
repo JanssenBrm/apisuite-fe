@@ -3,13 +3,14 @@ import {
   fetchOrgActions,
   updateOrgActions,
   resetErrorAction,
+  createOrgActions,
 } from 'containers/Profile/ducks'
 import {
   Dispatch,
   bindActionCreators,
 } from 'redux'
 import { Store } from 'store/types'
-import OrganizationPage from './OrganizationPage'
+import OrganisationPage from './OrganisationPage'
 
 export const mapStateToProps = ({ profile }: Store) => ({
   org: profile.org,
@@ -19,8 +20,9 @@ export const mapStateToProps = ({ profile }: Store) => ({
 
 export const mapDispatchToProps = (dispatch: Dispatch) => bindActionCreators({
   fetchOrg: fetchOrgActions.request,
+  createOrg: createOrgActions.request,
   updateOrg: updateOrgActions.request,
   resetErrors: resetErrorAction,
 }, dispatch)
 
-export default connect(mapStateToProps, mapDispatchToProps)(OrganizationPage)
+export default connect(mapStateToProps, mapDispatchToProps)(OrganisationPage)

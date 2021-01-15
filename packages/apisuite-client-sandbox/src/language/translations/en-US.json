@@ -244,7 +244,10 @@
         "viewTeam": "View team",
         "updateProfileDetails": "Update",
         "logOut": "Log out",
-        "deleteProfile": "Delete profile"
+        "deleteProfile": "Delete profile",
+        "deleteProfileModalConfirmButton": "Delete",
+        "deleteProfileModalTitle": "Delete",
+        "deleteProfileModalWarningText": "Are you sure you want to delete your account? This action is not reversible."
       },
       "roleRelatedLabels": {
         "admin": "Admin",
@@ -263,17 +266,51 @@
       }
     },
     "securitySubTab": {
-      "currentPasswordFieldLabel": "Current password",
-      "errorNotification": "Could not update your password. Please try again.",
-      "forgotPasswordButtonLabel": "Forgot password",
-      "newPasswordFieldLabel": "New password",
-      "samePasswordErrorMessage": "The new password should not be the same as the current one.",
       "securityTitle": "Security",
-      "successNotification": "Your password was updated successfully!",
-      "tooWeakPasswordErrorMessage": "The provided password is too weak.",
-      "updatePasswordButtonLabel": "Update",
       "updatePasswordTitle": "Update password",
-      "userActivityTitle": "User activity"
+      "userActivityTitle": "User activity",
+      "fieldLabels": {
+        "currentPasswordFieldLabel": "Current password",
+        "newPasswordFieldLabel": "New password"
+      },
+      "notifications": {
+        "errorNotification": "Could not update your password. Please try again.",
+        "successNotification": "Your password was updated successfully!"
+      },
+      "buttonLabels": {
+        "updatePasswordButtonLabel": "Update"
+      },
+      "errorMessages": {
+        "samePasswordErrorMessage": "The new password should not be the same as the current one.",
+        "tooWeakPasswordErrorMessage": "The provided password is too weak."
+      }
+    },
+    "organisationSubTab": {
+      "newOrgTitle": "New organisation",
+      "orgSubtitle": "You are the organisation owner.",
+      "orgAdditionalDetailsTitle": "Additional information",
+      "orgAdditionalDetailsSubtitle": "You have the option to provide multiple useful links related to your organisation.",
+      "selectorTitle": "Useful links",
+      "fieldLabels": {
+        "orgNameLabel": "Organisation name",
+        "orgVATLabel": "Corporate Identity Registration (VAT)",
+        "orgAvatarLabel": "Avatar",
+        "orgAvatarSubLabel": "Click to edit",
+        "orgDescriptionLabel": "Organisation description",
+        "orgToSLabel": "Terms of Service URL",
+        "orgPrivacyPolicyLabel": "Privacy Policy URL",
+        "orgYouTubeChannelLabel": "YouTube Channel URL",
+        "orgWebsiteLabel": "Website URL",
+        "orgSupportLabel": "Support URL"
+      },
+      "buttonLabels": {
+        "updateOrgButtonLabel": "Update",
+        "createOrgButtonLabel": "Create organisation"
+      },
+      "warningLabels": {
+        "orgAvatarURL": "The provided URL is not valid, or the image does not exist.",
+        "allOtherURLs": "The provided URL is not valid."
+      }
     }
   },
   "listApps": {
