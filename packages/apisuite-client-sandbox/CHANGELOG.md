@@ -3,6 +3,48 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-rc.7](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.6...apisuite-client-sandbox@1.1.0-rc.7) (2021-01-12)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+# [1.1.0-rc.6](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.5...apisuite-client-sandbox@1.1.0-rc.6) (2021-01-11)
+
+
+### Bug Fixes
+
+* **avatar-validation:** fix avatar valitation request function ([0a05841](https://github.com/Cloudoki/APISuite/commit/0a05841187ff21baeec1e6ea8d69e2351b79ae91))
+* **profile-lint:** linter fixes ([f0e0a6a](https://github.com/Cloudoki/APISuite/commit/f0e0a6a26c8fbc5819f1f477fe4f1bc0f851d906))
+* **security:** add to store, remove translation from saga ([05578f4](https://github.com/Cloudoki/APISuite/commit/05578f4d4c6da29b759543bd2a5070cb03e448a3))
+* Made the app deletion dialog's 'Cancel' button reappear ([040b34a](https://github.com/Cloudoki/APISuite/commit/040b34ae43ede0a5bcec12adbafe68531f2a62df))
+
+
+### Features
+
+* Implemented the 'Security' tab ([19c3671](https://github.com/Cloudoki/APISuite/commit/19c3671caa94372398eedc511247c70bdd5b22f6))
+* **profile:** delete account ducks ([c3b6023](https://github.com/Cloudoki/APISuite/commit/c3b60233ccdcde2379ea91fea73625bb2049a1cb))
+* **profile): delete -- fix(registration:** clickable next, add previous ([3514860](https://github.com/Cloudoki/APISuite/commit/35148604eb78ce2a44fabe3e2968970582642813))
+* Profile view's redesign ([530d42c](https://github.com/Cloudoki/APISuite/commit/530d42c0bb1d0051fff9024598da8d926ae57200))
+* Redesigned the 'Subscriptions' view, and created the 'Add/Revoke subscriptions' overlay ([f4fc6ff](https://github.com/Cloudoki/APISuite/commit/f4fc6ffecf51a382dcdeda7800e4dc7370994c0d))
+
+
+
+
+
+# [1.1.0-rc.5](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.4...apisuite-client-sandbox@1.1.0-rc.5) (2021-01-06)
+
+
+### Bug Fixes
+
+* bump cloud ext ui version ([5614d1e](https://github.com/Cloudoki/APISuite/commit/5614d1ec6c92aa8139823583357ca3faf3abb442))
+
+
+
+
+
 # [1.1.0-rc.4](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.3...apisuite-client-sandbox@1.1.0-rc.4) (2020-12-28)
 
 
