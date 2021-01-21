@@ -264,7 +264,7 @@ const Dashboard: React.FC<DashboardProps> = ({
                   {
                     recentlyAddedAPIs.length === 0
                       ? <p>{t('sandboxPage.apiCatalog.paragraph', { config })}</p>
-                      : <APICatalog recentlyAddedAPIs={recentlyAddedAPIs} />
+                      : <APICatalog apisToDisplay={recentlyAddedAPIs} />
                   }
                 </section>
               </section>

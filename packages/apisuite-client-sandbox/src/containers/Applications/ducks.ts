@@ -271,8 +271,8 @@ export function getAppDetailsSuccess (appData: AppData) {
   return { type: GET_APP_DETAILS_SUCCESS, appData }
 }
 
-export function getUserApps (orgId: number) {
-  return { type: GET_USER_APPS, orgId }
+export function getUserApps (userId: number) {
+  return { type: GET_USER_APPS, userId }
 }
 
 export function getUserAppsSuccess (userApps: AppData[]) {

@@ -97,6 +97,23 @@
       "securityStep": "Security Step"
     }
   },
+  "apiProductsTab": {
+    "latestAPIProductTitle": "Latest update",
+    "retrievingAPIProductMessage": "Retrieving most recently updated API...",
+    "apiProductButtons": {
+      "viewDetailsButtonLabel": "View details",
+      "subscribeButtonLabel": "Subscribe",
+      "tooltipLabels": {
+        "productionAccessible": "Production accessible APIs",
+        "sandboxAccessible": "Sandbox accessible APIs",
+        "documentationAccessible": "Documentation accessible APIs"
+      }
+    },
+    "productionAccess": "Production access",
+    "documentationAccess": "API Documentation",
+    "registerForMoreMessage": "Register for more options",
+    "textFilterPlaceholder": "Filter..."
+  },
   "dashboardTab": {
     "landingPageSubTab": {
       "adminUser": {

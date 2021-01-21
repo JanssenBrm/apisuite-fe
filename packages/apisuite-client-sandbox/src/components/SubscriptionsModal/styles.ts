@@ -170,6 +170,7 @@ export default makeStyles(({
     borderRadius: '4px',
     display: 'flex',
     height: '100%',
+    marginBottom: '25px',
     maxHeight: '65px',
     textAlign: 'left',
   },
