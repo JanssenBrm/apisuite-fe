@@ -53,7 +53,7 @@ export default makeStyles(({
 
     // Text field's input helper text
     '& .MuiFormHelperText-root': {
-      color: config.palette.active,
+      color: config.palette.label,
 
       '&.Mui-error': {
         color: config.palette.error,

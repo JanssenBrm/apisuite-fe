@@ -106,6 +106,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
       orgAvatarURL: {
         rules: [(URI) => {
           const validURL = uriBasicChecks(URI)
+
           if (validURL) {
             if (URI === null || URI.toString().length === 0) {
               setValidImage(true)
@@ -113,6 +114,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               validateAvatar(URI.toString())
             }
           }
+
           return validURL
         }],
         message: t('profileTab.organisationSubTab.warningLabels.orgAvatarURL', { config }),
@@ -186,6 +188,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
 
     const orgId = org.id.toString()
     const orgDetails = {
+      name: formState.values.orgName,
       description: formState.values.orgDescription,
       vat: formState.values.orgVAT,
       tosUrl: formState.values.orgTermsURL,
@@ -203,6 +206,18 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
 
   const [anchorElement, setAnchorElement] = React.useState(null)
   const [isShowing, setIsShowing] = React.useState([false, false, false, false])
+
+  /* Whenever the store's 'profile > org' details become available
+  (i.e., upon mounting this component, and immediately after saving one's details),
+  we need to determine what optional URLs have been provided, and are meant to be shown. */
+  React.useEffect(() => {
+    setIsShowing([
+      org.tosUrl ? true : false,
+      org.privacyUrl ? true : false,
+      org.youtubeUrl ? true : false,
+      org.supportUrl ? true : false,
+    ])
+  }, [org])
 
   const handleOpenSelector = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     event.stopPropagation()
@@ -239,6 +254,20 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
     const newIsShowingArray = [...isShowing]
 
     newIsShowingArray[indexOfFormFieldToRemove] = false
+
+    if (indexOfFormFieldToRemove === 0 && formState.values.orgTermsURL) {
+      formState.values.orgTermsURL = ''
+      formState.isDirty = org.tosUrl ? true : false
+    } else if (indexOfFormFieldToRemove === 1 && formState.values.orgPrivacyURL) {
+      formState.values.orgPrivacyURL = ''
+      formState.isDirty = org.privacyUrl ? true : false
+    } else if (indexOfFormFieldToRemove === 2 && formState.values.orgYouTubeURL) {
+      formState.values.orgYouTubeURL = ''
+      formState.isDirty = org.youtubeUrl ? true : false
+    } else if (indexOfFormFieldToRemove === 3 && formState.values.orgSupportURL) {
+      formState.values.orgSupportURL = ''
+      formState.isDirty = org.supportUrl ? true : false
+    }
 
     setIsShowing(newIsShowingArray)
     setAnchorElement(null)
@@ -295,18 +324,28 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                 ? (
                   <Close
                     className={classes.avatarIcons}
+                    onClick={
+                      formState.values.orgAvatarURL
+                        ? undefined
+                        : () => setAvatarInputIsInFocus(false)
+                    }
                   />
                 )
                 : (
                   <ImageSearchRoundedIcon
                     className={classes.avatarIcons}
+                    onClick={
+                      formState.values.orgAvatarURL
+                        ? undefined
+                        : () => setAvatarInputIsInFocus(true)
+                    }
                   />
                 )
             }
 
             <Avatar
               className={
-                avatarInputIsInFocus
+                avatarInputIsInFocus || formState.values.orgAvatarURL
                   ? classes.focusedAvatar
                   : classes.notFocusedAvatar
               }
@@ -333,11 +372,14 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               onChange={handleChange}
               onFocus={(focusEvent) => {
                 handleFocus(focusEvent)
-                setAvatarInputIsInFocus(true)
+
+                formState.values.orgAvatarURL
+                  ? undefined
+                  : setAvatarInputIsInFocus(true)
               }}
               onBlur={() => {
                 formState.values.orgAvatarURL
-                  ? setAvatarInputIsInFocus(true)
+                  ? undefined
                   : setAvatarInputIsInFocus(false)
               }}
               type='url'
@@ -353,7 +395,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
           <section className={classes.leftSideDetailsContainer}>
             <p className={classes.orgAdditionalDetailsTitle}>
               Additional information
-            </p>
+</p>
 
             <TextField
               className={classes.inputFields}

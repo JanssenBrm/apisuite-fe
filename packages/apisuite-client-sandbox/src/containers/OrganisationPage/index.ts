@@ -16,7 +16,6 @@ import OrganisationPage from './OrganisationPage'
 
 import { Store } from 'store/types'
 
-
 export const mapStateToProps = ({ profile }: Store) => ({
   org: profile.org,
   profile: profile.profile,
