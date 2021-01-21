@@ -212,10 +212,10 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
   we need to determine what optional URLs have been provided, and are meant to be shown. */
   React.useEffect(() => {
     setIsShowing([
-      org.tosUrl ? true : false,
-      org.privacyUrl ? true : false,
-      org.youtubeUrl ? true : false,
-      org.supportUrl ? true : false,
+      !!org.tosUrl,
+      !!org.privacyUrl,
+      !!org.youtubeUrl,
+      !!org.supportUrl,
     ])
   }, [org])
 
@@ -257,16 +257,16 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
 
     if (indexOfFormFieldToRemove === 0 && formState.values.orgTermsURL) {
       formState.values.orgTermsURL = ''
-      formState.isDirty = org.tosUrl ? true : false
+      formState.isDirty = !!org.tosUrl
     } else if (indexOfFormFieldToRemove === 1 && formState.values.orgPrivacyURL) {
       formState.values.orgPrivacyURL = ''
-      formState.isDirty = org.privacyUrl ? true : false
+      formState.isDirty = !!org.privacyUrl
     } else if (indexOfFormFieldToRemove === 2 && formState.values.orgYouTubeURL) {
       formState.values.orgYouTubeURL = ''
-      formState.isDirty = org.youtubeUrl ? true : false
+      formState.isDirty = !!org.youtubeUrl
     } else if (indexOfFormFieldToRemove === 3 && formState.values.orgSupportURL) {
       formState.values.orgSupportURL = ''
-      formState.isDirty = org.supportUrl ? true : false
+      formState.isDirty = !!org.supportUrl
     }
 
     setIsShowing(newIsShowingArray)
@@ -325,9 +325,9 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                   <Close
                     className={classes.avatarIcons}
                     onClick={
-                      formState.values.orgAvatarURL
-                        ? undefined
-                        : () => setAvatarInputIsInFocus(false)
+                      () => {
+                        if (!formState.values.orgAvatarURL) { setAvatarInputIsInFocus(false) }
+                      }
                     }
                   />
                 )
@@ -335,9 +335,9 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                   <ImageSearchRoundedIcon
                     className={classes.avatarIcons}
                     onClick={
-                      formState.values.orgAvatarURL
-                        ? undefined
-                        : () => setAvatarInputIsInFocus(true)
+                      () => {
+                        if (!formState.values.orgAvatarURL) { setAvatarInputIsInFocus(true) }
+                      }
                     }
                   />
                 )
@@ -373,14 +373,10 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               onFocus={(focusEvent) => {
                 handleFocus(focusEvent)
 
-                formState.values.orgAvatarURL
-                  ? undefined
-                  : setAvatarInputIsInFocus(true)
+                if (!formState.values.orgAvatarURL) setAvatarInputIsInFocus(true)
               }}
               onBlur={() => {
-                formState.values.orgAvatarURL
-                  ? undefined
-                  : setAvatarInputIsInFocus(false)
+                if (!formState.values.orgAvatarURL) setAvatarInputIsInFocus(true)
               }}
               type='url'
               value={formState.values.orgAvatarURL}
@@ -395,7 +391,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
           <section className={classes.leftSideDetailsContainer}>
             <p className={classes.orgAdditionalDetailsTitle}>
               Additional information
-</p>
+            </p>
 
             <TextField
               className={classes.inputFields}
