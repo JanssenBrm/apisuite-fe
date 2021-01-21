@@ -64,8 +64,8 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
         <Button
           label={cancelButtonLabel || 'Cancel'}
           onClick={handleCloseDialog}
-          background='transparent'
-          color='primary'
+          background='secondary'
+          color='secondary'
           fullWidth
           {...cancelButtonProps}
         />

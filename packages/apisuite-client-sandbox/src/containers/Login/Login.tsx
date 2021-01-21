@@ -15,6 +15,11 @@ const Login: React.FC<{ history: History }> = ({ history }) => {
   const [t] = useTranslation()
   const classes = useStyles()
 
+  const goTo = (goView: View) => {
+    history.push(goView)
+    setView(goView)
+  }
+
   return (
     <main className={classes.main}>
       <section className={classes.formSide}>
@@ -23,8 +28,8 @@ const Login: React.FC<{ history: History }> = ({ history }) => {
           <p className={classes.welcomeMessage}>{t('login.welcomeMsg')}</p>
 
           <div className={classes.loginRegisterSelector}>
-            <option className={view === 'login' ? classes.optionSelected : classes.option} onClick={() => setView('login')}>{t('login.loginBtn')}</option>
-            <option className={view === 'register' ? classes.optionSelected : classes.option} onClick={() => setView('register')}>{t('login.registerBtn')}</option>
+            <option className={view === 'login' ? classes.optionSelected : classes.option} onClick={() => goTo('login')}>{t('login.loginBtn')}</option>
+            <option className={view === 'register' ? classes.optionSelected : classes.option} onClick={() => goTo('register')}>{t('login.registerBtn')}</option>
           </div>
 
           {view === 'login'

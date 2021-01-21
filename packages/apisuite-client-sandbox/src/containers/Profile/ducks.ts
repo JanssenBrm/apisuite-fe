@@ -90,6 +90,10 @@ const initialState: ProfileStore = {
       isRequesting: false,
       error: '',
     },
+    deleteAccount: {
+      isRequesting: false,
+      error: '',
+    },
   },
 }
 
@@ -131,6 +135,10 @@ export enum ProfileActionTypes {
   UPDATE_ORG_ERROR = 'UPDATE_ORG_ERROR',
 
   RESET_ERRORS = 'RESET_ERRORS',
+
+  DELETE_ACCOUNT_REQUEST = 'DELETE_ACCOUNT_REQUEST',
+  DELETE_ACCOUNT_SUCCESS = 'DELETE_ACCOUNT_SUCCESS',
+  DELETE_ACCOUNT_ERROR = 'DELETE_ACCOUNT_ERROR',
 }
 
 export default function profileReducer (
@@ -381,6 +389,27 @@ export default function profileReducer (
       })
     }
 
+    case ProfileActionTypes.DELETE_ACCOUNT_REQUEST: {
+      return update(state, {
+        requestStatuses: {
+          deleteAccount: {
+            isRequesting: { $set: true },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.DELETE_ACCOUNT_SUCCESS:
+    case ProfileActionTypes.DELETE_ACCOUNT_ERROR: {
+      return update(state, {
+        requestStatuses: {
+          deleteAccount: {
+            isRequesting: { $set: false },
+          },
+        },
+      })
+    }
+
     default:
       return state
   }
@@ -517,7 +546,7 @@ export const getProfileActions = {
 }
 
 export const updateProfileActions = {
-  request: (name: string, bio: string, avatar: string, mobile: number, orgId: string) => {
+  request: (name: string, bio: string, avatar: string, mobile: string, orgId: string) => {
     return {
       type: ProfileActionTypes.UPDATE_PROFILE_REQUEST,
       payload: {
@@ -593,3 +622,21 @@ export const resetErrorAction = () =>
     type: ProfileActionTypes.RESET_ERRORS,
   } as const
   )
+
+export const deleteAccountActions = {
+  request: () => {
+    return {
+      type: ProfileActionTypes.DELETE_ACCOUNT_REQUEST,
+    } as const
+  },
+  success: () => {
+    return {
+      type: ProfileActionTypes.DELETE_ACCOUNT_SUCCESS,
+    } as const
+  },
+  error: () => {
+    return {
+      type: ProfileActionTypes.DELETE_ACCOUNT_ERROR,
+    } as const
+  },
+}

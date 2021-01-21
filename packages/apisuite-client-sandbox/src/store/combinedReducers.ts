@@ -20,6 +20,7 @@ import reduceReducers from './reduceReducers'
 import register from 'components/RegisterForm/ducks'
 import settings from 'containers/Settings/ducks'
 import subscriptions from 'containers/Subscriptions/ducks'
+import security from 'containers/Security/ducks'
 
 export default (
   history: History<any>, additionalReducers: Record<string, any[]> = {},
@@ -37,6 +38,7 @@ export default (
     router: [connectRouter(history)],
     settings: [settings],
     subscriptions: [subscriptions],
+    security: [security],
   }
 
   Object.keys(additionalReducers).map((key) => {

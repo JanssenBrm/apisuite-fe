@@ -33,8 +33,8 @@ function checkToken (response: AxiosResponse) {
 
 export { axios }
 
-async function checkStatus (response: AxiosResponse) {
-  if (response.status >= 200 || response.status < 400) {
+function checkStatus (response: AxiosResponse) {
+  if (response.status >= 200 && response.status < 400) {
     // check if the response has a token and get it
     const { hasToken, token } = checkToken(response)
     if (hasToken) {
@@ -44,19 +44,40 @@ async function checkStatus (response: AxiosResponse) {
     return response.data
   }
 
+  let errorsMsg = response.data
+
+  if (response.data && response.data.errors) {
+    errorsMsg = response.data.errors.join(' ')
+  }
+
   const reason: ErrorReason = {
     status: response.status,
     statusText: response.statusText,
-    message: response.data || response.statusText,
+    message: errorsMsg || response.statusText || response,
   }
 
   return reason
 }
 
 export default async function request (init: AxiosRequestConfig) {
-  const response = await axios({ ...init, withCredentials: true })
+  try {
+    const response = await axios({ ...init, withCredentials: true })
 
-  return checkStatus(response)
+    return checkStatus(response)
+  } catch (error) {
+    if (error.response) {
+      throw checkStatus(error.response)
+    } else if (error.request) {
+      throw checkStatus(error.request)
+    } else {
+      const reason: ErrorReason = {
+        status: 500,
+        statusText: 'Internal Server Error',
+        message: error.message,
+      }
+      throw reason
+    }
+  }
 }
 
 export async function requestInform (init: AxiosRequestConfig) {

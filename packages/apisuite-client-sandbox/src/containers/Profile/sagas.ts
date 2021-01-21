@@ -16,6 +16,7 @@ import {
   updateProfileActions,
   fetchOrgActions,
   updateOrgActions,
+  deleteAccountActions,
 } from './ducks'
 import { Store } from 'store/types'
 import { API_URL } from 'constants/endpoints'
@@ -82,7 +83,7 @@ export function * inviteMemberSaga (
     yield put(inviteMemberActions.success(response))
     yield put(openNotification('success', 'Member was invited successfully.', 3000))
   } catch (error) {
-    yield put(inviteMemberActions.error(error.response.data.error || { error: 'Invitation failed.' }))
+    yield put(inviteMemberActions.error(error.message || 'Invitation failed.'))
     yield put(openNotification('error', 'Error inviting member.', 3000))
     yield put(authActions.handleSessionExpire())
   }
@@ -129,7 +130,7 @@ export function * changeRoleSaga (
     yield put(fetchTeamMembersActions.request())
     yield put(openNotification('success', 'Role updaded successfully.', 3000))
   } catch (error) {
-    yield put(changeRoleActions.error(error.response.data.error))
+    yield put(changeRoleActions.error(error.message))
     yield put(openNotification('error', 'Failed to update role.', 3000))
     yield put(authActions.handleSessionExpire())
   }
@@ -172,7 +173,7 @@ export function * updateProfileSaga (
     yield put(updateProfileActions.success(response))
     yield put(getProfileActions.request())
   } catch (error) {
-    yield put(updateProfileActions.error(error.response.data.error))
+    yield put(updateProfileActions.error(error.message))
     yield put(authActions.handleSessionExpire())
   }
 }
@@ -221,7 +222,28 @@ export function * updateOrgSaga (
     yield put(updateOrgActions.success(response))
     yield put(fetchOrgActions.request(action.orgId))
   } catch (error) {
-    yield put(updateOrgActions.error(error.response.data.error))
+    yield put(updateOrgActions.error(error.message))
+    yield put(authActions.handleSessionExpire())
+  }
+}
+
+export function * deleteAccountSaga () {
+  try {
+    const accessToken = yield select((state: Store) => state.auth.authToken)
+    yield call(request, {
+      url: `${API_URL}/users`,
+      method: 'DELETE',
+      headers: {
+        'x-access-token': accessToken,
+      },
+    })
+
+    yield put(deleteAccountActions.success())
+    yield put(openNotification('success', 'Account deleted successfully.', 3000))
+    yield put(authActions.logout())
+  } catch (error) {
+    yield put(deleteAccountActions.error())
+    yield put(openNotification('error', `Failed to delete account. ${error.message}`, 3000))
     yield put(authActions.handleSessionExpire())
   }
 }
@@ -236,6 +258,7 @@ function * rootSaga () {
   yield takeLatest(ProfileActionTypes.UPDATE_PROFILE_REQUEST, updateProfileSaga)
   yield takeLatest(ProfileActionTypes.FETCH_ORG_REQUEST, fetchOrgSaga)
   yield takeLatest(ProfileActionTypes.UPDATE_ORG_REQUEST, updateOrgSaga)
+  yield takeLatest(ProfileActionTypes.DELETE_ACCOUNT_REQUEST, deleteAccountSaga)
 }
 
 export default rootSaga
