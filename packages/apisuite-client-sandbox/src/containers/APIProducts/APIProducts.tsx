@@ -129,7 +129,11 @@ const APIProducts: React.FC<APIProductsProps> = ({
       })
     }
 
-    newFilteredAPIs = newFilteredAPIs.concat(productionAccessibleAPIs, sandboxAccessibleAPIs, documentationAccessibleAPIs)
+    newFilteredAPIs = newFilteredAPIs.concat(
+      productionAccessibleAPIs,
+      sandboxAccessibleAPIs,
+      documentationAccessibleAPIs,
+    )
 
     // Filtering by name
     if (changeEvent) {
@@ -273,6 +277,7 @@ ${latestUpdatedAPI.apiAccess
                 : classes.inactiveFilterButtonContainer
             }
             onClick={() => handleAPIFiltering(undefined, 1)}
+            title={t('apiProductsTab.apiProductButtons.tooltipLabels.productionAccessible', { config })}
           >
             <PowerRoundedIcon
               className={
@@ -291,6 +296,7 @@ apiFilters[2]
 : classes.inactiveFilterButtonContainer
 }
 onClick={() => handleAPIFiltering(undefined, 2)}
+title={t('apiProductsTab.apiProductButtons.tooltipLabels.sandboxAccessible', { config })}
 >
 <SubscriptionsRoundedIcon
 className={
@@ -312,6 +318,7 @@ apiFilters[2]
                 )
             }
             onClick={() => handleAPIFiltering(undefined, 3)}
+            title={t('apiProductsTab.apiProductButtons.tooltipLabels.documentationAccessible', { config })}
           >
             <ChromeReaderModeRoundedIcon
               className={

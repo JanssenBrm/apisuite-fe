@@ -264,7 +264,13 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
             className={
               `
 tabs
-${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
+${(
+          goBackLabel ||
+                (
+                  activeTab && activeTab.label === 'Dashboard' &&
+                  activeSubTab && activeSubTab.label === 'Overview'
+                )
+        )
           ? ` ${classes.subTabsAndExtraButton}`
           : ` ${classes.subTabs}`
         }
@@ -273,7 +279,9 @@ ${(goBackLabel || (activeSubTab && activeSubTab.label === 'Overview'))
           >
             {/* Assistant icon (to be shown on the 'Overview' sub-tab of the 'Dashboard' tab) */}
             {
-              activeSubTab && activeSubTab.label === 'Overview' && (
+              activeTab && activeTab.label === 'Dashboard' &&
+              activeSubTab && activeSubTab.label === 'Overview' &&
+              (
                 <div className={classes.assistantContainer}>
                   <div
                     className={

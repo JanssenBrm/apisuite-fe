@@ -102,7 +102,12 @@
     "retrievingAPIProductMessage": "Retrieving most recently updated API...",
     "apiProductButtons": {
       "viewDetailsButtonLabel": "View details",
-      "subscribeButtonLabel": "Subscribe"
+      "subscribeButtonLabel": "Subscribe",
+      "tooltipLabels": {
+        "productionAccessible": "Production accessible APIs",
+        "sandboxAccessible": "Sandbox accessible APIs",
+        "documentationAccessible": "Documentation accessible APIs"
+      }
     },
     "productionAccess": "Production access",
     "documentationAccess": "API Documentation",
