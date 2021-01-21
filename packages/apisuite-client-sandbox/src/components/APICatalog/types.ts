@@ -8,6 +8,6 @@ export type APIDetails = {
   apiName: string,
   apiDescription: string,
   apiVersion: string,
-  apiRoutingId: number | '',
+  apiRoutingId: number | string,
   apiAccess: boolean,
 }

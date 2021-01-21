@@ -18,6 +18,8 @@ import useStyles from './styles'
 
 import { APIProductsProps } from './types'
 
+import { APIDetails } from 'components/APICatalog/types'
+
 import apiProductCard from 'assets/apiProductCard.svg'
 
 import { config } from 'constants/global'
@@ -33,8 +35,7 @@ const APIProducts: React.FC<APIProductsProps> = ({
 
   const [t] = useTranslation()
 
-  const [recentlyUpdatedAPIs, setRecentlyUpdatedAPIs] = React.useState<any[]>([])
-  const [latestUpdatedAPI, setLatestUpdatedAPI] = React.useState({
+  const initialAPIState: APIDetails = {
     apiAccess: false,
     apiDescription: '',
     apiName: '',
@@ -42,7 +43,10 @@ const APIProducts: React.FC<APIProductsProps> = ({
     apiVersion: '',
     hasMoreDetails: false,
     id: 0,
-  })
+  }
+
+  const [recentlyUpdatedAPIs, setRecentlyUpdatedAPIs] = React.useState<APIDetails[]>([])
+  const [latestUpdatedAPI, setLatestUpdatedAPI] = React.useState(initialAPIState)
 
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
@@ -56,7 +60,7 @@ const APIProducts: React.FC<APIProductsProps> = ({
     const allAvailableAPIs = subscriptions.apis
 
     if (allAvailableAPIs.length) {
-      const newRecentlyUpdatedAPIs = allAvailableAPIs.map((api) => {
+      const newRecentlyUpdatedAPIs: APIDetails[] = allAvailableAPIs.map((api) => {
         return {
           /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
           'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
@@ -89,13 +93,13 @@ const APIProducts: React.FC<APIProductsProps> = ({
     changeEvent?: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
     buttonFilterIndex?: number,
   ) => {
-    const apisToFilter = recentlyUpdatedAPIs
+    const apisToFilter: APIDetails[] = recentlyUpdatedAPIs
 
-    let newFilteredAPIs = []
+    let newFilteredAPIs: APIDetails[] = []
 
-    let productionAccessibleAPIs = []
-    const sandboxAccessibleAPIs = []
-    let documentationAccessibleAPIs = []
+    let productionAccessibleAPIs: APIDetails[] = []
+    const sandboxAccessibleAPIs: APIDetails[] = []
+    let documentationAccessibleAPIs: APIDetails[] = []
 
     const newAPIFilters = apiFilters
 
@@ -125,7 +129,7 @@ const APIProducts: React.FC<APIProductsProps> = ({
       })
     }
 
-    newFilteredAPIs = [].concat(productionAccessibleAPIs, sandboxAccessibleAPIs, documentationAccessibleAPIs)
+    newFilteredAPIs = newFilteredAPIs.concat(productionAccessibleAPIs, sandboxAccessibleAPIs, documentationAccessibleAPIs)
 
     // Filtering by name
     if (changeEvent) {
