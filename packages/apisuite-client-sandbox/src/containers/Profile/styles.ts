@@ -85,7 +85,7 @@ export default makeStyles(({
     backgroundColor: config.palette.active,
     borderRadius: config.dimensions.borderRadius,
     color: `${config.palette.primaryContrastText} !important`,
-    cursor: 'none',
+    cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
     padding: '12px 20px',

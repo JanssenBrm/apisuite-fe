@@ -12,7 +12,9 @@ import {
   GetProfileResponse,
   UpdateProfileResponse,
   UpdateOrgResponse,
-  OrgInfo,
+  NewOrgInfo,
+  ExistingOrgInfo,
+  CreateOrgResponse,
 } from './types'
 
 const initialState: ProfileStore = {
@@ -60,9 +62,12 @@ const initialState: ProfileStore = {
     id: '',
     description: '',
     vat: '',
-    website: '',
-    terms: '',
     logo: '',
+    tosUrl: '',
+    privacyUrl: '',
+    youtubeUrl: '',
+    websiteUrl: '',
+    supportUrl: '',
   },
   requestStatuses: {
     getMembersRequest: {
@@ -79,6 +84,10 @@ const initialState: ProfileStore = {
       error: '',
     },
     updateProfileRequest: {
+      isRequesting: false,
+      error: '',
+    },
+    createOrgRequest: {
       isRequesting: false,
       error: '',
     },
@@ -129,6 +138,10 @@ export enum ProfileActionTypes {
   FETCH_ORG_REQUEST = 'FETCH_ORG_REQUEST',
   FETCH_ORG_SUCCESS = 'FETCH_ORG_SUCCESS',
   FETCH_ORG_ERROR = 'FETCH_ORG_ERROR',
+
+  CREATE_ORG_REQUEST = 'CREATE_ORG_REQUEST',
+  CREATE_ORG_SUCCESS = 'CREATE_ORG_SUCCESS',
+  CREATE_ORG_ERROR = 'CREATE_ORG_ERROR',
 
   UPDATE_ORG_REQUEST = 'UPDATE_ORG_REQUEST',
   UPDATE_ORG_SUCCESS = 'UPDATE_ORG_SUCCESS',
@@ -244,6 +257,38 @@ export default function profileReducer (
       return update(state, {
         requestStatuses: {
           updateProfileRequest: {
+            isRequesting: { $set: false },
+            error: { $set: action.error },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.CREATE_ORG_REQUEST: {
+      return update(state, {
+        requestStatuses: {
+          createOrgRequest: {
+            isRequesting: { $set: true },
+            error: { $set: '' },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.CREATE_ORG_SUCCESS: {
+      return update(state, {
+        requestStatuses: {
+          createOrgRequest: {
+            isRequesting: { $set: false },
+          },
+        },
+      })
+    }
+
+    case ProfileActionTypes.CREATE_ORG_ERROR: {
+      return update(state, {
+        requestStatuses: {
+          createOrgRequest: {
             isRequesting: { $set: false },
             error: { $set: action.error },
           },
@@ -595,8 +640,29 @@ export const fetchOrgActions = {
   },
 }
 
+export const createOrgActions = {
+  request: (newOrgInfo: NewOrgInfo) => {
+    return {
+      type: ProfileActionTypes.CREATE_ORG_REQUEST,
+      payload: newOrgInfo,
+    } as const
+  },
+  success: (response: CreateOrgResponse) => {
+    return {
+      type: ProfileActionTypes.CREATE_ORG_SUCCESS,
+      response: response,
+    } as const
+  },
+  error: (error: string) => {
+    return {
+      type: ProfileActionTypes.CREATE_ORG_ERROR,
+      error: error,
+    } as const
+  },
+}
+
 export const updateOrgActions = {
-  request: (orgId: string, orgInfo: OrgInfo) => {
+  request: (orgId: string, orgInfo: ExistingOrgInfo) => {
     return {
       type: ProfileActionTypes.UPDATE_ORG_REQUEST,
       orgId: orgId,
