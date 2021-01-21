@@ -92,8 +92,6 @@ const Profile: React.FC<ProfileProps> = ({
           (URI) => {
             const stringURI = URI.toString()
 
-            console.log(stringURI, isValidURL(stringURI))
-
             if (URI === null || stringURI.length === 0) {
               /* Empty URI? That's okay - it just means we don't want,
               or have an image to display on the user's Avatar. */

@@ -30,12 +30,16 @@ export const isValidImage = async (imageURL: any) => {
       return !!requestResponseCors.ok
     }
   } catch (e) {
-    const requestResponseNoCors = await fetch(imageURL, {
-      mode: 'no-cors',
-    })
+    try {
+      const requestResponseNoCors = await fetch(imageURL, {
+        mode: 'no-cors',
+      })
 
-    if (requestResponseNoCors.status >= 100 && requestResponseNoCors.status < 400) {
-      return !!requestResponseNoCors.ok
+      if (requestResponseNoCors.status >= 100 && requestResponseNoCors.status < 400) {
+        return !!requestResponseNoCors.ok
+      }
+    } catch (error) {
+      return false
     }
   }
 

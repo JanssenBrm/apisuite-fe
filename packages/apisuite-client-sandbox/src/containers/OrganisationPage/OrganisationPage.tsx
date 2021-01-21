@@ -257,19 +257,19 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
 
     if (indexOfFormFieldToRemove === 0 && formState.values.orgTermsURL) {
       formState.values.orgTermsURL = ''
-      formState.errors.orgTermsURL = false
+      delete formState.errors.orgTermsURL
       formState.isDirty = !!org.tosUrl
     } else if (indexOfFormFieldToRemove === 1 && formState.values.orgPrivacyURL) {
       formState.values.orgPrivacyURL = ''
-      formState.errors.orgPrivacyURL = false
+      delete formState.errors.orgPrivacyURL
       formState.isDirty = !!org.privacyUrl
     } else if (indexOfFormFieldToRemove === 2 && formState.values.orgYouTubeURL) {
       formState.values.orgYouTubeURL = ''
-      formState.errors.orgYouTubeURL = false
+      delete formState.errors.orgYouTubeURL
       formState.isDirty = !!org.youtubeUrl
     } else if (indexOfFormFieldToRemove === 3 && formState.values.orgSupportURL) {
       formState.values.orgSupportURL = ''
-      formState.errors.orgSupportURL = false
+      delete formState.errors.orgSupportURL
       formState.isDirty = !!org.supportUrl
     }
 
@@ -330,7 +330,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                     className={classes.avatarIcons}
                     onClick={
                       () => {
-                        if (!formState.values.orgAvatarURL) { setAvatarInputIsInFocus(false) }
+                        setAvatarInputIsInFocus(false)
                       }
                     }
                   />
@@ -340,7 +340,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                     className={classes.avatarIcons}
                     onClick={
                       () => {
-                        if (!formState.values.orgAvatarURL) { setAvatarInputIsInFocus(true) }
+                        setAvatarInputIsInFocus(true)
                       }
                     }
                   />
@@ -367,6 +367,8 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                   ? formState.errorMsgs.orgAvatarURL
                   : t('profileTab.organisationSubTab.fieldLabels.orgAvatarSubLabel', { config })
               }
+              inputRef={(input) =>
+                avatarInputIsInFocus ? input && input.focus() : input && input.blur()}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -376,11 +378,10 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               onChange={handleChange}
               onFocus={(focusEvent) => {
                 handleFocus(focusEvent)
-
-                if (!formState.values.orgAvatarURL) setAvatarInputIsInFocus(true)
+                setAvatarInputIsInFocus(true)
               }}
               onBlur={() => {
-                if (!formState.values.orgAvatarURL) setAvatarInputIsInFocus(true)
+                setAvatarInputIsInFocus(false)
               }}
               type='url'
               value={formState.values.orgAvatarURL}
@@ -611,7 +612,9 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             ? (
               <Button
                 customButtonClassName={
-                  formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
+                  formState.isDirty &&
+                  (formState.isValid || Object.keys(formState.errors).length === 0) &&
+                  validImage
                     ? classes.enabledUpdateDetailsButton
                     : classes.disabledUpdateDetailsButton
                 }
@@ -622,7 +625,9 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             : (
               <Button
                 customButtonClassName={
-                  formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
+                  formState.isDirty &&
+                  (formState.isValid || Object.keys(formState.errors).length === 0) &&
+                  validImage
                     ? classes.enabledCreateOrgButton
                     : classes.disabledCreateOrgButton
                 }
