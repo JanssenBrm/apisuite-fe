@@ -67,7 +67,9 @@ const Sandbox: React.FC<SandboxProps> = ({
         }
       })
 
-      setRecentlyAddedAPIs(newRecentlyAddedAPIs)
+      const twoMostRecentlyAddedAPIs = [newRecentlyAddedAPIs[0], newRecentlyAddedAPIs[1]]
+
+      setRecentlyAddedAPIs(twoMostRecentlyAddedAPIs)
     }
   }, [subscriptions])
 

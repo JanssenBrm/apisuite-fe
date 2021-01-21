@@ -21,7 +21,7 @@ import Instructions from 'containers/Instructions'
 import Dashboard from 'containers/Dashboard'
 import ListApps from 'containers/Applications/ListApps'
 import Login from 'containers/Login'
-import OrganizationPage from 'containers/OrganizationPage'
+import OrganisationPage from 'containers/OrganisationPage'
 import Profile from 'containers/Profile'
 import RedirectPage from 'containers/RedirectPage'
 import RegisterConfirmation from 'containers/RegisterConfirmation'
@@ -76,7 +76,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/privacy', component: Privacy },
   { path: '/profile', exact: true, auth: true, component: Profile },
   { path: '/profile/team', exact: true, auth: true, component: TeamPage },
-  { path: '/profile/organisation', exact: true, auth: true, component: OrganizationPage },
+  { path: '/profile/organisation', exact: true, auth: true, component: OrganisationPage },
   { path: '/profile/security', exact: true, auth: true, component: Security },
   { path: ['/:redirect/confirm', '/:redirect/reset'], exact: true, component: RedirectPage },
   { path: '/terms', component: Terms },

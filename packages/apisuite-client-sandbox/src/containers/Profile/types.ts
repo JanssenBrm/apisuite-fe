@@ -12,6 +12,7 @@ import {
   changeRoleActions,
   resetErrorAction,
   deleteAccountActions,
+  createOrgActions,
 } from './ducks'
 import {
   mapStateToProps,
@@ -20,16 +21,31 @@ import {
 import { RequestStatus } from 'util/request'
 
 export type ProfileProps =
-ReturnType<typeof mapStateToProps> &
-ReturnType<typeof mapDispatchToProps>
+  ReturnType<typeof mapStateToProps> &
+  ReturnType<typeof mapDispatchToProps>
 
 export const roleNameOptions = ['admin', 'organizationOwner', 'developer', ''] as const
 
-export type OrgInfo = {
+export type NewOrgInfo = {
+  name: string,
   description: string | null,
-  vat?: string|null,
-  website: string,
-  terms: string,
+  vat?: string | null,
+  tosUrl: string,
+  privacyUrl: string,
+  youtubeUrl: string,
+  websiteUrl: string,
+  supportUrl: string,
+  logo: string,
+}
+
+export type ExistingOrgInfo = {
+  description: string | null,
+  vat?: string | null,
+  tosUrl: string,
+  privacyUrl: string,
+  youtubeUrl: string,
+  websiteUrl: string,
+  supportUrl: string,
   logo: string,
   'org_code'?: string,
   createdAt?: string,
@@ -40,13 +56,25 @@ export type ProfileStore = {
   members: FetchTeamMembersResponse[],
   roleOptions: Role[],
   profile: Profile,
-  org: Organization & Pick<OrgInfo, 'description' | 'vat' | 'website' | 'terms' | 'logo'>,
+  org: Organization &
+  Pick<
+  ExistingOrgInfo,
+  'description' |
+  'vat' |
+  'tosUrl' |
+  'privacyUrl' |
+  'youtubeUrl' |
+  'websiteUrl' |
+  'supportUrl' |
+  'logo'
+  >,
   requestStatuses: {
     getMembersRequest: RequestStatus,
     getRolesRequest: RequestStatus,
     inviteMemberRequest: RequestStatus & { invited: boolean },
     updateProfileRequest: RequestStatus,
     updateOrgRequest: RequestStatus,
+    createOrgRequest: RequestStatus,
     changeRoleRequest: RequestStatus,
     deleteAccount: RequestStatus,
   },
@@ -103,8 +131,10 @@ export type UpdateProfileResponse = {
 export type FetchOrgResponse = {
   success: boolean,
   message: string,
-  org: Organization & OrgInfo,
+  org: Organization & ExistingOrgInfo,
 }
+
+export type CreateOrgResponse = any
 
 export type UpdateOrgResponse = any
 
@@ -115,6 +145,7 @@ export type ProfileActions =
   ReturnNestedType<typeof confirmInviteActions> |
   ReturnNestedType<typeof getProfileActions> |
   ReturnNestedType<typeof updateProfileActions> |
+  ReturnNestedType<typeof createOrgActions> |
   ReturnNestedType<typeof updateOrgActions> |
   ReturnNestedType<typeof changeRoleActions> |
   ReturnNestedType<typeof fetchOrgActions> |

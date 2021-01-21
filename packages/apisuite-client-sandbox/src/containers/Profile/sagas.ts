@@ -17,6 +17,7 @@ import {
   fetchOrgActions,
   updateOrgActions,
   deleteAccountActions,
+  createOrgActions,
 } from './ducks'
 import { Store } from 'store/types'
 import { API_URL } from 'constants/endpoints'
@@ -204,6 +205,29 @@ export function * fetchOrgSaga (
   }
 }
 
+export function * createOrgSaga (
+  action: ReturnType<typeof createOrgActions.request>,
+) {
+  try {
+    const accessToken = yield select((state: Store) => state.auth.authToken)
+
+    const response: UpdateOrgResponse = yield call(request, {
+      url: `${API_URL}/organization/`,
+      method: 'POST',
+      headers: {
+        'x-access-token': accessToken,
+        'content-type': 'application/json',
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(createOrgActions.success(response))
+  } catch (error) {
+    yield put(createOrgActions.error(error.message))
+    yield put(authActions.handleSessionExpire())
+  }
+}
+
 export function * updateOrgSaga (
   action: ReturnType<typeof updateOrgActions.request>,
 ) {
@@ -257,6 +281,7 @@ function * rootSaga () {
   yield takeLatest(ProfileActionTypes.GET_PROFILE_REQUEST, getProfileSaga)
   yield takeLatest(ProfileActionTypes.UPDATE_PROFILE_REQUEST, updateProfileSaga)
   yield takeLatest(ProfileActionTypes.FETCH_ORG_REQUEST, fetchOrgSaga)
+  yield takeLatest(ProfileActionTypes.CREATE_ORG_REQUEST, createOrgSaga)
   yield takeLatest(ProfileActionTypes.UPDATE_ORG_REQUEST, updateOrgSaga)
   yield takeLatest(ProfileActionTypes.DELETE_ACCOUNT_REQUEST, deleteAccountSaga)
 }

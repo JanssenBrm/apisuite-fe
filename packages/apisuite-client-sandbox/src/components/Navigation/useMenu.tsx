@@ -236,4 +236,8 @@ export const goBackConfig = [
     path: '/api-products/details',
     label: 'Back to overview',
   },
+  {
+    path: '/profile/organisation',
+    label: 'Back to profile',
+  },
 ]

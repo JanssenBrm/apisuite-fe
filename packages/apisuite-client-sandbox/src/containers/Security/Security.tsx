@@ -85,7 +85,7 @@ const Security: React.FC<SecurityProps> = ({
               </InputAdornment>
             ),
           }}
-          label={t('profileTab.securitySubTab.currentPasswordFieldLabel', { config })}
+          label={t('profileTab.securitySubTab.fieldLabels.currentPasswordFieldLabel', { config })}
           margin='dense'
           name='currentPassword'
           onChange={(changeEvent) => handlePasswordChanges(changeEvent, 0)}
@@ -113,11 +113,11 @@ const Security: React.FC<SecurityProps> = ({
               ? ''
               : (
                 providedPasswords[0] === providedPasswords[1]
-                  ? t('profileTab.securitySubTab.samePasswordErrorMessage', { config })
+                  ? t('profileTab.securitySubTab.errorMessages.samePasswordErrorMessage', { config })
                   : (
                     isValidPass(providedPasswords[1])
                       ? ''
-                      : t('profileTab.securitySubTab.tooWeakPasswordErrorMessage', { config })
+                      : t('profileTab.securitySubTab.errorMessages.tooWeakPasswordErrorMessage', { config })
                   )
               )
           }
@@ -136,7 +136,7 @@ const Security: React.FC<SecurityProps> = ({
               </InputAdornment>
             ),
           }}
-          label={t('profileTab.securitySubTab.newPasswordFieldLabel', { config })}
+          label={t('profileTab.securitySubTab.fieldLabels.newPasswordFieldLabel', { config })}
           margin='dense'
           name='newPassword'
           onChange={(changeEvent) => handlePasswordChanges(changeEvent, 1)}
@@ -155,7 +155,7 @@ const Security: React.FC<SecurityProps> = ({
                 : classes.disabledUpdatePasswordButton
             }
             href='#'
-            label={t('profileTab.securitySubTab.updatePasswordButtonLabel', { config })}
+            label={t('profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel', { config })}
             onClick={handlePasswordChangeRequest}
           />
         </div>
