@@ -3,6 +3,14 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.5](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.7...apisuite-client-sandbox@1.1.5) (2021-01-21)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
 ## [1.1.4](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.5...apisuite-client-sandbox@1.1.4) (2021-01-08)
 
 **Note:** Version bump only for package apisuite-client-sandbox
