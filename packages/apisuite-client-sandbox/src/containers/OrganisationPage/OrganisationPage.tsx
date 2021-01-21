@@ -257,15 +257,19 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
 
     if (indexOfFormFieldToRemove === 0 && formState.values.orgTermsURL) {
       formState.values.orgTermsURL = ''
+      formState.errors.orgTermsURL = false
       formState.isDirty = !!org.tosUrl
     } else if (indexOfFormFieldToRemove === 1 && formState.values.orgPrivacyURL) {
       formState.values.orgPrivacyURL = ''
+      formState.errors.orgPrivacyURL = false
       formState.isDirty = !!org.privacyUrl
     } else if (indexOfFormFieldToRemove === 2 && formState.values.orgYouTubeURL) {
       formState.values.orgYouTubeURL = ''
+      formState.errors.orgYouTubeURL = false
       formState.isDirty = !!org.youtubeUrl
     } else if (indexOfFormFieldToRemove === 3 && formState.values.orgSupportURL) {
       formState.values.orgSupportURL = ''
+      formState.errors.orgSupportURL = false
       formState.isDirty = !!org.supportUrl
     }
 
