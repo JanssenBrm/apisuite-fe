@@ -127,7 +127,7 @@ export function * updateApp (action: UpdateAppAction) {
 
 export function * getUsersApps (action: GetUserAppsAction) {
   try {
-    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.orgId}`
+    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
     const accessToken = yield select(
       (state: Store) => state.auth.authToken)
     const response = yield call(request, {

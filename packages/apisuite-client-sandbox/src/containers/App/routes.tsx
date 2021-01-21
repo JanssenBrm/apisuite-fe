@@ -13,6 +13,7 @@ import MainLayout from 'layouts/Main'
 import EssentialLayout from 'layouts/Essential'
 
 import APIDetails from 'containers/APIDetails'
+import APIProducts from 'containers/APIProducts'
 import AppDetail from 'containers/Applications/AppDetail'
 import CreateApp from 'containers/Applications/CreateApp'
 import ForgotPasswordPage from 'containers/ForgotPasswordPage'
@@ -60,7 +61,7 @@ const extensionsRoutes = getRoutes().map(
 
 export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox, layoutProps: { contractibleMenu: true } },
-  { path: '/api-products', exact: true, auth: true, component: Subscriptions },
+  { path: '/api-products', exact: true, component: APIProducts, layoutProps: { contractibleMenu: true } },
   { path: '/api-products/details/:apiId/spec/:versionId', exact: true, component: APIDetails, layoutProps: { contractibleMenu: true } },
   { path: '/auth/:view?/:email?', exact: true, component: Login, layout: EssentialLayout },
   { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation, layout: EssentialLayout },

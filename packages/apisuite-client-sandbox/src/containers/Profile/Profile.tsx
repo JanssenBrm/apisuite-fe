@@ -273,8 +273,6 @@ const Profile: React.FC<ProfileProps> = ({
                       }
                     />
 
-                    {console.log(currentlySelectedOrganisation, profile.current_org)}
-
                     <Button
                       customButtonClassName={
                         currentlySelectedOrganisation.value !== profile.current_org.id

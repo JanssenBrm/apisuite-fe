@@ -1,5 +1,5 @@
 export type APICatalogProps = {
-  recentlyAddedAPIs: APIDetails[],
+  apisToDisplay: APIDetails[],
 }
 
 export type APIDetails = {

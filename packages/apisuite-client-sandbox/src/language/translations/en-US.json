@@ -97,6 +97,18 @@
       "securityStep": "Security Step"
     }
   },
+  "apiProductsTab": {
+    "latestAPIProductTitle": "Latest update",
+    "retrievingAPIProductMessage": "Retrieving most recently updated API...",
+    "apiProductButtons": {
+      "viewDetailsButtonLabel": "View details",
+      "subscribeButtonLabel": "Subscribe"
+    },
+    "productionAccess": "Production access",
+    "documentationAccess": "API Documentation",
+    "registerForMoreMessage": "Register for more options",
+    "textFilterPlaceholder": "Filter..."
+  },
   "dashboardTab": {
     "landingPageSubTab": {
       "adminUser": {

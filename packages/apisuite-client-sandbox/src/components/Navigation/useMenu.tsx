@@ -138,7 +138,6 @@ export function useMenu (): Array<TabProps[]> {
       {
         label: 'API Products',
         route: '/api-products',
-        subTabs: [],
       },
       {
         label: 'Documentation',
