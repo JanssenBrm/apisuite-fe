@@ -59,7 +59,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
   }
 
   const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false)
-  const [validImage, setValidImage] = React.useState<boolean>(false)
+  const [validImage, setValidImage] = React.useState<boolean>(true)
 
   const validateAvatar = (avatar: string) => {
     if (avatar !== '') {
@@ -104,7 +104,17 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
     // Rules for the organisation details
     {
       orgAvatarURL: {
-        rules: [(URI) => uriBasicChecks(URI) && validImage],
+        rules: [(URI) => {
+          const validURL = uriBasicChecks(URI)
+          if (validURL) {
+            if (URI === null || URI.toString().length === 0) {
+              setValidImage(true)
+            } else {
+              validateAvatar(URI.toString())
+            }
+          }
+          return validURL
+        }],
         message: t('profileTab.organisationSubTab.warningLabels.orgAvatarURL', { config }),
       },
 
@@ -307,10 +317,10 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
 
             <TextField
               className={classes.avatarURLInputField}
-              error={formState.touched.orgAvatarURL && formState.errors.orgAvatarURL}
+              error={(formState.touched.orgAvatarURL && formState.errors.orgAvatarURL) || !validImage}
               fullWidth
               helperText={
-                formState.touched.orgAvatarURL && formState.errors.orgAvatarURL
+                (formState.touched.orgAvatarURL && formState.errors.orgAvatarURL) || !validImage
                   ? formState.errorMsgs.orgAvatarURL
                   : t('profileTab.organisationSubTab.fieldLabels.orgAvatarSubLabel', { config })
               }
@@ -320,14 +330,10 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               label={t('profileTab.organisationSubTab.fieldLabels.orgAvatarLabel', { config })}
               margin='dense'
               name='orgAvatarURL'
-              onChange={(changeEvent) => {
-                handleChange(changeEvent)
-                validateAvatar(formState.values.orgAvatarURL)
-              }}
+              onChange={handleChange}
               onFocus={(focusEvent) => {
                 handleFocus(focusEvent)
                 setAvatarInputIsInFocus(true)
-                validateAvatar(formState.values.orgAvatarURL)
               }}
               onBlur={() => {
                 formState.values.orgAvatarURL
@@ -372,10 +378,10 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             <div className={classes.orgURLFieldWrapper}>
               <TextField
                 className={classes.inputFields}
-                error={formState.touched.orgWebsiteURL && formState.errors.orgWebsiteURL}
+                error={formState.errors.orgWebsiteURL}
                 fullWidth
                 helperText={
-                  formState.touched.orgWebsiteURL && formState.errors.orgWebsiteURL
+                  formState.errors.orgWebsiteURL
                     ? formState.errorMsgs.orgWebsiteURL
                     : ''
                 }
@@ -451,10 +457,10 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               <div className={classes.orgURLFieldWrapper}>
                 <TextField
                   className={classes.inputFields}
-                  error={formState.touched.orgTermsURL && formState.errors.orgTermsURL}
+                  error={formState.errors.orgTermsURL}
                   fullWidth
                   helperText={
-                    formState.touched.orgTermsURL && formState.errors.orgTermsURL
+                    formState.errors.orgTermsURL
                       ? formState.errorMsgs.orgTermsURL
                       : ''
                   }
@@ -478,10 +484,10 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               <div className={classes.orgURLFieldWrapper}>
                 <TextField
                   className={classes.inputFields}
-                  error={formState.touched.orgPrivacyURL && formState.errors.orgPrivacyURL}
+                  error={formState.errors.orgPrivacyURL}
                   fullWidth
                   helperText={
-                    formState.touched.orgPrivacyURL && formState.errors.orgPrivacyURL
+                    formState.errors.orgPrivacyURL
                       ? formState.errorMsgs.orgPrivacyURL
                       : ''
                   }
@@ -505,10 +511,10 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               <div className={classes.orgURLFieldWrapper}>
                 <TextField
                   className={classes.inputFields}
-                  error={formState.touched.orgYouTubeURL && formState.errors.orgYouTubeURL}
+                  error={formState.errors.orgYouTubeURL}
                   fullWidth
                   helperText={
-                    formState.touched.orgYouTubeURL && formState.errors.orgYouTubeURL
+                    formState.errors.orgYouTubeURL
                       ? formState.errorMsgs.orgYouTubeURL
                       : ''
                   }
@@ -532,10 +538,10 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               <div className={classes.orgURLFieldWrapper}>
                 <TextField
                   className={classes.inputFields}
-                  error={formState.touched.orgSupportURL && formState.errors.orgSupportURL}
+                  error={formState.errors.orgSupportURL}
                   fullWidth
                   helperText={
-                    formState.touched.orgSupportURL && formState.errors.orgSupportURL
+                    formState.errors.orgSupportURL
                       ? formState.errorMsgs.orgSupportURL
                       : ''
                   }

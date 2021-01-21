@@ -58,7 +58,7 @@ const Profile: React.FC<ProfileProps> = ({
   }
 
   const [avatarHasBeenClicked, setAvatarHasBeenClicked] = React.useState(false)
-  const [validImage, setValidImage] = React.useState<boolean>(false)
+  const [validImage, setValidImage] = React.useState<boolean>(true)
 
   const validateAvatar = (avatar: string) => {
     if (avatar !== '') {
@@ -92,15 +92,21 @@ const Profile: React.FC<ProfileProps> = ({
           (URI) => {
             const stringURI = URI.toString()
 
-            if (stringURI.length === 0) {
+            console.log(stringURI, isValidURL(stringURI))
+
+            if (URI === null || stringURI.length === 0) {
               /* Empty URI? That's okay - it just means we don't want,
               or have an image to display on the user's Avatar. */
+              setValidImage(true)
               return true
             } else {
               /* Non-empty URI? Cool! First, we determine if that URI is valid,
               and then we need to check if the URI points to an actual image.
               If any of these conditions are not met, we display an error message. */
-              const doesImageExist = isValidURL(URI) && validImage
+              const doesImageExist = isValidURL(stringURI)
+              if (doesImageExist) {
+                validateAvatar(stringURI)
+              }
 
               return doesImageExist
             }
@@ -360,24 +366,18 @@ const Profile: React.FC<ProfileProps> = ({
                   ? (
                     <TextField
                       className={classes.inputFields}
-                      error={formState.touched.userAvatarURL && formState.errors.userAvatarURL}
+                      error={(formState.touched.userAvatarURL && formState.errors.userAvatarURL) || !validImage}
                       fullWidth
                       helperText={
-                        formState.touched.userAvatarURL &&
-                        formState.errors.userAvatarURL &&
+                        ((formState.touched.userAvatarURL &&
+                        formState.errors.userAvatarURL) || !validImage) &&
                         formState.errorMsgs.userAvatarURL
                       }
                       label={t('profileTab.overviewTab.userRelatedLabels.userAvatarURL', { config })}
                       margin='dense'
                       name='userAvatarURL'
-                      onChange={(changeEvent) => {
-                        handleChange(changeEvent)
-                        validateAvatar(formState.values.userAvatarURL)
-                      }}
-                      onFocus={(focusEvent) => {
-                        handleFocus(focusEvent)
-                        validateAvatar(formState.values.userAvatarURL)
-                      }}
+                      onChange={handleChange}
+                      onFocus={handleFocus}
                       type='url'
                       value={formState.values.userAvatarURL}
                       variant='outlined'

@@ -23,11 +23,23 @@ export const isValidURL = (url: any) => {
 }
 
 export const isValidImage = async (imageURL: any) => {
-  const requestResponse = await fetch(imageURL, {
-    mode: 'no-cors',
-  })
+  try {
+    const requestResponseCors = await fetch(imageURL)
 
-  return !!requestResponse.ok
+    if (requestResponseCors.status >= 100 && requestResponseCors.status < 400) {
+      return !!requestResponseCors.ok
+    }
+  } catch(e) {
+    const requestResponseNoCors = await fetch(imageURL, {
+      mode: 'no-cors',
+    })
+
+    if (requestResponseNoCors.status >= 100 && requestResponseNoCors.status < 400) {
+      return !!requestResponseNoCors.ok
+    }
+  }
+
+  return false
 }
 
 export const isValidPhoneNumber = (number: any) => {
