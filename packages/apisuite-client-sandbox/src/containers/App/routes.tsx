@@ -71,7 +71,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/dashboard/apps/detail/:id', exact: true, auth: true, component: AppDetail },
   { path: '/dashboard/subscriptions', exact: true, auth: true, component: Subscriptions },
   { path: '/dashboard/test', exact: true, auth: true, component: Instructions },
-  { path: '/documentation', exact: true, auth: true, component: Instructions },
+  { path: '/documentation', exact: true, component: Instructions },
   { path: '/forgot', exact: true, component: ForgotPasswordPage, layout: EssentialLayout },
   { path: '/privacy', component: Privacy },
   { path: '/profile', exact: true, auth: true, component: Profile },
