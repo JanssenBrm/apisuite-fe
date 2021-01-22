@@ -108,6 +108,10 @@ export function useMenu (): Array<TabProps[]> {
         route: '/api-products',
       },
       {
+        label: 'Documentation',
+        route: settings.documentationURL || '/documentation',
+      },
+      {
         label: 'Support',
         route: settings.supportURL || (
           roleName === 'admin'

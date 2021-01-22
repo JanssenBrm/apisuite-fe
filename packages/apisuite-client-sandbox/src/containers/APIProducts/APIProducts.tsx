@@ -94,16 +94,14 @@ const APIProducts: React.FC<APIProductsProps> = ({
     buttonFilterIndex?: number,
   ) => {
     const apisToFilter: APIDetails[] = recentlyUpdatedAPIs
-
     let newFilteredAPIs: APIDetails[] = []
+    const newAPIFilters = apiFilters
 
+    // Filtering by access type
     let productionAccessibleAPIs: APIDetails[] = []
     const sandboxAccessibleAPIs: APIDetails[] = []
     let documentationAccessibleAPIs: APIDetails[] = []
 
-    const newAPIFilters = apiFilters
-
-    // Filtering by access type
     if (buttonFilterIndex) {
       if (newAPIFilters[buttonFilterIndex] === false) {
         newAPIFilters[buttonFilterIndex] = true
@@ -136,20 +134,23 @@ const APIProducts: React.FC<APIProductsProps> = ({
     )
 
     // Filtering by name
+
+    let textFilterContents = apiFilters[0]
+
     if (changeEvent) {
-      const textFilterContents = changeEvent.target.value
+      textFilterContents = changeEvent?.target.value
 
       newAPIFilters[0] = textFilterContents
+    }
 
-      if (newFilteredAPIs.length) {
-        newFilteredAPIs = newFilteredAPIs.filter((api) => {
-          return api.apiName.toLowerCase().includes(textFilterContents.toLowerCase())
-        })
-      } else {
-        newFilteredAPIs = apisToFilter.filter((api) => {
-          return api.apiName.toLowerCase().includes(textFilterContents.toLowerCase())
-        })
-      }
+    if (newFilteredAPIs.length) {
+      newFilteredAPIs = newFilteredAPIs.filter((api) => {
+        return api.apiName.toLowerCase().includes(textFilterContents.toLowerCase())
+      })
+    } else {
+      newFilteredAPIs = apisToFilter.filter((api) => {
+        return api.apiName.toLowerCase().includes(textFilterContents.toLowerCase())
+      })
     }
 
     setFilteredAPIs(newFilteredAPIs)
@@ -185,9 +186,9 @@ const APIProducts: React.FC<APIProductsProps> = ({
                   `
 ${classes.apiProductVersion}
 ${latestUpdatedAPI.apiAccess
-      ? classes.productionAccess
-      : classes.documentationAccess
-    }
+                    ? classes.productionAccess
+                    : classes.documentationAccess
+                  }
 `
                 }
               >
@@ -236,7 +237,7 @@ ${latestUpdatedAPI.apiAccess
                         }
                       >
                         &#9679;
-                      </span>
+</span>
 
                       <p>
                         {
