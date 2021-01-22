@@ -54,7 +54,7 @@ export function * fetchRoleOptionsSaga () {
   try {
     const accessToken = yield select((state: Store) => state.auth.authToken)
     const response: FetchRoleOptionsResponse = yield call(request, {
-      url: `${API_URL}/role`,
+      url: `${API_URL}/roles`,
       method: 'GET',
       headers: { 'x-access-token': accessToken },
     })
