@@ -10,7 +10,7 @@ import useStyles from './styles'
 import clsx from 'clsx'
 
 const Login: React.FC<{ history: History }> = ({ history }) => {
-  const { view: viewParam, email: emailParam } = useParams()
+  const { view: viewParam, email: emailParam } = useParams<{view: string, email: string}>()
   const [view, setView] = React.useState<View>(viewParam === 'register' ? 'register' : 'login')
   const [t] = useTranslation()
   const classes = useStyles()
