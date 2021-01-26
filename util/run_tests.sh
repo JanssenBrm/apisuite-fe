@@ -18,8 +18,8 @@ set -e
 for project in ${PROJECTS}; do
   if [ -n "$project" ]; then
     # Go into folder and run yarn/npm i
-    (cd ../${ROOT_PROJECTS_FOLDER}/${project} && yarn install)
+    (cd ../${ROOT_PROJECTS_FOLDER}/${project} && npm i)
     # Go into folder and run test
-    (cd ../${ROOT_PROJECTS_FOLDER}/${project} && yarn test)
+    (cd ../${ROOT_PROJECTS_FOLDER}/${project} && npm run test)
   fi
 done
