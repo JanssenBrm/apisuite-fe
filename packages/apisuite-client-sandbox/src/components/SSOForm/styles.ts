@@ -9,7 +9,7 @@ const useStyles = makeStyles(({
   loginWithButtonWrapper: {
     marginBottom: '10px',
     color: config.palette.greyScales[400],
-  }
+  },
 }))
 
 export default useStyles

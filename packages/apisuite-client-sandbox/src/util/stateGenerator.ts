@@ -1,10 +1,10 @@
 const validChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
 /** generates a random state */
-export default function (size: number = 15) {
+export default function (size = 15) {
   let randomState = ''
   if (window && window.crypto && window.crypto.getRandomValues) {
-    let container = new Uint8Array(size)
+    const container = new Uint8Array(size)
     window.crypto.getRandomValues(container)
     const numChars: number[] = Array.from(container.map(x => validChars.charCodeAt(x % validChars.length)))
     randomState = String.fromCharCode.apply(null, numChars)
