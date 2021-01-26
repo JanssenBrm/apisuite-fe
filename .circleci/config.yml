@@ -3,7 +3,7 @@ version: 2.1
 executors:
   apisuite-executor:
     environment:
-      SHOULD_TEST: "false"
+      SHOULD_TEST: "true"
     docker:
       - image: circleci/node:12.13.1
     working_directory: ~/apisuite

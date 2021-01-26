@@ -186,9 +186,9 @@ const APIProducts: React.FC<APIProductsProps> = ({
                   `
 ${classes.apiProductVersion}
 ${latestUpdatedAPI.apiAccess
-                    ? classes.productionAccess
-                    : classes.documentationAccess
-                  }
+      ? classes.productionAccess
+      : classes.documentationAccess
+    }
 `
                 }
               >
@@ -237,7 +237,7 @@ ${latestUpdatedAPI.apiAccess
                         }
                       >
                         &#9679;
-</span>
+                      </span>
 
                       <p>
                         {

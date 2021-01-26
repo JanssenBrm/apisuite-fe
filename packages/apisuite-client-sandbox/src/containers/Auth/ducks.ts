@@ -124,7 +124,7 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
 
     case SSO_PROVIDERS_SUCCESS: {
       return update(state, {
-        providers: { $set: action.payload.providers }
+        providers: { $set: action.payload.providers },
       })
     }
 
