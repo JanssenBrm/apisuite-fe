@@ -102,7 +102,7 @@ export interface GetAppDetailsSuccess extends Action {
 
 export interface GetUserAppsAction extends Action {
   type: typeof GET_USER_APPS,
-  orgId: number,
+  userId: number,
 }
 
 export interface GetUserAppsActionSuccess extends Action {

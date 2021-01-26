@@ -104,6 +104,14 @@ export function useMenu (): Array<TabProps[]> {
   const initTabs = React.useMemo((): TabProps[] => {
     const entries = [
       {
+        label: 'API Products',
+        route: '/api-products',
+      },
+      {
+        label: 'Documentation',
+        route: settings.documentationURL || '/documentation',
+      },
+      {
         label: 'Support',
         route: settings.supportURL || (
           roleName === 'admin'
@@ -138,7 +146,6 @@ export function useMenu (): Array<TabProps[]> {
       {
         label: 'API Products',
         route: '/api-products',
-        subTabs: [],
       },
       {
         label: 'Documentation',
@@ -232,5 +239,9 @@ export const goBackConfig = [
   {
     path: '/api-products/details',
     label: 'Back to overview',
+  },
+  {
+    path: '/profile/organisation',
+    label: 'Back to profile',
   },
 ]

@@ -1,4 +1,4 @@
-import { call, put, select, takeLatest } from 'redux-saga/effects'
+import { call, put, takeLatest } from 'redux-saga/effects'
 
 import { openNotification } from 'containers/NotificationStack/ducks'
 
@@ -9,8 +9,6 @@ import {
 } from './ducks'
 
 import { API_URL } from 'constants/endpoints'
-
-import { Store } from 'store/types'
 
 import { UpdatePasswordRequestAction } from './types'
 
@@ -25,14 +23,11 @@ export function * updatePasswordRequestSaga (action: UpdatePasswordRequestAction
       'new_password': action.payload.newPassword,
     }
 
-    const authToken = yield select((state: Store) => state.auth.authToken)
-
     yield call(request, {
       url: updatePasswordRequestURL,
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
-        'X-Access-Token': authToken,
       },
       data: JSON.stringify(updatePasswordRequestData),
     })

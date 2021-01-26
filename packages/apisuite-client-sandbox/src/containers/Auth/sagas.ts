@@ -2,8 +2,8 @@ import {
   call,
   delay,
   put,
-  select,
   takeLatest,
+  select,
 } from 'redux-saga/effects'
 import request from 'util/request'
 import {
@@ -15,38 +15,33 @@ import {
   RECOVER_PASSWORD,
   LOGOUT,
   EXPIRED_SESSION,
+  SSO_LOGIN,
+  SSO_TOKEN_EXCHANGE,
+  SSO_PROVIDERS,
 } from './ducks'
 import {
-  AUTH_URL,
-  LOGIN_PORT,
   API_URL,
 } from 'constants/endpoints'
 import { Profile } from 'containers/Profile/types'
 import qs from 'qs'
 import { openNotification } from 'containers/NotificationStack/ducks'
 import { Store } from 'store/types'
+import stateGenerator from 'util/stateGenerator'
 
 import { AnyAction } from 'redux'
 
+const STATE_STORAGE = 'ssoStateStorage'
+
 function * loginWorker (action: AnyAction) {
   try {
-    const credentialsUrl = `${AUTH_URL}${LOGIN_PORT}/auth/apisuite`
-    const loginUrl = `${AUTH_URL}/auth/login`
-
-    const responseCred = yield call(request, {
-      url: credentialsUrl,
-      method: 'GET',
-    })
-
-    const challenge = responseCred.challenge
+    const loginUrl = `${API_URL}/auth/login`
 
     const data = {
-      challenge: challenge,
       email: action.payload.email,
       password: action.payload.password,
     }
 
-    const { token } = yield call(request, {
+    yield call(request, {
       url: loginUrl,
       method: 'POST',
       headers: {
@@ -55,39 +50,28 @@ function * loginWorker (action: AnyAction) {
       data: qs.stringify(data),
     })
 
-    yield put(authActions.loginSuccess({
-      token,
-    }))
+    yield put(authActions.loginSuccess())
   } catch (error) {
     yield put(authActions.loginError(error.message.error))
   }
 }
 
-function * loginUWorker (action: AnyAction) {
+function * loginUWorker () {
   try {
-    const userinfo = yield call(request, {
-      url: `${AUTH_URL}/userinfo`,
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${action.payload.token}`,
-      },
-    })
-
-    const user = userinfo.userinfo
-    const userName = user.name.split(' ')
-    const userId = user.id
-
     const profile: Profile = yield call(request, {
       url: `${API_URL}/users/profile`,
       method: 'GET',
-      headers: { 'x-access-token': action.payload.token },
     })
+
+    const user = profile.user
+    const userName = user.name.split(' ')
+    const userId = user.id
 
     yield put(authActions.loginUserSuccess({
       user: {
         fName: userName[0],
         lName: userName[userName.length - 1],
-        id: userId,
+        id: Number(userId),
         role: {
           id: profile.current_org.role.id,
           name: profile.current_org.role.name,
@@ -139,22 +123,12 @@ function * recoverPasswordSaga (action: AnyAction) {
 
 function * logoutWorker () {
   try {
-    const logoutSessionUrl = `${AUTH_URL}/auth/session/logout`
-    const logoutUrl = `${AUTH_URL}/auth/logout`
+    const logoutUrl = `${API_URL}/auth/logout`
 
-    try {
-      // try to logout via session
-      yield call(request, {
-        url: logoutSessionUrl,
-        method: 'GET',
-      })
-    } catch (_) {
-      // if it fails try callback call to remove active session if exists
-      yield call(request, {
-        url: logoutUrl,
-        method: 'GET',
-      })
-    }
+    yield call(request, {
+      url: logoutUrl,
+      method: 'POST',
+    })
 
     yield put(authActions.logoutSuccess())
   } catch (error) {
@@ -164,24 +138,78 @@ function * logoutWorker () {
 
 function * expiredSessionWorker () {
   try {
-    const accessToken = yield select(
-      (state: Store) => state.auth.authToken)
-
-    // check token validity by calling user info endpoint
+    // try to exchange the refresh token for a new access tokn
     yield call(request, {
-      url: `${AUTH_URL}/userinfo`,
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${accessToken}`,
-      },
+      url: `${API_URL}/auth/refresh`,
+      method: 'POST',
     })
   } catch (error) {
     // if token expired logout
-    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
-      yield put(openNotification('error', 'Your session has expired, you need to login again.', 5000))
-      yield delay(1000)
-      yield put(authActions.logout())
+    const authToken = yield select((state: Store) => state.auth.authToken)
+    // only logout if we have the session token
+    if (authToken) {
+      if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+        yield put(openNotification('error', 'Your session has expired, you need to login again.', 5000))
+        yield delay(1000)
+        yield put(authActions.logout())
+      }
     }
+  }
+}
+
+function * getProviders () {
+  const providers: string[] = ['keycloak', 'hydra']
+  try {
+    const settingsURL = `${API_URL}/settings`
+
+    const response = yield call(request, {
+      url: settingsURL,
+      method: 'GET',
+    })
+
+    yield put(authActions.getSSOProvidersSuccess({ providers: response.sso || providers }))
+  } catch (error) {
+    yield put(authActions.getSSOProvidersSuccess({ providers }))
+  }
+}
+
+function * ssoLoginWorker (action: AnyAction) {
+  try {
+    let state = localStorage.getItem(STATE_STORAGE)
+
+    if (!state) {
+      state = stateGenerator()
+      localStorage.setItem(STATE_STORAGE, state)
+    }
+
+    const provider = action?.payload?.provider
+    const ssoLoginUrl = `${API_URL}/auth/oidc/${provider}?state=${state}`
+
+    yield call(request, {
+      url: ssoLoginUrl,
+      method: 'GET',
+    })
+
+    yield put(authActions.loginSuccess())
+  } catch (error) {
+    yield put(authActions.loginError(error.message.error))
+  }
+}
+
+function * ssoTokenExchangeWorker (action: AnyAction) {
+  try {
+    const provider = action?.payload?.provider
+    const ssoLoginUrl = `${API_URL}/auth/oidc/${provider}/token`
+
+    yield call(request, {
+      url: ssoLoginUrl,
+      method: 'POST',
+    })
+
+    yield put(authActions.loginSuccess())
+    localStorage.removeItem(STATE_STORAGE)
+  } catch (error) {
+    yield put(authActions.loginError(error.message.error))
   }
 }
 
@@ -192,5 +220,8 @@ export function * rootSaga () {
   yield takeLatest(RECOVER_PASSWORD, recoverPasswordSaga)
   yield takeLatest(LOGOUT, logoutWorker)
   yield takeLatest(EXPIRED_SESSION, expiredSessionWorker)
+  yield takeLatest(SSO_LOGIN, ssoLoginWorker)
+  yield takeLatest(SSO_TOKEN_EXCHANGE, ssoTokenExchangeWorker)
+  yield takeLatest(SSO_PROVIDERS, getProviders)
 }
 export default rootSaga

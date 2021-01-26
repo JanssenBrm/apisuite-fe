@@ -67,7 +67,9 @@ const Sandbox: React.FC<SandboxProps> = ({
         }
       })
 
-      setRecentlyAddedAPIs(newRecentlyAddedAPIs)
+      const twoMostRecentlyAddedAPIs = [newRecentlyAddedAPIs[0], newRecentlyAddedAPIs[1]]
+
+      setRecentlyAddedAPIs(twoMostRecentlyAddedAPIs)
     }
   }, [subscriptions])
 
@@ -298,7 +300,7 @@ const Sandbox: React.FC<SandboxProps> = ({
           {
             recentlyAddedAPIs.length === 0
               ? <p>{t('sandboxPage.apiCatalog.paragraph', { config })}</p>
-              : <APICatalog recentlyAddedAPIs={recentlyAddedAPIs} />
+              : <APICatalog apisToDisplay={recentlyAddedAPIs} />
           }
         </section>
       </section>

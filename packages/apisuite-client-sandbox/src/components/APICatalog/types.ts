@@ -1,5 +1,5 @@
 export type APICatalogProps = {
-  recentlyAddedAPIs: APIDetails[],
+  apisToDisplay: APIDetails[],
 }
 
 export type APIDetails = {
@@ -8,6 +8,6 @@ export type APIDetails = {
   apiName: string,
   apiDescription: string,
   apiVersion: string,
-  apiRoutingId: number | '',
+  apiRoutingId: number | string,
   apiAccess: boolean,
 }

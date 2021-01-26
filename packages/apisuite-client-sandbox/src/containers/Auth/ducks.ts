@@ -24,10 +24,20 @@ export const RECOVER_PASSWORD = 'auth/RECOVER_PASSWORD'
 export const RECOVER_PASSWORD_ERROR = 'auth/RECOVER_PASSWORD_ERROR'
 export const RECOVER_PASSWORD_SUCCESS = 'auth/RECOVER_PASSWORD_SUCCESS'
 
-export const TOKEN_KEY = 'at'
-export const TOKEN_MAX_AGE = 30 // <-- 1 month
+export const SSO_LOGIN = 'auth/SSO_LOGIN'
+export const SSO_LOGIN_SUCCESS = 'auth/SSO_LOGIN_SUCCESS'
+export const SSO_LOGIN_ERROR = 'auth/SSO_LOGIN_ERROR'
+export const SSO_TOKEN_EXCHANGE = 'auth/SSO_TOKEN_EXCHANGE'
+export const SSO_TOKEN_EXCHANGE_SUCCESS = 'auth/SSO_TOKEN_EXCHANGE_SUCCESS'
+export const SSO_TOKEN_EXCHANGE_ERROR = 'auth/SSO_TOKEN_EXCHANGE_ERROR'
 
-const authToken = cookie.get(TOKEN_KEY) || ''
+export const SSO_PROVIDERS = 'auth/SSO_PROVIDERS'
+export const SSO_PROVIDERS_SUCCESS = 'auth/SSO_PROVIDERS_SUCCESS'
+
+export const COO_KEY = 'apiSuiteSession'
+export const COO_KEY_MAX_AGE = 30 // <-- 1 month
+
+const authToken = cookie.get(COO_KEY) || ''
 
 const initialState: AuthStore = {
   authToken,
@@ -35,6 +45,7 @@ const initialState: AuthStore = {
   isAuthorizing: false,
   isRecoveringPassword: false,
   error: undefined,
+  providers: null,
 }
 
 const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) => {
@@ -53,9 +64,8 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
     }
 
     case LOGIN_SUCCESS: {
-      const { payload: { token } } = action as AuthStoreActionTypes['loginSuccess']
       return update(state, {
-        authToken: { $set: token },
+        authToken: { $set: 'TOKEN_COMES_FROM_BE_IN_COOKIE' },
         error: { $set: undefined },
       })
     }
@@ -105,10 +115,17 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
       if (action.payload.action === 'POP') {
         return update(state, {
           error: { $set: undefined },
+          providers: { $set: null },
         })
       }
 
       return state
+    }
+
+    case SSO_PROVIDERS_SUCCESS: {
+      return update(state, {
+        providers: { $set: action.payload.providers },
+      })
     }
 
     default:
@@ -119,7 +136,7 @@ const reducer: Reducer<AuthStore, AnyAction> = (state = initialState, action) =>
 export const authActions = {
   login: (payload: AuthPayloads['login']) => ({ type: LOGIN, payload }),
   loginUser: (payload: AuthPayloads['loginUser']) => ({ type: LOGIN_USER, payload }),
-  loginSuccess: (payload: AuthPayloads['loginSuccess']) => ({ type: LOGIN_SUCCESS, payload }),
+  loginSuccess: () => ({ type: LOGIN_SUCCESS }),
   loginError: (error: AuthPayloads['loginError']) => ({ type: LOGIN_ERROR, error }),
   loginUserSuccess: (payload: AuthPayloads['loginUserSuccess']) => ({ type: LOGIN_USER_SUCCESS, payload }),
   loginUserError: (error: AuthPayloads['loginUserError']) => ({ type: LOGIN_USER_ERROR, error }),
@@ -133,14 +150,19 @@ export const authActions = {
   logoutSuccess: () => ({ type: LOGOUT_SUCCESS }),
   logoutError: (payload: AuthPayloads['logoutError']) => ({ type: LOGOUT_ERROR, payload }),
   handleSessionExpire: () => ({ type: EXPIRED_SESSION }),
+  ssoLogin: (payload: AuthPayloads['sso']['ssoLogin']) => ({ type: SSO_LOGIN, payload }),
+  ssoLoginSuccess: (payload: AuthPayloads['sso']['ssoLoginSuccess']) => ({ type: SSO_LOGIN_SUCCESS, payload }),
+  ssoLoginError: (error: AuthPayloads['sso']['ssoLoginError']) => ({ type: SSO_LOGIN_ERROR, error }),
+  getSSOProviders: () => ({ type: SSO_PROVIDERS }),
+  getSSOProvidersSuccess: (payload: AuthPayloads['sso']['ssoProvidersSuccess']) => ({ type: SSO_PROVIDERS_SUCCESS, payload }),
 }
 
 export const createAuthMiddleware = (history: History) => () => (next: Dispatch) => (action: AnyAction) => {
   next(action)
 
   if (action.type === LOGIN_SUCCESS) {
-    cookie.set(TOKEN_KEY, action.payload.token, {
-      expires: TOKEN_MAX_AGE,
+    cookie.set(COO_KEY, 'TOKEN_COMES_FROM_BE_IN_COOKIE', {
+      expires: new Date(new Date().getTime() + COO_KEY_MAX_AGE * 60 * 1000),
       path: '/',
     })
   } else if (action.type === LOGIN_USER_SUCCESS) {
@@ -154,10 +176,10 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
       }
     }
   } else if (action.type === LOGIN_ERROR || action.type === LOGIN_USER_ERROR) {
-    cookie.remove(TOKEN_KEY, { path: '/' })
+    cookie.remove(COO_KEY, { path: '/' })
     history.replace('/auth/login')
   } else if (action.type === LOGOUT || action.type === LOGOUT_ERROR) {
-    cookie.remove(TOKEN_KEY, { path: '/' })
+    cookie.remove(COO_KEY, { path: '/' })
     history.replace('/auth/login')
   }
 }

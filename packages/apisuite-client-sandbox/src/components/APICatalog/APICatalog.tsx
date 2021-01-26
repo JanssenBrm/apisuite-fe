@@ -9,14 +9,13 @@ import useStyles from './styles'
 import { APICatalogProps, APIDetails } from './types'
 
 const APICatalog: React.FC<APICatalogProps> = ({
-  recentlyAddedAPIs,
+  apisToDisplay,
 }) => {
   const classes = useStyles()
 
   const generateAPICatalogEntry = (apiDetails: APIDetails, index: number) => {
     const apiSplitName = apiDetails.apiName.split(' ')
-    const apiInitials = apiSplitName.length >= 2
-      ? `${apiSplitName[0].charAt(0)}${apiSplitName[1].charAt(0)}` : apiSplitName[0].slice(0, 2)
+    const apiInitials = apiSplitName[0].slice(0, 2)
 
     return (
       <div
@@ -29,7 +28,7 @@ const APICatalog: React.FC<APICatalogProps> = ({
               ? classes.colorsOfProductionAPI
               : classes.colorsOfAPIDocumentation}
           >
-            {apiInitials.toUpperCase()}
+            {apiInitials}
           </Avatar>
         </div>
 
@@ -48,7 +47,7 @@ ${apiDetails.apiAccess
 `
               }
             >
-              {apiDetails.apiVersion}
+              {`v${apiDetails.apiVersion}`}
             </span>
             <>{apiDetails.apiAccess ? 'Production access' : 'API Documentation'}</>
           </p>
@@ -61,7 +60,7 @@ ${apiDetails.apiAccess
     )
   }
 
-  const apiCatalogEntries = recentlyAddedAPIs.map((apiDetails, index) => {
+  const apiCatalogEntries = apisToDisplay.map((apiDetails, index) => {
     if (apiDetails.hasMoreDetails) {
       return (
         <Link

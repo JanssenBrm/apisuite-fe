@@ -3,6 +3,6 @@ import {
   mapDispatchToProps,
 } from './index'
 
-export type OrganizationPageProps =
+export type OrganisationPageProps =
 ReturnType<typeof mapStateToProps> &
 ReturnType<typeof mapDispatchToProps>
