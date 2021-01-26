@@ -1,3 +1,4 @@
+sudo apt-get update
 sudo apt-get install jq
 sudo apt-get install --no-install-recommends -y \
   libgtk2.0-0 \
