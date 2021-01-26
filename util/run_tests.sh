@@ -17,9 +17,13 @@ set -e
 # For each updated project go into it and run the test
 for project in ${PROJECTS}; do
   if [ -n "$project" ]; then
+    # Go into the folder and create the base config file
+    (cd ../${ROOT_PROJECTS_FOLDER}/${project} && cp "sandbox.config-$CIRCLE_BRANCH.json" "sandbox.config.json")
     # Go into folder and run yarn/npm i
     (cd ../${ROOT_PROJECTS_FOLDER}/${project} && npm i)
     # Go into folder and run test
     (cd ../${ROOT_PROJECTS_FOLDER}/${project} && npm run test)
+    # remove the file
+    (cd ../${ROOT_PROJECTS_FOLDER}/${project} && rm sandbox.config.json)
   fi
 done
