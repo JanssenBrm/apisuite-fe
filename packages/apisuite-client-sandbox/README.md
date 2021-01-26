@@ -69,6 +69,12 @@ The APISuite Portal can be extended through APISuite UI Extensions. For more det
 
 ## Installation
 
+## Session Cookies
+
+In order for the login flow to work and be secure cookie are used and are blocked to especific domains. So to be able to run the app locally you need to edit you host file (`/etc/hosts`) and add the following: `127.0.0.1       localhost.develop.apisuite.io`.
+
+Also edit the `webpack.config.dev.js` and change the host parameter to: `host: 'localhost.develop.apisuite.io',`. This should enable you to login properly.
+
 ### Permission denied (publickey)
 
 ```

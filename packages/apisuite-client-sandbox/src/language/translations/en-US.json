@@ -79,7 +79,8 @@
     "fields": {
       "email": "E-mail address",
       "password": "Password"
-    }
+    },
+    "loginWith": "Login With"
   },
   "registerForm": {
     "warnings": {
