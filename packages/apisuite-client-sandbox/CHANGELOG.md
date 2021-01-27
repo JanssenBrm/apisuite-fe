@@ -3,6 +3,40 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-rc.9](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.8...apisuite-client-sandbox@1.1.0-rc.9) (2021-01-26)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+# [1.1.0-rc.8](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.7...apisuite-client-sandbox@1.1.0-rc.8) (2021-01-26)
+
+
+### Bug Fixes
+
+* **lint:** linter fixes ([4a02431](https://github.com/Cloudoki/APISuite/commit/4a024317e9bb0253de29e052c44f43fa6bdcc2de))
+* **webpack:** file change should not have been pushed ([06273f3](https://github.com/Cloudoki/APISuite/commit/06273f39a8ddd29b1a864a9fb45ddad9df714cb6))
+* Changed the URL of a saga (i.e., 'fetchRoleOptionsSaga') ([f65ac38](https://github.com/Cloudoki/APISuite/commit/f65ac38fd16c9804d2a809c00c42f6112d400834))
+* Cursor was not showing when over the 'Profile' view's 'Switch (organisation)' button ([641e125](https://github.com/Cloudoki/APISuite/commit/641e1251f061eba12c06c88c022617d31fb697e2))
+* Fixed a bug related to optional URLs' error messages ([98b4732](https://github.com/Cloudoki/APISuite/commit/98b473201fbf385f26bc226bc1c36db93e5f8875))
+* Fixed some issues regarding the 'Organisation' view's Avatar and optional URLs ([7266b0b](https://github.com/Cloudoki/APISuite/commit/7266b0bd2d7bcb62e395df99700f6a79a4d08dbf))
+* Post-demo improvements (i.e., fixed small issue on filters, and made 'Documentation' tab public) ([fac72e6](https://github.com/Cloudoki/APISuite/commit/fac72e639c9cd554bb386816ffad5aedaf83b4bf))
+* **linter:** fix linter issues ([4eb1d20](https://github.com/Cloudoki/APISuite/commit/4eb1d2083990d7543c78f5731aeb647d3bbe8377))
+* **org/profile:** fix validation, update url validation function ([a19b852](https://github.com/Cloudoki/APISuite/commit/a19b852bc4fa5436bf36b0f53244b36f07ef90c5))
+
+
+### Features
+
+* **login:** implement new login flow and base sso integration ([5242cca](https://github.com/Cloudoki/APISuite/commit/5242cca180c86fa3b63160749e892ac9f4268be2))
+* Implemented 'API Products' view ([ec7ce8e](https://github.com/Cloudoki/APISuite/commit/ec7ce8eaaf45799b44889b9b2f98cc5e4ba1c7d7))
+* Implemented new 'Organisation' view ([de240cd](https://github.com/Cloudoki/APISuite/commit/de240cd92e5210e64169d398fcf99aeb78a979bd))
+
+
+
+
+
 # [1.1.0-rc.7](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.6...apisuite-client-sandbox@1.1.0-rc.7) (2021-01-12)
 
 **Note:** Version bump only for package apisuite-client-sandbox
