@@ -17,6 +17,9 @@ import {
   addAppSubscriptionError,
   removeAppSubscriptionSuccess,
   removeAppSubscriptionError,
+  requestAPIAccessError,
+  requestAPIAccessSuccess,
+  REQUEST_API_ACCESS,
 } from './ducks'
 import { SubscriptionsActionTypes } from 'containers/Subscriptions/ducks'
 import {
@@ -37,6 +40,7 @@ import {
   GetUserAppsAction,
   GetAppDetails,
   AppData,
+  RequestAPIAccessAction,
 } from './types'
 import {
   API_URL,
@@ -63,7 +67,7 @@ export function * createApp (action: CreateAppAction) {
 
     const accessToken = yield select(
       (state: Store) => state.auth.authToken)
-    const createAppUrl = `${API_URL}${SIGNUP_PORT}/app/create`
+    const createAppUrl = `${API_URL}${SIGNUP_PORT}/apps`
 
     yield call(request, {
       url: createAppUrl,
@@ -125,44 +129,6 @@ export function * updateApp (action: UpdateAppAction) {
   }
 }
 
-export function * getUsersApps (action: GetUserAppsAction) {
-  try {
-    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
-    const accessToken = yield select(
-      (state: Store) => state.auth.authToken)
-    const response = yield call(request, {
-      url: getUserAppsUrl,
-      method: 'GET',
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken,
-      },
-    })
-
-    const userApps = response.map((userApp: any) => (
-      {
-        appId: userApp.id,
-        name: userApp.name,
-        description: userApp.description,
-        redirectUrl: userApp.redirect_url,
-        logo: userApp.logo,
-        orgId: userApp.orgId,
-        subscriptions: userApp.subscriptions,
-        pubUrls: userApp.pub_urls,
-        enable: userApp.enable,
-        createdAt: userApp.createdAt,
-        updatedAt: userApp.updatedAt,
-        clientId: userApp.clientId,
-        clientSecret: userApp.clientSecret,
-      }
-    ))
-    yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
-  } catch (error) {
-    console.log('Error fetching user apps')
-    yield put(authActions.handleSessionExpire())
-  }
-}
-
 export function * deleteApp (action: DeleteAppAction) {
   try {
     const deleteAppUrl = `${API_URL}${SIGNUP_PORT}/app/delete/${action.appId}`
@@ -198,6 +164,69 @@ export function * deleteApp (action: DeleteAppAction) {
       yield put(deleteAppError())
       yield put(authActions.handleSessionExpire())
     }
+  }
+}
+
+export function * requestAPIAccess (action: RequestAPIAccessAction) {
+  try {
+    const requestAPIAccessUrl = `${API_URL}/apps/${action.appId}/request`
+
+    const accessToken = yield select(
+      (state: Store) => state.auth.authToken)
+
+    yield call(request, {
+      url: requestAPIAccessUrl,
+      method: 'POST',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'x-access-token': accessToken,
+      },
+    })
+
+    yield put(requestAPIAccessSuccess())
+  } catch (error) {
+    yield put(requestAPIAccessError())
+    yield put(authActions.handleSessionExpire())
+  }
+}
+
+// TODO: Eventually clean this up - despite working, this is not according to most recent documentation changes.
+
+export function * getUsersApps (action: GetUserAppsAction) {
+  try {
+    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
+    const accessToken = yield select(
+      (state: Store) => state.auth.authToken)
+    const response = yield call(request, {
+      url: getUserAppsUrl,
+      method: 'GET',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'x-access-token': accessToken,
+      },
+    })
+
+    const userApps = response.map((userApp: any) => (
+      {
+        appId: userApp.id,
+        name: userApp.name,
+        description: userApp.description,
+        redirectUrl: userApp.redirect_url,
+        logo: userApp.logo,
+        orgId: userApp.orgId,
+        subscriptions: userApp.subscriptions,
+        pubUrls: userApp.pub_urls,
+        enable: userApp.enable,
+        createdAt: userApp.createdAt,
+        updatedAt: userApp.updatedAt,
+        clientId: userApp.clientId,
+        clientSecret: userApp.clientSecret,
+      }
+    ))
+    yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
+  } catch (error) {
+    console.log('Error fetching user apps')
+    yield put(authActions.handleSessionExpire())
   }
 }
 
@@ -351,6 +380,7 @@ function * rootSaga () {
   yield takeLatest(CREATE_APP, createApp)
   yield takeLatest(UPDATE_APP, updateApp)
   yield takeLatest(DELETE_APP, deleteApp)
+  yield takeLatest(REQUEST_API_ACCESS, requestAPIAccess)
   yield takeLatest(GET_APP_DETAILS, getAppDetails)
   yield takeLatest(GET_USER_APPS, getUsersApps)
   yield takeLatest(SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION, addAppSubscriptionSaga)

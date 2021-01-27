@@ -27,7 +27,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
   allUserApps,
   apisByName,
   isModalOpen,
-  modalMode,
+  requestAPIAccess,
   settings,
   toggleModal,
 }) => {
@@ -137,6 +137,17 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
     toggleModal()
   }
 
+  /* 'API Product' access request */
+
+  const handleAPIProductAccessRequest = () => {
+    const idOfSelectedClientApp = typeof selectedClientApp.appId === 'string'
+      ? parseInt(selectedClientApp.appId)
+      : selectedClientApp.appId
+
+    requestAPIAccess(idOfSelectedClientApp)
+    resetModalSelections()
+  }
+
   return (
     <Modal
       onClose={toggleModal}
@@ -230,17 +241,8 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                 </p>
 
                 {
-                  (modalMode && modalMode === 'revoke')
+                  (selectedClientApp.subscriptions.length === 0)
                     ? (
-                      <div className={classes.warningBox}>
-                        <ReportProblemOutlinedIcon className={classes.warningBoxIcon} />
-
-                        <p className={classes.warningBoxText}>
-                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.warningBoxNotificationText', { config })}
-                        </p>
-                      </div>
-                    )
-                    : (
                       <div className={classes.infoBox}>
                         <QueryBuilderRoundedIcon className={classes.infoBoxIcon} />
 
@@ -248,6 +250,15 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                           {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartOne', { config })}
                           {settings.clientName}
                           {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationTextPartTwo', { config })}
+                        </p>
+                      </div>
+                    )
+                    : (
+                      <div className={classes.warningBox}>
+                        <ReportProblemOutlinedIcon className={classes.warningBoxIcon} />
+
+                        <p className={classes.warningBoxText}>
+                          {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.warningBoxNotificationText', { config })}
                         </p>
                       </div>
                     )
@@ -336,25 +347,31 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
               <div className={classes.leftSideButtonsContainer}>
                 <Button
                   customButtonClassName={
-                    (modalMode && modalMode === 'revoke')
+                    (selectedClientApp.subscriptions.length === 0)
                       ? (
-                        selectedClientApp.appId === ''
-                          ? classes.disabledRevokeAccessButton
-                          : classes.enabledRevokeAccessButton
-                      )
-                      : (
                         selectedClientApp.appId === ''
                           ? classes.disabledRequestAccessButton
                           : classes.enabledRequestAccessButton
                       )
+                      : (
+                        selectedClientApp.appId === ''
+                          ? classes.disabledRevokeAccessButton
+                          /* Previously ': classes.enabledRevokeAccessButton'.
+                          Go back on this change once the 'revoke' action is possible. */
+                          : classes.disabledRevokeAccessButton
+                      )
                   }
                   href='#'
                   label={
-                    (modalMode && modalMode === 'revoke')
-                      ? (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess', { config }))
-                      : (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess', { config }))
+                    (selectedClientApp.subscriptions.length === 0)
+                      ? (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess', { config }))
+                      : (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess', { config }))
                   }
-                  onClick={resetModalSelections}
+                  onClick={
+                    (selectedClientApp.subscriptions.length === 0)
+                      ? handleAPIProductAccessRequest
+                      : null
+                  }
                 />
 
                 <Button

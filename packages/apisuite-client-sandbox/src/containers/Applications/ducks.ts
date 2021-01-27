@@ -37,6 +37,10 @@ const initialState: ApplicationsStore = {
     isRequesting: false,
     isError: false,
   },
+  resRequestAPIAccess: {
+    isRequesting: false,
+    isError: false,
+  },
   subscribing: {
     isRequesting: false,
     isError: false,
@@ -53,6 +57,9 @@ export const UPDATE_APP_ERROR = 'Applications/UPDATE_APP_ERROR'
 export const DELETE_APP = 'Applications/DELETE_APP'
 export const DELETE_APP_SUCCESS = 'Applications/DELETE_APP_SUCCESS'
 export const DELETE_APP_ERROR = 'Applications/DELETE_APP_ERROR'
+export const REQUEST_API_ACCESS = 'Applications/REQUEST_API_ACCESS'
+export const REQUEST_API_ACCESS_SUCCESS = 'Applications/REQUEST_API_ACCESS_SUCCESS'
+export const REQUEST_API_ACCESS_ERROR = 'Applications/REQUEST_API_ACCESS_ERROR'
 export const GET_APP_DETAILS = 'Applications/GET_APP_DETAILS'
 export const GET_APP_DETAILS_SUCCESS = 'Applications/GET_APP_DETAILS_SUCCESS'
 export const GET_USER_APPS = 'Applications/GET_USER_APPS'
@@ -143,6 +150,29 @@ export default function reducer (
     case DELETE_APP_ERROR: {
       return update(state, {
         resDelete: {
+          isRequesting: { $set: false },
+          isError: { $set: true },
+        },
+      })
+    }
+    case REQUEST_API_ACCESS: {
+      return update(state, {
+        resRequestAPIAccess: {
+          isRequesting: { $set: true },
+          isError: { $set: false },
+        },
+      })
+    }
+    case REQUEST_API_ACCESS_SUCCESS: {
+      return update(state, {
+        resRequestAPIAccess: {
+          isRequesting: { $set: false },
+        },
+      })
+    }
+    case REQUEST_API_ACCESS_ERROR: {
+      return update(state, {
+        resRequestAPIAccess: {
           isRequesting: { $set: false },
           isError: { $set: true },
         },
@@ -261,6 +291,18 @@ export function deleteAppSuccess () {
 
 export function deleteAppError () {
   return { type: DELETE_APP_ERROR }
+}
+
+export function requestAPIAccess (appId: number) {
+  return { type: REQUEST_API_ACCESS, appId }
+}
+
+export function requestAPIAccessSuccess () {
+  return { type: REQUEST_API_ACCESS_SUCCESS }
+}
+
+export function requestAPIAccessError () {
+  return { type: REQUEST_API_ACCESS_ERROR }
 }
 
 export function getAppDetails (appId: number, orgId: number) {
