@@ -78,8 +78,8 @@ export default makeStyles(({
   logo: {
     color: config.palette.primary,
     height: 'auto',
-    marginRight: '15px',
-    width: '60px',
+    marginRight: '10px',
+    width: '55px',
   },
 
   logoAndPortalNameContainer: {
@@ -129,11 +129,15 @@ export default makeStyles(({
 
     '& > p': {
       color: config.palette.newGreyScales['300'],
-      fontSize: '16px',
+      fontSize: '14px',
       fontWeight: '300',
       lineHeight: '22px',
       margin: '0',
       padding: '0',
+
+      '& > a': {
+        textDecoration: 'none',
+      },
     },
   },
 }))

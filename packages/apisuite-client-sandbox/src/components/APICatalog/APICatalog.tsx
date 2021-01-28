@@ -61,7 +61,7 @@ ${apiDetails.apiAccess
   }
 
   const apiCatalogEntries = apisToDisplay.map((apiDetails, index) => {
-    if(!apiDetails) return <div key={`apiCatalogEntry${index}`} />
+    if (!apiDetails) return <div key={`apiCatalogEntry${index}`} />
     if (apiDetails.hasMoreDetails) {
       return (
         <Link

@@ -1,6 +1,6 @@
 /*
- * Webpack DEVELOPMENT configuration file
- */
+* Webpack DEVELOPMENT configuration file
+*/
 
 const path = require('path')
 const webpack = require('webpack')
@@ -16,8 +16,8 @@ module.exports = {
     contentBase: path.resolve(__dirname, 'src'),
     publicPath: '/',
     historyApiFallback: true,
-    port: 9001,
-    host: '0.0.0.0',
+    port: 9002,
+    host: 'localhost.develop.apisuite.io',
     noInfo: false,
     inline: true,
     hot: true,

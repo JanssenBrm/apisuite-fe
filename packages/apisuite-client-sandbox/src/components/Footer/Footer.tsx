@@ -22,7 +22,7 @@ import { useSettings } from 'util/useSetting'
 
 import useStyles from './styles'
 
-import { MenuSection, MenuSections } from './types'
+import { FooterProps, MenuSection, MenuSections } from './types'
 
 const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
   const classes = useStyles()
@@ -64,31 +64,15 @@ const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
 
 const menuSections: MenuSections = {
   [Menus.FooterProducts]: {
-    title: 'Products',
+    title: 'API Products',
     entries: [
-      {
-        label: 'Upcoming',
-      },
-      {
-        label: 'Feedback',
-      },
       {
         label: 'Subscriptions',
-      },
-    ],
-  },
-
-  [Menus.FooterDocumentation]: {
-    title: 'Documentation',
-    entries: [
-      {
-        label: 'Getting Started',
+        route: '/dashboard/subscriptions',
       },
       {
-        label: 'API References',
-      },
-      {
-        label: 'Search',
+        label: 'Documentation',
+        route: '/documentation',
       },
     ],
   },
@@ -97,13 +81,12 @@ const menuSections: MenuSections = {
     title: 'Support',
     entries: [
       {
-        label: 'Knowledge Base',
+        label: 'Product website',
+        route: 'https://apisuite.io/',
       },
       {
-        label: 'External resources',
-      },
-      {
-        label: '\u00A0', // Empty entry to fix alignment
+        label: 'Knowledge base',
+        route: 'https://intercom.help/api-suite/en',
       },
     ],
   },
@@ -112,13 +95,12 @@ const menuSections: MenuSections = {
     title: 'Dashboard',
     entries: [
       {
-        label: 'Manage Apps',
+        label: 'Applications',
+        route: '/dashboard/apps',
       },
       {
-        label: 'Test Data',
-      },
-      {
-        label: 'API Console',
+        label: 'Team',
+        route: '/profile/team',
       },
     ],
   },
@@ -128,11 +110,18 @@ const menuSections: MenuSections = {
     entries: [
       {
         label: 'Security',
+        route: '/profile/security',
       },
       {
-        label: 'Log out',
+        label: 'Organisation',
+        route: '/profile/organisation',
       },
     ],
+  },
+
+  [Menus.FooterStatus]: {
+    title: 'API Suite Cloud',
+    entries: [],
   },
 }
 
@@ -141,6 +130,7 @@ const renderSubSection = (subMenu: string, roleName?: string) => {
 
   const section: MenuSection = menuSections[subMenu]
   const extensionsMenuEntries = getMenuEntries(subMenu, roleName)
+  console.log('extensionsMenuEntries', extensionsMenuEntries)
   const allEntries = [...section.entries, ...extensionsMenuEntries]
 
   return (
@@ -174,7 +164,9 @@ const renderSubSection = (subMenu: string, roleName?: string) => {
 
 // Footer
 
-const Footer = () => {
+const Footer: React.FC<FooterProps> = ({
+  auth,
+}) => {
   const classes = useStyles()
 
   const [settings] = useSettings()
@@ -211,10 +203,6 @@ const Footer = () => {
             </div>
 
             <div className={classes.section}>
-              {renderSubSection(Menus.FooterDocumentation, roleName)}
-            </div>
-
-            <div className={classes.section}>
               {renderSubSection(Menus.FooterSupport, roleName)}
             </div>
 
@@ -225,6 +213,13 @@ const Footer = () => {
             <div className={classes.section}>
               {renderSubSection(Menus.FooterProfile, roleName)}
             </div>
+
+            {
+              auth.user?.role.name === 'admin' &&
+              <div className={classes.section}>
+                {renderSubSection(Menus.FooterStatus, roleName)}
+              </div>
+            }
           </div>
         </div>
 
