@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next'
 
 import APICatalog from 'components/APICatalog'
 import Button from 'components/Button'
+import SubscriptionsModal from 'components/SubscriptionsModal'
 
 import InputBase from '@material-ui/core/InputBase'
 
@@ -29,6 +30,7 @@ In the future, add logic for this kind of API product. */
 const APIProducts: React.FC<APIProductsProps> = ({
   auth,
   getAPIs,
+  getUserApps,
   subscriptions,
 }) => {
   const classes = useStyles()
@@ -53,6 +55,14 @@ const APIProducts: React.FC<APIProductsProps> = ({
     of all API-related information we presently have. */
     getAPIs()
   }, [])
+
+  React.useEffect(() => {
+    /* Triggers the retrieval and storage of all app-related information we presently
+    have on a given user. */
+    if (auth?.user) {
+      getUserApps(auth.user.id)
+    }
+  }, [auth])
 
   React.useEffect(() => {
     /* Once 'subscriptions' info is made available, we process it so as to display it
@@ -157,6 +167,14 @@ const APIProducts: React.FC<APIProductsProps> = ({
     setAPIFilters(newAPIFilters)
   }
 
+  /* Modal stuff */
+
+  const [isModalOpen, setModalOpen] = React.useState(false)
+
+  const toggleModal = () => {
+    setModalOpen(!isModalOpen)
+  }
+
   return (
     <main className='page-container'>
       {/* 'Latest API product update' section */}
@@ -216,9 +234,10 @@ ${latestUpdatedAPI.apiAccess
                 <Button
                   /* TODO: This button will be disabled until we move on from the simplified API
                   subscription model, where APIs are automatically associated to any and all apps. */
-                  customButtonClassName={classes.disabledSubscribeButton}
+                  customButtonClassName={classes.subscribeButton}
                   href='#'
                   label={t('apiProductsTab.apiProductButtons.subscribeButtonLabel', { config })}
+                  onClick={toggleModal}
                 />
               }
             </div>
@@ -357,6 +376,14 @@ apiFilters[2]
             )
         }
       </section>
+
+      {
+        isModalOpen &&
+        <SubscriptionsModal
+          isModalOpen={isModalOpen}
+          toggleModal={toggleModal}
+        />
+      }
     </main>
   )
 }
