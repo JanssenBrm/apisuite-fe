@@ -86,7 +86,7 @@ const menuSections: MenuSections = {
       },
       {
         label: 'Knowledge base',
-        route: 'https://intercom.help/api-suite/en',
+        route: 'https://cloudoki.atlassian.net/wiki/spaces/APIEC/overview?homepageId=281444539',
       },
     ],
   },
