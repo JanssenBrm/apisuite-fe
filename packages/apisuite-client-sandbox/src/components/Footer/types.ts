@@ -2,6 +2,7 @@ import { AuthStore } from 'containers/Auth/types'
 
 export interface FooterProps {
   auth: AuthStore,
+  settings: SettingsStore,
 }
 
 export type MenuSection = {

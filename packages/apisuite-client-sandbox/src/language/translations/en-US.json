@@ -331,6 +331,35 @@
       }
     }
   },
+  "footer": {
+    "apiProductsMenu": {
+      "menuTitle": "API Products",
+      "menuItemOne": "Subscriptions",
+      "menuItemTwo": "Documentation"
+    },
+    "supportMenu": {
+      "menuTitle": "Support",
+      "menuItemOne": "Product website",
+      "menuItemTwo": "Knowledge base"
+    },
+    "dashboardMenu": {
+      "menuTitle": "Dashboard",
+      "menuItemOne": "Applications",
+      "menuItemTwo": "Team"
+    },
+    "profileMenu": {
+      "menuTitle": "Profile",
+      "menuItemOne": "Security",
+      "menuItemTwo": "Organisation"
+    },
+    "apisCloudExtensionMenu": {
+      "menuTitle": "API Suite Cloud"
+    },
+    "copyrights": {
+      "website": "APISuite.io",
+      "allRightsReserved": "All rights reserved"
+    }
+  },
   "listApps": {
     "overview": {
       "title": "Apps overview"

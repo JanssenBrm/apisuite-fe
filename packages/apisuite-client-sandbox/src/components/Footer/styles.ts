@@ -119,7 +119,7 @@ export default makeStyles(({
 
   subSection: {
     '& > h3': {
-      color: '#ffffff',
+      color: config.palette.primaryContrastText,
       fontSize: '16px',
       fontWeight: '300',
       lineHeight: '22px',

@@ -2,7 +2,7 @@ import * as React from 'react'
 
 import { useSelector } from 'react-redux'
 
-// import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'react-i18next'
 
 import { Menus } from '@apisuite/extension-ui-types'
 
@@ -23,6 +23,8 @@ import { useSettings } from 'util/useSetting'
 import useStyles from './styles'
 
 import { FooterProps, MenuSection, MenuSections } from './types'
+
+import { config } from 'constants/global'
 
 const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
   const classes = useStyles()
@@ -62,75 +64,80 @@ const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
   )
 }
 
-const menuSections: MenuSections = {
-  [Menus.FooterProducts]: {
-    title: 'API Products',
-    entries: [
-      {
-        label: 'Subscriptions',
-        route: '/dashboard/subscriptions',
-      },
-      {
-        label: 'Documentation',
-        route: '/documentation',
-      },
-    ],
-  },
-
-  [Menus.FooterSupport]: {
-    title: 'Support',
-    entries: [
-      {
-        label: 'Product website',
-        route: 'https://apisuite.io/',
-      },
-      {
-        label: 'Knowledge base',
-        route: 'https://cloudoki.atlassian.net/wiki/spaces/APIEC/overview?homepageId=281444539',
-      },
-    ],
-  },
-
-  [Menus.FooterDashboard]: {
-    title: 'Dashboard',
-    entries: [
-      {
-        label: 'Applications',
-        route: '/dashboard/apps',
-      },
-      {
-        label: 'Team',
-        route: '/profile/team',
-      },
-    ],
-  },
-
-  [Menus.FooterProfile]: {
-    title: 'Profile',
-    entries: [
-      {
-        label: 'Security',
-        route: '/profile/security',
-      },
-      {
-        label: 'Organisation',
-        route: '/profile/organisation',
-      },
-    ],
-  },
-
-  [Menus.FooterStatus]: {
-    title: 'API Suite Cloud',
-    entries: [],
-  },
-}
-
-const renderSubSection = (subMenu: string, roleName?: string) => {
+const renderSubSection = (
+  settings: SettingsStore,
+  subMenu: string,
+  roleName?: string,
+) => {
   const classes = useStyles()
+
+  const [t] = useTranslation()
+
+  const menuSections: MenuSections = {
+    [Menus.FooterProducts]: {
+      title: t('footer.apiProductsMenu.menuTitle', { config }),
+      entries: [
+        {
+          label: t('footer.apiProductsMenu.menuItemOne', { config }),
+          route: '/dashboard/subscriptions',
+        },
+        {
+          label: t('footer.apiProductsMenu.menuItemTwo', { config }),
+          route: '/documentation',
+        },
+      ],
+    },
+
+    [Menus.FooterSupport]: {
+      title: t('footer.supportMenu.menuTitle', { config }),
+      entries: [
+        {
+          label: t('footer.supportMenu.menuItemOne', { config }),
+          route: settings ? settings.socialURLs[0]?.url : '#',
+        },
+        {
+          label: t('footer.supportMenu.menuItemTwo', { config }),
+          route: 'https://cloudoki.atlassian.net/wiki/spaces/APIEC/overview?homepageId=281444539',
+        },
+      ],
+    },
+
+    [Menus.FooterDashboard]: {
+      title: t('footer.dashboardMenu.menuTitle', { config }),
+      entries: [
+        {
+          label: t('footer.dashboardMenu.menuItemOne', { config }),
+          route: '/dashboard/apps',
+        },
+        {
+          label: t('footer.dashboardMenu.menuItemTwo', { config }),
+          route: '/profile/team',
+        },
+      ],
+    },
+
+    [Menus.FooterProfile]: {
+      title: t('footer.profileMenu.menuTitle', { config }),
+      entries: [
+        {
+          label: t('footer.profileMenu.menuItemOne', { config }),
+          route: '/profile/security',
+        },
+        {
+          label: t('footer.profileMenu.menuItemTwo', { config }),
+          route: '/profile/organisation',
+        },
+      ],
+    },
+
+    [Menus.FooterStatus]: {
+      title: t('footer.apisCloudExtensionMenu.menuTitle', { config }),
+      entries: [],
+    },
+  }
 
   const section: MenuSection = menuSections[subMenu]
   const extensionsMenuEntries = getMenuEntries(subMenu, roleName)
-  console.log('extensionsMenuEntries', extensionsMenuEntries)
   const allEntries = [...section.entries, ...extensionsMenuEntries]
 
   return (
@@ -166,14 +173,15 @@ const renderSubSection = (subMenu: string, roleName?: string) => {
 
 const Footer: React.FC<FooterProps> = ({
   auth,
+  settings,
 }) => {
   const classes = useStyles()
 
-  const [settings] = useSettings()
-
-  // const [t] = useTranslation()
+  console.log('settings', settings)
 
   const roleName = useSelector(getRoleName)
+
+  const [t] = useTranslation()
 
   const handleFabClick = () => {
     window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
@@ -199,25 +207,25 @@ const Footer: React.FC<FooterProps> = ({
 
           <div className={classes.sectionsContainer}>
             <div>
-              {renderSubSection(Menus.FooterProducts, roleName)}
+              {renderSubSection(settings, Menus.FooterProducts, roleName)}
             </div>
 
             <div className={classes.section}>
-              {renderSubSection(Menus.FooterSupport, roleName)}
+              {renderSubSection(settings, Menus.FooterSupport, roleName)}
             </div>
 
             <div className={classes.section}>
-              {renderSubSection(Menus.FooterDashboard, roleName)}
+              {renderSubSection(settings, Menus.FooterDashboard, roleName)}
             </div>
 
             <div className={classes.section}>
-              {renderSubSection(Menus.FooterProfile, roleName)}
+              {renderSubSection(settings, Menus.FooterProfile, roleName)}
             </div>
 
             {
               auth.user?.role.name === 'admin' &&
               <div className={classes.section}>
-                {renderSubSection(Menus.FooterStatus, roleName)}
+                {renderSubSection(settings, Menus.FooterStatus, roleName)}
               </div>
             }
           </div>
@@ -232,10 +240,10 @@ const Footer: React.FC<FooterProps> = ({
               rel='noopener noreferrer'
               target='_blank'
             >
-              &copy; {new Date().getFullYear()} APISuite.io
+              &copy; {new Date().getFullYear()} {t('footer.copyrights.website', { config })}
             </a>
 
-            <p>All rights reserved</p>
+            <p>{t('footer.copyrights.allRightsReserved', { config })}</p>
           </div>
 
           <LocaleSelect />
