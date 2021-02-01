@@ -150,7 +150,7 @@ const OrganisationDetailsForm: React.FC<{
   const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState({
     name: '',
-    website: '',
+    website: 'https://',
     // vat: '',
   })
 
@@ -232,7 +232,16 @@ const OrganisationDetailsForm: React.FC<{
               classes: { input: classes.textField },
             }}
             rules={[
-              { rule: isValidURL(input.website), message: t('registerForm.warnings.website') },
+              {
+                rule: input.website.startsWith('http://') || input.website.startsWith('https://'),
+                message: t('registerForm.warnings.noPrefixWebsite'),
+              },
+              {
+                rule: input.website.startsWith('http://') || input.website.startsWith('https://')
+                  ? isValidURL(input.website)
+                  : true,
+                message: t('registerForm.warnings.invalidWebsite'),
+              },
             ]}
           />
         </div>
