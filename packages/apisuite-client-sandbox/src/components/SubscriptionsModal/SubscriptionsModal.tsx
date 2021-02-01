@@ -140,9 +140,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
   /* 'API Product' access request */
 
   const handleAPIProductAccessRequest = () => {
-    const idOfSelectedClientApp = typeof selectedClientApp.appId === 'string'
-      ? parseInt(selectedClientApp.appId)
-      : selectedClientApp.appId
+    const idOfSelectedClientApp = Number(selectedClientApp.appId)
 
     requestAPIAccess(idOfSelectedClientApp)
     resetModalSelections()

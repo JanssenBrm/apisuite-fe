@@ -11,8 +11,8 @@ import { Store } from 'store/types'
 import SubscriptionsModal from './SubscriptionsModal'
 
 export const mapStateToProps = (store: Store) => ({
-  apisByName: getAPIsByName(store),
   allUserApps: store.applications.userApps,
+  apisByName: getAPIsByName(store),
   settings: store.settings,
 })
 
