@@ -177,8 +177,6 @@ const Footer: React.FC<FooterProps> = ({
 }) => {
   const classes = useStyles()
 
-  console.log('settings', settings)
-
   const roleName = useSelector(getRoleName)
 
   const [t] = useTranslation()
