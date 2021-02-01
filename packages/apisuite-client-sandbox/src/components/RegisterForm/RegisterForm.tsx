@@ -28,7 +28,7 @@ import LoadingView from './loading'
 const PersonalDetailsForm: React.FC<{
   handleSubmit: (personalDetails: PersonalDetails) => void,
   register: any,
-  token: string|undefined,
+  token: string | undefined,
 }> = ({ handleSubmit, register, token }) => {
   const classes = useStyles()
   const [t] = useTranslation()
@@ -246,27 +246,27 @@ const OrganisationDetailsForm: React.FC<{
           />
         </div>
         {/* VAT is not needed currently -- commented out of page
-        <div className={classes.fieldContainer}>
-          <FormField
-            id='vat-field'
-            label='VAT'
-            variant='outlined'
-            type='text'
-            placeholder=''
-            name='vat'
-            value={input.vat}
-            onChange={handleInputs}
-            fullWidth
-            errorPlacing='bottom'
-            InputProps={{
-              classes: { input: classes.textField },
-            }}
-            rules={[
-              { rule: isRequired(input.vat), message: t('registerForm.warnings.vat') },
-            ]}
-          />
-        </div>
-        */}
+<div className={classes.fieldContainer}>
+<FormField
+id='vat-field'
+label='VAT'
+variant='outlined'
+type='text'
+placeholder=''
+name='vat'
+value={input.vat}
+onChange={handleInputs}
+fullWidth
+errorPlacing='bottom'
+InputProps={{
+classes: { input: classes.textField },
+}}
+rules={[
+{ rule: isRequired(input.vat), message: t('registerForm.warnings.vat') },
+]}
+/>
+</div>
+*/}
       </FormCard>
     </div>
   )
@@ -275,9 +275,9 @@ const OrganisationDetailsForm: React.FC<{
 const SecurityStepForm: React.FC<{
   handleSubmit: (securityStep: SecurityStep) => void,
   register: any,
-  token: string|undefined,
+  token: string | undefined,
   previousStep: () => void,
-}> = ({ handleSubmit, register, token }) => {
+}> = ({ handleSubmit, register, token, previousStep }) => {
   const classes = useStyles()
   const [t] = useTranslation()
 
@@ -317,7 +317,13 @@ const SecurityStepForm: React.FC<{
           // do nothing
         }}
         loading={register.isRequesting}
-        showBack={false}
+        showBack
+        backLabel='Back'
+        backDisabled={false}
+        handleBackClick={(e) => {
+          e.preventDefault()
+          previousStep()
+        }}
       >
         <div className={classes.fieldContainer}>
           <div>
@@ -334,15 +340,15 @@ const SecurityStepForm: React.FC<{
               InputProps={{
                 classes: { input: classes.textField },
                 endAdornment:
-  <InputAdornment position='end'>
-    <IconButton
-      aria-label='toggle password visibility'
-      onClick={handleClickShowPassword}
-      edge='end'
-    >
-      {showPassword ? <Visibility /> : <VisibilityOff />}
-    </IconButton>
-  </InputAdornment>,
+                  <InputAdornment position='end'>
+                    <IconButton
+                      aria-label='toggle password visibility'
+                      onClick={handleClickShowPassword}
+                      edge='end'
+                    >
+                      {showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>,
               }}
               rules={[
                 { rule: isValidPass(input.password), message: t('registerForm.warnings.password') },
@@ -417,17 +423,17 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     <>
       {
         invitationToken &&
-          <>
-            {
-              !invitation.email &&
-                <LoadingView
-                  isLoading={!invitation.email && !invitationError}
-                  isError={!!invitationError}
-                  errorMessage='This invitation is invalid or expired.'
-                />
-            }
-            {invitation.email && formView}
-          </>
+        <>
+          {
+            !invitation.email &&
+            <LoadingView
+              isLoading={!invitation.email && !invitationError}
+              isError={!!invitationError}
+              errorMessage='This invitation is invalid or expired.'
+            />
+          }
+          {invitation.email && formView}
+        </>
       }
       {!invitationToken && formView}
     </>
