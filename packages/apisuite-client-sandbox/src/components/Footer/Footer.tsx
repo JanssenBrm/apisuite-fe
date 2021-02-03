@@ -18,7 +18,6 @@ import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import LocaleSelect from 'language/LocaleSelect'
 
 import { getMenuEntries } from 'util/extensions'
-import { useSettings } from 'util/useSetting'
 
 import useStyles from './styles'
 
