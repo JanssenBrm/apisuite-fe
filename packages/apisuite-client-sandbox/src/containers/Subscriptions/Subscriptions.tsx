@@ -124,9 +124,6 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
         isModalOpen &&
         <SubscriptionsModal
           isModalOpen={isModalOpen}
-          /* The subscriptions modal has two modes - the 'subscriptions' mode,
-          and the 'revoke' mode. */
-          // modalMode={'revoke'}
           toggleModal={toggleModal}
         />
       }
