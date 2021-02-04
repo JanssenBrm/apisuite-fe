@@ -233,13 +233,7 @@ const OrganisationDetailsForm: React.FC<{
             }}
             rules={[
               {
-                rule: input.website.startsWith('http://') || input.website.startsWith('https://'),
-                message: t('registerForm.warnings.noPrefixWebsite'),
-              },
-              {
-                rule: input.website.startsWith('http://') || input.website.startsWith('https://')
-                  ? isValidURL(input.website)
-                  : true,
+                rule: isValidURL(input.website),
                 message: t('registerForm.warnings.invalidWebsite'),
               },
             ]}
