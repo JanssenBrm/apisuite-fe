@@ -17,6 +17,7 @@ import {
   fetchOrgActions,
   updateOrgActions,
   deleteAccountActions,
+  createOrgActions,
 } from './ducks'
 import { Store } from 'store/types'
 import { API_URL } from 'constants/endpoints'
@@ -35,11 +36,9 @@ import { authActions } from 'containers/Auth/ducks'
 
 export function * fetchTeamMembersSaga () {
   try {
-    const accessToken = yield select((state: Store) => state.auth.authToken)
     const response: FetchTeamMembersResponse[] = yield call(request, {
       url: `${API_URL}/organization/members/list`,
       method: 'GET',
-      headers: { 'x-access-token': accessToken },
     })
 
     yield put(fetchTeamMembersActions.success(response))
@@ -51,11 +50,9 @@ export function * fetchTeamMembersSaga () {
 
 export function * fetchRoleOptionsSaga () {
   try {
-    const accessToken = yield select((state: Store) => state.auth.authToken)
     const response: FetchRoleOptionsResponse = yield call(request, {
-      url: `${API_URL}/role`,
+      url: `${API_URL}/roles`,
       method: 'GET',
-      headers: { 'x-access-token': accessToken },
     })
 
     yield put(fetchRoleOptionsActions.success(response))
@@ -69,12 +66,10 @@ export function * inviteMemberSaga (
   action: ReturnType<typeof inviteMemberActions.request>,
 ) {
   try {
-    const accessToken = yield select((state: Store) => state.auth.authToken)
     const response: InviteMemberResponse = yield call(request, {
       url: `${API_URL}/users/invite`,
       method: 'POST',
       headers: {
-        'x-access-token': accessToken,
         'content-type': 'application/json',
       },
       data: JSON.stringify(action.payload),
@@ -93,12 +88,10 @@ export function * confirmInviteSaga (
   action: ReturnType<typeof confirmInviteActions.request>,
 ) {
   try {
-    const accessToken = yield select((state: Store) => state.auth.authToken)
     const response: InviteMemberResponse = yield call(request, {
       url: `${API_URL}/users/invite/confirm`,
       method: 'POST',
       headers: {
-        'x-access-token': accessToken,
         'content-type': 'application/json',
       },
       data: JSON.stringify(action.payload),
@@ -115,12 +108,10 @@ export function * changeRoleSaga (
   action: ReturnType<typeof changeRoleActions.request>,
 ) {
   try {
-    const accessToken = yield select((state: Store) => state.auth.authToken)
     const response: ChangeRoleResponse = yield call(request, {
       url: `${API_URL}/organization/assign`,
       method: 'POST',
       headers: {
-        'x-access-token': accessToken,
         'content-type': 'application/json',
       },
       data: JSON.stringify(action.payload),
@@ -138,12 +129,10 @@ export function * changeRoleSaga (
 
 export function * getProfileSaga () {
   try {
-    const accessToken = yield select((state: Store) => state.auth.authToken)
     const response: GetProfileResponse = yield call(request, {
       url: `${API_URL}/users/profile`,
       method: 'GET',
       headers: {
-        'x-access-token': accessToken,
         'content-type': 'application/json',
       },
     })
@@ -159,12 +148,10 @@ export function * updateProfileSaga (
   action: ReturnType<typeof updateProfileActions.request>,
 ) {
   try {
-    const accessToken = yield select((state: Store) => state.auth.authToken)
     const response: UpdateProfileResponse = yield call(request, {
       url: `${API_URL}/users/profile/update`,
       method: 'PUT',
       headers: {
-        'x-access-token': accessToken,
         'content-type': 'application/json',
       },
       data: JSON.stringify(action.payload),
@@ -182,7 +169,6 @@ export function * fetchOrgSaga (
   action: ReturnType<typeof fetchOrgActions.request>,
 ) {
   try {
-    const accessToken = yield select((state: Store) => state.auth.authToken)
     let orgId
     if (!action.payload.org_id) {
       yield call(getProfileSaga)
@@ -192,7 +178,6 @@ export function * fetchOrgSaga (
       url: `${API_URL}/organization/${action.payload.org_id !== '' ? action.payload.org_id : orgId}`,
       method: 'GET',
       headers: {
-        'x-access-token': accessToken,
         'content-type': 'application/json',
       },
     })
@@ -204,16 +189,34 @@ export function * fetchOrgSaga (
   }
 }
 
+export function * createOrgSaga (
+  action: ReturnType<typeof createOrgActions.request>,
+) {
+  try {
+    const response: UpdateOrgResponse = yield call(request, {
+      url: `${API_URL}/organization/`,
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      data: JSON.stringify(action.payload),
+    })
+
+    yield put(createOrgActions.success(response))
+  } catch (error) {
+    yield put(createOrgActions.error(error.message))
+    yield put(authActions.handleSessionExpire())
+  }
+}
+
 export function * updateOrgSaga (
   action: ReturnType<typeof updateOrgActions.request>,
 ) {
   try {
-    const accessToken = yield select((state: Store) => state.auth.authToken)
     const response: UpdateOrgResponse = yield call(request, {
       url: `${API_URL}/organization/${action.orgId}`,
       method: 'PUT',
       headers: {
-        'x-access-token': accessToken,
         'content-type': 'application/json',
       },
       data: JSON.stringify(action.payload),
@@ -229,13 +232,9 @@ export function * updateOrgSaga (
 
 export function * deleteAccountSaga () {
   try {
-    const accessToken = yield select((state: Store) => state.auth.authToken)
     yield call(request, {
       url: `${API_URL}/users`,
       method: 'DELETE',
-      headers: {
-        'x-access-token': accessToken,
-      },
     })
 
     yield put(deleteAccountActions.success())
@@ -257,6 +256,7 @@ function * rootSaga () {
   yield takeLatest(ProfileActionTypes.GET_PROFILE_REQUEST, getProfileSaga)
   yield takeLatest(ProfileActionTypes.UPDATE_PROFILE_REQUEST, updateProfileSaga)
   yield takeLatest(ProfileActionTypes.FETCH_ORG_REQUEST, fetchOrgSaga)
+  yield takeLatest(ProfileActionTypes.CREATE_ORG_REQUEST, createOrgSaga)
   yield takeLatest(ProfileActionTypes.UPDATE_ORG_REQUEST, updateOrgSaga)
   yield takeLatest(ProfileActionTypes.DELETE_ACCOUNT_REQUEST, deleteAccountSaga)
 }

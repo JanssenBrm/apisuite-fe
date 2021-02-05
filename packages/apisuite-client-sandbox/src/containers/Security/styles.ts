@@ -93,7 +93,7 @@ export default makeStyles(({
   securityTitle: {
     color: config.palette.tertiary,
     fontSize: '32px',
-    fontWeight: 200,
+    fontWeight: 300,
     marginBottom: '55px',
   },
 

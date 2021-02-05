@@ -3,7 +3,7 @@ import { Action, AnyAction } from 'redux'
 import { Role } from 'containers/Profile/types'
 import { History } from 'history'
 import { RoleRequirement } from '@apisuite/extension-ui-types'
-import { LOGOUT } from './ducks'
+import { LOGOUT, SSO_PROVIDERS } from './ducks'
 
 export interface AuthStore {
   user?: User,
@@ -11,6 +11,7 @@ export interface AuthStore {
   isAuthorizing: boolean,
   isRecoveringPassword: boolean,
   error?: string,
+  providers: null|string[],
 }
 
 export interface User {
@@ -52,6 +53,30 @@ export interface AuthPayloads {
   expireSession: {
     error: any,
   },
+  sso: {
+    ssoLogin: {
+      provider: string,
+    },
+    ssoLoginSuccess: {
+      code: string,
+    },
+    ssoLoginError: {
+      error: ErrorReason,
+    },
+    ssoExchangeToken: {
+      provider: string,
+      code: string,
+    },
+    ssoExchangeTokenSuccess: {
+      token: string,
+    },
+    ssoExchangeTokenError: {
+      error: ErrorReason,
+    },
+    ssoProvidersSuccess: {
+      providers: string[],
+    },
+  },
 }
 
 export interface AuthStoreActionTypes {
@@ -67,6 +92,14 @@ export interface AuthStoreActionTypes {
   recoverPasswordError: AnyAction & { payload: AuthPayloads['recoverPasswordError']},
   recoverPasswordSuccess: AnyAction,
   logout: Action<typeof LOGOUT>,
+  ssoLogin: AnyAction & { payload: AuthPayloads['sso']['ssoLogin'] },
+  ssoLoginSuccess: AnyAction & { payload: AuthPayloads['sso']['ssoLoginSuccess'] },
+  ssoLoginError: AnyAction & { error: AuthPayloads['sso']['ssoLoginError'] },
+  ssoExchange: AnyAction & { payload: AuthPayloads['sso']['ssoExchangeToken'] },
+  ssoExchangeSuccess: AnyAction & { payload: AuthPayloads['sso']['ssoExchangeTokenSuccess'] },
+  ssoExchangeError: AnyAction & { error: AuthPayloads['sso']['ssoExchangeTokenError'] },
+  ssoProviders: Action<typeof SSO_PROVIDERS>,
+  ssoProvidersSuccess: AnyAction & { payload: AuthPayloads['sso']['ssoProvidersSuccess'] },
 }
 
 export interface AuthStoreActionCreators {
@@ -74,6 +107,11 @@ export interface AuthStoreActionCreators {
   loginSuccess: (payload: AuthPayloads['loginSuccess']) => AuthStoreActionTypes['loginSuccess'],
   loginError: (error: AuthPayloads['loginError']) => AuthStoreActionTypes['loginError'],
   logout: () => AuthStoreActionTypes['logout'],
+  ssoLogin: (payload: AuthPayloads['sso']['ssoLogin']) => AuthStoreActionTypes['ssoLogin'],
+  ssoLoginSuccess: (payload: AuthPayloads['sso']['ssoLoginSuccess']) => AuthStoreActionTypes['ssoLoginSuccess'],
+  ssoLoginError: (error: AuthPayloads['sso']['ssoLoginError']) => AuthStoreActionTypes['ssoLoginError'],
+  getSSOProviders: () => AuthStoreActionTypes['ssoProviders'],
+  getSSOProvidersSuccess: (payload: AuthPayloads['sso']['ssoProvidersSuccess']) => AuthStoreActionTypes['ssoProvidersSuccess'],
 }
 
 export interface RequireAuthProps {

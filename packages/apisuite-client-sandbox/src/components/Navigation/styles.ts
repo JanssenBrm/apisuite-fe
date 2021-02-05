@@ -55,6 +55,11 @@ export default makeStyles(({
     alignItems: 'center',
     cursor: 'pointer',
 
+    '& > span': {
+      fontSize: '16px',
+      fontWeight: 500,
+    },
+
     '& > svg': {
       marginRight: '8px',
     },

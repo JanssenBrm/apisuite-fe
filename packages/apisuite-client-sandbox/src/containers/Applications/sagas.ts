@@ -61,8 +61,6 @@ export function * createApp (action: CreateAppAction) {
       'pub_urls': action.appData.pubUrls,
     }
 
-    const accessToken = yield select(
-      (state: Store) => state.auth.authToken)
     const createAppUrl = `${API_URL}${SIGNUP_PORT}/app/create`
 
     yield call(request, {
@@ -70,7 +68,6 @@ export function * createApp (action: CreateAppAction) {
       method: 'POST',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken,
       },
       data: qs.stringify(data),
     })
@@ -92,8 +89,7 @@ export function * updateApp (action: UpdateAppAction) {
       visibility: action.appData.visibility,
       'pub_urls': action.appData.pubUrls,
     }
-    const accessToken = yield select(
-      (state: Store) => state.auth.authToken)
+
     const updateAppUrl = `${API_URL}${SIGNUP_PORT}/app/update/${action.appData.appId}`
 
     yield call(request, {
@@ -101,7 +97,6 @@ export function * updateApp (action: UpdateAppAction) {
       method: 'PUT',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken,
       },
       data: qs.stringify(data),
     })
@@ -127,15 +122,13 @@ export function * updateApp (action: UpdateAppAction) {
 
 export function * getUsersApps (action: GetUserAppsAction) {
   try {
-    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.orgId}`
-    const accessToken = yield select(
-      (state: Store) => state.auth.authToken)
+    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
+
     const response = yield call(request, {
       url: getUserAppsUrl,
       method: 'GET',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken,
       },
     })
 
@@ -166,15 +159,12 @@ export function * getUsersApps (action: GetUserAppsAction) {
 export function * deleteApp (action: DeleteAppAction) {
   try {
     const deleteAppUrl = `${API_URL}${SIGNUP_PORT}/app/delete/${action.appId}`
-    const accessToken = yield select(
-      (state: Store) => state.auth.authToken)
 
     yield call(request, {
       url: deleteAppUrl,
       method: 'DELETE',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
-        'x-access-token': accessToken,
       },
     })
     yield put(deleteAppSuccess())
@@ -203,15 +193,12 @@ export function * deleteApp (action: DeleteAppAction) {
 
 export function * getAppDetails (action: GetAppDetails) {
   const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.orgId}`
-  const accessToken = yield select(
-    (state: Store) => state.auth.authToken)
 
   const response = yield call(request, {
     url: getUserAppsUrl,
     method: 'GET',
     headers: {
       'content-type': 'application/x-www-form-urlencoded',
-      'x-access-token': accessToken,
     },
   })
 
@@ -244,8 +231,6 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
   const userApps: AppData[] = yield select((store: Store) => store.applications.userApps)
   const appInfo: AppData[] = userApps.filter(app => app.appId === action.appId)
   const appSubscriptions = appInfo[0].subscriptions.map((sub: Api) => sub.id)
-  const accessToken = yield select(
-    (state: Store) => state.auth.authToken)
 
   for (const apiIndx in apis) {
     if (apis[apiIndx].name === action.apiName) appSubscriptions.push(apis[apiIndx].id)
@@ -262,7 +247,6 @@ export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
-        'x-access-token': accessToken,
       },
       data: JSON.stringify(data),
     })
@@ -301,8 +285,6 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
   const appInfo: AppData[] = userApps.filter(app => app.appId === action.appId)
   const appSubscriptions = appInfo[0].subscriptions.map((sub: Api) => sub.id)
   const subscriptionsToRemove = apis.filter((api: Api) => api.name === action.apiName).map((api: Api) => api.id)
-  const accessToken = yield select(
-    (state: Store) => state.auth.authToken)
 
   const data = {
     subscriptions: appSubscriptions.filter(apiId => !subscriptionsToRemove.includes(apiId)),
@@ -315,7 +297,6 @@ export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
-        'x-access-token': accessToken,
       },
       data: JSON.stringify(data),
     })
