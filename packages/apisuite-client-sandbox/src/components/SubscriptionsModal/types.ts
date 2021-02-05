@@ -6,7 +6,7 @@ export default interface SubscriptionsModalProps {
   allUserApps: AppData[],
   apisByName: APIData[],
   isModalOpen: boolean,
-  modalMode?: 'subscribe' | 'revoke',
+  requestAPIAccess: (appId: number) => void,
   settings: SettingsStore,
   toggleModal: () => void,
 }

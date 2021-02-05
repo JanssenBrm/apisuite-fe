@@ -3,9 +3,6 @@ import { createSelector } from 'reselect'
 import { ApplicationsStore } from 'containers/Applications/types'
 
 import {
-  APIVersion,
-  Api,
-  AppInfo,
   SubscriptionsStore,
 } from './types'
 
@@ -17,37 +14,27 @@ const getApps = ({ applications }: Store) => applications
 export const getAPIsByName = createSelector(
   [getAPIs, getApps],
   (subscriptions: SubscriptionsStore, applications: ApplicationsStore) => {
-    const apiNames = [...new Set(subscriptions.apis.map((api: Api) => api.name))]
+    const allApis = subscriptions.apis
+    const allApps = applications.userApps
 
-    return apiNames.map((apiName) => {
-      let getVersions: APIVersion[] = []
-      const getApps: AppInfo[] = []
+    return allApis.map((api) => {
+      const filteredApps = allApps.filter((app) => {
+        return app.subscriptions.includes(api.id)
+      })
 
-      // For each API, get its ID, title, and version.
-      subscriptions.apis.forEach((api) => {
-        if (apiName === api.name) {
-          getVersions = api.apiVersions
+      const apps = filteredApps.map((filteredApp) => {
+        return {
+          appName: filteredApp.name,
+          appId: filteredApp.appId,
         }
       })
 
-      // For each API, get all apps subscribed to it.
-      applications.userApps.forEach((app) => {
-        const appSubs = [...new Set(app.subscriptions.map((api) => api.name))]
-
-        if (appSubs.includes(apiName)) {
-          getApps.push({
-            appName: app.name,
-            appId: app.appId,
-          })
-        }
-      })
-
-      return ({
-        name: apiName,
-        versions: getVersions,
-        apps: getApps,
-        description: '',
-      })
+      return {
+        name: api.name,
+        versions: api.apiVersions,
+        apps,
+        description: api.docs,
+      }
     })
   },
 )
