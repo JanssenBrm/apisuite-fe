@@ -138,13 +138,24 @@ const Navigation: React.FC<NavigationProps> = ({
             className={classes.logoAndNameContainer}
             to={user?.role.name !== 'admin' ? '/' : '/dashboard'}
           >
-            <AmpStoriesRoundedIcon
-              className={
-                !scrolled
-                  ? classes.regularLogo
-                  : classes.alternativeLogo
-              }
-            />
+            {
+              settings.logoURL
+                ? (
+                  <img
+                    className={classes.imageLogo}
+                    src={settings.logoURL}
+                  />
+                )
+                : (
+                  <AmpStoriesRoundedIcon
+                    className={
+                      !scrolled
+                        ? classes.regularLogo
+                        : classes.alternativeLogo
+                    }
+                  />
+                )
+            }
 
             <h3 className={classes.portalName}>
               {settings.portalName}
@@ -198,9 +209,9 @@ const Navigation: React.FC<NavigationProps> = ({
                         className={
                           `
 ${(contractible && !scrolled)
-                        ? classes.transparentMenuTab
-                        : classes.opaqueMenuTab
-                      }
+                            ? classes.transparentMenuTab
+                            : classes.opaqueMenuTab
+                          }
 ${tab.active ? ' ' + classes.activeTab : ''}
 ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
 `
@@ -265,15 +276,15 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
               `
 tabs
 ${(
-          goBackLabel ||
+                goBackLabel ||
                 (
                   activeTab && activeTab.label === 'Dashboard' &&
                   activeSubTab && activeSubTab.label === 'Overview'
                 )
-        )
-          ? ` ${classes.subTabsAndExtraButton}`
-          : ` ${classes.subTabs}`
-        }
+              )
+                ? ` ${classes.subTabsAndExtraButton}`
+                : ` ${classes.subTabs}`
+              }
 `
             }
           >

@@ -42,7 +42,7 @@ export default makeStyles(({
   alternativeLogo: {
     color: config.palette.primary,
     height: 'auto',
-    marginRight: '20px',
+    marginRight: '10px',
     width: '60px',
   },
 
@@ -68,6 +68,13 @@ export default makeStyles(({
   headerContentsContainer: {
     display: 'flex',
     alignItems: 'center',
+  },
+
+  imageLogo: {
+    height: 'auto',
+    marginRight: '10px',
+    padding: '5px',
+    width: '60px',
   },
 
   linkToProfile: {
@@ -159,7 +166,7 @@ export default makeStyles(({
   regularLogo: {
     color: config.palette.primaryContrastText,
     height: 'auto',
-    marginRight: '20px',
+    marginRight: '10px',
     width: '60px',
   },
 

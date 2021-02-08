@@ -1,17 +1,32 @@
+import { call, put, takeLatest } from 'redux-saga/effects'
+
 import { GET_SETTINGS, getSettingsSuccess } from './ducks'
-import { takeLatest, call, put } from 'redux-saga/effects'
+
 import { API_URL, SIGNUP_PORT } from 'constants/endpoints'
+
 import request from 'util/request'
 
 export function * getSettings () {
   try {
     const getSettingsUrl = `${API_URL}${SIGNUP_PORT}/settings`
-    const response = yield call(request, {
+    const getOwnerDetailsUrl = `${API_URL}${SIGNUP_PORT}/owner`
+
+    const settingsRequestResponse = yield call(request, {
       url: getSettingsUrl,
       method: 'GET',
     })
 
-    yield put(getSettingsSuccess(response))
+    const ownerDetailsRequestResponse = yield call(request, {
+      url: getOwnerDetailsUrl,
+      method: 'GET',
+    })
+
+    const newSettings = {
+      ...settingsRequestResponse,
+      logoURL: ownerDetailsRequestResponse.logo,
+    }
+
+    yield put(getSettingsSuccess(newSettings))
   } catch {
     console.log('Error getting settings')
   }
