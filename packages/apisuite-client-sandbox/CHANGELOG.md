@@ -3,6 +3,34 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+# [1.1.0-rc.10](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.9...apisuite-client-sandbox@1.1.0-rc.10) (2021-02-08)
+
+
+### Bug Fixes
+
+* **linter:** make fetch request parameter optional ([3a9bd76](https://github.com/Cloudoki/APISuite/commit/3a9bd766eae4e4087dab129f3513dc74902a910a))
+* **navigation:** linter ([7f7404e](https://github.com/Cloudoki/APISuite/commit/7f7404edd2815292525eaabd2100b6d7801d81b8))
+* **webpack:** fix host, update with develop ([fd6a8ed](https://github.com/Cloudoki/APISuite/commit/fd6a8ed4392f592150b592d0482e1766d94ab3ee))
+* **webpack:** revert host ([82da257](https://github.com/Cloudoki/APISuite/commit/82da2574bf6409dafa1b4d07b5cb343eda341df2))
+* Fixed an issue related to the 'Subscriptions' view ([1dafeaa](https://github.com/Cloudoki/APISuite/commit/1dafeaa3545b7f72f0cb5a25a3f8a6ec2658171e))
+* Fixed some subscriptions-related TypeScript issues ([2620167](https://github.com/Cloudoki/APISuite/commit/262016731f10be4c38a34dd4ecea58a01c0d1082))
+* Improved error handling on the 'organisation website' field of the registration process ([f35d302](https://github.com/Cloudoki/APISuite/commit/f35d302d724b741b702ade296c648aa53e6e12a7))
+* Removed mandatory 'https' (or 'https') prefix on registration ([69d959f](https://github.com/Cloudoki/APISuite/commit/69d959f4ec57d064e4f83b0236982838fafeb639))
+* **webpack:** revert host ([f5489b9](https://github.com/Cloudoki/APISuite/commit/f5489b98d3033d560fb9a016b50ae5c233b4ebd9))
+
+
+### Features
+
+* Added 'Back' button on the 'Security' step of the portal registration process ([8f6312d](https://github.com/Cloudoki/APISuite/commit/8f6312d6a9d6a33848891285c8da9c70c6148185))
+* Added portal logo personalisation support ([259681d](https://github.com/Cloudoki/APISuite/commit/259681db2e22e82e74c2583ee17a90532cbd2538))
+* Added the 'API product's subscription' overlay to the 'API Product's overview' view, and made some general improvements on code & its organisation ([a7afa2f](https://github.com/Cloudoki/APISuite/commit/a7afa2fd5aa24c1e0356197ad24524ec9ff0bade))
+* **organization:** changed /organization to /organizations; replaced /organization/member/list with /organizations/:id/users ([ec6ef13](https://github.com/Cloudoki/APISuite/commit/ec6ef1370f205d2d490054c71d8b5a41b4be1de6))
+* Changed footer to meet spec; Added Admin-exclusive footer links; changed some footer styles ([9c77403](https://github.com/Cloudoki/APISuite/commit/9c774031796537171e233a8f58f80f78b75dd8b4))
+
+
+
+
+
 # [1.1.0-rc.9](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.8...apisuite-client-sandbox@1.1.0-rc.9) (2021-01-26)
 
 **Note:** Version bump only for package apisuite-client-sandbox
