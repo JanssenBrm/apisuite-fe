@@ -461,7 +461,7 @@ export default function profileReducer (
 }
 
 export const fetchTeamMembersActions = {
-  request: (orgID: string) => {
+  request: (orgID?: string) => {
     return {
       type: ProfileActionTypes.FETCH_TEAM_MEMBERS_REQUEST,
       payload: {
