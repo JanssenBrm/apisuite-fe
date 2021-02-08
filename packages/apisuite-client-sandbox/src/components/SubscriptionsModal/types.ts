@@ -1,6 +1,6 @@
 import { AppData } from 'containers/Applications/types'
 import { SettingsStore } from 'containers/Settings/types'
-import { APIVersion, AppInfo } from 'containers/Subscriptions/types'
+import { ApiDocs, APIVersion } from 'containers/Subscriptions/types'
 
 export default interface SubscriptionsModalProps {
   allUserApps: AppData[],
@@ -14,6 +14,9 @@ export default interface SubscriptionsModalProps {
 export interface APIData {
   name: string,
   versions: APIVersion[],
-  apps: AppInfo[],
-  description: string,
+  apps: {
+    appName: string,
+    appId: number,
+  }[],
+  description: ApiDocs | undefined,
 }
