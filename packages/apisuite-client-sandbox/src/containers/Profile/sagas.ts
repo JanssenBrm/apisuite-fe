@@ -34,10 +34,16 @@ import {
 import { openNotification } from 'containers/NotificationStack/ducks'
 import { authActions } from 'containers/Auth/ducks'
 
-export function * fetchTeamMembersSaga () {
+export function * fetchTeamMembersSaga (
+  action: ReturnType<typeof fetchTeamMembersActions.request>,
+) {
   try {
+    let orgID
+    if (!action.payload.orgID) {
+      orgID = yield select((state: Store) => state.profile.profile.current_org.id)
+    }
     const response: FetchTeamMembersResponse[] = yield call(request, {
-      url: `${API_URL}/organization/members/list`,
+      url: `${API_URL}/organizations/${orgID}/users`,
       method: 'GET',
     })
 
@@ -109,7 +115,7 @@ export function * changeRoleSaga (
 ) {
   try {
     const response: ChangeRoleResponse = yield call(request, {
-      url: `${API_URL}/organization/assign`,
+      url: `${API_URL}/organizations/assign`,
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -175,7 +181,7 @@ export function * fetchOrgSaga (
       orgId = yield select((state: Store) => state.profile.profile.current_org.id)
     }
     const response: FetchOrgResponse = yield call(request, {
-      url: `${API_URL}/organization/${action.payload.org_id !== '' ? action.payload.org_id : orgId}`,
+      url: `${API_URL}/organizations/${action.payload.org_id !== '' ? action.payload.org_id : orgId}`,
       method: 'GET',
       headers: {
         'content-type': 'application/json',
@@ -194,7 +200,7 @@ export function * createOrgSaga (
 ) {
   try {
     const response: UpdateOrgResponse = yield call(request, {
-      url: `${API_URL}/organization/`,
+      url: `${API_URL}/organizations/`,
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -214,7 +220,7 @@ export function * updateOrgSaga (
 ) {
   try {
     const response: UpdateOrgResponse = yield call(request, {
-      url: `${API_URL}/organization/${action.orgId}`,
+      url: `${API_URL}/organizations/${action.orgId}`,
       method: 'PUT',
       headers: {
         'content-type': 'application/json',
