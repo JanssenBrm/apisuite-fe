@@ -129,10 +129,11 @@ const renderSubSection = (
       ],
     },
 
-    [Menus.FooterStatus]: {
-      title: t('footer.apisCloudExtensionMenu.menuTitle', { config }),
-      entries: [],
-    },
+    // TODO: Come up with a solution to a bug that manifests upon logging out with this extension active
+    // [Menus.FooterStatus]: {
+    //   title: t('footer.apisCloudExtensionMenu.menuTitle', { config }),
+    //   entries: [],
+    // },
   }
 
   const section: MenuSection = menuSections[subMenu]
@@ -171,7 +172,8 @@ const renderSubSection = (
 // Footer
 
 const Footer: React.FC<FooterProps> = ({
-  auth,
+  // TODO: Come up with a solution to a bug that manifests upon logging out with this extension active
+  // auth,
   settings,
 }) => {
   const classes = useStyles()
@@ -219,12 +221,13 @@ const Footer: React.FC<FooterProps> = ({
               {renderSubSection(settings, Menus.FooterProfile, roleName)}
             </div>
 
-            {
-              auth.user?.role.name === 'admin' &&
-              <div className={classes.section}>
-                {renderSubSection(settings, Menus.FooterStatus, roleName)}
-              </div>
-            }
+            {/* TODO: Come up with a solution to a bug that manifests upon logging out with this extension active */}
+            {/* {
+auth.user?.role.name === 'admin' &&
+<div className={classes.section}>
+{renderSubSection(settings, Menus.FooterStatus, roleName)}
+</div>
+} */}
           </div>
         </div>
 
