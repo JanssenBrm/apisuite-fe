@@ -150,7 +150,7 @@ const OrganisationDetailsForm: React.FC<{
   const [errors, setErrors] = React.useState()
   const [input, setInput] = React.useState({
     name: '',
-    website: 'https://',
+    website: '',
     // vat: '',
   })
 
