@@ -9,6 +9,7 @@ const initialState: SettingsStore = {
   documentationURL: '',
   supportURL: '',
   socialURLs: [],
+  logoURL: '',
 }
 
 /** Action types */
@@ -32,6 +33,7 @@ const reducer: Reducer<SettingsStore, AnyAction> = (
         documentationURL: { $set: payload.documentationURL },
         supportURL: { $set: payload.supportURL },
         socialURLs: { $set: payload.socialURLs },
+        logoURL: { $set: payload.logoURL },
       })
     }
     default:
