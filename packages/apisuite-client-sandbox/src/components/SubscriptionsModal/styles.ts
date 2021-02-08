@@ -193,7 +193,9 @@ export default makeStyles(({
     backgroundColor: '#FFDCB9',
     borderRadius: '4px',
     display: 'flex',
-    height: '55px',
+    height: '100%',
+    marginBottom: '25px',
+    maxHeight: '65px',
     textAlign: 'left',
   },
 

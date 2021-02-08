@@ -17,6 +17,9 @@ import {
   addAppSubscriptionError,
   removeAppSubscriptionSuccess,
   removeAppSubscriptionError,
+  requestAPIAccessError,
+  requestAPIAccessSuccess,
+  REQUEST_API_ACCESS,
 } from './ducks'
 import { SubscriptionsActionTypes } from 'containers/Subscriptions/ducks'
 import {
@@ -37,6 +40,7 @@ import {
   GetUserAppsAction,
   GetAppDetails,
   AppData,
+  RequestAPIAccessAction,
 } from './types'
 import {
   API_URL,
@@ -61,7 +65,7 @@ export function * createApp (action: CreateAppAction) {
       'pub_urls': action.appData.pubUrls,
     }
 
-    const createAppUrl = `${API_URL}${SIGNUP_PORT}/app/create`
+    const createAppUrl = `${API_URL}${SIGNUP_PORT}/apps`
 
     yield call(request, {
       url: createAppUrl,
@@ -120,6 +124,66 @@ export function * updateApp (action: UpdateAppAction) {
   }
 }
 
+export function * deleteApp (action: DeleteAppAction) {
+  try {
+    const deleteAppUrl = `${API_URL}${SIGNUP_PORT}/app/delete/${action.appId}`
+
+    yield call(request, {
+      url: deleteAppUrl,
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+      },
+    })
+    yield put(deleteAppSuccess())
+    if (action.orgId) {
+      yield put(getUserApps(action.orgId))
+    }
+    yield put(push('/dashboard/apps'))
+  } catch (error) {
+    /* TODO: Review the 'checkStatus' function in 'util/request.ts',
+    as this Saga considers a response from the server whose status
+    code is 204 (i.e., a 'No Content') as an error. */
+    if (error.status === 204) {
+      yield put(deleteAppSuccess())
+
+      if (action.orgId) {
+        yield put(getUserApps(action.orgId))
+      }
+
+      yield put(push('/dashboard/apps'))
+    } else {
+      yield put(deleteAppError())
+      yield put(authActions.handleSessionExpire())
+    }
+  }
+}
+
+export function * requestAPIAccess (action: RequestAPIAccessAction) {
+  try {
+    const requestAPIAccessUrl = `${API_URL}/apps/${action.appId}/request`
+
+    const accessToken = yield select(
+      (state: Store) => state.auth.authToken)
+
+    yield call(request, {
+      url: requestAPIAccessUrl,
+      method: 'POST',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'x-access-token': accessToken,
+      },
+    })
+
+    yield put(requestAPIAccessSuccess())
+  } catch (error) {
+    yield put(requestAPIAccessError())
+    yield put(authActions.handleSessionExpire())
+  }
+}
+
+// TODO: Eventually clean this up - despite working, this is not according to most recent documentation changes.
+
 export function * getUsersApps (action: GetUserAppsAction) {
   try {
     const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
@@ -153,41 +217,6 @@ export function * getUsersApps (action: GetUserAppsAction) {
   } catch (error) {
     console.log('Error fetching user apps')
     yield put(authActions.handleSessionExpire())
-  }
-}
-
-export function * deleteApp (action: DeleteAppAction) {
-  try {
-    const deleteAppUrl = `${API_URL}${SIGNUP_PORT}/app/delete/${action.appId}`
-
-    yield call(request, {
-      url: deleteAppUrl,
-      method: 'DELETE',
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded',
-      },
-    })
-    yield put(deleteAppSuccess())
-    if (action.orgId) {
-      yield put(getUserApps(action.orgId))
-    }
-    yield put(push('/dashboard/apps'))
-  } catch (error) {
-    /* TODO: Review the 'checkStatus' function in 'util/request.ts',
-    as this Saga considers a response from the server whose status
-    code is 204 (i.e., a 'No Content') as an error. */
-    if (error.status === 204) {
-      yield put(deleteAppSuccess())
-
-      if (action.orgId) {
-        yield put(getUserApps(action.orgId))
-      }
-
-      yield put(push('/dashboard/apps'))
-    } else {
-      yield put(deleteAppError())
-      yield put(authActions.handleSessionExpire())
-    }
   }
 }
 
@@ -332,6 +361,7 @@ function * rootSaga () {
   yield takeLatest(CREATE_APP, createApp)
   yield takeLatest(UPDATE_APP, updateApp)
   yield takeLatest(DELETE_APP, deleteApp)
+  yield takeLatest(REQUEST_API_ACCESS, requestAPIAccess)
   yield takeLatest(GET_APP_DETAILS, getAppDetails)
   yield takeLatest(GET_USER_APPS, getUsersApps)
   yield takeLatest(SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION, addAppSubscriptionSaga)
