@@ -9,6 +9,7 @@ export interface SettingsData {
   supportURL: string,
   documentationURL: string,
   socialURLs: SocialUrl[],
+  logoURL: string,
 }
 
 export interface SocialUrl {

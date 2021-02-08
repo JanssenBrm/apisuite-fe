@@ -1,4 +1,4 @@
-import { APIVersion, AppInfo } from 'containers/Subscriptions/types'
+import { ApiDocs, APIVersion } from 'containers/Subscriptions/types'
 
 export type SubscriptionsTableProps = {
   apisByName: APIData[],
@@ -7,6 +7,9 @@ export type SubscriptionsTableProps = {
 export interface APIData {
   name: string,
   versions: APIVersion[],
-  apps: AppInfo[],
-  description: string,
+  apps: {
+    appName: string,
+    appId: number,
+  }[],
+  description: ApiDocs | undefined,
 }

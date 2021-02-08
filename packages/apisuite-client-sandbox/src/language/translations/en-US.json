@@ -88,7 +88,8 @@
       "email": "Please enter a valid e-mail address.",
       "emailInUse": "The provided e-mail address is already in use.",
       "organisationName": "Please enter the name of your organisation.",
-      "website": "Please enter a valid website for your organisation.",
+      "invalidWebsite": "Please provide a valid website for your organisation.",
+      "noPrefixWebsite": "Please include the 'http://' or 'https://' prefix to the provided web address.",
       "vat": "Please enter your organisations' VAT.",
       "password": "Password must have one lowercase, one uppercase, one symbol, and be at least 12 characters long."
     },
@@ -329,6 +330,35 @@
         "orgAvatarURL": "The provided URL is not valid, or the image does not exist.",
         "allOtherURLs": "The provided URL is not valid."
       }
+    }
+  },
+  "footer": {
+    "apiProductsMenu": {
+      "menuTitle": "API Products",
+      "menuItemOne": "Subscriptions",
+      "menuItemTwo": "Documentation"
+    },
+    "supportMenu": {
+      "menuTitle": "Support",
+      "menuItemOne": "Product website",
+      "menuItemTwo": "Knowledge base"
+    },
+    "dashboardMenu": {
+      "menuTitle": "Dashboard",
+      "menuItemOne": "Applications",
+      "menuItemTwo": "Team"
+    },
+    "profileMenu": {
+      "menuTitle": "Profile",
+      "menuItemOne": "Security",
+      "menuItemTwo": "Organisation"
+    },
+    "apisCloudExtensionMenu": {
+      "menuTitle": "API Suite Cloud"
+    },
+    "copyrights": {
+      "website": "APISuite.io",
+      "allRightsReserved": "All rights reserved"
     }
   },
   "listApps": {

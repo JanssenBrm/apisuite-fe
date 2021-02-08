@@ -1,6 +1,6 @@
 import { History } from 'history'
 import { Action } from 'redux'
-import { CREATE_APP, UPDATE_APP, GET_APP_DETAILS, DELETE_APP, GET_APP_DETAILS_SUCCESS, GET_USER_APPS, GET_USER_APPS_SUCCESS, CREATE_APP_SUCCESS, UPDATE_APP_SUCCESS, DELETE_APP_SUCCESS, CREATE_APP_ERROR, UPDATE_APP_ERROR, DELETE_APP_ERROR, RESET_CURRENT_APP } from './ducks'
+import { CREATE_APP, UPDATE_APP, GET_APP_DETAILS, DELETE_APP, REQUEST_API_ACCESS, GET_APP_DETAILS_SUCCESS, GET_USER_APPS, GET_USER_APPS_SUCCESS, CREATE_APP_SUCCESS, UPDATE_APP_SUCCESS, DELETE_APP_SUCCESS, REQUEST_API_ACCESS_SUCCESS, CREATE_APP_ERROR, UPDATE_APP_ERROR, DELETE_APP_ERROR, REQUEST_API_ACCESS_ERROR, RESET_CURRENT_APP } from './ducks'
 
 export interface ApplicationRouteProps {
   history: History,
@@ -17,6 +17,7 @@ export interface ApplicationsStore {
   resCreate: Response,
   resUpdate: Response,
   resDelete: Response,
+  resRequestAPIAccess: Response,
   subscribing: Response,
 }
 
@@ -89,6 +90,19 @@ export interface DeleteAppErrorAction extends Action {
   type: typeof DELETE_APP_ERROR,
 }
 
+export interface RequestAPIAccessAction extends Action {
+  type: typeof REQUEST_API_ACCESS,
+  appId: number,
+}
+
+export interface RequestAPIAccessSuccessAction extends Action {
+  type: typeof REQUEST_API_ACCESS_SUCCESS,
+}
+
+export interface RequestAPIAccessErrorAction extends Action {
+  type: typeof REQUEST_API_ACCESS_ERROR,
+}
+
 export interface GetAppDetails extends Action {
   type: typeof GET_APP_DETAILS,
   appId: number,
@@ -114,7 +128,7 @@ export interface ResetCurrentApp extends Action {
   type: typeof RESET_CURRENT_APP,
 }
 
-export type ApplicationsActions = CreateAppAction | UpdateAppAction | DeleteAppAction | GetAppDetails
-| GetAppDetailsSuccess | GetUserAppsAction | GetUserAppsActionSuccess | CreateAppErrorAction
-| UpdateAppErrorAction | DeleteAppErrorAction | CreateAppSuccessAction | UpdateAppSuccessAction
-| DeleteAppSuccessAction | ResetCurrentApp
+export type ApplicationsActions = CreateAppAction | UpdateAppAction | DeleteAppAction | RequestAPIAccessAction
+| GetAppDetails | GetAppDetailsSuccess | GetUserAppsAction | GetUserAppsActionSuccess | CreateAppErrorAction
+| UpdateAppErrorAction | DeleteAppErrorAction | RequestAPIAccessErrorAction | CreateAppSuccessAction
+| UpdateAppSuccessAction | DeleteAppSuccessAction | RequestAPIAccessSuccessAction | ResetCurrentApp
