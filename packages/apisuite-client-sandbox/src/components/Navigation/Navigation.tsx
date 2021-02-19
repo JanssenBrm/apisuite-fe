@@ -138,13 +138,24 @@ const Navigation: React.FC<NavigationProps> = ({
             className={classes.logoAndNameContainer}
             to={user?.role.name !== 'admin' ? '/' : '/dashboard'}
           >
-            <AmpStoriesRoundedIcon
-              className={
-                !scrolled
-                  ? classes.regularLogo
-                  : classes.alternativeLogo
-              }
-            />
+            {
+              settings.logoURL
+                ? (
+                  <img
+                    className={classes.imageLogo}
+                    src={settings.logoURL}
+                  />
+                )
+                : (
+                  <AmpStoriesRoundedIcon
+                    className={
+                      !scrolled
+                        ? classes.regularLogo
+                        : classes.alternativeLogo
+                    }
+                  />
+                )
+            }
 
             <h3 className={classes.portalName}>
               {settings.portalName}
