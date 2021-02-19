@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [1.1.8](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.7...apisuite-client-sandbox@1.1.8) (2021-02-19)
+
+
+### Bug Fixes
+
+* **footer:** fix footer for empty settings ([ac90d01](https://github.com/Cloudoki/APISuite/commit/ac90d0190eb443adb2e91b85c98633392e3f0c15))
+
+
+
+
+
 ## [1.1.7](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.10...apisuite-client-sandbox@1.1.7) (2021-02-19)
 
 **Note:** Version bump only for package apisuite-client-sandbox
