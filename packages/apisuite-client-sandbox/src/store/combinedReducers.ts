@@ -13,14 +13,14 @@ import applications from 'containers/Applications/ducks'
 import auth from 'containers/Auth/ducks'
 import informDialog from 'components/InformDialog/ducks'
 // Temporary until notification cards become clearer
-import notifications from 'containers/NotificationStack/ducks'
 import notificationCards from 'containers/NotificationCards/ducks'
+import notifications from 'containers/NotificationStack/ducks'
 import profile from 'containers/Profile/ducks'
 import reduceReducers from './reduceReducers'
 import register from 'components/RegisterForm/ducks'
+import security from 'containers/Security/ducks'
 import settings from 'containers/Settings/ducks'
 import subscriptions from 'containers/Subscriptions/ducks'
-import security from 'containers/Security/ducks'
 
 export default (
   history: History<any>, additionalReducers: Record<string, any[]> = {},
@@ -36,9 +36,9 @@ export default (
     profile: [profile],
     register: [register],
     router: [connectRouter(history)],
+    security: [security],
     settings: [settings],
     subscriptions: [subscriptions],
-    security: [security],
   }
 
   Object.keys(additionalReducers).map((key) => {

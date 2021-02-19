@@ -9,17 +9,15 @@ import { Layouts } from '@apisuite/extension-ui-types'
 
 import { getRoutes } from 'util/extensions'
 
-import MainLayout from 'layouts/Main'
 import EssentialLayout from 'layouts/Essential'
+import MainLayout from 'layouts/Main'
 
 import APIDetails from 'containers/APIDetails'
 import APIProducts from 'containers/APIProducts'
-import AppDetail from 'containers/Applications/AppDetail'
-import CreateApp from 'containers/Applications/CreateApp'
+import Applications from 'containers/Applications'
+import Dashboard from 'containers/Dashboard'
 import ForgotPasswordPage from 'containers/ForgotPasswordPage'
 import Instructions from 'containers/Instructions'
-import Dashboard from 'containers/Dashboard'
-import ListApps from 'containers/Applications/ListApps'
 import Login from 'containers/Login'
 import OrganisationPage from 'containers/OrganisationPage'
 import Profile from 'containers/Profile'
@@ -66,9 +64,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/auth/:view?/:email?', exact: true, component: Login, layout: EssentialLayout },
   { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation, layout: EssentialLayout },
   { path: '/dashboard', exact: true, auth: true, component: Dashboard, layoutProps: { contractibleMenu: true } },
-  { path: '/dashboard/apps', exact: true, auth: true, component: ListApps },
-  { path: '/dashboard/apps/create', exact: true, auth: true, component: CreateApp },
-  { path: '/dashboard/apps/detail/:id', exact: true, auth: true, component: AppDetail },
+  { path: '/dashboard/apps', exact: true, auth: true, component: Applications },
   { path: '/dashboard/subscriptions', exact: true, auth: true, component: Subscriptions },
   { path: '/dashboard/test', exact: true, auth: true, component: Instructions },
   { path: '/documentation', exact: true, component: Instructions },

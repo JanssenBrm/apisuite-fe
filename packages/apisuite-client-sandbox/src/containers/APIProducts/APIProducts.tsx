@@ -29,8 +29,8 @@ import { config } from 'constants/global'
 In the future, add logic for this kind of API product. */
 const APIProducts: React.FC<APIProductsProps> = ({
   auth,
+  getAllUserAppsAction,
   getAPIs,
-  getUserApps,
   subscriptions,
 }) => {
   const classes = useStyles()
@@ -60,7 +60,7 @@ const APIProducts: React.FC<APIProductsProps> = ({
     /* Triggers the retrieval and storage of all app-related information we presently
     have on a given user. */
     if (auth?.user) {
-      getUserApps(auth.user.id)
+      getAllUserAppsAction(auth.user.id)
     }
   }, [auth])
 
@@ -72,20 +72,20 @@ const APIProducts: React.FC<APIProductsProps> = ({
     if (allAvailableAPIs.length) {
       const newRecentlyUpdatedAPIs: APIDetails[] = allAvailableAPIs.map((api) => {
         return {
-          /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
-          'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
-          link to its corresponding 'API Details' view if it has versions. */
-          hasMoreDetails: api.apiVersions.length > 0,
-          id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
-          apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
-          apiDescription: api?.docs?.info || 'No description presently available.',
-          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : 'No version available',
-          // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
-          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : '',
           /* An API that is 'live' (i.e., 'production accessible') is one that has versions, and has
           its 'live' property set to 'true'. Ones that do NOT meet any of the above criteria are ones
           that, presently, only have 'API Documentation' to show for it. */
           apiAccess: (api.apiVersions.length > 0 && api.apiVersions[0].live),
+          /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
+          'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
+          link to its corresponding 'API Details' view if it has versions. */
+          apiDescription: api?.docs?.info || 'No description presently available.',
+          apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
+          // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
+          apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : '',
+          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : 'No version available',
+          hasMoreDetails: api.apiVersions.length > 0,
+          id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
         }
       })
 

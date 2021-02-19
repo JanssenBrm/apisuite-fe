@@ -1,134 +1,201 @@
-import { History } from 'history'
 import { Action } from 'redux'
-import { CREATE_APP, UPDATE_APP, GET_APP_DETAILS, DELETE_APP, REQUEST_API_ACCESS, GET_APP_DETAILS_SUCCESS, GET_USER_APPS, GET_USER_APPS_SUCCESS, CREATE_APP_SUCCESS, UPDATE_APP_SUCCESS, DELETE_APP_SUCCESS, REQUEST_API_ACCESS_SUCCESS, CREATE_APP_ERROR, UPDATE_APP_ERROR, DELETE_APP_ERROR, REQUEST_API_ACCESS_ERROR, RESET_CURRENT_APP } from './ducks'
 
-export interface ApplicationRouteProps {
-  history: History,
-}
+import {
+  CREATE_APP_ACTION_ERROR,
+  CREATE_APP_ACTION_SUCCESS,
+  CREATE_APP_ACTION,
+  DELETE_APP_ACTION_ERROR,
+  DELETE_APP_ACTION_SUCCESS,
+  DELETE_APP_ACTION,
+  GET_ALL_USER_APPS_ACTION_SUCCESS,
+  GET_ALL_USER_APPS_ACTION,
+  GET_USER_APP_ACTION_SUCCESS,
+  GET_USER_APP_ACTION,
+  REQUEST_API_ACCESS_ACTION_ERROR,
+  REQUEST_API_ACCESS_ACTION_SUCCESS,
+  REQUEST_API_ACCESS_ACTION,
+  UPDATE_APP_ACTION_ERROR,
+  UPDATE_APP_ACTION_SUCCESS,
+  UPDATE_APP_ACTION,
+} from './ducks'
+
+import { User } from 'containers/Auth/types'
 
 export interface Response {
-  isRequesting: boolean,
   isError: boolean,
+  isRequesting: boolean,
 }
 
 export interface ApplicationsStore {
+  createAppStatus: Response,
   currentApp: AppData,
+  deleteAppStatus: Response,
+  requestingAPIAccessStatus: Response,
+  updateAppStatus: Response,
   userApps: AppData[],
-  resCreate: Response,
-  resUpdate: Response,
-  resDelete: Response,
-  resRequestAPIAccess: Response,
-  subscribing: Response,
-}
-
-export interface RouteParams {
-  id: string,
 }
 
 export interface AppData {
-  appId: number,
-  name: string,
-  description: string,
-  redirectUrl: string,
-  logo: string,
-  orgId: number,
-  subscriptions: any[],
-  visibility: 'public' | 'private',
-  pubUrls: PubUrl[],
-  enable: boolean,
-  updatedAt?: string,
-  createdAt?: string,
   clientId: string,
   clientSecret: string,
+  created_at: string,
+  description: string,
+  id: number,
+  logo: string,
+  name: string,
+  orgId: number,
+  privacyUrl: string,
+  redirectUrl: string,
+  shortDescription: string,
+  subscriptions: any[],
+  supportUrl: string,
+  tosUrl: string,
+  updated_at: string,
+  websiteUrl: string,
+  youtubeUrl: string,
 }
 
-export interface PubUrl {
-  url: string,
-  type: string,
+export interface ModalDetails {
+  userAppID: number,
+  userID: number,
+}
+
+export interface ApplicationsProps {
+  allUserApps: AppData[],
+  currentOrganisation: {
+    id: number | string,
+    member_since: string,
+    name: string,
+    role: {
+      id: number,
+      name: string,
+    },
+  },
+  createAppStatus: boolean,
+  deleteAppStatus: boolean,
+  getAllUserAppsAction: (userID: number) => void,
+  requestAPIAccessStatus: boolean,
+  updateAppStatus: boolean,
+  user: User,
+}
+
+export interface CreateAppActionData {
+  description: string,
+  logo: string,
+  name: string,
+  privacyUrl: string,
+  redirectUrl: string,
+  shortDescription: string,
+  supportUrl: string,
+  tosUrl: string,
+  websiteUrl: string,
+  youtubeUrl: string,
+}
+
+export interface UpdateAppActionData {
+  description: string,
+  id: number,
+  logo: string,
+  name: string,
+  privacyUrl: string,
+  redirectUrl: string,
+  shortDescription: string,
+  supportUrl: string,
+  tosUrl: string,
+  websiteUrl: string,
+  youtubeUrl: string,
 }
 
 export interface CreateAppAction extends Action {
-  type: typeof CREATE_APP,
-  appData: AppData,
+  type: typeof CREATE_APP_ACTION,
+  appData: CreateAppActionData,
   orgId: number,
 }
 
-export interface CreateAppSuccessAction extends Action {
-  type: typeof CREATE_APP_SUCCESS,
+export interface CreateAppActionSuccess extends Action {
+  type: typeof CREATE_APP_ACTION_SUCCESS,
 }
 
-export interface CreateAppErrorAction extends Action {
-  type: typeof CREATE_APP_ERROR,
+export interface CreateAppActionError extends Action {
+  type: typeof CREATE_APP_ACTION_ERROR,
 }
 
 export interface UpdateAppAction extends Action {
-  type: typeof UPDATE_APP,
-  appData: AppData,
+  type: typeof UPDATE_APP_ACTION,
+  appData: UpdateAppActionData,
   appId: number,
 }
 
-export interface UpdateAppSuccessAction extends Action {
-  type: typeof UPDATE_APP_SUCCESS,
+export interface UpdateAppActionSuccess extends Action {
+  type: typeof UPDATE_APP_ACTION_SUCCESS,
   appData: AppData,
 }
 
-export interface UpdateAppErrorAction extends Action {
-  type: typeof UPDATE_APP_ERROR,
+export interface UpdateAppActionError extends Action {
+  type: typeof UPDATE_APP_ACTION_ERROR,
 }
 
 export interface DeleteAppAction extends Action {
-  type: typeof DELETE_APP,
+  type: typeof DELETE_APP_ACTION,
   appId: number,
   orgId?: number,
 }
 
-export interface DeleteAppSuccessAction extends Action {
-  type: typeof DELETE_APP_SUCCESS,
+export interface DeleteAppActionSuccess extends Action {
+  type: typeof DELETE_APP_ACTION_SUCCESS,
 }
 
-export interface DeleteAppErrorAction extends Action {
-  type: typeof DELETE_APP_ERROR,
+export interface DeleteAppActionError extends Action {
+  type: typeof DELETE_APP_ACTION_ERROR,
 }
 
 export interface RequestAPIAccessAction extends Action {
-  type: typeof REQUEST_API_ACCESS,
+  type: typeof REQUEST_API_ACCESS_ACTION,
   appId: number,
 }
 
-export interface RequestAPIAccessSuccessAction extends Action {
-  type: typeof REQUEST_API_ACCESS_SUCCESS,
+export interface RequestAPIAccessActionSuccess extends Action {
+  type: typeof REQUEST_API_ACCESS_ACTION_SUCCESS,
 }
 
-export interface RequestAPIAccessErrorAction extends Action {
-  type: typeof REQUEST_API_ACCESS_ERROR,
+export interface RequestAPIAccessActionError extends Action {
+  type: typeof REQUEST_API_ACCESS_ACTION_ERROR,
 }
 
-export interface GetAppDetails extends Action {
-  type: typeof GET_APP_DETAILS,
+export interface GetUserAppAction extends Action {
+  type: typeof GET_USER_APP_ACTION,
   appId: number,
   orgId: number,
 }
 
-export interface GetAppDetailsSuccess extends Action {
-  type: typeof GET_APP_DETAILS_SUCCESS,
+export interface GetUserAppActionSuccess extends Action {
+  type: typeof GET_USER_APP_ACTION_SUCCESS,
   appData: AppData,
 }
 
-export interface GetUserAppsAction extends Action {
-  type: typeof GET_USER_APPS,
+export interface GetAllUserAppsAction extends Action {
+  type: typeof GET_ALL_USER_APPS_ACTION,
   userId: number,
 }
 
-export interface GetUserAppsActionSuccess extends Action {
-  type: typeof GET_USER_APPS_SUCCESS,
+export interface GetAllUserAppsActionSuccess extends Action {
+  type: typeof GET_ALL_USER_APPS_ACTION_SUCCESS,
   userApps: AppData[],
 }
 
-export interface ResetCurrentApp extends Action {
-  type: typeof RESET_CURRENT_APP,
-}
-
-export type ApplicationsActions = CreateAppAction | UpdateAppAction | DeleteAppAction | RequestAPIAccessAction
-| GetAppDetails | GetAppDetailsSuccess | GetUserAppsAction | GetUserAppsActionSuccess | CreateAppErrorAction
-| UpdateAppErrorAction | DeleteAppErrorAction | RequestAPIAccessErrorAction | CreateAppSuccessAction
-| UpdateAppSuccessAction | DeleteAppSuccessAction | RequestAPIAccessSuccessAction | ResetCurrentApp
+export type ApplicationsActions = CreateAppAction |
+  CreateAppActionError |
+  CreateAppActionSuccess |
+  DeleteAppAction |
+  DeleteAppActionError |
+  DeleteAppActionSuccess |
+  GetAllUserAppsAction |
+  GetAllUserAppsActionSuccess |
+  GetUserAppAction |
+  GetUserAppActionSuccess |
+  RequestAPIAccessAction |
+  RequestAPIAccessActionError |
+  RequestAPIAccessActionSuccess |
+  UpdateAppAction |
+  UpdateAppActionError |
+  UpdateAppActionSuccess

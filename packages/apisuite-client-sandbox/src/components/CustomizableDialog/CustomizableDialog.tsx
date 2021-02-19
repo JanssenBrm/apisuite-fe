@@ -1,58 +1,56 @@
 import React from 'react'
 
-// Component imports
+import Button from '@material-ui/core/Button'
 import Dialog from '@material-ui/core/Dialog'
-import DialogTitle from '@material-ui/core/DialogTitle'
+import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogActions from '@material-ui/core/DialogActions'
-import Button from '../Button'
+import DialogTitle from '@material-ui/core/DialogTitle'
 
-// 'Type' imports
 import { CustomizableDialogProps } from './types'
 
-// Styling imports
 import useStyles from './styles'
 
 const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
   // Props passed by the 'calling' component to be added below
-  open,
-  providedTitle,
-  providedText,
-  providedDialogContent,
-  confirmButtonLabel,
   cancelButtonLabel,
-  openDialogCallback,
   closeDialogCallback,
   confirmButtonCallback,
-  confirmButtonProps,
-  cancelButtonProps,
+  confirmButtonLabel,
+  open,
+  openDialogCallback,
   providedDialogActions,
+  providedDialogContent,
+  providedText,
+  providedTitle,
 
   // 'mapStateToProps' props (i.e., coming from the app's Redux 'store') to be added below (if any)
 }) => {
   const classes = useStyles()
 
-  function handleOpenDialog () {
+  const handleOpenDialog = () => {
     if (openDialogCallback) openDialogCallback()
   }
 
-  function handleCloseDialog () {
+  const handleCloseDialog = () => {
     if (closeDialogCallback) closeDialogCallback()
   }
 
-  function handleConfirmAction () {
+  const handleConfirmAction = () => {
     confirmButtonCallback()
   }
 
   return (
     <Dialog
-      open={open}
-      onEnter={handleOpenDialog}
       onClose={handleCloseDialog}
+      onEnter={handleOpenDialog}
+      open={open}
     >
-      <DialogTitle>{providedTitle}</DialogTitle>
-      <DialogContent>
+      <DialogTitle className={classes.dialogTitleContainer}>
+        {providedTitle}
+      </DialogTitle>
+
+      <DialogContent className={classes.dialogContentContainer}>
         <DialogContentText>
           {providedText}
         </DialogContentText>
@@ -60,23 +58,23 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
         {providedDialogContent}
       </DialogContent>
 
-      <DialogActions>
+      <DialogActions className={classes.dialogActionsContainer}>
         <Button
-          label={cancelButtonLabel || 'Cancel'}
-          onClick={handleCloseDialog}
-          background='secondary'
-          color='secondary'
+          className={classes.cancelButton}
           fullWidth
-          {...cancelButtonProps}
-        />
+          onClick={handleCloseDialog}
+        >
+          {cancelButtonLabel || 'Cancel'}
+        </Button>
 
-        <div className={classes.confirmWrapper}>
+        <div>
           <Button
-            label={confirmButtonLabel || 'Confirm'}
-            onClick={handleConfirmAction}
+            className={classes.confirmButton}
             fullWidth
-            {...confirmButtonProps}
-          />
+            onClick={handleConfirmAction}
+          >
+            {confirmButtonLabel || 'Confirm'}
+          </Button>
 
           {providedDialogActions}
         </div>

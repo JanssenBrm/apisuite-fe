@@ -19,8 +19,8 @@ import { config } from 'constants/global'
 
 const Subscriptions: React.FC<SubscriptionsProps> = ({
   auth,
+  getAllUserAppsAction,
   getAPIs,
-  getUserApps,
   subscriptions,
 }) => {
   const classes = useStyles()
@@ -35,7 +35,7 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
     have all the information it needs. */
     if (auth?.user) {
       getAPIs()
-      getUserApps(auth.user.id)
+      getAllUserAppsAction(auth.user.id)
     }
   }, [])
 
