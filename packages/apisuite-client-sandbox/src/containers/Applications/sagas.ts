@@ -113,7 +113,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
     yield put(updateAppActionSuccess({
       clientId: response.clientId,
       clientSecret: response.clientSecret,
-      created_at: response.created_at,
+      createdAt: response.createdAt,
       description: response.description,
       id: response.id,
       logo: response.logo,
@@ -125,7 +125,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
       subscriptions: response.subscriptions,
       supportUrl: response.supportUrl,
       tosUrl: response.tosUrl,
-      updated_at: response.updated_at,
+      updatedAt: response.updatedAt,
       websiteUrl: response.websiteUrl,
       youtubeUrl: response.youtubeUrl,
     }))
@@ -212,7 +212,7 @@ export function * getAllUserAppsActionSaga () {
       {
         clientId: userApp.clientId,
         clientSecret: userApp.clientSecret,
-        created_at: userApp.created_at,
+        createdAt: userApp.createdAt,
         description: userApp.description,
         id: userApp.id,
         logo: userApp.logo,
@@ -224,7 +224,7 @@ export function * getAllUserAppsActionSaga () {
         subscriptions: userApp.subscriptions,
         supportUrl: userApp.supportUrl,
         tosUrl: userApp.tosUrl,
-        updated_at: userApp.updated_at,
+        updatedAt: userApp.updatedAt,
         websiteUrl: userApp.websiteUrl,
         youtubeUrl: userApp.youtubeUrl,
       }
@@ -255,7 +255,7 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
       {
         clientId: userApp.clientId,
         clientSecret: userApp.clientSecret,
-        created_at: userApp.created_at,
+        createdAt: userApp.createdAt,
         description: userApp.description,
         id: userApp.id,
         logo: userApp.logo,
@@ -267,7 +267,7 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
         subscriptions: userApp.subscriptions,
         supportUrl: userApp.supportUrl,
         tosUrl: userApp.tosUrl,
-        updated_at: userApp.updated_at,
+        updatedAt: userApp.updatedAt,
         websiteUrl: userApp.websiteUrl,
         youtubeUrl: userApp.youtubeUrl,
       }

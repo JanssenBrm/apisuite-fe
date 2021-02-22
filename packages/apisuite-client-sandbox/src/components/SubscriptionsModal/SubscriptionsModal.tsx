@@ -40,7 +40,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
   const initialClientApp = {
     clientId: '',
     clientSecret: '',
-    created_at: '',
+    createdAt: '',
     description: '',
     id: '',
     logo: '',
@@ -52,7 +52,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
     subscriptions: [],
     supportUrl: '',
     tosUrl: '',
-    updated_at: '',
+    updatedAt: '',
     websiteUrl: '',
     youtubeUrl: '',
   }

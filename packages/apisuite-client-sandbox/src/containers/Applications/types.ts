@@ -38,7 +38,7 @@ export interface ApplicationsStore {
 export interface AppData {
   clientId: string,
   clientSecret: string,
-  created_at: string,
+  createdAt: string,
   description: string,
   id: number,
   logo: string,
@@ -50,7 +50,7 @@ export interface AppData {
   subscriptions: any[],
   supportUrl: string,
   tosUrl: string,
-  updated_at: string,
+  updatedAt: string,
   websiteUrl: string,
   youtubeUrl: string,
 }
@@ -184,18 +184,18 @@ export interface GetAllUserAppsActionSuccess extends Action {
 }
 
 export type ApplicationsActions = CreateAppAction |
-  CreateAppActionError |
-  CreateAppActionSuccess |
-  DeleteAppAction |
-  DeleteAppActionError |
-  DeleteAppActionSuccess |
-  GetAllUserAppsAction |
-  GetAllUserAppsActionSuccess |
-  GetUserAppAction |
-  GetUserAppActionSuccess |
-  RequestAPIAccessAction |
-  RequestAPIAccessActionError |
-  RequestAPIAccessActionSuccess |
-  UpdateAppAction |
-  UpdateAppActionError |
-  UpdateAppActionSuccess
+CreateAppActionError |
+CreateAppActionSuccess |
+DeleteAppAction |
+DeleteAppActionError |
+DeleteAppActionSuccess |
+GetAllUserAppsAction |
+GetAllUserAppsActionSuccess |
+GetUserAppAction |
+GetUserAppActionSuccess |
+RequestAPIAccessAction |
+RequestAPIAccessActionError |
+RequestAPIAccessActionSuccess |
+UpdateAppAction |
+UpdateAppActionError |
+UpdateAppActionSuccess

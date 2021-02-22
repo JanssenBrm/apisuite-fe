@@ -57,9 +57,24 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     }
   }, [modalMode])
 
+  const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false)
+  const [validImage, setValidImage] = React.useState<boolean>(true)
+
+  const validateAvatar = (avatar: string) => {
+    if (avatar !== '') {
+      (
+        async () => {
+          const valid = await isValidImage(avatar)
+
+          setValidImage(valid)
+        }
+      )()
+    }
+  }
+
   /*
   App details
-  
+
   Note:
   - 'formState' refers to our own, local copy of an app's details.
   - 'mostRecentlySelectedAppDetails' refers to our stored, back-end approved copy of all details
@@ -188,39 +203,6 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     }
   }, [modalMode, mostRecentlySelectedAppDetails])
 
-  /* Avatar-related stuff */
-
-  let appNameInitials = '...'
-
-  if (formState.values.appName) {
-    const appNameInitialsArray = formState.values.appName.split(' ').filter((word) => {
-      return word.length > 0
-    })
-
-    appNameInitials = appNameInitialsArray.length >= 2
-      ? `${appNameInitialsArray[0][0]}${appNameInitialsArray[1][0]}`
-      : (
-        appNameInitialsArray[0].length === 1
-          ? appNameInitialsArray[0][0]
-          : `${appNameInitialsArray[0][0]}${appNameInitialsArray[0][1]}`
-      )
-  }
-
-  const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false)
-  const [validImage, setValidImage] = React.useState<boolean>(true)
-
-  const validateAvatar = (avatar: string) => {
-    if (avatar !== '') {
-      (
-        async () => {
-          const valid = await isValidImage(avatar)
-
-          setValidImage(valid)
-        }
-      )()
-    }
-  }
-
   /* Optional URL selector */
 
   const [anchorElement, setAnchorElement] = React.useState(null)
@@ -296,6 +278,24 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     setAnchorElement(null)
   }
 
+  /* Avatar-related stuff, part two */
+
+  let appNameInitials = '...'
+
+  if (formState.values.appName) {
+    const appNameInitialsArray = formState.values.appName.split(' ').filter((word) => {
+      return word.length > 0
+    })
+
+    appNameInitials = appNameInitialsArray.length >= 2
+      ? `${appNameInitialsArray[0][0]}${appNameInitialsArray[1][0]}`
+      : (
+        appNameInitialsArray[0].length === 1
+          ? appNameInitialsArray[0][0]
+          : `${appNameInitialsArray[0][0]}${appNameInitialsArray[0][1]}`
+      )
+  }
+
   /* App-related actions */
 
   // Creating an app
@@ -369,8 +369,21 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     <>
       <Modal
         onClose={() => {
-          resetForm
-          toggleModal
+          resetForm({
+            appAvatarURL: '',
+            appClientID: '',
+            appClientSecret: '',
+            appFullDescription: '',
+            appName: '',
+            appPrivacyURL: '',
+            appRedirectURI: 'https://',
+            appShortDescription: '',
+            appSupportURL: '',
+            appTermsURL: '',
+            appWebsiteURL: '',
+            appYouTubeURL: '',
+          })
+          toggleModal()
         }}
         open={isModalOpen}
       >

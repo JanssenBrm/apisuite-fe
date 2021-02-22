@@ -7,7 +7,7 @@ const initialState: ApplicationsStore = {
   currentApp: {
     clientId: '',
     clientSecret: '',
-    created_at: '',
+    createdAt: '',
     description: '',
     id: 0,
     logo: '',
@@ -19,7 +19,7 @@ const initialState: ApplicationsStore = {
     subscriptions: [],
     supportUrl: '',
     tosUrl: '',
-    updated_at: '',
+    updatedAt: '',
     websiteUrl: '',
     youtubeUrl: '',
   },
@@ -61,7 +61,7 @@ export const UPDATE_APP_ACTION_ERROR = 'Applications/UPDATE_APP_ACTION_ERROR'
 export const UPDATE_APP_ACTION_SUCCESS = 'Applications/UPDATE_APP_ACTION_SUCCESS'
 
 /** Reducer */
-export default function reducer(
+export default function reducer (
   state = initialState,
   action: ApplicationsActions,
 ): ApplicationsStore {
@@ -137,7 +137,7 @@ export default function reducer(
         currentApp: {
           clientId: { $set: action.appData.clientId },
           clientSecret: { $set: action.appData.clientSecret },
-          created_at: { $set: action.appData.created_at },
+          createdAt: { $set: action.appData.createdAt },
           description: { $set: action.appData.description },
           id: { $set: action.appData.id },
           logo: { $set: action.appData.logo },
@@ -149,7 +149,7 @@ export default function reducer(
           subscriptions: { $set: action.appData.subscriptions },
           supportUrl: { $set: action.appData.supportUrl },
           tosUrl: { $set: action.appData.tosUrl },
-          updated_at: { $set: action.appData.updated_at },
+          updatedAt: { $set: action.appData.updatedAt },
           websiteUrl: { $set: action.appData.websiteUrl },
           youtubeUrl: { $set: action.appData.youtubeUrl },
         },
@@ -227,66 +227,66 @@ export default function reducer(
 }
 
 /** Action builders */
-export function createAppAction(appData: CreateAppActionData) {
+export function createAppAction (appData: CreateAppActionData) {
   return { type: CREATE_APP_ACTION, appData }
 }
 
-export function createAppActionSuccess() {
+export function createAppActionSuccess () {
   return { type: CREATE_APP_ACTION_SUCCESS }
 }
 
-export function createAppActionError() {
+export function createAppActionError () {
   return { type: CREATE_APP_ACTION_ERROR }
 }
 
-export function updateAppAction(appData: UpdateAppActionData) {
+export function updateAppAction (appData: UpdateAppActionData) {
   return { type: UPDATE_APP_ACTION, appData }
 }
 
-export function updateAppActionSuccess(appData: AppData) {
+export function updateAppActionSuccess (appData: AppData) {
   return { type: UPDATE_APP_ACTION_SUCCESS, appData }
 }
 
-export function updateAppActionError() {
+export function updateAppActionError () {
   return { type: UPDATE_APP_ACTION_ERROR }
 }
 
-export function deleteAppAction(appId: number, orgId?: number) {
+export function deleteAppAction (appId: number, orgId?: number) {
   return { type: DELETE_APP_ACTION, appId, orgId }
 }
 
-export function deleteAppActionSuccess() {
+export function deleteAppActionSuccess () {
   return { type: DELETE_APP_ACTION_SUCCESS }
 }
 
-export function deleteAppActionError() {
+export function deleteAppActionError () {
   return { type: DELETE_APP_ACTION_ERROR }
 }
 
-export function requestAPIAccessAction(appId: number) {
+export function requestAPIAccessAction (appId: number) {
   return { type: REQUEST_API_ACCESS_ACTION, appId }
 }
 
-export function requestAPIAccessActionSuccess() {
+export function requestAPIAccessActionSuccess () {
   return { type: REQUEST_API_ACCESS_ACTION_SUCCESS }
 }
 
-export function requestAPIAccessActionError() {
+export function requestAPIAccessActionError () {
   return { type: REQUEST_API_ACCESS_ACTION_ERROR }
 }
 
-export function getUserAppAction(appId: number, orgId: number) {
+export function getUserAppAction (appId: number, orgId: number) {
   return { type: GET_USER_APP_ACTION, appId, orgId }
 }
 
-export function getUserAppActionSuccess(appData: AppData) {
+export function getUserAppActionSuccess (appData: AppData) {
   return { type: GET_USER_APP_ACTION_SUCCESS, appData }
 }
 
-export function getAllUserAppsAction(userId: number) {
+export function getAllUserAppsAction (userId: number) {
   return { type: GET_ALL_USER_APPS_ACTION, userId }
 }
 
-export function getAllUserAppsActionSuccess(userApps: AppData[]) {
+export function getAllUserAppsActionSuccess (userApps: AppData[]) {
   return { type: GET_ALL_USER_APPS_ACTION_SUCCESS, userApps }
 }
