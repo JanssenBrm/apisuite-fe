@@ -10,22 +10,18 @@ jobs:
     executor: node12-executor
     steps:
       - checkout
-      - run:
-          name: Run tests
-          command: |
-            ./install_dependencies.sh
-            ./run_tests.sh
-      - persist_to_workspace:
-          root: ~/
-          paths:
-            - project
+      - run: npm run pretest
+# No relevant tests for now. Leaving pretest for linter & type check
+#      - run:
+#          name: Run tests
+#          command: |
+#            ./install_dependencies.sh
+#            ./run_tests.sh
 
   release:
     executor: node12-executor
     steps:
-      - attach_workspace:
-          at: ~/
-      - run: cp -r .ssh ../.ssh && rm -rf .ssh
+      - checkout
       - run: GH_TOKEN=$GH_TOKEN npx semantic-release
       - persist_to_workspace:
           root: ~/
@@ -57,7 +53,7 @@ workflows:
   version: 2
   build:
     jobs:
-      - test
+#      - test
       - release:
           context: docker
           filters:
@@ -66,8 +62,8 @@ workflows:
                 - develop
                 - staging
                 - production
-          requires:
-            - test
+#          requires:
+#            - test
 #      - build:
 #          context: docker
 #          filters:
