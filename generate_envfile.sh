@@ -21,7 +21,7 @@ LOGIN_PORT=${LOGIN_PORT_DEV}
 THEME=
 SIGNUP_PORT=${SIGNUP_PORT_DEV}" > .env
 
-if [ "$CIRCLE_BRANCH" = "staging" ]; then
+elif [ "$CIRCLE_BRANCH" = "staging" ]; then
 
     echo "ENV=stg
 CLOUD=${CLOUD_BUILD}
@@ -33,7 +33,7 @@ LOGIN_PORT=${LOGIN_PORT_STG}
 THEME=
 SIGNUP_PORT=${SIGNUP_PORT_STG}" > .env
 
-if [ "$CIRCLE_BRANCH" = "production" ]; then
+elif [ "$CIRCLE_BRANCH" = "production" ]; then
 
     echo "ENV=prod
 CLOUD=${CLOUD_BUILD}
