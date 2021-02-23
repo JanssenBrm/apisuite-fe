@@ -1,204 +1,90 @@
 version: 2.1
 
 executors:
-  apisuite-executor:
-    environment:
-      SHOULD_TEST: "true"
+  node12-executor:
     docker:
-      - image: circleci/node:12.13.1
-    working_directory: ~/apisuite
+      - image: circleci/node:12.20.1
 
 jobs:
   test:
-      executor: apisuite-executor
-      steps:
-        - checkout
-        - run:
-            name: Run tests
-            command: |
-              cd util
-              chmod +x common.sh
-              chmod +x run_tests.sh
-              chmod +x install_dependencies.sh
-              [[ $SHOULD_TEST == "false" ]] && echo "Bypass tests" || (./install_dependencies.sh && ./run_tests.sh)
+    executor: node12-executor
+    steps:
+      - checkout
+      - run:
+          name: Run tests
+          command: |
+            ./install_dependencies.sh
+            ./run_tests.sh
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
 
   release:
-    executor: apisuite-executor
+    executor: node12-executor
     steps:
-      - add_ssh_keys:
-          fingerprints:
-            - "7f:86:85:4e:99:1e:77:42:27:11:f4:57:43:e0:c5:27"
-      - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
-      - run: yarn --frozen-lockfile
-      - save_cache:
-          key: dependency-cache-{{ checksum "yarn.lock" }}
+      - attach_workspace:
+          at: ~/
+      - run: cp -r .ssh ../.ssh && rm -rf .ssh
+      - run: GH_TOKEN=$GH_TOKEN npx semantic-release
+      - persist_to_workspace:
+          root: ~/
           paths:
-            - node_modules
-      - run:
-          name: Tag and release a new version of all changed projects
-          command: |
-            git config --global user.name 'apisuite-machine-user'; git config --global user.email 'dev@apisuite.io'
-            if [ "$CIRCLE_BRANCH" = "staging" ]; then
-              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-prerelease --preid rc --yes
-            elif [ "$CIRCLE_BRANCH" = "production" ]; then
-              GH_TOKEN=$GITHUB_TOKEN yarn lerna version --conventional-commits --conventional-graduate --yes
-            fi
+            - project
 
   build:
-      executor: apisuite-executor
-      steps:
-        - checkout
-        - setup_remote_docker
-        - run:
-            name: Build packages with docker-compose and push to registry
-            command: |
-              sudo apt-get update
-              sudo apt-get install ruby-full jq
-              cd util
-              chmod +x build_push_docker.sh
-              ./build_push_docker.sh
-        - persist_to_workspace:
-              root: ./util
-              paths:
-                - .env
+    docker:
+      - image: cimg/base:2020.01
+    steps:
+      - attach_workspace:
+          at: ~/
+      - setup_remote_docker
+      - run: ./build.sh
+      - persist_to_workspace:
+          root: ~/
+          paths:
+            - project
 
-  build-cloud:
-      executor: apisuite-executor
-      environment:
-        CLOUD_BUILD: "true"
-      steps:
-        - checkout
-        - setup_remote_docker
-        - run:
-            name: Build packages with docker-compose and push to registry
-            command: |
-              sudo apt-get update
-              sudo apt-get install ruby-full jq
-              cd util
-              chmod +x build_push_docker.sh
-              ./build_push_docker.sh
-        - persist_to_workspace:
-              root: ./util
-              paths:
-                - .env
-
-  deploy-dev:
-      executor: apisuite-executor
-      steps:
-        - checkout
-        - attach_workspace:
-            at: ./util
-        - run:
-            name: Fix ssh could not resolve hostname
-            command: |
-              ssh-keyscan $DROPLET_IP_DEV >> ~/.ssh/known_hosts
-        - add_ssh_keys:
-            fingerprints:
-              - "92:92:37:9c:7c:b4:e2:93:0a:f7:ac:f7:c6:74:b8:61"
-        - run:
-            name: Deploy Over SSH
-            command: |
-              chmod +x ./util/clean_compose.sh
-              (cd ./util && ./clean_compose.sh)
-              chmod +x ./util/merge_env.sh
-              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_DEV:/apps/APISuite/
-              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_DEV "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
-
-  deploy-stg:
-      executor: apisuite-executor
-      steps:
-        - checkout
-        - attach_workspace:
-            at: ./util
-        - run:
-            name: Fix ssh could not resolve hostname
-            command: |
-              ssh-keyscan $DROPLET_IP_STG >> ~/.ssh/known_hosts
-        - add_ssh_keys:
-            fingerprints:
-              - "5d:31:e4:99:b3:31:14:d9:2e:50:b7:1f:8f:b8:f3:ab"
-        - run:
-            name: Deploy Over SSH
-            command: |
-              chmod +x ./util/clean_compose.sh
-              (cd ./util && ./clean_compose.sh)
-              chmod +x ./util/merge_env.sh
-              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_STG:/apps/APISuite/
-              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_STG "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
-
-  deploy-prd:
-      executor: apisuite-executor
-      steps:
-        - checkout
-        - attach_workspace:
-            at: ./util
-        - run:
-            name: Fix ssh could not resolve hostname
-            command: |
-              ssh-keyscan $DROPLET_IP_PRD >> ~/.ssh/known_hosts
-        - add_ssh_keys:
-            fingerprints:
-              - "28:aa:29:cc:98:cb:7d:23:80:2d:4f:f6:85:4d:a7:4a"
-        - run:
-            name: Deploy Over SSH
-            command: |
-              chmod +x ./util/clean_compose.sh
-              (cd ./util && ./clean_compose.sh)
-              chmod +x ./util/merge_env.sh
-              scp -o StrictHostKeyChecking=no ./util/.env ./util/environment ./util/docker-compose.yml ./util/merge_env.sh $DROPLET_USER@$DROPLET_IP_PRD:/apps/APISuite/
-              ssh -o StrictHostKeyChecking=no $DROPLET_USER@$DROPLET_IP_PRD "cd /apps/APISuite/ && ./merge_env.sh && docker-compose pull && docker-compose up -d && docker image prune --force"
+  deploy:
+    docker:
+      - image: cimg/base:2020.01
+    steps:
+      - attach_workspace:
+          at: ~/
+      - run: ./deploy.sh
 
 workflows:
   version: 2
   build:
     jobs:
-        - test
-        - release:
-            filters:
-                branches:
-                  only:
-                    - develop
-                    - staging
-                    - production
-            requires:
-                - test
-        - build:
-            filters:
-                branches:
-                  only:
-                    - develop
-                    - staging
-                    - production
-            requires:
-                - release
-        - build-cloud:
-            filters:
-                branches:
-                  only:
-                    - staging
-                    - production
-            requires:
-                - release
-        - deploy-dev:
-            filters:
-                branches:
-                  only:
-                    - develop
-            requires:
-                - build
-        - deploy-stg:
-            filters:
-                branches:
-                  only:
-                    - staging
-            requires:
-                - build
-        - deploy-prd:
-            filters:
-                branches:
-                  only:
-                    - production
-            requires:
-              - build
+      - test
+#      - release:
+#          context: docker
+#          filters:
+#            branches:
+#              only:
+#                - develop
+#                - staging
+#                - production
+#          requires:
+#            - test
+#      - build:
+#          context: docker
+#          filters:
+#            branches:
+#              only:
+#                - develop
+#                - staging
+#                - production
+#          requires:
+#            - release
+#      - deploy:
+#          context: vmachines
+#          filters:
+#            branches:
+#              only:
+#                - develop
+#                - staging
+#                - production
+#          requires:
+#            - build
