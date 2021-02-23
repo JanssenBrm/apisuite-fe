@@ -10,9 +10,6 @@ set -e
 # Email       : delio@cloudoki.com
 ###################################################################
 
-cd ..
-
-# Create the base config file
 cp "sandbox.config-$CIRCLE_BRANCH.json" "sandbox.config.json"
 npm install
 npm run test
