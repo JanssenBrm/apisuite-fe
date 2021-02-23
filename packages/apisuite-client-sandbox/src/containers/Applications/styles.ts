@@ -5,7 +5,8 @@ import { config } from 'constants/global'
 export default makeStyles(({
   clientApplicationCard: {
     height: '331.5px',
-    marginBottom: '25px',
+    marginBottom: '15px',
+    marginRight: '15px',
     width: '285px',
 
     '&:hover': {
@@ -111,7 +112,6 @@ export default makeStyles(({
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
-    justifyContent: 'space-between',
   },
 
   clientApplicationsContentContainer: {
