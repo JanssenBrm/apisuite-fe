@@ -18,7 +18,10 @@ set -e
 for project in ${PROJECTS}; do
   if [ -n "$project" ]; then
     # Go into the folder and create the base config file
-    (cd ../${ROOT_PROJECTS_FOLDER}/${project} && cp "sandbox.config-$CIRCLE_BRANCH.json" "sandbox.config.json")
+    (cd ../${ROOT_PROJECTS_FOLDER}/${project})
+    if [ -f "sandbox.config-$CIRCLE_BRANCH.json" ]; then
+      (cp "sandbox.config-$CIRCLE_BRANCH.json" "sandbox.config.json"))
+    fi
     # Go into folder and run yarn/npm i
     (cd ../${ROOT_PROJECTS_FOLDER}/${project} && npm i)
     # Go into folder and run test
