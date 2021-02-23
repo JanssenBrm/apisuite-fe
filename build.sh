@@ -17,7 +17,7 @@ if [ "$CIRCLE_BRANCH" = "production" ]; then
 
   VERSION=$(cat package.json | grep version | head -1 | awk -F ": " '{ print $2 }' | sed 's/[",]//g')
 
-  docker build \
+  docker build --build-arg SSH_PRIVATE_KEY="$(echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d)" \
     -t cloudokihub/apisuite-fe:$HASH \
     -t cloudokihub/apisuite-fe:latest \
     -t cloudokihub/apisuite-fe:$VERSION .
@@ -27,7 +27,7 @@ if [ "$CIRCLE_BRANCH" = "production" ]; then
 
   # Cloud image
   cp sandbox.config-cloud.json sandbox.config.json
-  docker build \
+  docker build --build-arg SSH_PRIVATE_KEY="$(echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d)" \
     -t cloudokihub/apisuite-fe:cloud-$VERSION \
     -t cloudokihub/apisuite-fe:cloud-latest .
 
@@ -41,7 +41,7 @@ else
     LATEST=stg-latest
   fi
 
-  docker build \
+  docker build --build-arg SSH_PRIVATE_KEY="$(echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d)" \
     -t cloudokihub/apisuite-fe:$HASH \
     -t cloudokihub/apisuite-fe:$LATEST .
 
