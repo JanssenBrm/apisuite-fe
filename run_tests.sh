@@ -10,7 +10,10 @@ set -e
 # Email       : delio@cloudoki.com
 ###################################################################
 
+# . ./install_dependencies.sh
+
 cp "sandbox.config-$CIRCLE_BRANCH.json" "sandbox.config.json"
 npm install
-npm run test
+npm run pretest
+# npm run test
 rm sandbox.config.json
