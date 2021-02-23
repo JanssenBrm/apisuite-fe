@@ -10,6 +10,7 @@ jobs:
     executor: node12-executor
     steps:
       - checkout
+      - run: npm install
       - run: npm run pretest
 # No relevant tests for now. Leaving pretest for linter & type check
 #      - run:
