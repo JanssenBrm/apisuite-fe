@@ -27,7 +27,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
   allUserApps,
   apisByName,
   isModalOpen,
-  requestAPIAccess,
+  requestAPIAccessAction,
   settings,
   toggleModal,
 }) => {
@@ -38,19 +38,23 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
   /* 'Client app' selection */
 
   const initialClientApp = {
-    appId: '',
     clientId: '',
     clientSecret: '',
     createdAt: '',
     description: '',
-    enable: '',
+    id: '',
     logo: '',
     name: '',
     orgId: '',
-    pubUrls: [],
+    privacyUrl: '',
     redirectUrl: '',
+    shortDescription: '',
     subscriptions: [],
+    supportUrl: '',
+    tosUrl: '',
     updatedAt: '',
+    websiteUrl: '',
+    youtubeUrl: '',
   }
 
   const [selectedClientApp, setSelectedClientApp] = React.useState(
@@ -140,9 +144,9 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
   /* 'API Product' access request */
 
   const handleAPIProductAccessRequest = () => {
-    const idOfSelectedClientApp = Number(selectedClientApp.appId)
+    const idOfSelectedClientApp = Number(selectedClientApp.id)
 
-    requestAPIAccess(idOfSelectedClientApp)
+    requestAPIAccessAction(idOfSelectedClientApp)
     resetModalSelections()
   }
 
@@ -156,7 +160,20 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
           {/* Modal header */}
           <div className={classes.modalHeaderContainer}>
             <div className={classes.logoAndNameContainer}>
-              <AmpStoriesRoundedIcon className={classes.portalLogo} />
+              {
+                settings.logoURL
+                  ? (
+                    <img
+                      className={classes.imageLogo}
+                      src={settings.logoURL}
+                    />
+                  )
+                  : (
+                    <AmpStoriesRoundedIcon
+                      className={classes.iconLogo}
+                    />
+                  )
+              }
 
               <h3 className={classes.portalName}>
                 {settings.portalName}
@@ -204,7 +221,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                   displayEmpty
                   IconComponent={ExpandMoreRoundedIcon}
                   value={
-                    selectedClientApp.appId === ''
+                    selectedClientApp.id === ''
                       ? ''
                       : selectedClientApp.name
                   }
@@ -347,12 +364,12 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                   customButtonClassName={
                     (selectedClientApp.subscriptions.length === 0)
                       ? (
-                        selectedClientApp.appId === ''
+                        selectedClientApp.id === ''
                           ? classes.disabledRequestAccessButton
                           : classes.enabledRequestAccessButton
                       )
                       : (
-                        selectedClientApp.appId === ''
+                        selectedClientApp.id === ''
                           ? classes.disabledRevokeAccessButton
                           /* Previously ': classes.enabledRevokeAccessButton'.
                           Go back on this change once the 'revoke' action is possible. */
@@ -388,7 +405,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                   }
                   href={
                     isClientAppSelected
-                      ? `/dashboard/apps/detail/${selectedClientApp.appId}`
+                      ? `/dashboard/apps/detail/${selectedClientApp.id}`
                       : '#'
                   }
                   label={

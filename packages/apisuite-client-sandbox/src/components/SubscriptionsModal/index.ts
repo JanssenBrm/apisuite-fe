@@ -2,7 +2,7 @@ import { Dispatch } from 'redux'
 
 import { connect } from 'react-redux'
 
-import { requestAPIAccess } from 'containers/Applications/ducks'
+import { requestAPIAccessAction } from 'containers/Applications/ducks'
 
 import { getAPIsByName } from 'containers/Subscriptions/selectors'
 
@@ -17,7 +17,7 @@ export const mapStateToProps = (store: Store) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  requestAPIAccess: (appId: number) => dispatch(requestAPIAccess(appId)),
+  requestAPIAccessAction: (appId: number) => dispatch(requestAPIAccessAction(appId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SubscriptionsModal)

@@ -93,6 +93,7 @@ export default makeStyles(({
     justifyContent: 'center',
     marginLeft: '12px',
     textAlign: 'center',
+    textTransform: 'uppercase',
     width: '35px',
   },
 

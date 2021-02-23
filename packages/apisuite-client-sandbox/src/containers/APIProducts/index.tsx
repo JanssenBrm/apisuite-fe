@@ -2,7 +2,7 @@ import { Dispatch } from 'redux'
 
 import { connect } from 'react-redux'
 
-import { getUserApps } from 'containers/Applications/ducks'
+import { getAllUserAppsAction } from 'containers/Applications/ducks'
 import { getAPIs } from 'containers/Subscriptions/ducks'
 
 import { Store } from 'store/types'
@@ -15,8 +15,8 @@ const mapStateToProps = ({ auth, subscriptions }: Store) => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  getAllUserAppsAction: (userId: number) => dispatch(getAllUserAppsAction(userId)),
   getAPIs: () => dispatch(getAPIs()),
-  getUserApps: (userId: number) => dispatch(getUserApps(userId)),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(APIProducts)

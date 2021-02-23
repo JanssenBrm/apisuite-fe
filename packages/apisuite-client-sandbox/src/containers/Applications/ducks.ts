@@ -1,253 +1,223 @@
 import update from 'immutability-helper'
-import { AppData, ApplicationsStore, ApplicationsActions } from './types'
-import { SubscriptionsActionTypes } from 'containers/Subscriptions/ducks'
-import { SubscriptionsActions } from 'containers/Subscriptions/types'
-import { AuthStoreActionTypes } from 'containers/Auth/types'
-import { LOGOUT } from 'containers/Auth/ducks'
+
+import { AppData, ApplicationsActions, ApplicationsStore, CreateAppActionData, UpdateAppActionData } from './types'
 
 /** Initial state */
 const initialState: ApplicationsStore = {
   currentApp: {
-    appId: 0,
-    name: '',
-    description: '',
-    redirectUrl: '',
-    logo: 'http://logo.png',
-    orgId: 0,
-    subscriptions: [],
-    visibility: 'private',
-    pubUrls: [{
-      url: '',
-      type: 'client',
-    }],
-    enable: true,
     clientId: '',
     clientSecret: '',
+    createdAt: '',
+    description: '',
+    id: 0,
+    logo: '',
+    name: '',
+    orgId: 0,
+    privacyUrl: '',
+    redirectUrl: '',
+    shortDescription: '',
+    subscriptions: [],
+    supportUrl: '',
+    tosUrl: '',
+    updatedAt: '',
+    websiteUrl: '',
+    youtubeUrl: '',
+  },
+  createAppStatus: {
+    isError: false,
+    isRequesting: false,
+  },
+  deleteAppStatus: {
+    isError: false,
+    isRequesting: false,
+  },
+  requestingAPIAccessStatus: {
+    isError: false,
+    isRequesting: false,
+  },
+  updateAppStatus: {
+    isError: false,
+    isRequesting: false,
   },
   userApps: [],
-  resCreate: {
-    isRequesting: false,
-    isError: false,
-  },
-  resUpdate: {
-    isRequesting: false,
-    isError: false,
-  },
-  resDelete: {
-    isRequesting: false,
-    isError: false,
-  },
-  resRequestAPIAccess: {
-    isRequesting: false,
-    isError: false,
-  },
-  subscribing: {
-    isRequesting: false,
-    isError: false,
-  },
 }
 
 /** Action types */
-export const CREATE_APP = 'Applications/CREATE_APP'
-export const CREATE_APP_SUCCESS = 'Applications/CREATE_APP_SUCCESS'
-export const CREATE_APP_ERROR = 'Applications/CREATE_APP_ERROR'
-export const UPDATE_APP = 'Applications/UPDATE_APP'
-export const UPDATE_APP_SUCCESS = 'Applications/UPDATE_APP_SUCCESS'
-export const UPDATE_APP_ERROR = 'Applications/UPDATE_APP_ERROR'
-export const DELETE_APP = 'Applications/DELETE_APP'
-export const DELETE_APP_SUCCESS = 'Applications/DELETE_APP_SUCCESS'
-export const DELETE_APP_ERROR = 'Applications/DELETE_APP_ERROR'
-export const REQUEST_API_ACCESS = 'Applications/REQUEST_API_ACCESS'
-export const REQUEST_API_ACCESS_SUCCESS = 'Applications/REQUEST_API_ACCESS_SUCCESS'
-export const REQUEST_API_ACCESS_ERROR = 'Applications/REQUEST_API_ACCESS_ERROR'
-export const GET_APP_DETAILS = 'Applications/GET_APP_DETAILS'
-export const GET_APP_DETAILS_SUCCESS = 'Applications/GET_APP_DETAILS_SUCCESS'
-export const GET_USER_APPS = 'Applications/GET_USER_APPS'
-export const GET_USER_APPS_SUCCESS = 'Applications/GET_USER_APPS_SUCCESS'
-export const RESET_CURRENT_APP = 'Applications/RESET_CURRENT_APP'
+export const CREATE_APP_ACTION = 'Applications/CREATE_APP_ACTION'
+export const CREATE_APP_ACTION_ERROR = 'Applications/CREATE_APP_ACTION_ERROR'
+export const CREATE_APP_ACTION_SUCCESS = 'Applications/CREATE_APP_ACTION_SUCCESS'
+export const DELETE_APP_ACTION = 'Applications/DELETE_APP_ACTION'
+export const DELETE_APP_ACTION_ERROR = 'Applications/DELETE_APP_ACTION_ERROR'
+export const DELETE_APP_ACTION_SUCCESS = 'Applications/DELETE_APP_ACTION_SUCCESS'
+export const GET_ALL_USER_APPS_ACTION = 'Applications/GET_ALL_USER_APPS_ACTION'
+export const GET_ALL_USER_APPS_ACTION_SUCCESS = 'Applications/GET_ALL_USER_APPS_ACTION_SUCCESS'
+export const GET_USER_APP_ACTION = 'Applications/GET_USER_APP_ACTION'
+export const GET_USER_APP_ACTION_SUCCESS = 'Applications/GET_USER_APP_ACTION_SUCCESS'
+export const REQUEST_API_ACCESS_ACTION = 'Applications/REQUEST_API_ACCESS_ACTION'
+export const REQUEST_API_ACCESS_ACTION_ERROR = 'Applications/REQUEST_API_ACCESS_ACTION_ERROR'
+export const REQUEST_API_ACCESS_ACTION_SUCCESS = 'Applications/REQUEST_API_ACCESS_ACTION_SUCCESS'
+export const UPDATE_APP_ACTION = 'Applications/UPDATE_APP_ACTION'
+export const UPDATE_APP_ACTION_ERROR = 'Applications/UPDATE_APP_ACTION_ERROR'
+export const UPDATE_APP_ACTION_SUCCESS = 'Applications/UPDATE_APP_ACTION_SUCCESS'
 
-// TODO: name all reducers according to feature and change them to named exports
 /** Reducer */
 export default function reducer (
   state = initialState,
-  action: ApplicationsActions | SubscriptionsActions | AuthStoreActionTypes['logout'],
+  action: ApplicationsActions,
 ): ApplicationsStore {
   switch (action.type) {
-    case LOGOUT: {
+    case CREATE_APP_ACTION: {
+      return update(state, {
+        createAppStatus: {
+          isError: { $set: false },
+          isRequesting: { $set: true },
+        },
+      })
+    }
+
+    case CREATE_APP_ACTION_SUCCESS: {
+      return update(state, {
+        createAppStatus: {
+          isRequesting: { $set: false },
+        },
+      })
+    }
+
+    case CREATE_APP_ACTION_ERROR: {
+      return update(state, {
+        createAppStatus: {
+          isError: { $set: true },
+          isRequesting: { $set: false },
+        },
+      })
+    }
+
+    case DELETE_APP_ACTION: {
+      return update(state, {
+        deleteAppStatus: {
+          isError: { $set: false },
+          isRequesting: { $set: true },
+        },
+      })
+    }
+
+    case DELETE_APP_ACTION_SUCCESS: {
+      return update(state, {
+        deleteAppStatus: {
+          isRequesting: { $set: false },
+        },
+      })
+    }
+
+    case DELETE_APP_ACTION_ERROR: {
+      return update(state, {
+        deleteAppStatus: {
+          isError: { $set: true },
+          isRequesting: { $set: false },
+        },
+      })
+    }
+
+    case GET_ALL_USER_APPS_ACTION: {
       return state
     }
-    case CREATE_APP: {
-      return update(state, {
-        resCreate: {
-          isRequesting: { $set: true },
-          isError: { $set: false },
-        },
-      })
-    }
-    case CREATE_APP_SUCCESS: {
-      return update(state, {
-        resCreate: {
-          isRequesting: { $set: false },
-        },
-      })
-    }
-    case CREATE_APP_ERROR: {
-      return update(state, {
-        resCreate: {
-          isRequesting: { $set: false },
-          isError: { $set: true },
-        },
-      })
-    }
-    case UPDATE_APP: {
-      return update(state, {
-        resUpdate: {
-          isRequesting: { $set: true },
-          isError: { $set: false },
-        },
-      })
-    }
-    case UPDATE_APP_SUCCESS: {
-      return update(state, {
-        resUpdate: {
-          isRequesting: { $set: false },
-        },
-        currentApp: {
-          appId: { $set: action.appData.appId },
-          name: { $set: action.appData.name },
-          description: { $set: action.appData.description },
-          redirectUrl: { $set: action.appData.redirectUrl },
-          logo: { $set: action.appData.logo },
-          orgId: { $set: action.appData.orgId },
-          pubUrls: { $set: action.appData.pubUrls },
-          enable: { $set: action.appData.enable },
-        },
-      })
-    }
-    case UPDATE_APP_ERROR: {
-      return update(state, {
-        resUpdate: {
-          isRequesting: { $set: false },
-          isError: { $set: true },
-        },
-      })
-    }
-    case DELETE_APP: {
-      return update(state, {
-        resDelete: {
-          isRequesting: { $set: true },
-          isError: { $set: false },
-        },
-      })
-    }
-    case DELETE_APP_SUCCESS: {
-      return update(state, {
-        resDelete: {
-          isRequesting: { $set: false },
-        },
-      })
-    }
-    case DELETE_APP_ERROR: {
-      return update(state, {
-        resDelete: {
-          isRequesting: { $set: false },
-          isError: { $set: true },
-        },
-      })
-    }
-    case REQUEST_API_ACCESS: {
-      return update(state, {
-        resRequestAPIAccess: {
-          isRequesting: { $set: true },
-          isError: { $set: false },
-        },
-      })
-    }
-    case REQUEST_API_ACCESS_SUCCESS: {
-      return update(state, {
-        resRequestAPIAccess: {
-          isRequesting: { $set: false },
-        },
-      })
-    }
-    case REQUEST_API_ACCESS_ERROR: {
-      return update(state, {
-        resRequestAPIAccess: {
-          isRequesting: { $set: false },
-          isError: { $set: true },
-        },
-      })
-    }
-    case GET_APP_DETAILS: {
-      return state
-    }
-    case GET_APP_DETAILS_SUCCESS: {
-      return update(state, {
-        currentApp: {
-          appId: { $set: action.appData.appId },
-          name: { $set: action.appData.name },
-          description: { $set: action.appData.description },
-          redirectUrl: { $set: action.appData.redirectUrl },
-          logo: { $set: action.appData.logo },
-          orgId: { $set: action.appData.orgId },
-          subscriptions: { $set: action.appData.subscriptions },
-          pubUrls: { $set: action.appData.pubUrls },
-          createdAt: { $set: action.appData.createdAt },
-          updatedAt: { $set: action.appData.updatedAt },
-          clientId: { $set: action.appData.clientId },
-          clientSecret: { $set: action.appData.clientSecret },
-        },
-      })
-    }
-    case GET_USER_APPS: {
-      return state
-    }
-    case GET_USER_APPS_SUCCESS: {
+
+    case GET_ALL_USER_APPS_ACTION_SUCCESS: {
       return update(state, {
         userApps: { $set: action.userApps },
       })
     }
 
-    /** Actions related to adding and removing app subscriptions to APIs */
-    case SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION: {
+    case GET_USER_APP_ACTION: {
+      return state
+    }
+
+    case GET_USER_APP_ACTION_SUCCESS: {
       return update(state, {
-        subscribing: {
+        currentApp: {
+          clientId: { $set: action.appData.clientId },
+          clientSecret: { $set: action.appData.clientSecret },
+          createdAt: { $set: action.appData.createdAt },
+          description: { $set: action.appData.description },
+          id: { $set: action.appData.id },
+          logo: { $set: action.appData.logo },
+          name: { $set: action.appData.name },
+          orgId: { $set: action.appData.orgId },
+          privacyUrl: { $set: action.appData.privacyUrl },
+          redirectUrl: { $set: action.appData.redirectUrl },
+          shortDescription: { $set: action.appData.shortDescription },
+          subscriptions: { $set: action.appData.subscriptions },
+          supportUrl: { $set: action.appData.supportUrl },
+          tosUrl: { $set: action.appData.tosUrl },
+          updatedAt: { $set: action.appData.updatedAt },
+          websiteUrl: { $set: action.appData.websiteUrl },
+          youtubeUrl: { $set: action.appData.youtubeUrl },
+        },
+      })
+    }
+
+    case REQUEST_API_ACCESS_ACTION: {
+      return update(state, {
+        requestingAPIAccessStatus: {
+          isError: { $set: false },
           isRequesting: { $set: true },
         },
       })
     }
 
-    case SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS: {
+    case REQUEST_API_ACCESS_ACTION_SUCCESS: {
       return update(state, {
-        userApps: { [action.updatedAppIndx]: { $set: action.updatedApp } },
-        subscribing: { isRequesting: { $set: false } },
+        requestingAPIAccessStatus: {
+          isRequesting: { $set: false },
+        },
       })
     }
 
-    case SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_ERROR: {
+    case REQUEST_API_ACCESS_ACTION_ERROR: {
       return update(state, {
-        subscribing: { isRequesting: { $set: false } },
+        requestingAPIAccessStatus: {
+          isError: { $set: true },
+          isRequesting: { $set: false },
+        },
       })
     }
 
-    case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION: {
+    case UPDATE_APP_ACTION: {
       return update(state, {
-        subscribing: {
+        updateAppStatus: {
+          isError: { $set: false },
           isRequesting: { $set: true },
         },
       })
     }
 
-    case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS: {
+    case UPDATE_APP_ACTION_SUCCESS: {
       return update(state, {
-        userApps: { [action.updatedAppIndx]: { $set: action.updatedApp } },
-        subscribing: { isRequesting: { $set: false } },
+        updateAppStatus: {
+          isRequesting: { $set: false },
+        },
+
+        currentApp: {
+          description: { $set: action.appData.description },
+          logo: { $set: action.appData.logo },
+          name: { $set: action.appData.name },
+          privacyUrl: { $set: action.appData.privacyUrl },
+          redirectUrl: { $set: action.appData.redirectUrl },
+          shortDescription: { $set: action.appData.shortDescription },
+          supportUrl: { $set: action.appData.supportUrl },
+          tosUrl: { $set: action.appData.tosUrl },
+          websiteUrl: { $set: action.appData.websiteUrl },
+          youtubeUrl: { $set: action.appData.youtubeUrl },
+        },
       })
     }
 
-    case SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_ERROR: {
+    case UPDATE_APP_ACTION_ERROR: {
       return update(state, {
-        subscribing: { isRequesting: { $set: false } },
+        updateAppStatus: {
+          isError: { $set: true },
+          isRequesting: { $set: false },
+        },
       })
     }
 
@@ -257,90 +227,66 @@ export default function reducer (
 }
 
 /** Action builders */
-export function createApp (appData: AppData) {
-  return { type: CREATE_APP, appData }
+export function createAppAction (appData: CreateAppActionData) {
+  return { type: CREATE_APP_ACTION, appData }
 }
 
-export function createAppSuccess () {
-  return { type: CREATE_APP_SUCCESS }
+export function createAppActionSuccess () {
+  return { type: CREATE_APP_ACTION_SUCCESS }
 }
 
-export function createAppError () {
-  return { type: CREATE_APP_ERROR }
+export function createAppActionError () {
+  return { type: CREATE_APP_ACTION_ERROR }
 }
 
-export function updateApp (appData: AppData) {
-  return { type: UPDATE_APP, appData }
+export function updateAppAction (appData: UpdateAppActionData) {
+  return { type: UPDATE_APP_ACTION, appData }
 }
 
-export function updateAppSuccess (appData: AppData) {
-  return { type: UPDATE_APP_SUCCESS, appData }
+export function updateAppActionSuccess (appData: AppData) {
+  return { type: UPDATE_APP_ACTION_SUCCESS, appData }
 }
 
-export function updateAppError () {
-  return { type: UPDATE_APP_ERROR }
+export function updateAppActionError () {
+  return { type: UPDATE_APP_ACTION_ERROR }
 }
 
-export function deleteApp (appId: number, orgId?: number) {
-  return { type: DELETE_APP, appId, orgId }
+export function deleteAppAction (appId: number, orgId?: number) {
+  return { type: DELETE_APP_ACTION, appId, orgId }
 }
 
-export function deleteAppSuccess () {
-  return { type: DELETE_APP_SUCCESS }
+export function deleteAppActionSuccess () {
+  return { type: DELETE_APP_ACTION_SUCCESS }
 }
 
-export function deleteAppError () {
-  return { type: DELETE_APP_ERROR }
+export function deleteAppActionError () {
+  return { type: DELETE_APP_ACTION_ERROR }
 }
 
-export function requestAPIAccess (appId: number) {
-  return { type: REQUEST_API_ACCESS, appId }
+export function requestAPIAccessAction (appId: number) {
+  return { type: REQUEST_API_ACCESS_ACTION, appId }
 }
 
-export function requestAPIAccessSuccess () {
-  return { type: REQUEST_API_ACCESS_SUCCESS }
+export function requestAPIAccessActionSuccess () {
+  return { type: REQUEST_API_ACCESS_ACTION_SUCCESS }
 }
 
-export function requestAPIAccessError () {
-  return { type: REQUEST_API_ACCESS_ERROR }
+export function requestAPIAccessActionError () {
+  return { type: REQUEST_API_ACCESS_ACTION_ERROR }
 }
 
-export function getAppDetails (appId: number, orgId: number) {
-  return { type: GET_APP_DETAILS, appId, orgId }
+export function getUserAppAction (appId: number, orgId: number) {
+  return { type: GET_USER_APP_ACTION, appId, orgId }
 }
 
-export function getAppDetailsSuccess (appData: AppData) {
-  return { type: GET_APP_DETAILS_SUCCESS, appData }
+export function getUserAppActionSuccess (appData: AppData) {
+  return { type: GET_USER_APP_ACTION_SUCCESS, appData }
 }
 
-export function getUserApps (userId: number) {
-  return { type: GET_USER_APPS, userId }
+export function getAllUserAppsAction (userId: number) {
+  return { type: GET_ALL_USER_APPS_ACTION, userId }
 }
 
-export function getUserAppsSuccess (userApps: AppData[]) {
-  return { type: GET_USER_APPS_SUCCESS, userApps }
-}
-
-export function addAppSubscription (appId: number, apiName: string) {
-  return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION, appId, apiName }
-}
-
-export function addAppSubscriptionSuccess (updatedApp: AppData, updatedAppIndx: number) {
-  return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_SUCCESS, updatedAppIndx, updatedApp }
-}
-
-export function addAppSubscriptionError () {
-  return { type: SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION_ERROR }
-}
-
-export function removeAppSubscription (appId: number, apiName: string) {
-  return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION, appId, apiName }
-}
-
-export function removeAppSubscriptionSuccess (updatedApp: AppData, updatedAppIndx: number) {
-  return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_SUCCESS, updatedAppIndx, updatedApp }
-}
-
-export function removeAppSubscriptionError () {
-  return { type: SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION_ERROR }
+export function getAllUserAppsActionSuccess (userApps: AppData[]) {
+  return { type: GET_ALL_USER_APPS_ACTION_SUCCESS, userApps }
 }

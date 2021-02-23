@@ -1,68 +1,67 @@
 import {
-  CREATE_APP,
-  UPDATE_APP,
-  DELETE_APP,
-  GET_APP_DETAILS,
-  getAppDetailsSuccess,
-  getUserAppsSuccess,
-  GET_USER_APPS,
-  getUserApps,
-  createAppError,
-  updateAppError,
-  deleteAppError,
-  deleteAppSuccess,
-  updateAppSuccess,
-  createAppSuccess,
-  addAppSubscriptionSuccess,
-  addAppSubscriptionError,
-  removeAppSubscriptionSuccess,
-  removeAppSubscriptionError,
-  requestAPIAccessError,
-  requestAPIAccessSuccess,
-  REQUEST_API_ACCESS,
-} from './ducks'
-import { SubscriptionsActionTypes } from 'containers/Subscriptions/ducks'
-import {
-  AddAppSubscriptionAction,
-  RemoveAppSubscriptionAction,
-  Api,
-} from 'containers/Subscriptions/types'
-import {
-  takeLatest,
   call,
   put,
   select,
+  takeLatest,
 } from 'redux-saga/effects'
+
 import {
-  CreateAppAction,
-  UpdateAppAction,
-  DeleteAppAction,
-  GetUserAppsAction,
-  GetAppDetails,
+  CREATE_APP_ACTION,
+  createAppActionError,
+  createAppActionSuccess,
+  DELETE_APP_ACTION,
+  deleteAppActionError,
+  deleteAppActionSuccess,
+  GET_ALL_USER_APPS_ACTION,
+  GET_USER_APP_ACTION,
+  getAllUserAppsAction,
+  getAllUserAppsActionSuccess,
+  getUserAppActionSuccess,
+  REQUEST_API_ACCESS_ACTION,
+  requestAPIAccessActionError,
+  requestAPIAccessActionSuccess,
+  UPDATE_APP_ACTION,
+  updateAppActionError,
+  updateAppActionSuccess,
+} from './ducks'
+
+import {
   AppData,
+  CreateAppAction,
+  DeleteAppAction,
+  GetUserAppAction,
   RequestAPIAccessAction,
+  UpdateAppAction,
 } from './types'
+
+import { authActions } from 'containers/Auth/ducks'
+
 import {
   API_URL,
   SIGNUP_PORT,
 } from 'constants/endpoints'
-import request from 'util/request'
-import { push } from 'connected-react-router'
-import { Store } from 'store/types'
-import qs from 'qs'
-import { authActions } from 'containers/Auth/ducks'
-import { openNotification } from 'containers/NotificationStack/ducks'
 
-export function * createApp (action: CreateAppAction) {
+import request from 'util/request'
+
+import { push } from 'connected-react-router'
+
+import { Store } from 'store/types'
+
+import qs from 'qs'
+
+export function * createAppActionSaga (action: CreateAppAction) {
   try {
     const data = {
-      name: action.appData.name,
       description: action.appData.description,
-      'redirect_url': action.appData.redirectUrl,
       logo: action.appData.logo,
-      visibility: action.appData.visibility,
-      subscriptions: action.appData.subscriptions,
-      'pub_urls': action.appData.pubUrls,
+      name: action.appData.name,
+      privacyUrl: action.appData.privacyUrl,
+      redirectUrl: action.appData.redirectUrl,
+      shortDescription: action.appData.shortDescription,
+      supportUrl: action.appData.supportUrl,
+      tosUrl: action.appData.tosUrl,
+      websiteUrl: action.appData.websiteUrl,
+      youtubeUrl: action.appData.youtubeUrl,
     }
 
     const createAppUrl = `${API_URL}${SIGNUP_PORT}/apps`
@@ -75,28 +74,34 @@ export function * createApp (action: CreateAppAction) {
       },
       data: qs.stringify(data),
     })
-    yield put(createAppSuccess())
+
+    yield put(createAppActionSuccess())
+
     yield put(push('/dashboard/apps'))
   } catch (error) {
-    yield put(createAppError())
+    yield put(createAppActionError())
     yield put(authActions.handleSessionExpire())
   }
 }
 
-export function * updateApp (action: UpdateAppAction) {
+export function * updateAppActionSaga (action: UpdateAppAction) {
   try {
     const data = {
-      name: action.appData.name,
       description: action.appData.description,
-      'redirect_url': action.appData.redirectUrl,
       logo: action.appData.logo,
-      visibility: action.appData.visibility,
-      'pub_urls': action.appData.pubUrls,
+      name: action.appData.name,
+      privacyUrl: action.appData.privacyUrl,
+      redirectUrl: action.appData.redirectUrl,
+      shortDescription: action.appData.shortDescription,
+      supportUrl: action.appData.supportUrl,
+      tosUrl: action.appData.tosUrl,
+      websiteUrl: action.appData.websiteUrl,
+      youtubeUrl: action.appData.youtubeUrl,
     }
 
-    const updateAppUrl = `${API_URL}${SIGNUP_PORT}/app/update/${action.appData.appId}`
+    const updateAppUrl = `${API_URL}${SIGNUP_PORT}/apps/${action.appData.id}`
 
-    yield call(request, {
+    const response = yield call(request, {
       url: updateAppUrl,
       method: 'PUT',
       headers: {
@@ -104,29 +109,35 @@ export function * updateApp (action: UpdateAppAction) {
       },
       data: qs.stringify(data),
     })
-    yield put(updateAppSuccess({
-      appId: action.appData.appId,
-      name: action.appData.name,
-      description: action.appData.description,
-      redirectUrl: action.appData.redirectUrl,
-      logo: action.appData.logo,
-      orgId: action.appData.orgId,
-      visibility: action.appData.visibility,
-      subscriptions: action.appData.subscriptions,
-      pubUrls: action.appData.pubUrls,
-      enable: action.appData.enable,
-      clientId: action.appData.clientId,
-      clientSecret: action.appData.clientSecret,
+
+    yield put(updateAppActionSuccess({
+      clientId: response.clientId,
+      clientSecret: response.clientSecret,
+      createdAt: response.createdAt,
+      description: response.description,
+      id: response.id,
+      logo: response.logo,
+      name: response.name,
+      orgId: response.orgId,
+      privacyUrl: response.privacyUrl,
+      redirectUrl: response.redirectUrl,
+      shortDescription: response.shortDescription,
+      subscriptions: response.subscriptions,
+      supportUrl: response.supportUrl,
+      tosUrl: response.tosUrl,
+      updatedAt: response.updatedAt,
+      websiteUrl: response.websiteUrl,
+      youtubeUrl: response.youtubeUrl,
     }))
   } catch (error) {
-    yield put(updateAppError())
+    yield put(updateAppActionError())
     yield put(authActions.handleSessionExpire())
   }
 }
 
-export function * deleteApp (action: DeleteAppAction) {
+export function * deleteAppActionSaga (action: DeleteAppAction) {
   try {
-    const deleteAppUrl = `${API_URL}${SIGNUP_PORT}/app/delete/${action.appId}`
+    const deleteAppUrl = `${API_URL}${SIGNUP_PORT}/apps/${action.appId}`
 
     yield call(request, {
       url: deleteAppUrl,
@@ -135,31 +146,34 @@ export function * deleteApp (action: DeleteAppAction) {
         'content-type': 'application/x-www-form-urlencoded',
       },
     })
-    yield put(deleteAppSuccess())
+
+    yield put(deleteAppActionSuccess())
+
     if (action.orgId) {
-      yield put(getUserApps(action.orgId))
+      yield put(getAllUserAppsAction(action.orgId))
     }
+
     yield put(push('/dashboard/apps'))
   } catch (error) {
     /* TODO: Review the 'checkStatus' function in 'util/request.ts',
     as this Saga considers a response from the server whose status
     code is 204 (i.e., a 'No Content') as an error. */
     if (error.status === 204) {
-      yield put(deleteAppSuccess())
+      yield put(deleteAppActionSuccess())
 
       if (action.orgId) {
-        yield put(getUserApps(action.orgId))
+        yield put(getAllUserAppsAction(action.orgId))
       }
 
       yield put(push('/dashboard/apps'))
     } else {
-      yield put(deleteAppError())
+      yield put(deleteAppActionError())
       yield put(authActions.handleSessionExpire())
     }
   }
 }
 
-export function * requestAPIAccess (action: RequestAPIAccessAction) {
+export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
   try {
     const requestAPIAccessUrl = `${API_URL}/apps/${action.appId}/request`
 
@@ -175,197 +189,106 @@ export function * requestAPIAccess (action: RequestAPIAccessAction) {
       },
     })
 
-    yield put(requestAPIAccessSuccess())
+    yield put(requestAPIAccessActionSuccess())
   } catch (error) {
-    yield put(requestAPIAccessError())
+    yield put(requestAPIAccessActionError())
     yield put(authActions.handleSessionExpire())
   }
 }
 
-// TODO: Eventually clean this up - despite working, this is not according to most recent documentation changes.
-
-export function * getUsersApps (action: GetUserAppsAction) {
+export function * getAllUserAppsActionSaga () {
   try {
-    const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.userId}`
+    const getAllUserAppsActionUrl = `${API_URL}${SIGNUP_PORT}/apps`
 
     const response = yield call(request, {
-      url: getUserAppsUrl,
+      url: getAllUserAppsActionUrl,
       method: 'GET',
       headers: {
         'content-type': 'application/x-www-form-urlencoded',
       },
     })
 
-    const userApps = response.map((userApp: any) => (
+    const allUserApps = response.map((userApp: any) => (
       {
-        appId: userApp.id,
-        name: userApp.name,
-        description: userApp.description,
-        redirectUrl: userApp.redirect_url,
-        logo: userApp.logo,
-        orgId: userApp.orgId,
-        subscriptions: userApp.subscriptions,
-        pubUrls: userApp.pub_urls,
-        enable: userApp.enable,
-        createdAt: userApp.createdAt,
-        updatedAt: userApp.updatedAt,
         clientId: userApp.clientId,
         clientSecret: userApp.clientSecret,
+        createdAt: userApp.createdAt,
+        description: userApp.description,
+        id: userApp.id,
+        logo: userApp.logo,
+        name: userApp.name,
+        orgId: userApp.orgId,
+        privacyUrl: userApp.privacyUrl,
+        redirectUrl: userApp.redirectUrl,
+        shortDescription: userApp.shortDescription,
+        subscriptions: userApp.subscriptions,
+        supportUrl: userApp.supportUrl,
+        tosUrl: userApp.tosUrl,
+        updatedAt: userApp.updatedAt,
+        websiteUrl: userApp.websiteUrl,
+        youtubeUrl: userApp.youtubeUrl,
       }
     ))
-    yield put(getUserAppsSuccess(userApps.sort((a: AppData, b: AppData) => a.appId - b.appId)))
+
+    yield put(getAllUserAppsActionSuccess(
+      allUserApps.sort((userAppA: AppData, userAppB: AppData) => userAppA.id - userAppB.id)),
+    )
   } catch (error) {
-    console.log('Error fetching user apps')
+    console.log('Error fetching all user apps')
     yield put(authActions.handleSessionExpire())
   }
 }
 
-export function * getAppDetails (action: GetAppDetails) {
-  const getUserAppsUrl = `${API_URL}${SIGNUP_PORT}/app/list/${action.orgId}`
-
-  const response = yield call(request, {
-    url: getUserAppsUrl,
-    method: 'GET',
-    headers: {
-      'content-type': 'application/x-www-form-urlencoded',
-    },
-  })
-
-  // TODO change request when BE allows to fetch a specific app
-  const userApps = response.map((userApp: any) => (
-    {
-      appId: userApp.id,
-      name: userApp.name,
-      description: userApp.description,
-      redirectUrl: userApp.redirect_url,
-      logo: userApp.logo,
-      orgId: userApp.orgId,
-      subscriptions: userApp.subscriptions,
-      pubUrls: userApp.pub_urls,
-      enable: userApp.enable,
-      createdAt: userApp.createdAt,
-      updatedAt: userApp.updatedAt,
-      clientId: userApp.clientId,
-      clientSecret: userApp.clientSecret,
-    }
-  ))
-
-  const appIndx = userApps.findIndex((app: AppData) => app.appId === action.appId)
-  yield put(getAppDetailsSuccess(userApps[appIndx]))
-}
-
-export function * addAppSubscriptionSaga (action: AddAppSubscriptionAction) {
-  const addAppSubscriptionUrl = `${API_URL}/app/${action.appId}/subscribe`
-  const apis: Api[] = yield select((store: Store) => store.subscriptions.apis)
-  const userApps: AppData[] = yield select((store: Store) => store.applications.userApps)
-  const appInfo: AppData[] = userApps.filter(app => app.appId === action.appId)
-  const appSubscriptions = appInfo[0].subscriptions.map((sub: Api) => sub.id)
-
-  for (const apiIndx in apis) {
-    if (apis[apiIndx].name === action.apiName) appSubscriptions.push(apis[apiIndx].id)
-  }
-
-  const data = {
-    subscriptions: [...new Set(appSubscriptions)],
-  }
-
+export function * getUserAppActionSaga (action: GetUserAppAction) {
   try {
-    // TODO: add response type
+    const getAllUserAppsActionUrl = `${API_URL}${SIGNUP_PORT}/apps`
+
     const response = yield call(request, {
-      url: addAppSubscriptionUrl,
-      method: 'PUT',
+      url: getAllUserAppsActionUrl,
+      method: 'GET',
       headers: {
-        'content-type': 'application/json',
+        'content-type': 'application/x-www-form-urlencoded',
       },
-      data: JSON.stringify(data),
     })
 
-    const updatedApp = {
-      appId: response.id,
-      name: response.name,
-      description: response.description,
-      redirectUrl: response.redirect_url,
-      logo: response.logo,
-      orgId: response.org_id,
-      subscriptions: response.subscriptions,
-      pubUrls: response.pub_urls,
-      visibility: response.visibility,
-      enable: response.enable,
-      createdAt: response.createdAt,
-      updatedAt: response.updatedAt,
-      clientId: response.clientId,
-      clientSecret: response.clientSecret,
-    }
+    const allUserApps = response.map((userApp: any) => (
+      {
+        clientId: userApp.clientId,
+        clientSecret: userApp.clientSecret,
+        createdAt: userApp.createdAt,
+        description: userApp.description,
+        id: userApp.id,
+        logo: userApp.logo,
+        name: userApp.name,
+        orgId: userApp.orgId,
+        privacyUrl: userApp.privacyUrl,
+        redirectUrl: userApp.redirectUrl,
+        shortDescription: userApp.shortDescription,
+        subscriptions: userApp.subscriptions,
+        supportUrl: userApp.supportUrl,
+        tosUrl: userApp.tosUrl,
+        updatedAt: userApp.updatedAt,
+        websiteUrl: userApp.websiteUrl,
+        youtubeUrl: userApp.youtubeUrl,
+      }
+    ))
 
-    const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
-    yield put(addAppSubscriptionSuccess(updatedApp, appIndx))
+    const indexOfUserAppWeWant = allUserApps.findIndex((userApp: AppData) => userApp.id === action.appId)
+
+    yield put(getUserAppActionSuccess(allUserApps[indexOfUserAppWeWant]))
   } catch (error) {
-    console.log('Error adding subscription', error)
-    yield put(openNotification('error', 'Error subscribing.', 3000))
-    yield put(addAppSubscriptionError())
-    yield put(authActions.handleSessionExpire())
-  }
-}
-
-export function * removeAppSubscriptionSaga (action: RemoveAppSubscriptionAction) {
-  const addAppSubscriptionUrl = `${API_URL}/app/${action.appId}/subscribe`
-  const apis: Api[] = yield select((store: Store) => store.subscriptions.apis)
-  const userApps: AppData[] = yield select((store: Store) => store.applications.userApps)
-  const appInfo: AppData[] = userApps.filter(app => app.appId === action.appId)
-  const appSubscriptions = appInfo[0].subscriptions.map((sub: Api) => sub.id)
-  const subscriptionsToRemove = apis.filter((api: Api) => api.name === action.apiName).map((api: Api) => api.id)
-
-  const data = {
-    subscriptions: appSubscriptions.filter(apiId => !subscriptionsToRemove.includes(apiId)),
-  }
-
-  try {
-    // TODO: add response type
-    const response = yield call(request, {
-      url: addAppSubscriptionUrl,
-      method: 'PUT',
-      headers: {
-        'content-type': 'application/json',
-      },
-      data: JSON.stringify(data),
-    })
-
-    const updatedApp = {
-      appId: response.id,
-      name: response.name,
-      description: response.description,
-      redirectUrl: response.redirect_url,
-      logo: response.logo,
-      orgId: response.org_id,
-      subscriptions: response.subscriptions,
-      pubUrls: response.pub_urls,
-      visibility: response.visibility,
-      enable: response.enable,
-      createdAt: response.createdAt,
-      updatedAt: response.updatedAt,
-      clientId: response.clientId,
-      clientSecret: response.clientSecret,
-    }
-
-    const appIndx = userApps.map((app: AppData) => app.appId).indexOf(action.appId)
-    yield put(removeAppSubscriptionSuccess(updatedApp, appIndx))
-  } catch (error) {
-    console.log('Error removing subscription')
-    yield put(openNotification('error', 'Error removing subscription.', 3000))
-    yield put(removeAppSubscriptionError())
+    console.log('Error fetching user app')
     yield put(authActions.handleSessionExpire())
   }
 }
 
 function * rootSaga () {
-  yield takeLatest(CREATE_APP, createApp)
-  yield takeLatest(UPDATE_APP, updateApp)
-  yield takeLatest(DELETE_APP, deleteApp)
-  yield takeLatest(REQUEST_API_ACCESS, requestAPIAccess)
-  yield takeLatest(GET_APP_DETAILS, getAppDetails)
-  yield takeLatest(GET_USER_APPS, getUsersApps)
-  yield takeLatest(SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION, addAppSubscriptionSaga)
-  yield takeLatest(SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION, removeAppSubscriptionSaga)
+  yield takeLatest(CREATE_APP_ACTION, createAppActionSaga)
+  yield takeLatest(DELETE_APP_ACTION, deleteAppActionSaga)
+  yield takeLatest(GET_ALL_USER_APPS_ACTION, getAllUserAppsActionSaga)
+  yield takeLatest(GET_USER_APP_ACTION, getUserAppActionSaga)
+  yield takeLatest(REQUEST_API_ACCESS_ACTION, requestAPIAccessActionSaga)
+  yield takeLatest(UPDATE_APP_ACTION, updateAppActionSaga)
 }
 
 export default rootSaga

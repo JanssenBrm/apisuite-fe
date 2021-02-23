@@ -25,7 +25,7 @@ export const getAPIsByName = createSelector(
       const apps = filteredApps.map((filteredApp) => {
         return {
           appName: filteredApp.name,
-          appId: filteredApp.appId,
+          appId: filteredApp.id,
         }
       })
 

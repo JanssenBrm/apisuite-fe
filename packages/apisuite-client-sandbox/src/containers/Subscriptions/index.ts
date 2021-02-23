@@ -1,4 +1,4 @@
-import { Dispatch, bindActionCreators } from 'redux'
+import { bindActionCreators, Dispatch } from 'redux'
 
 import { connect } from 'react-redux'
 
@@ -6,7 +6,7 @@ import { getAPIs } from './ducks'
 
 import { Store } from 'store/types'
 
-import { getUserApps } from 'containers/Applications/ducks'
+import { getAllUserAppsAction } from 'containers/Applications/ducks'
 
 import Subscriptions from './Subscriptions'
 
@@ -20,8 +20,8 @@ export const mapStateToProps = ({ applications, auth, settings, subscriptions }:
 export const mapDispatchToProps = (dispatch: Dispatch): any =>
   bindActionCreators(
     {
+      getAllUserAppsAction: getAllUserAppsAction,
       getAPIs: getAPIs,
-      getUserApps: getUserApps,
     },
     dispatch,
   )

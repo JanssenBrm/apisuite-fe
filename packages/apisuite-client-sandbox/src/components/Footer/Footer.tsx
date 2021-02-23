@@ -38,13 +38,13 @@ const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
     <div className={classes.iconsContainer}>
       {socialURLs.map((socialUrl, index) => {
         switch (socialUrl.name) {
-          case 'twitter':
           case 'facebook':
+          case 'github':
+          case 'gitlab':
+          case 'instagram':
           case 'linkedin':
           case 'reddit':
-          case 'github':
-          case 'instagram':
-          case 'gitlab':
+          case 'twitter':
             return (
               <a key={`${index}-${socialUrl.name}`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
                 <SvgIcon size={24} name={socialUrl.name} />
@@ -197,7 +197,20 @@ const Footer: React.FC<FooterProps> = ({
       <div className={classes.footerContentsContainer}>
         <div className={classes.leftFooterContentsContainer}>
           <div className={classes.logoAndPortalNameContainer}>
-            <AmpStoriesRoundedIcon className={classes.logo} />
+            {
+              settings.logoURL
+                ? (
+                  <img
+                    className={classes.imageLogo}
+                    src={settings.logoURL}
+                  />
+                )
+                : (
+                  <AmpStoriesRoundedIcon
+                    className={classes.iconLogo}
+                  />
+                )
+            }
 
             <h3 className={classes.portalName}>
               {settings.portalName}

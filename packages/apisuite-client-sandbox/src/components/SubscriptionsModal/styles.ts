@@ -43,6 +43,20 @@ export default makeStyles(({
     },
   },
 
+  iconLogo: {
+    color: config.palette.primary,
+    height: 'auto',
+    marginRight: '10px',
+    width: '60px',
+  },
+
+  imageLogo: {
+    height: 'auto',
+    marginRight: '10px',
+    padding: '5px',
+    width: '60px',
+  },
+
   logoAndNameContainer: {
     alignItems: 'center',
     display: 'flex',

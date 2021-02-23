@@ -55,6 +55,13 @@ export default makeStyles(({
     },
   },
 
+  iconLogo: {
+    color: config.palette.primary,
+    height: 'auto',
+    marginRight: '10px',
+    width: '60px',
+  },
+
   iconsContainer: {
     display: 'flex',
     flexDirection: 'row',
@@ -64,6 +71,13 @@ export default makeStyles(({
     '& > a': {
       marginLeft: '20px',
     },
+  },
+
+  imageLogo: {
+    height: 'auto',
+    marginRight: '10px',
+    padding: '5px',
+    width: '60px',
   },
 
   leftFooterContentsContainer: {

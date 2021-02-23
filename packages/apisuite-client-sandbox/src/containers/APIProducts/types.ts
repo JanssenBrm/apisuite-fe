@@ -3,7 +3,7 @@ import { SubscriptionsStore } from 'containers/Subscriptions/types'
 
 export interface APIProductsProps extends React.HTMLAttributes<HTMLDivElement> {
   auth: AuthStore,
+  getAllUserAppsAction: (userId: number) => void,
   getAPIs: () => void,
-  getUserApps: (userId: number) => void,
   subscriptions: SubscriptionsStore,
 }

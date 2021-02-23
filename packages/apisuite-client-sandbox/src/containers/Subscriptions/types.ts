@@ -22,8 +22,8 @@ export interface SubscriptionsStore {
 
 export interface SubscriptionsProps {
   auth?: AuthStore,
+  getAllUserAppsAction: (userId: number) => void,
   getAPIs: () => void,
-  getUserApps: (userId: number) => void,
   subscriptions: SubscriptionsStore,
 }
 
@@ -33,8 +33,8 @@ export interface GetAPIsAction extends Action {
 }
 
 export interface GetAPIsSuccessAction extends Action {
-  type: typeof SubscriptionsActionTypes.GET_APIS_SUCCESS,
   apis: ApiResponse[],
+  type: typeof SubscriptionsActionTypes.GET_APIS_SUCCESS,
 }
 
 export interface GetAPIsErrorAction extends Action {
@@ -42,9 +42,9 @@ export interface GetAPIsErrorAction extends Action {
 }
 
 export interface AddAppSubscriptionAction extends Action {
-  type: typeof SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION,
   apiName: string,
   appId: number,
+  type: typeof SubscriptionsActionTypes.ADD_APP_SUBSCRIPTION,
 }
 
 export interface AddAppSubscriptionSuccessAction extends Action {
@@ -58,9 +58,9 @@ export interface AddAppSubscriptionErrorAction extends Action {
 }
 
 export interface RemoveAppSubscriptionAction extends Action {
-  type: typeof SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION,
   apiName: string,
   appId: number,
+  type: typeof SubscriptionsActionTypes.REMOVE_APP_SUBSCRIPTION,
 }
 
 export interface RemoveAppSubscriptionSuccessAction extends Action {
@@ -77,12 +77,12 @@ export type SubscriptionsActions =
   AddAppSubscriptionAction |
   AddAppSubscriptionErrorAction |
   AddAppSubscriptionSuccessAction |
-  RemoveAppSubscriptionAction |
-  RemoveAppSubscriptionErrorAction |
-  RemoveAppSubscriptionSuccessAction |
   GetAPIsAction |
   GetAPIsErrorAction |
-  GetAPIsSuccessAction
+  GetAPIsSuccessAction |
+  RemoveAppSubscriptionAction |
+  RemoveAppSubscriptionErrorAction |
+  RemoveAppSubscriptionSuccessAction
 
 /** Endpoint response type */
 export interface ApisResponse {
