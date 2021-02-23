@@ -18,6 +18,7 @@ jobs:
     executor: node12-executor
     steps:
       - checkout
+      - run: npm install
       - run: GH_TOKEN=$GH_TOKEN npx semantic-release
       - persist_to_workspace:
           root: ~/
@@ -60,16 +61,16 @@ workflows:
                 - production
           requires:
             - test
-#      - build:
-#          context: docker
-#          filters:
-#            branches:
-#              only:
-#                - develop
-#                - staging
-#                - production
-#          requires:
-#            - release
+      - build:
+          context: docker
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - production
+          requires:
+            - release
 #      - deploy:
 #          context: vmachines
 #          filters:
