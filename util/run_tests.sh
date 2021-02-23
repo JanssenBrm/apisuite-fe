@@ -26,6 +26,8 @@ for project in ${PROJECTS}; do
     # Go into folder and run test
     (cd ../${ROOT_PROJECTS_FOLDER}/${project} && npm run test)
     # remove the file
-    (cd ../${ROOT_PROJECTS_FOLDER}/${project} && rm sandbox.config.json)
+    if [ -f "../${ROOT_PROJECTS_FOLDER}/${project}/sandbox.config.json" ]; then
+      (cd ../${ROOT_PROJECTS_FOLDER}/${project} && rm sandbox.config.json)
+    fi
   fi
 done
