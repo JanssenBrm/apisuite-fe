@@ -92,7 +92,7 @@ const renderSubSection = (
       entries: [
         {
           label: t('footer.supportMenu.menuItemOne', { config }),
-          route: settings ? settings.socialURLs[0]?.url : '#',
+          route: settings && settings.socialURLs && settings.socialURLs.length ? settings.socialURLs[0]?.url : '#',
         },
         {
           label: t('footer.supportMenu.menuItemTwo', { config }),
