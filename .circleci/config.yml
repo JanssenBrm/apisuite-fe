@@ -58,16 +58,16 @@ workflows:
   build:
     jobs:
       - test
-#      - release:
-#          context: docker
-#          filters:
-#            branches:
-#              only:
-#                - develop
-#                - staging
-#                - production
-#          requires:
-#            - test
+      - release:
+          context: docker
+          filters:
+            branches:
+              only:
+                - develop
+                - staging
+                - production
+          requires:
+            - test
 #      - build:
 #          context: docker
 #          filters:
