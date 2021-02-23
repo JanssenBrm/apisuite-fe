@@ -1,6 +1,6 @@
-# apisuite-client-sandbox
+# APISuite Frontend
 
-This project is the APISuite Portal front-end.
+This is APISuite's core frontend repository.
 
 ## Set up
 
