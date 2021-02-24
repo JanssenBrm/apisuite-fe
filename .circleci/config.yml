@@ -71,13 +71,13 @@ workflows:
                 - production
           requires:
             - release
-#      - deploy:
-#          context: vmachines
-#          filters:
-#            branches:
-#              only:
-#                - develop
-#                - staging
-#                - production
-#          requires:
-#            - build
+     - deploy:
+         context: vmachines
+         filters:
+           branches:
+             only:
+               - develop
+               - staging
+               - production
+         requires:
+           - build
