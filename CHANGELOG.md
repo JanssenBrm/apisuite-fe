@@ -1,17 +1,364 @@
 # Change Log
 
-This Change Log is kept for historical reasons. It was generated for the whole repo before we changed to per-project tagging and CHANGELOG generation.
+All notable changes to this project will be documented in this file.
+See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
-Find each individual project's `CHANGELOG.md` file in their respective directories.
+## [1.1.8](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.7...apisuite-client-sandbox@1.1.8) (2021-02-19)
 
-# [0.9.0](https://github.com/Cloudoki/APISuite/compare/v0.9.0...v0.8.0) (2020-09-04)
+
+### Bug Fixes
+
+* **footer:** fix footer for empty settings ([ac90d01](https://github.com/Cloudoki/APISuite/commit/ac90d0190eb443adb2e91b85c98633392e3f0c15))
+
+
+
+
+
+## [1.1.7](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.10...apisuite-client-sandbox@1.1.7) (2021-02-19)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+## [1.1.6](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.9...apisuite-client-sandbox@1.1.6) (2021-02-05)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+## [1.1.5](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.7...apisuite-client-sandbox@1.1.5) (2021-01-21)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+## [1.1.4](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.5...apisuite-client-sandbox@1.1.4) (2021-01-08)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+## [1.1.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.2...apisuite-client-sandbox@1.1.3) (2020-12-31)
+
+
+### Bug Fixes
+
+* bump cloud ext ui version ([5614d1e](https://github.com/Cloudoki/APISuite/commit/5614d1ec6c92aa8139823583357ca3faf3abb442))
+
+
+
+
+
+## [1.1.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.3...apisuite-client-sandbox@1.1.2) (2020-12-28)
+
+
+### Bug Fixes
+
+* bump cloud ext ui version ([5614d1e](https://github.com/Cloudoki/APISuite/commit/5614d1ec6c92aa8139823583357ca3faf3abb442))
+
+
+
+
+
+# [1.1.0-rc.4](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.3...apisuite-client-sandbox@1.1.0-rc.4) (2020-12-28)
+
+
+### Bug Fixes
+
+* **lint:** linter fixes ([dd696ea](https://github.com/Cloudoki/APISuite/commit/dd696ea6114c7c928035f8f0a5e9bfcdf2136dc8))
+* Changed the background color of the navigation to meet the design ([010d79e](https://github.com/Cloudoki/APISuite/commit/010d79ecf8cb6c912de4371b4330568ddf55df79))
+
+
+### Features
+
+* Animated the assistant's 'toggle' action ([8df8e68](https://github.com/Cloudoki/APISuite/commit/8df8e68f5121e56c18f618bf26eca60a3eaf9839))
+* Removed the 'ON/OFF' icon from the navigation, and added a 'Logout' button to the user's profile ([9cc0575](https://github.com/Cloudoki/APISuite/commit/9cc05758e518d9646afefbc525c7a3dc3ffd8fc1))
+* send registration token on payloads instead of headers ([d9f06ec](https://github.com/Cloudoki/APISuite/commit/d9f06ecddbb8e434d05eb479c23df507135b2fa2))
+
+
+
+
+# [1.1.0-rc.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.2...apisuite-client-sandbox@1.1.0-rc.3) (2020-12-14)
+
+
+### Bug Fixes
+
+* **notification-cards:** linter fixes ([e9dc2c4](https://github.com/Cloudoki/APISuite/commit/e9dc2c43bc6381cbd971981f7e4543c2139b4387))
+
+
+### Features
+
+* Implemented the Dasboard's new 'Overview' UI ([2b8f2fa](https://github.com/Cloudoki/APISuite/commit/2b8f2fab7dc0d73c3564cda847573514916e15c5))
+
+
+
+
+
+# [1.1.0-rc.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.1...apisuite-client-sandbox@1.1.0-rc.2) (2020-12-14)
+
+
+### Bug Fixes
+
+* **app-sub:** fix app subscription wrong request ([677a1ba](https://github.com/Cloudoki/APISuite/commit/677a1ba55e02e5951f0a79b98a1c6bcb4213b759))
+* **build:** use npm instead of yarn ([4f1f443](https://github.com/Cloudoki/APISuite/commit/4f1f443c9ea84811bac3a969b6334d8a9a611eda))
+* **commons-build:** fix build by removining styled components dependency ([1730414](https://github.com/Cloudoki/APISuite/commit/17304143657d5241d70c8a65a427662ba4dff1f0))
+* **empty-subscriptions:** add empty subscriptions message and error subscribe feedback ([83af035](https://github.com/Cloudoki/APISuite/commit/83af0357c839f97b2fc64da309f93e369d1061ec))
+* **linter:** linter fixes ([291c6ac](https://github.com/Cloudoki/APISuite/commit/291c6ac7f16b8bbc31660a4644c13b1643b136d5))
+
+
+
+
+
+# [1.1.0-rc.1](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.0...apisuite-client-sandbox@1.1.0-rc.1) (2020-11-30)
+
+
+### Bug Fixes
+
+* **settings:** empty settings no longer break the home page ([9952f11](https://github.com/Cloudoki/APISuite/commit/9952f1106bf925b027f36ab392bbbbfb3097e2f6))
+
+
+### Features
+
+* **common-lib:** implement common components library for apisuite ([ebe65e8](https://github.com/Cloudoki/APISuite/commit/ebe65e8281f06269d352c8338c208869c6d7f4a5))
+* **translations:** add admin action button translations ([93f59a5](https://github.com/Cloudoki/APISuite/commit/93f59a5b6ece32e526cf4e4cbc865b6348d185b0))
+* Implemented API Suite's 'cookies consent' banner ([31ae5a0](https://github.com/Cloudoki/APISuite/commit/31ae5a0b146b68c893c5e59bda6e6af1e4dcade1))
+
+# [1.1.0](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.1.0-rc.0...apisuite-client-sandbox@1.1.0) (2020-11-30)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+# [1.1.0-rc.0](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.3...apisuite-client-sandbox@1.1.0-rc.0) (2020-11-19)
+
+
+### Bug Fixes
+
+* **api-spec-design:** update navigation and fix colors ([ae3fb3a](https://github.com/Cloudoki/APISuite/commit/ae3fb3ae3cb4d88c04316ca309fcc6576fd1c13d))
+* **build:** replace redoc with swagger ui due to build issues ([8055c9c](https://github.com/Cloudoki/APISuite/commit/8055c9ce5afbbe9bb1843b952e736e7331830bb1))
+* Fix the `primary` and the `success` theme colors. ([e78db81](https://github.com/Cloudoki/APISuite/commit/e78db815eee2a1408ae3def96e69224179e37a95))
+* Linting issues. ([3c56226](https://github.com/Cloudoki/APISuite/commit/3c562269999f5561ae9f23a03683f99de4647780))
+* Revert to overriding the `className` prop for the Button component. ([394252c](https://github.com/Cloudoki/APISuite/commit/394252c276b999cd46abbdbd3f3e1cf706e74b84))
+* **app-details:** fix update description chnages app name, update session validation ([e8d2ad1](https://github.com/Cloudoki/APISuite/commit/e8d2ad157d9988cb9f756b3967ff56e4b4b1814b))
+* Navigation menu is not re-mounted when navigating to another page. ([a013727](https://github.com/Cloudoki/APISuite/commit/a01372739d1fbaaa56d1dfd4f8cc6a9f55d6c1e4))
+* Set layout height to 100% again. ([c0d844c](https://github.com/Cloudoki/APISuite/commit/c0d844c149a56f1f65f949a577f8aa6bfe6da0de))
+
+
+### Features
+
+* **spec-visualisation:** add api product spec page with redoc, fix subscriptions view, try to fix form submit on enter ([404257e](https://github.com/Cloudoki/APISuite/commit/404257ee19c8d6b78ccb547547131ff2e107c77c))
+* Add a default Support URL when none was provided yet by the admin. ([b71e650](https://github.com/Cloudoki/APISuite/commit/b71e650477f021c6a936da82bb43de744bde1ba0))
+* Improved new theming ([a7d268a](https://github.com/Cloudoki/APISuite/commit/a7d268a81f7b95831a406a71debd703e6f69d7f4))
+* Partial implementation of the new navigation ([4943f6f](https://github.com/Cloudoki/APISuite/commit/4943f6ff40ca97ff140d748f17e3183677c63d81))
+* Redesigned most of the Portal's homepage (pre-merge of Tiago's most recent Navigation changes) ([18ba7e4](https://github.com/Cloudoki/APISuite/commit/18ba7e41ee5b86231afa0f86205c2c4660f45586))
+* Upgrade Cloud Extension to v1.0.10. ([5fd84e7](https://github.com/Cloudoki/APISuite/commit/5fd84e77e81c6271f2f1dc680341ffb70f7a80a5))
+* Wrapped up the Core's landing page, fixed some visual bugs, and added links to API Catalog entries that have more details to be shown ([3e2d562](https://github.com/Cloudoki/APISuite/commit/3e2d562f92888a0825393bb6a66af55788c267ea))
+
+
+
+
+
+## [1.0.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-rc.5...apisuite-client-sandbox@1.0.3) (2020-11-19)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+## [1.0.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-rc.3...apisuite-client-sandbox@1.0.2) (2020-10-29)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+## [1.0.1](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-rc.2...apisuite-client-sandbox@1.0.1) (2020-10-15)
+
+
+### Bug Fixes
+
+* **logout/subscriptions:** use the new apis endpoint and fix types, add logout request ([ee17116](https://github.com/Cloudoki/APISuite/commit/ee17116dec86d7211a514c83e0ee9e174fac7f5b))
+* **profile:** fix profile validation, org and teams page ([3c9da60](https://github.com/Cloudoki/APISuite/commit/3c9da60f9d5e8485bb0ca43f583426f3ca501b35))
+* **registration:** remove vat, add invitation flow ([a0ab05b](https://github.com/Cloudoki/APISuite/commit/a0ab05b25bb957a56f8dc054cd2601b309471951))
+* Remove `Demo` from the portal title ([79c0f10](https://github.com/Cloudoki/APISuite/commit/79c0f10d51f990bc53b37d6933ab2fb820d580c8))
+* **Settings:** Remove the `x-access-token` header when reading from the Settings API ([e0b4786](https://github.com/Cloudoki/APISuite/commit/e0b47868fe1f24e4f312d03a3be890771e605a46))
+
+
+### Features
+
+* Pass internal helper functions to extensions ([8d1eda5](https://github.com/Cloudoki/APISuite/commit/8d1eda5747769c06270c3a45a35c011c3d0198ce))
+* **Settings:** Integrate with the Settings API ([8e6f84f](https://github.com/Cloudoki/APISuite/commit/8e6f84f8b8304a95cb0db9b9d531daec967cabc3))
+
+
+### Performance Improvements
+
+* **audit:** update version for audit fixes ([d854a03](https://github.com/Cloudoki/APISuite/commit/d854a03ae7574c3103b3584d35ff06da75302a20))
+
+
+
+
+
+# [1.0.0-rc.2](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.14...apisuite-client-sandbox@1.0.0-rc.2) (2020-10-02)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+# [1.0.0-alpha.14](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.13...apisuite-client-sandbox@1.0.0-alpha.14) (2020-10-01)
+
+
+### Bug Fixes
+
+* Linting error which prevents building. ([e36b884](https://github.com/Cloudoki/APISuite/commit/e36b884169d11a9535b6e4f7bcce38aa72e54050))
+
+
+
+# [1.0.0-alpha.13](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.12...apisuite-client-sandbox@1.0.0-alpha.13) (2020-10-01)
+
+
+### Bug Fixes
+
+* **AppDetail:** Fixed an issue that caused an app's details to not be loaded ([149b88d](https://github.com/Cloudoki/APISuite/commit/149b88dfe520f2a0b37ae977c5278773fd972dc2))
+
+
+
+
+# [1.0.0-alpha.12](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.11...apisuite-client-sandbox@1.0.0-alpha.12) (2020-10-01)
+
+
+### Bug Fixes
+
+* **Profile:** Made the user's name (and thus, his avatar) editable ([6d12e30](https://github.com/Cloudoki/APISuite/commit/6d12e30a7ec8f6b8b05003ddb5073c84a3d79557))
+
+
+
+
+# [1.0.0-alpha.11](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.10...apisuite-client-sandbox@1.0.0-alpha.11) (2020-09-25)
+
+
+### Bug Fixes
+
+* **package.json:** Fixed design breaks exclusive to Safari ([fadf3e6](https://github.com/Cloudoki/APISuite/commit/fadf3e6d227112745b92d25ffa0abdd077f9751c))
+
+
+# [1.0.0-rc.1](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.10...apisuite-client-sandbox@1.0.0-rc.1) (2020-09-21)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+# [1.0.0-rc.0](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.8...apisuite-client-sandbox@1.0.0-rc.0) (2020-09-18)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+# [1.0.0-alpha.10](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.9...apisuite-client-sandbox@1.0.0-alpha.10) (2020-09-18)
+
+
+### Bug Fixes
+
+* **apps:** update app sagas for client id and secret ([2557147](https://github.com/Cloudoki/APISuite/commit/25571472e0dcd83f48c0659ca6b7b63e36bf5636))
+
+
+
+
+
+# [1.0.0-alpha.9](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.8...apisuite-client-sandbox@1.0.0-alpha.9) (2020-09-18)
+
+
+### Bug Fixes
+
+* **favicon:** update favicon to new logo ([e7ecc43](https://github.com/Cloudoki/APISuite/commit/e7ecc43ba6f3a7ebec194f77e7b87c4fe1c4a612))
+
+
+
+
+
+# [1.0.0-alpha.8](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.7...apisuite-client-sandbox@1.0.0-alpha.8) (2020-09-17)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+# [1.0.0-alpha.7](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.6...apisuite-client-sandbox@1.0.0-alpha.7) (2020-09-17)
+
+
+### Bug Fixes
+
+* **merge-conflicts:** fix conflicts in merge ([978e34f](https://github.com/Cloudoki/APISuite/commit/978e34f0be2392ac2c33b423cb10a8c4c4eca8c0))
+* **types&lint:** lint fixes and update broken types ([e65e435](https://github.com/Cloudoki/APISuite/commit/e65e4351153bdc44b59e252618c4e9ce8d05cdf1))
+
+
+### Features
+
+* **CreateApp:** Implemented multiple URL support to the app creation, review, and updating processes ([5d70cf7](https://github.com/Cloudoki/APISuite/commit/5d70cf70e26c8faaa702f8a9a8a877ecb3adfbd9))
+
+
+
+
+
+# [1.0.0-alpha.6](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.5...apisuite-client-sandbox@1.0.0-alpha.6) (2020-09-16)
+
+
+### Bug Fixes
+
+* **AppDetail:** Made Client (i.e., Public) URL input fields editable ([6e8404c](https://github.com/Cloudoki/APISuite/commit/6e8404c40c16c8fb24a2fdfac10a6b932ad7c4ed))
+* **Navigation:** Fixed some navigation menu issues ([bf0243f](https://github.com/Cloudoki/APISuite/commit/bf0243f521aba24b9fe10983b85cd142f9c7697a))
+
+
+
+
+
+# [1.0.0-alpha.5](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.4...apisuite-client-sandbox@1.0.0-alpha.5) (2020-09-09)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+# [1.0.0-alpha.4](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.3...apisuite-client-sandbox@1.0.0-alpha.4) (2020-09-08)
+
+**Note:** Version bump only for package apisuite-client-sandbox
+
+
+
+
+
+# [1.0.0-alpha.3](https://github.com/Cloudoki/APISuite/compare/apisuite-client-sandbox@1.0.0-alpha.2...apisuite-client-sandbox@1.0.0-alpha.3) (2020-09-08)
+
+
+### Features
+
+* **internal:** Trying out the CHANGELOG generation. ([e79bbf3](https://github.com/Cloudoki/APISuite/commit/e79bbf3ede791b7aa19e09aaf6f4b236049e3911))
+
+
+
+
+
+# 1.0.0-alpha.2 (2020-09-08)
 
 
 ### Bug Fixes
 
 * **Build:** Automatically create the `sandbox.config.json` file ([db8040e](https://github.com/Cloudoki/APISuite/commit/db8040e2a03e3511db9d35be9c0ad87daf8bedb6))
 * **instructions:** removed host header from instructions text ([7e8e46e](https://github.com/Cloudoki/APISuite/commit/7e8e46e3aeff13c215b34cc72c574d1bd6c78681))
-* CI/CD build fix ([5dd6a33](https://github.com/Cloudoki/APISuite/commit/5dd6a336d299f4b0c7365bfde09e24db99591da7))
 * New Status API endpoint and docker-compose build command in CI/CD ([1c1e5c0](https://github.com/Cloudoki/APISuite/commit/1c1e5c0dc1472f7729d20c691a019620e0e2beb0))
 * Remove debugging logs and made SSH key env var name more explicit. ([7205cb4](https://github.com/Cloudoki/APISuite/commit/7205cb47eeaa506cd7491ccd4eec9ebc931ffd3a))
 
@@ -20,19 +367,16 @@ Find each individual project's `CHANGELOG.md` file in their respective directori
 
 * Add support for Extension Typings. ([623603c](https://github.com/Cloudoki/APISuite/commit/623603c5a71ddeb7cc71dec2625e0ab8b0a03732))
 * Support per-env UI extensions auto-installation in CI/CD pipelines ([4036ae6](https://github.com/Cloudoki/APISuite/commit/4036ae6d592b6c3700428d286c5c79e9aeafe226))
-* **AppDetail:** Added a 'Confirm deletion' dialog ([c5bdbae](https://github.com/Cloudoki/APISuite/commit/c5bdbaed48308df42f29beb80e8333af3a54d73f))
-* **extensions:** Add initial support for UI extensions. ([242e206](https://github.com/Cloudoki/APISuite/commit/242e206913e53ca0645701687e65771c90e5a5f6))
 
 
 
-# 0.8.0 (2020-08-19)
+# 1.0.0 (2020-08-19)
 
 
 ### Bug Fixes
 
 * **APIS-193:** Changed idle time. ([0d9f312](https://github.com/Cloudoki/APISuite/commit/0d9f3122aaf1820b21d259f8d7f4a01f5bace6ff))
 * **APIS-69:** try to fix ci scripts; update env vars for sandbox ([f250a78](https://github.com/Cloudoki/APISuite/commit/f250a7826bc0305bc644d627073fa0354fa97ef6))
-* **App:** Fixed packaged on yarn lock. ([8bdbe56](https://github.com/Cloudoki/APISuite/commit/8bdbe56250d69fccaa83250269c737de6e3c79a5))
 * **App:** removed font definitions from the theme.config.json and included it in a .css file ([06140ae](https://github.com/Cloudoki/APISuite/commit/06140ae7f39b0d125b71c5c19daa4eac168669d8))
 * **appdetail:** Made the Avatars of the 'List of Apps' and 'App Details' views the same ([91fcf4e](https://github.com/Cloudoki/APISuite/commit/91fcf4e533c152f5cf4cc4616c895d80de59b8a5))
 * **appdetail:** Made the Avatars of the 'List of Apps' and 'App Details' views the same ([8eef2e7](https://github.com/Cloudoki/APISuite/commit/8eef2e78e98a0404caa6220876d13fbfa671d215))
@@ -41,31 +385,8 @@ Find each individual project's `CHANGELOG.md` file in their respective directori
 * **Appliactions:** small fix ([520e889](https://github.com/Cloudoki/APISuite/commit/520e88991cdbd81a89d1a69806253010a9a63613))
 * **Applications:** corrected actions to remove and add subscriptions ([03eff64](https://github.com/Cloudoki/APISuite/commit/03eff64e662d1df21da0cd7bfef7c30d29b864f9))
 * **auth:** updated login flow; fixed multiple issues; added persistent login ([4768184](https://github.com/Cloudoki/APISuite/commit/47681843303b4086aab116a5c7d8eda3516ea328))
-* **build:** add a way to forcefully build the project even if no changes in the packages were made ([3bdbe98](https://github.com/Cloudoki/APISuite/commit/3bdbe98188b90c48b09d06365e46b36e6b1e4757))
-* **ci:** add signup port env ([b3441bf](https://github.com/Cloudoki/APISuite/commit/b3441bf0e03162ca3ab70f1365ed5313242f8c95))
-* **cicleci:** fix deploy command ([bf0799a](https://github.com/Cloudoki/APISuite/commit/bf0799a86464248d9ce29c269db67d1e173963c3))
-* **cicleci:** fix deploy command ([009397a](https://github.com/Cloudoki/APISuite/commit/009397ac2785e2cc0087ddc4f045b2f74bbd42fc))
-* **cicleci:** fix deploy command try 3 ([62b791a](https://github.com/Cloudoki/APISuite/commit/62b791aebef446b6fa3c4e30c050ce4522a6e0a5))
-* **circle:** no deploy, exit on error, build only ([af95b0f](https://github.com/Cloudoki/APISuite/commit/af95b0f9153ceffb4827ad172e3e2325b340b667))
-* **circleci:** add env to .env file ([4bc655f](https://github.com/Cloudoki/APISuite/commit/4bc655f3277efa0430d36617d0b93b9ef55f0c5f))
-* **circleci:** add env to .env file ([ca9213c](https://github.com/Cloudoki/APISuite/commit/ca9213ca4a0c68e6583a542985f9f2205073b8a7))
-* **circleci:** add setup remote docker, only build if changes ([fa14f1b](https://github.com/Cloudoki/APISuite/commit/fa14f1b395e7f7afeb9e8b72d9d21cf255b74b42))
-* **circleci:** build sha and commit match ([6a0c74e](https://github.com/Cloudoki/APISuite/commit/6a0c74e679da7eb45fd6bac06a636937abcb5fe0))
-* **circleci:** fix merge_env script for existing network ([67168d2](https://github.com/Cloudoki/APISuite/commit/67168d28f9aa3864d50367897774ffd5f8734b77))
-* **circleci:** new fingerprint ([c042460](https://github.com/Cloudoki/APISuite/commit/c0424606b6918ac210a007e5c1abd6c5b9496880))
-* **circleci:** rename rc to staging ([a3b1ef5](https://github.com/Cloudoki/APISuite/commit/a3b1ef5a51e31da69b3fb68f77b0ce5f0d4ab149))
-* **circleci:** test the deploy flow ([fa0213d](https://github.com/Cloudoki/APISuite/commit/fa0213d4738284d0d35aba8b74f98717c6bd82b8))
-* **circleci:** update config for staging deploy ([53841bb](https://github.com/Cloudoki/APISuite/commit/53841bb27a3ac4308a4ed7b30d805c29aba8594d))
-* **circleci-config:** add missing dependency, update deploy ([c890506](https://github.com/Cloudoki/APISuite/commit/c890506215f656be11e8747f82d73bb1196dae23))
 * **circleci-deploy:** add script to clean compose, update compose and deploy commands ([1bbcbbb](https://github.com/Cloudoki/APISuite/commit/1bbcbbbf4e2bd96d7b18a8d164b1bb4c4ced968e))
-* **circleci-deploy:** add workspace, fix deploy commands ([2687fba](https://github.com/Cloudoki/APISuite/commit/2687fbaa89353ec38c5596e7093829ba2af1590e))
-* **circleci-envs:** add envs to docker ([0a7d471](https://github.com/Cloudoki/APISuite/commit/0a7d471d5c3fc974b8ddd2465a1e920194fa07d8))
 * **client-sandbox:** missing background images on final build ([c43c4c1](https://github.com/Cloudoki/APISuite/commit/c43c4c1e900ae5d9b9814a742bb843549947abe8))
-* **common-script:** fix date format for jq ([8d45166](https://github.com/Cloudoki/APISuite/commit/8d45166311813ae21f4c7b33909ff8cb5166e591))
-* **common.sh:** handle empty `.author_date` ([bde1518](https://github.com/Cloudoki/APISuite/commit/bde151892bc0fce59d3c99b15d3f56479f2ff2e8))
-* **docker-compose:** add restart policy ([2f96ab6](https://github.com/Cloudoki/APISuite/commit/2f96ab68aeca6223c7ae814d098bd7aadebce149))
-* **env-regex:** fix staging detection regex pattern ([2b57e56](https://github.com/Cloudoki/APISuite/commit/2b57e56f08e5be91d8612492cb4a8216e6253790))
-* **envs:** add sample envfile ([0664edc](https://github.com/Cloudoki/APISuite/commit/0664edc31f4dc9e80b0cbfdcd2f3c811874688b6))
 * **FormField:** changed setErrors call ([0f1f66f](https://github.com/Cloudoki/APISuite/commit/0f1f66f99c6e62bb1d2702bd3c70b67afa5b5c4d))
 * **FormField:** fixed styles of form wrapper and error message so that password error message does not go over the form button. ([7d6f296](https://github.com/Cloudoki/APISuite/commit/7d6f296bcffe54edb3bea57ea2261b1e1975e451))
 * **FormField:** guard types ([707bf5b](https://github.com/Cloudoki/APISuite/commit/707bf5b4ce7ee26fd30af26d6d2c8334a9d0a948))
@@ -75,13 +396,11 @@ Find each individual project's `CHANGELOG.md` file in their respective directori
 * **Instructions:** fix API version ([0cf2cf8](https://github.com/Cloudoki/APISuite/commit/0cf2cf8cb6a7d937976b55c29a4883c28540acea))
 * **Instructions:** fix API version. ([c642016](https://github.com/Cloudoki/APISuite/commit/c642016caa9f5ee49d5905c6e0b4db97157038b4))
 * **Login:** added decoding for the url enconded email and passed it to the RegisterPortal component. Removed 'test' placeholder on email field. ([857cb5d](https://github.com/Cloudoki/APISuite/commit/857cb5d0ee67ae5f60c5ff014eca4bb51bb8d134))
-* **Login:** added email decoding and passed it to RegisterPortal. Removed 'test' placeholder on the email field. ([b92759c](https://github.com/Cloudoki/APISuite/commit/b92759ce69625758b60a119d4c1bf144e2f09e02))
 * **Login:** fixed moving forms when changing Login/Register tabs. ([766c0c2](https://github.com/Cloudoki/APISuite/commit/766c0c232f63d9b30c69eadc37898ebc62fd6286))
 * **login flow:** remove comment, update package json axios version ([f8c54a6](https://github.com/Cloudoki/APISuite/commit/f8c54a698d2cd8696c5ce0c3aa18389ff56bb657))
 * **login-flow:** fix login flow with axios and complete userinfo ([dda7f3d](https://github.com/Cloudoki/APISuite/commit/dda7f3d4700bd7497b0db46484090740fe9a4fdc))
 * **login-flow:** fix register sagas, camelcase ([8e285fc](https://github.com/Cloudoki/APISuite/commit/8e285fc503b86a1c8c26109572031a2412d92696))
 * **LoginForm:** Fixed a bug related to a particular Login form's error message ([045acbf](https://github.com/Cloudoki/APISuite/commit/045acbf86bc725706cacd1b2c7effc267860cb33))
-* **minor:** fix typos and rename some jobs ([f345c85](https://github.com/Cloudoki/APISuite/commit/f345c855f151d3fa73e1b012519603ef53dcf514))
 * **Notification:** Remove unnecessary file. ([8e25b41](https://github.com/Cloudoki/APISuite/commit/8e25b4192bcfe54d662c7018f09624b36acf184a))
 * **OrganizationPage:** added fetch org after successful update ([2f1a352](https://github.com/Cloudoki/APISuite/commit/2f1a352ac308b0de8e97e49d75fc2c112737d5d5))
 * **OrganizationPage:** changed update org ([5248a54](https://github.com/Cloudoki/APISuite/commit/5248a5456270b6bbaa4668ff0098d1745673b4ed))
@@ -89,16 +408,13 @@ Find each individual project's `CHANGELOG.md` file in their respective directori
 * **package:** changed babel preset-env version. ([0ed09ee](https://github.com/Cloudoki/APISuite/commit/0ed09eed082bb75a197b52df2a8cc382ca1a5d36))
 * **RegisterForm:** Added an 'already registered' type of error message ([0a8f42a](https://github.com/Cloudoki/APISuite/commit/0a8f42aaed33fa20305c9f53b387105fe7a4715c))
 * **RegisterForm:** Fixed a registration flow bug ([55a6550](https://github.com/Cloudoki/APISuite/commit/55a6550bde6e3c12dbb3a9cc8f7f9ee63e27ba9f))
-* **RegisterPortal:** added action to reset error state after register redirect to login. ([ea09506](https://github.com/Cloudoki/APISuite/commit/ea0950673039f98493167e10e27913ba2e85ddbf))
-* **RequireAuth:** remove optional chaining plugin ([ec42dfa](https://github.com/Cloudoki/APISuite/commit/ec42dfac48488e1464bbd3a9d816e24a14a51874))
 * **sandbox:** sandbox config file based on branch ([a2388ae](https://github.com/Cloudoki/APISuite/commit/a2388ae1d39f6d5c8bb6e50fac3ed0382589549c))
 * changed tsc version, removed npm lock file, created new yarn lock file ([df4472e](https://github.com/Cloudoki/APISuite/commit/df4472e965d743e9492db70ca7faf438bd51044e))
 * **package:** updated babel loader. ([8c754c1](https://github.com/Cloudoki/APISuite/commit/8c754c1316b4f5811e25fd0145d3937da1ca1e9c))
+* **RegisterPortal:** added action to reset error state after register redirect to login. ([ea09506](https://github.com/Cloudoki/APISuite/commit/ea0950673039f98493167e10e27913ba2e85ddbf))
+* **RequireAuth:** remove optional chaining plugin ([ec42dfa](https://github.com/Cloudoki/APISuite/commit/ec42dfac48488e1464bbd3a9d816e24a14a51874))
 * **Sandbox:** minor style fixes ([32a754e](https://github.com/Cloudoki/APISuite/commit/32a754e01827dfc1da114bd81dd91f8d1901f8b1))
-* **script:** add missing call to generate env vars and missing = ([b680f26](https://github.com/Cloudoki/APISuite/commit/b680f2663f1693b0d4e49416d13677648d4cb528))
 * **Subscriptions:** corrected array iteration in selector ([e52e135](https://github.com/Cloudoki/APISuite/commit/e52e135cf1071d1be2adf753cd3cfed005e82d72))
-* **test:** install cypress dependencies, block tests until ready ([6489e58](https://github.com/Cloudoki/APISuite/commit/6489e58e4fce3066967c431f51d3cb39c2878711))
-* **tests:** fix test command ([ac7f958](https://github.com/Cloudoki/APISuite/commit/ac7f9588fd13db019c579ad3eb1b0af753df1e5c))
 * **themes:** changed logo imports ([ef6d9bf](https://github.com/Cloudoki/APISuite/commit/ef6d9bfe7b19bdd2b029437819d5f51cc71b1af3))
 * **themes:** optimized svg, changed fonts to be WOFF2, added todo. ([e82e067](https://github.com/Cloudoki/APISuite/commit/e82e067fb3292be10c65cc7b74e7df708ee3f3c0))
 
@@ -125,6 +441,7 @@ Find each individual project's `CHANGELOG.md` file in their respective directori
 * **App:** removed webpack bundle analyzer. ([cf62b78](https://github.com/Cloudoki/APISuite/commit/cf62b78ae6ea97669b1771473cacc8624dbbfa8e))
 * **App:** Removing sass files. ([0121f4a](https://github.com/Cloudoki/APISuite/commit/0121f4a7a811f155adcaa8a49427eccf014fd7fa))
 * **App:** type guarded color picker function. ([87a10da](https://github.com/Cloudoki/APISuite/commit/87a10da39d89326275bf2b13fa5bce1fbf791135))
+* **AppDetail:** Added a 'Confirm deletion' dialog ([c5bdbae](https://github.com/Cloudoki/APISuite/commit/c5bdbaed48308df42f29beb80e8333af3a54d73f))
 * **AppDetail:** added redux sagas for fetching, updating and creating apps ([3e65710](https://github.com/Cloudoki/APISuite/commit/3e65710bede66b644353641fb90b6aa949e60d7a))
 * **AppDetail:** created requests to BE ([0791434](https://github.com/Cloudoki/APISuite/commit/0791434dbb197d4055bf67c52c635edd290a0e91))
 * **AppDetail:** remove host from the request header. ([85f0744](https://github.com/Cloudoki/APISuite/commit/85f0744281629758558e6a29b805c06620d8ce5d))
@@ -143,10 +460,6 @@ Find each individual project's `CHANGELOG.md` file in their respective directori
 * **Auth:** added user id to User ([647b167](https://github.com/Cloudoki/APISuite/commit/647b1678ddbacd585213ecb6fa377d7277b161e6))
 * **auth windows:** changed component structure for login and registration windows ([aa90f94](https://github.com/Cloudoki/APISuite/commit/aa90f940bb25b05e32e1447b2fc4f6a66368eca6))
 * **cclient-sandbox:** adds Panel component ([be12ead](https://github.com/Cloudoki/APISuite/commit/be12ead9cd82ae4afe35bcf67de225b864990b8f))
-* **circleci:** update ci for monorepo management ([a6824e8](https://github.com/Cloudoki/APISuite/commit/a6824e8805e37e9893196b4242838318daeac81c))
-* **circleci-build-deploy:** add initial config for circle ci ([e554b65](https://github.com/Cloudoki/APISuite/commit/e554b650d05723fecfc7426116a83d2647f7edf5))
-* **client-marketplace:** added package ([f5ee695](https://github.com/Cloudoki/APISuite/commit/f5ee6951032114cc150bc660fb1e03fc2f8bcc51))
-* **client-portal:** added package ([b8c4a3b](https://github.com/Cloudoki/APISuite/commit/b8c4a3b1421f9fd7fc368621d0cbae90748cec66))
 * **client-sandbox:** added more translation support ([7de2b4c](https://github.com/Cloudoki/APISuite/commit/7de2b4cb02494fd13bae5351c0400d15194d3157))
 * **client-sandbox:** adds Carousel ([5bfbaa0](https://github.com/Cloudoki/APISuite/commit/5bfbaa021c841487383605c69b6f946d740535aa))
 * **client-sandbox:** adds form field component ([9befc7c](https://github.com/Cloudoki/APISuite/commit/9befc7ce7f7a0ab30f1184ea77f5a9a272d69a94))
@@ -161,15 +474,14 @@ Find each individual project's `CHANGELOG.md` file in their respective directori
 * **client-sandbox:** global config and code striping by inclusive rules ([a1c5e2d](https://github.com/Cloudoki/APISuite/commit/a1c5e2dc7a068b6a62d649ac38002aac2d8ceb41))
 * **client-sandbox:** landing page ([3e55514](https://github.com/Cloudoki/APISuite/commit/3e555144715671bb41e3c3aff85c8c075d02806b))
 * **client-sandbox:** navigation back button ([cd65ba3](https://github.com/Cloudoki/APISuite/commit/cd65ba3e174ce535b0bc0e30e8e7941a40bdcb44))
-* **client-sso:** added package ([54970e1](https://github.com/Cloudoki/APISuite/commit/54970e11244f4d68118c3d7123acf54c6134a5c8))
 * **config:** disabling links with no content ([27b75df](https://github.com/Cloudoki/APISuite/commit/27b75df2c40d0ff7f1e60bbd25ec50bc0e1fd294))
 * **confirmationEmail:** added confirmation email page. ([56dd009](https://github.com/Cloudoki/APISuite/commit/56dd00938d4829331974cd9dd018d16746fe7b2e))
 * **CreateApp:** added api options to form. ([50b80a3](https://github.com/Cloudoki/APISuite/commit/50b80a342f6d8b20d9f6789d0980dc356778ab31))
 * **CreateApp:** added saga and reducers for the app creation ([82b55c9](https://github.com/Cloudoki/APISuite/commit/82b55c9a067b1510383c62c8d102f05816d92866))
 * **CreateApp:** added type annotations to create app inputs. Minor fixes. ([8057dc2](https://github.com/Cloudoki/APISuite/commit/8057dc2a516627f4542ca9bd2bcebac2b2bedd30))
 * **CreateApp:** disable visibility and API choice options ([4047e76](https://github.com/Cloudoki/APISuite/commit/4047e7691238ba4e5ebb605b009389491165b753))
-* **CreateData:** added validation ([8691138](https://github.com/Cloudoki/APISuite/commit/8691138d82b065904211cace2c2155a79a345692))
 * **email validation:** doing email validadion ([57458c1](https://github.com/Cloudoki/APISuite/commit/57458c14767c2f699527b18869a6168f5de34443))
+* **extensions:** Add initial support for UI extensions. ([242e206](https://github.com/Cloudoki/APISuite/commit/242e206913e53ca0645701687e65771c90e5a5f6))
 * **field validation:** added field validation for name, email, and password ([a970966](https://github.com/Cloudoki/APISuite/commit/a970966315d3d4b3d2b1dafffe2203f5255641ca))
 * **Footer:** added back locale select ([cb9f286](https://github.com/Cloudoki/APISuite/commit/cb9f286671d33dd0da05ef655348918bc6857444))
 * **Footer:** scroll top fab ([713e78e](https://github.com/Cloudoki/APISuite/commit/713e78e59f217c26fd597102ba321feca3bff90c))
@@ -233,7 +545,6 @@ Find each individual project's `CHANGELOG.md` file in their respective directori
 * **Sandbox:** change styling ([f6590e1](https://github.com/Cloudoki/APISuite/commit/f6590e19618edf8ac0b0814b89bd0e1f79d03f0e))
 * **Sandbox:** enable subscription box functionality ([8250772](https://github.com/Cloudoki/APISuite/commit/825077239864b34704b7e2c9f550f837249d12c2))
 * **Sandbox:** removed newsletter section. Left it commented ([9aed164](https://github.com/Cloudoki/APISuite/commit/9aed164afa36e450a61f0a0fc6c9f0fbb3293e10))
-* **staging-deploy:** handle deploying to different environments ([67a4bca](https://github.com/Cloudoki/APISuite/commit/67a4bcafc50e0e3010b0a7ac50c0a047672b8dc0))
 * **Subscriptions:** added api cards and list ([00f1b8a](https://github.com/Cloudoki/APISuite/commit/00f1b8af222a206764792cf798d08b9998def328))
 * **Subscriptions:** change in card style. ([c3ddfe4](https://github.com/Cloudoki/APISuite/commit/c3ddfe4efad6070f5858124902f5b0dcc5747eac))
 * **Subscriptions:** change reducer structure ([3fd4746](https://github.com/Cloudoki/APISuite/commit/3fd47465e5910bf727fb2a9ac03035750987dd14))
@@ -247,7 +558,6 @@ Find each individual project's `CHANGELOG.md` file in their respective directori
 * **SubscriptionsTable:** changed data structure. ([a9d573e](https://github.com/Cloudoki/APISuite/commit/a9d573edd2ee617c66831e4aec23cff035f0edbe))
 * **SubscriptionsTable:** integration of the subcriptions ui to the store ([2daa35e](https://github.com/Cloudoki/APISuite/commit/2daa35eb9d059246bb0697df1095cbeed81d8f35))
 * **SubscriptionTable:** added loading icon to chips. ([ed8132d](https://github.com/Cloudoki/APISuite/commit/ed8132d368fca61b430aed704fee853a079fb5fb))
-* **Table:** added table component ([7ae329b](https://github.com/Cloudoki/APISuite/commit/7ae329bdb93a42db50e57e3ddc048683a06d7d20))
 * **TeamPage:** added change role feature ([fe2a489](https://github.com/Cloudoki/APISuite/commit/fe2a4898d3c47c5568df3bbc2f1a12f383a1915e))
 * **TeamPage:** added invite member feature ([acdc534](https://github.com/Cloudoki/APISuite/commit/acdc534fe573326d7f6227475e18d9f7ba7d8bf2))
 * **TeamPage:** added requests for team members and roles ([87ca34e](https://github.com/Cloudoki/APISuite/commit/87ca34e3abe402b11e12310ee933570b0ddb9a21))
@@ -256,13 +566,5 @@ Find each individual project's `CHANGELOG.md` file in their respective directori
 * **TeamPage:** changed message after being added to team ([4dd1d7f](https://github.com/Cloudoki/APISuite/commit/4dd1d7fc79a270b83fad4cb2e02971d86d148c93))
 * **TeamPage:** disabled role change for own account ([416e759](https://github.com/Cloudoki/APISuite/commit/416e759250ff72a0339b2656c8a200c5d3e196ce))
 * **TeamPage:** update team members info after succesful role change ([6e0bc95](https://github.com/Cloudoki/APISuite/commit/6e0bc95b20706af8446c90eedd1bae481f89081f))
-* **TestData:** added package cards ([f9a8b09](https://github.com/Cloudoki/APISuite/commit/f9a8b091a0e1c2453476ccceaec0eb28aa60fc57))
-* **TestData:** added Test Data container ([a8e3280](https://github.com/Cloudoki/APISuite/commit/a8e32803156db309093dcd830dc574ddab9e4234))
-* **TestData:** detail and create data pages. ([dd434c1](https://github.com/Cloudoki/APISuite/commit/dd434c1539fdf75bb4a606a8810a372069469e8b))
-* **TestData:** disable nav buttons functionality ([8670e17](https://github.com/Cloudoki/APISuite/commit/8670e1706d146271d994821ab768e4a40a7c0db4))
-* **TestDatat:** added button and table navigation ([f17b658](https://github.com/Cloudoki/APISuite/commit/f17b658e766b2427dd834738d14fd3a4a328ec35))
 * **useForm:** changed form behavior ([2f6068f](https://github.com/Cloudoki/APISuite/commit/2f6068fb12f372e5f150ca3fac2804ba0ff77f9a))
 * **validation alerts:** included alerts for invalid fields ([d43b594](https://github.com/Cloudoki/APISuite/commit/d43b5943dafca51c0768efb3e6fd06ea0be59708))
-
-
-
