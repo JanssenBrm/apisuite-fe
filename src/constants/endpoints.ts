@@ -32,16 +32,5 @@ function getApiUrl () {
   return process.env.API_URL || ''
 }
 
-function getAuthUrl () {
-  if (IS_CLOUD) {
-    // Transform the Portal's hostname into the API's hostname
-    // Ex: ${client}.cloud.apisuite.io -> ${client}-hydraapi.cloud.apisuite.io
-    const authHostname = hostname.replace('.', '-hydraapi.')
-    return `https://${authHostname}`
-  }
-
-  return process.env.AUTH_URL || ''
-}
-
 export const API_URL = getApiUrl()
 export const INFORM_URL = process.env.INFORM_URL || ''
