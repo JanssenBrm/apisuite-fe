@@ -18,16 +18,16 @@ import Applications from 'containers/Applications'
 import Dashboard from 'containers/Dashboard'
 import ForgotPasswordPage from 'containers/ForgotPasswordPage'
 import Instructions from 'containers/Instructions'
-import Organisation from 'containers/Organisation'
+import Login from 'containers/Login'
+import OrganisationPage from 'containers/OrganisationPage'
 import Profile from 'containers/Profile'
 import RedirectPage from 'containers/RedirectPage'
+import RegisterConfirmation from 'containers/RegisterConfirmation'
 import RequireAuth from 'containers/Auth'
 import Sandbox from 'containers/Sandbox'
 import Security from 'containers/Security'
-import SignUpConfirmation from 'containers/SignUpConfirmation'
 import Subscriptions from 'containers/Subscriptions'
 import TeamPage from 'containers/TeamPage'
-import SignInOrUp from 'containers/SignInOrUp'
 
 import NotFound from 'components/NotFound'
 import Privacy from 'components/Privacy'
@@ -61,8 +61,8 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/', exact: true, component: Sandbox, layoutProps: { contractibleMenu: true } },
   { path: '/api-products', exact: true, component: APIProducts, layoutProps: { contractibleMenu: true } },
   { path: '/api-products/details/:apiId/spec/:versionId', exact: true, component: APIDetails, layoutProps: { contractibleMenu: true } },
-  { path: '/auth/:view?/:email?', exact: true, component: SignInOrUp, layout: EssentialLayout },
-  { path: '/confirmation/:name?', exact: true, component: SignUpConfirmation, layout: EssentialLayout },
+  { path: '/auth/:view?/:email?', exact: true, component: Login, layout: EssentialLayout },
+  { path: '/confirmation/:name?', exact: true, component: RegisterConfirmation, layout: EssentialLayout },
   { path: '/dashboard', exact: true, auth: true, component: Dashboard, layoutProps: { contractibleMenu: true } },
   { path: '/dashboard/apps/:appID?', exact: true, auth: true, component: Applications },
   { path: '/dashboard/subscriptions', exact: true, auth: true, component: Subscriptions },
@@ -71,11 +71,11 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/forgot', exact: true, component: ForgotPasswordPage, layout: EssentialLayout },
   { path: '/privacy', component: Privacy },
   { path: '/profile', exact: true, auth: true, component: Profile },
-  { path: '/profile/organisation', exact: true, auth: true, component: Organisation },
-  { path: '/profile/security', exact: true, auth: true, component: Security },
   { path: '/profile/team', exact: true, auth: true, component: TeamPage },
-  { path: '/terms', component: Terms },
+  { path: '/profile/organisation', exact: true, auth: true, component: OrganisationPage },
+  { path: '/profile/security', exact: true, auth: true, component: Security },
   { path: ['/:redirect/confirm', '/:redirect/reset'], exact: true, component: RedirectPage },
+  { path: '/terms', component: Terms },
   ...extensionsRoutes,
   { render: () => <NotFound /> },
 ]
