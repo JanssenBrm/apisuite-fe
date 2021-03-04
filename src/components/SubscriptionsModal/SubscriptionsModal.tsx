@@ -405,7 +405,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                   }
                   href={
                     isClientAppSelected
-                      ? `/dashboard/apps/detail/${selectedClientApp.id}`
+                      ? `/dashboard/apps/${selectedClientApp.id}`
                       : '#'
                   }
                   label={
