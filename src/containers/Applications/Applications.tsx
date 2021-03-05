@@ -156,6 +156,19 @@ const Applications: React.FC<ApplicationsProps> = ({
     return allUserAppCardsArray
   }
 
+  /* The following useEffect comes in handy when users want to quickly review & edit an app
+  from some other place in our project (say, from the 'API Product' subscription's modal). */
+  React.useEffect(() => {
+    /*
+    - 'window.location.pathname' will amount to '/dashboard/apps/X'.
+    - '.split('/')[3]' will amount to 'X', our app's ID.
+    - 'parseInt()' will convert the 'X' string into a number.
+    */
+    const appIDInURL = parseInt(window.location.pathname.split('/')[3]) || undefined
+
+    if (appIDInURL !== undefined) toggleModal('edit', user.id, appIDInURL)
+  }, [])
+
   /* Triggers the retrieval and storage (on the app's Store, under 'applications > userApps')
   of all app-related information we presently have on a particular user the first time, and
   following any changes to 'applications > userApps' (i.e., 'allUserApps'). */
