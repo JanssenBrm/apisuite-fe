@@ -35,7 +35,7 @@ export const SSO_PROVIDERS = 'auth/SSO_PROVIDERS'
 export const SSO_PROVIDERS_SUCCESS = 'auth/SSO_PROVIDERS_SUCCESS'
 
 export const COO_KEY = 'apiSuiteSession'
-export const COO_KEY_MAX_AGE = 30 // <-- 1 month
+export const COO_KEY_MAX_AGE = 30 * 24 * 60 // <-- 1 month
 
 const authToken = cookie.get(COO_KEY) || ''
 
