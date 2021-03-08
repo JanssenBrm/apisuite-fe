@@ -332,7 +332,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
 
                               <div className={classes.apiProductVersionAndSelectionContainer}>
                                 <p className={classes.apiProductVersion}>
-                                  {api.versions[0].version}
+                                  {api.versions.length !== 0 && api.versions[0].version}
                                 </p>
 
                                 {
