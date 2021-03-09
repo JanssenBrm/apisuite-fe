@@ -1,7 +1,7 @@
 version: '3.2'
 services:
   sandbox-client-dev:
-    build: '../packages/apisuite-client-sandbox'
+    build: '../apisuite-client-sandbox'
     image: ${DOCKER_REPO}:${APISUITE_CLIENT_SANDBOX_TAG}
     container_name: apisuite-client-sandbox-${APISUITE_ENVIRONMENT}
     restart: on-failure

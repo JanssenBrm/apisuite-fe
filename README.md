@@ -1,14 +1,6 @@
-# APISuite
+# APISuite Frontend
 
-This is the API Suite.
-
-## About this repo
-
-This is a monorepo that contains the API Suite front-end clients. In the `packages/` folder you can find the individual projects that make up the API Suite.
-
-### `apisuite-client-sandbox`
-
-This package represents the main API Suite front-end.
+This is APISuite's core frontend repository.
 
 ## Set up
 
@@ -19,50 +11,85 @@ This package represents the main API Suite front-end.
 
 ### Install dependencies
 
-This package is part of a monorepo managed through [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/). Additionally, the monorepo also uses [lerna](https://github.com/lerna/lerna) to manage releases of the individual sub-projects.
+This package is part of a monorepo managed through [Yarn Workspaces](https://classic.yarnpkg.com/en/docs/workspaces/).
 
-To install all dependencies, run the following command from the monorepo's root folder:
+Thus, to install all dependencies, run the following command from the monorepo's root folder:
 
     yarn
 
 #### Handling private GitHub-hosted dependencies
 
-Since the individual projects may use private GitHub-hosted dependencies, read the [apisuite-client-sandbox documentation](packages/apisuite-client-sandbox/README.md) to understand how you can set up your SSH keys.
+Some dependencies (node modules) might be hosted in private GitHub repos. This might be the case when using UI extensions. In this case, you need to have your local machine and Git host (GitHub) set up with your SSH keys before running `yarn`. If you need help, read this [documentation](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+### Configuring your local environment
+
+1. Copy the `.env.sample` file to `.env` and adapt it to your setup
+1. Copy one of the `sandbox.config-*.json` files to `sandbox.config.json` and adapt it to your setup
+
+Note that the `sandbox.config.json` file is automatically created the first time you run/build the project if it doesn't already exist.
 
 ## Run
 
-### `apisuite-client-sandbox`
-
 To start a webpack development server that rebuilds the project on every change, run:
 
-    npm run sandbox-dev
+    npm run dev
 
 To create a build:
 
-    npm run sandbox-build
+    npm run build
 
-## Releases
+## Docker compose example for tests
 
-Releases are managed through [lerna's version command](https://github.com/lerna/lerna/tree/master/commands/version) with the [--conventional-commits](https://github.com/lerna/lerna/tree/master/commands/version#--conventional-commits) option. This means that lerna will use the [Conventional Commits Specification](https://www.conventionalcommits.org/en/v1.0.0/) to determine the version bump (major, minor or patch), generate CHANGELOG.md files and releases in GitHub.
+You will need the `.env` and `cypress.env.json` files in the project root.
 
-Lerna versions, tags and releases sub-projects individually. Thus, tags are prefixed with each project's name such as `apisuite-client-sandbox@1.0.0`. Similarly, each project contains its own `CHANGELOG.md` file.
+```yml
+# docker-compose.yml
+version: '3.6'
+services:
+  sandbox-client:
+    build: ""
+    image: cloudoki/apisuite/sandbox/client
+    ports:
+      - "3500:8080"
+```
 
-Releases are managed automatically through the configured CircleCI pipelines and developers don't have to worry about creating releases manually. However, they have to make sure to follow the [Conventional Commits Specification](https://www.conventionalcommits.org/en/v1.0.0/) when commiting their changes.
+run:
 
-### How releases are triggered
+```bash
+$ docker-compose up -d --build
+```
 
-To accomodate our release environments, different environments have different pre-release tags, or none.
+Go to [http://localhost:3500](http://localhost:3500)
 
-When new commits (direct or through PRs/merges) are made to one of the main environment branches (`staging`, `production`), a release with the adequate tag is triggered.
+## Extending the APISuite Portal
 
-**`staging`**
+The APISuite Portal can be extended through APISuite UI Extensions. For more details consult the [EXTENSIONS.md](EXTENSIONS.md) documentation.
 
-The staging environment uses the `rc` pre-release tag.
+# Troubleshooting
 
-Example release tag: `apisuite-client-sandbox@1.0.0-rc.0`.
+## Installation
 
-**`production`**
+## Session Cookies
 
-Final releases use no pre-release tag.
+In order for the login flow to work and be secure cookie are used and are blocked to especific domains. So to be able to run the app locally you need to edit you host file (`/etc/hosts`) and add the following: `127.0.0.1       localhost.develop.apisuite.io`.
 
-Example release tag: `apisuite-client-sandbox@1.0.0`.
+Also edit the `webpack.config.dev.js` and change the host parameter to: `host: 'localhost.develop.apisuite.io',`. This should enable you to login properly.
+
+### Permission denied (publickey)
+
+```
+git@github.com: Permission denied (publickey).
+fatal: Could not read from remote repository.
+```
+
+There's something wrong with your SSH Key setup. Read this [documentation](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+## Run-time
+
+### Invalid Hook Call Warning
+
+During run-time, in the browser, one might receive a React error related to having multiple react versions installed at the same time.
+
+This might happen when manually installing UI extensions during development time after having installed the monorepo's dependencies with `yarn` in the project root. This initial setup adds `react` and `react-dom` to the root's `node_modules` folder. Installing the extension in a particular subproject might install `react` and `react-dom` in the subproject's local `node_modules` folder as well. During run-time, some some packages will use one `react` and some others the other `react`.
+
+To fix this, run `npm install` locally which should install all dependencies under the local `node_modules`.
