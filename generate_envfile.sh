@@ -36,7 +36,7 @@ SIGNUP_PORT=${SIGNUP_PORT_STG}" > .env
 elif [ "$CIRCLE_BRANCH" = "production" ]; then
 
     echo "ENV=prod
-CLOUD=${CLOUD_BUILD}
+CLOUD=true
 AUTH_URL=${AUTH_URL_PROD}
 API_URL=${API_URL_PROD}
 APP_URL=${APP_URL_PROD}
