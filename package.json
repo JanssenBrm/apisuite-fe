@@ -1,6 +1,6 @@
 {
   "name": "apisuite-fe",
-  "version": "1.1.8",
+  "version": "1.0.0",
   "description": "APISuite Core portal",
   "license": "MPL-2.0",
   "author": "APISuite",
@@ -178,7 +178,13 @@
           "message": "chore(release): ${nextRelease.version} [ci skip]"
         }
       ],
-      "@semantic-release/github"
+      [
+        "@semantic-release/github",
+        {
+          "successComment": false,
+          "failComment": false
+        }
+      ]
     ]
   }
 }
