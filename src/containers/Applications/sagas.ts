@@ -36,10 +36,7 @@ import {
 
 import { authActions } from 'containers/Auth/ducks'
 
-import {
-  API_URL,
-  SIGNUP_PORT,
-} from 'constants/endpoints'
+import { API_URL } from 'constants/endpoints'
 
 import request from 'util/request'
 
@@ -64,7 +61,7 @@ export function * createAppActionSaga (action: CreateAppAction) {
       youtubeUrl: action.appData.youtubeUrl,
     }
 
-    const createAppUrl = `${API_URL}${SIGNUP_PORT}/apps`
+    const createAppUrl = `${API_URL}/apps`
 
     yield call(request, {
       url: createAppUrl,
@@ -99,7 +96,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
       youtubeUrl: action.appData.youtubeUrl,
     }
 
-    const updateAppUrl = `${API_URL}${SIGNUP_PORT}/apps/${action.appData.id}`
+    const updateAppUrl = `${API_URL}/apps/${action.appData.id}`
 
     const response = yield call(request, {
       url: updateAppUrl,
@@ -137,7 +134,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
 
 export function * deleteAppActionSaga (action: DeleteAppAction) {
   try {
-    const deleteAppUrl = `${API_URL}${SIGNUP_PORT}/apps/${action.appId}`
+    const deleteAppUrl = `${API_URL}/apps/${action.appId}`
 
     yield call(request, {
       url: deleteAppUrl,
@@ -198,7 +195,7 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
 
 export function * getAllUserAppsActionSaga () {
   try {
-    const getAllUserAppsActionUrl = `${API_URL}${SIGNUP_PORT}/apps`
+    const getAllUserAppsActionUrl = `${API_URL}/apps`
 
     const response = yield call(request, {
       url: getAllUserAppsActionUrl,
@@ -241,7 +238,7 @@ export function * getAllUserAppsActionSaga () {
 
 export function * getUserAppActionSaga (action: GetUserAppAction) {
   try {
-    const getAllUserAppsActionUrl = `${API_URL}${SIGNUP_PORT}/apps`
+    const getAllUserAppsActionUrl = `${API_URL}/apps`
 
     const response = yield call(request, {
       url: getAllUserAppsActionUrl,
