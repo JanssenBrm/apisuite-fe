@@ -178,7 +178,13 @@
           "message": "chore(release): ${nextRelease.version} [ci skip]"
         }
       ],
-      "@semantic-release/github"
+      [
+        "@semantic-release/github",
+        {
+          "successComment": false,
+          "failComment": false
+        }
+      ]
     ]
   }
 }
