@@ -1,15 +1,17 @@
-import { Reducer, AnyAction } from 'redux'
 import update from 'immutability-helper'
-import { SettingsData, SettingsStore, GetSettingsAction } from './types'
+
+import { AnyAction, Reducer } from 'redux'
+
+import { GetSettingsAction, SettingsData, SettingsStore } from './types'
 
 /** Initial state */
 const initialState: SettingsStore = {
-  portalName: '',
   clientName: '',
   documentationURL: '',
-  supportURL: '',
-  socialURLs: [],
   logoURL: '',
+  portalName: '',
+  socialURLs: [],
+  supportURL: '',
 }
 
 /** Action types */
@@ -25,17 +27,19 @@ const reducer: Reducer<SettingsStore, AnyAction> = (
     case GET_SETTINGS: {
       return state
     }
+
     case GET_SETTINGS_SUCCESS: {
       const { payload } = action as GetSettingsAction
       return update(state, {
-        portalName: { $set: payload.portalName },
         clientName: { $set: payload.clientName },
         documentationURL: { $set: payload.documentationURL },
-        supportURL: { $set: payload.supportURL },
-        socialURLs: { $set: payload.socialURLs },
         logoURL: { $set: payload.logoURL },
+        portalName: { $set: payload.portalName },
+        socialURLs: { $set: payload.socialURLs },
+        supportURL: { $set: payload.supportURL },
       })
     }
+
     default:
       return state
   }

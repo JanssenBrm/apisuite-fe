@@ -1,10 +1,11 @@
 import { makeStyles } from '@material-ui/styles'
+
 import { config } from 'constants/global'
 
 export default makeStyles(({
   allUserDetailsContainer: {
     display: 'flex',
-    margin: '0px auto',
+    margin: '0px auto 50px auto',
     maxWidth: '900px',
     width: '100%',
   },
@@ -25,7 +26,7 @@ export default makeStyles(({
   },
 
   avatar: {
-    backgroundColor: '#7DD291',
+    background: '#C8DC8C linear-gradient(270deg, rgba(200, 220, 140, 1) 0%, rgba(25, 165, 140, 1) 100%)',
     cursor: 'pointer',
     fontSize: '20px',
     fontWeight: 300,
@@ -43,16 +44,75 @@ export default makeStyles(({
     width: '20px',
   },
 
-  deleteProfileButton: {
+  createOrganisationButton: {
+    backgroundColor: config.palette.primary,
+    borderRadius: config.dimensions.borderRadius,
+    color: `${config.palette.primaryContrastText} !important`,
+    cursor: 'pointer',
+    fontSize: '16px',
+    fontWeight: 500,
+    padding: '12px 20px',
+    textDecoration: 'none',
+    textTransform: 'none',
+  },
+
+  deleteAccountButton: {
     backgroundColor: config.palette.error,
     border: `1px solid ${config.palette.error}`,
     borderRadius: config.dimensions.borderRadius,
     color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
-    marginRight: '15px',
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.error,
+    },
+  },
+
+  disabledInputFields: {
+    borderRadius: '4px',
+    marginBottom: '25px',
+    marginTop: '0px',
+    maxWidth: '270px',
+    pointerEvents: 'none',
+    width: '100%',
+
+    // Text field's label styles
+    '& > label': {
+      color: config.palette.label,
+    },
+
+    '& label.Mui-focused': {
+      color: `${config.palette.focus} !important`,
+    },
+
+    // Text field's input outline styles
+    '& .MuiOutlinedInput-root': {
+      '&:hover fieldset': {
+        borderColor: `${config.palette.greyScales['300']} !important`,
+      },
+
+      '&.Mui-focused fieldset': {
+        borderColor: `${config.palette.focus} !important`,
+      },
+    },
+
+    // Text field's input text styles
+    '& .MuiInputBase-root': {
+      '& .MuiInputBase-input': {
+        backgroundColor: '#DCDFE2',
+        borderRadius: '4px',
+        color: config.palette.label,
+      },
+
+      '& .MuiInputAdornment-root': {
+        color: config.palette.label,
+        pointerEvents: 'none',
+      },
+    },
   },
 
   disabledOrganisationButton: {
@@ -65,12 +125,17 @@ export default makeStyles(({
     padding: '12px 20px',
     pointerEvents: 'none',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.label,
+    },
   },
 
   disabledUpdateDetailsButton: {
     backgroundColor: config.palette.label,
     borderRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    color: `${config.palette.primaryContrastText} !important`,
     cursor: 'none',
     fontWeight: 500,
     height: '40px',
@@ -78,7 +143,12 @@ export default makeStyles(({
     maxWidth: '270px',
     padding: '6px 0px',
     pointerEvents: 'none',
+    textTransform: 'none',
     width: '100%',
+
+    '&:hover': {
+      backgroundColor: config.palette.label,
+    },
   },
 
   enabledOrganisationButton: {
@@ -90,12 +160,17 @@ export default makeStyles(({
     fontWeight: 500,
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.active,
+    },
   },
 
   enabledUpdateDetailsButton: {
     backgroundColor: config.palette.active,
     borderRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    color: `${config.palette.primaryContrastText} !important`,
     cursor: 'pointer',
     fontWeight: 500,
     height: '40px',
@@ -103,6 +178,11 @@ export default makeStyles(({
     maxWidth: '270px',
     padding: '6px 0px',
     width: '100%',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.active,
+    },
   },
 
   formFieldsContainer: {
@@ -116,9 +196,33 @@ export default makeStyles(({
   formSectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
     borderRadius: config.dimensions.borderRadius,
-    margin: '0px 0px 16px 0px',
+    margin: '0px 0px 20px 0px',
     maxWidth: '320px',
     width: '100%',
+  },
+
+  infoBox: {
+    alignItems: 'center',
+    backgroundColor: config.palette.alert.success.background,
+    borderRadius: '4px',
+    display: 'flex',
+    height: '100%',
+    padding: '12px 12px',
+    textAlign: 'left',
+    width: '400px',
+  },
+
+  infoBoxIcon: {
+    fill: '#46B5EF',
+    transform: 'translate(-3.5px, -23.5px)',
+  },
+
+  infoBoxText: {
+    color: '#035E86',
+    fontSize: '14px',
+    fontWeight: 400,
+    lineHeight: '18px',
+    margin: '0px 0px 5px 2.5px',
   },
 
   inputFields: {
@@ -132,7 +236,7 @@ export default makeStyles(({
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -142,7 +246,7 @@ export default makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
     },
 
@@ -158,6 +262,21 @@ export default makeStyles(({
     marginRight: '80px',
     maxWidth: '500px',
     width: '100%',
+  },
+
+  openIDInfoBoxContainer: {
+    display: 'flex',
+    justifyContent: 'flex-end',
+    margin: '0px auto',
+    maxWidth: '900px',
+    width: '100%',
+  },
+
+  organisationDetailsTitle: {
+    color: config.palette.tertiary,
+    fontSize: '16px',
+    fontWeight: 500,
+    marginBottom: '40px',
   },
 
   organisationSelector: {
@@ -190,17 +309,16 @@ export default makeStyles(({
     marginRight: '15px',
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
   },
 
-  otherActionsContainer: {
+  otherActionsContainerOne: {
     display: 'flex',
   },
 
-  regularOrganisationDetailsTitle: {
-    color: config.palette.tertiary,
-    fontSize: '16px',
-    fontWeight: 500,
-    marginBottom: '20px',
+  otherActionsContainerTwo: {
+    display: 'flex',
+    justifyContent: 'flex-end',
   },
 
   regularSectionSeparator: {
@@ -214,6 +332,19 @@ export default makeStyles(({
   rightSideDetailsContainer: {
     maxWidth: '320px',
     width: '100%',
+  },
+
+  signOutButton: {
+    backgroundColor: config.palette.primaryContrastText,
+    border: `1px solid ${config.palette.label}`,
+    borderRadius: config.dimensions.borderRadius,
+    color: `${config.palette.active} !important`,
+    fontSize: '16px',
+    fontWeight: 500,
+    marginLeft: '15px',
+    padding: '12px 20px',
+    textDecoration: 'none',
+    textTransform: 'none',
   },
 
   subtitle: {
@@ -234,10 +365,15 @@ export default makeStyles(({
     fontSize: '32px',
     fontWeight: 300,
     marginRight: '10px',
+    maxWidth: '355px',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
   },
 
   userNameAndRoleContainer: {
     display: 'flex',
+    height: '32.5px',
     marginBottom: '12px',
   },
 
@@ -247,7 +383,7 @@ export default makeStyles(({
     color: config.palette.primaryContrastText,
     fontSize: '14px',
     fontWeight: 300,
-    padding: '0px 7.5px',
+    padding: '2px 7.5px',
   },
 
   userStatusAndType: {

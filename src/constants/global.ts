@@ -1,7 +1,7 @@
 
 import sandboxConfig from '../../sandbox.config.json'
 
-import { SandboxConfig, Roles } from './types.js'
+import { Roles, SandboxConfig } from './types.js'
 
 export const config: SandboxConfig = sandboxConfig
 
@@ -25,9 +25,16 @@ export const ROLES: Roles = {
     value: 'organizationOwner',
     level: 3,
   },
+
   developer: {
     label: 'Developer',
     value: 'developer',
     level: 4,
+  },
+
+  baseUser: {
+    label: 'Base user',
+    value: 'baseUser',
+    level: 5,
   },
 }

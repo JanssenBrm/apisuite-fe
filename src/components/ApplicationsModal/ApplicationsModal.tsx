@@ -258,18 +258,22 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     if (indexOfFormFieldToRemove === 0 && formState.values.appTermsURL) {
       formState.values.appTermsURL = ''
+      // @ts-ignore
       delete formState.errors.appTermsURL
       formState.isDirty = !!mostRecentlySelectedAppDetails.tosUrl
     } else if (indexOfFormFieldToRemove === 1 && formState.values.appPrivacyURL) {
       formState.values.appPrivacyURL = ''
+      // @ts-ignore
       delete formState.errors.appPrivacyURL
       formState.isDirty = !!mostRecentlySelectedAppDetails.privacyUrl
     } else if (indexOfFormFieldToRemove === 2 && formState.values.appYouTubeURL) {
       formState.values.appYouTubeURL = ''
+      // @ts-ignore
       delete formState.errors.appYouTubeURL
       formState.isDirty = !!mostRecentlySelectedAppDetails.youtubeUrl
     } else if (indexOfFormFieldToRemove === 3 && formState.values.appSupportURL) {
       formState.values.appSupportURL = ''
+      // @ts-ignore
       delete formState.errors.appSupportURL
       formState.isDirty = !!mostRecentlySelectedAppDetails.supportUrl
     }
@@ -1021,6 +1025,8 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           confirmButtonCallback={deleteApp}
           confirmButtonLabel={t('dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel', { config })}
           open={openDialog}
+          optionalTitleIcon='warning'
+          providedSubText={t('dashboardTab.applicationsSubTab.appModal.dialogSubText', { config })}
           providedText={t('dashboardTab.applicationsSubTab.appModal.dialogText', { config })}
           providedTitle={t('dashboardTab.applicationsSubTab.appModal.dialogTitle', { config })}
         />

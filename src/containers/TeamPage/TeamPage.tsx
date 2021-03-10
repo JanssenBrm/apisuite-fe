@@ -1,35 +1,48 @@
 import * as React from 'react'
-import useStyles from './styles'
+
 import { useTranslation } from 'react-i18next'
-import Select from 'components/Select'
-import Button from '@material-ui/core/Button'
-import FormField, { isValidEmail } from 'components/FormField'
-import { FormFieldEvent } from 'components/FormField/types'
-import { TeamPageProps } from './types'
-import { SelectOption } from 'components/Select/types'
-import { Role, FetchTeamMembersResponse } from 'containers/Profile/types'
-import CircularProgress from '@material-ui/core/CircularProgress'
-import { ROLES } from 'constants/global'
+
+import { FetchTeamMembersResponse, Role } from 'containers/Profile/types'
 import { User } from 'containers/Auth/types'
+
+import FormField, { isValidEmail } from 'components/FormField'
+import Select from 'components/Select'
+
+import { FormFieldEvent } from 'components/FormField/types'
+import { SelectOption } from 'components/Select/types'
+
+import Button from '@material-ui/core/Button'
+import CircularProgress from '@material-ui/core/CircularProgress'
+
+import { ROLES } from 'constants/global'
+
+import { TeamPageProps } from './types'
+
+import useStyles from './styles'
+
 const AUTHORIZED_ROLES = [
   ROLES.admin.value,
   ROLES.organizationOwner.value,
 ]
 
 const TeamPage: React.FC<TeamPageProps> = ({
-  fetchTeamMembers,
-  fetchRoleOptions,
-  inviteMember,
   changeRole,
+  currentOrganisation,
+  fetchRoleOptions,
+  fetchTeamMembers,
+  inviteMember,
   members,
-  roleOptions,
-  user,
   requestStatuses,
   resetErrors,
+  roleOptions,
+  user,
 }) => {
   const classes = useStyles()
-  const [inviteVisible, showInvite] = React.useState(false)
+
   const [t] = useTranslation()
+
+  const [inviteVisible, showInvite] = React.useState(false)
+
   const [input, setInput] = React.useState({
     email: '',
     roleId: '',
@@ -51,9 +64,12 @@ const TeamPage: React.FC<TeamPageProps> = ({
   }
 
   React.useEffect(() => {
-    fetchTeamMembers()
-    fetchRoleOptions()
-  }, [fetchTeamMembers, fetchRoleOptions])
+    if (Object.keys(currentOrganisation).length !== 0 && currentOrganisation.id !== '') {
+      fetchTeamMembers()
+
+      fetchRoleOptions()
+    }
+  }, [fetchRoleOptions, fetchTeamMembers])
 
   function chooseRole (e: React.ChangeEvent<{}>, option: SelectOption) {
     if (e && option) {
@@ -91,6 +107,7 @@ const TeamPage: React.FC<TeamPageProps> = ({
     // check if the arrays contain empty data
     const hasEmptyMember = members.some((m) => !(m.Organization.id && m.Role.id && m.User.id))
     const hasEmptyRole = roleOptions.some((r) => !(r.id && r.name))
+
     return hasEmptyMember || hasEmptyRole
   }
 
@@ -112,53 +129,45 @@ const TeamPage: React.FC<TeamPageProps> = ({
       className={classes.inviteCard}
       onSubmit={(e) => {
         e.preventDefault()
+
         inviteMember(input.email, input.roleId.toString())
       }}
     >
-      <Button className={classes.btn} type='submit' disabled={input.email.length === 0 || inputErrors.email || inputErrors.role}>
-        {requestStatuses.inviteMemberRequest.isRequesting ? <CircularProgress size={20} className={classes.loading} /> : t('rbac.team.send')}
+      <Button
+        className={classes.btn}
+        disabled={input.email.length === 0 || inputErrors.email || inputErrors.role}
+        type='submit'
+      >
+        {
+          requestStatuses.inviteMemberRequest.isRequesting
+            ? <CircularProgress className={classes.loading} size={20} />
+            : t('rbac.team.send')
+        }
       </Button>
 
       <FormField
-        id='email-field'
-        label='E-mail'
-        variant='outlined'
-        type='email'
-        placeholder='john.doe@email.com'
-        name='email'
-        value={input.email}
-        onChange={handleInputs}
         autoFocus
-        fullWidth={false}
         error={inputErrors.email}
         errorPlacing='bottom'
+        fullWidth={false}
         helperText={inputErrors.email && 'Please insert a valid email.'}
+        id='email-field'
         InputProps={{
           classes: { input: classes.emailTextfield },
         }}
-      />
-
-      {/* <FormField
-        id='name-field'
-        label='Name'
-        variant='outlined'
-        type='text'
-        placeholder=''
-        name='name'
-        value={input.name}
+        label='E-mail'
+        name='email'
         onChange={handleInputs}
-        autoFocus
-        fullWidth={false}
-        errorPlacing='bottom'
-        InputProps={{
-          classes: { input: classes.nameTextfield },
-        }}
-      /> */}
+        placeholder='john.doe@email.com'
+        type='email'
+        value={input.email}
+        variant='outlined'
+      />
 
       <Select
         className={classes.select}
-        options={selectOptions(roleOptions)}
         onChange={chooseRole}
+        options={selectOptions(roleOptions)}
       />
     </form>
   )
@@ -171,44 +180,60 @@ const TeamPage: React.FC<TeamPageProps> = ({
           <div className={classes.actions}>{t('rbac.team.actions')}</div>
         </div>
 
-        {!isEmpty(members, roleOptions) && members.map((member, indx) => (
-          <div key={indx} className={classes.row}>
-            <div>
-              <div className={classes.name}>
-                {member.User.name}
-              </div>
+        {
+          !isEmpty(members, roleOptions) && members.map((member, indx) => (
+            <div key={indx} className={classes.row}>
               <div>
-                <p className={classes.auth}>{`Current role: ${ROLES[member.Role.name]?.label}`}</p>
-              </div>
-            </div>
+                <div className={classes.name}>
+                  {member.User.name}
+                </div>
 
-            {user &&
-              <Select
-                className={classes.select}
-                options={selectOptions(roleOptions)}
-                onChange={handleChangeRole(member.User.id, member.Organization.id)}
-                disabled={getUserMemberRole(user).name === 'developer' || user.id === member.User.id || ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level}
-                selected={selectOptions(roleOptions).find(
-                  option => option.label === ROLES[member.Role.name].label)}
-              />}
-          </div>
-        ))}
+                <div>
+                  <p className={classes.auth}>{`Current role: ${ROLES[member.Role.name]?.label}`}</p>
+                </div>
+              </div>
+
+              {
+                user &&
+                <Select
+                  className={classes.select}
+                  disabled={getUserMemberRole(user).name === 'developer' || user.id === member.User.id || ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level}
+                  onChange={handleChangeRole(member.User.id, member.Organization.id)}
+                  options={selectOptions(roleOptions)}
+                  selected={selectOptions(roleOptions).find(option => option.label === ROLES[member.Role.name].label)}
+                />
+              }
+            </div>
+          ))
+        }
       </div>
 
-      {!inviteVisible && user
-        ? canInvite(getUserMemberRole(user).name) &&
-          <Button className={classes.btn} style={{ marginTop: 24 }} onClick={toggle}>{t('rbac.team.invite')} </Button>
-        : inviteCard()}
+      {
+        !inviteVisible && user
+          ? (
+            canInvite(getUserMemberRole(user).name) &&
+            <Button className={classes.btn} onClick={toggle} style={{ marginTop: 24 }}>{t('rbac.team.invite')} </Button>
+          )
+          : inviteCard()
+      }
     </>
   )
 
   const loading = requestStatuses.getMembersRequest.isRequesting || requestStatuses.getRolesRequest.isRequesting
+
   return (
     <div className={`page-container ${classes.root}`}>
       <section className={classes.contentContainer}>
         <h1 className={classes.title}>{t('rbac.team.title')}</h1>
+
         <>
-          {loading && <div className={classes.loadingPage}><CircularProgress size={50} /></div>}
+          {
+            loading &&
+            <div className={classes.loadingPage}>
+              <CircularProgress size={50} />
+            </div>
+          }
+
           {!loading && showMembers()}
         </>
       </section>

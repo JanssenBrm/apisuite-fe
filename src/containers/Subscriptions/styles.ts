@@ -6,7 +6,7 @@ export default makeStyles(({
   addSubscriptionButton: {
     backgroundColor: config.palette.primary,
     borderRadius: `${config.dimensions.borderRadius}px`,
-    color: '#FFFFFF !important',
+    color: `${config.palette.primaryContrastText} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -56,7 +56,7 @@ export default makeStyles(({
   },
 
   infoBoxIcon: {
-    fill: '#46b5ef',
+    fill: '#46B5EF',
     transform: 'translate(7px, -17.5px)',
   },
 

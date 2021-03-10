@@ -1,40 +1,52 @@
 import * as React from 'react'
-import { Location, History } from 'history'
+
 import { useTranslation } from 'react-i18next'
+
+import { History, Location } from 'history'
+
 import FormCard from 'components/FormCard'
-import FormField, { parseErrors, isValidEmail, isValidPass } from 'components/FormField'
+import FormField, { isValidEmail, isValidPass, parseErrors } from 'components/FormField'
+
 import { FormFieldEvent } from 'components/FormField/types'
-import useStyles from './styles'
+
 import IconButton from '@material-ui/core/IconButton'
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
 import InputAdornment from '@material-ui/core/InputAdornment'
 
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
+
+import useStyles from './styles'
+
 const ForgotPasswordPage: React.FC<{
+  auth: any,
   forgotPassword: (emailInformation: { email: string }) => void,
+  history: History<any>,
   location: Location<{
     stage: 'recover' | 'forgot',
     token: string,
   }>,
-  history: History<any>,
-  auth: any,
   recoverPassword: (payload: { token: string; password: string }, history: History<any>) => void,
 }> = ({
-  forgotPassword,
   auth,
-  location,
+  forgotPassword,
   history,
+  location,
   recoverPassword,
 }) => {
   const classes = useStyles()
+
   const [t] = useTranslation()
+
   let stage = 'forgot'
+
   if (location.state) stage = location.state.stage
 
   const [sent, setSent] = React.useState(false)
   const [submited, setSubmited] = React.useState(false)
+
   const [isFormValid, setFormValid] = React.useState(false)
   const [errors, setErrors] = React.useState()
+
   const [input, setInput] = React.useState('')
   const [showPassword, toggle] = React.useReducer(v => !v, false)
 
@@ -51,6 +63,7 @@ const ForgotPasswordPage: React.FC<{
 
   const handleInputs = (e: FormFieldEvent, err: any) => {
     setInput(e.target.value)
+
     const eventTarget = e.target
 
     // @ts-ignore
@@ -59,7 +72,9 @@ const ForgotPasswordPage: React.FC<{
 
   function handleSubmit (e: React.FormEvent<HTMLFormElement> | KeyboardEvent) {
     e.preventDefault()
+
     setSubmited(true)
+
     if (stage === 'recover') {
       recoverPassword({ token: location.state.token, password: input }, history)
     } else {
@@ -71,85 +86,89 @@ const ForgotPasswordPage: React.FC<{
     <main className={classes.main}>
       <section className={classes.messageSide}>
         {!sent &&
-          <section className={classes.messageContainer}>
-            <h1 className={classes.messageTitle}>
-              {stage === 'recover' ? t('forgotPassword.messageTitleRecover') : t('forgotPassword.messageTitle')}
-            </h1>
-            <p className={classes.message}>
-              {stage === 'recover' ? t('forgotPassword.messageRecover') : t('forgotPassword.message')}
-            </p>
+            <section className={classes.messageContainer}>
+              <h1 className={classes.messageTitle}>
+                {stage === 'recover' ? t('forgotPassword.messageTitleRecover') : t('forgotPassword.messageTitle')}
+              </h1>
 
-            <div className={classes.forgotPasswordContainer}>
-              <FormCard
-                buttonLabel={(location.state && location.state.stage === 'recover') ? t('actions.save') : t('actions.send')}
-                buttonDisabled={!isFormValid}
-                handleSubmit={handleSubmit}
-                loading={auth.isRecoveringPassword}
-              >
-                <div className={classes.fieldContainer}>
-                  {stage === 'recover'
-                    ? (
-                      <FormField
-                        id='password-field'
-                        label='Password'
-                        variant='outlined'
-                        type={showPassword ? 'text' : 'password'}
-                        placeholder=''
-                        name='password'
-                        value={input}
-                        onChange={handleInputs}
-                        autoFocus
-                        fullWidth
-                        errorPlacing='bottom'
-                        InputProps={{
-                          classes: { input: classes.textField },
-                          endAdornment:
-                        <InputAdornment position='end'>
-                          <IconButton
-                            aria-label='toggle password visibility'
-                            onClick={toggle}
-                            edge='end'
-                          >
-                            {showPassword ? <Visibility /> : <VisibilityOff />}
-                          </IconButton>
-                        </InputAdornment>,
-                        }}
-                        rules={[
-                          { rule: isValidPass(input), message: t('registerForm.warnings.password') },
-                        ]}
-                      />
-                    )
-                    : (
-                      <FormField
-                        id='email-field'
-                        label='E-mail'
-                        variant='outlined'
-                        type='email'
-                        placeholder=''
-                        name='email'
-                        value={input}
-                        onChange={handleInputs}
-                        autoFocus
-                        fullWidth
-                        errorPlacing='bottom'
-                        InputProps={{
-                          classes: { input: classes.textField },
-                        }}
-                        rules={[
-                          { rule: isValidEmail(input), message: t('registerForm.warnings.email') },
-                        ]}
-                      />
-                    )}
-                </div>
-              </FormCard>
-            </div>
-          </section>}
+              <p className={classes.message}>
+                {stage === 'recover' ? t('forgotPassword.messageRecover') : t('forgotPassword.message')}
+              </p>
 
-        {sent &&
-          <section className={classes.messageContainer}>
-            <h1 className={classes.messageTitle}>{t('forgotPassword.sent.messageTitle')}</h1>
-            <p className={classes.message}>{t('forgotPassword.sent.message')}</p>
-          </section>}
+              <div className={classes.forgotPasswordContainer}>
+                <FormCard
+                  buttonDisabled={!isFormValid}
+                  buttonLabel={(location.state && location.state.stage === 'recover') ? t('actions.save') : t('actions.send')}
+                  handleSubmit={handleSubmit}
+                  loading={auth.isRecoveringPassword}
+                >
+                  <div className={classes.fieldContainer}>
+                    {stage === 'recover'
+                      ? (
+                        <FormField
+                          autoFocus
+                          errorPlacing='bottom'
+                          fullWidth
+                          id='password-field'
+                          InputProps={{
+                            classes: { input: classes.textField },
+                            endAdornment:
+                              <InputAdornment position='end'>
+                                <IconButton
+                                  aria-label='toggle password visibility'
+                                  edge='end'
+                                  onClick={toggle}
+                                >
+                                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                              </InputAdornment>,
+                          }}
+                          label='Password'
+                          name='password'
+                          onChange={handleInputs}
+                          placeholder=''
+                          rules={[
+                            { rule: isValidPass(input), message: t('signUpForm.warnings.password') },
+                          ]}
+                          type={showPassword ? 'text' : 'password'}
+                          value={input}
+                          variant='outlined'
+                        />
+                      )
+                      : (
+                        <FormField
+                          autoFocus
+                          errorPlacing='bottom'
+                          fullWidth
+                          id='email-field'
+                          InputProps={{
+                            classes: { input: classes.textField },
+                          }}
+                          label='E-mail'
+                          name='email'
+                          onChange={handleInputs}
+                          placeholder=''
+                          rules={[
+                            { rule: isValidEmail(input), message: t('signUpForm.warnings.email') },
+                          ]}
+                          type='email'
+                          value={input}
+                          variant='outlined'
+                        />
+                      )}
+                  </div>
+                </FormCard>
+              </div>
+            </section>}
+
+        {
+          sent &&
+            <section className={classes.messageContainer}>
+              <h1 className={classes.messageTitle}>{t('forgotPassword.sent.messageTitle')}</h1>
+
+              <p className={classes.message}>{t('forgotPassword.sent.message')}</p>
+            </section>
+        }
       </section>
 
       <aside className={classes.imageSide} />

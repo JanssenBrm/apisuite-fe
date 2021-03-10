@@ -67,16 +67,16 @@ export default makeStyles({
 
   colorsOfAPIDocumentation: {
     backgroundColor: config.palette.active,
-    color: '#FFFFFF',
+    color: config.palette.background.default,
   },
 
   colorsOfProductionAPI: {
     backgroundColor: config.palette.primary,
-    color: '#FFFFFF',
+    color: config.palette.background.default,
   },
 
   colorsOfSandboxExtensionAPI: {
     backgroundColor: config.palette.info,
-    color: '#FFFFFF',
+    color: config.palette.background.default,
   },
 })

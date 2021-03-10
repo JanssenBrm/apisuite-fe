@@ -1,41 +1,47 @@
 import * as React from 'react'
-import { SSOFormProps } from './types'
-import useStyles from './styles'
+
 import { useTranslation } from 'react-i18next'
-import Button from 'components/Button'
+
+import Button from '@material-ui/core/Button'
+
+import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded'
+
+import { SSOFormProps } from './types'
+
+import useStyles from './styles'
+
 import { config } from 'constants/global'
 
 const SSOForm: React.FC<SSOFormProps> = ({
   auth,
-  getProviders,
-  loginWith,
+  ssoLogin,
 }) => {
   const classes = useStyles()
+
   const [t] = useTranslation()
 
-  React.useEffect(() => {
-    if (auth.providers === null) {
-      getProviders()
-    }
-  }, [])
+  const handleSubmit = (provider: string) => {
+    localStorage.setItem('attemptingSignInWithProvider', provider)
 
-  function handleSubmit (provider: string) {
-    loginWith({ provider })
+    ssoLogin({ provider })
   }
 
   return (
-    <div className={classes.loginWithContainer}>
+    <div className={classes.ssoFormContainer}>
       {
-        auth.providers?.map((prov, idx) => (
-          <div className={classes.loginWithButtonWrapper}>
+        auth.providers?.map((provider, index) => (
+          <div className={classes.ssoSignInWithButtonContainer}>
             <Button
-              key={`${prov}-${idx}`}
-              label={`${t('loginForm.loginWith', { config })} ${prov}`}
-              onClick={() => handleSubmit(prov)}
-              fullWidth
-              background='secondary'
-              type='button'
-            />
+              className={classes.ssoSignInWithButton}
+              href='#'
+              key={`${provider}${index}`}
+              onClick={() => handleSubmit(provider)}
+              startIcon={
+                <VpnKeyRoundedIcon className={classes.ssoSignInWithIcon} />
+              }
+            >
+              {t('signInForm.alternativeSignInButtonLabel', { config }) + ` ${provider}`}
+            </Button>
           </div>
         ))
       }

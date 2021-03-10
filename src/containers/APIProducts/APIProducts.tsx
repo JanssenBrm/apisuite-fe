@@ -268,7 +268,7 @@ ${latestUpdatedAPI.apiAccess
                     </>
                   )
                   : (
-                    <a href='/auth/register'>
+                    <a href='/auth/signup'>
                       {t('apiProductsTab.registerForMoreMessage', { config })}
                     </a>
                   )

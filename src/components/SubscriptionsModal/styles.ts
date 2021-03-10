@@ -8,7 +8,7 @@ export default makeStyles(({
   modalContentsContainer: {
     backgroundColor: config.palette.background.default,
     borderRadius: '4px',
-    boxShadow: '0px 0px 20px 0px rgba(0,0,0,0.3)',
+    boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.3)',
     height: '100%',
     /* The 'outline' property is necessary to remove
     an annoying orange border that Material UI adds
@@ -153,9 +153,9 @@ export default makeStyles(({
     },
 
     '& > :last-child': {
-      color: config.palette.active,
       border: `1px solid ${config.palette.newGreyScales['400']}`,
       borderRadius: '4px',
+      color: config.palette.active,
       height: '40px',
       maxWidth: '420px',
       width: '100%',
@@ -190,7 +190,7 @@ export default makeStyles(({
   },
 
   infoBoxIcon: {
-    fill: '#46b5ef',
+    fill: '#46B5EF',
     transform: 'translate(7px, -7px)',
   },
 

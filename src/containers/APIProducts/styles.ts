@@ -4,13 +4,13 @@ import { config } from 'constants/global'
 
 export default makeStyles(({
   activeDocumentationAccessFilterButtonIcon: {
-    color: '#51606E',
+    color: config.palette.active,
   },
 
   activeFilterButtonContainer: {
     alignItems: 'center',
     backgroundColor: '#DCDFE3',
-    border: '1px solid #BAC0C6',
+    border: `1px solid ${config.palette.label}`,
     borderLeft: 'none',
     cursor: 'pointer',
     display: 'flex',
@@ -18,11 +18,11 @@ export default makeStyles(({
   },
 
   activeProductionAccessFilterButtonIcon: {
-    color: '#32C896',
+    color: config.palette.primary,
   },
 
   activeSandboxAccessFilterButtonIcon: {
-    color: '#19B3EE',
+    color: config.palette.secondary,
   },
 
   allAPIProductsSection: {
@@ -51,7 +51,7 @@ export default makeStyles(({
   },
 
   apiProductName: {
-    color: '#FFFFFF',
+    color: config.palette.background.default,
     fontSize: '22px',
     fontWeight: 400,
     marginRight: '12px',
@@ -65,7 +65,7 @@ export default makeStyles(({
   },
 
   apiProductOfflineStatus: {
-    color: '#FFFFFF',
+    color: config.palette.background.default,
     fontSize: '14px',
     marginRight: '12px',
   },
@@ -81,7 +81,7 @@ export default makeStyles(({
 
     // Access type
     '& > :last-child': {
-      color: '#14283C',
+      color: config.palette.tertiary,
       fontSize: '14px',
       fontWeight: 300,
       textAlign: 'left',
@@ -89,13 +89,13 @@ export default makeStyles(({
   },
 
   apiProductVersion: {
-    color: '#FFFFFF',
+    color: config.palette.background.default,
     fontSize: '14px',
     fontWeight: 400,
   },
 
   documentationAccess: {
-    backgroundColor: '#51606E',
+    backgroundColor: config.palette.active,
     borderRadius: '4px',
     padding: '4px 8px',
   },
@@ -107,8 +107,8 @@ export default makeStyles(({
 
   inactiveFilterButtonContainer: {
     alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #BAC0C6',
+    backgroundColor: config.palette.background.default,
+    border: `1px solid ${config.palette.label}`,
     borderLeft: 'none',
     cursor: 'pointer',
     display: 'flex',
@@ -116,7 +116,7 @@ export default makeStyles(({
   },
 
   inactiveFilterButtonIcon: {
-    color: '#85909A',
+    color: config.palette.newGreyScales['400'],
   },
 
   lastFilterButtonContainer: {
@@ -141,7 +141,7 @@ export default makeStyles(({
   },
 
   latestAPIProductTitle: {
-    color: '#FFFFFF',
+    color: config.palette.background.default,
     fontSize: '16px',
     fontWeight: 500,
   },
@@ -162,7 +162,7 @@ export default makeStyles(({
   },
 
   productionAccess: {
-    backgroundColor: '#32C896',
+    backgroundColor: config.palette.primary,
     borderRadius: '4px',
     padding: '4px 8px',
   },
@@ -171,22 +171,22 @@ export default makeStyles(({
     textAlign: 'center',
 
     '& > :first-child': {
-      color: '#14283C',
+      color: config.palette.tertiary,
       fontSize: '16px',
       fontWeight: 300,
     },
   },
 
   sandboxAccess: {
-    backgroundColor: '#19B3EE',
+    backgroundColor: config.palette.secondary,
     borderRadius: '4px',
     padding: '4px 8px',
   },
 
   subscribeButton: {
-    backgroundColor: '#FFFFFF',
+    backgroundColor: config.palette.background.default,
     borderRadius: '4px',
-    color: '#32C896 !important',
+    color: `${config.palette.primary} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '12px 20px',
@@ -194,8 +194,8 @@ export default makeStyles(({
   },
 
   textFilter: {
-    backgroundColor: '#FFFFFF',
-    border: '1px solid #BAC0C6',
+    backgroundColor: config.palette.background.default,
+    border: `1px solid ${config.palette.label}`,
     borderBottomRightRadius: '0px',
     borderRadius: '4px',
     borderTopRightRadius: '0px',
@@ -209,14 +209,14 @@ export default makeStyles(({
     },
 
     '& > :last-child': {
-      color: '#BAC0C6',
+      color: config.palette.label,
     },
   },
 
   viewDetailsButton: {
-    backgroundColor: '#14283C',
+    backgroundColor: config.palette.tertiary,
     borderRadius: '4px',
-    color: '#FFFFFF !important',
+    color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '12px',

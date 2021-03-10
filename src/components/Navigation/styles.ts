@@ -51,9 +51,9 @@ export default makeStyles(({
   },
 
   goBackButton: {
-    display: 'flex',
     alignItems: 'center',
     cursor: 'pointer',
+    display: 'flex',
 
     '& > span': {
       fontSize: '16px',
@@ -66,8 +66,8 @@ export default makeStyles(({
   },
 
   headerContentsContainer: {
-    display: 'flex',
     alignItems: 'center',
+    display: 'flex',
   },
 
   imageLogo: {
@@ -92,8 +92,8 @@ export default makeStyles(({
   },
 
   logoAndNameContainer: {
-    display: 'flex',
     alignItems: 'center',
+    display: 'flex',
     textDecoration: 'none',
   },
 
@@ -208,6 +208,7 @@ export default makeStyles(({
   },
 
   userAvatar: {
+    background: '#C8DC8C linear-gradient(270deg, rgba(200, 220, 140, 1) 0%, rgba(25, 165, 140, 1) 100%)',
     border: `2px solid ${config.palette.primaryContrastText}`,
     fontSize: '20px',
     fontWeight: 300,

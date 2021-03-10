@@ -1,35 +1,41 @@
 import { makeStyles } from '@material-ui/styles'
+
 import { config } from 'constants/global'
 
 export default makeStyles(({
-  snackbar: {
-    display: 'flex',
-    position: 'relative',
-    margin: 8,
-  },
   content: {
+    alignItems: 'center',
+    borderRadius: config.dimensions.borderRadius,
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
     justifyContent: 'space-between',
     padding: 20,
-    borderRadius: config.dimensions.borderRadius,
   },
+
+  error: {
+    backgroundColor: config.palette.feedback.error,
+    color: config.palette.primaryContrastText,
+  },
+
   icon: {
-    display: 'flex',
     alignItems: 'center',
+    display: 'flex',
     fontSize: 24,
     marginRight: 10,
   },
-  text: {
-    margin: 0,
+
+  snackbar: {
+    display: 'flex',
+    margin: 8,
+    position: 'relative',
   },
+
   success: {
     backgroundColor: config.palette.primary,
-    color: 'white',
+    color: config.palette.primaryContrastText,
   },
-  error: {
-    backgroundColor: config.palette.feedback.error,
-    color: 'white',
+
+  text: {
+    margin: 0,
   },
 }))

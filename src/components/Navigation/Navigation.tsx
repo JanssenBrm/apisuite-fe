@@ -6,7 +6,7 @@ import { useHistory } from 'react-router-dom'
 
 import clsx from 'clsx'
 
-import { useMenu, goBackConfig } from './useMenu'
+import { goBackConfig, useMenu } from './useMenu'
 
 import Link from 'components/Link'
 import SvgIcon from 'components/SvgIcon'
@@ -25,7 +25,7 @@ import useStyles from './styles'
 
 import './styles.scss'
 
-import { TabMenus, NavigationProps } from './types'
+import { NavigationProps, TabMenus } from './types'
 
 const Navigation: React.FC<NavigationProps> = ({
   contractible = false,
@@ -42,6 +42,7 @@ const Navigation: React.FC<NavigationProps> = ({
   ...rest
 }) => {
   const classes = useStyles()
+
   const history = useHistory()
 
   const auth = useSelector(getAuth)
@@ -178,7 +179,7 @@ const Navigation: React.FC<NavigationProps> = ({
                     component={Link}
                     disableRipple
                     key={`nav-tab-${idx}`}
-                    label={tab.isLogin ? <PowerSettingsNewRoundedIcon /> : tab.label}
+                    label={tab.label}
                     to={tab.route}
                     value={tab.route}
                   />,
@@ -219,7 +220,7 @@ ${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
                         component={Link}
                         disableRipple
                         key={`nav-tab-${idx}`}
-                        label={tab.isLogin ? <PowerSettingsNewRoundedIcon /> : tab.label}
+                        label={tab.label}
                         to={tab.route}
                         value={tab.route}
                       />

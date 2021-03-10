@@ -3,7 +3,7 @@ import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import Button from 'components/Button'
-import { isValidImage, isValidURL } from 'components/FormField'
+import { isValidImage, isValidURL } from 'components/FormField/index'
 
 import Avatar from '@material-ui/core/Avatar'
 import Fade from '@material-ui/core/Fade'
@@ -16,7 +16,7 @@ import Close from '@material-ui/icons/Close'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
 
-import { OrganisationPageProps } from './types'
+import { OrganisationProps } from './types'
 
 import useStyles from './styles'
 
@@ -24,7 +24,7 @@ import { useForm } from 'util/useForm'
 
 import { config } from 'constants/global'
 
-const OrganisationPage: React.FC<OrganisationPageProps> = ({
+const Organisation: React.FC<OrganisationProps> = ({
   createOrg,
   fetchOrg,
   org,
@@ -187,6 +187,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
     event.preventDefault()
 
     const orgId = org.id.toString()
+
     const orgDetails = {
       name: formState.values.orgName,
       description: formState.values.orgDescription,
@@ -257,18 +258,22 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
 
     if (indexOfFormFieldToRemove === 0 && formState.values.orgTermsURL) {
       formState.values.orgTermsURL = ''
+      // @ts-ignore
       delete formState.errors.orgTermsURL
       formState.isDirty = !!org.tosUrl
     } else if (indexOfFormFieldToRemove === 1 && formState.values.orgPrivacyURL) {
       formState.values.orgPrivacyURL = ''
+      // @ts-ignore
       delete formState.errors.orgPrivacyURL
       formState.isDirty = !!org.privacyUrl
     } else if (indexOfFormFieldToRemove === 2 && formState.values.orgYouTubeURL) {
       formState.values.orgYouTubeURL = ''
+      // @ts-ignore
       delete formState.errors.orgYouTubeURL
       formState.isDirty = !!org.youtubeUrl
     } else if (indexOfFormFieldToRemove === 3 && formState.values.orgSupportURL) {
       formState.values.orgSupportURL = ''
+      // @ts-ignore
       delete formState.errors.orgSupportURL
       formState.isDirty = !!org.supportUrl
     }
@@ -299,6 +304,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             <TextField
               className={classes.inputFields}
               fullWidth
+              InputLabelProps={{ shrink: true }}
               label={t('profileTab.organisationSubTab.fieldLabels.orgNameLabel', { config })}
               margin='dense'
               name='orgName'
@@ -311,6 +317,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
             <TextField
               className={classes.inputFields}
               fullWidth
+              InputLabelProps={{ shrink: true }}
               label={t('profileTab.organisationSubTab.fieldLabels.orgVATLabel', { config })}
               margin='dense'
               name='orgVAT'
@@ -375,13 +382,13 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               label={t('profileTab.organisationSubTab.fieldLabels.orgAvatarLabel', { config })}
               margin='dense'
               name='orgAvatarURL'
+              onBlur={() => {
+                setAvatarInputIsInFocus(false)
+              }}
               onChange={handleChange}
               onFocus={(focusEvent) => {
                 handleFocus(focusEvent)
                 setAvatarInputIsInFocus(true)
-              }}
-              onBlur={() => {
-                setAvatarInputIsInFocus(false)
               }}
               type='url'
               value={formState.values.orgAvatarURL}
@@ -395,12 +402,13 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
         <section className={classes.orgAdditionalDetailsContainer}>
           <section className={classes.leftSideDetailsContainer}>
             <p className={classes.orgAdditionalDetailsTitle}>
-              Additional information
+              {t('profileTab.organisationSubTab.orgAdditionalDetailsTitle', { config })}
             </p>
 
             <TextField
               className={classes.inputFields}
               fullWidth
+              InputLabelProps={{ shrink: true }}
               label={t('profileTab.organisationSubTab.fieldLabels.orgDescriptionLabel', { config })}
               margin='dense'
               multiline
@@ -428,6 +436,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                     ? formState.errorMsgs.orgWebsiteURL
                     : ''
                 }
+                InputLabelProps={{ shrink: true }}
                 label={t('profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel', { config })}
                 margin='dense'
                 name='orgWebsiteURL'
@@ -507,6 +516,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgTermsURL
                       : ''
                   }
+                  InputLabelProps={{ shrink: true }}
                   label={t('profileTab.organisationSubTab.fieldLabels.orgToSLabel', { config })}
                   margin='dense'
                   name='orgTermsURL'
@@ -534,6 +544,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgPrivacyURL
                       : ''
                   }
+                  InputLabelProps={{ shrink: true }}
                   label={t('profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel', { config })}
                   margin='dense'
                   name='orgPrivacyURL'
@@ -561,6 +572,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgYouTubeURL
                       : ''
                   }
+                  InputLabelProps={{ shrink: true }}
                   label={t('profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel', { config })}
                   margin='dense'
                   name='orgYouTubeURL'
@@ -588,6 +600,7 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
                       ? formState.errorMsgs.orgSupportURL
                       : ''
                   }
+                  InputLabelProps={{ shrink: true }}
                   label={t('profileTab.organisationSubTab.fieldLabels.orgSupportLabel', { config })}
                   margin='dense'
                   name='orgSupportURL'
@@ -613,8 +626,8 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               <Button
                 customButtonClassName={
                   formState.isDirty &&
-                  (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                  validImage
+                    (formState.isValid || Object.keys(formState.errors).length === 0) &&
+                    validImage
                     ? classes.enabledUpdateDetailsButton
                     : classes.disabledUpdateDetailsButton
                 }
@@ -626,8 +639,8 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
               <Button
                 customButtonClassName={
                   formState.isDirty &&
-                  (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                  validImage
+                    (formState.isValid || Object.keys(formState.errors).length === 0) &&
+                    validImage
                     ? classes.enabledCreateOrgButton
                     : classes.disabledCreateOrgButton
                 }
@@ -641,4 +654,4 @@ const OrganisationPage: React.FC<OrganisationPageProps> = ({
   )
 }
 
-export default OrganisationPage
+export default Organisation

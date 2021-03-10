@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
+
 import { config } from 'constants/global'
 
 export default makeStyles(({
@@ -28,7 +29,7 @@ export default makeStyles(({
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -38,7 +39,7 @@ export default makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
     },
 
@@ -147,7 +148,7 @@ export default makeStyles(({
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -157,7 +158,7 @@ export default makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
     },
 
@@ -231,8 +232,8 @@ export default makeStyles(({
   },
 
   orgTitleAndSubtitleContainer: {
-    width: '100%',
     marginBottom: '40px',
+    width: '100%',
   },
 
   orgURLFieldWrapper: {
