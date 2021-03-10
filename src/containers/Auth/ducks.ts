@@ -18,7 +18,7 @@ const LOGOUT_ERROR = 'auth/LOGOUT_ERROR'
 const LOGOUT_SUCCESS = 'auth/LOGOUT_SUCCESS'
 
 export const COO_KEY = 'apiSuiteSession'
-export const COO_KEY_MAX_AGE = 30 // '30' amounts to 1 month
+export const COO_KEY_MAX_AGE = 30 * 24 * 60 // <-- 1 month
 
 export const EXPIRED_SESSION = 'auth/EXPIRED_SESSION'
 

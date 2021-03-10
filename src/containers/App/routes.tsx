@@ -62,7 +62,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/auth/:view?/:email?', exact: true, component: SignInOrUp, layout: EssentialLayout },
   { path: '/confirmation/:name?', exact: true, component: SignUpConfirmation, layout: EssentialLayout },
   { path: '/dashboard', exact: true, auth: true, component: Dashboard, layoutProps: { contractibleMenu: true } },
-  { path: '/dashboard/apps', exact: true, auth: true, component: Applications },
+  { path: '/dashboard/apps/:appID?', exact: true, auth: true, component: Applications },
   { path: '/dashboard/subscriptions', exact: true, auth: true, component: Subscriptions },
   { path: '/dashboard/test', exact: true, auth: true, component: Instructions },
   { path: '/documentation', exact: true, component: Instructions },
