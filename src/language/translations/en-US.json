@@ -115,9 +115,10 @@
       "email": "Please provide a valid e-mail address.",
       "password": "Your new password must be at least 12 characters long, and contain 1 lowercase & 1 uppercase character, as well as 1 symbol."
     },
-    "recoveryEmailHasBeenSentPartOne": "Check your inbox,",
+    "recoveryEmailHasBeenSentPartOne": "Check your inbox",
     "recoveryEmailHasBeenSentPartTwo": "If you have an",
-    "recoveryEmailHasBeenSentPartThree": "account associated to this e-mail, you will receive a link to recover your password.",
+    "recoveryEmailHasBeenSentPartThree": "account registered with",
+    "recoveryEmailHasBeenSentPartFour": ", you will receive a link to recover your password.",
     "infoBoxTextPartOne": "If the e-mail we've just sent you does not show up on your inbox, please check your Spam or Junk folders or, ultimately,",
     "infoBoxTextPartTwo": "contact support",
     "togglePasswordVisibilityARIALabel": "Toggle password visibility"

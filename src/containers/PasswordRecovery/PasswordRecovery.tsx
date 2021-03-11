@@ -229,14 +229,15 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
               : (
                 <>
                   <h1 className={classes.formSideTitle}>
-                    <>{t('passwordRecovery.recoveryEmailHasBeenSentPartOne', { config })} </>
-                    <>{userInput}</>
+                    {t('passwordRecovery.recoveryEmailHasBeenSentPartOne', { config })}
                   </h1>
 
                   <p className={classes.formSideSubtitle}>
                     <>{t('passwordRecovery.recoveryEmailHasBeenSentPartTwo', { config })} </>
-                    <>{settings.portalName} </>
-                    <>{t('passwordRecovery.recoveryEmailHasBeenSentPartThree', { config })}</>
+                    <span className={classes.boldText}>{settings.portalName} </span>
+                    <>{t('passwordRecovery.recoveryEmailHasBeenSentPartThree', { config })} </>
+                    <span className={classes.boldText}>{userInput}</span>
+                    <>{t('passwordRecovery.recoveryEmailHasBeenSentPartFour', { config })}</>
                   </p>
 
                   <div className={classes.infoBox}>
