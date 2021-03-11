@@ -20,7 +20,7 @@ import { PasswordRecoveryProps } from './types'
 
 import useStyles from './styles'
 
-import { config } from 'constants/global'
+import { config, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
 
 import keyIllustration from 'assets/keyIllustration.svg'
 
@@ -244,7 +244,15 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
 
                     <div>
                       <p className={classes.infoBoxText}>
-                        {t('passwordRecovery.infoBoxText', { config })}
+                        <>{t('passwordRecovery.infoBoxTextPartOne', { config })} </>
+                        <a
+                          href={settings.supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL}
+                          rel='noopener noreferrer'
+                          target='_blank'
+                        >
+                          {t('passwordRecovery.infoBoxTextPartTwo', { config })}
+                        </a>
+                        <>.</>
                       </p>
                     </div>
                   </div>
