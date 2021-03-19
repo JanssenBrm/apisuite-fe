@@ -4,7 +4,7 @@
  */
 
 import axios, { AxiosResponse, AxiosRequestConfig } from 'axios'
-import { API_URL, SIGNUP_PORT } from 'constants/endpoints'
+import { API_URL } from 'constants/endpoints'
 
 export interface ErrorReason {
   /** response status */
@@ -87,7 +87,7 @@ export async function requestInform (init: AxiosRequestConfig) {
 }
 
 export async function apiRequest (init: AxiosRequestConfig) {
-  const baseUrl = `${API_URL}${SIGNUP_PORT}`
+  const baseUrl = `${API_URL}`
   return request({
     ...init,
     url: `${baseUrl}${init.url}`,
@@ -95,7 +95,7 @@ export async function apiRequest (init: AxiosRequestConfig) {
 }
 
 export async function apiRequestInform (init: AxiosRequestConfig) {
-  const baseUrl = `${API_URL}${SIGNUP_PORT}`
+  const baseUrl = `${API_URL}`
   return requestInform({
     ...init,
     url: `${baseUrl}${init.url}`,

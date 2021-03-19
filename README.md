@@ -19,7 +19,9 @@ Thus, to install all dependencies, run the following command from the monorepo's
 
 #### Handling private GitHub-hosted dependencies
 
-Some dependencies (node modules) might be hosted in private GitHub repos. This might be the case when using UI extensions. In this case, you need to have your local machine and Git host (GitHub) set up with your SSH keys before running `yarn`. If you need help, read this [documentation](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+Some dependencies (node modules) might be hosted in private GitHub repos. This might be the case when using UI extensions. 
+In this case, you need to have your local machine and Git host (GitHub) set up with your SSH keys before running `yarn`. 
+If you need help, read this [documentation](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
 
 ### Configuring your local environment
 
@@ -38,26 +40,6 @@ To create a build:
 
     npm run build
 
-## Docker compose example for tests
-
-You will need the `.env` and `cypress.env.json` files in the project root.
-
-```yml
-# docker-compose.yml
-version: '3.6'
-services:
-  sandbox-client:
-    build: ""
-    image: cloudoki/apisuite/sandbox/client
-    ports:
-      - "3500:8080"
-```
-
-run:
-
-```bash
-$ docker-compose up -d --build
-```
 
 Go to [http://localhost:3500](http://localhost:3500)
 
@@ -71,7 +53,8 @@ The APISuite Portal can be extended through APISuite UI Extensions. For more det
 
 ## Session Cookies
 
-In order for the login flow to work and be secure cookie are used and are blocked to especific domains. So to be able to run the app locally you need to edit you host file (`/etc/hosts`) and add the following: `127.0.0.1       localhost.develop.apisuite.io`.
+In order for the login flow to work and be secure cookie are used and are blocked to specific domains. 
+So to be able to run the app locally you need to edit you host file (`/etc/hosts`) and add the following: `127.0.0.1       localhost.develop.apisuite.io`.
 
 Also edit the `webpack.config.dev.js` and change the host parameter to: `host: 'localhost.develop.apisuite.io',`. This should enable you to login properly.
 
