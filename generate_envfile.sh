@@ -26,7 +26,7 @@ SUPPORT_URL=${SUPPORT_URL_STG}" > .env
 elif [ "$CIRCLE_BRANCH" = "production" ]; then
 
     echo "ENV=prod
-CLOUD=${CLOUD_BUILD}
+CLOUD=true
 API_URL=${API_URL_PROD}
 SUPPORT_URL=${SUPPORT_URL_PROD}" > .env
 
