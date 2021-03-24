@@ -26,8 +26,8 @@ jobs:
             - project
 
   build:
-    machine:
-      image: ubuntu-2004:202101-01
+    docker:
+      - image: cimg/base:2020.01
     steps:
       - attach_workspace:
           at: ~/
