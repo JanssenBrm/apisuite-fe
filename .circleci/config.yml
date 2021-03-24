@@ -31,11 +31,11 @@ jobs:
       - attach_workspace:
           at: ~/
       - setup_remote_docker
-      - run: mkdir /root/.ssh/
-      - run: echo "${echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d}" > /root/.ssh/id_rsa
-      - run: chmod 600 /root/.ssh/id_rsa
-      - run: touch /root/.ssh/known_hosts
-      - run: ssh-keyscan github.com >> /root/.ssh/known_hosts
+      - run: mkdir ~/.ssh/
+      - run: echo "${echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d}" > ~/.ssh/id_rsa
+      - run: chmod 600 ~/.ssh/id_rsa
+      - run: touch ~/.ssh/known_hosts
+      - run: ssh-keyscan github.com >> ~/.ssh/known_hosts
       - run: ./build.sh
       - persist_to_workspace:
           root: ~/
