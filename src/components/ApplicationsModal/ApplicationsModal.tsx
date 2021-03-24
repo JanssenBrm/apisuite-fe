@@ -103,6 +103,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appClientID: '',
       appClientSecret: '',
       appFullDescription: '',
+      appLabels: '',
       appName: '',
       appPrivacyURL: '',
       appRedirectURI: 'https://',
@@ -174,6 +175,9 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientID: mostRecentlySelectedAppDetails.clientId ? mostRecentlySelectedAppDetails.clientId : '',
         appClientSecret: mostRecentlySelectedAppDetails.clientSecret ? mostRecentlySelectedAppDetails.clientSecret : '',
         appFullDescription: mostRecentlySelectedAppDetails.description ? mostRecentlySelectedAppDetails.description : '',
+        appLabels: mostRecentlySelectedAppDetails.labels.length > 0
+          ? mostRecentlySelectedAppDetails.labels.join(' ')
+          : '',
         appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : '',
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : '',
         appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ? mostRecentlySelectedAppDetails.redirectUrl : '',
@@ -191,6 +195,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientID: '',
         appClientSecret: '',
         appFullDescription: '',
+        appLabels: '',
         appName: '',
         appPrivacyURL: '',
         appRedirectURI: 'https://',
@@ -258,18 +263,22 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     if (indexOfFormFieldToRemove === 0 && formState.values.appTermsURL) {
       formState.values.appTermsURL = ''
+      // @ts-ignore
       delete formState.errors.appTermsURL
       formState.isDirty = !!mostRecentlySelectedAppDetails.tosUrl
     } else if (indexOfFormFieldToRemove === 1 && formState.values.appPrivacyURL) {
       formState.values.appPrivacyURL = ''
+      // @ts-ignore
       delete formState.errors.appPrivacyURL
       formState.isDirty = !!mostRecentlySelectedAppDetails.privacyUrl
     } else if (indexOfFormFieldToRemove === 2 && formState.values.appYouTubeURL) {
       formState.values.appYouTubeURL = ''
+      // @ts-ignore
       delete formState.errors.appYouTubeURL
       formState.isDirty = !!mostRecentlySelectedAppDetails.youtubeUrl
     } else if (indexOfFormFieldToRemove === 3 && formState.values.appSupportURL) {
       formState.values.appSupportURL = ''
+      // @ts-ignore
       delete formState.errors.appSupportURL
       formState.isDirty = !!mostRecentlySelectedAppDetails.supportUrl
     }
@@ -305,6 +314,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const newAppDetails = {
       description: formState.values.appFullDescription,
+      labels: formState.values.appLabels.split(' '),
       logo: formState.values.appAvatarURL,
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
@@ -329,6 +339,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     const updatedAppDetails = {
       description: formState.values.appFullDescription,
       id: modalDetails.userAppID,
+      labels: formState.values.appLabels.split(' '),
       logo: formState.values.appAvatarURL,
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
@@ -374,6 +385,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appClientID: '',
             appClientSecret: '',
             appFullDescription: '',
+            appLabels: '',
             appName: '',
             appPrivacyURL: '',
             appRedirectURI: 'https://',
@@ -715,6 +727,19 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     rows={4}
                     type='text'
                     value={formState.values.appFullDescription}
+                    variant='outlined'
+                  />
+
+                  <TextField
+                    className={classes.inputFields}
+                    fullWidth
+                    helperText={t('dashboardTab.applicationsSubTab.appModal.appLabelsFieldHelperText', { config })}
+                    label={t('dashboardTab.applicationsSubTab.appModal.appLabelsFieldLabel', { config })}
+                    margin='dense'
+                    name='appLabels'
+                    onChange={handleChange}
+                    type='text'
+                    value={formState.values.appLabels}
                     variant='outlined'
                   />
                 </div>
