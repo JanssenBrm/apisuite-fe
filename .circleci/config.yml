@@ -28,6 +28,9 @@ jobs:
   build:
     executor: node12-executor
     steps:
+      - add_ssh_keys:
+          fingerprints:
+            - 7f:86:85:4e:99:1e:77:42:27:11:f4:57:43:e0:c5:27
       - attach_workspace:
           at: ~/
       - setup_remote_docker
