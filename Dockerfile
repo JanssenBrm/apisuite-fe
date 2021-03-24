@@ -13,7 +13,7 @@ RUN mkdir /root/.ssh/ &&\
 RUN node scripts/extensions-installer.js
 RUN npm install -g yarn
 RUN npm install
-RUN set NODE_OPTIONS=--max_old_space_size=4096 && npm run build
+RUN npm run build
 
 # This results in a single layer image
 FROM nginx:1.17.3-alpine
