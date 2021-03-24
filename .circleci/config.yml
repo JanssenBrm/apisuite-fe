@@ -39,8 +39,7 @@ jobs:
             - project
 
   deploy:
-    docker:
-      - image: cimg/base:2020.01
+    executor: node12-executor
     steps:
       - add_ssh_keys:
           fingerprints:
