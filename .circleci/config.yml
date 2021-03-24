@@ -26,8 +26,7 @@ jobs:
             - project
 
   build:
-    docker:
-      - image: cimg/base:2020.01
+    executor: node12-executor
     steps:
       - attach_workspace:
           at: ~/
@@ -39,7 +38,8 @@ jobs:
             - project
 
   deploy:
-    executor: node12-executor
+    docker:
+      - image: cimg/base:2020.01
     steps:
       - add_ssh_keys:
           fingerprints:
