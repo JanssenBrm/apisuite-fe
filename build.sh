@@ -41,8 +41,11 @@ else
     LATEST=stg-latest
   fi
 
-  docker build --build-arg SSH_PRIVATE_KEY="$(echo $GITHUB_SSH_PRIVATE_KEY_BASE64 | base64 -d)" \
-    -t cloudokihub/apisuite-fe:$HASH \
+  node scripts/extensions-installer.js
+  # npm install -g yarn
+  npm install
+  npm run build
+  docker build -t cloudokihub/apisuite-fe:$HASH \
     -t cloudokihub/apisuite-fe:$LATEST .
 
   docker push cloudokihub/apisuite-fe:$HASH
