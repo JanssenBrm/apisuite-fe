@@ -210,6 +210,7 @@ export default makeStyles(({
   buttonsContainer: {
     display: 'flex',
     justifyContent: 'space-between',
+    marginBottom: '25px',
   },
 
   clientApplicationCardStatusText: {
