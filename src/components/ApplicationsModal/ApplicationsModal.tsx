@@ -310,7 +310,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const newAppDetails = {
       description: formState.values.appFullDescription,
-      labels: formState.values.appLabels.length !== 0
+      labels: formState.values.appLabels.length
         ? formState.values.appLabels.split(' ')
         : [],
       logo: formState.values.appAvatarURL,
@@ -337,7 +337,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     const updatedAppDetails = {
       description: formState.values.appFullDescription,
       id: modalDetails.userAppID,
-      labels: formState.values.appLabels.length !== 0
+      labels: formState.values.appLabels.length
         ? formState.values.appLabels.split(' ')
         : [],
       logo: formState.values.appAvatarURL,
