@@ -50,6 +50,7 @@ export function * createAppActionSaga (action: CreateAppAction) {
   try {
     const data = {
       description: action.appData.description,
+      labels: action.appData.labels,
       logo: action.appData.logo,
       name: action.appData.name,
       privacyUrl: action.appData.privacyUrl,
@@ -85,6 +86,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
   try {
     const data = {
       description: action.appData.description,
+      labels: action.appData.labels,
       logo: action.appData.logo,
       name: action.appData.name,
       privacyUrl: action.appData.privacyUrl,
@@ -113,6 +115,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
       createdAt: response.createdAt,
       description: response.description,
       id: response.id,
+      labels: response.labels,
       logo: response.logo,
       name: response.name,
       orgId: response.orgId,
@@ -212,6 +215,7 @@ export function * getAllUserAppsActionSaga () {
         createdAt: userApp.createdAt,
         description: userApp.description,
         id: userApp.id,
+        labels: userApp.labels,
         logo: userApp.logo,
         name: userApp.name,
         orgId: userApp.orgId,
@@ -255,6 +259,7 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
         createdAt: userApp.createdAt,
         description: userApp.description,
         id: userApp.id,
+        labels: userApp.labels,
         logo: userApp.logo,
         name: userApp.name,
         orgId: userApp.orgId,

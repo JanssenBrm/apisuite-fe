@@ -277,6 +277,8 @@
         "appClientIDFieldLabel": "Client ID",
         "appClientSecretFieldLabel": "Client Secret",
         "appFullDescriptionFieldLabel": "Full description",
+        "appLabelsFieldLabel": "Labels",
+        "appLabelsFieldHelperText": "Each provided label should be separated by a space.",
         "appNameFieldLabel": "Application name",
         "appPrivacyPolicyFieldLabel": "Privacy Policy URL",
         "appPrivacyPolicyURLFieldLabel": "Privacy Policy URL",
@@ -312,7 +314,7 @@
         "subSectionLabelFourPartTwo": "OAuth2 secured API access",
         "subSectionLabelOne": "General information",
         "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
-        "subSectionLabelThree": "Access details",
+        "subSectionLabelThree": "Redirect URI",
         "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us."
       }
     },
