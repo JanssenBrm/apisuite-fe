@@ -44,9 +44,7 @@ import { push } from 'connected-react-router'
 
 import { Store } from 'store/types'
 
-import qs from 'qs'
-
-export function* createAppActionSaga(action: CreateAppAction) {
+export function * createAppActionSaga (action: CreateAppAction) {
   try {
     const data = {
       description: action.appData.description,
@@ -82,7 +80,7 @@ export function* createAppActionSaga(action: CreateAppAction) {
   }
 }
 
-export function* updateAppActionSaga(action: UpdateAppAction) {
+export function * updateAppActionSaga (action: UpdateAppAction) {
   try {
     const data = {
       description: action.appData.description,
@@ -135,7 +133,7 @@ export function* updateAppActionSaga(action: UpdateAppAction) {
   }
 }
 
-export function* deleteAppActionSaga(action: DeleteAppAction) {
+export function * deleteAppActionSaga (action: DeleteAppAction) {
   try {
     const deleteAppUrl = `${API_URL}/apps/${action.appId}`
 
@@ -173,7 +171,7 @@ export function* deleteAppActionSaga(action: DeleteAppAction) {
   }
 }
 
-export function* requestAPIAccessActionSaga(action: RequestAPIAccessAction) {
+export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
   try {
     const requestAPIAccessUrl = `${API_URL}/apps/${action.appId}/request`
 
@@ -196,7 +194,7 @@ export function* requestAPIAccessActionSaga(action: RequestAPIAccessAction) {
   }
 }
 
-export function* getAllUserAppsActionSaga() {
+export function * getAllUserAppsActionSaga () {
   try {
     const getAllUserAppsActionUrl = `${API_URL}/apps`
 
@@ -240,7 +238,7 @@ export function* getAllUserAppsActionSaga() {
   }
 }
 
-export function* getUserAppActionSaga(action: GetUserAppAction) {
+export function * getUserAppActionSaga (action: GetUserAppAction) {
   try {
     const getAllUserAppsActionUrl = `${API_URL}/apps`
 
@@ -284,7 +282,7 @@ export function* getUserAppActionSaga(action: GetUserAppAction) {
   }
 }
 
-function* rootSaga() {
+function * rootSaga () {
   yield takeLatest(CREATE_APP_ACTION, createAppActionSaga)
   yield takeLatest(DELETE_APP_ACTION, deleteAppActionSaga)
   yield takeLatest(GET_ALL_USER_APPS_ACTION, getAllUserAppsActionSaga)
