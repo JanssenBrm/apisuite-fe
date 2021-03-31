@@ -44,8 +44,6 @@ import { push } from 'connected-react-router'
 
 import { Store } from 'store/types'
 
-import qs from 'qs'
-
 export function * createAppActionSaga (action: CreateAppAction) {
   try {
     const data = {
@@ -68,9 +66,9 @@ export function * createAppActionSaga (action: CreateAppAction) {
       url: createAppUrl,
       method: 'POST',
       headers: {
-        'content-type': 'application/x-www-form-urlencoded',
+        'content-type': 'application/json',
       },
-      data: qs.stringify(data),
+      data: data,
     })
 
     yield put(createAppActionSuccess())
@@ -104,9 +102,9 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
       url: updateAppUrl,
       method: 'PUT',
       headers: {
-        'content-type': 'application/x-www-form-urlencoded',
+        'content-type': 'application/json',
       },
-      data: qs.stringify(data),
+      data: data,
     })
 
     yield put(updateAppActionSuccess({

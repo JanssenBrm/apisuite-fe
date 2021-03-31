@@ -303,6 +303,10 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   /* App-related actions */
 
+  const checkForLabels = (stringOfLabels: string) => {
+    return stringOfLabels.length ? stringOfLabels.split(' ') : []
+  }
+
   // Creating an app
 
   const createApp = (event: React.ChangeEvent<{}>) => {
@@ -310,7 +314,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const newAppDetails = {
       description: formState.values.appFullDescription,
-      labels: formState.values.appLabels.split(' '),
+      labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
@@ -335,7 +339,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     const updatedAppDetails = {
       description: formState.values.appFullDescription,
       id: modalDetails.userAppID,
-      labels: formState.values.appLabels.split(' '),
+      labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
