@@ -74,7 +74,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   /*
   App details
-  
+
   Note:
   - 'formState' refers to our own, local copy of an app's details.
   - 'mostRecentlySelectedAppDetails' refers to our stored, back-end approved copy of all details
@@ -303,6 +303,10 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   /* App-related actions */
 
+  const checkForLabels = () => {
+    return formState.values.appLabels.length ? formState.values.appLabels.split(' ') : []
+  }
+
   // Creating an app
 
   const createApp = (event: React.ChangeEvent<{}>) => {
@@ -310,9 +314,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const newAppDetails = {
       description: formState.values.appFullDescription,
-      labels: formState.values.appLabels.length
-        ? formState.values.appLabels.split(' ')
-        : [],
+      labels: checkForLabels(),
       logo: formState.values.appAvatarURL,
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
@@ -337,9 +339,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     const updatedAppDetails = {
       description: formState.values.appFullDescription,
       id: modalDetails.userAppID,
-      labels: formState.values.appLabels.length
-        ? formState.values.appLabels.split(' ')
-        : [],
+      labels: checkForLabels(),
       logo: formState.values.appAvatarURL,
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
