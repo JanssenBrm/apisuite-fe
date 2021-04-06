@@ -253,11 +253,12 @@
       "documentationLink": "Read why apps are used",
       "noOrganisationWarning": "You need to create an Organisation before you can create your first app. Click on the \"Set up your Organisation\" button above to start.",
       "listOfAppsSection": {
-        "title": "Client applications",
-        "subtitle": "Register and manage your client applications",
-        "loadingApps": "Loading all user apps...",
+        "title": "Applications",
+        "subtitle": "Register and manage your applications",
+        "loadingApps": "Loading all apps...",
+        "clientApplicationsTitle": "Client applications",
+        "registerNewAppButtonLabel": "Register new app",
         "noAppDescription": "No description provided.",
-        "registerAppButtonLabel": "Register app",
         "subscribedAppStatus": "Subscribed",
         "draftAppStatus": "Draft"
       },

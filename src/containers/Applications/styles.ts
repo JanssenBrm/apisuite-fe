@@ -31,15 +31,6 @@ export default makeStyles(({
     width: '120px',
   },
 
-  clientApplicationCardImage: {
-    borderRadius: '50%',
-    fontSize: '20px',
-    fontWeight: 300,
-    height: '120px',
-    margin: '20px auto',
-    width: '120px',
-  },
-
   clientApplicationCardBottomSection: {
     backgroundColor: '#F5F5F5',
     border: `1px solid ${config.palette.label}`,
@@ -64,18 +55,13 @@ export default makeStyles(({
     '-webkit-line-clamp': 2,
   },
 
-  clientApplicationCardWithAvatarIcon: {
-    color: config.palette.label,
-    fontSize: '30px',
-    position: 'absolute',
-    transform: 'translate(105px, 10px) rotate(45deg)',
-  },
-
-  clientApplicationCardWithImageIcon: {
-    color: config.palette.label,
-    fontSize: '30px',
-    position: 'absolute',
-    transform: 'translate(165px, 10px) rotate(45deg)',
+  clientApplicationCardImage: {
+    borderRadius: '50%',
+    fontSize: '20px',
+    fontWeight: 300,
+    height: '120px',
+    margin: '20px auto',
+    width: '120px',
   },
 
   clientApplicationCardStatus: {
@@ -108,10 +94,31 @@ export default makeStyles(({
     textAlign: 'center',
   },
 
+  clientApplicationCardWithAvatarIcon: {
+    color: config.palette.label,
+    fontSize: '30px',
+    position: 'absolute',
+    transform: 'translate(105px, 10px) rotate(45deg)',
+  },
+
+  clientApplicationCardWithImageIcon: {
+    color: config.palette.label,
+    fontSize: '30px',
+    position: 'absolute',
+    transform: 'translate(165px, 10px) rotate(45deg)',
+  },
+
   clientApplicationCardsContainer: {
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
+  },
+
+  clientApplicationsContainerTitle: {
+    color: '#14283C',
+    fontSize: '24px',
+    fontWeight: 400,
+    marginBottom: '24px',
   },
 
   clientApplicationsContentContainer: {
@@ -125,7 +132,7 @@ export default makeStyles(({
     color: config.palette.newGreyScales['400'],
     fontSize: '16px',
     fontWeight: 300,
-    marginBottom: '24px',
+    marginBottom: '40px',
   },
 
   clientApplicationsTitle: {
@@ -253,31 +260,20 @@ export default makeStyles(({
     fontWeight: 200,
   },
 
-  registerClientApplicationCard: {
-    alignItems: 'center',
-    backgroundColor: '#F5F5F5',
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: '4px',
-    display: 'flex',
-    height: '331.5px',
-    marginBottom: '25px',
-    width: '285px',
-  },
-
-  registerClientApplicationCardButton: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
+  registerNewClientApplicationCardButton: {
+    backgroundColor: config.palette.primary,
+    border: `1px solid ${config.palette.primary}`,
     borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.active} !important`,
+    color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
-    margin: '0px auto',
+    marginBottom: '40px',
     padding: '6px 21px',
     textDecoration: 'none',
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.background.default,
+      backgroundColor: config.palette.primary,
     },
   },
 
