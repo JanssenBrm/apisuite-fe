@@ -103,6 +103,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appClientID: '',
       appClientSecret: '',
       appFullDescription: '',
+      appLabels: '',
       appName: '',
       appPrivacyURL: '',
       appRedirectURI: 'https://',
@@ -174,6 +175,9 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientID: mostRecentlySelectedAppDetails.clientId ? mostRecentlySelectedAppDetails.clientId : '',
         appClientSecret: mostRecentlySelectedAppDetails.clientSecret ? mostRecentlySelectedAppDetails.clientSecret : '',
         appFullDescription: mostRecentlySelectedAppDetails.description ? mostRecentlySelectedAppDetails.description : '',
+        appLabels: mostRecentlySelectedAppDetails.labels.length > 0
+          ? mostRecentlySelectedAppDetails.labels.join(' ')
+          : '',
         appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : '',
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : '',
         appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ? mostRecentlySelectedAppDetails.redirectUrl : '',
@@ -191,6 +195,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientID: '',
         appClientSecret: '',
         appFullDescription: '',
+        appLabels: '',
         appName: '',
         appPrivacyURL: '',
         appRedirectURI: 'https://',
@@ -298,6 +303,10 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   /* App-related actions */
 
+  const checkForLabels = (stringOfLabels: string) => {
+    return stringOfLabels.length ? stringOfLabels.split(' ') : []
+  }
+
   // Creating an app
 
   const createApp = (event: React.ChangeEvent<{}>) => {
@@ -305,6 +314,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const newAppDetails = {
       description: formState.values.appFullDescription,
+      labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
@@ -329,6 +339,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     const updatedAppDetails = {
       description: formState.values.appFullDescription,
       id: modalDetails.userAppID,
+      labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
@@ -374,6 +385,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appClientID: '',
             appClientSecret: '',
             appFullDescription: '',
+            appLabels: '',
             appName: '',
             appPrivacyURL: '',
             appRedirectURI: 'https://',
@@ -715,6 +727,19 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     rows={4}
                     type='text'
                     value={formState.values.appFullDescription}
+                    variant='outlined'
+                  />
+
+                  <TextField
+                    className={classes.inputFields}
+                    fullWidth
+                    helperText={t('dashboardTab.applicationsSubTab.appModal.appLabelsFieldHelperText', { config })}
+                    label={t('dashboardTab.applicationsSubTab.appModal.appLabelsFieldLabel', { config })}
+                    margin='dense'
+                    name='appLabels'
+                    onChange={handleChange}
+                    type='text'
+                    value={formState.values.appLabels}
                     variant='outlined'
                   />
                 </div>
