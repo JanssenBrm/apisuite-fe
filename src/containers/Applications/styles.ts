@@ -108,7 +108,6 @@ export default makeStyles(({
     transform: 'translate(165px, 10px) rotate(45deg)',
   },
 
-
   clientApplicationCardsContainer: {
     display: 'flex',
     flexDirection: 'row',
