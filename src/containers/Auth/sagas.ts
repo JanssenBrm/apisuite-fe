@@ -147,7 +147,7 @@ function * expiredSessionWorker () {
     })
   } catch (error) {
     // If the token has expired, we sign out
-    const authToken = yield select((state: Store) => state.auth.authToken)
+    const authToken: string = yield select((state: Store) => state.auth.authToken)
 
     // We only sign out if we have the session token
     if (authToken) {
@@ -164,7 +164,7 @@ function * getProviders () {
   try {
     const settingsURL = `${API_URL}/settings`
 
-    const response = yield call(request, {
+    const response: { sso: string[] } = yield call(request, {
       url: settingsURL,
       method: 'GET',
     })
@@ -190,14 +190,7 @@ function * ssoLoginWorker (action: AnyAction) {
     const provider = action?.payload?.provider
     const ssoLoginUrl = `${API_URL}/auth/oidc/${provider}?state=${state}`
 
-    const response = yield call(fetch, ssoLoginUrl,
-      {
-        url: ssoLoginUrl,
-        method: 'GET',
-      },
-    )
-
-    console.log('response', response)
+    const response: { url: string } = yield call(window.fetch, ssoLoginUrl)
 
     window.location.href = response.url
   } catch (error) {
