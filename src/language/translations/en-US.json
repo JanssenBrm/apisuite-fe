@@ -138,6 +138,30 @@
   "formCard": {
     "holdMessage": "Please hold..."
   },
+  "passwordRecovery": {
+    "closeButtonLabel": "close",
+    "forgotPasswordTitle": "Forgot your password?",
+    "forgotPasswordSubtitle": "Enter your recovery information below, and we'll send you an e-mail to recover your password.",
+    "recoverPasswordTitle": "Enter your new password",
+    "recoverPasswordSubtitle": "Please provide a new password.",
+    "formButtonLabel": {
+      "forgot": "Send the recovery e-mail",
+      "recover": "Save new password"
+    },
+    "emailLabel": "E-mail",
+    "newPasswordLabel": "New password",
+    "warnings": {
+      "email": "Please provide a valid e-mail address.",
+      "password": "Your new password must be at least 12 characters long, and contain 1 lowercase & 1 uppercase character, as well as 1 symbol."
+    },
+    "recoveryEmailHasBeenSentPartOne": "Check your inbox",
+    "recoveryEmailHasBeenSentPartTwo": "If you have an",
+    "recoveryEmailHasBeenSentPartThree": "account registered with",
+    "recoveryEmailHasBeenSentPartFour": ", you will receive a link to recover your password.",
+    "infoBoxTextPartOne": "If the e-mail we've just sent you does not show up on your inbox, please check your Spam or Junk folders or, ultimately,",
+    "infoBoxTextPartTwo": "contact support",
+    "togglePasswordVisibilityARIALabel": "Toggle password visibility"
+  },
   "apiProductsTab": {
     "latestAPIProductTitle": "Latest update",
     "retrievingAPIProductMessage": "Retrieving most recently updated API...",
@@ -268,11 +292,12 @@
       "documentationLink": "Read why apps are used",
       "noOrganisationWarning": "You need to create an Organisation before you can create your first app. Click on the \"Set up your Organisation\" button above to start.",
       "listOfAppsSection": {
-        "title": "Client applications",
-        "subtitle": "Register and manage your client applications",
-        "loadingApps": "Loading all user apps...",
+        "title": "Applications",
+        "subtitle": "Register and manage your applications",
+        "loadingApps": "Loading all apps...",
+        "clientApplicationsTitle": "Client applications",
+        "registerNewAppButtonLabel": "Register new app",
         "noAppDescription": "No description provided.",
-        "registerAppButtonLabel": "Register app",
         "subscribedAppStatus": "Subscribed",
         "draftAppStatus": "Draft"
       },
@@ -292,6 +317,8 @@
         "appClientIDFieldLabel": "Client ID",
         "appClientSecretFieldLabel": "Client Secret",
         "appFullDescriptionFieldLabel": "Full description",
+        "appLabelsFieldLabel": "Labels",
+        "appLabelsFieldHelperText": "Each provided label should be separated by a space.",
         "appNameFieldLabel": "Application name",
         "appPrivacyPolicyFieldLabel": "Privacy Policy URL",
         "appPrivacyPolicyURLFieldLabel": "Privacy Policy URL",
@@ -328,7 +355,7 @@
         "subSectionLabelFourPartTwo": "OAuth2 secured API access",
         "subSectionLabelOne": "General information",
         "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
-        "subSectionLabelThree": "Access details",
+        "subSectionLabelThree": "Redirect URI",
         "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us."
       }
     },

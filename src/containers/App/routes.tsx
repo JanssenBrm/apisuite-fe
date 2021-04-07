@@ -13,9 +13,9 @@ import APIDetails from 'containers/APIDetails'
 import APIProducts from 'containers/APIProducts'
 import Applications from 'containers/Applications'
 import Dashboard from 'containers/Dashboard'
-import ForgotPasswordPage from 'containers/ForgotPasswordPage'
 import Instructions from 'containers/Instructions'
 import Organisation from 'containers/Organisation'
+import PasswordRecovery from 'containers/PasswordRecovery'
 import Profile from 'containers/Profile'
 import RedirectPage from 'containers/RedirectPage'
 import RequireAuth from 'containers/Auth'
@@ -66,7 +66,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: '/dashboard/subscriptions', exact: true, auth: true, component: Subscriptions },
   { path: '/dashboard/test', exact: true, auth: true, component: Instructions },
   { path: '/documentation', exact: true, component: Instructions },
-  { path: '/forgot', exact: true, component: ForgotPasswordPage, layout: EssentialLayout },
+  { path: '/forgot', exact: true, component: PasswordRecovery, layout: EssentialLayout },
   { path: '/privacy', component: Privacy },
   { path: '/profile', exact: true, auth: true, component: Profile },
   { path: '/profile/organisation', exact: true, auth: true, component: Organisation },

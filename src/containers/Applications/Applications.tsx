@@ -2,6 +2,8 @@ import * as React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
+import { getSections } from 'util/extensions'
+
 import ApplicationsModal from 'components/ApplicationsModal'
 import Link from 'components/Link'
 
@@ -261,19 +263,29 @@ const Applications: React.FC<ApplicationsProps> = ({
                       {t('dashboardTab.applicationsSubTab.listOfAppsSection.subtitle', { config })}
                     </p>
 
-                    <div className={classes.clientApplicationCardsContainer}>
-                      {appCardGenerator(allUserApps)}
+                    {/* Client applications container */}
+                    <div>
+                      <p className={classes.clientApplicationsContainerTitle}>
+                        {t('dashboardTab.applicationsSubTab.listOfAppsSection.clientApplicationsTitle', { config })}
+                      </p>
 
-                      <div
-                        className={classes.registerClientApplicationCard}
+                      <Button
+                        className={classes.registerNewClientApplicationCardButton}
+                        onClick={() => toggleModal('new', 0, 0)}
                       >
-                        <Button
-                          className={classes.registerClientApplicationCardButton}
-                          onClick={() => toggleModal('new', 0, 0)}
-                        >
-                          {t('dashboardTab.applicationsSubTab.listOfAppsSection.registerAppButtonLabel', { config })}
-                        </Button>
+                        {t('dashboardTab.applicationsSubTab.listOfAppsSection.registerNewAppButtonLabel', { config })}
+                      </Button>
+
+                      <div className={classes.clientApplicationCardsContainer}>
+                        {appCardGenerator(allUserApps)}
                       </div>
+                    </div>
+
+                    {/* Marketplace applications container */}
+                    <div>
+                      {
+                        getSections('MARKETPLACE_APPLICATIONS')
+                      }
                     </div>
                   </section>
 

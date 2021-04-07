@@ -11,7 +11,7 @@ import SSOSignIn from './SSOSignIn'
 export const mapDispatchToProps = (dispatch: Dispatch): any =>
   bindActionCreators(
     {
-      ssoTokenExchange: (payload: AuthPayloads['sso']['ssoTokenExchange']) => dispatch(authActions.ssoTokenExchange(payload)),
+      ssoTokenExchange: (payload: AuthPayloads['sso']['ssoTokenExchange']) => authActions.ssoTokenExchange(payload),
     },
     dispatch,
   )

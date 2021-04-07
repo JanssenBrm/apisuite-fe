@@ -197,7 +197,7 @@ export default makeStyles(({
       },
     },
 
-    // Text field's input helper text
+    // Text field's helper text
     '& .MuiFormHelperText-root': {
       color: config.palette.label,
 
@@ -210,6 +210,7 @@ export default makeStyles(({
   buttonsContainer: {
     display: 'flex',
     justifyContent: 'space-between',
+    marginBottom: '25px',
   },
 
   clientApplicationCardStatusText: {
@@ -560,6 +561,11 @@ export default makeStyles(({
       '&.MuiInputBase-multiline': {
         height: '104.5px',
       },
+    },
+
+    // Text field's helper text styles
+    '& > p': {
+      color: config.palette.label,
     },
 
     // Text field's input text styles
