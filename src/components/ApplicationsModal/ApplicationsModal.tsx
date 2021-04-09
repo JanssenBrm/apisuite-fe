@@ -962,7 +962,6 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                                 ? classes.enabledAddOrEditButton
                                 : classes.disabledAddOrEditButton
                             }
-                            href='#'
                             onClick={createApp}
                           >
                             {t('dashboardTab.applicationsSubTab.appModal.addAppButtonLabel', { config })}
@@ -970,7 +969,6 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <Button
                             className={classes.otherButtons}
-                            href='#'
                             onClick={toggleModal}
                           >
                             {t('dashboardTab.applicationsSubTab.appModal.cancelModalButtonLabel', { config })}
@@ -1003,7 +1001,6 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                                 ? classes.enabledAddOrEditButton
                                 : classes.disabledAddOrEditButton
                             }
-                            href='#'
                             onClick={updateApp}
                           >
                             {t('dashboardTab.applicationsSubTab.appModal.editAppButtonLabel', { config })}
@@ -1020,7 +1017,6 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <Button
                             className={classes.removeAppButton}
-                            href='#'
                             onClick={handleOpenDialog}
                           >
                             {t('dashboardTab.applicationsSubTab.appModal.removeAppButtonLabel', { config })}
@@ -1029,7 +1025,6 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                         <Button
                           className={classes.otherButtons}
-                          href='#'
                           onClick={toggleModal}
                         >
                           {t('dashboardTab.applicationsSubTab.appModal.closeModalButtonLabel', { config })}

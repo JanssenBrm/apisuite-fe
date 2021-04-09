@@ -33,7 +33,6 @@ const SSOForm: React.FC<SSOFormProps> = ({
           <div className={classes.ssoSignInWithButtonContainer}>
             <Button
               className={classes.ssoSignInWithButton}
-              href='#'
               key={`${provider}${index}`}
               onClick={() => handleSubmit(provider)}
               startIcon={

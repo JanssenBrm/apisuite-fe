@@ -199,7 +199,6 @@ const Security: React.FC<SecurityProps> = ({
                         ? classes.enabledUpdatePasswordButton
                         : classes.disabledUpdatePasswordButton
                     }
-                    href='#'
                     label={t('profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel', { config })}
                     onClick={handlePasswordChangeRequest}
                   />

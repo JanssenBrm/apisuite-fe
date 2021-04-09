@@ -45,7 +45,6 @@ const FormCard: React.FC<FormCardProps> = ({
               : customEnabledConfirmButtonStyles || classes.enabledNextButton
           }
           disabled={buttonDisabled}
-          href='#'
           onClick={handleSubmit}
         >
           {
@@ -61,7 +60,6 @@ const FormCard: React.FC<FormCardProps> = ({
             {/* @ts-ignore */}
             <Button
               className={customBackButtonStyles || classes.backButton}
-              href='#'
               onClick={handleBackClick}
             >
               {backLabel}

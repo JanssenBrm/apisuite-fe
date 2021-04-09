@@ -322,7 +322,6 @@ const Profile: React.FC<ProfileProps> = ({
                           ? classes.enabledOrganisationButton
                           : classes.disabledOrganisationButton
                       }
-                      href='#'
                       onClick={switchOrganisation}
                     >
                       {t('profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel', { config })}
@@ -487,7 +486,6 @@ const Profile: React.FC<ProfileProps> = ({
                         ? classes.enabledUpdateDetailsButton
                         : classes.disabledUpdateDetailsButton
                     }
-                    href='#'
                     onClick={updateProfileDetails}
                   >
                     {t('profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails', { config })}
@@ -522,7 +520,6 @@ const Profile: React.FC<ProfileProps> = ({
           <div className={classes.otherActionsContainerTwo}>
             <Button
               className={classes.deleteAccountButton}
-              href='#'
               onClick={handleDelete}
             >
               {t('profileTab.overviewSubTab.otherActionsLabels.deleteAccount', { config })}
@@ -530,7 +527,6 @@ const Profile: React.FC<ProfileProps> = ({
 
             <Button
               className={classes.signOutButton}
-              href='#'
               onClick={logout}
             >
               {t('profileTab.overviewSubTab.otherActionsLabels.signOut', { config })}
