@@ -235,7 +235,6 @@ ${latestUpdatedAPI.apiAccess
                   /* TODO: This button will be disabled until we move on from the simplified API
                   subscription model, where APIs are automatically associated to any and all apps. */
                   customButtonClassName={classes.subscribeButton}
-                  href='#'
                   label={t('apiProductsTab.apiProductButtons.subscribeButtonLabel', { config })}
                   onClick={toggleModal}
                 />
@@ -268,7 +267,7 @@ ${latestUpdatedAPI.apiAccess
                     </>
                   )
                   : (
-                    <a href='/auth/register'>
+                    <a href='/auth/signup'>
                       {t('apiProductsTab.registerForMoreMessage', { config })}
                     </a>
                   )

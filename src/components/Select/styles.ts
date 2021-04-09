@@ -5,7 +5,7 @@ import { config } from 'constants/global'
 const useStyles = makeStyles(({
   textField: {
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     '& .MuiOutlinedInput-root': {
@@ -14,7 +14,7 @@ const useStyles = makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
     },
   },

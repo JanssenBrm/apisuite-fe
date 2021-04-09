@@ -38,6 +38,17 @@ const Applications: React.FC<ApplicationsProps> = ({
 
   const [t] = useTranslation()
 
+  const [hasCurrentOrgDetails, setHasCurrentOrgDetails] = React.useState(false)
+
+  /* With every change of our store's 'profile > profile > current_org' section
+  (which goes from its initial state, to a filled or completely empty state),
+  we do the following check, so as to know what view needs to be shown. */
+  React.useEffect(() => {
+    if (Object.keys(currentOrganisation).length !== 0 && currentOrganisation.id !== '') {
+      setHasCurrentOrgDetails(true)
+    }
+  }, [currentOrganisation])
+
   /* Modal stuff */
   const [modalDetails, setModalDetails] = React.useState<ModalDetails>({
     userID: 0,
@@ -182,7 +193,7 @@ const Applications: React.FC<ApplicationsProps> = ({
     <main>
       {
         // If the user has yet to create/join an organisation, (...)
-        currentOrganisation.id === ''
+        !hasCurrentOrgDetails
           ? (
             <section className={classes.firstUseContentContainer}>
               <div className={classes.firstUseImageContainer}>

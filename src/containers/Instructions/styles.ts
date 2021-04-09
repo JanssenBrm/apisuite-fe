@@ -1,10 +1,28 @@
 import { makeStyles } from '@material-ui/styles'
+
 import { config } from 'constants/global'
 
 export default makeStyles(({
-  root: {
-    backgroundColor: config.palette.newGreyScales['25'],
-    minHeight: '100%',
+  clipboardIcon: {
+    cursor: 'pointer',
+    zIndex: 1,
+
+    '&:hover': {
+      color: config.palette.primary,
+    },
+  },
+
+  codeBlock: {
+    borderBottomLeftRadius: config.dimensions.borderRadius,
+    borderBottomRightRadius: config.dimensions.borderRadius,
+    borderTopLeftRadius: 0,
+    borderTopRightRadius: 0,
+  },
+
+  content: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: 688,
   },
 
   contentContainer: {
@@ -16,36 +34,6 @@ export default makeStyles(({
     transform: 'translateX(-8px)',
   },
 
-  mainContainer: {
-    display: 'flex',
-    flexDirection: 'row',
-    marginBottom: 100,
-    width: '100%',
-  },
-
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: 688,
-  },
-
-  navigation: {
-    display: 'flex',
-    flexDirection: 'column',
-    width: 300,
-  },
-
-  title: {
-    fontSize: 26,
-    fontWeight: 300,
-  },
-
-  stepTitle: {
-    fontSize: 20,
-    marginTop: -170,
-    paddingTop: 170,
-  },
-
   description: {
     display: 'flex',
     marginBottom: 20,
@@ -54,16 +42,38 @@ export default makeStyles(({
     textAlign: 'justify',
   },
 
-  stepContainer: {
-    marginBottom: 20,
-    marginTop: 20,
+  iconRow: {
+    alignItems: 'flex-end',
+    backgroundColor: config.palette.text.primary,
+    borderBottomLeftRadius: 0,
+    borderBottomRightRadius: 0,
+    borderTopLeftRadius: config.dimensions.borderRadius,
+    borderTopRightRadius: config.dimensions.borderRadius,
+    color: config.palette.primaryContrastText,
+    display: 'flex',
+    height: 40,
+    justifyContent: 'flex-end',
+    marginTop: 0,
+    paddingLeft: 20,
+    paddingRight: 20,
   },
 
-  codeBlock: {
-    borderBottomLeftRadius: config.dimensions.borderRadius,
-    borderBottomRightRadius: config.dimensions.borderRadius,
-    borderTopRightRadius: 0,
-    borderTopLeftRadius: 0,
+  mainContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    marginBottom: 100,
+    width: '100%',
+  },
+
+  navigation: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: 300,
+  },
+
+  note: {
+    color: config.palette.primaryContrastText,
+    fontSize: 14,
   },
 
   noteContainer: {
@@ -74,52 +84,43 @@ export default makeStyles(({
     width: '100%',
   },
 
-  noteTitle: {
-    color: 'black',
-    fontSize: 16,
-    fontWeight: 400,
-  },
-
-  note: {
-    color: 'white',
-    fontSize: 14,
-  },
-
   noteContent: {
     backgroundColor: config.palette.primary,
     marginLeft: 5,
     padding: 20,
   },
 
-  iconRow: {
-    alignItems: 'flex-end',
-    backgroundColor: config.palette.text.primary,
-    color: 'white',
-    display: 'flex',
-    height: 40,
-    justifyContent: 'flex-end',
-    marginTop: 0,
-    paddingLeft: 20,
-    paddingRight: 20,
-    borderBottomLeftRadius: 0,
-    borderBottomRightRadius: 0,
-    borderTopRightRadius: config.dimensions.borderRadius,
-    borderTopLeftRadius: config.dimensions.borderRadius,
+  noteTitle: {
+    color: 'black',
+    fontSize: 16,
+    fontWeight: 400,
   },
 
-  clipboardIcon: {
-    cursor: 'pointer',
-    zIndex: 1,
-
-    '&:hover': {
-      color: config.palette.primary,
-    },
+  root: {
+    backgroundColor: config.palette.newGreyScales['25'],
+    minHeight: '100%',
   },
 
   sideMenuContainer: {
     paddingLeft: 40,
     position: 'sticky',
     top: 180,
+  },
+
+  stepContainer: {
+    marginBottom: 20,
+    marginTop: 20,
+  },
+
+  stepTitle: {
+    fontSize: 20,
+    marginTop: -170,
+    paddingTop: 170,
+  },
+
+  title: {
+    fontSize: 26,
+    fontWeight: 300,
   },
 }))
 

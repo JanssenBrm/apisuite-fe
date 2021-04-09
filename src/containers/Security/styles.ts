@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/styles'
+
 import { config } from 'constants/global'
 
 export default makeStyles(({
@@ -9,8 +10,8 @@ export default makeStyles(({
   },
 
   disabledUpdatePasswordButton: {
-    backgroundColor: config.palette.label,
-    border: `1px solid ${config.palette.label}`,
+    backgroundColor: '#99E6CC',
+    border: '1px solid #99E6CC',
     borderRadius: config.dimensions.borderRadius,
     color: `${config.palette.primaryContrastText} !important`,
     cursor: 'none',
@@ -24,8 +25,8 @@ export default makeStyles(({
   },
 
   enabledUpdatePasswordButton: {
-    backgroundColor: config.palette.tertiary,
-    border: `1px solid ${config.palette.tertiary}`,
+    backgroundColor: config.palette.primary,
+    border: `1px solid ${config.palette.primary}`,
     borderRadius: config.dimensions.borderRadius,
     color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
@@ -48,6 +49,31 @@ export default makeStyles(({
     textDecoration: 'none',
   },
 
+  infoBox: {
+    alignItems: 'center',
+    backgroundColor: config.palette.alert.success.background,
+    borderRadius: '4px',
+    display: 'flex',
+    height: '100%',
+    marginBottom: '25px',
+    padding: '12px 12px',
+    textAlign: 'left',
+    width: '500px',
+  },
+
+  infoBoxIcon: {
+    fill: '#46B5EF',
+    transform: 'translate(-3.5px, -11.5px)',
+  },
+
+  infoBoxText: {
+    color: '#035E86',
+    fontSize: '14px',
+    fontWeight: 400,
+    lineHeight: '18px',
+    margin: '0px 0px 5px 2.5px',
+  },
+
   inputFields: {
     marginBottom: '20px',
     marginTop: '20px',
@@ -60,7 +86,7 @@ export default makeStyles(({
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -70,7 +96,7 @@ export default makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
     },
 
@@ -94,6 +120,13 @@ export default makeStyles(({
     color: config.palette.tertiary,
     fontSize: '32px',
     fontWeight: 300,
+    marginBottom: '12px',
+  },
+
+  securitySubtitle: {
+    color: config.palette.newGreyScales['400'],
+    fontSize: '16px',
+    fontWeight: 300,
     marginBottom: '55px',
   },
 
@@ -111,7 +144,7 @@ export default makeStyles(({
   },
 
   userActivityTitle: {
-    color: '#BAC0C6',
+    color: config.palette.label,
     fontSize: '22px',
     fontWeight: 300,
   },

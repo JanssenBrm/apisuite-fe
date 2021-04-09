@@ -6,7 +6,7 @@ export default makeStyles({
   carouselSlideButtonStyling: {
     backgroundColor: config.palette.primary,
     borderRadius: `${config.dimensions.borderRadius}px`,
-    color: '#FFFFFF !important',
+    color: `${config.palette.primaryContrastText} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -29,7 +29,7 @@ export default makeStyles({
   },
 
   carouselSlideText: {
-    color: '#FFFFFF',
+    color: config.palette.background.default,
     fontSize: '22px',
     fontWeight: 300,
     marginBottom: '30px',

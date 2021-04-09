@@ -174,7 +174,7 @@ export default makeStyles(({
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -184,7 +184,7 @@ export default makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
     },
 
@@ -262,7 +262,7 @@ export default makeStyles(({
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -272,7 +272,7 @@ export default makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
     },
 
@@ -310,7 +310,7 @@ export default makeStyles(({
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -320,7 +320,7 @@ export default makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
     },
 
@@ -398,7 +398,7 @@ export default makeStyles(({
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -408,7 +408,7 @@ export default makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
 
       // Multiline text field's styles
@@ -445,7 +445,7 @@ export default makeStyles(({
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -455,7 +455,7 @@ export default makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
 
       // Multiline text field's styles
@@ -520,7 +520,7 @@ export default makeStyles(({
   },
 
   infoBoxIcon: {
-    fill: '#46b5ef',
+    fill: '#46B5EF',
     transform: 'translate(-2.5px, -40px)',
   },
 
@@ -544,7 +544,7 @@ export default makeStyles(({
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.primary} !important`,
+      color: `${config.palette.focus} !important`,
     },
 
     // Text field's input outline styles
@@ -554,7 +554,7 @@ export default makeStyles(({
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.primary} !important`,
+        borderColor: `${config.palette.focus} !important`,
       },
 
       // Multiline text field's styles

@@ -60,7 +60,6 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
               <div className={classes.addSubscriptionButtonContainer}>
                 <Button
                   customButtonClassName={classes.addSubscriptionButton}
-                  href='#'
                   label={
                     t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel', { config })
                   }
@@ -93,7 +92,6 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
               <div className={classes.addSubscriptionButtonContainer}>
                 <Button
                   customButtonClassName={classes.addSubscriptionButton}
-                  href='#'
                   label={
                     t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel', { config })
                   }

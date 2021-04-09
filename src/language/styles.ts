@@ -7,7 +7,7 @@ export default makeStyles(({
     backgroundColor: config.palette.newGreyScales['400'],
     borderColor: config.palette.newGreyScales['400'],
     borderRadius: `${config.dimensions.borderRadius}px`,
-    color: '#FFFFFF !important',
+    color: `${config.palette.primaryContrastText} !important`,
     fontSize: '14px',
     fontWeight: 300,
     overflow: 'hidden !important',

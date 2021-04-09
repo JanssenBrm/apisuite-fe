@@ -376,7 +376,6 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                           : classes.disabledRevokeAccessButton
                       )
                   }
-                  href='#'
                   label={
                     (selectedClientApp.subscriptions.length === 0)
                       ? (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess', { config }))
@@ -417,7 +416,6 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
               <div className={classes.rightSideButtonsContainer}>
                 <Button
                   customButtonClassName={classes.enabledOtherButtons}
-                  href='#'
                   label={
                     t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel', { config })
                   }

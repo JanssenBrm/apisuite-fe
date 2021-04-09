@@ -2,19 +2,20 @@ import * as React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import Button from 'components/Button'
 import Select from 'components/Select'
 import { SelectOption } from 'components/Select/types'
 import { isValidImage, isValidPhoneNumber, isValidURL } from 'components/FormField'
 
 import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 
 import Close from '@material-ui/icons/Close'
+import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded'
 import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
-import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
+import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 
 import { Organization, ProfileProps } from './types'
 
@@ -25,21 +26,35 @@ import { config } from 'constants/global'
 import { useForm } from 'util/useForm'
 
 const Profile: React.FC<ProfileProps> = ({
+  deleteAccount,
   getProfile,
   logout,
   profile,
+  switchOrg,
   updateProfile,
-  deleteAccount,
 }) => {
   const classes = useStyles()
 
   const [t] = useTranslation()
+
+  const [ssoIsActive, setSSOIsActive] = React.useState(false)
 
   React.useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile')
     of all user-related information we presently have. */
     getProfile()
   }, [getProfile])
+
+  React.useEffect(() => {
+    /* Once our store's 'profile' details load, we check its 'oidcProvider'
+    field to determine whether the user signed in regularly or by way of SSO.
+
+    If 'oidcProvider' amounts to 'null', it means that the user signed in regularly,
+    and if not, it means that the user signed in by way of SSO. */
+    if (profile.user.oidcProvider) {
+      setSSOIsActive(true)
+    }
+  }, [profile])
 
   /*
   User details
@@ -110,7 +125,7 @@ const Profile: React.FC<ProfileProps> = ({
             }
           },
         ],
-        message: t('profileTab.overviewTab.warningLabels.userAvatarURL', { config }),
+        message: t('profileTab.overviewSubTab.warningLabels.userAvatarURL', { config }),
       },
 
       userPhoneNumber: {
@@ -125,7 +140,7 @@ const Profile: React.FC<ProfileProps> = ({
             }
           },
         ],
-        message: t('profileTab.overviewTab.warningLabels.userPhoneNumber', { config }),
+        message: t('profileTab.overviewSubTab.warningLabels.userPhoneNumber', { config }),
       },
     })
 
@@ -147,6 +162,8 @@ const Profile: React.FC<ProfileProps> = ({
   }, [profile])
 
   /* Organisation details */
+
+  const [profileHasOrgDetails, setProfileHasOrgDetails] = React.useState(false)
 
   const [currentlySelectedOrganisation, setCurrentlySelectedOrganisation] = React.useState({
     group: '',
@@ -175,6 +192,13 @@ const Profile: React.FC<ProfileProps> = ({
   }
 
   React.useEffect(() => {
+    // Once our store's 'profile' details load, we check if there's organisation data associated to it
+    const hasOrgDetails = Object.keys(profile.current_org).length !== 0 && profile.current_org.id !== ''
+
+    setProfileHasOrgDetails(hasOrgDetails)
+  }, [profile])
+
+  React.useEffect(() => {
     // Once our store's 'profile' details load, we store them locally
     setCurrentlySelectedOrganisation({
       group: '',
@@ -189,27 +213,27 @@ const Profile: React.FC<ProfileProps> = ({
     event.preventDefault()
 
     if (selectedOrganisation && selectedOrganisation.value) {
+      const userID = profile.user.id
       const userAvatarURL = profile.user.avatar ? profile.user.avatar : ''
       const userBio = ''
       const userName = profile.user.name
-      const userOrganisation = selectedOrganisation.value.toString()
-      const userPhoneNumber = profile.user.mobile ? profile.user.mobile : '0'
+      const userPhoneNumber = profile.user.mobile ? profile.user.mobile : ''
 
-      updateProfile(userName, userBio, userAvatarURL, userPhoneNumber, userOrganisation)
+      updateProfile(userID, userName, userBio, userAvatarURL, userPhoneNumber)
     } else {
+      const userID = profile.user.id
       const userAvatarURL = formState.values.userAvatarURL
       const userBio = formState.values.userBio
       const userName = formState.values.userName
-      const userOrganisation = profile.current_org.id.toString()
       const userPhoneNumber = formState.values.userPhoneNumber
         ? formState.values.userPhoneNumber
-        : '0'
+        : ''
 
-      updateProfile(userName, userBio, userAvatarURL, userPhoneNumber, userOrganisation)
+      updateProfile(userID, userName, userBio, userAvatarURL, userPhoneNumber)
     }
   }
 
-  const shouldUpdateProfileDetails = (event: React.ChangeEvent<{}>) => {
+  const switchOrganisation = (event: React.ChangeEvent<{}>) => {
     event.preventDefault()
 
     if (
@@ -217,7 +241,7 @@ const Profile: React.FC<ProfileProps> = ({
       currentlySelectedOrganisation.value &&
       currentlySelectedOrganisation.value !== profile.current_org.id
     ) {
-      updateProfileDetails(event, currentlySelectedOrganisation)
+      switchOrg(profile.user.id, currentlySelectedOrganisation.value)
     }
   }
 
@@ -238,32 +262,38 @@ const Profile: React.FC<ProfileProps> = ({
       <section className={classes.allUserDetailsContainer}>
         <div className={classes.leftSideDetailsContainer}>
           <div className={classes.userNameAndRoleContainer}>
-            <p className={classes.userName}>{profile.user.name}</p>
+            <p className={classes.userName}>
+              {
+                profile.user.name !== ''
+                  ? profile.user.name
+                  : t('profileTab.overviewSubTab.loadingDetails', { config })
+              }
+            </p>
 
             <p className={classes.userRole}>
               {
-                profile.current_org.role.name === 'admin'
-                  ? t('profileTab.overviewTab.roleRelatedLabels.admin', { config })
-                  : (profile.current_org.role.name === 'organizationOwner')
-                    ? t('profileTab.overviewTab.roleRelatedLabels.orgOwner', { config })
-                    : t('profileTab.overviewTab.roleRelatedLabels.developer', { config })
+                !profileHasOrgDetails
+                  ? t('profileTab.overviewSubTab.roleRelatedLabels.baseUser', { config })
+                  : (
+                    profile.current_org.role.name === 'admin'
+                      ? t('profileTab.overviewSubTab.roleRelatedLabels.admin', { config })
+                      : (
+                        profile.current_org.role.name === 'organizationOwner'
+                          ? t('profileTab.overviewSubTab.roleRelatedLabels.orgOwner', { config })
+                          : t('profileTab.overviewSubTab.roleRelatedLabels.developer', { config })
+                      )
+                  )
               }
             </p>
           </div>
 
           <p className={classes.subtitle}>
-            {t('profileTab.overviewTab.subtitle', { config })}
+            {t('profileTab.overviewSubTab.subtitle', { config })}
           </p>
 
           <div>
-            <p
-              className={
-                profile.orgs_member.length !== 0
-                  ? classes.regularOrganisationDetailsTitle
-                  : classes.alternativeOrganisationDetailsTitle
-              }
-            >
-              <>{t('profileTab.overviewTab.orgRelatedLabels.selectorTitle', { config })}</>
+            <p className={classes.organisationDetailsTitle}>
+              {t('profileTab.overviewSubTab.orgRelatedLabels.selectorTitle', { config })}
             </p>
 
             {
@@ -274,7 +304,7 @@ const Profile: React.FC<ProfileProps> = ({
                       className={classes.organisationSelector}
                       customCloseIcon={<ExpandLessRoundedIcon />}
                       customOpenIcon={<ExpandMoreRoundedIcon />}
-                      fieldLabel={t('profileTab.overviewTab.orgRelatedLabels.selectorLabel', { config })}
+                      fieldLabel={t('profileTab.overviewSubTab.orgRelatedLabels.selectorLabel', { config })}
                       onChange={handleOrganisationSelection}
                       options={organisationSelector(profile.orgs_member)}
                       selected={
@@ -287,23 +317,24 @@ const Profile: React.FC<ProfileProps> = ({
                     />
 
                     <Button
-                      customButtonClassName={
+                      className={
                         currentlySelectedOrganisation.value !== profile.current_org.id
                           ? classes.enabledOrganisationButton
                           : classes.disabledOrganisationButton
                       }
-                      href='profile/organisation'
-                      label='Switch'
-                      onClick={shouldUpdateProfileDetails}
-                    />
+                      onClick={switchOrganisation}
+                    >
+                      {t('profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel', { config })}
+                    </Button>
                   </>
                 )
                 : (
                   <Button
-                    customButtonClassName={classes.enabledOrganisationButton}
+                    className={classes.createOrganisationButton}
                     href='profile/organisation'
-                    label={t('profileTab.overviewTab.orgRelatedLabels.createOrgButtonLabel', { config })}
-                  />
+                  >
+                    {t('profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel', { config })}
+                  </Button>
                 )
             }
           </div>
@@ -316,18 +347,23 @@ const Profile: React.FC<ProfileProps> = ({
             }
           />
 
-          <div className={classes.otherActionsContainer}>
-            <Button
-              customButtonClassName={classes.otherActionsButtons}
-              href='profile/security'
-              label={t('profileTab.overviewTab.otherActionsLabels.changePassword', { config })}
-            />
+          <div className={classes.otherActionsContainerOne}>
+            {
+              !ssoIsActive &&
+              <Button
+                className={classes.otherActionsButtons}
+                href='profile/security'
+              >
+                {t('profileTab.overviewSubTab.otherActionsLabels.changePassword', { config })}
+              </Button>
+            }
 
             <Button
-              customButtonClassName={classes.otherActionsButtons}
+              className={classes.otherActionsButtons}
               href='profile/team'
-              label={t('profileTab.overviewTab.otherActionsLabels.viewTeam', { config })}
-            />
+            >
+              {t('profileTab.overviewSubTab.otherActionsLabels.viewTeam', { config })}
+            </Button>
           </div>
         </div>
 
@@ -368,10 +404,10 @@ const Profile: React.FC<ProfileProps> = ({
                       fullWidth
                       helperText={
                         ((formState.touched.userAvatarURL &&
-                        formState.errors.userAvatarURL) || !validImage) &&
+                          formState.errors.userAvatarURL) || !validImage) &&
                         formState.errorMsgs.userAvatarURL
                       }
-                      label={t('profileTab.overviewTab.userRelatedLabels.userAvatarURL', { config })}
+                      label={t('profileTab.overviewSubTab.userRelatedLabels.userAvatarURL', { config })}
                       margin='dense'
                       name='userAvatarURL'
                       onChange={handleChange}
@@ -388,9 +424,13 @@ const Profile: React.FC<ProfileProps> = ({
             <hr className={classes.formSectionSeparator} />
 
             <TextField
-              className={classes.inputFields}
+              className={
+                !ssoIsActive
+                  ? classes.inputFields
+                  : classes.disabledInputFields
+              }
               fullWidth
-              label={t('profileTab.overviewTab.userRelatedLabels.userName', { config })}
+              label={t('profileTab.overviewSubTab.userRelatedLabels.userName', { config })}
               margin='dense'
               name='userName'
               onChange={handleChange}
@@ -401,9 +441,13 @@ const Profile: React.FC<ProfileProps> = ({
             />
 
             <TextField
-              className={classes.inputFields}
+              className={
+                !ssoIsActive
+                  ? classes.inputFields
+                  : classes.disabledInputFields
+              }
               fullWidth
-              label={t('profileTab.overviewTab.userRelatedLabels.userEmailAddress', { config })}
+              label={t('profileTab.overviewSubTab.userRelatedLabels.userEmailAddress', { config })}
               margin='dense'
               name='userEmailAddress'
               onChange={handleChange}
@@ -413,34 +457,42 @@ const Profile: React.FC<ProfileProps> = ({
               variant='outlined'
             />
 
-            <TextField
-              className={classes.inputFields}
-              error={formState.touched.userPhoneNumber && formState.errors.userPhoneNumber}
-              fullWidth
-              helperText={
-                formState.touched.userPhoneNumber &&
-                formState.errors.userPhoneNumber &&
-                formState.errorMsgs.userPhoneNumber
-              }
-              label={t('profileTab.overviewTab.userRelatedLabels.userPhoneNumber', { config })}
-              margin='dense'
-              name='userPhoneNumber'
-              onChange={handleChange}
-              onFocus={handleFocus}
-              type='tel'
-              value={formState.values.userPhoneNumber}
-              variant='outlined'
-            />
+            {
+              !ssoIsActive &&
+              (
+                <>
+                  <TextField
+                    className={classes.inputFields}
+                    error={formState.touched.userPhoneNumber && formState.errors.userPhoneNumber}
+                    fullWidth
+                    helperText={
+                      formState.touched.userPhoneNumber &&
+                      formState.errors.userPhoneNumber &&
+                      formState.errorMsgs.userPhoneNumber
+                    }
+                    label={t('profileTab.overviewSubTab.userRelatedLabels.userPhoneNumber', { config })}
+                    margin='dense'
+                    name='userPhoneNumber'
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    type='tel'
+                    value={formState.values.userPhoneNumber}
+                    variant='outlined'
+                  />
 
-            <Button
-              customButtonClassName={
-                formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
-                  ? classes.enabledUpdateDetailsButton
-                  : classes.disabledUpdateDetailsButton
-              }
-              label={t('profileTab.overviewTab.otherActionsLabels.updateProfileDetails', { config })}
-              onClick={updateProfileDetails}
-            />
+                  <Button
+                    className={
+                      formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
+                        ? classes.enabledUpdateDetailsButton
+                        : classes.disabledUpdateDetailsButton
+                    }
+                    onClick={updateProfileDetails}
+                  >
+                    {t('profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails', { config })}
+                  </Button>
+                </>
+              )
+            }
 
             <div className={classes.userStatusAndType}>
               {/* A mere dot */}
@@ -448,31 +500,37 @@ const Profile: React.FC<ProfileProps> = ({
 
               <p>
                 {
-                  profile.current_org.role.name === 'admin'
-                    ? t('profileTab.overviewTab.roleRelatedLabels.admin', { config })
-                    : (profile.current_org.role.name === 'organizationOwner')
-                      ? t('profileTab.overviewTab.roleRelatedLabels.orgOwner', { config })
-                      : t('profileTab.overviewTab.roleRelatedLabels.developer', { config })
+                  !profileHasOrgDetails
+                    ? t('profileTab.overviewSubTab.roleRelatedLabels.baseUser', { config })
+                    : (
+                      profile.current_org.role.name === 'admin'
+                        ? t('profileTab.overviewSubTab.roleRelatedLabels.admin', { config })
+                        : (
+                          profile.current_org.role.name === 'organizationOwner'
+                            ? t('profileTab.overviewSubTab.roleRelatedLabels.orgOwner', { config })
+                            : t('profileTab.overviewSubTab.roleRelatedLabels.developer', { config })
+                        )
+                    )
                 }
               </p>
             </div>
           </div>
 
           {/* 'Logout' and 'Delete' buttons div */}
-          <div className={classes.otherActionsContainer}>
+          <div className={classes.otherActionsContainerTwo}>
             <Button
-              customButtonClassName={classes.otherActionsButtons}
-              href='#'
-              label={t('profileTab.overviewTab.otherActionsLabels.logOut', { config })}
-              onClick={logout}
-            />
+              className={classes.deleteAccountButton}
+              onClick={handleDelete}
+            >
+              {t('profileTab.overviewSubTab.otherActionsLabels.deleteAccount', { config })}
+            </Button>
 
             <Button
-              customButtonClassName={classes.deleteProfileButton}
-              href='#'
-              label={t('profileTab.overviewTab.otherActionsLabels.deleteProfile', { config })}
-              onClick={handleDelete}
-            />
+              className={classes.signOutButton}
+              onClick={logout}
+            >
+              {t('profileTab.overviewSubTab.otherActionsLabels.signOut', { config })}
+            </Button>
           </div>
         </div>
 
@@ -480,14 +538,51 @@ const Profile: React.FC<ProfileProps> = ({
           openDialog &&
           <CustomizableDialog
             closeDialogCallback={handleCloseDialog}
-            confirmButtonCallback={deleteAccount}
-            confirmButtonLabel={t('profileTab.overviewTab.otherActionsLabels.deleteProfileModalConfirmButton', { config })}
+            confirmButtonCallback={() => {
+              deleteAccount()
+
+              handleCloseDialog()
+            }}
+            confirmButtonLabel={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalConfirmButton', { config })}
             open={openDialog}
-            providedText={t('profileTab.overviewTab.otherActionsLabels.deleteProfileModalWarningText', { config })}
-            providedTitle={t('profileTab.overviewTab.otherActionsLabels.deleteProfileModalTitle', { config })}
+            optionalTitleIcon='warning'
+            providedText={
+              t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningText', { config }) +
+              ` ${profile.user.email}?`
+            }
+            providedSubText={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningSubText', { config })}
+            providedTitle={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalTitle', { config })}
           />
         }
       </section>
+
+      {
+        ssoIsActive &&
+        <section className={classes.openIDInfoBoxContainer}>
+          <div className={classes.infoBox}>
+            <InfoRoundedIcon className={classes.infoBoxIcon} />
+
+            <div>
+              <p className={classes.infoBoxText}>
+                {t('profileTab.overviewSubTab.openIDInfoBoxContainerPartOne', { config })}
+              </p>
+
+              <p className={classes.infoBoxText}>
+                <span>
+                  <a
+                    href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/760774663/Open+ID'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    {t('profileTab.overviewSubTab.openIDInfoBoxContainerPartTwo', { config })}
+                  </a>
+                </span>
+                <span>{t('profileTab.overviewSubTab.openIDInfoBoxContainerPartThree', { config })}</span>
+              </p>
+            </div>
+          </div>
+        </section>
+      }
     </main>
   )
 }

@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     color: `${config.palette.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
-    marginRight: '24px',
+    marginRight: '12px',
     padding: '6px 21px',
     textDecoration: 'none',
     textTransform: 'none',
@@ -45,22 +45,48 @@ const useStyles = makeStyles({
 
   dialogContentContainer: {
     padding: '20px 24px',
+  },
 
-    '& > :first-child': {
-      color: config.palette.newGreyScales['400'],
-      fontSize: '16px',
-      fontWeight: 400,
-    },
+  dialogText: {
+    color: '#2F4152',
+    fontSize: '16px',
+    fontWeight: 400,
+    lineHeight: '20px',
+  },
+
+  dialogSubText: {
+    color: config.palette.newGreyScales['400'],
+    fontSize: '14px',
+    fontWeight: 300,
+    lineHeight: '20px',
   },
 
   dialogTitleContainer: {
-    backgroundColor: config.palette.newGreyScales['100'],
+    alignItems: 'center',
+    backgroundColor: config.palette.newGreyScales['25'],
+    display: 'flex',
+    padding: '15px 25px',
 
+    // Dialog's optional title icon
     '& > :first-child': {
+      marginRight: '10px',
+    },
+
+    // Dialog's title
+    '& > :last-child': {
       color: config.palette.tertiary,
       fontSize: '24px',
       fontWeight: 500,
+      padding: '0px',
     },
+  },
+
+  dialogTitleInfoIcon: {
+    color: '#46B5EF',
+  },
+
+  dialogTitleWarningIcon: {
+    color: config.palette.warning,
   },
 })
 

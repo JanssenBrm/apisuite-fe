@@ -1,133 +1,152 @@
 import { makeStyles } from '@material-ui/styles'
+
 import { config } from 'constants/global'
 
 export default makeStyles(({
-  root: {
-    minHeight: '100%',
-    backgroundColor: config.palette.greyScales[50],
-  },
-  contentContainer: {
-    maxWidth: 900,
-    margin: '0 auto',
-    transform: 'translateX(-8px)',
-  },
-  title: {
-    fontSize: 26,
-    fontWeight: 300,
-    marginBottom: 54,
-  },
-  table: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    width: '100%',
-    cursor: 'pointer',
-    borderRadius: config.dimensions.borderRadius,
-    backgroundColor: 'white',
-    overflow: 'hidden',
-    borderStyle: 'solid',
-    borderColor: config.palette.greyScales[300],
-    border: 1,
-  },
-  header: {
-    display: 'flex',
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    height: 42,
-    paddingLeft: 10,
-    color: config.palette.greyScales[400],
-  },
   actions: {
     paddingRight: 178,
   },
-  row: {
-    display: 'flex',
-    padding: '16px 30px 16px 10px',
-    justifyContent: 'space-between',
-    width: '100%',
-    borderTop: '1px solid ' + config.palette.greyScales[300],
-  },
+
   auth: {
-    fontSize: 14,
     color: config.palette.text.secondary,
+    fontSize: 14,
   },
-  select: {
-    width: 182,
-  },
-  name: {
-    fontSize: 16,
-    color: config.palette.text.primary,
-  },
+
   btn: {
-    display: 'inline-block',
-    color: 'white',
-    padding: '8px 24px',
     backgroundColor: config.palette.greyScales[900],
     borderRadius: config.dimensions.borderRadius,
+    color: config.palette.primaryContrastText,
     cursor: 'pointer',
+    display: 'inline-block',
     fontWeight: 500,
     marginRight: 16,
+    padding: '8px 24px',
+
     '&:disabled': {
       backgroundColor: config.palette.greyScales[400],
     },
   },
-  inviteCard: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    width: '100%',
-    cursor: 'pointer',
-    borderRadius: config.dimensions.borderRadius,
-    backgroundColor: 'white',
-    overflow: 'hidden',
-    borderStyle: 'solid',
-    borderColor: config.palette.greyScales[300],
-    border: 1,
-    marginTop: 24,
-    height: 82,
-    padding: '12px 30px 12px 10px',
+
+  contentContainer: {
+    margin: '0 auto',
+    maxWidth: 900,
+    transform: 'translateX(-8px)',
   },
+
   emailTextfield: {
-    backgroundColor: 'white',
-    width: 220,
+    backgroundColor: config.palette.background.default,
     borderRadius: config.dimensions.borderRadius,
     color: config.palette.greyScales[400],
-  },
-  nameTextfield: {
-    backgroundColor: 'white',
     width: 220,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[400],
   },
-  loading: {
-    position: 'relative',
-    top: 4,
-    color: 'white',
-    opacity: 0.5,
-  },
-  loadingPage: {
-    display: 'flex',
+
+  errorAlert: {
     alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: config.palette.feedback.error,
+    border: 'solid',
+    borderColor: config.palette.feedback.error,
+    borderRadius: config.dimensions.borderRadius,
+    borderWidth: 1,
+    color: config.palette.primaryContrastText,
+    display: 'flex',
+    fontSize: 13,
+    minHeight: 20,
+    padding: '2px 15px',
   },
+
   errorPlaceholder: {
     display: 'flex',
     marginTop: 10,
   },
-  errorAlert: {
-    display: 'flex',
+
+  header: {
     alignItems: 'center',
-    backgroundColor: config.palette.feedback.error,
-    border: 'solid',
-    borderWidth: 1,
-    borderColor: config.palette.feedback.error,
-    fontSize: 13,
-    color: '#FFF',
-    padding: '2px 15px',
+    color: config.palette.greyScales[400],
+    display: 'flex',
+    flexDirection: 'row',
+    height: 42,
+    justifyContent: 'space-between',
+    paddingLeft: 10,
+    width: '100%',
+  },
+
+  inviteCard: {
+    alignItems: 'center',
+    backgroundColor: config.palette.background.default,
+    border: 1,
+    borderColor: config.palette.greyScales[300],
     borderRadius: config.dimensions.borderRadius,
-    minHeight: 20,
+    borderStyle: 'solid',
+    cursor: 'pointer',
+    display: 'flex',
+    height: 82,
+    justifyContent: 'space-between',
+    marginTop: 24,
+    overflow: 'hidden',
+    padding: '12px 30px 12px 10px',
+    width: '100%',
+  },
+
+  loading: {
+    color: config.palette.primaryContrastText,
+    opacity: 0.5,
+    position: 'relative',
+    top: 4,
+  },
+
+  loadingPage: {
+    alignItems: 'center',
+    display: 'flex',
+    justifyContent: 'center',
+  },
+
+  name: {
+    color: config.palette.text.primary,
+    fontSize: 16,
+  },
+
+  nameTextfield: {
+    backgroundColor: config.palette.background.default,
+    borderRadius: config.dimensions.borderRadius,
+    color: config.palette.greyScales[400],
+    width: 220,
+  },
+
+  root: {
+    backgroundColor: config.palette.greyScales[50],
+    minHeight: '100%',
+  },
+
+  row: {
+    borderTop: '1px solid ' + config.palette.greyScales[300],
+    display: 'flex',
+    justifyContent: 'space-between',
+    padding: '16px 30px 16px 10px',
+    width: '100%',
+  },
+
+  select: {
+    width: 182,
+  },
+
+  table: {
+    alignItems: 'center',
+    backgroundColor: config.palette.background.default,
+    border: 1,
+    borderColor: config.palette.greyScales[300],
+    borderRadius: config.dimensions.borderRadius,
+    borderStyle: 'solid',
+    cursor: 'pointer',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    overflow: 'hidden',
+    width: '100%',
+  },
+
+  title: {
+    fontSize: 26,
+    fontWeight: 300,
+    marginBottom: 54,
   },
 }))

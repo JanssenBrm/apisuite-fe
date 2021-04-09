@@ -22,7 +22,7 @@ export default makeStyles(({
 
   footer: {
     backgroundColor: config.palette.newGreyScales['700'],
-    color: 'white',
+    color: config.palette.primaryContrastText,
     paddingBottom: '50px',
     paddingTop: '40px',
     width: '100%',

@@ -1,15 +1,16 @@
 import { Action } from 'redux'
+
 import { GET_SETTINGS, GET_SETTINGS_SUCCESS } from './ducks'
 
 export type SettingsStore = SettingsData
 
 export interface SettingsData {
-  portalName: string,
   clientName: string,
-  supportURL: string,
   documentationURL: string,
-  socialURLs: SocialUrl[],
   logoURL: string,
+  portalName: string,
+  socialURLs: SocialUrl[],
+  supportURL: string,
 }
 
 export interface SocialUrl {
