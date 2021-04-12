@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   confirmButton: {
     backgroundColor: config.palette.error,
     border: `1px solid ${config.palette.error}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,

@@ -78,7 +78,7 @@ export default makeStyles(({
 
   noteContainer: {
     backgroundColor: config.palette.secondary,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     marginBottom: 20,
     overflow: 'hidden',
     width: '100%',

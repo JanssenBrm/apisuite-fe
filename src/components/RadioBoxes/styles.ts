@@ -11,10 +11,10 @@ export default makeStyles(({
   },
   controlWrapper: {
     border: `1px solid ${config.palette.greyScales[900]}`,
+    borderRadius: `${config.dimensions.borderRadius}px`,
+    cursor: 'pointer',
     marginRight: 8,
     paddingRight: 12,
-    borderRadius: config.dimensions.borderRadius,
-    cursor: 'pointer',
   },
   controlLabel: {
     margin: 0,

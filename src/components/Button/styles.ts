@@ -6,7 +6,7 @@ const useStyles = makeStyles({
 
   button: {
     backgroundColor: config.palette.primary,
-    borderRadius: '5px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
     color: config.palette.primaryContrastText,
     display: 'inline-block',

@@ -2,8 +2,7 @@ import * as React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import Button from 'components/Button'
-
+import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade'
 import MenuItem from '@material-ui/core/MenuItem'
 import Modal from '@material-ui/core/Modal'
@@ -361,7 +360,7 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
             <div className={classes.buttonsContainer}>
               <div className={classes.leftSideButtonsContainer}>
                 <Button
-                  customButtonClassName={
+                  className={
                     (selectedClientApp.subscriptions.length === 0)
                       ? (
                         selectedClientApp.id === ''
@@ -376,28 +375,28 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                           : classes.disabledRevokeAccessButton
                       )
                   }
-                  label={
+                  onClick={
+                    (selectedClientApp.subscriptions.length === 0)
+                      ? handleAPIProductAccessRequest
+                      : () => null
+                  }
+                >
+                  {
                     (selectedClientApp.subscriptions.length === 0)
                       ? (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess', { config }))
                       : (t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess', { config }))
                   }
-                  onClick={
-                    (selectedClientApp.subscriptions.length === 0)
-                      ? handleAPIProductAccessRequest
-                      : null
-                  }
-                />
+                </Button>
 
                 <Button
-                  customButtonClassName={classes.enabledOtherButtons}
+                  className={classes.enabledOtherButtons}
                   href='/profile/organisation'
-                  label={
-                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewOrganisation', { config })
-                  }
-                />
+                >
+                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewOrganisation', { config })}
+                </Button>
 
                 <Button
-                  customButtonClassName={
+                  className={
                     isClientAppSelected
                       ? classes.enabledOtherButtons
                       : classes.disabledOtherButtons
@@ -407,20 +406,18 @@ const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({
                       ? `/dashboard/apps/${selectedClientApp.id}`
                       : '#'
                   }
-                  label={
-                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp', { config })
-                  }
-                />
+                >
+                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp', { config })}
+                </Button>
               </div>
 
               <div className={classes.rightSideButtonsContainer}>
                 <Button
-                  customButtonClassName={classes.enabledOtherButtons}
-                  label={
-                    t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel', { config })
-                  }
+                  className={classes.enabledOtherButtons}
                   onClick={resetModalSelections}
-                />
+                >
+                  {t('dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel', { config })}
+                </Button>
               </div>
             </div>
           </div>

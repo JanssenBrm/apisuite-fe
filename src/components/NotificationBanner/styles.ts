@@ -5,6 +5,7 @@ import { config } from 'constants/global'
 const useStyles = makeStyles(({
   notificationBannerCloseButton: {
     color: config.palette.primaryContrastText,
+    cursor: 'pointer',
     height: '24px',
     width: '24px',
   },

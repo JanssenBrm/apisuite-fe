@@ -12,6 +12,11 @@ export default makeStyles(({
     fontWeight: 500,
     padding: '12px 21px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.primary,
+    },
   },
 
   addSubscriptionButtonContainer: {
@@ -47,7 +52,7 @@ export default makeStyles(({
   infoBox: {
     alignItems: 'center',
     backgroundColor: config.palette.alert.success.background,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     height: '75px',
     marginLeft: 'auto',

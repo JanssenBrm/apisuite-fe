@@ -13,7 +13,12 @@ export default makeStyles({
     margin: '0px auto',
     padding: '17px 40px',
     textDecoration: 'none',
+    textTransform: 'none',
     width: '200px',
+
+    '&:hover': {
+      backgroundColor: config.palette.primary,
+    },
   },
 
   carouselSlideInnerContainer: {

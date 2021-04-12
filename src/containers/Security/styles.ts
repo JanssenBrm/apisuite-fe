@@ -12,7 +12,7 @@ export default makeStyles(({
   disabledUpdatePasswordButton: {
     backgroundColor: '#99E6CC',
     border: '1px solid #99E6CC',
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     cursor: 'none',
     fontSize: '16px',
@@ -22,12 +22,17 @@ export default makeStyles(({
     padding: '12px 20px',
     pointerEvents: 'none',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: '#99E6CC',
+    },
   },
 
   enabledUpdatePasswordButton: {
     backgroundColor: config.palette.primary,
     border: `1px solid ${config.palette.primary}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
@@ -35,12 +40,17 @@ export default makeStyles(({
     marginRight: '15px',
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.primary,
+    },
   },
 
   forgotPasswordButton: {
     backgroundColor: config.palette.primaryContrastText,
     border: `1px solid ${config.palette.label}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
@@ -52,7 +62,7 @@ export default makeStyles(({
   infoBox: {
     alignItems: 'center',
     backgroundColor: config.palette.alert.success.background,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     height: '100%',
     marginBottom: '25px',
@@ -110,7 +120,7 @@ export default makeStyles(({
 
   sectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     marginBottom: '25px',
     maxWidth: '900px',
     width: '100%',

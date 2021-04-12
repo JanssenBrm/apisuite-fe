@@ -34,7 +34,7 @@ export default makeStyles(({
   clientApplicationCardBottomSection: {
     backgroundColor: '#F5F5F5',
     border: `1px solid ${config.palette.label}`,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     borderTop: 'none',
     borderTopLeftRadius: '0px',
     borderTopRightRadius: '0px',
@@ -90,7 +90,7 @@ export default makeStyles(({
     border: `1px solid ${config.palette.label}`,
     borderBottomLeftRadius: '0px',
     borderBottomRightRadius: '0px',
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     textAlign: 'center',
   },
 
@@ -187,7 +187,7 @@ export default makeStyles(({
 
   knowledgeBaseCard: {
     backgroundColor: config.palette.primaryContrastText,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     boxShadow: '1px 0px 10px 0px rgba(0, 0, 0, 0.05)',
     height: '310px',
     padding: '24px 40px 40px 40px',
@@ -286,7 +286,7 @@ export default makeStyles(({
   warningBox: {
     alignItems: 'center',
     backgroundColor: '#FFDCB9',
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     height: '40px',
     marginTop: '40px',

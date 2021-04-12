@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Button from '../Button'
+import Button from '@material-ui/core/Button'
 
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 
@@ -70,21 +70,22 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
         notificationCardButtonClassName
           ? (
             <Button
-              customButtonClassName={notificationCardButtonClassName}
+              className={notificationCardButtonClassName}
               href={notificationCardButtonLink}
-              label={notificationCardButtonLabel}
               onClick={notificationCardButtonAction}
-            />
+            >
+              {notificationCardButtonLabel}
+            </Button>
           )
           : (
             <Button
-              background='tertiary'
-              color='tertiary'
+              className={classes.notificationCardButton}
               fullWidth
               href={notificationCardButtonLink}
-              label={notificationCardButtonLabel}
               onClick={notificationCardButtonAction}
-            />
+            >
+              {notificationCardButtonLabel}
+            </Button>
           )
       }
 

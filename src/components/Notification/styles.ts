@@ -5,7 +5,7 @@ import { config } from 'constants/global'
 export default makeStyles(({
   content: {
     alignItems: 'center',
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',

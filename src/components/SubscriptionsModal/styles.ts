@@ -7,7 +7,7 @@ export default makeStyles(({
 
   modalContentsContainer: {
     backgroundColor: config.palette.background.default,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.3)',
     height: '100%',
     /* The 'outline' property is necessary to remove
@@ -106,7 +106,7 @@ export default makeStyles(({
 
   sectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     margin: '25px 0px',
     width: '100%',
   },
@@ -154,7 +154,7 @@ export default makeStyles(({
 
     '& > :last-child': {
       border: `1px solid ${config.palette.newGreyScales['400']}`,
-      borderRadius: '4px',
+      borderRadius: `${config.dimensions.borderRadius}px`,
       color: config.palette.active,
       height: '40px',
       maxWidth: '420px',
@@ -181,7 +181,7 @@ export default makeStyles(({
   infoBox: {
     alignItems: 'center',
     backgroundColor: config.palette.alert.success.background,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     height: '100%',
     marginBottom: '25px',
@@ -205,7 +205,7 @@ export default makeStyles(({
   warningBox: {
     alignItems: 'center',
     backgroundColor: '#FFDCB9',
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     height: '100%',
     marginBottom: '25px',
@@ -374,6 +374,11 @@ export default makeStyles(({
     padding: '12px 21px',
     pointerEvents: 'none',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.background.default,
+    },
   },
 
   disabledRequestAccessButton: {
@@ -387,6 +392,11 @@ export default makeStyles(({
     padding: '12px 21px',
     pointerEvents: 'none',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.primary,
+    },
   },
 
   disabledRevokeAccessButton: {
@@ -400,6 +410,11 @@ export default makeStyles(({
     padding: '12px 21px',
     pointerEvents: 'none',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.warning,
+    },
   },
 
   enabledOtherButtons: {
@@ -413,6 +428,11 @@ export default makeStyles(({
     marginLeft: '25px',
     padding: '12px 21px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.background.default,
+    },
   },
 
   enabledRequestAccessButton: {
@@ -426,6 +446,11 @@ export default makeStyles(({
     opacity: 1,
     padding: '12px 21px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.primary,
+    },
   },
 
   enabledRevokeAccessButton: {

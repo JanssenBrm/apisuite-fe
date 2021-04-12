@@ -1,6 +1,6 @@
 import * as React from 'react'
 
-import Button from '../Button'
+import Button from '@material-ui/core/Button'
 
 import useStyles from './styles'
 
@@ -31,21 +31,22 @@ const GreetingCard: React.FC<GreetingCardProps> = ({
         greetingCardButtonClassName
           ? (
             <Button
-              customButtonClassName={greetingCardButtonClassName}
+              className={greetingCardButtonClassName}
               href={greetingCardButtonLink}
-              label={greetingCardButtonLabel}
               onClick={greetingCardButtonAction}
-            />
+            >
+              {greetingCardButtonLabel}
+            </Button>
           )
           : (
             <Button
-              background='tertiary'
-              color='tertiary'
+              className={classes.greetingCardButton}
               fullWidth
               href={greetingCardButtonLink}
-              label={greetingCardButtonLabel}
               onClick={greetingCardButtonAction}
-            />
+            >
+              {greetingCardButtonLabel}
+            </Button>
           )
       }
     </section>

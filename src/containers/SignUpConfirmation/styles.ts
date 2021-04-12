@@ -68,7 +68,7 @@ const useStyles = makeStyles({
   infoBox: {
     alignItems: 'center',
     backgroundColor: config.palette.alert.success.background,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     padding: '12px 35px 12px 10px',
     textAlign: 'left',

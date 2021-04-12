@@ -17,12 +17,12 @@ export default makeStyles(({
     justifyContent: 'flex-end',
   },
   badge: {
-    padding: '5px',
-    borderRadius: '5px',
-    width: '40px',
-    textAlign: 'center',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     fontSize: '.7em',
     lineHeight: '1em',
+    padding: '5px',
+    textAlign: 'center',
+    width: '40px',
   },
   live: {
     backgroundColor: config.palette.primary,

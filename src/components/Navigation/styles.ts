@@ -11,7 +11,7 @@ export default makeStyles(({
 
   alternativeAssistantAmountOfNotifications: {
     backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
@@ -135,7 +135,7 @@ export default makeStyles(({
 
   regularAssistantAmountOfNotifications: {
     backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     height: '24px',
     pointerEvents: 'none',
     textAlign: 'center',
