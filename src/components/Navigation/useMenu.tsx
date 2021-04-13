@@ -18,7 +18,7 @@ import {
   DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
 } from 'constants/global'
 
-export function useMenu (): Array<TabProps[]> {
+export function useMenu(): Array<TabProps[]> {
   const [settings] = useSettings()
   const roleName = useSelector(getRoleName)
   const { pathname } = useLocation()
@@ -119,6 +119,9 @@ export function useMenu (): Array<TabProps[]> {
             : DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
         ),
       },
+
+      ...extensionsInitTabs,
+
       {
         // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
@@ -135,7 +138,6 @@ export function useMenu (): Array<TabProps[]> {
         route: '/auth/signin',
         active: pathname === '/auth/signin',
       },
-      ...extensionsInitTabs,
     ].filter(Boolean)
 
     return setMenuActiveEntries(entries)
