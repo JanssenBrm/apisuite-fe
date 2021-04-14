@@ -2,9 +2,9 @@ import * as React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import Button from 'components/Button'
 import { isValidPass } from 'components/FormField'
 
+import Button from '@material-ui/core/Button'
 import IconButton from '@material-ui/core/IconButton'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
@@ -192,16 +192,17 @@ const Security: React.FC<SecurityProps> = ({
 
                 <div className={classes.actionsContainer}>
                   <Button
-                    customButtonClassName={
+                    className={
                       (providedPasswords[0] !== providedPasswords[1]) &&
-                        (providedPasswords[0].length && providedPasswords[1].length) &&
-                        (isValidPass(providedPasswords[1]))
+                (providedPasswords[0].length && providedPasswords[1].length) &&
+                (isValidPass(providedPasswords[1]))
                         ? classes.enabledUpdatePasswordButton
                         : classes.disabledUpdatePasswordButton
                     }
-                    label={t('profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel', { config })}
                     onClick={handlePasswordChangeRequest}
-                  />
+                  >
+                    {t('profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel', { config })}
+                  </Button>
                 </div>
               </>
             )

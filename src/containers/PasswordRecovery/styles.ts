@@ -106,7 +106,7 @@ const useStyles = makeStyles(({
   infoBox: {
     alignItems: 'center',
     backgroundColor: config.palette.alert.success.background,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     height: '100%',
     marginBottom: '25px',
@@ -130,7 +130,7 @@ const useStyles = makeStyles(({
 
   inputField: {
     backgroundColor: config.palette.background.default,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.greyScales[400],
   },
 

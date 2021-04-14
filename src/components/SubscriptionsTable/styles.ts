@@ -86,7 +86,7 @@ export default makeStyles(({
 
   appNameIcon: {
     backgroundColor: config.palette.primary,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.primaryContrastText,
     fontSize: '14px',
     fontWeight: 300,
@@ -103,7 +103,7 @@ export default makeStyles(({
 
   deprecatedIcon: {
     backgroundColor: config.palette.warning,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.primaryContrastText,
     marginRight: '20px',
     padding: '5px',

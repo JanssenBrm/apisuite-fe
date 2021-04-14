@@ -2,10 +2,11 @@ import * as React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import Button from 'components/Button'
 import Link from 'components/Link'
 import SubscriptionsModal from 'components/SubscriptionsModal'
 import SubscriptionsTable from 'components/SubscriptionsTable'
+
+import Button from '@material-ui/core/Button'
 
 import SportsSoccerRoundedIcon from '@material-ui/icons/SportsSoccerRounded'
 
@@ -59,12 +60,11 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
 
               <div className={classes.addSubscriptionButtonContainer}>
                 <Button
-                  customButtonClassName={classes.addSubscriptionButton}
-                  label={
-                    t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel', { config })
-                  }
+                  className={classes.addSubscriptionButton}
                   onClick={toggleModal}
-                />
+                >
+                  {t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel', { config })}
+                </Button>
               </div>
 
               <Link
@@ -91,12 +91,11 @@ const Subscriptions: React.FC<SubscriptionsProps> = ({
 
               <div className={classes.addSubscriptionButtonContainer}>
                 <Button
-                  customButtonClassName={classes.addSubscriptionButton}
-                  label={
-                    t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel', { config })
-                  }
+                  className={classes.addSubscriptionButton}
                   onClick={toggleModal}
-                />
+                >
+                  {t('dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel', { config })}
+                </Button>
               </div>
 
               <div className={classes.infoBox}>

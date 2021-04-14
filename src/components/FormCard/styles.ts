@@ -53,7 +53,7 @@ const useStyles = makeStyles(({
 
   errorAlert: {
     backgroundColor: config.palette.feedback.error,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.background.default,
     minHeight: '50px',
     padding: '12px 25px',

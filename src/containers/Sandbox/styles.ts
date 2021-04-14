@@ -28,7 +28,7 @@ export default makeStyles(({
 
   sectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['300']}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     maxWidth: '900px',
     width: '100%',
   },

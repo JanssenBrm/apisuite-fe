@@ -2,10 +2,10 @@ import * as React from 'react'
 
 import { useTranslation } from 'react-i18next'
 
-import Button from 'components/Button'
 import { isValidImage, isValidURL } from 'components/FormField/index'
 
 import Avatar from '@material-ui/core/Avatar'
+import Button from '@material-ui/core/Button'
 import Fade from '@material-ui/core/Fade'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
@@ -624,29 +624,31 @@ const Organisation: React.FC<OrganisationProps> = ({
           org.name
             ? (
               <Button
-                customButtonClassName={
+                className={
                   formState.isDirty &&
-                    (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                    validImage
+                (formState.isValid || Object.keys(formState.errors).length === 0) &&
+                validImage
                     ? classes.enabledUpdateDetailsButton
                     : classes.disabledUpdateDetailsButton
                 }
-                label={t('profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel', { config })}
                 onClick={updateOrgDetails}
-              />
+              >
+                {t('profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel', { config })}
+              </Button>
             )
             : (
               <Button
-                customButtonClassName={
+                className={
                   formState.isDirty &&
-                    (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                    validImage
+                (formState.isValid || Object.keys(formState.errors).length === 0) &&
+                validImage
                     ? classes.enabledCreateOrgButton
                     : classes.disabledCreateOrgButton
                 }
-                label={t('profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel', { config })}
                 onClick={createOrgDetails}
-              />
+              >
+                {t('profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel', { config })}
+              </Button>
             )
         }
       </section>

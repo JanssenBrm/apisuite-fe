@@ -3,9 +3,9 @@ import * as React from 'react'
 import { useTranslation } from 'react-i18next'
 
 import APICatalog from 'components/APICatalog'
-import Button from 'components/Button'
 import SubscriptionsModal from 'components/SubscriptionsModal'
 
+import Button from '@material-ui/core/Button'
 import InputBase from '@material-ui/core/InputBase'
 
 import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
@@ -220,24 +220,24 @@ ${latestUpdatedAPI.apiAccess
 
             <div className={classes.apiProductButtons}>
               <Button
-                customButtonClassName={classes.viewDetailsButton}
+                className={classes.viewDetailsButton}
                 href={
                   (latestUpdatedAPI.id && latestUpdatedAPI.apiRoutingId)
                     ? `/api-products/details/${latestUpdatedAPI.id}/spec/${latestUpdatedAPI.apiRoutingId}`
                     : '#'
                 }
-                label={t('apiProductsTab.apiProductButtons.viewDetailsButtonLabel', { config })}
-              />
+              >
+                {t('apiProductsTab.apiProductButtons.viewDetailsButtonLabel', { config })}
+              </Button>
 
               {
                 auth.user &&
                 <Button
-                  /* TODO: This button will be disabled until we move on from the simplified API
-                  subscription model, where APIs are automatically associated to any and all apps. */
-                  customButtonClassName={classes.subscribeButton}
-                  label={t('apiProductsTab.apiProductButtons.subscribeButtonLabel', { config })}
+                  className={classes.subscribeButton}
                   onClick={toggleModal}
-                />
+                >
+                  {t('apiProductsTab.apiProductButtons.subscribeButtonLabel', { config })}
+                </Button>
               }
             </div>
 

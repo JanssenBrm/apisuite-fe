@@ -64,7 +64,7 @@ export default makeStyles(({
 
   disabledUpdateDetailsButton: {
     backgroundColor: config.palette.label,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.primaryContrastText,
     cursor: 'none',
     fontWeight: 500,
@@ -73,12 +73,17 @@ export default makeStyles(({
     padding: '6px 0px',
     pointerEvents: 'none',
     textAlign: 'center',
+    textTransform: 'none',
     width: '100%',
+
+    '&:hover': {
+      backgroundColor: config.palette.label,
+    },
   },
 
   disabledCreateOrgButton: {
     backgroundColor: '#99e6cc',
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.primaryContrastText,
     cursor: 'none',
     fontWeight: 500,
@@ -92,7 +97,7 @@ export default makeStyles(({
 
   enabledCreateOrgButton: {
     backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.primaryContrastText,
     cursor: 'pointer',
     fontWeight: 500,
@@ -100,12 +105,17 @@ export default makeStyles(({
     maxWidth: '185px',
     padding: '6px 0px',
     textAlign: 'center',
+    textTransform: 'none',
     width: '100%',
+
+    '&:hover': {
+      backgroundColor: config.palette.primary,
+    },
   },
 
   enabledUpdateDetailsButton: {
     backgroundColor: config.palette.active,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.primaryContrastText,
     cursor: 'pointer',
     fontWeight: 500,
@@ -113,12 +123,17 @@ export default makeStyles(({
     maxWidth: '95px',
     padding: '6px 0px',
     textAlign: 'center',
+    textTransform: 'none',
     width: '100%',
+
+    '&:hover': {
+      backgroundColor: config.palette.active,
+    },
   },
 
   firstSectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     marginBottom: '25px',
     marginTop: '15px',
     maxWidth: '900px',
@@ -248,7 +263,7 @@ export default makeStyles(({
     '& > :last-child': {
       backgroundColor: config.palette.background.default,
       border: `1px solid ${config.palette.greyScales['300']}`,
-      borderRadius: '4px',
+      borderRadius: `${config.dimensions.borderRadius}px`,
       color: config.palette.active,
       cursor: 'pointer',
       height: '40px',
@@ -267,7 +282,7 @@ export default makeStyles(({
 
   secondSectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     marginBottom: '15px',
     marginTop: '0px',
     maxWidth: '900px',

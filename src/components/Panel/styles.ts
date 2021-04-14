@@ -5,7 +5,7 @@ import { config } from 'constants/global'
 export default makeStyles(({
   card: {
     backgroundColor: config.palette.background.default,
-    borderRadius: config.dimensions.borderRadius * 2,
+    borderRadius: '8px',
     boxShadow: '-1px -1px 1px 0px rgba(0,0,0,0.03)',
     display: 'flex',
     flexDirection: 'column',

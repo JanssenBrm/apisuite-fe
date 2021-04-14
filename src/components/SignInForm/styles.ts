@@ -49,7 +49,7 @@ const useStyles = makeStyles(({
 
   inputField: {
     backgroundColor: config.palette.background.default,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.greyScales[400],
   },
 
@@ -72,7 +72,7 @@ const useStyles = makeStyles(({
 
   separatorLine: {
     backgroundColor: config.palette.newGreyScales['100'],
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     height: '1px',
     width: '100%',
   },

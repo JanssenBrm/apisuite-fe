@@ -39,6 +39,7 @@ export default makeStyles({
   },
 
   actionsCatalogEntryLink: {
+    cursor: 'pointer',
     textDecoration: 'none',
   },
 

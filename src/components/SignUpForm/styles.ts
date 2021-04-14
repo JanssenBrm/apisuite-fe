@@ -14,7 +14,7 @@ const useStyles = makeStyles(({
 
   inputField: {
     backgroundColor: config.palette.background.default,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.greyScales[400],
   },
 

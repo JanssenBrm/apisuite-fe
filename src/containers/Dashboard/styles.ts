@@ -44,9 +44,10 @@ export default makeStyles(({
 
   customNotificationCardButton: {
     backgroundColor: config.palette.primary,
-    borderRadius: '5px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     boxShadow: 'none',
     color: config.palette.primaryContrastText,
+    cursor: 'pointer',
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -54,9 +55,10 @@ export default makeStyles(({
     position: 'relative',
     textAlign: 'center',
     textDecoration: 'none',
+    textTransform: 'none',
 
     '&:hover': {
-      cursor: 'pointer',
+      backgroundColor: config.palette.primary,
     },
 
     '&:link, &:visited': {
@@ -89,9 +91,10 @@ export default makeStyles(({
 
   customGreetingCardButton: {
     backgroundColor: config.palette.tertiary,
-    borderRadius: '5px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     boxShadow: 'none',
     color: config.palette.tertiaryContrastText,
+    cursor: 'pointer',
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -99,9 +102,10 @@ export default makeStyles(({
     position: 'relative',
     textAlign: 'center',
     textDecoration: 'none',
+    textTransform: 'none',
 
     '&:hover': {
-      cursor: 'pointer',
+      backgroundColor: config.palette.tertiary,
     },
 
     '&:link, &:visited': {
@@ -152,7 +156,7 @@ export default makeStyles(({
 
   sectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     maxWidth: '900px',
     width: '100%',
   },

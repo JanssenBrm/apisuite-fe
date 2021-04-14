@@ -47,7 +47,8 @@ export default makeStyles(({
 
   apiProductButtons: {
     display: 'flex',
-    marginBottom: '12px',
+    height: '40px',
+    marginBottom: '6px',
   },
 
   apiProductName: {
@@ -60,7 +61,7 @@ export default makeStyles(({
   apiProductNameAndVersion: {
     alignItems: 'center',
     display: 'flex',
-    marginBottom: '20px',
+    marginBottom: '12px',
     marginTop: '-5px',
   },
 
@@ -96,7 +97,7 @@ export default makeStyles(({
 
   documentationAccess: {
     backgroundColor: config.palette.active,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
 
@@ -163,7 +164,7 @@ export default makeStyles(({
 
   productionAccess: {
     backgroundColor: config.palette.primary,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
 
@@ -179,25 +180,30 @@ export default makeStyles(({
 
   sandboxAccess: {
     backgroundColor: config.palette.secondary,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
 
   subscribeButton: {
     backgroundColor: config.palette.background.default,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primary} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.background.default,
+    },
   },
 
   textFilter: {
     backgroundColor: config.palette.background.default,
     border: `1px solid ${config.palette.label}`,
     borderBottomRightRadius: '0px',
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     borderTopRightRadius: '0px',
     maxWidth: '325px',
     padding: '2.5px 12px',
@@ -215,12 +221,17 @@ export default makeStyles(({
 
   viewDetailsButton: {
     backgroundColor: config.palette.tertiary,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '12px',
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.tertiary,
+    },
   },
 }))

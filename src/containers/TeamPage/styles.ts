@@ -14,7 +14,7 @@ export default makeStyles(({
 
   btn: {
     backgroundColor: config.palette.greyScales[900],
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.primaryContrastText,
     cursor: 'pointer',
     display: 'inline-block',
@@ -35,7 +35,7 @@ export default makeStyles(({
 
   emailTextfield: {
     backgroundColor: config.palette.background.default,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.greyScales[400],
     width: 220,
   },
@@ -45,7 +45,7 @@ export default makeStyles(({
     backgroundColor: config.palette.feedback.error,
     border: 'solid',
     borderColor: config.palette.feedback.error,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     borderWidth: 1,
     color: config.palette.primaryContrastText,
     display: 'flex',
@@ -75,7 +75,7 @@ export default makeStyles(({
     backgroundColor: config.palette.background.default,
     border: 1,
     borderColor: config.palette.greyScales[300],
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     borderStyle: 'solid',
     cursor: 'pointer',
     display: 'flex',
@@ -107,7 +107,7 @@ export default makeStyles(({
 
   nameTextfield: {
     backgroundColor: config.palette.background.default,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.greyScales[400],
     width: 220,
   },
@@ -134,7 +134,7 @@ export default makeStyles(({
     backgroundColor: config.palette.background.default,
     border: 1,
     borderColor: config.palette.greyScales[300],
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     borderStyle: 'solid',
     cursor: 'pointer',
     display: 'flex',

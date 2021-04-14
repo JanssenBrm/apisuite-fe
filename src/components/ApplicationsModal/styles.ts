@@ -7,7 +7,7 @@ export default makeStyles(({
 
   modalContentsContainer: {
     backgroundColor: config.palette.background.default,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     boxShadow: '0px 0px 20px 0px rgba(0,0,0,0.3)',
     height: '100%',
     /* The 'outline' property is necessary to remove
@@ -103,7 +103,7 @@ export default makeStyles(({
 
   alternativeSectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     margin: '25px 0px',
     width: '100%',
   },
@@ -140,7 +140,7 @@ export default makeStyles(({
     '& > :last-child': {
       backgroundColor: config.palette.background.default,
       border: `1px solid ${config.palette.greyScales['300']}`,
-      borderRadius: '4px',
+      borderRadius: `${config.dimensions.borderRadius}px`,
       color: config.palette.active,
       cursor: 'pointer',
       height: '40px',
@@ -234,6 +234,7 @@ export default makeStyles(({
 
   disabledAddOrEditButton: {
     backgroundColor: '#99e6cc',
+    border: '1px solid #99e6cc',
     color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
@@ -249,7 +250,7 @@ export default makeStyles(({
 
   disabledClientIDInputField: {
     backgroundColor: '#DCDFE2',
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     marginBottom: '25px',
     marginTop: '0px',
     maxWidth: '400px',
@@ -297,7 +298,7 @@ export default makeStyles(({
 
   disabledClientSecretInputField: {
     backgroundColor: '#DCDFE2',
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     marginBottom: '25px',
     marginTop: '0px',
     maxWidth: '350px',
@@ -346,7 +347,7 @@ export default makeStyles(({
   disabledClientSecretInputFieldRefreshButton: {
     backgroundColor: '#DCDFE2',
     border: '1px solid rgba(0, 0, 0, 0.2)',
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.label,
     height: '40px',
     marginLeft: '10px',
@@ -374,6 +375,7 @@ export default makeStyles(({
 
   enabledAddOrEditButton: {
     backgroundColor: config.palette.primary,
+    border: `1px solid ${config.palette.primary}`,
     color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
@@ -482,7 +484,7 @@ export default makeStyles(({
 
   enabledClientSecretInputFieldRefreshButton: {
     border: '1px solid rgba(0, 0, 0, 0.2)',
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.active,
     cursor: 'pointer',
     height: '40px',
@@ -511,7 +513,7 @@ export default makeStyles(({
   infoBox: {
     alignItems: 'center',
     backgroundColor: config.palette.alert.success.background,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     height: '100%',
     padding: '12px 10px',
@@ -639,7 +641,7 @@ export default makeStyles(({
 
   regularSectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     margin: '0px 0px 25px 0px',
     width: '100%',
   },
@@ -647,7 +649,7 @@ export default makeStyles(({
   removeAppButton: {
     backgroundColor: config.palette.error,
     border: `1px solid ${config.palette.error}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,

@@ -19,7 +19,7 @@ export default makeStyles(({
 
   alternativeSectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     margin: '32.5px 0px',
     maxWidth: '900px',
     width: '100%',
@@ -46,7 +46,7 @@ export default makeStyles(({
 
   createOrganisationButton: {
     backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     cursor: 'pointer',
     fontSize: '16px',
@@ -59,7 +59,7 @@ export default makeStyles(({
   deleteAccountButton: {
     backgroundColor: config.palette.error,
     border: `1px solid ${config.palette.error}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     fontSize: '16px',
     fontWeight: 500,
@@ -73,7 +73,7 @@ export default makeStyles(({
   },
 
   disabledInputFields: {
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     marginBottom: '25px',
     marginTop: '0px',
     maxWidth: '270px',
@@ -104,7 +104,7 @@ export default makeStyles(({
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
         backgroundColor: '#DCDFE2',
-        borderRadius: '4px',
+        borderRadius: `${config.dimensions.borderRadius}px`,
         color: config.palette.label,
       },
 
@@ -117,7 +117,7 @@ export default makeStyles(({
 
   disabledOrganisationButton: {
     backgroundColor: config.palette.label,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     cursor: 'none',
     fontSize: '16px',
@@ -134,7 +134,7 @@ export default makeStyles(({
 
   disabledUpdateDetailsButton: {
     backgroundColor: config.palette.label,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     cursor: 'none',
     fontWeight: 500,
@@ -153,7 +153,7 @@ export default makeStyles(({
 
   enabledOrganisationButton: {
     backgroundColor: config.palette.active,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     cursor: 'pointer',
     fontSize: '16px',
@@ -169,7 +169,7 @@ export default makeStyles(({
 
   enabledUpdateDetailsButton: {
     backgroundColor: config.palette.active,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.primaryContrastText} !important`,
     cursor: 'pointer',
     fontWeight: 500,
@@ -188,14 +188,14 @@ export default makeStyles(({
   formFieldsContainer: {
     backgroundColor: config.palette.primaryContrastText,
     border: `1px solid ${config.palette.label}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     marginBottom: '35px',
     textAlign: 'center',
   },
 
   formSectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     margin: '0px 0px 20px 0px',
     maxWidth: '320px',
     width: '100%',
@@ -204,7 +204,7 @@ export default makeStyles(({
   infoBox: {
     alignItems: 'center',
     backgroundColor: config.palette.alert.success.background,
-    borderRadius: '4px',
+    borderRadius: `${config.dimensions.borderRadius}px`,
     display: 'flex',
     height: '100%',
     padding: '12px 12px',
@@ -302,7 +302,7 @@ export default makeStyles(({
   otherActionsButtons: {
     backgroundColor: config.palette.primaryContrastText,
     border: `1px solid ${config.palette.label}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
@@ -310,6 +310,10 @@ export default makeStyles(({
     padding: '12px 20px',
     textDecoration: 'none',
     textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.primaryContrastText,
+    },
   },
 
   otherActionsContainerOne: {
@@ -323,7 +327,7 @@ export default makeStyles(({
 
   regularSectionSeparator: {
     border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     margin: '32.5px 0px 32.5px 0px',
     maxWidth: '900px',
     width: '100%',
@@ -337,7 +341,7 @@ export default makeStyles(({
   signOutButton: {
     backgroundColor: config.palette.primaryContrastText,
     border: `1px solid ${config.palette.label}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: `${config.palette.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
@@ -345,6 +349,10 @@ export default makeStyles(({
     padding: '12px 20px',
     textDecoration: 'none',
     textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: config.palette.primaryContrastText,
+    },
   },
 
   subtitle: {
@@ -357,7 +365,7 @@ export default makeStyles(({
   userDetailsContainer: {
     backgroundColor: config.palette.primaryContrastText,
     border: `1px solid ${config.palette.label}`,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
   },
 
   userName: {
@@ -379,7 +387,7 @@ export default makeStyles(({
 
   userRole: {
     backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: `${config.dimensions.borderRadius}px`,
     color: config.palette.primaryContrastText,
     fontSize: '14px',
     fontWeight: 300,
