@@ -1,12 +1,10 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles({
+export default makeStyles((theme) => ({
   apiCatalogEntry: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.grey['300']}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     height: '200px',
     marginBottom: '20px',
@@ -25,7 +23,7 @@ export default makeStyles({
   },
 
   apiCatalogEntryDescription: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey['400'],
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '20px',
@@ -36,7 +34,7 @@ export default makeStyles({
   },
 
   apiCatalogEntryName: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '22px',
     fontWeight: 400,
     marginBottom: '8px',
@@ -53,30 +51,30 @@ export default makeStyles({
   },
 
   apiCatalogEntryVersion: {
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     marginRight: '8px',
     padding: '5px 10px',
   },
 
   apiCatalogEntryVersionAndAccess: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey['400'],
     fontSize: '14px',
     fontWeight: 300,
     marginBottom: '8px',
   },
 
   colorsOfAPIDocumentation: {
-    backgroundColor: config.palette.active,
-    color: config.palette.background.default,
+    backgroundColor: theme.palette.action.active,
+    color: theme.palette.background.default,
   },
 
   colorsOfProductionAPI: {
-    backgroundColor: config.palette.primary,
-    color: config.palette.background.default,
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.background.default,
   },
 
   colorsOfSandboxExtensionAPI: {
-    backgroundColor: config.palette.info,
-    color: config.palette.background.default,
+    backgroundColor: theme.palette.info.main,
+    color: theme.palette.background.default,
   },
-})
+}))

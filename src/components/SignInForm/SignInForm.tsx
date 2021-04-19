@@ -1,20 +1,14 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
+import React, { useCallback } from 'react'
+import { useTranslation, IconButton, InputAdornment } from '@apisuite/fe-base'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import FormCard from 'components/FormCard'
 import FormField, { isValidEmail, parseErrors } from 'components/FormField'
 import { FormFieldEvent } from 'components/FormField/types'
 import SSOForm from 'components/SSOForm'
 
-import IconButton from '@material-ui/core/IconButton'
-import InputAdornment from '@material-ui/core/InputAdornment'
-
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
-
 import { SignInFormProps } from './types'
-
 import useStyles from './styles'
 
 const SignInForm: React.FC<SignInFormProps> = ({
@@ -67,13 +61,13 @@ const SignInForm: React.FC<SignInFormProps> = ({
     setErrors((old: string[]) => parseErrors(eventTarget, error, old || []))
   }
 
-  const handleFormSubmission = (event: React.FormEvent<HTMLFormElement> | KeyboardEvent) => {
+  const handleFormSubmission = useCallback((event: React.FormEvent<HTMLFormElement> | KeyboardEvent) => {
     event.preventDefault()
 
     login({ email: formInputs.email, password: formInputs.password })
 
     setFormInputsHaveChanged(false)
-  }
+  }, [formInputs.email, formInputs.password, login])
 
   // 'Show password' logic
   const [showPassword, setShowPassword] = React.useState(false)
@@ -83,14 +77,14 @@ const SignInForm: React.FC<SignInFormProps> = ({
   }
 
   // Logic for 'Press ENTER to submit form'
-  const submitEnter = (event: KeyboardEvent) => {
+  const submitEnter = useCallback((event: KeyboardEvent) => {
     const { key } = event
     const inputElement = document.getElementById('passwordField')
 
     if (key === 'Enter' && document.activeElement === inputElement && isFormValid) {
       handleFormSubmission(event)
     }
-  }
+  }, [isFormValid, handleFormSubmission])
 
   React.useEffect(() => {
     window.addEventListener('keydown', submitEnter)

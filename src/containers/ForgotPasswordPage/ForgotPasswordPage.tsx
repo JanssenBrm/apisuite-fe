@@ -1,21 +1,14 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
-
+import React from 'react'
 import { History, Location } from 'history'
+import { useTranslation, IconButton, InputAdornment } from '@apisuite/fe-base'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import FormCard from 'components/FormCard'
 import FormField, { isValidEmail, isValidPass, parseErrors } from 'components/FormField'
 
-import { FormFieldEvent } from 'components/FormField/types'
-
-import IconButton from '@material-ui/core/IconButton'
-import InputAdornment from '@material-ui/core/InputAdornment'
-
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
-
 import useStyles from './styles'
+import { FormFieldEvent } from 'components/FormField/types'
 
 const ForgotPasswordPage: React.FC<{
   auth: any,

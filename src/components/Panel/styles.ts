@@ -1,11 +1,9 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   card: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: '8px',
+    backgroundColor: theme.palette.background.default,
+    borderRadius: theme.palette.dimensions.borderRadius * 2,
     boxShadow: '-1px -1px 1px 0px rgba(0,0,0,0.03)',
     display: 'flex',
     flexDirection: 'column',
@@ -49,13 +47,13 @@ export default makeStyles(({
   },
 
   featuresTitle: {
-    color: config.palette.primary,
+    color: theme.palette.secondary.main,
     fontSize: 26,
     fontWeight: 100,
     textAlign: 'center',
   },
 
   otherTitle: {
-    color: config.palette.primary,
+    color: theme.palette.secondary.main,
   },
 }))

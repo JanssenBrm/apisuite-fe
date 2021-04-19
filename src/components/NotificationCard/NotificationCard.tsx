@@ -1,11 +1,8 @@
-import * as React from 'react'
-
-import Button from '@material-ui/core/Button'
-
+import React from 'react'
+import { Button } from '@apisuite/fe-base'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 
 import useStyles from './styles'
-
 import { NotificationCardProps } from './types'
 
 const NotificationCard: React.FC<NotificationCardProps> = ({

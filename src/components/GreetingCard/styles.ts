@@ -1,13 +1,11 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles({
+export default makeStyles((theme) => ({
   greetingCardButton: {
-    backgroundColor: config.palette.tertiary,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: 'none',
-    color: `${config.palette.tertiaryContrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -18,15 +16,15 @@ export default makeStyles({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.tertiary,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
   greetingCardContentsContainer: {
     alignItems: 'center',
-    backgroundColor: config.palette.background.default,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    boxShadow: `0px 3px 10px -3px ${config.palette.newGreyScales['100']}`,
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    boxShadow: `0px 3px 10px -3px ${theme.palette.grey[200]}`,
     display: 'flex',
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -43,4 +41,4 @@ export default makeStyles({
     paddingRight: '20px',
     width: '625px',
   },
-})
+}))

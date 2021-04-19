@@ -1,30 +1,22 @@
-import * as React from 'react'
-
+import React from 'react'
 import { useParams } from 'react-router'
-
-import { useTranslation } from 'react-i18next'
-
-import { decodeBase64 } from 'util/decodeBase64'
-
-import SignInForm from 'components/SignInForm'
-import SignUpForm from 'components/SignUpForm'
-
+import { useConfig, useTranslation } from '@apisuite/fe-base'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 
-import { SignInOrUpProps, View } from './types'
+import { decodeBase64 } from 'util/decodeBase64'
+import SignInForm from 'components/SignInForm'
+import SignUpForm from 'components/SignUpForm'
 
 import useStyles from './styles'
-
-import { config } from 'constants/global'
+import { SignInOrUpProps, View } from './types'
 
 const SignInOrUp: React.FC<SignInOrUpProps> = ({
   history,
-  settings,
 }) => {
   const classes = useStyles()
-
   const [t] = useTranslation()
+  const { ownerInfo, portalName } = useConfig()
 
   const { view: viewParameter, email: emailParameter } = useParams<{ view: string; email: string }>()
 
@@ -44,11 +36,11 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
           onClick={() => history.push('/')}
         >
           {
-            settings.logoURL
+            ownerInfo.logo
               ? (
                 <img
                   className={classes.imageLogo}
-                  src={settings.logoURL}
+                  src={ownerInfo.logo}
                 />
               )
               : (
@@ -59,7 +51,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
           }
 
           <h3 className={classes.portalName}>
-            {settings.portalName}
+            {portalName}
           </h3>
         </div>
 
@@ -68,7 +60,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
           onClick={() => history.push('/')}
         >
           <p>
-            {t('signInOrUpView.closeButtonLabel', { config })}
+            {t('signInOrUpView.closeButtonLabel')}
           </p>
           <CloseRoundedIcon />
         </div>
@@ -77,10 +69,10 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
       <section className={classes.pageContentContainer}>
         <div className={classes.formSideContentContainer}>
           <h1 className={classes.formSideTitle}>
-            {t('signInOrUpView.welcomeTitle', { config })}
+            {t('signInOrUpView.welcomeTitle')}
           </h1>
           <p className={classes.formSideSubtitle}>
-            {t('signInOrUpView.welcomeSubtitle', { config })}
+            {t('signInOrUpView.welcomeSubtitle')}
           </p>
 
           <div>
@@ -93,7 +85,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
                 }
                 onClick={() => changeView('signin')}
               >
-                {t('signInOrUpView.options.signIn', { config })}
+                {t('signInOrUpView.options.signIn')}
               </option>
 
               <option
@@ -104,7 +96,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
                 }
                 onClick={() => changeView('signup')}
               >
-                {t('signInOrUpView.options.signUp', { config })}
+                {t('signInOrUpView.options.signUp')}
               </option>
             </div>
 

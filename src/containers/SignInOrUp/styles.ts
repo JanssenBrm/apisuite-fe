@@ -1,17 +1,14 @@
-import { makeStyles } from '@material-ui/styles'
-
+import { makeStyles } from '@apisuite/fe-base'
 import rocketMan from 'assets/rocketMan.svg'
 
-import { config } from 'constants/global'
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   closeButtonContainer: {
     alignItems: 'center',
     cursor: 'pointer',
     display: 'flex',
 
     '& > p': {
-      color: config.palette.primaryContrastText,
+      color: theme.palette.common.white,
       fontSize: '14px',
       fontWeight: 300,
       marginRight: '15px',
@@ -19,7 +16,7 @@ const useStyles = makeStyles({
     },
 
     '& > svg': {
-      color: config.palette.background.default,
+      color: theme.palette.background.default,
       height: '25px',
       width: '25px',
     },
@@ -43,14 +40,14 @@ const useStyles = makeStyles({
   },
 
   formSideSubtitle: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '20px',
     fontWeight: 300,
     marginBottom: '35px',
   },
 
   formSideTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '42px',
     fontWeight: 700,
     marginBottom: '5px',
@@ -67,7 +64,7 @@ const useStyles = makeStyles({
   },
 
   iconLogo: {
-    color: config.palette.primary,
+    color: theme.palette.secondary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -103,13 +100,13 @@ const useStyles = makeStyles({
   },
 
   mainContainer: {
-    backgroundColor: `${config.palette.background.default} !important`,
+    backgroundColor: `${theme.palette.background.default} !important`,
   },
 
   notSelectedOption: {
     background: 'none',
-    borderBottom: '1px solid ' + config.palette.greyScales[300],
-    color: config.palette.greyScales[300],
+    borderBottom: '1px solid ' + theme.palette.grey[300],
+    color: theme.palette.grey[300],
     cursor: 'pointer',
     flex: '1 1 0',
     fontWeight: 'normal',
@@ -117,8 +114,8 @@ const useStyles = makeStyles({
     textAlign: 'center',
 
     '&:hover': {
-      borderBottom: '3px solid ' + config.palette.greyScales[500],
-      color: config.palette.greyScales[500],
+      borderBottom: '3px solid ' + theme.palette.grey[500],
+      color: theme.palette.grey[500],
       fontWeight: 'bold',
     },
   },
@@ -131,15 +128,15 @@ const useStyles = makeStyles({
   },
 
   portalName: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '24px',
     fontWeight: 500,
   },
 
   selectedOption: {
     background: 'none',
-    borderBottom: '3px solid ' + config.palette.primary,
-    color: config.palette.primary,
+    borderBottom: '3px solid ' + theme.palette.secondary.main,
+    color: theme.palette.secondary.main,
     cursor: 'pointer',
     flex: '1 1 0',
     fontWeight: 'bold',
@@ -158,6 +155,6 @@ const useStyles = makeStyles({
   separator: {
     width: '5px',
   },
-})
+}))
 
 export default useStyles

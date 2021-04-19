@@ -1,12 +1,8 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
+import React from 'react'
+import { useTranslation, Button, InputBase } from '@apisuite/fe-base'
 
 import APICatalog from 'components/APICatalog'
 import SubscriptionsModal from 'components/SubscriptionsModal'
-
-import Button from '@material-ui/core/Button'
-import InputBase from '@material-ui/core/InputBase'
 
 import ChromeReaderModeRoundedIcon from '@material-ui/icons/ChromeReaderModeRounded'
 import PowerRoundedIcon from '@material-ui/icons/PowerRounded'
@@ -22,8 +18,6 @@ import { APIProductsProps } from './types'
 import { APIDetails } from 'components/APICatalog/types'
 
 import apiProductCard from 'assets/apiProductCard.svg'
-
-import { config } from 'constants/global'
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
@@ -54,7 +48,7 @@ const APIProducts: React.FC<APIProductsProps> = ({
     /* Triggers the retrieval and storage (on the app's Store, under 'subscriptions')
     of all API-related information we presently have. */
     getAPIs()
-  }, [])
+  }, [getAPIs])
 
   React.useEffect(() => {
     /* Triggers the retrieval and storage of all app-related information we presently
@@ -62,7 +56,7 @@ const APIProducts: React.FC<APIProductsProps> = ({
     if (auth?.user) {
       getAllUserAppsAction(auth.user.id)
     }
-  }, [auth])
+  }, [auth, getAllUserAppsAction])
 
   React.useEffect(() => {
     /* Once 'subscriptions' info is made available, we process it so as to display it
@@ -187,7 +181,7 @@ const APIProducts: React.FC<APIProductsProps> = ({
 
           <div className={classes.latestAPIProductDetails}>
             <p className={classes.latestAPIProductTitle}>
-              {t('apiProductsTab.latestAPIProductTitle', { config })}
+              {t('apiProductsTab.latestAPIProductTitle')}
             </p>
 
             <div className={classes.apiProductNameAndVersion}>
@@ -195,7 +189,7 @@ const APIProducts: React.FC<APIProductsProps> = ({
                 {
                   latestUpdatedAPI.apiName
                     ? latestUpdatedAPI.apiName
-                    : t('apiProductsTab.retrievingAPIProductMessage', { config })
+                    : t('apiProductsTab.retrievingAPIProductMessage')
                 }
               </p>
 
@@ -227,7 +221,7 @@ ${latestUpdatedAPI.apiAccess
                     : '#'
                 }
               >
-                {t('apiProductsTab.apiProductButtons.viewDetailsButtonLabel', { config })}
+                {t('apiProductsTab.apiProductButtons.viewDetailsButtonLabel')}
               </Button>
 
               {
@@ -236,7 +230,7 @@ ${latestUpdatedAPI.apiAccess
                   className={classes.subscribeButton}
                   onClick={toggleModal}
                 >
-                  {t('apiProductsTab.apiProductButtons.subscribeButtonLabel', { config })}
+                  {t('apiProductsTab.apiProductButtons.subscribeButtonLabel')}
                 </Button>
               }
             </div>
@@ -260,15 +254,15 @@ ${latestUpdatedAPI.apiAccess
                       <p>
                         {
                           latestUpdatedAPI.apiAccess
-                            ? t('apiProductsTab.productionAccess', { config })
-                            : t('apiProductsTab.documentationAccess', { config })
+                            ? t('apiProductsTab.productionAccess')
+                            : t('apiProductsTab.documentationAccess')
                         }
                       </p>
                     </>
                   )
                   : (
                     <a href='/auth/signup'>
-                      {t('apiProductsTab.registerForMoreMessage', { config })}
+                      {t('apiProductsTab.registerForMoreMessage')}
                     </a>
                   )
               }
@@ -286,7 +280,7 @@ ${latestUpdatedAPI.apiAccess
               <SearchRoundedIcon />
             }
             onChange={(changeEvent) => handleAPIFiltering(changeEvent, undefined)}
-            placeholder={t('apiProductsTab.textFilterPlaceholder', { config })}
+            placeholder={t('apiProductsTab.textFilterPlaceholder')}
           />
 
           <div
@@ -296,7 +290,7 @@ ${latestUpdatedAPI.apiAccess
                 : classes.inactiveFilterButtonContainer
             }
             onClick={() => handleAPIFiltering(undefined, 1)}
-            title={t('apiProductsTab.apiProductButtons.tooltipLabels.productionAccessible', { config })}
+            title={t('apiProductsTab.apiProductButtons.tooltipLabels.productionAccessible')}
           >
             <PowerRoundedIcon
               className={
@@ -315,7 +309,7 @@ apiFilters[2]
 : classes.inactiveFilterButtonContainer
 }
 onClick={() => handleAPIFiltering(undefined, 2)}
-title={t('apiProductsTab.apiProductButtons.tooltipLabels.sandboxAccessible', { config })}
+title={t('apiProductsTab.apiProductButtons.tooltipLabels.sandboxAccessible')}
 >
 <SubscriptionsRoundedIcon
 className={
@@ -337,7 +331,7 @@ apiFilters[2]
                 )
             }
             onClick={() => handleAPIFiltering(undefined, 3)}
-            title={t('apiProductsTab.apiProductButtons.tooltipLabels.documentationAccessible', { config })}
+            title={t('apiProductsTab.apiProductButtons.tooltipLabels.documentationAccessible')}
           >
             <ChromeReaderModeRoundedIcon
               className={
@@ -356,7 +350,7 @@ apiFilters[2]
             ? (
               <div className={classes.retrievingAPIProductMessageContainer}>
                 <p>
-                  {t('apiProductsTab.retrievingAPIProductMessage', { config })}
+                  {t('apiProductsTab.retrievingAPIProductMessage')}
                 </p>
               </div>
             )

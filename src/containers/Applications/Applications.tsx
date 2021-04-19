@@ -1,14 +1,11 @@
-import * as React from 'react'
+import React from 'react'
 
-import { useTranslation } from 'react-i18next'
+import { useTranslation, Avatar, Button } from '@apisuite/fe-base'
 
 import { getSections } from 'util/extensions'
 
 import ApplicationsModal from 'components/ApplicationsModal'
 import Link from 'components/Link'
-
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
 
 import HeightRoundedIcon from '@material-ui/icons/HeightRounded'
 import OpenInNewRoundedIcon from '@material-ui/icons/OpenInNewRounded'
@@ -21,8 +18,6 @@ import launchApp from 'assets/launchApp.svg'
 import { AppData, ModalDetails, ApplicationsProps } from './types'
 
 import useStyles from './styles'
-
-import { config } from 'constants/global'
 
 const Applications: React.FC<ApplicationsProps> = ({
   allUserApps,
@@ -57,7 +52,7 @@ const Applications: React.FC<ApplicationsProps> = ({
   const [modalMode, setModalMode] = React.useState('')
   const [isModalOpen, setModalOpen] = React.useState(false)
 
-  const toggleModal = (
+  const toggleModal = React.useCallback((
     modalMode: string,
     userID: number,
     userAppID: number,
@@ -70,7 +65,7 @@ const Applications: React.FC<ApplicationsProps> = ({
     setModalDetails(newModalDetails)
     setModalMode(modalMode)
     setModalOpen(!isModalOpen)
-  }
+  }, [isModalOpen])
 
   let allUserAppNames: string[] = []
 
@@ -79,7 +74,7 @@ const Applications: React.FC<ApplicationsProps> = ({
     if (allUserAppsArray.length === 0) {
       return (
         <p className={classes.loadingClientApplicationCards}>
-          {t('dashboardTab.applicationsSubTab.listOfAppsSection.loadingApps', { config })}
+          {t('dashboardTab.applicationsSubTab.listOfAppsSection.loadingApps')}
         </p>
       )
     }
@@ -136,7 +131,7 @@ const Applications: React.FC<ApplicationsProps> = ({
                   : (
                     userApp.description
                       ? userApp.description
-                      : t('dashboardTab.applicationsSubTab.listOfAppsSection.noAppDescription', { config })
+                      : t('dashboardTab.applicationsSubTab.listOfAppsSection.noAppDescription')
                   )
               }
             </p>
@@ -156,8 +151,8 @@ const Applications: React.FC<ApplicationsProps> = ({
               <p className={classes.clientApplicationCardStatusText}>
                 {
                   userApp.subscriptions.length === 0
-                    ? t('dashboardTab.applicationsSubTab.listOfAppsSection.draftAppStatus', { config })
-                    : t('dashboardTab.applicationsSubTab.listOfAppsSection.subscribedAppStatus', { config })
+                    ? t('dashboardTab.applicationsSubTab.listOfAppsSection.draftAppStatus')
+                    : t('dashboardTab.applicationsSubTab.listOfAppsSection.subscribedAppStatus')
                 }
               </p>
             </div>
@@ -180,14 +175,14 @@ const Applications: React.FC<ApplicationsProps> = ({
     const appIDInURL = parseInt(window.location.pathname.split('/')[3]) || undefined
 
     if (appIDInURL !== undefined) toggleModal('edit', user.id, appIDInURL)
-  }, [])
+  }, [toggleModal, user.id])
 
   /* Triggers the retrieval and storage (on the app's Store, under 'applications > userApps')
   of all app-related information we presently have on a particular user the first time, and
   following any changes to 'applications > userApps' (i.e., 'allUserApps'). */
   React.useEffect(() => {
     if (user) getAllUserAppsAction(user.id)
-  }, [modalMode, createAppStatus, updateAppStatus, deleteAppStatus, requestAPIAccessStatus])
+  }, [modalMode, createAppStatus, updateAppStatus, deleteAppStatus, requestAPIAccessStatus, getAllUserAppsAction, user])
 
   return (
     <main>
@@ -205,7 +200,7 @@ const Applications: React.FC<ApplicationsProps> = ({
                   className={classes.firstUseButton}
                   href='/profile/organisation'
                 >
-                  {t('dashboardTab.applicationsSubTab.noOrganisationsButtonLabel', { config })}
+                  {t('dashboardTab.applicationsSubTab.noOrganisationsButtonLabel')}
                 </Button>
               </div>
 
@@ -213,14 +208,14 @@ const Applications: React.FC<ApplicationsProps> = ({
                 className={classes.firstUseLink}
                 to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications'
               >
-                {t('dashboardTab.applicationsSubTab.documentationLink', { config })}
+                {t('dashboardTab.applicationsSubTab.documentationLink')}
               </Link>
 
               <div className={classes.warningBox}>
                 <ReportProblemOutlinedIcon className={classes.warningBoxIcon} />
 
                 <p className={classes.warningBoxText}>
-                  {t('dashboardTab.applicationsSubTab.noOrganisationWarning', { config })}
+                  {t('dashboardTab.applicationsSubTab.noOrganisationWarning')}
                 </p>
               </div>
             </section>
@@ -239,7 +234,7 @@ const Applications: React.FC<ApplicationsProps> = ({
                       className={classes.firstUseButton}
                       onClick={() => toggleModal('new', 0, 0)}
                     >
-                      {t('dashboardTab.applicationsSubTab.noApplicationsButtonLabel', { config })}
+                      {t('dashboardTab.applicationsSubTab.noApplicationsButtonLabel')}
                     </Button>
                   </div>
 
@@ -247,7 +242,7 @@ const Applications: React.FC<ApplicationsProps> = ({
                     className={classes.firstUseLink}
                     to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications'
                   >
-                    {t('dashboardTab.applicationsSubTab.documentationLink', { config })}
+                    {t('dashboardTab.applicationsSubTab.documentationLink')}
                   </Link>
                 </section>
               )
@@ -256,24 +251,24 @@ const Applications: React.FC<ApplicationsProps> = ({
                 <>
                   <section className={classes.clientApplicationsContentContainer}>
                     <h1 className={classes.clientApplicationsTitle}>
-                      {t('dashboardTab.applicationsSubTab.listOfAppsSection.title', { config })}
+                      {t('dashboardTab.applicationsSubTab.listOfAppsSection.title')}
                     </h1>
 
                     <p className={classes.clientApplicationsSubtitle}>
-                      {t('dashboardTab.applicationsSubTab.listOfAppsSection.subtitle', { config })}
+                      {t('dashboardTab.applicationsSubTab.listOfAppsSection.subtitle')}
                     </p>
 
                     {/* Client applications container */}
                     <div>
                       <p className={classes.clientApplicationsContainerTitle}>
-                        {t('dashboardTab.applicationsSubTab.listOfAppsSection.clientApplicationsTitle', { config })}
+                        {t('dashboardTab.applicationsSubTab.listOfAppsSection.clientApplicationsTitle')}
                       </p>
 
                       <Button
                         className={classes.registerNewClientApplicationCardButton}
                         onClick={() => toggleModal('new', 0, 0)}
                       >
-                        {t('dashboardTab.applicationsSubTab.listOfAppsSection.registerNewAppButtonLabel', { config })}
+                        {t('dashboardTab.applicationsSubTab.listOfAppsSection.registerNewAppButtonLabel')}
                       </Button>
 
                       <div className={classes.clientApplicationCardsContainer}>
@@ -291,7 +286,7 @@ const Applications: React.FC<ApplicationsProps> = ({
 
                   <section className={classes.knowledgeBaseContentContainer}>
                     <h1 className={classes.knowledgeBaseTitle}>
-                      {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.title', { config })}
+                      {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.title')}
                     </h1>
 
                     <div className={classes.knowledgeBaseCardsContainer}>
@@ -304,11 +299,11 @@ const Applications: React.FC<ApplicationsProps> = ({
                         <img className={classes.knowledgeBaseCardImage} src={launchApp} />
 
                         <p className={classes.knowledgeBaseCardTitle}>
-                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardTitle', { config })}
+                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardTitle')}
                         </p>
 
                         <p className={classes.knowledgeBaseCardDescription}>
-                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardSubtitle', { config })}
+                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardSubtitle')}
                         </p>
                       </Link>
 
@@ -321,11 +316,11 @@ const Applications: React.FC<ApplicationsProps> = ({
                         <img className={classes.knowledgeBaseCardImage} src={authFundamentals} />
 
                         <p className={classes.knowledgeBaseCardTitle}>
-                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsTitle', { config })}
+                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsTitle')}
                         </p>
 
                         <p className={classes.knowledgeBaseCardDescription}>
-                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsSubtitle', { config })}
+                          {t('dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsSubtitle')}
                         </p>
                       </Link>
                     </div>

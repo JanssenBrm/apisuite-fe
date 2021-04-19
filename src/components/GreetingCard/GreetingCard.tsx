@@ -1,9 +1,7 @@
-import * as React from 'react'
-
-import Button from '@material-ui/core/Button'
+import React from 'react'
+import { Button } from '@apisuite/fe-base'
 
 import useStyles from './styles'
-
 import { GreetingCardProps } from './types'
 
 const GreetingCard: React.FC<GreetingCardProps> = ({

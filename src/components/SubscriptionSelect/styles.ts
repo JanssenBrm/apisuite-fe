@@ -1,12 +1,11 @@
-import { makeStyles } from '@material-ui/styles'
 
-import { config } from 'constants/global'
+import { makeStyles } from '@apisuite/fe-base'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   chip: {
     background: 'linear-gradient(270deg, #2DB7BA 0%, #14BC7D 100%)',
     borderRadius: 3,
-    color: config.palette.background.default,
+    color: theme.palette.background.default,
     display: 'flex',
     fontWeight: 400,
     margin: 4,
@@ -41,13 +40,13 @@ export default makeStyles(({
   },
 
   loading: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
     opacity: 0.5,
   },
 
   subSelect: {
     alignItems: 'center',
-    color: config.palette.greyScales[400],
+    color: theme.palette.grey[400],
     display: 'flex',
     justifyContent: 'space-between',
     width: '100%',

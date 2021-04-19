@@ -1,11 +1,9 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   content: {
     alignItems: 'center',
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -13,8 +11,8 @@ export default makeStyles(({
   },
 
   error: {
-    backgroundColor: config.palette.feedback.error,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.common.white,
   },
 
   icon: {
@@ -31,8 +29,8 @@ export default makeStyles(({
   },
 
   success: {
-    backgroundColor: config.palette.primary,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.common.white,
   },
 
   text: {

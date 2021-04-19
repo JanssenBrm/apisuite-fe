@@ -1,14 +1,12 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   /* 1. Modal */
 
   modalContentsContainer: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    boxShadow: '0px 0px 20px 0px rgba(0, 0, 0, 0.3)',
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    boxShadow: '0px 0px 20px 0px rgba(0,0,0,0.3)',
     height: '100%',
     /* The 'outline' property is necessary to remove
     an annoying orange border that Material UI adds
@@ -29,7 +27,7 @@ export default makeStyles(({
     display: 'flex',
 
     '& > p': {
-      color: config.palette.label,
+      color: theme.palette.label,
       fontSize: '14px',
       fontWeight: 300,
       marginRight: '15px',
@@ -37,14 +35,14 @@ export default makeStyles(({
     },
 
     '& > svg': {
-      color: config.palette.active,
+      color: theme.palette.action.active,
       height: '25px',
       width: '25px',
     },
   },
 
   iconLogo: {
-    color: config.palette.primary,
+    color: theme.palette.secondary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -72,7 +70,7 @@ export default makeStyles(({
   },
 
   portalLogo: {
-    color: config.palette.primary,
+    color: theme.palette.secondary.main,
     height: 'auto',
     /* This property makes it so that the logo is
     left-aligned with the remaining content.
@@ -83,7 +81,7 @@ export default makeStyles(({
   },
 
   portalName: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '24px',
     fontWeight: 500,
   },
@@ -91,7 +89,7 @@ export default makeStyles(({
   /* 1.2 Modal's body */
 
   header: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '22px',
     fontWeight: 400,
     margin: '20px 0px 0px 0px',
@@ -105,8 +103,8 @@ export default makeStyles(({
   },
 
   sectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    border: `1px solid ${theme.palette.grey[200]}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
     margin: '25px 0px',
     width: '100%',
   },
@@ -114,7 +112,7 @@ export default makeStyles(({
   /* 1.2.1 'Steps' section */
 
   stepsContainer: {
-    color: config.palette.active,
+    color: theme.palette.action.active,
     fontSize: '20px',
     fontWeight: 200,
     lineHeight: '30px',
@@ -133,7 +131,7 @@ export default makeStyles(({
     width: '100%',
 
     '& > :first-child': {
-      color: config.palette.newGreyScales['400'],
+      color: theme.palette.grey[400],
       fontSize: '14px',
       fontWeight: 400,
       marginBottom: '25px',
@@ -146,16 +144,16 @@ export default makeStyles(({
     width: '100%',
 
     '& > :first-child': {
-      color: config.palette.tertiary,
+      color: theme.palette.primary.main,
       fontSize: '16px',
       fontWeight: 500,
       marginBottom: '25px',
     },
 
     '& > :last-child': {
-      border: `1px solid ${config.palette.newGreyScales['400']}`,
-      borderRadius: `${config.dimensions.borderRadius}px`,
-      color: config.palette.active,
+      color: theme.palette.action.active,
+      border: `1px solid ${theme.palette.grey[400]}`,
+      borderRadius: theme.palette.dimensions.borderRadius,
       height: '40px',
       maxWidth: '420px',
       width: '100%',
@@ -168,7 +166,7 @@ export default makeStyles(({
       },
 
       '& > .MuiSelect-icon': {
-        color: config.palette.active,
+        color: theme.palette.action.active,
         marginRight: '15px',
       },
     },
@@ -180,8 +178,8 @@ export default makeStyles(({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: config.palette.alert.success.background,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.info.light,
+    borderRadius: theme.palette.dimensions.borderRadius,
     display: 'flex',
     height: '100%',
     marginBottom: '25px',
@@ -205,7 +203,7 @@ export default makeStyles(({
   warningBox: {
     alignItems: 'center',
     backgroundColor: '#FFDCB9',
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     height: '100%',
     marginBottom: '25px',
@@ -214,7 +212,7 @@ export default makeStyles(({
   },
 
   warningBoxIcon: {
-    fill: config.palette.warning,
+    fill: theme.palette.warning.main,
     transform: 'translate(7px, -7px)',
   },
 
@@ -231,7 +229,7 @@ export default makeStyles(({
   alternativeAPIProductDetailsContainer: {
     alignItems: 'center',
     backgroundColor: 'none',
-    borderBottom: `1px solid ${config.palette.newGreyScales['50']}`,
+    borderBottom: `1px solid ${theme.palette.grey[100]}`,
     display: 'flex',
     height: '40px',
     justifyContent: 'space-between',
@@ -240,13 +238,13 @@ export default makeStyles(({
   },
 
   apiProductName: {
-    color: config.palette.active,
+    color: theme.palette.action.active,
     fontSize: '16px',
     fontWeight: 500,
   },
 
   apiProductVersion: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '14px',
     fontWeight: 300,
     marginRight: '14.75px',
@@ -273,20 +271,20 @@ export default makeStyles(({
     width: '100%',
 
     '& > :first-child': {
-      color: config.palette.newGreyScales['400'],
+      color: theme.palette.grey[400],
       fontSize: '16px',
       fontWeight: 300,
     },
   },
 
   notSelectedAPIProduct: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
   },
 
   regularAPIProductDetailsContainer: {
     alignItems: 'center',
-    backgroundColor: config.palette.background.default,
-    borderBottom: `1px solid ${config.palette.newGreyScales['50']}`,
+    backgroundColor: theme.palette.background.paper,
+    borderBottom: `1px solid ${theme.palette.grey[100]}`,
     display: 'flex',
     height: '40px',
     justifyContent: 'space-between',
@@ -295,36 +293,36 @@ export default makeStyles(({
   },
 
   selectedAPIProduct: {
-    color: config.palette.primary,
+    color: theme.palette.secondary.main,
   },
 
   tableBody: {
-    backgroundColor: config.palette.newGreyScales['25'],
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
-    borderBottomLeftRadius: `${config.dimensions.borderRadius}px`,
-    borderBottomRightRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.grey[50],
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderBottomLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderBottomRightRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderTop: 'none',
     width: '100%',
   },
 
   tableHeader: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
-    borderTopLeftRadius: `${config.dimensions.borderRadius}px`,
-    borderTopRightRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderTopLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderTopRightRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     justifyContent: 'space-between',
     padding: '10px 55px 10px 40px',
     width: '100%',
 
     '& > :first-child': {
-      color: config.palette.active,
+      color: theme.palette.action.active,
       fontSize: '16px',
       fontWeight: 400,
     },
 
     '& > :last-child': {
-      color: config.palette.newGreyScales['400'],
+      color: theme.palette.grey['400'],
       fontSize: '16px',
       fontWeight: 300,
     },
@@ -334,7 +332,7 @@ export default makeStyles(({
     display: 'flex',
 
     '& > :first-child': {
-      color: config.palette.tertiary,
+      color: theme.palette.primary.main,
       fontSize: '16px',
       fontWeight: 500,
       marginBottom: '25px',
@@ -344,7 +342,7 @@ export default makeStyles(({
     },
 
     '& > :last-child': {
-      color: config.palette.newGreyScales['400'],
+      color: theme.palette.grey['400'],
       fontSize: '14px',
       fontWeight: 400,
       lineHeight: '18px',
@@ -362,10 +360,10 @@ export default makeStyles(({
   },
 
   disabledOtherButtons: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.active} !important`,
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.action.active} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -377,15 +375,15 @@ export default makeStyles(({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.background.default,
+      backgroundColor: theme.palette.background.default,
     },
   },
 
   disabledRequestAccessButton: {
-    backgroundColor: config.palette.primary,
-    border: `1px solid ${config.palette.primary}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.background.default} !important`,
+    backgroundColor: theme.palette.primary.main,
+    border: `1px solid ${theme.palette.primary.main}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.background.default} !important`,
     fontSize: '16px',
     fontWeight: 500,
     opacity: 0.5,
@@ -395,15 +393,15 @@ export default makeStyles(({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.primary,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
   disabledRevokeAccessButton: {
-    backgroundColor: config.palette.warning,
-    border: `1px solid ${config.palette.warning}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.background.default} !important`,
+    backgroundColor: theme.palette.warning.main,
+    border: `1px solid ${theme.palette.warning.main}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.background.default} !important`,
     fontSize: '16px',
     fontWeight: 500,
     opacity: 0.5,
@@ -413,15 +411,15 @@ export default makeStyles(({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.warning,
+      backgroundColor: theme.palette.warning.main,
     },
   },
 
   enabledOtherButtons: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.active} !important`,
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.action.active} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -431,15 +429,15 @@ export default makeStyles(({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.background.default,
+      backgroundColor: theme.palette.background.default,
     },
   },
 
   enabledRequestAccessButton: {
-    backgroundColor: config.palette.primary,
-    border: `1px solid ${config.palette.primary}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.background.default} !important`,
+    backgroundColor: theme.palette.secondary.main,
+    border: `1px solid ${theme.palette.secondary.main}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.background.default} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
@@ -449,15 +447,15 @@ export default makeStyles(({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.primary,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
   enabledRevokeAccessButton: {
-    backgroundColor: config.palette.warning,
-    border: `1px solid ${config.palette.warning}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.background.default} !important`,
+    backgroundColor: theme.palette.warning.main,
+    border: `1px solid ${theme.palette.warning.main}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.background.default} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,

@@ -1,8 +1,7 @@
-import { makeStyles } from '@material-ui/styles'
 
-import { config } from 'constants/global'
+import { makeStyles } from '@apisuite/fe-base'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   btnsContainer: {
     alignItems: 'center',
     display: 'flex',
@@ -11,9 +10,9 @@ const useStyles = makeStyles(({
   },
 
   emailTextfield: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: config.palette.greyScales[400],
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
   },
 
   fieldContainer: {
@@ -22,7 +21,7 @@ const useStyles = makeStyles(({
   },
 
   fieldTitle: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
     fontSize: 14,
     fontWeight: 300,
     margin: 0,
@@ -34,15 +33,15 @@ const useStyles = makeStyles(({
   },
 
   nameTextfield: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: config.palette.greyScales[400],
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
   },
 
   passPhrasefield: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: config.palette.greyScales[400],
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
   },
 
   passPhraseContainer: {
@@ -52,11 +51,11 @@ const useStyles = makeStyles(({
   },
 
   shuffleIcon: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
   },
 
   visibilityIcon: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
   },
 }))
 

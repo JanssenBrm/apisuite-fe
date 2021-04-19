@@ -1,13 +1,11 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   languageSelector: {
-    backgroundColor: config.palette.newGreyScales['400'],
-    borderColor: config.palette.newGreyScales['400'],
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.grey[400],
+    borderColor: theme.palette.grey[400],
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '14px',
     fontWeight: 300,
     overflow: 'hidden !important',
@@ -20,11 +18,11 @@ export default makeStyles(({
     width: '180px',
 
     '&:disabled': {
-      backgroundColor: config.palette.newGreyScales['400'],
+      backgroundColor: theme.palette.grey[400],
     },
 
     '&:hover': {
-      backgroundColor: config.palette.newGreyScales['400'],
+      backgroundColor: theme.palette.grey[400],
     },
 
     '&::after': {

@@ -1,28 +1,15 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
-
-import { isValidImage, isValidURL } from 'components/FormField/index'
-
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import Fade from '@material-ui/core/Fade'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import TextField from '@material-ui/core/TextField'
-
+import React from 'react'
+import { useTranslation, Avatar, Button, Fade, Menu, MenuItem, TextField } from '@apisuite/fe-base'
 import AddRoundedIcon from '@material-ui/icons/AddRounded'
 import Close from '@material-ui/icons/Close'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
 
-import { OrganisationProps } from './types'
-
-import useStyles from './styles'
-
 import { useForm } from 'util/useForm'
+import { isValidImage, isValidURL } from 'components/FormField/index'
 
-import { config } from 'constants/global'
+import { OrganisationProps } from './types'
+import useStyles from './styles'
 
 const Organisation: React.FC<OrganisationProps> = ({
   createOrg,
@@ -39,7 +26,7 @@ const Organisation: React.FC<OrganisationProps> = ({
     /* Triggers the retrieval and storage (on the app's Store, under 'profile > org')
     of all organisation-related information we presently have. */
     fetchOrg(profile.current_org.id)
-  }, [fetchOrg])
+  }, [fetchOrg, profile.current_org.id])
 
   /*
   Organisation details
@@ -117,32 +104,32 @@ const Organisation: React.FC<OrganisationProps> = ({
 
           return validURL
         }],
-        message: t('profileTab.organisationSubTab.warningLabels.orgAvatarURL', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.orgAvatarURL'),
       },
 
       orgPrivacyURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs'),
       },
 
       orgSupportURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs'),
       },
 
       orgTermsURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs'),
       },
 
       orgWebsiteURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs'),
       },
 
       orgYouTubeURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs', { config }),
+        message: t('profileTab.organisationSubTab.warningLabels.allOtherURLs'),
       },
     })
 
@@ -161,6 +148,7 @@ const Organisation: React.FC<OrganisationProps> = ({
       orgWebsiteURL: org.websiteUrl ? org.websiteUrl : '',
       orgYouTubeURL: org.youtubeUrl ? org.youtubeUrl : '',
     })
+  // FIXME: adding resetForm to the dependencies causes an infinite loop
   }, [org])
 
   /* All organisation details */
@@ -290,12 +278,12 @@ const Organisation: React.FC<OrganisationProps> = ({
             {
               org.name
                 ? org.name
-                : t('profileTab.organisationSubTab.newOrgTitle', { config })
+                : t('profileTab.organisationSubTab.newOrgTitle')
             }
           </p>
 
           <p className={classes.orgSubtitle}>
-            {t('profileTab.organisationSubTab.orgSubtitle', { config })}
+            {t('profileTab.organisationSubTab.orgSubtitle')}
           </p>
         </section>
 
@@ -305,7 +293,7 @@ const Organisation: React.FC<OrganisationProps> = ({
               className={classes.inputFields}
               fullWidth
               InputLabelProps={{ shrink: true }}
-              label={t('profileTab.organisationSubTab.fieldLabels.orgNameLabel', { config })}
+              label={t('profileTab.organisationSubTab.fieldLabels.orgNameLabel')}
               margin='dense'
               name='orgName'
               onChange={handleChange}
@@ -318,7 +306,7 @@ const Organisation: React.FC<OrganisationProps> = ({
               className={classes.inputFields}
               fullWidth
               InputLabelProps={{ shrink: true }}
-              label={t('profileTab.organisationSubTab.fieldLabels.orgVATLabel', { config })}
+              label={t('profileTab.organisationSubTab.fieldLabels.orgVATLabel')}
               margin='dense'
               name='orgVAT'
               onChange={handleChange}
@@ -372,14 +360,14 @@ const Organisation: React.FC<OrganisationProps> = ({
               helperText={
                 (formState.touched.orgAvatarURL && formState.errors.orgAvatarURL) || !validImage
                   ? formState.errorMsgs.orgAvatarURL
-                  : t('profileTab.organisationSubTab.fieldLabels.orgAvatarSubLabel', { config })
+                  : t('profileTab.organisationSubTab.fieldLabels.orgAvatarSubLabel')
               }
               inputRef={(input) =>
                 avatarInputIsInFocus ? input && input.focus() : input && input.blur()}
               InputLabelProps={{
                 shrink: true,
               }}
-              label={t('profileTab.organisationSubTab.fieldLabels.orgAvatarLabel', { config })}
+              label={t('profileTab.organisationSubTab.fieldLabels.orgAvatarLabel')}
               margin='dense'
               name='orgAvatarURL'
               onBlur={() => {
@@ -402,14 +390,14 @@ const Organisation: React.FC<OrganisationProps> = ({
         <section className={classes.orgAdditionalDetailsContainer}>
           <section className={classes.leftSideDetailsContainer}>
             <p className={classes.orgAdditionalDetailsTitle}>
-              {t('profileTab.organisationSubTab.orgAdditionalDetailsTitle', { config })}
+              {t('profileTab.organisationSubTab.orgAdditionalDetailsTitle')}
             </p>
 
             <TextField
               className={classes.inputFields}
               fullWidth
               InputLabelProps={{ shrink: true }}
-              label={t('profileTab.organisationSubTab.fieldLabels.orgDescriptionLabel', { config })}
+              label={t('profileTab.organisationSubTab.fieldLabels.orgDescriptionLabel')}
               margin='dense'
               multiline
               name='orgDescription'
@@ -423,7 +411,7 @@ const Organisation: React.FC<OrganisationProps> = ({
 
           <section className={classes.rightSideDetailsContainer}>
             <p className={classes.orgAdditionalDetailsSubtitle}>
-              {t('profileTab.organisationSubTab.orgAdditionalDetailsSubtitle', { config })}
+              {t('profileTab.organisationSubTab.orgAdditionalDetailsSubtitle')}
             </p>
 
             <div className={classes.orgURLFieldWrapper}>
@@ -437,7 +425,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                     : ''
                 }
                 InputLabelProps={{ shrink: true }}
-                label={t('profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel', { config })}
+                label={t('profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel')}
                 margin='dense'
                 name='orgWebsiteURL'
                 onChange={handleChange}
@@ -461,7 +449,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                 className={classes.selectorTitle}
                 disabled
               >
-                {t('profileTab.organisationSubTab.selectorTitle', { config })}
+                {t('profileTab.organisationSubTab.selectorTitle')}
               </MenuItem>
 
               <MenuItem
@@ -469,7 +457,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                 disabled={isShowing[0]}
                 onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 0)}
               >
-                {t('profileTab.organisationSubTab.fieldLabels.orgToSLabel', { config })}
+                {t('profileTab.organisationSubTab.fieldLabels.orgToSLabel')}
               </MenuItem>
 
               <MenuItem
@@ -477,7 +465,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                 disabled={isShowing[1]}
                 onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 1)}
               >
-                {t('profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel', { config })}
+                {t('profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel')}
               </MenuItem>
 
               <MenuItem
@@ -485,14 +473,14 @@ const Organisation: React.FC<OrganisationProps> = ({
                 disabled={isShowing[2]}
                 onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 2)}
               >
-                {t('profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel', { config })}
+                {t('profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel')}
               </MenuItem>
 
               <MenuItem
                 className={classes.selectorOption}
                 disabled
               >
-                {t('profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel', { config })}
+                {t('profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel')}
               </MenuItem>
 
               <MenuItem
@@ -500,7 +488,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                 disabled={isShowing[3]}
                 onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 3)}
               >
-                {t('profileTab.organisationSubTab.fieldLabels.orgSupportLabel', { config })}
+                {t('profileTab.organisationSubTab.fieldLabels.orgSupportLabel')}
               </MenuItem>
             </Menu>
 
@@ -517,7 +505,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                       : ''
                   }
                   InputLabelProps={{ shrink: true }}
-                  label={t('profileTab.organisationSubTab.fieldLabels.orgToSLabel', { config })}
+                  label={t('profileTab.organisationSubTab.fieldLabels.orgToSLabel')}
                   margin='dense'
                   name='orgTermsURL'
                   onChange={handleChange}
@@ -545,7 +533,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                       : ''
                   }
                   InputLabelProps={{ shrink: true }}
-                  label={t('profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel', { config })}
+                  label={t('profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel')}
                   margin='dense'
                   name='orgPrivacyURL'
                   onChange={handleChange}
@@ -573,7 +561,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                       : ''
                   }
                   InputLabelProps={{ shrink: true }}
-                  label={t('profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel', { config })}
+                  label={t('profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel')}
                   margin='dense'
                   name='orgYouTubeURL'
                   onChange={handleChange}
@@ -601,7 +589,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                       : ''
                   }
                   InputLabelProps={{ shrink: true }}
-                  label={t('profileTab.organisationSubTab.fieldLabels.orgSupportLabel', { config })}
+                  label={t('profileTab.organisationSubTab.fieldLabels.orgSupportLabel')}
                   margin='dense'
                   name='orgSupportURL'
                   onChange={handleChange}
@@ -633,7 +621,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                 }
                 onClick={updateOrgDetails}
               >
-                {t('profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel', { config })}
+                {t('profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel')}
               </Button>
             )
             : (
@@ -647,7 +635,7 @@ const Organisation: React.FC<OrganisationProps> = ({
                 }
                 onClick={createOrgDetails}
               >
-                {t('profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel', { config })}
+                {t('profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel')}
               </Button>
             )
         }

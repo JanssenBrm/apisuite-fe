@@ -1,10 +1,8 @@
-import { makeStyles } from '@material-ui/styles'
-
-import { config } from 'constants/global'
+import { makeStyles } from '@apisuite/fe-base'
 
 import keyIllustration from 'assets/keyIllustration.svg'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   fieldContainer: {
     marginBottom: 20,
     marginTop: 20,
@@ -42,7 +40,7 @@ const useStyles = makeStyles(({
   },
 
   main: {
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     display: 'flex',
     height: '100%',
 
@@ -52,7 +50,7 @@ const useStyles = makeStyles(({
   },
 
   message: {
-    color: config.palette.greyScales[600],
+    color: theme.palette.grey[600],
     marginBottom: '12px',
   },
 
@@ -83,7 +81,7 @@ const useStyles = makeStyles(({
   },
 
   messageTitle: {
-    color: config.palette.greyScales[800],
+    color: theme.palette.grey[800],
     marginBottom: '16px',
   },
 
@@ -92,9 +90,9 @@ const useStyles = makeStyles(({
   },
 
   textField: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: config.palette.greyScales[400],
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
   },
 }))
 

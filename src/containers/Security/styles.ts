@@ -1,8 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   actionsContainer: {
     display: 'flex',
     marginBottom: '65px',
@@ -10,30 +8,32 @@ export default makeStyles(({
   },
 
   disabledUpdatePasswordButton: {
-    backgroundColor: '#99E6CC',
-    border: '1px solid #99E6CC',
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.primary.main,
+    border: `1px solid ${theme.palette.primary.main}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: `${theme.palette.common.white} !important`,
     cursor: 'none',
     fontSize: '16px',
     fontWeight: 500,
     height: '40px',
     marginRight: '15px',
+    opacity: 0.5,
     padding: '12px 20px',
     pointerEvents: 'none',
     textDecoration: 'none',
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: '#99E6CC',
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
   enabledUpdatePasswordButton: {
-    backgroundColor: config.palette.primary,
-    border: `1px solid ${config.palette.primary}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.primary.main,
+    border: `1px solid ${theme.palette.primary.main}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: `${theme.palette.common.white} !important`,
+    cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
     height: '40px',
@@ -43,15 +43,15 @@ export default makeStyles(({
     textTransform: 'none',
 
     '&:hover': {
-      backgroundColor: config.palette.primary,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
   forgotPasswordButton: {
-    backgroundColor: config.palette.primaryContrastText,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.active} !important`,
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.label}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: `${theme.palette.action.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     height: '40px',
@@ -61,8 +61,8 @@ export default makeStyles(({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: config.palette.alert.success.background,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.info.light,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     height: '100%',
     marginBottom: '25px',
@@ -92,49 +92,49 @@ export default makeStyles(({
 
     // Text field's label styles
     '& > label': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
 
     '& label.Mui-focused': {
-      color: `${config.palette.focus} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     // Text field's input outline styles
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.focus} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
     },
 
     // Text field's input text styles
     '& .MuiInputBase-root': {
       '& .MuiInputBase-input': {
-        color: config.palette.active,
+        color: theme.palette.action.active,
       },
     },
   },
 
   sectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    border: `1px solid ${theme.palette.grey[200]}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
     marginBottom: '25px',
     maxWidth: '900px',
     width: '100%',
   },
 
   securityTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',
   },
 
   securitySubtitle: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '16px',
     fontWeight: 300,
     marginBottom: '55px',
@@ -147,14 +147,14 @@ export default makeStyles(({
   },
 
   updatePasswordTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '16px',
     fontWeight: 500,
     marginBottom: '10px',
   },
 
   userActivityTitle: {
-    color: config.palette.label,
+    color: theme.palette.label,
     fontSize: '22px',
     fontWeight: 300,
   },

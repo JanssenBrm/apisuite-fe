@@ -1,20 +1,18 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   textField: {
     '& label.Mui-focused': {
-      color: `${config.palette.focus} !important`,
+      color: `${theme.palette.action.focus} !important`,
     },
 
     '& .MuiOutlinedInput-root': {
       '&:hover fieldset': {
-        borderColor: `${config.palette.greyScales['300']} !important`,
+        borderColor: `${theme.palette.grey[300]} !important`,
       },
 
       '&.Mui-focused fieldset': {
-        borderColor: `${config.palette.focus} !important`,
+        borderColor: `${theme.palette.action.focus} !important`,
       },
     },
   },

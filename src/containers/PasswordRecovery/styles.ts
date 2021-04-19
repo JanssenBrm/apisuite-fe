@@ -1,8 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   boldText: {
     fontWeight: 400,
   },
@@ -13,7 +11,7 @@ const useStyles = makeStyles(({
     display: 'flex',
 
     '& > p': {
-      color: config.palette.tertiary,
+      color: theme.palette.primary.main,
       fontSize: '14px',
       fontWeight: 300,
       marginRight: '15px',
@@ -21,7 +19,7 @@ const useStyles = makeStyles(({
     },
 
     '& > svg': {
-      color: config.palette.tertiary,
+      color: theme.palette.primary.main,
       height: '25px',
       width: '25px',
     },
@@ -42,7 +40,7 @@ const useStyles = makeStyles(({
   },
 
   formSideSubtitle: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '20px',
     fontWeight: 300,
     marginBottom: '35px',
@@ -50,7 +48,7 @@ const useStyles = makeStyles(({
   },
 
   formSideTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '42px',
     fontWeight: 700,
     marginBottom: '5px',
@@ -68,7 +66,7 @@ const useStyles = makeStyles(({
   },
 
   iconLogo: {
-    color: config.palette.primary,
+    color: theme.palette.secondary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -105,8 +103,8 @@ const useStyles = makeStyles(({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: config.palette.alert.success.background,
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    backgroundColor: theme.palette.info.light,
+    borderRadius: theme.palette.dimensions.borderRadius,
     display: 'flex',
     height: '100%',
     marginBottom: '25px',
@@ -129,9 +127,9 @@ const useStyles = makeStyles(({
   },
 
   inputField: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: config.palette.greyScales[400],
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: theme.palette.grey[400],
   },
 
   inputFieldContainer: {
@@ -145,11 +143,11 @@ const useStyles = makeStyles(({
   },
 
   mainContainer: {
-    backgroundColor: `${config.palette.background.default} !important`,
+    backgroundColor: `${theme.palette.background.default} !important`,
   },
 
   pageContentContainer: {
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     display: 'flex',
     height: '100vh',
     minWidth: '1024px',
@@ -157,7 +155,7 @@ const useStyles = makeStyles(({
   },
 
   portalName: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '24px',
     fontWeight: 500,
   },

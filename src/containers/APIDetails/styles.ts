@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@apisuite/fe-base'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   root: {
     display: 'flex',
     flexDirection: 'column',
@@ -17,7 +16,7 @@ export default makeStyles(({
     justifyContent: 'flex-end',
   },
   badge: {
-    borderRadius: `${config.dimensions.borderRadius}px`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     fontSize: '.7em',
     lineHeight: '1em',
     padding: '5px',
@@ -25,12 +24,12 @@ export default makeStyles(({
     width: '40px',
   },
   live: {
-    backgroundColor: config.palette.primary,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.common.white,
   },
   docs: {
-    backgroundColor: config.palette.active,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.action.active,
+    color: theme.palette.common.white,
   },
   centerVertical: {
     display: 'flex',
