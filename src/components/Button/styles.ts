@@ -31,6 +31,10 @@ const useStyles = makeStyles({
     },
   },
 
+  basic: {
+    backgroundColor: `${config.palette.newGreyScales['25']} !important`,
+  },
+
   dark: {
     backgroundColor: config.palette.text.primary,
   },
@@ -54,6 +58,10 @@ const useStyles = makeStyles({
   },
 
   // b) Button's text color
+
+  basicColor: {
+    color: `${config.palette.newGreyScales['700']} !important`,
+  },
 
   primaryColor: {
     color: `${config.palette.primaryContrastText} !important`,

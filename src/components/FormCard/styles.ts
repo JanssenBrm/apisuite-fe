@@ -36,6 +36,12 @@ const useStyles = makeStyles(({
       backgroundColor: config.palette.label,
     },
   },
+  loading: {
+    position: 'relative',
+    top: 4,
+    color: 'white',
+    opacity: 0.5,
+  },
 
   enabledNextButton: {
     backgroundColor: config.palette.primary,
@@ -72,6 +78,14 @@ const useStyles = makeStyles(({
     color: config.palette.primaryContrastText,
     fontSize: '26px',
     fontWeight: 300,
+  },
+
+  rejectBtnContainer: {
+    margin: '20px 0px',
+  },
+  rejectButton: {
+    backgroundColor: `${config.palette.newGreyScales['25']} !important`,
+    color: `${config.palette.newGreyScales['700']} !important`,
   },
 }))
 

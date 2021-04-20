@@ -11,6 +11,7 @@ export interface SettingsData {
   portalName: string,
   socialURLs: SocialUrl[],
   supportURL: string,
+  sso?: string[],
 }
 
 export interface SocialUrl {

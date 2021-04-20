@@ -4,7 +4,9 @@ import { Store } from 'store/types'
 
 import SignInOrUp from './SignInOrUp'
 
-const mapStateToProps = ({ settings }: Store) => ({
+const mapStateToProps = ({ auth, settings, invitation }: Store) => ({
+  auth,
+  invitation,
   settings: settings,
 })
 

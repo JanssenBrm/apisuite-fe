@@ -12,6 +12,7 @@ const initialState: SettingsStore = {
   portalName: '',
   socialURLs: [],
   supportURL: '',
+  sso: [],
 }
 
 /** Action types */
@@ -37,6 +38,7 @@ const reducer: Reducer<SettingsStore, AnyAction> = (
         portalName: { $set: payload.portalName },
         socialURLs: { $set: payload.socialURLs },
         supportURL: { $set: payload.supportURL },
+        sso: { $set: payload.sso },
       })
     }
 
