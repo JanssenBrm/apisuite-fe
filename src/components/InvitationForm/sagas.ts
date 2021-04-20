@@ -123,13 +123,6 @@ export function * validateInvitationTokenSaga (
     })
 
     yield put(validateInvitationTokenActions.success(response))
-    // console.log('---------------- action.payload.token ---------->', action.payload.token)
-    // yield put(validateInvitationTokenActions.success({
-    //   email: 'delio@cloudokii.com',
-    //   organization: 'CloudokiLX',
-    //   isUser: true,
-    //   hasOrganizations: true,
-    // }))
   } catch (error) {
     yield put(validateInvitationTokenActions.error(error.message))
   }
