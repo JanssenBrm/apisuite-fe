@@ -1,11 +1,9 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   disabledConfirmButton: {
-    backgroundColor: config.palette.label,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.label,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -14,13 +12,13 @@ const useStyles = makeStyles(({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: config.palette.label,
+      backgroundColor: theme.palette.label,
     },
   },
 
   enabledConfirmButton: {
-    backgroundColor: config.palette.tertiary,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.primary.main,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -28,12 +26,12 @@ const useStyles = makeStyles(({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: config.palette.tertiary,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
   forgotPasswordLink: {
-    color: `${config.palette.greyScales['400']} !important`,
+    color: `${theme.palette.grey[400]} !important`,
     cursor: 'pointer',
     display: 'flex',
     fontSize: '14px',
@@ -43,14 +41,14 @@ const useStyles = makeStyles(({
     textDecoration: 'underline',
 
     '&:hover': {
-      color: `${config.palette.greyScales['400']} !important`,
+      color: `${theme.palette.grey[400]} !important`,
     },
   },
 
   inputField: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[400],
+    backgroundColor: theme.palette.background.paper,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
   },
 
   inputFieldContainer: {
@@ -71,14 +69,14 @@ const useStyles = makeStyles(({
   },
 
   separatorLine: {
-    backgroundColor: config.palette.newGreyScales['100'],
-    borderRadius: config.dimensions.borderRadius,
+    backgroundColor: theme.palette.grey[200],
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     height: '1px',
     width: '100%',
   },
 
   separatorText: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     padding: '0px 10px',
   },
 }))

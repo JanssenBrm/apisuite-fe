@@ -1,16 +1,14 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   activeDocumentationAccessFilterButtonIcon: {
-    color: config.palette.active,
+    color: theme.palette.action.active,
   },
 
   activeFilterButtonContainer: {
     alignItems: 'center',
     backgroundColor: '#DCDFE3',
-    border: `1px solid ${config.palette.label}`,
+    border: `1px solid ${theme.palette.label}`,
     borderLeft: 'none',
     cursor: 'pointer',
     display: 'flex',
@@ -18,11 +16,11 @@ export default makeStyles(({
   },
 
   activeProductionAccessFilterButtonIcon: {
-    color: config.palette.primary,
+    color: theme.palette.secondary.main,
   },
 
   activeSandboxAccessFilterButtonIcon: {
-    color: config.palette.secondary,
+    color: theme.palette.primary.main,
   },
 
   allAPIProductsSection: {
@@ -47,11 +45,12 @@ export default makeStyles(({
 
   apiProductButtons: {
     display: 'flex',
-    marginBottom: '12px',
+    height: '40px',
+    marginBottom: '6px',
   },
 
   apiProductName: {
-    color: config.palette.background.default,
+    color: theme.palette.background.default,
     fontSize: '22px',
     fontWeight: 400,
     marginRight: '12px',
@@ -60,18 +59,18 @@ export default makeStyles(({
   apiProductNameAndVersion: {
     alignItems: 'center',
     display: 'flex',
-    marginBottom: '20px',
+    marginBottom: '12px',
     marginTop: '-5px',
   },
 
   apiProductOfflineStatus: {
-    color: config.palette.background.default,
+    color: theme.palette.background.default,
     fontSize: '14px',
     marginRight: '12px',
   },
 
   apiProductOnlineStatus: {
-    color: config.palette.primary,
+    color: theme.palette.secondary.main,
     fontSize: '14px',
     marginRight: '12px',
   },
@@ -81,7 +80,7 @@ export default makeStyles(({
 
     // Access type
     '& > :last-child': {
-      color: config.palette.tertiary,
+      color: theme.palette.primary.main,
       fontSize: '14px',
       fontWeight: 300,
       textAlign: 'left',
@@ -89,14 +88,14 @@ export default makeStyles(({
   },
 
   apiProductVersion: {
-    color: config.palette.background.default,
+    color: theme.palette.background.default,
     fontSize: '14px',
     fontWeight: 400,
   },
 
   documentationAccess: {
-    backgroundColor: config.palette.active,
-    borderRadius: '4px',
+    backgroundColor: theme.palette.action.active,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
 
@@ -107,8 +106,8 @@ export default makeStyles(({
 
   inactiveFilterButtonContainer: {
     alignItems: 'center',
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.label}`,
     borderLeft: 'none',
     cursor: 'pointer',
     display: 'flex',
@@ -116,7 +115,7 @@ export default makeStyles(({
   },
 
   inactiveFilterButtonIcon: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
   },
 
   lastFilterButtonContainer: {
@@ -141,7 +140,7 @@ export default makeStyles(({
   },
 
   latestAPIProductTitle: {
-    color: config.palette.background.default,
+    color: theme.palette.background.default,
     fontSize: '16px',
     fontWeight: 500,
   },
@@ -162,8 +161,8 @@ export default makeStyles(({
   },
 
   productionAccess: {
-    backgroundColor: config.palette.primary,
-    borderRadius: '4px',
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
 
@@ -171,33 +170,38 @@ export default makeStyles(({
     textAlign: 'center',
 
     '& > :first-child': {
-      color: config.palette.tertiary,
+      color: theme.palette.primary.main,
       fontSize: '16px',
       fontWeight: 300,
     },
   },
 
   sandboxAccess: {
-    backgroundColor: config.palette.secondary,
-    borderRadius: '4px',
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     padding: '4px 8px',
   },
 
   subscribeButton: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: '4px',
-    color: `${config.palette.primary} !important`,
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.primary} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.background.default,
+    },
   },
 
   textFilter: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.label}`,
     borderBottomRightRadius: '0px',
-    borderRadius: '4px',
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderTopRightRadius: '0px',
     maxWidth: '325px',
     padding: '2.5px 12px',
@@ -209,18 +213,23 @@ export default makeStyles(({
     },
 
     '& > :last-child': {
-      color: config.palette.label,
+      color: theme.palette.label,
     },
   },
 
   viewDetailsButton: {
-    backgroundColor: config.palette.tertiary,
-    borderRadius: '4px',
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '12px',
     padding: '12px 20px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.primary.main,
+    },
   },
 }))

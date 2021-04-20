@@ -1,14 +1,12 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
 import dashboardSpaceBackground from 'assets/dashboardSpaceBackground.svg'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   // General JSS
 
   dashboardContentsContainer: {
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     position: 'relative',
   },
 
@@ -16,7 +14,7 @@ export default makeStyles(({
 
   expandedHeaderImageSection: {
     background: 'url(' + dashboardSpaceBackground + ')',
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     backgroundPosition: 'center -320px',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -29,7 +27,7 @@ export default makeStyles(({
 
   regularHeaderImageSection: {
     background: 'url(' + dashboardSpaceBackground + ')',
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     backgroundPosition: 'center -320px',
     backgroundRepeat: 'no-repeat',
     backgroundSize: 'cover',
@@ -43,10 +41,11 @@ export default makeStyles(({
   // JSS for the 'Notification cards' section
 
   customNotificationCardButton: {
-    backgroundColor: config.palette.primary,
-    borderRadius: '5px',
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: 'none',
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
+    cursor: 'pointer',
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -54,13 +53,14 @@ export default makeStyles(({
     position: 'relative',
     textAlign: 'center',
     textDecoration: 'none',
+    textTransform: 'none',
 
     '&:hover': {
-      cursor: 'pointer',
+      backgroundColor: theme.palette.secondary.main,
     },
 
     '&:link, &:visited': {
-      color: config.palette.primaryContrastText,
+      color: theme.palette.common.white,
     },
   },
 
@@ -88,10 +88,11 @@ export default makeStyles(({
   // JSS for the 'Greeting card' section
 
   customGreetingCardButton: {
-    backgroundColor: config.palette.tertiary,
-    borderRadius: '5px',
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: 'none',
-    color: config.palette.tertiaryContrastText,
+    color: theme.palette.common.white,
+    cursor: 'pointer',
     display: 'inline-block',
     fontSize: '16px',
     fontWeight: 600,
@@ -99,13 +100,14 @@ export default makeStyles(({
     position: 'relative',
     textAlign: 'center',
     textDecoration: 'none',
+    textTransform: 'none',
 
     '&:hover': {
-      cursor: 'pointer',
+      backgroundColor: theme.palette.primary.main,
     },
 
     '&:link, &:visited': {
-      color: config.palette.primaryContrastText,
+      color: theme.palette.common.white,
     },
   },
 
@@ -144,15 +146,15 @@ export default makeStyles(({
   },
 
   sectionIntroHeading: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '32px',
     fontWeight: 300,
     margin: '40px 0px',
   },
 
   sectionSeparator: {
-    border: `1px solid ${config.palette.newGreyScales['100']}`,
-    borderRadius: '4px',
+    border: `1px solid ${theme.palette.grey[200]}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
     maxWidth: '900px',
     width: '100%',
   },
@@ -167,7 +169,7 @@ export default makeStyles(({
   // JSS for the notification banner
 
   customNotificationBannerParagraph: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '22px',

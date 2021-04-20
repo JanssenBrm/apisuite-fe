@@ -542,10 +542,6 @@
     "invitationSignInBtn": "Sign in to accept invitation",
     "invitationBtn": "Invitation"
   },
-  "registerConfirmation": {
-    "messageTitle": "Thanks for joining us!",
-    "message": "A verification link has been sent to your e-mail address. Please follow the instructions to finish your registration!"
-  },
   "forgotPassword": {
     "messageTitle": "Forgot your password?",
     "messageTitleRecover": "Enter your new password",
@@ -594,7 +590,7 @@
     "notfound": "No Swagger documentation found.",
     "goback": "Go back"
   },
-  "invitation": {
+  "invitationForm": {
     "accept": "Accept invitation",
     "reject": "Reject invitation",
     "signin": "Sign in with {{provider}}"

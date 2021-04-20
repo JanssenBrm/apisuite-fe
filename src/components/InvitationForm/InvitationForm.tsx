@@ -4,7 +4,7 @@ import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded'
 import {
   InvitationFormProps, InvitationFormStore,
 } from './types'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from '@apisuite/fe-base'
 import FormCard from 'components/FormCard'
 import FormField, {
   parseErrors,
@@ -62,14 +62,14 @@ const InvitationConfirmationForm: React.FC<{
     <div className={classes.registerContainer}>
       <FormCard
         buttonIcon={isLogged ? null : <VpnKeyRoundedIcon className={classes.ssoSignIcon} />}
-        buttonLabel={isLogged ? t('invitation.accept') : t('invitation.signin', { provider })}
+        buttonLabel={isLogged ? t('invitationForm.accept') : t('invitationForm.signin', { provider })}
         buttonDisabled={!isFormValid}
         handleSubmit={() => isFormValid ? handleSubmit(input.token || '', provider) : () => {
           // do nothing
         }}
         loading={invitation.isRequesting}
         showReject
-        rejectLabel={t('invitation.reject')}
+        rejectLabel={t('invitationForm.reject')}
         rejectDisabled={!isFormValid}
         customRejectButtonStyles={classes.rejectButton}
         handleReject={() => isFormValid ? handleReject(input.token || '') : () => {
@@ -125,7 +125,7 @@ const InvitationForm: React.FC<InvitationFormProps> = ({
   rejectInvitation,
   validateToken,
   isLogged,
-  settings,
+  sso,
 }) => {
   // get token from url
   const invitationToken = qs.parse(window.location.search.slice(1)).token || undefined
@@ -138,7 +138,7 @@ const InvitationForm: React.FC<InvitationFormProps> = ({
 
   React.useEffect(() => {
     if (stateToken && code) {
-      acceptInvitationWithSignIn(stateToken, (settings.sso?.length && settings.sso[0]) || 'keycloak', code)
+      acceptInvitationWithSignIn(stateToken, (sso?.length && sso[0]) || 'keycloak', code)
     } else if (invitationToken && !invitation?.organization && !invitation?.email && invitationError === undefined) {
       validateToken(invitationToken)
     }
@@ -164,7 +164,7 @@ const InvitationForm: React.FC<InvitationFormProps> = ({
               isLogged={isLogged || false}
               invitation={invitationStore}
               token={invitationToken}
-              provider={(settings.sso?.length && settings.sso[0]) || ''}
+              provider={(sso?.length && sso[0]) || ''}
               handleSubmit={!isLogged ? invitationSignIn : acceptInvitation}
               handleReject={rejectInvitation}
             />

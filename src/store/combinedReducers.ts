@@ -20,7 +20,6 @@ import profile from 'containers/Profile/ducks'
 import reduceReducers from './reduceReducers'
 import register from 'components/SignUpForm/ducks'
 import security from 'containers/Security/ducks'
-import settings from 'containers/Settings/ducks'
 import subscriptions from 'containers/Subscriptions/ducks'
 
 export default (
@@ -39,7 +38,6 @@ export default (
     register: [register],
     router: [connectRouter(history)],
     security: [security],
-    settings: [settings],
     subscriptions: [subscriptions],
   }
 

@@ -1,10 +1,9 @@
-import * as React from 'react'
-
+import React from 'react'
 import { Redirect } from 'react-router-dom'
-
-import { useTranslation } from 'react-i18next'
-
 import qs from 'qs'
+import { useTranslation, IconButton, InputAdornment } from '@apisuite/fe-base'
+import Visibility from '@material-ui/icons/Visibility'
+import VisibilityOff from '@material-ui/icons/VisibilityOff'
 
 import FormCard from 'components/FormCard'
 import FormField, { isRequired, isValidEmail, isValidPass, isValidURL, parseErrors } from 'components/FormField'
@@ -13,15 +12,8 @@ import StepsProgress from 'components/StepsProgress'
 
 import LoadingView from './LoadingView'
 
-import IconButton from '@material-ui/core/IconButton'
-import InputAdornment from '@material-ui/core/InputAdornment'
-
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
-
-import { OrganisationDetailsProps, ProfileDetailsProps, SecurityDetailsProps, SignUpFormProps } from './types'
-
 import useStyles from './styles'
+import { OrganisationDetailsProps, ProfileDetailsProps, SecurityDetailsProps, SignUpFormProps } from './types'
 
 const ProfileDetailsForm: React.FC<ProfileDetailsProps> = ({
   handleSubmit,

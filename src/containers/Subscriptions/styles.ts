@@ -1,17 +1,20 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   addSubscriptionButton: {
-    backgroundColor: config.palette.primary,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.common.white} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
     padding: '12px 21px',
     textDecoration: 'none',
+    textTransform: 'none',
+
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
 
   addSubscriptionButtonContainer: {
@@ -25,7 +28,7 @@ export default makeStyles(({
   },
 
   dataToShowDescription: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '16px',
     fontWeight: 300,
     marginBottom: '24px',
@@ -38,7 +41,7 @@ export default makeStyles(({
   },
 
   dataToShowTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '32px',
     fontWeight: 300,
     marginBottom: '12px',
@@ -46,8 +49,8 @@ export default makeStyles(({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: config.palette.alert.success.background,
-    borderRadius: '4px',
+    backgroundColor: theme.palette.info.light,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     height: '75px',
     marginLeft: 'auto',
@@ -86,7 +89,7 @@ export default makeStyles(({
   },
 
   noDataToShowLink: {
-    color: `${config.palette.newGreyScales['300']} !important`,
+    color: `${theme.palette.grey[300]} !important`,
     marginTop: '15px',
   },
 }))

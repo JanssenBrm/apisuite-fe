@@ -1,24 +1,15 @@
-import * as React from 'react'
-
+import React from 'react'
 import ReactSlidy from 'react-slidy/lib'
-
-import 'react-slidy/lib/index.scss'
-
-import Button from 'components/Button'
-
-import Fade from '@material-ui/core/Fade'
-
+import { useTheme, Fade, Button } from '@apisuite/fe-base'
 import RadioButtonCheckedRoundedIcon from '@material-ui/icons/RadioButtonCheckedRounded'
 import RadioButtonUncheckedRoundedIcon from '@material-ui/icons/RadioButtonUncheckedRounded'
 
+import useStyles from './styles'
 import { CarouselSlideProps, CarouselProps } from './types'
 
-import useStyles from './styles'
-
-import { config } from 'constants/global'
+import 'react-slidy/lib/index.scss'
 
 // Carousel slides
-
 const CarouselSlide: React.FC<CarouselSlideProps> = ({
   carouselSlideButton,
   carouselSlideButtonCustomStyling,
@@ -56,13 +47,12 @@ ${carouselSlideContentsPlacement && carouselSlideContentsPlacement === 'side-by-
         {
           carouselSlideButton &&
           <Button
-            customButtonClassName={
-              carouselSlideButtonCustomStyling || classes.carouselSlideButtonStyling
-            }
+            className={carouselSlideButtonCustomStyling || classes.carouselSlideButtonStyling}
             href={carouselSlideButtonLink}
-            label={carouselSlideButtonLabel}
             onClick={carouselSlideButtonOnClick}
-          />
+          >
+            {carouselSlideButtonLabel}
+          </Button>
         }
       </div>
     </div>
@@ -84,6 +74,7 @@ const Carousel: React.FC<CarouselProps> = ({
   timeBetweenSlides,
 }) => {
   const classes = useStyles()
+  const { palette } = useTheme()
 
   const [slideNumber, setSlideNumber] = React.useState(initialSlide || 0)
   const amountOfSlides = slidesArray.length
@@ -152,6 +143,9 @@ const Carousel: React.FC<CarouselProps> = ({
 
     This behavior repeats itself ad nauseam, UNLESS the user happens to hover over a particular slide.
     */
+
+    // FIXME: hooks can not be called conditionally
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     React.useEffect(() => {
       let scheduledCarouselSlideChange: NodeJS.Timeout
 
@@ -168,7 +162,7 @@ const Carousel: React.FC<CarouselProps> = ({
       }
 
       return () => clearInterval(scheduledCarouselSlideChange)
-    }, [isHoveringSlide, slideNumber])
+    }, [isHoveringSlide, slideNumber, amountOfSlides, timeBetweenSlides])
   }
 
   return (
@@ -186,7 +180,8 @@ const Carousel: React.FC<CarouselProps> = ({
                 backgroundRepeat: 'no-repeat',
                 backgroundSize: 'cover',
               }
-              : { backgroundColor: carouselBackgroundColor || config.palette.newGreyScales['700'] }
+              // TODO: update this config
+              : { backgroundColor: carouselBackgroundColor || palette.grey[700] }
           }
         >
           <ReactSlidy

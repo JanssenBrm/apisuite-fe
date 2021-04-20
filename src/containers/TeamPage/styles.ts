@@ -1,21 +1,19 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   actions: {
     paddingRight: 178,
   },
 
   auth: {
-    color: config.palette.text.secondary,
+    color: theme.palette.text.secondary,
     fontSize: 14,
   },
 
   btn: {
-    backgroundColor: config.palette.greyScales[900],
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    backgroundColor: theme.palette.grey[900],
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.common.white,
     cursor: 'pointer',
     display: 'inline-block',
     fontWeight: 500,
@@ -23,7 +21,7 @@ export default makeStyles(({
     padding: '8px 24px',
 
     '&:disabled': {
-      backgroundColor: config.palette.greyScales[400],
+      backgroundColor: theme.palette.grey[400],
     },
   },
 
@@ -34,20 +32,20 @@ export default makeStyles(({
   },
 
   emailTextfield: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[400],
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
     width: 220,
   },
 
   errorAlert: {
     alignItems: 'center',
-    backgroundColor: config.palette.feedback.error,
+    backgroundColor: theme.palette.error.main,
     border: 'solid',
-    borderColor: config.palette.feedback.error,
-    borderRadius: config.dimensions.borderRadius,
+    borderColor: theme.palette.error.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderWidth: 1,
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
     display: 'flex',
     fontSize: 13,
     minHeight: 20,
@@ -61,7 +59,7 @@ export default makeStyles(({
 
   header: {
     alignItems: 'center',
-    color: config.palette.greyScales[400],
+    color: theme.palette.grey[400],
     display: 'flex',
     flexDirection: 'row',
     height: 42,
@@ -72,10 +70,10 @@ export default makeStyles(({
 
   inviteCard: {
     alignItems: 'center',
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     border: 1,
-    borderColor: config.palette.greyScales[300],
-    borderRadius: config.dimensions.borderRadius,
+    borderColor: theme.palette.grey[300],
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderStyle: 'solid',
     cursor: 'pointer',
     display: 'flex',
@@ -88,7 +86,7 @@ export default makeStyles(({
   },
 
   loading: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
     opacity: 0.5,
     position: 'relative',
     top: 4,
@@ -101,24 +99,24 @@ export default makeStyles(({
   },
 
   name: {
-    color: config.palette.text.primary,
+    color: theme.palette.text.primary,
     fontSize: 16,
   },
 
   nameTextfield: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[400],
+    backgroundColor: theme.palette.background.default,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.grey[400],
     width: 220,
   },
 
   root: {
-    backgroundColor: config.palette.greyScales[50],
+    backgroundColor: theme.palette.grey[100],
     minHeight: '100%',
   },
 
   row: {
-    borderTop: '1px solid ' + config.palette.greyScales[300],
+    borderTop: '1px solid ' + theme.palette.grey[300],
     display: 'flex',
     justifyContent: 'space-between',
     padding: '16px 30px 16px 10px',
@@ -131,10 +129,10 @@ export default makeStyles(({
 
   table: {
     alignItems: 'center',
-    backgroundColor: config.palette.background.default,
+    backgroundColor: theme.palette.background.default,
     border: 1,
-    borderColor: config.palette.greyScales[300],
-    borderRadius: config.dimensions.borderRadius,
+    borderColor: theme.palette.grey[300],
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     borderStyle: 'solid',
     cursor: 'pointer',
     display: 'flex',

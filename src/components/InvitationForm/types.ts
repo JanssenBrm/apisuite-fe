@@ -8,13 +8,12 @@ import {
   rejectInvitationActions,
   validateInvitationTokenActions,
 } from './ducks'
-import { SettingsData } from 'containers/Settings/types'
 
 export type InvitationFormProps =
   ReturnType<typeof mapStateToProps> &
   ReturnType<typeof mapDispatchToProps> & {
     isLogged?: boolean,
-    settings: SettingsData,
+    sso: string[]|undefined,
   }
 
 export type InvitationDetails = {

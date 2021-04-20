@@ -1,12 +1,8 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
-
+import React from 'react'
+import { useTranslation } from '@apisuite/fe-base'
 import CookieConsent from 'react-cookie-consent'
 
 import useStyles from './styles'
-
-import { config } from 'constants/global'
 
 const CookiesBanner: React.FC = () => {
   /*
@@ -32,7 +28,7 @@ const CookiesBanner: React.FC = () => {
       overlay
     >
       <h2 className={classes.cookiesConsentHeader}>
-        {t('cookiesConsentBanner.intro', { config })}
+        {t('cookiesConsentBanner.intro')}
       </h2>
 
       <p className={classes.cookiesConsentParagraph}>

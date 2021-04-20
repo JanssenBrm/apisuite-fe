@@ -1,13 +1,11 @@
 import { connect } from 'react-redux'
 
+import SignInOrUp from './SignInOrUp'
 import { Store } from 'store/types'
 
-import SignInOrUp from './SignInOrUp'
-
-const mapStateToProps = ({ auth, settings, invitation }: Store) => ({
+const mapStateToProps = ({ auth, invitation }: Store) => ({
   auth,
   invitation,
-  settings: settings,
 })
 
 export default connect(mapStateToProps, null)(SignInOrUp)

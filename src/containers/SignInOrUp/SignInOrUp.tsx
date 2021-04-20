@@ -1,10 +1,9 @@
-import * as React from 'react'
-
+import React from 'react'
 import qs from 'qs'
-
 import { useParams } from 'react-router'
-
-import { useTranslation } from 'react-i18next'
+import { useConfig, useTranslation } from '@apisuite/fe-base'
+import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
+import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 
 import { decodeBase64 } from 'util/decodeBase64'
 
@@ -12,24 +11,17 @@ import InvitationForm from 'components/InvitationForm'
 import SignInForm from 'components/SignInForm'
 import SignUpForm from 'components/SignUpForm'
 
-import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
-
-import { SignInOrUpProps, View } from './types'
-
 import useStyles from './styles'
-
-import { config } from 'constants/global'
+import { SignInOrUpProps, View } from './types'
 
 const SignInOrUp: React.FC<SignInOrUpProps> = ({
   auth,
   invitation,
   history,
-  settings,
 }) => {
   const classes = useStyles()
-
   const [t] = useTranslation()
+  const { ownerInfo, portalName, sso } = useConfig()
 
   const { view: viewParameter, email: emailParameter } = useParams<{ view: string; email: string }>()
 
@@ -50,13 +42,13 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
 
   React.useEffect(() => {
     const invitationToken = qs.parse(window.location.search.slice(1)).token || undefined
-    if (view === 'invitation' && settings.sso?.length && invitationToken) {
+    if (view === 'invitation' && sso?.length && invitationToken) {
       setSSO(true)
     }
     if (usingSSO) {
       setSSO(false)
     }
-  }, [settings])
+  }, [sso])
 
   const renderRegisterInvitationOption = () => {
     if (auth.authToken) {
@@ -73,11 +65,11 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
           onClick={() => history.push('/')}
         >
           {
-            settings.logoURL
+            ownerInfo.logo
               ? (
                 <img
                   className={classes.imageLogo}
-                  src={settings.logoURL}
+                  src={ownerInfo.logo}
                 />
               )
               : (
@@ -88,7 +80,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
           }
 
           <h3 className={classes.portalName}>
-            {settings.portalName}
+            {portalName}
           </h3>
         </div>
 
@@ -97,7 +89,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
           onClick={() => history.push('/')}
         >
           <p>
-            {t('signInOrUpView.closeButtonLabel', { config })}
+            {t('signInOrUpView.closeButtonLabel')}
           </p>
           <CloseRoundedIcon />
         </div>
@@ -106,7 +98,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
       <section className={classes.pageContentContainer}>
         <div className={classes.formSideContentContainer}>
           <h1 className={classes.formSideTitle}>
-            {t('signInOrUpView.welcomeTitle', { config })}
+            {t('signInOrUpView.welcomeTitle')}
           </h1>
           <p className={classes.formSideSubtitle}>
             {t(view === 'invitation' ? 'signInOrUpView.welcomeSubtitleInvitation' : 'signInOrUpView.welcomeSubtitle', { org: invitation?.invitation?.organization || 'Unknown' })}
@@ -126,7 +118,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
                     }
                     onClick={() => changeView('signin')}
                   >
-                    {t('signInOrUpView.options.signIn', { config })}
+                    {t('signInOrUpView.options.signIn')}
                   </option>
 
                   <option
@@ -137,7 +129,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
                     }
                     onClick={() => changeView('signup')}
                   >
-                    {t('signInOrUpView.options.signUp', { config })}
+                    {t('signInOrUpView.options.signUp')}
                   </option>
                 </>
               }
@@ -147,7 +139,7 @@ const SignInOrUp: React.FC<SignInOrUpProps> = ({
               {view === 'signin' && <SignInForm history={history} />}
               {/* @ts-ignore */}
               {view === 'signup' && <SignUpForm prefilledEmail={decodeBase64(emailParameter)} />}
-              {view === 'invitation' && <InvitationForm isLogged={!!auth.authToken} settings={settings} />}
+              {view === 'invitation' && <InvitationForm isLogged={!!auth.authToken} sso={sso} />}
             </div>
             {/* <div className={classes.formFooter}>
               {(view === 'invitation' && !auth.authToken) && <div>Sign Up</div>}

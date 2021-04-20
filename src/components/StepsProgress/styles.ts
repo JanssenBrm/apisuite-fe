@@ -1,8 +1,7 @@
-import { makeStyles } from '@material-ui/styles'
 
-import { config } from 'constants/global'
+import { makeStyles } from '@apisuite/fe-base'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   container: {
     alignItems: 'center',
     display: 'flex',
@@ -19,38 +18,38 @@ export default makeStyles(({
     '-moz-appearance': 'none',
 
     '&::-webkit-progress-bar': {
-      backgroundColor: config.palette.primary,
-      backgroundImage: config.palette.greyScales[100],
+      backgroundImage: theme.palette.grey[200],
+      backgroundColor: theme.palette.secondary.main,
     },
 
     '&::-moz-progress-bar': {
-      backgroundColor: config.palette.primary,
-      backgroundImage: config.palette.greyScales[100],
+      backgroundImage: theme.palette.grey[200],
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 
   progressAfter: {
     '&::-webkit-progress-bar': {
-      backgroundColor: config.palette.greyScales[100],
+      backgroundColor: theme.palette.grey[200],
     },
 
     '&::-moz-progress-bar': {
-      backgroundColor: config.palette.greyScales[100],
+      backgroundColor: theme.palette.grey[200],
     },
   },
 
   progressCurrent: {
     '&::-webkit-progress-bar': {
-      backgroundColor: config.palette.greyScales[100],
+      backgroundColor: theme.palette.grey[200],
     },
 
     '&::-moz-progress-bar': {
-      backgroundColor: config.palette.greyScales[100],
+      backgroundColor: theme.palette.grey[200],
     },
   },
 
   stepCircle: {
-    border: '3px solid ' + config.palette.greyScales[100],
+    border: '3px solid ' + theme.palette.grey[200],
     borderRadius: '50%',
     display: 'block',
     height: '20px',
@@ -58,8 +57,8 @@ export default makeStyles(({
   },
 
   stepCircleBefore: {
-    border: '3px solid ' + config.palette.primary,
-    color: config.palette.greyScales[500],
+    border: '3px solid ' + theme.palette.secondary.main,
+    color: theme.palette.grey[500],
   },
 
   stepCircleCurrent: {
@@ -73,7 +72,7 @@ export default makeStyles(({
 
   stepTitle: {
     borderRadius: '50%',
-    color: config.palette.greyScales[300],
+    color: theme.palette.grey[300],
     display: 'flex',
     fontSize: '14px',
     fontWeight: 'normal',
@@ -87,7 +86,7 @@ export default makeStyles(({
 
   stepTitleCurrent: {
     borderRadius: '50%',
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     display: 'flex',
     fontSize: '14px',
     fontWeight: 'normal',

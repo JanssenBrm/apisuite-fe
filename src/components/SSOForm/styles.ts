@@ -1,8 +1,7 @@
-import { makeStyles } from '@material-ui/styles'
 
-import { config } from 'constants/global'
+import { makeStyles } from '@apisuite/fe-base'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   ssoFormContainer: {
     marginTop: '40px',
   },
@@ -13,8 +12,8 @@ const useStyles = makeStyles(({
   },
 
   ssoSignInWithButton: {
-    backgroundColor: config.palette.primary,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.secondary.main,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -22,7 +21,7 @@ const useStyles = makeStyles(({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: config.palette.primary,
+      backgroundColor: theme.palette.secondary.main,
     },
   },
 

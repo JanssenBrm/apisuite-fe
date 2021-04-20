@@ -1,12 +1,11 @@
-import { makeStyles } from '@material-ui/styles'
 
-import { config } from 'constants/global'
+import { makeStyles } from '@apisuite/fe-base'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   backButton: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
-    color: `${config.palette.active} !important`,
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.label}`,
+    color: `${theme.palette.action.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -14,7 +13,7 @@ const useStyles = makeStyles(({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: config.palette.background.default,
+      backgroundColor: theme.palette.background.default,
     },
   },
 
@@ -23,8 +22,8 @@ const useStyles = makeStyles(({
   },
 
   disabledNextButton: {
-    backgroundColor: `${config.palette.label} !important`,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: `${theme.palette.label} !important`,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -33,7 +32,7 @@ const useStyles = makeStyles(({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: config.palette.label,
+      backgroundColor: theme.palette.label,
     },
   },
   loading: {
@@ -44,8 +43,8 @@ const useStyles = makeStyles(({
   },
 
   enabledNextButton: {
-    backgroundColor: config.palette.primary,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.secondary.main,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '7.5px 45px',
@@ -53,14 +52,14 @@ const useStyles = makeStyles(({
     width: '100%',
 
     '&:hover': {
-      backgroundColor: config.palette.primary,
+      backgroundColor: theme.palette.primary,
     },
   },
 
   errorAlert: {
-    backgroundColor: config.palette.feedback.error,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.background.default,
+    backgroundColor: theme.palette.error.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: theme.palette.background.default,
     minHeight: '50px',
     padding: '12px 25px',
   },
@@ -75,7 +74,7 @@ const useStyles = makeStyles(({
   },
 
   formTitle: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
     fontSize: '26px',
     fontWeight: 300,
   },
@@ -84,8 +83,8 @@ const useStyles = makeStyles(({
     margin: '20px 0px',
   },
   rejectButton: {
-    backgroundColor: `${config.palette.newGreyScales['25']} !important`,
-    color: `${config.palette.newGreyScales['700']} !important`,
+    backgroundColor: `${theme.palette.grey['50']} !important`,
+    color: `${theme.palette.grey['700']} !important`,
   },
 }))
 

@@ -1,24 +1,17 @@
-import * as React from 'react'
+import React from 'react'
+import { useTranslation, Button, CircularProgress } from '@apisuite/fe-base'
 
-import { useTranslation } from 'react-i18next'
-
+import { ROLES } from 'constants/global'
+import Select from 'components/Select'
 import { FetchTeamMembersResponse, Role } from 'containers/Profile/types'
 import { User } from 'containers/Auth/types'
-
 import FormField, { isValidEmail } from 'components/FormField'
-import Select from 'components/Select'
 
 import { FormFieldEvent } from 'components/FormField/types'
 import { SelectOption } from 'components/Select/types'
 
-import Button from '@material-ui/core/Button'
-import CircularProgress from '@material-ui/core/CircularProgress'
-
-import { ROLES } from 'constants/global'
-
-import { TeamPageProps } from './types'
-
 import useStyles from './styles'
+import { TeamPageProps } from './types'
 
 const AUTHORIZED_ROLES = [
   ROLES.admin.value,
@@ -69,7 +62,7 @@ const TeamPage: React.FC<TeamPageProps> = ({
 
       fetchRoleOptions()
     }
-  }, [fetchRoleOptions, fetchTeamMembers])
+  }, [fetchRoleOptions, fetchTeamMembers, currentOrganisation])
 
   function chooseRole (e: React.ChangeEvent<{}>, option: SelectOption) {
     if (e && option) {

@@ -1,34 +1,19 @@
-import * as React from 'react'
-
+import React from 'react'
 import { useSelector } from 'react-redux'
-
-import { useTranslation } from 'react-i18next'
-
+import { useConfig, useTranslation, Fab } from '@apisuite/fe-base'
+import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import { Menus } from '@apisuite/extension-ui-types'
-
+import { getMenuEntries } from 'util/extensions'
+import LocaleSelect from 'language/LocaleSelect'
 import { getRoleName } from 'containers/Profile/selectors'
-import { SettingsStore } from 'containers/Settings/types'
-
 import SvgIcon from 'components/SvgIcon'
 
-import Fab from '@material-ui/core/Fab'
-
-import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
-
-import LocaleSelect from 'language/LocaleSelect'
-
-import { getMenuEntries } from 'util/extensions'
-
 import useStyles from './styles'
-
 import { FooterProps, MenuSection, MenuSections } from './types'
 
-import { config } from 'constants/global'
-
-const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
+const SocialLinks = () => {
   const classes = useStyles()
-
-  const { socialURLs } = settings
+  const { socialURLs } = useConfig()
 
   if (!socialURLs || !socialURLs.length) {
     return null
@@ -63,67 +48,63 @@ const renderSocialLinks = ({ settings }: { settings: SettingsStore }) => {
   )
 }
 
-const renderSubSection = (
-  settings: SettingsStore,
-  subMenu: string,
-  roleName?: string,
-) => {
+const SubSection = ({ subMenu, roleName }: { subMenu: string; roleName?: string }) => {
   const classes = useStyles()
-
+  const { socialURLs } = useConfig()
   const [t] = useTranslation()
 
   const menuSections: MenuSections = {
     [Menus.FooterProducts]: {
-      title: t('footer.apiProductsMenu.menuTitle', { config }),
+      title: t('footer.apiProductsMenu.menuTitle'),
       entries: [
         {
-          label: t('footer.apiProductsMenu.menuItemOne', { config }),
+          label: t('footer.apiProductsMenu.menuItemOne'),
           route: '/dashboard/subscriptions',
         },
         {
-          label: t('footer.apiProductsMenu.menuItemTwo', { config }),
+          label: t('footer.apiProductsMenu.menuItemTwo'),
           route: '/documentation',
         },
       ],
     },
 
     [Menus.FooterSupport]: {
-      title: t('footer.supportMenu.menuTitle', { config }),
+      title: t('footer.supportMenu.menuTitle'),
       entries: [
         {
-          label: t('footer.supportMenu.menuItemOne', { config }),
-          route: settings && settings.socialURLs && settings.socialURLs.length ? settings.socialURLs[0]?.url : '#',
+          label: t('footer.supportMenu.menuItemOne'),
+          route: socialURLs[0]?.url ?? '#',
         },
         {
-          label: t('footer.supportMenu.menuItemTwo', { config }),
+          label: t('footer.supportMenu.menuItemTwo'),
           route: 'https://cloudoki.atlassian.net/wiki/spaces/APIEC/overview?homepageId=281444539',
         },
       ],
     },
 
     [Menus.FooterDashboard]: {
-      title: t('footer.dashboardMenu.menuTitle', { config }),
+      title: t('footer.dashboardMenu.menuTitle'),
       entries: [
         {
-          label: t('footer.dashboardMenu.menuItemOne', { config }),
+          label: t('footer.dashboardMenu.menuItemOne'),
           route: '/dashboard/apps',
         },
         {
-          label: t('footer.dashboardMenu.menuItemTwo', { config }),
+          label: t('footer.dashboardMenu.menuItemTwo'),
           route: '/profile/team',
         },
       ],
     },
 
     [Menus.FooterProfile]: {
-      title: t('footer.profileMenu.menuTitle', { config }),
+      title: t('footer.profileMenu.menuTitle'),
       entries: [
         {
-          label: t('footer.profileMenu.menuItemOne', { config }),
+          label: t('footer.profileMenu.menuItemOne'),
           route: '/profile/security',
         },
         {
-          label: t('footer.profileMenu.menuItemTwo', { config }),
+          label: t('footer.profileMenu.menuItemTwo'),
           route: '/profile/organisation',
         },
       ],
@@ -171,15 +152,13 @@ const renderSubSection = (
 
 // Footer
 
-const Footer: React.FC<FooterProps> = ({
+const Footer: React.FC<FooterProps> = (
   // TODO: Come up with a solution to a bug that manifests upon logging out with this extension active
-  // auth,
-  settings,
-}) => {
+  // { auth }
+) => {
   const classes = useStyles()
-
   const roleName = useSelector(getRoleName)
-
+  const { ownerInfo, portalName } = useConfig()
   const [t] = useTranslation()
 
   const handleFabClick = () => {
@@ -198,13 +177,12 @@ const Footer: React.FC<FooterProps> = ({
         <div className={classes.leftFooterContentsContainer}>
           <div className={classes.logoAndPortalNameContainer}>
             {
-              settings.logoURL
-                ? (
-                  <img
-                    className={classes.imageLogo}
-                    src={settings.logoURL}
-                  />
-                )
+              ownerInfo.logo ? (
+                <img
+                  className={classes.imageLogo}
+                  src={ownerInfo.logo}
+                />
+              )
                 : (
                   <AmpStoriesRoundedIcon
                     className={classes.iconLogo}
@@ -213,25 +191,37 @@ const Footer: React.FC<FooterProps> = ({
             }
 
             <h3 className={classes.portalName}>
-              {settings.portalName}
+              {portalName}
             </h3>
           </div>
 
           <div className={classes.sectionsContainer}>
             <div>
-              {renderSubSection(settings, Menus.FooterProducts, roleName)}
+              <SubSection
+                subMenu={Menus.FooterProducts}
+                roleName={roleName}
+              />
             </div>
 
             <div className={classes.section}>
-              {renderSubSection(settings, Menus.FooterSupport, roleName)}
+              <SubSection
+                subMenu={Menus.FooterSupport}
+                roleName={roleName}
+              />
             </div>
 
             <div className={classes.section}>
-              {renderSubSection(settings, Menus.FooterDashboard, roleName)}
+              <SubSection
+                subMenu={Menus.FooterDashboard}
+                roleName={roleName}
+              />
             </div>
 
             <div className={classes.section}>
-              {renderSubSection(settings, Menus.FooterProfile, roleName)}
+              <SubSection
+                subMenu={Menus.FooterProfile}
+                roleName={roleName}
+              />
             </div>
 
             {/* TODO: Come up with a solution to a bug that manifests upon logging out with this extension active */}
@@ -245,7 +235,7 @@ auth.user?.role.name === 'admin' &&
         </div>
 
         <div className={classes.rightFooterContentsContainer}>
-          {renderSocialLinks({ settings })}
+          <SocialLinks />
 
           <div className={classes.copyrightContainer}>
             <a
@@ -253,10 +243,10 @@ auth.user?.role.name === 'admin' &&
               rel='noopener noreferrer'
               target='_blank'
             >
-              &copy; {new Date().getFullYear()} {t('footer.copyrights.website', { config })}
+              &copy; {new Date().getFullYear()} {t('footer.copyrights.website')}
             </a>
 
-            <p>{t('footer.copyrights.allRightsReserved', { config })}</p>
+            <p>{t('footer.copyrights.allRightsReserved')}</p>
           </div>
 
           <LocaleSelect />

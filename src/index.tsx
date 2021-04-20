@@ -1,65 +1,29 @@
-
-import * as React from 'react'
-
+import React from 'react'
 import ReactDOM from 'react-dom'
-
 import { Provider } from 'react-redux'
-
 import { ConnectedRouter } from 'connected-react-router'
-
-import { createMuiTheme, Theme } from '@material-ui/core/styles'
-import { ThemeProvider } from '@material-ui/styles'
-import theme from 'theme'
-
+import { ConfigProvider } from '@apisuite/fe-base'
 import store, { history } from 'store'
+import { API_URL } from 'constants/endpoints'
+import App from 'containers/App'
+import ErrorMonitor from 'components/ErrorMonitor'
 
 // Translations
-import 'language/i18n'
-
+import translations from 'language/translations'
 // Main Application Styles
 import 'typeface-roboto'
 import 'styles/app.scss'
-
-import App from 'containers/App'
-
-import ErrorMonitor from 'components/ErrorMonitor'
-
-import { config } from 'constants/global'
-
+// load extensions
 import 'util/extensions'
 
-interface CustomTheme extends Theme {
-  alert: {
-    success: {
-      background: string,
-    },
-  },
-  dimensions: {
-    borderRadius: number,
-  },
-  feedback: {
-    error: string,
-  },
-}
-
-const defaultTheme = createMuiTheme(theme)
-
-const apiSuiteCustomTheme: CustomTheme = {
-  alert: config?.palette?.alert,
-  dimensions: config?.dimensions,
-  feedback: config?.palette?.feedback,
-  ...defaultTheme,
-}
-
-function render (Component: any) {
-  // @ts-ignore
+function render (Component: React.ElementType) {
   ReactDOM.render(
     <ErrorMonitor>
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <ThemeProvider theme={apiSuiteCustomTheme}>
+          <ConfigProvider api={{ base: API_URL }} translations={translations}>
             <Component />
-          </ThemeProvider>
+          </ConfigProvider>
         </ConnectedRouter>
       </Provider>
     </ErrorMonitor>,

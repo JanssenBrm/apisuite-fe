@@ -1,17 +1,14 @@
-import { makeStyles } from '@material-ui/styles'
-
+import { makeStyles } from '@apisuite/fe-base'
 import celebration from 'assets/celebration.svg'
 
-import { config } from 'constants/global'
-
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   closeButtonContainer: {
     alignItems: 'center',
     cursor: 'pointer',
     display: 'flex',
 
     '& > p': {
-      color: config.palette.primaryContrastText,
+      color: theme.palette.common.white,
       fontSize: '14px',
       fontWeight: 300,
       marginRight: '15px',
@@ -19,7 +16,7 @@ const useStyles = makeStyles({
     },
 
     '& > svg': {
-      color: config.palette.background.default,
+      color: theme.palette.background.default,
       height: '25px',
       width: '25px',
     },
@@ -36,7 +33,7 @@ const useStyles = makeStyles({
   },
 
   iconLogo: {
-    color: config.palette.primary,
+    color: theme.palette.secondary.main,
     height: 'auto',
     marginRight: '10px',
     width: '60px',
@@ -67,8 +64,8 @@ const useStyles = makeStyles({
 
   infoBox: {
     alignItems: 'center',
-    backgroundColor: config.palette.alert.success.background,
-    borderRadius: '4px',
+    backgroundColor: theme.palette.info.light,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     display: 'flex',
     padding: '12px 35px 12px 10px',
     textAlign: 'left',
@@ -98,7 +95,7 @@ const useStyles = makeStyles({
   },
 
   mainContainer: {
-    backgroundColor: `${config.palette.background.default} !important`,
+    backgroundColor: `${theme.palette.background.default} !important`,
   },
 
   pageContentContainer: {
@@ -109,7 +106,7 @@ const useStyles = makeStyles({
   },
 
   portalName: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '24px',
     fontWeight: 500,
   },
@@ -128,7 +125,7 @@ const useStyles = makeStyles({
   },
 
   signUpCompleteSideSubtitle: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '20px',
     fontWeight: 300,
     marginBottom: '40px',
@@ -140,11 +137,11 @@ const useStyles = makeStyles({
   },
 
   signUpCompleteSideTitle: {
-    color: config.palette.tertiary,
+    color: theme.palette.primary.main,
     fontSize: '42px',
     fontWeight: 700,
     marginBottom: '16px',
   },
-})
+}))
 
 export default useStyles

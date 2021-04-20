@@ -1,28 +1,18 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
-
-import FormCard from 'components/FormCard'
-import FormField, { isValidEmail, isValidPass, parseErrors } from 'components/FormField'
-
-import { FormFieldEvent } from 'components/FormField/types'
-
-import IconButton from '@material-ui/core/IconButton'
-import InputAdornment from '@material-ui/core/InputAdornment'
-
+import React from 'react'
+import { useConfig, useTranslation, IconButton, InputAdornment } from '@apisuite/fe-base'
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 import Visibility from '@material-ui/icons/Visibility'
 import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
+import FormCard from 'components/FormCard'
+import FormField, { isValidEmail, isValidPass, parseErrors } from 'components/FormField'
+import { FormFieldEvent } from 'components/FormField/types'
+import keyIllustration from 'assets/keyIllustration.svg'
 
 import { PasswordRecoveryProps } from './types'
-
 import useStyles from './styles'
-
-import { config, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from 'constants/global'
-
-import keyIllustration from 'assets/keyIllustration.svg'
 
 const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
   auth,
@@ -30,10 +20,9 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
   history,
   location,
   recoverPassword,
-  settings,
 }) => {
   const classes = useStyles()
-
+  const { ownerInfo, portalName, supportURL } = useConfig()
   const [t] = useTranslation()
 
   let stage = 'forgot'
@@ -87,7 +76,7 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
     if (userHasSubmitted && !auth.isRecoveringPassword) {
       setEmailHasBeenSent(true)
     }
-  }, [auth.isRecoveringPassword])
+  }, [auth.isRecoveringPassword, userHasSubmitted])
 
   return (
     <main className={classes.mainContainer}>
@@ -97,13 +86,12 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
           onClick={() => history.push('/auth/signin')}
         >
           {
-            settings.logoURL
-              ? (
-                <img
-                  className={classes.imageLogo}
-                  src={settings.logoURL}
-                />
-              )
+            ownerInfo.logo ? (
+              <img
+                className={classes.imageLogo}
+                src={ownerInfo.logo}
+              />
+            )
               : (
                 <AmpStoriesRoundedIcon
                   className={classes.iconLogo}
@@ -112,7 +100,7 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
           }
 
           <h3 className={classes.portalName}>
-            {settings.portalName}
+            {portalName}
           </h3>
         </div>
 
@@ -121,7 +109,7 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
           onClick={() => history.push('/auth/signin')}
         >
           <p>
-            {t('passwordRecovery.closeButtonLabel', { config })}
+            {t('passwordRecovery.closeButtonLabel')}
           </p>
           <CloseRoundedIcon />
         </div>
@@ -136,16 +124,16 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
                   <h1 className={classes.formSideTitle}>
                     {
                       stage === 'forgot'
-                        ? t('passwordRecovery.forgotPasswordTitle', { config })
-                        : t('passwordRecovery.recoverPasswordTitle', { config })
+                        ? t('passwordRecovery.forgotPasswordTitle')
+                        : t('passwordRecovery.recoverPasswordTitle')
                     }
                   </h1>
 
                   <p className={classes.formSideSubtitle}>
                     {
                       stage === 'forgot'
-                        ? t('passwordRecovery.forgotPasswordSubtitle', { config })
-                        : t('passwordRecovery.recoverPasswordSubtitle', { config })
+                        ? t('passwordRecovery.forgotPasswordSubtitle')
+                        : t('passwordRecovery.recoverPasswordSubtitle')
                     }
                   </p>
 
@@ -154,8 +142,8 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
                       buttonDisabled={!isFormValid}
                       buttonLabel={
                         stage === 'forgot'
-                          ? t('passwordRecovery.formButtonLabel.forgot', { config })
-                          : t('passwordRecovery.formButtonLabel.recover', { config })
+                          ? t('passwordRecovery.formButtonLabel.forgot')
+                          : t('passwordRecovery.formButtonLabel.recover')
                       }
                       handleSubmit={handleSubmission}
                       loading={auth.isRecoveringPassword}
@@ -172,7 +160,7 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
                                 InputProps={{
                                   classes: { input: classes.inputField },
                                 }}
-                                label={t('passwordRecovery.emailLabel', { config })}
+                                label={t('passwordRecovery.emailLabel')}
                                 name='email'
                                 onChange={handleUserInput}
                                 placeholder=''
@@ -206,13 +194,13 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
                                       </IconButton>
                                     </InputAdornment>,
                                 }}
-                                label={t('passwordRecovery.newPasswordLabel', { config })}
+                                label={t('passwordRecovery.newPasswordLabel')}
                                 name='password'
                                 onChange={handleUserInput}
                                 rules={[
                                   {
                                     rule: isValidPass(userInput),
-                                    message: t('passwordRecovery.warnings.password', { config }),
+                                    message: t('passwordRecovery.warnings.password'),
                                   },
                                 ]}
                                 type={showPassword ? 'text' : 'password'}
@@ -229,15 +217,15 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
               : (
                 <>
                   <h1 className={classes.formSideTitle}>
-                    {t('passwordRecovery.recoveryEmailHasBeenSentPartOne', { config })}
+                    {t('passwordRecovery.recoveryEmailHasBeenSentPartOne')}
                   </h1>
 
                   <p className={classes.formSideSubtitle}>
-                    <>{t('passwordRecovery.recoveryEmailHasBeenSentPartTwo', { config })} </>
-                    <span className={classes.boldText}>{settings.portalName} </span>
-                    <>{t('passwordRecovery.recoveryEmailHasBeenSentPartThree', { config })} </>
+                    <>{t('passwordRecovery.recoveryEmailHasBeenSentPartTwo')} </>
+                    <span className={classes.boldText}>{portalName} </span>
+                    <>{t('passwordRecovery.recoveryEmailHasBeenSentPartThree')} </>
                     <span className={classes.boldText}>{userInput}</span>
-                    <>{t('passwordRecovery.recoveryEmailHasBeenSentPartFour', { config })}</>
+                    <>{t('passwordRecovery.recoveryEmailHasBeenSentPartFour')}</>
                   </p>
 
                   <div className={classes.infoBox}>
@@ -245,13 +233,13 @@ const PasswordRecovery: React.FC<PasswordRecoveryProps> = ({
 
                     <div>
                       <p className={classes.infoBoxText}>
-                        <>{t('passwordRecovery.infoBoxTextPartOne', { config })} </>
+                        <>{t('passwordRecovery.infoBoxTextPartOne')} </>
                         <a
-                          href={settings.supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL}
+                          href={supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL}
                           rel='noopener noreferrer'
                           target='_blank'
                         >
-                          {t('passwordRecovery.infoBoxTextPartTwo', { config })}
+                          {t('passwordRecovery.infoBoxTextPartTwo')}
                         </a>
                         <>.</>
                       </p>

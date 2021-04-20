@@ -1,13 +1,11 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-const useStyles = makeStyles({
+export default makeStyles((theme) => ({
   cancelButton: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.active} !important`,
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.action.active} !important`,
     fontSize: '16px',
     fontWeight: 500,
     marginRight: '12px',
@@ -17,15 +15,15 @@ const useStyles = makeStyles({
     width: 'auto',
 
     '&:hover': {
-      backgroundColor: config.palette.background.default,
+      backgroundColor: theme.palette.background.default,
     },
   },
 
   confirmButton: {
-    backgroundColor: config.palette.error,
-    border: `1px solid ${config.palette.error}`,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.error.main,
+    border: `1px solid ${theme.palette.error.main}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: `${theme.palette.common.white} !important`,
     fontSize: '16px',
     fontWeight: 500,
     padding: '6px 21px',
@@ -34,7 +32,7 @@ const useStyles = makeStyles({
     width: 'auto',
 
     '&:hover': {
-      backgroundColor: config.palette.error,
+      backgroundColor: theme.palette.error.main,
     },
   },
 
@@ -55,7 +53,7 @@ const useStyles = makeStyles({
   },
 
   dialogSubText: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.grey[400],
     fontSize: '14px',
     fontWeight: 300,
     lineHeight: '20px',
@@ -63,7 +61,7 @@ const useStyles = makeStyles({
 
   dialogTitleContainer: {
     alignItems: 'center',
-    backgroundColor: config.palette.newGreyScales['25'],
+    backgroundColor: theme.palette.grey[50],
     display: 'flex',
     padding: '15px 25px',
 
@@ -74,7 +72,7 @@ const useStyles = makeStyles({
 
     // Dialog's title
     '& > :last-child': {
-      color: config.palette.tertiary,
+      color: theme.palette.primary.main,
       fontSize: '24px',
       fontWeight: 500,
       padding: '0px',
@@ -86,8 +84,6 @@ const useStyles = makeStyles({
   },
 
   dialogTitleWarningIcon: {
-    color: config.palette.warning,
+    color: theme.palette.warning.main,
   },
-})
-
-export default useStyles
+}))

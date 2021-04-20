@@ -1,31 +1,29 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   cookiesConsentBannerContainer: {
-    backgroundColor: `${config.palette.primary} !important`,
+    backgroundColor: `${theme.palette.secondary.main} !important`,
     padding: '25px 45px',
   },
 
   cookiesConsentButton: {
-    backgroundColor: `${config.palette.background.default} !important`,
-    borderRadius: `${config.dimensions.borderRadius}px !important`,
-    color: `${config.palette.primary} !important`,
+    backgroundColor: `${theme.palette.background.default} !important`,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px !important`,
+    color: `${theme.palette.secondary.main} !important`,
     padding: '12px 20px !important',
     fontSize: '16px !important',
     fontWeight: 600,
   },
 
   cookiesConsentHeader: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
     fontSize: '24px',
     fontWeight: 400,
     margin: '0px 80px 12px 0px',
   },
 
   cookiesConsentParagraph: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
     fontSize: '16px',
     fontWeight: 300,
     lineHeight: '22px',

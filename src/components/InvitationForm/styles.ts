@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@apisuite/fe-base'
 
-const useStyles = makeStyles(({
+const useStyles = makeStyles((theme) => ({
   registerContainer: {
     width: '100%',
     height: '100%',
@@ -12,20 +11,20 @@ const useStyles = makeStyles(({
   },
   rejectButton: {
     backgroundColor: 'white',
-    border: `1px solid ${config.palette.greyScales[400]}`,
-    borderRadius: config.dimensions.borderRadius,
-    color: config.palette.greyScales[800],
+    border: `1px solid ${theme.palette.grey[400]}`,
+    borderRadius: theme.palette.dimensions.borderRadius,
+    color: theme.palette.grey[800],
     fontSize: '16px',
     fontWeight: 500,
     textTransform: 'none',
   },
   textField: {
     backgroundColor: 'white',
-    borderRadius: config.dimensions.borderRadius,
+    borderRadius: theme.palette.dimensions.borderRadius,
     fontSize: '16px',
     fontWeight: 500,
     '& div > input': {
-      color: config.palette.greyScales[400] + ' !important',
+      color: theme.palette.grey[400] + ' !important',
     },
   },
   centerContent: {
@@ -37,7 +36,7 @@ const useStyles = makeStyles(({
     fontWeight: 500,
   },
   loading: {
-    color: config.palette.primary,
+    color: theme.palette.primary.main,
   },
   ssoSignIcon: {
     fontSize: '25px',

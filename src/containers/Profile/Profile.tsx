@@ -1,15 +1,5 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
-
-import Select from 'components/Select'
-import { SelectOption } from 'components/Select/types'
-import { isValidImage, isValidPhoneNumber, isValidURL } from 'components/FormField'
-
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import TextField from '@material-ui/core/TextField'
-
+import React from 'react'
+import { useTranslation, Button, Avatar, TextField } from '@apisuite/fe-base'
 import Close from '@material-ui/icons/Close'
 import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
 import ExpandLessRoundedIcon from '@material-ui/icons/ExpandLessRounded'
@@ -17,13 +7,13 @@ import ExpandMoreRoundedIcon from '@material-ui/icons/ExpandMoreRounded'
 import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 
-import { Organization, ProfileProps } from './types'
+import { useForm } from 'util/useForm'
+import Select from 'components/Select'
+import { SelectOption } from 'components/Select/types'
+import { isValidImage, isValidPhoneNumber, isValidURL } from 'components/FormField'
 
 import useStyles from './styles'
-
-import { config } from 'constants/global'
-
-import { useForm } from 'util/useForm'
+import { Organization, ProfileProps } from './types'
 
 const Profile: React.FC<ProfileProps> = ({
   deleteAccount,
@@ -125,7 +115,7 @@ const Profile: React.FC<ProfileProps> = ({
             }
           },
         ],
-        message: t('profileTab.overviewSubTab.warningLabels.userAvatarURL', { config }),
+        message: t('profileTab.overviewSubTab.warningLabels.userAvatarURL'),
       },
 
       userPhoneNumber: {
@@ -140,7 +130,7 @@ const Profile: React.FC<ProfileProps> = ({
             }
           },
         ],
-        message: t('profileTab.overviewSubTab.warningLabels.userPhoneNumber', { config }),
+        message: t('profileTab.overviewSubTab.warningLabels.userPhoneNumber'),
       },
     })
 
@@ -159,6 +149,7 @@ const Profile: React.FC<ProfileProps> = ({
           : '',
       },
     )
+  // FIXME: adding resetForm to the dependencies causes an infinite loop
   }, [profile])
 
   /* Organisation details */
@@ -266,21 +257,21 @@ const Profile: React.FC<ProfileProps> = ({
               {
                 profile.user.name !== ''
                   ? profile.user.name
-                  : t('profileTab.overviewSubTab.loadingDetails', { config })
+                  : t('profileTab.overviewSubTab.loadingDetails')
               }
             </p>
 
             <p className={classes.userRole}>
               {
                 !profileHasOrgDetails
-                  ? t('profileTab.overviewSubTab.roleRelatedLabels.baseUser', { config })
+                  ? t('profileTab.overviewSubTab.roleRelatedLabels.baseUser')
                   : (
                     profile.current_org.role.name === 'admin'
-                      ? t('profileTab.overviewSubTab.roleRelatedLabels.admin', { config })
+                      ? t('profileTab.overviewSubTab.roleRelatedLabels.admin')
                       : (
                         profile.current_org.role.name === 'organizationOwner'
-                          ? t('profileTab.overviewSubTab.roleRelatedLabels.orgOwner', { config })
-                          : t('profileTab.overviewSubTab.roleRelatedLabels.developer', { config })
+                          ? t('profileTab.overviewSubTab.roleRelatedLabels.orgOwner')
+                          : t('profileTab.overviewSubTab.roleRelatedLabels.developer')
                       )
                   )
               }
@@ -288,12 +279,12 @@ const Profile: React.FC<ProfileProps> = ({
           </div>
 
           <p className={classes.subtitle}>
-            {t('profileTab.overviewSubTab.subtitle', { config })}
+            {t('profileTab.overviewSubTab.subtitle')}
           </p>
 
           <div>
             <p className={classes.organisationDetailsTitle}>
-              {t('profileTab.overviewSubTab.orgRelatedLabels.selectorTitle', { config })}
+              {t('profileTab.overviewSubTab.orgRelatedLabels.selectorTitle')}
             </p>
 
             {
@@ -304,7 +295,7 @@ const Profile: React.FC<ProfileProps> = ({
                       className={classes.organisationSelector}
                       customCloseIcon={<ExpandLessRoundedIcon />}
                       customOpenIcon={<ExpandMoreRoundedIcon />}
-                      fieldLabel={t('profileTab.overviewSubTab.orgRelatedLabels.selectorLabel', { config })}
+                      fieldLabel={t('profileTab.overviewSubTab.orgRelatedLabels.selectorLabel')}
                       onChange={handleOrganisationSelection}
                       options={organisationSelector(profile.orgs_member)}
                       selected={
@@ -324,7 +315,7 @@ const Profile: React.FC<ProfileProps> = ({
                       }
                       onClick={switchOrganisation}
                     >
-                      {t('profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel', { config })}
+                      {t('profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel')}
                     </Button>
                   </>
                 )
@@ -333,7 +324,7 @@ const Profile: React.FC<ProfileProps> = ({
                     className={classes.createOrganisationButton}
                     href='profile/organisation'
                   >
-                    {t('profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel', { config })}
+                    {t('profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel')}
                   </Button>
                 )
             }
@@ -354,7 +345,7 @@ const Profile: React.FC<ProfileProps> = ({
                 className={classes.otherActionsButtons}
                 href='profile/security'
               >
-                {t('profileTab.overviewSubTab.otherActionsLabels.changePassword', { config })}
+                {t('profileTab.overviewSubTab.otherActionsLabels.changePassword')}
               </Button>
             }
 
@@ -362,7 +353,7 @@ const Profile: React.FC<ProfileProps> = ({
               className={classes.otherActionsButtons}
               href='profile/team'
             >
-              {t('profileTab.overviewSubTab.otherActionsLabels.viewTeam', { config })}
+              {t('profileTab.overviewSubTab.otherActionsLabels.viewTeam')}
             </Button>
           </div>
         </div>
@@ -407,7 +398,7 @@ const Profile: React.FC<ProfileProps> = ({
                           formState.errors.userAvatarURL) || !validImage) &&
                         formState.errorMsgs.userAvatarURL
                       }
-                      label={t('profileTab.overviewSubTab.userRelatedLabels.userAvatarURL', { config })}
+                      label={t('profileTab.overviewSubTab.userRelatedLabels.userAvatarURL')}
                       margin='dense'
                       name='userAvatarURL'
                       onChange={handleChange}
@@ -430,7 +421,7 @@ const Profile: React.FC<ProfileProps> = ({
                   : classes.disabledInputFields
               }
               fullWidth
-              label={t('profileTab.overviewSubTab.userRelatedLabels.userName', { config })}
+              label={t('profileTab.overviewSubTab.userRelatedLabels.userName')}
               margin='dense'
               name='userName'
               onChange={handleChange}
@@ -447,7 +438,7 @@ const Profile: React.FC<ProfileProps> = ({
                   : classes.disabledInputFields
               }
               fullWidth
-              label={t('profileTab.overviewSubTab.userRelatedLabels.userEmailAddress', { config })}
+              label={t('profileTab.overviewSubTab.userRelatedLabels.userEmailAddress')}
               margin='dense'
               name='userEmailAddress'
               onChange={handleChange}
@@ -470,7 +461,7 @@ const Profile: React.FC<ProfileProps> = ({
                       formState.errors.userPhoneNumber &&
                       formState.errorMsgs.userPhoneNumber
                     }
-                    label={t('profileTab.overviewSubTab.userRelatedLabels.userPhoneNumber', { config })}
+                    label={t('profileTab.overviewSubTab.userRelatedLabels.userPhoneNumber')}
                     margin='dense'
                     name='userPhoneNumber'
                     onChange={handleChange}
@@ -488,7 +479,7 @@ const Profile: React.FC<ProfileProps> = ({
                     }
                     onClick={updateProfileDetails}
                   >
-                    {t('profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails', { config })}
+                    {t('profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails')}
                   </Button>
                 </>
               )
@@ -501,14 +492,14 @@ const Profile: React.FC<ProfileProps> = ({
               <p>
                 {
                   !profileHasOrgDetails
-                    ? t('profileTab.overviewSubTab.roleRelatedLabels.baseUser', { config })
+                    ? t('profileTab.overviewSubTab.roleRelatedLabels.baseUser')
                     : (
                       profile.current_org.role.name === 'admin'
-                        ? t('profileTab.overviewSubTab.roleRelatedLabels.admin', { config })
+                        ? t('profileTab.overviewSubTab.roleRelatedLabels.admin')
                         : (
                           profile.current_org.role.name === 'organizationOwner'
-                            ? t('profileTab.overviewSubTab.roleRelatedLabels.orgOwner', { config })
-                            : t('profileTab.overviewSubTab.roleRelatedLabels.developer', { config })
+                            ? t('profileTab.overviewSubTab.roleRelatedLabels.orgOwner')
+                            : t('profileTab.overviewSubTab.roleRelatedLabels.developer')
                         )
                     )
                 }
@@ -522,14 +513,14 @@ const Profile: React.FC<ProfileProps> = ({
               className={classes.deleteAccountButton}
               onClick={handleDelete}
             >
-              {t('profileTab.overviewSubTab.otherActionsLabels.deleteAccount', { config })}
+              {t('profileTab.overviewSubTab.otherActionsLabels.deleteAccount')}
             </Button>
 
             <Button
               className={classes.signOutButton}
               onClick={logout}
             >
-              {t('profileTab.overviewSubTab.otherActionsLabels.signOut', { config })}
+              {t('profileTab.overviewSubTab.otherActionsLabels.signOut')}
             </Button>
           </div>
         </div>
@@ -543,15 +534,15 @@ const Profile: React.FC<ProfileProps> = ({
 
               handleCloseDialog()
             }}
-            confirmButtonLabel={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalConfirmButton', { config })}
+            confirmButtonLabel={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalConfirmButton')}
             open={openDialog}
             optionalTitleIcon='warning'
             providedText={
-              t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningText', { config }) +
+              t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningText') +
               ` ${profile.user.email}?`
             }
-            providedSubText={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningSubText', { config })}
-            providedTitle={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalTitle', { config })}
+            providedSubText={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningSubText')}
+            providedTitle={t('profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalTitle')}
           />
         }
       </section>
@@ -564,7 +555,7 @@ const Profile: React.FC<ProfileProps> = ({
 
             <div>
               <p className={classes.infoBoxText}>
-                {t('profileTab.overviewSubTab.openIDInfoBoxContainerPartOne', { config })}
+                {t('profileTab.overviewSubTab.openIDInfoBoxContainerPartOne')}
               </p>
 
               <p className={classes.infoBoxText}>
@@ -574,10 +565,10 @@ const Profile: React.FC<ProfileProps> = ({
                     target='_blank'
                     rel='noopener noreferrer'
                   >
-                    {t('profileTab.overviewSubTab.openIDInfoBoxContainerPartTwo', { config })}
+                    {t('profileTab.overviewSubTab.openIDInfoBoxContainerPartTwo')}
                   </a>
                 </span>
-                <span>{t('profileTab.overviewSubTab.openIDInfoBoxContainerPartThree', { config })}</span>
+                <span>{t('profileTab.overviewSubTab.openIDInfoBoxContainerPartThree')}</span>
               </p>
             </div>
           </div>

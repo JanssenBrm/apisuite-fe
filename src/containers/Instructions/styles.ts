@@ -1,20 +1,19 @@
-import { makeStyles } from '@material-ui/styles'
 
-import { config } from 'constants/global'
+import { makeStyles } from '@apisuite/fe-base'
 
-export default makeStyles(({
+export default makeStyles((theme) => ({
   clipboardIcon: {
     cursor: 'pointer',
     zIndex: 1,
 
     '&:hover': {
-      color: config.palette.primary,
+      color: theme.palette.secondary.main,
     },
   },
 
   codeBlock: {
-    borderBottomLeftRadius: config.dimensions.borderRadius,
-    borderBottomRightRadius: config.dimensions.borderRadius,
+    borderBottomLeftRadius: theme.palette.dimensions.borderRadius,
+    borderBottomRightRadius: theme.palette.dimensions.borderRadius,
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
   },
@@ -44,12 +43,12 @@ export default makeStyles(({
 
   iconRow: {
     alignItems: 'flex-end',
-    backgroundColor: config.palette.text.primary,
+    backgroundColor: theme.palette.text.primary,
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    borderTopLeftRadius: config.dimensions.borderRadius,
-    borderTopRightRadius: config.dimensions.borderRadius,
-    color: config.palette.primaryContrastText,
+    borderTopLeftRadius: theme.palette.dimensions.borderRadius,
+    borderTopRightRadius: theme.palette.dimensions.borderRadius,
+    color: theme.palette.common.white,
     display: 'flex',
     height: 40,
     justifyContent: 'flex-end',
@@ -72,20 +71,20 @@ export default makeStyles(({
   },
 
   note: {
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
     fontSize: 14,
   },
 
   noteContainer: {
-    backgroundColor: config.palette.secondary,
-    borderRadius: config.dimensions.borderRadius,
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     marginBottom: 20,
     overflow: 'hidden',
     width: '100%',
   },
 
   noteContent: {
-    backgroundColor: config.palette.primary,
+    backgroundColor: theme.palette.secondary.main,
     marginLeft: 5,
     padding: 20,
   },
@@ -97,7 +96,7 @@ export default makeStyles(({
   },
 
   root: {
-    backgroundColor: config.palette.newGreyScales['25'],
+    backgroundColor: theme.palette.grey[50],
     minHeight: '100%',
   },
 
@@ -123,43 +122,3 @@ export default makeStyles(({
     fontWeight: 300,
   },
 }))
-
-export const codeStyle = {
-  'hljs-string': {
-    'color': config.palette.primary,
-  },
-
-  'hljs-symbol': {
-    'color': config.palette.primary,
-  },
-
-  'hljs-bullet': {
-    'color': config.palette.primary,
-  },
-
-  'hljs-addition': {
-    'color': config.palette.primary,
-  },
-
-  'hljs': {
-    background: config.palette.text.primary,
-    color: '#D8D8D8',
-    display: 'block',
-    fontFamily: 'Roboto, sans-serif',
-    fontSize: 14,
-    marginTop: 0,
-    overflowX: 'auto',
-    paddingBottom: 20,
-    paddingLeft: 20,
-    paddingRight: 20,
-    paddingTop: 0,
-  },
-
-  'hljs-emphasis': {
-    fontStyle: 'italic',
-  },
-
-  'hljs-strong': {
-    fontWeight: 'bold',
-  },
-}

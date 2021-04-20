@@ -8,7 +8,6 @@ import { NotificationCardsStore } from 'containers/NotificationCards/types'
 import { NotificationStackStore } from 'containers/NotificationStack/types'
 import { ProfileStore } from 'containers/Profile/types'
 import { RouterState } from 'connected-react-router'
-import { SettingsStore } from 'containers/Settings/types'
 import { SubscriptionsStore } from 'containers/Subscriptions/types'
 
 export interface Store {
@@ -23,6 +22,5 @@ export interface Store {
   profile: ProfileStore,
   register: any,
   router: RouterState,
-  settings: SettingsStore,
   subscriptions: SubscriptionsStore,
 }

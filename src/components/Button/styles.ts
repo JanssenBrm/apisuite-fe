@@ -1,14 +1,13 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from '@apisuite/fe-base'
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   // a) Button's variant
 
   button: {
-    backgroundColor: config.palette.primary,
-    borderRadius: '5px',
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
     boxShadow: '0 2px 5px 0 rgba(0,0,0,0.15)',
-    color: config.palette.primaryContrastText,
+    color: theme.palette.common.white,
     display: 'inline-block',
     fontSize: '14px',
     fontWeight: 600,
@@ -27,24 +26,24 @@ const useStyles = makeStyles({
     },
 
     '&:link, &:visited': {
-      color: config.palette.primaryContrastText,
+      color: theme.palette.common.white,
     },
   },
 
   basic: {
-    backgroundColor: `${config.palette.newGreyScales['25']} !important`,
+    backgroundColor: `${theme.palette.grey['50']} !important`,
   },
 
   dark: {
-    backgroundColor: config.palette.text.primary,
+    backgroundColor: theme.palette.text.primary,
   },
 
   secondary: {
-    backgroundColor: config.palette.secondary,
+    backgroundColor: theme.palette.action.focus,
   },
 
   tertiary: {
-    backgroundColor: config.palette.tertiary,
+    backgroundColor: theme.palette.secondary.main,
   },
 
   transparent: {
@@ -60,25 +59,25 @@ const useStyles = makeStyles({
   // b) Button's text color
 
   basicColor: {
-    color: `${config.palette.newGreyScales['700']} !important`,
+    color: `${theme.palette.grey['700']} !important`,
   },
 
   primaryColor: {
-    color: `${config.palette.primaryContrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
   },
 
   secondaryColor: {
-    color: `${config.palette.secondaryContrastText} !important`,
+    color: `${theme.palette.common.white} !important`,
   },
 
   tertiaryColor: {
-    color: `${config.palette.tertiaryContrastText} !important`,
+    color: `${theme.palette.primary.contrastText} !important`,
   },
 
   // c) Button's status
 
   disabled: {
-    backgroundColor: `${config.palette.newGreyScales['300']} !important`,
+    backgroundColor: `${theme.palette.grey[300]} !important`,
     boxShadow: '0 2px 5px 0 rgba(0,0,0,0.05) !important',
     cursor: 'default !important',
     opacity: 0.6,
@@ -91,6 +90,6 @@ const useStyles = makeStyles({
   loading: {
 
   },
-})
+}))
 
 export default useStyles

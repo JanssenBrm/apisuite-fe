@@ -1,22 +1,10 @@
 import React from 'react'
-
-import { useTranslation } from 'react-i18next'
-
-import Button from '@material-ui/core/Button'
-import Dialog from '@material-ui/core/Dialog'
-import DialogActions from '@material-ui/core/DialogActions'
-import DialogContent from '@material-ui/core/DialogContent'
-import DialogContentText from '@material-ui/core/DialogContentText'
-import DialogTitle from '@material-ui/core/DialogTitle'
-
+import { useTranslation, Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@apisuite/fe-base'
 import InfoRoundedIcon from '@material-ui/icons/InfoRounded'
 import WarningRoundedIcon from '@material-ui/icons/WarningRounded'
 
 import { CustomizableDialogProps } from './types'
-
 import useStyles from './styles'
-
-import { config } from 'constants/global'
 
 const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
   // Props passed by the 'calling' component to be added below
@@ -91,7 +79,7 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
           fullWidth
           onClick={handleCloseDialog}
         >
-          {cancelButtonLabel || t('customizableDialog.cancelButtonLabel', { config })}
+          {cancelButtonLabel || t('customizableDialog.cancelButtonLabel')}
         </Button>
 
         <div>
@@ -100,7 +88,7 @@ const CustomizableDialog: React.FC<CustomizableDialogProps> = ({
             fullWidth
             onClick={handleConfirmAction}
           >
-            {confirmButtonLabel || t('customizableDialog.confirmButtonLabel', { config })}
+            {confirmButtonLabel || t('customizableDialog.confirmButtonLabel')}
           </Button>
 
           {providedDialogActions}

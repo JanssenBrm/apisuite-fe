@@ -1,16 +1,10 @@
-import * as React from 'react'
-
-import { useTranslation } from 'react-i18next'
-
-import Button from '@material-ui/core/Button'
-
+import React from 'react'
+import { useTranslation, Button } from '@apisuite/fe-base'
 import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded'
 
 import { SSOFormProps } from './types'
 
 import useStyles from './styles'
-
-import { config } from 'constants/global'
 
 const SSOForm: React.FC<SSOFormProps> = ({
   auth,
@@ -39,7 +33,8 @@ const SSOForm: React.FC<SSOFormProps> = ({
                 <VpnKeyRoundedIcon className={classes.ssoSignInWithIcon} />
               }
             >
-              {t('signInForm.alternativeSignInButtonLabel', { config }) + ` ${provider}`}
+              {/* FIXME: the translations support interpolation */}
+              {t('signInForm.alternativeSignInButtonLabel') + ` ${provider}`}
             </Button>
           </div>
         ))

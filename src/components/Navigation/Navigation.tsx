@@ -1,28 +1,18 @@
-import * as React from 'react'
-
+import React from 'react'
 import { useSelector } from 'react-redux'
-
 import { useHistory } from 'react-router-dom'
-
 import clsx from 'clsx'
-
-import { goBackConfig, useMenu } from './useMenu'
-
-import Link from 'components/Link'
-import SvgIcon from 'components/SvgIcon'
-
-import Avatar from '@material-ui/core/Avatar'
-import Tab from '@material-ui/core/Tab'
-import Tabs from '@material-ui/core/Tabs'
+import { useConfig, Avatar, Tabs, Tab } from '@apisuite/fe-base'
 
 import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
 import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded'
 import RoomServiceRoundedIcon from '@material-ui/icons/RoomServiceRounded'
-
 import { getAuth } from 'containers/Auth/selectors'
+import Link from 'components/Link'
+import SvgIcon from 'components/SvgIcon'
 
+import { useMenu, goBackConfig } from './useMenu'
 import useStyles from './styles'
-
 import './styles.scss'
 
 import { NavigationProps, TabMenus } from './types'
@@ -33,7 +23,6 @@ const Navigation: React.FC<NavigationProps> = ({
   // Temporary until notification cards become clearer
   notificationCards,
   profile,
-  settings,
   title,
   toggleInform,
   // Temporary until notification cards become clearer
@@ -44,6 +33,7 @@ const Navigation: React.FC<NavigationProps> = ({
   const classes = useStyles()
 
   const history = useHistory()
+  const { portalName, ownerInfo } = useConfig()
 
   const auth = useSelector(getAuth)
   const user = auth.user
@@ -140,13 +130,12 @@ const Navigation: React.FC<NavigationProps> = ({
             to={user?.role.name !== 'admin' ? '/' : '/dashboard'}
           >
             {
-              settings.logoURL
-                ? (
-                  <img
-                    className={classes.imageLogo}
-                    src={settings.logoURL}
-                  />
-                )
+              ownerInfo.logo ? (
+                <img
+                  className={classes.imageLogo}
+                  src={ownerInfo.logo}
+                />
+              )
                 : (
                   <AmpStoriesRoundedIcon
                     className={
@@ -159,7 +148,7 @@ const Navigation: React.FC<NavigationProps> = ({
             }
 
             <h3 className={classes.portalName}>
-              {settings.portalName}
+              {portalName}
             </h3>
           </Link>
 

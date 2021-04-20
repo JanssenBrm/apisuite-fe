@@ -1,19 +1,22 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from '@apisuite/fe-base'
 
-import { config } from 'constants/global'
-
-export default makeStyles({
+export default makeStyles((theme) => ({
   carouselSlideButtonStyling: {
-    backgroundColor: config.palette.primary,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.primaryContrastText} !important`,
+    backgroundColor: theme.palette.secondary.main,
+    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    color: `${theme.palette.common.white} !important`,
     cursor: 'pointer',
     fontSize: '16px',
     fontWeight: 500,
     margin: '0px auto',
     padding: '17px 40px',
     textDecoration: 'none',
+    textTransform: 'none',
     width: '200px',
+
+    '&:hover': {
+      backgroundColor: theme.palette.secondary.main,
+    },
   },
 
   carouselSlideInnerContainer: {
@@ -29,7 +32,7 @@ export default makeStyles({
   },
 
   carouselSlideText: {
-    color: config.palette.background.default,
+    color: theme.palette.background.default,
     fontSize: '22px',
     fontWeight: 300,
     marginBottom: '30px',
@@ -60,19 +63,19 @@ export default makeStyles({
     transform: 'translateY(-20px)',
 
     '& > :first-child': {
-      borderBottomLeftRadius: `${config.dimensions.borderRadius}px`,
-      borderTopLeftRadius: `${config.dimensions.borderRadius}px`,
+      borderBottomLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
+      borderTopLeftRadius: `${theme.palette.dimensions.borderRadius}px`,
     },
 
     '& > :last-child': {
-      borderBottomRightRadius: `${config.dimensions.borderRadius}px`,
-      borderTopRightRadius: `${config.dimensions.borderRadius}px`,
+      borderBottomRightRadius: `${theme.palette.dimensions.borderRadius}px`,
+      borderTopRightRadius: `${theme.palette.dimensions.borderRadius}px`,
     },
   },
 
   notSelectedCarouselSliderIconButton: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.grey[300]}`,
     color: '#6A7884',
     height: '40px',
     width: '40px',
@@ -80,8 +83,8 @@ export default makeStyles({
 
   selectedCarouselSliderIconButton: {
     backgroundColor: '#DCDFE3',
-    border: `1px solid ${config.palette.focus}`,
-    color: config.palette.focus,
+    border: `1px solid ${theme.palette.action.focus}`,
+    color: theme.palette.action.focus,
     height: '40px',
     width: '40px',
   },
@@ -108,4 +111,4 @@ export default makeStyles({
       paddingTop: '165px',
     },
   },
-})
+}))
