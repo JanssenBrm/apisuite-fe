@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React from 'react'
 import qs from 'qs'
 import VpnKeyRoundedIcon from '@material-ui/icons/VpnKeyRounded'
 import {

@@ -1,3 +1,5 @@
+import { AnyAction, Dispatch } from 'redux'
+import { History } from 'history'
 import update from 'immutability-helper'
 import { AuthStoreActionTypes } from 'containers/Auth/types'
 import { LOGOUT } from 'containers/Auth/ducks'
@@ -7,25 +9,25 @@ import {
 } from './types'
 
 export enum InvitationFormActionsTypes {
-  INVITATION_WITH_SIGN_REQUEST = 'INVITATION_WITH_SIGN_REQUEST',
-  INVITATION_WITH_SIGN_SUCCESS = 'INVITATION_WITH_SIGN_SUCCESS',
-  INVITATION_WITH_SIGN_ERROR = 'INVITATION_WITH_SIGN_ERROR',
+  ACCEPT_INVITATION_WITH_SIGN_REQUEST = 'invitation/ACCEPT_INVITATION_WITH_SIGN_REQUEST',
+  ACCEPT_INVITATION_WITH_SIGN_SUCCESS = 'invitation/ACCEPT_INVITATION_WITH_SIGN_SUCCESS',
+  ACCEPT_INVITATION_WITH_SIGN_ERROR = 'invitation/ACCEPT_INVITATION_WITH_SIGN_ERROR',
 
-  INVITATION_SIGN_REQUEST = 'INVITATION_SIGN_REQUEST',
-  INVITATION_SIGN_SUCCESS = 'INVITATION_SIGN_SUCCESS',
-  INVITATION_SIGN_ERROR = 'INVITATION_SIGN_ERROR',
+  INVITATION_SIGN_IN_REQUEST = 'invitation/INVITATION_SIGN_IN_REQUEST',
+  INVITATION_SIGN_IN_SUCCESS = 'invitation/INVITATION_SIGN_IN_SUCCESS',
+  INVITATION_SIGN_IN_ERROR = 'invitation/INVITATION_SIGN_IN_ERROR',
 
-  ACCEPT_INVITATION_REQUEST = 'ACCEPT_INVITATION_REQUEST',
-  ACCEPT_INVITATION_SUCCESS = 'ACCEPT_INVITATION_SUCCESS',
-  ACCEPT_INVITATION_ERROR = 'ACCEPT_INVITATION_ERROR',
+  ACCEPT_INVITATION_REQUEST = 'invitation/ACCEPT_INVITATION_REQUEST',
+  ACCEPT_INVITATION_SUCCESS = 'invitation/ACCEPT_INVITATION_SUCCESS',
+  ACCEPT_INVITATION_ERROR = 'invitation/ACCEPT_INVITATION_ERROR',
 
-  REJECT_INVITATION_REQUEST = 'REJECT_INVITATION_REQUEST',
-  REJECT_INVITATION_SUCCESS = 'REJECT_INVITATION_SUCCESS',
-  REJECT_INVITATION_ERROR = 'REJECT_INVITATION_ERROR',
+  REJECT_INVITATION_REQUEST = 'invitation/REJECT_INVITATION_REQUEST',
+  REJECT_INVITATION_SUCCESS = 'invitation/REJECT_INVITATION_SUCCESS',
+  REJECT_INVITATION_ERROR = 'invitation/REJECT_INVITATION_ERROR',
 
-  VALIDATE_INVITATION_TOKEN_REQUEST = 'VALIDATE_INVITATION_TOKEN_REQUEST',
-  VALIDATE_INVITATION_TOKEN_SUCCESS = 'VALIDATE_INVITATION_TOKEN_SUCCESS',
-  VALIDATE_INVITATION_TOKEN_ERROR = 'VALIDATE_INVITATION_TOKEN_ERROR',
+  VALIDATE_INVITATION_TOKEN_REQUEST = 'invitation/VALIDATE_INVITATION_TOKEN_REQUEST',
+  VALIDATE_INVITATION_TOKEN_SUCCESS = 'invitation/VALIDATE_INVITATION_TOKEN_SUCCESS',
+  VALIDATE_INVITATION_TOKEN_ERROR = 'invitation/VALIDATE_INVITATION_TOKEN_ERROR',
 }
 
 const initialState: InvitationFormStore = {
@@ -71,19 +73,19 @@ export default function registerFormReducer (
 export const acceptInvitationWithSignInActions = {
   request: (token: string, provider: string, code: string) => {
     return {
-      type: InvitationFormActionsTypes.INVITATION_WITH_SIGN_REQUEST,
+      type: InvitationFormActionsTypes.ACCEPT_INVITATION_WITH_SIGN_REQUEST,
       payload: { token, provider, code },
     } as const
   },
   success: (response: any) => {
     return {
-      type: InvitationFormActionsTypes.INVITATION_WITH_SIGN_SUCCESS,
+      type: InvitationFormActionsTypes.ACCEPT_INVITATION_WITH_SIGN_SUCCESS,
       response: response,
     } as const
   },
   error: (error: string) => {
     return {
-      type: InvitationFormActionsTypes.INVITATION_WITH_SIGN_ERROR,
+      type: InvitationFormActionsTypes.ACCEPT_INVITATION_WITH_SIGN_ERROR,
       error: error,
     } as const
   },
@@ -113,19 +115,19 @@ export const acceptInvitationActions = {
 export const invitationSignInActions = {
   request: (token: string, provider: string) => {
     return {
-      type: InvitationFormActionsTypes.INVITATION_SIGN_REQUEST,
+      type: InvitationFormActionsTypes.INVITATION_SIGN_IN_REQUEST,
       payload: { token, provider },
     } as const
   },
   success: (response: any) => {
     return {
-      type: InvitationFormActionsTypes.INVITATION_SIGN_SUCCESS,
+      type: InvitationFormActionsTypes.INVITATION_SIGN_IN_SUCCESS,
       response: response,
     } as const
   },
   error: (error: string) => {
     return {
-      type: InvitationFormActionsTypes.INVITATION_SIGN_ERROR,
+      type: InvitationFormActionsTypes.INVITATION_SIGN_IN_ERROR,
       error: error,
     } as const
   },
@@ -171,4 +173,13 @@ export const validateInvitationTokenActions = {
       error: error,
     } as const
   },
+}
+
+export const createInvitationMiddleware = (history: History) => () => (next: Dispatch) => (action: AnyAction) => {
+  next(action)
+
+  if (action.type === InvitationFormActionsTypes.ACCEPT_INVITATION_WITH_SIGN_SUCCESS ||
+    action.type === InvitationFormActionsTypes.ACCEPT_INVITATION_SUCCESS) {
+    history.push(action.response)
+  }
 }

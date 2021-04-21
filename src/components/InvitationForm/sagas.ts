@@ -4,6 +4,13 @@ import {
   call,
 } from 'redux-saga/effects'
 import request from 'util/request'
+import stateGenerator from 'util/stateGenerator'
+
+import { openNotification } from 'containers/NotificationStack/ducks'
+import { authActions } from 'containers/Auth/ducks'
+
+import { API_URL } from 'constants/endpoints'
+
 import {
   InvitationFormActionsTypes,
   acceptInvitationWithSignInActions,
@@ -12,13 +19,9 @@ import {
   validateInvitationTokenActions,
   invitationSignInActions,
 } from './ducks'
-import { openNotification } from 'containers/NotificationStack/ducks'
-import { API_URL } from 'constants/endpoints'
 import {
   InvitationResponse,
 } from './types'
-import stateGenerator from 'util/stateGenerator'
-import { authActions } from 'containers/Auth/ducks'
 
 const STATE_STORAGE = 'ssoStateStorage'
 const STATE_STORAGE_INVITATION = 'ssoStateInvitationStorage'
@@ -44,8 +47,8 @@ export function * invitationWithSignInSaga (
     localStorage.removeItem(STATE_STORAGE)
     localStorage.removeItem(STATE_STORAGE_INVITATION)
     yield put(authActions.loginSuccess())
+    yield put(acceptInvitationWithSignInActions.success('/'))
     yield put(openNotification('success', 'You have accepted your invitation.', 4000))
-    window.location.href = window.location.origin
   } catch (error) {
     yield put(acceptInvitationWithSignInActions.error(error))
   }
@@ -85,7 +88,7 @@ export function * acceptInvitationSaga (
     })
 
     yield put(openNotification('success', 'You have accepted your invitation.', 4000))
-    window.location.href = window.location.origin
+    yield put(acceptInvitationActions.success('/'))
   } catch (error) {
     yield put(acceptInvitationActions.error(error))
   }
@@ -104,7 +107,7 @@ export function * rejectInvitationSaga (
     })
 
     yield put(openNotification('success', 'You have rejected your invitation.', 4000))
-    window.location.href = window.location.origin
+    yield put(rejectInvitationActions.success('/'))
   } catch (error) {
     yield put(rejectInvitationActions.error(error))
   }
@@ -130,8 +133,8 @@ export function * validateInvitationTokenSaga (
 
 function * rootSaga () {
   yield takeLatest(InvitationFormActionsTypes.ACCEPT_INVITATION_REQUEST, acceptInvitationSaga)
-  yield takeLatest(InvitationFormActionsTypes.INVITATION_SIGN_REQUEST, invitationSignInSaga)
-  yield takeLatest(InvitationFormActionsTypes.INVITATION_WITH_SIGN_REQUEST, invitationWithSignInSaga)
+  yield takeLatest(InvitationFormActionsTypes.INVITATION_SIGN_IN_REQUEST, invitationSignInSaga)
+  yield takeLatest(InvitationFormActionsTypes.ACCEPT_INVITATION_WITH_SIGN_REQUEST, invitationWithSignInSaga)
   yield takeLatest(InvitationFormActionsTypes.REJECT_INVITATION_REQUEST, rejectInvitationSaga)
   yield takeLatest(InvitationFormActionsTypes.VALIDATE_INVITATION_TOKEN_REQUEST, validateInvitationTokenSaga)
 }
