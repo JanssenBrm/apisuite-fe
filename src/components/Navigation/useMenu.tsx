@@ -88,16 +88,16 @@ export function useMenu (): Array<TabProps[]> {
   const topTabs = React.useMemo((): TabProps[] => {
     return [
       {
-        label: 'Sign up',
-        route: '/auth/signup',
-        active: pathname === '/auth/signup',
+        label: 'Register',
+        route: '/auth/register',
+        active: pathname === '/auth/register',
       },
       {
         // Used to convert the 'Log in' tab's label into a Material UI icon
         isLogin: true,
-        label: 'Sign in',
-        route: '/auth/signin',
-        active: pathname === '/auth/signin',
+        label: 'Log in',
+        route: '/auth/login',
+        active: pathname === '/auth/login',
       },
     ]
   }, [pathname])
@@ -126,18 +126,18 @@ export function useMenu (): Array<TabProps[]> {
       {
         // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
-        label: 'Sign up',
-        route: '/auth/signup',
-        active: pathname === '/auth/signup',
+        label: 'Register',
+        route: '/auth/register',
+        active: pathname === '/auth/register',
       },
       {
         // Used to convert the 'Log in' tab's label into a Material UI icon
         isLogin: true,
         // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
-        label: 'Sign in',
-        route: '/auth/signin',
-        active: pathname === '/auth/signin',
+        label: 'Log in',
+        route: '/auth/login',
+        active: pathname === '/auth/login',
       },
     ].filter(Boolean)
 
