@@ -45,11 +45,13 @@ const Button: React.FC<{
             [classes.button],
             type,
             // Background color
+            { [classes.basic]: background && background === 'basic' },
             { [classes.dark]: background && background === 'dark' },
             { [classes.secondary]: background && background === 'secondary' },
             { [classes.tertiary]: background && background === 'tertiary' },
             { [classes.transparent]: background && background === 'transparent' },
             // Text color
+            { [classes.basicColor]: color && color === 'basic' },
             { [classes.primaryColor]: color && color === 'primary' },
             { [classes.secondaryColor]: color && color === 'secondary' },
             { [classes.tertiaryColor]: color && color === 'tertiary' },
@@ -70,11 +72,13 @@ const Button: React.FC<{
             [classes.button],
             type,
             // Background color
+            { [classes.basic]: background && background === 'basic' },
             { [classes.dark]: background && background === 'dark' },
             { [classes.secondary]: background && background === 'secondary' },
             { [classes.tertiary]: background && background === 'tertiary' },
             { [classes.transparent]: background && background === 'transparent' },
             // Text color
+            { [classes.basicColor]: color && color === 'basic' },
             { [classes.primaryColor]: color && color === 'primary' },
             { [classes.secondaryColor]: color && color === 'secondary' },
             { [classes.tertiaryColor]: color && color === 'tertiary' },

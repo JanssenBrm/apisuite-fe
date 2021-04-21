@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
+  basic: {
+    backgroundColor: `${theme.palette.grey['50']} !important`,
+  },
+
   dark: {
     backgroundColor: theme.palette.text.primary,
   },
@@ -53,6 +57,10 @@ const useStyles = makeStyles((theme) => ({
   },
 
   // b) Button's text color
+
+  basicColor: {
+    color: `${theme.palette.grey['700']} !important`,
+  },
 
   primaryColor: {
     color: `${theme.palette.common.white} !important`,

@@ -35,6 +35,12 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.label,
     },
   },
+  loading: {
+    position: 'relative',
+    top: 4,
+    color: 'white',
+    opacity: 0.5,
+  },
 
   enabledNextButton: {
     backgroundColor: theme.palette.secondary.main,
@@ -71,6 +77,14 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white,
     fontSize: '26px',
     fontWeight: 300,
+  },
+
+  rejectBtnContainer: {
+    margin: '20px 0px',
+  },
+  rejectButton: {
+    backgroundColor: `${theme.palette.grey['50']} !important`,
+    color: `${theme.palette.grey['700']} !important`,
   },
 }))
 

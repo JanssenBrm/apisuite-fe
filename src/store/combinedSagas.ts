@@ -5,6 +5,7 @@
 import apiDetails from 'containers/APIDetails/sagas'
 import applications from 'containers/Applications/sagas'
 import auth from 'containers/Auth/sagas'
+import invitation from 'components/InvitationForm/sagas'
 import informDialog from 'components/InformDialog/sagas'
 import profile from 'containers/Profile/sagas'
 import register from 'components/SignUpForm/sagas'
@@ -16,6 +17,7 @@ const sagas = [
   applications,
   auth,
   informDialog,
+  invitation,
   profile,
   register,
   security,

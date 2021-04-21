@@ -12,6 +12,7 @@ import apiDetails from 'containers/APIDetails/ducks'
 import applications from 'containers/Applications/ducks'
 import auth from 'containers/Auth/ducks'
 import informDialog from 'components/InformDialog/ducks'
+import invitation from 'components/InvitationForm/ducks'
 // Temporary until notification cards become clearer
 import notificationCards from 'containers/NotificationCards/ducks'
 import notifications from 'containers/NotificationStack/ducks'
@@ -28,6 +29,7 @@ export default (
     apiDetails: [apiDetails],
     applications: [applications],
     auth: [auth],
+    invitation: [invitation],
     informDialog: [informDialog],
     notifications: [notifications],
     // Temporary until notification cards become clearer

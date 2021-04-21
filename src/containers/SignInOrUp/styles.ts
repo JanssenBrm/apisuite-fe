@@ -26,6 +26,10 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: '550px',
   },
 
+  formFooter: {
+    maxWidth: '550px',
+  },
+
   formSideContentContainer: {
     padding: '200px 80px',
     width: '55%',
