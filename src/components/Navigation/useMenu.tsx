@@ -18,6 +18,7 @@ import {
   DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
 } from 'constants/global'
 
+
 export function useMenu (): Array<TabProps[]> {
   const [settings] = useSettings()
   const roleName = useSelector(getRoleName)
@@ -87,19 +88,19 @@ export function useMenu (): Array<TabProps[]> {
   const topTabs = React.useMemo((): TabProps[] => {
     return [
       {
-        label: 'Register',
-        route: '/auth/register',
-        active: pathname === '/auth/register',
+        label: 'Sign up',
+        route: '/auth/signup',
+        active: pathname === '/auth/signup',
       },
       {
         // Used to convert the 'Log in' tab's label into a Material UI icon
         isLogin: true,
-        label: 'Log in',
-        route: '/auth/login',
-        active: pathname === '/auth/login',
+        label: 'Sign in',
+        route: '/auth/signin',
+        active: pathname === '/auth/signin',
       },
     ]
-  }, [])
+  }, [pathname])
 
   const initTabs = React.useMemo((): TabProps[] => {
     const entries = [
@@ -119,27 +120,29 @@ export function useMenu (): Array<TabProps[]> {
             : DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
         ),
       },
+
+      ...extensionsInitTabs,
+
       {
         // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
-        label: 'Register',
-        route: '/auth/register',
-        active: pathname === '/auth/register',
+        label: 'Sign up',
+        route: '/auth/signup',
+        active: pathname === '/auth/signup',
       },
       {
         // Used to convert the 'Log in' tab's label into a Material UI icon
         isLogin: true,
         // Used to place this tab at the logo-level of a contractible && NOT scrolled navigation menu
         yetToLogIn: true,
-        label: 'Log in',
-        route: '/auth/login',
-        active: pathname === '/auth/login',
+        label: 'Sign in',
+        route: '/auth/signin',
+        active: pathname === '/auth/signin',
       },
-      ...extensionsInitTabs,
     ].filter(Boolean)
 
     return setMenuActiveEntries(entries)
-  }, [settings, extensionsInitTabs])
+  }, [extensionsInitTabs, settings.documentationURL, pathname, roleName, setMenuActiveEntries, settings.supportURL])
 
   const loginTabs = React.useMemo((): TabProps[] => {
     const entries = [
@@ -167,10 +170,13 @@ export function useMenu (): Array<TabProps[]> {
             label: 'Overview',
             route: '/dashboard',
           },
+          /*
+          This page is currently breaking, but it's being fixed in another branch. Keep it hidden for the time being.
           {
             label: 'Team',
             route: '/profile/team',
           },
+          */
           {
             label: 'Subscriptions',
             route: '/dashboard/subscriptions',
@@ -215,11 +221,13 @@ export function useMenu (): Array<TabProps[]> {
 
     return setMenuActiveEntries(entries)
   }, [
-    settings,
     extensionsLoginTabs,
     extensionsLoginDashboardTabs,
     extensionsLoginProfileTabs,
-    levelPathnames,
+    settings.documentationURL,
+    roleName,
+    settings.supportURL,
+    setMenuActiveEntries,
   ])
 
   return [topTabs, initTabs, loginTabs]
