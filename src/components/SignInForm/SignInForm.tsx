@@ -1,98 +1,103 @@
-import React, { useCallback } from 'react'
-import { useTranslation, IconButton, InputAdornment } from '@apisuite/fe-base'
-import Visibility from '@material-ui/icons/Visibility'
-import VisibilityOff from '@material-ui/icons/VisibilityOff'
+import React, { useCallback, useEffect, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
+import update from "immutability-helper";
+import { useTranslation, TextField, IconButton, InputAdornment, TextFieldProps } from "@apisuite/fe-base";
+import Visibility from "@material-ui/icons/Visibility";
+import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
-import FormCard from 'components/FormCard'
-import FormField, { isValidEmail, parseErrors } from 'components/FormField'
-import { FormFieldEvent } from 'components/FormField/types'
-import SSOForm from 'components/SSOForm'
+import FormCard from "components/FormCard";
+import { isValidEmail } from "util/forms";
+import SSOForm from "components/SSOForm";
 
-import { SignInFormProps } from './types'
-import useStyles from './styles'
+import useStyles from "./styles";
+import { signinFormSelector } from "./selector";
+import { ssoProviders } from "store/auth/actions/ssoProviders";
+import { login } from "store/auth/actions/login";
 
-const SignInForm: React.FC<SignInFormProps> = ({
-  auth,
-  getProviders,
-  history,
-  login,
-}) => {
-  const classes = useStyles()
-
-  const [t] = useTranslation()
+export const SignInForm: React.FC = () => {
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const auth = useSelector(signinFormSelector);
+  const classes = useStyles();
+  const { t } = useTranslation();
 
   /* SSO sign in */
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (auth.providers === null) {
-      getProviders()
+      dispatch(ssoProviders({}));
     }
-  }, [])
+  }, [auth.providers, dispatch]);
 
   /* Regular sign in */
 
-  // Form validity logic
-  const [isFormValid, setFormValid] = React.useState(false)
-  const [errors, setErrors] = React.useState()
+  const [formInputs, setFormInputs] = useState({
+    email: "",
+    password: "",
+    errors: {
+      email: "",
+      password: "",
+    },
+  });
+  const [formInputsHaveChanged, setFormInputsHaveChanged] = useState(false);
 
-  React.useEffect(() => {
-    // @ts-ignore
-    setFormValid(errors && errors.length === 0)
-  }, [errors])
+  const handleInputChanges: TextFieldProps["onChange"] = ({ target }) => {
+    setFormInputs((s) => {
+      switch (target.name) {
+        case "email": {
+          return update(s, {
+            email: { $set: target.value },
+            errors: { email: { $set: isValidEmail(target.value) ? "" : t("signInForm.warnings.email") } },
+          });
+        }
 
-  // Form changes logic
-  const [formInputs, setFormInputs] = React.useState({
-    email: '',
-    password: '',
-  })
-  const [formInputsHaveChanged, setFormInputsHaveChanged] = React.useState(false)
+        case "password": {
+          return update(s, {
+            password: { $set: target.value },
+            errors: { password: { $set: target.value.length > 0 ? "" : t("signInForm.warnings.password") } },
+          });
+        }
 
-  const handleInputChanges = (event: FormFieldEvent, error: any) => {
-    setFormInputs({
-      ...formInputs,
-      [event.target.name]: event.target.value,
-    })
-
-    setFormInputsHaveChanged(true)
-
-    const eventTarget = event.target
-
-    // @ts-ignore
-    setErrors((old: string[]) => parseErrors(eventTarget, error, old || []))
-  }
+        default:
+          return s;
+      }
+    });
+  };
 
   const handleFormSubmission = useCallback((event: React.FormEvent<HTMLFormElement> | KeyboardEvent) => {
-    event.preventDefault()
+    event.preventDefault();
 
-    login({ email: formInputs.email, password: formInputs.password })
+    dispatch(login({ email: formInputs.email, password: formInputs.password }));
 
-    setFormInputsHaveChanged(false)
-  }, [formInputs.email, formInputs.password, login])
+    setFormInputsHaveChanged(false);
+  }, [formInputs.email, formInputs.password, dispatch]);
 
   // 'Show password' logic
-  const [showPassword, setShowPassword] = React.useState(false)
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleShowPassword = () => {
-    setShowPassword(!showPassword)
-  }
+    setShowPassword(!showPassword);
+  };
 
   // Logic for 'Press ENTER to submit form'
   const submitEnter = useCallback((event: KeyboardEvent) => {
-    const { key } = event
-    const inputElement = document.getElementById('passwordField')
+    const { key } = event;
+    const inputElement = document.getElementById("passwordField");
+    const haveErrors = Object.values(formInputs.errors).some(Boolean);
 
-    if (key === 'Enter' && document.activeElement === inputElement && isFormValid) {
-      handleFormSubmission(event)
+    if (key === "Enter" && document.activeElement === inputElement && haveErrors) {
+      handleFormSubmission(event);
     }
-  }, [isFormValid, handleFormSubmission])
+  }, [formInputs.errors, handleFormSubmission]);
 
-  React.useEffect(() => {
-    window.addEventListener('keydown', submitEnter)
+  useEffect(() => {
+    window.addEventListener("keydown", submitEnter);
 
     return () => {
-      window.removeEventListener('keydown', submitEnter)
-    }
-  }, [submitEnter])
+      window.removeEventListener("keydown", submitEnter);
+    };
+  }, [submitEnter]);
 
   return (
     <div className={classes.signInContainer}>
@@ -105,7 +110,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
             <div className={classes.separatorLine} />
 
             <div className={classes.separatorText}>
-              <p>{t('signInForm.separatorLabel')}</p>
+              <p>{t("signInForm.separatorLabel")}</p>
             </div>
 
             <div className={classes.separatorLine} />
@@ -114,8 +119,8 @@ const SignInForm: React.FC<SignInFormProps> = ({
       }
 
       <FormCard
-        buttonDisabled={!isFormValid}
-        buttonLabel={t('signInForm.regularSignInButtonLabel')}
+        buttonDisabled={Object.values(formInputs.errors).some(Boolean)}
+        buttonLabel={t("signInForm.regularSignInButtonLabel")}
         customDisabledConfirmButtonStyles={classes.disabledConfirmButton}
         customEnabledConfirmButtonStyles={classes.enabledConfirmButton}
         /* We pass an error message to the 'FormCard' component if an authentication error is detected,
@@ -124,7 +129,7 @@ const SignInForm: React.FC<SignInFormProps> = ({
         error={
           auth.error &&
             !formInputsHaveChanged &&
-            (formInputs.email !== '' || formInputs.password !== '')
+            (formInputs.email !== "" || formInputs.password !== "")
             ? auth.error
             : undefined
         }
@@ -132,38 +137,42 @@ const SignInForm: React.FC<SignInFormProps> = ({
         loading={auth.isAuthorizing}
       >
         <div className={classes.inputFieldContainer}>
-          <FormField
-            autoFocus
-            errorPlacing='bottom'
-            fullWidth
+          <TextField
             id='emailField'
-            InputProps={{
-              classes: { input: classes.inputField },
-            }}
-            label={t('signInForm.fieldLabels.email')}
-            name='email'
-            onChange={handleInputChanges}
-            placeholder=''
-            rules={[
-              { rule: isValidEmail(formInputs.email), message: t('signInForm.warnings.email') },
-            ]}
-            type='email'
-            value={formInputs.email}
             variant='outlined'
+            margin='dense'
+            type='email'
+            name='email'
+            label={t("signInForm.fieldLabels.email")}
+            placeholder=''
+            value={formInputs.email}
+            error={!!formInputs.errors.email.length}
+            helperText={formInputs.errors.email}
+            autoFocus
+            fullWidth
+            InputProps={{ classes: { input: classes.inputField } }}
+            onChange={handleInputChanges}
           />
         </div>
 
         <div className={classes.inputFieldContainer}>
-          <FormField
-            errorPlacing='bottom'
-            fullWidth
+          <TextField
             id='passwordField'
+            variant='outlined'
+            margin='dense'
+            type={showPassword ? "text" : "password"}
+            name='password'
+            label={t("signInForm.fieldLabels.password")}
+            value={formInputs.password}
+            error={!!formInputs.errors.password.length}
+            helperText={formInputs.errors.password}
+            fullWidth
             InputProps={{
               classes: { input: classes.inputField },
               endAdornment:
                 <InputAdornment position='end'>
                   <IconButton
-                    aria-label={t('signInForm.togglePasswordVisibilityARIALabel')}
+                    aria-label={t("signInForm.togglePasswordVisibilityARIALabel")}
                     edge='end'
                     onClick={handleShowPassword}
                   >
@@ -171,27 +180,17 @@ const SignInForm: React.FC<SignInFormProps> = ({
                   </IconButton>
                 </InputAdornment>,
             }}
-            label={t('signInForm.fieldLabels.password')}
-            name='password'
             onChange={handleInputChanges}
-            rules={[
-              { rule: formInputs.password.length > 0, message: t('signInForm.warnings.password') },
-            ]}
-            type={showPassword ? 'text' : 'password'}
-            value={formInputs.password}
-            variant='outlined'
           />
         </div>
       </FormCard>
 
       <a
         className={classes.forgotPasswordLink}
-        onClick={() => history.push('/forgot')}
+        onClick={() => history.push("/forgot")}
       >
-        {t('signInForm.forgotPasswordLinkLabel')}
+        {t("signInForm.forgotPasswordLinkLabel")}
       </a>
     </div>
-  )
-}
-
-export default SignInForm
+  );
+};
