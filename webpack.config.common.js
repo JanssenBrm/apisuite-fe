@@ -6,7 +6,7 @@ const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const autoprefixer = require("autoprefixer");
-const Dotenv = require("dotenv-webpack");
+const dotenv = require("dotenv");
 const webpack = require("webpack");
 
 module.exports = {
@@ -58,10 +58,12 @@ module.exports = {
   },
 
   plugins: [
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(dotenv.config().parsed),
+    }),
     new webpack.ProvidePlugin({
       Buffer: ["buffer", "Buffer"],
     }),
-    new Dotenv({ systemvars: true }),
     new HtmlWebpackPlugin({ template: path.resolve(__dirname, "src", "index.html") }),
     new MiniCssExtractPlugin({ filename: "[name]-[contenthash].css" }),
   ],
