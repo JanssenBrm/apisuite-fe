@@ -1,4 +1,4 @@
-FROM node:15.14.0-alpine AS build
+FROM cypress/base:14.15.0 AS build
 
 ARG ENV=dev
 ARG SSH_PRIVATE_KEY
