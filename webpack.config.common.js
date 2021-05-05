@@ -86,6 +86,7 @@ module.exports = {
       constants: false,
       assert: false,
       fs: false,
+      zlib: false,
     },
   },
 
