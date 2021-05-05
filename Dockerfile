@@ -1,12 +1,10 @@
-FROM node:15.14.0-alpine AS build
+FROM cypress/base:14.15.0 AS build
 
 ARG ENV=dev
 ARG SSH_PRIVATE_KEY
 
 WORKDIR /build
 COPY . /build
-RUN apk update
-RUN apk add --no-cache openssh
 RUN mkdir /root/.ssh/ &&\
     echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa &&\
     chmod 600 /root/.ssh/id_rsa &&\
