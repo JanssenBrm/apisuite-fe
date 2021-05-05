@@ -1,13 +1,13 @@
 version: 2.1
 
 executors:
-  node12-executor:
+  node15-executor:
     docker:
-      - image: circleci/node:12.20.1
+      - image: circleci/node:15.14.0
 
 jobs:
   test:
-    executor: node12-executor
+    executor: node15-executor
     steps:
       - checkout
       - run:
@@ -15,7 +15,7 @@ jobs:
           command: ./run_tests.sh
 
   release:
-    executor: node12-executor
+    executor: node15-executor
     steps:
       - checkout
       - run: npm install

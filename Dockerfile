@@ -5,6 +5,8 @@ ARG SSH_PRIVATE_KEY
 
 WORKDIR /build
 COPY . /build
+RUN apk update
+RUN apk add --no-cache openssh
 RUN mkdir /root/.ssh/ &&\
     echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa &&\
     chmod 600 /root/.ssh/id_rsa &&\
