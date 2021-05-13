@@ -1,34 +1,32 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from "@apisuite/fe-base";
 
-import { config } from 'constants/global'
-
-export default makeStyles({
+export default makeStyles((theme) => ({
   noticeContentsContainer: {
-    backgroundColor: config.palette.alert.success.background,
-    border: `1px solid ${config.palette.alert.success.background}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    display: 'flex',
-    padding: '12px',
-    width: '100%',
+    backgroundColor: theme.palette.info.light,
+    border: `1px solid ${theme.palette.info.light}`,
+    borderRadius: `${theme.shape.borderRadius}px`,
+    display: "flex",
+    padding: "12px",
+    width: "100%",
   },
 
   noticeIcon: {
-    alignItems: 'center',
-    color: config.palette.info,
-    display: 'flex',
-    justifyContent: 'center',
-    marginRight: '10px',
+    alignItems: "center",
+    color: theme.palette.info.main,
+    display: "flex",
+    justifyContent: "center",
+    marginRight: "10px",
   },
 
   noticeText: {
-    '& > p': {
-      color: '#035E86',
-      fontSize: '14px',
+    "& > p": {
+      color: "#035E86",
+      fontSize: "14px",
       fontWeight: 400,
 
-      '& > a': {
-        textDecoration: 'none',
+      "& > a": {
+        textDecoration: "none",
       },
     },
   },
-})
+}));

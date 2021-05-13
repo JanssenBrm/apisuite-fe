@@ -1,38 +1,31 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from "@apisuite/fe-base";
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   languageSelector: {
-    backgroundColor: config.palette.newGreyScales['400'],
-    borderColor: config.palette.newGreyScales['400'],
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: '#FFFFFF !important',
-    fontSize: '14px',
+    backgroundColor: theme.palette.common.white,
+    borderColor: theme.palette.grey[400],
+    borderRadius: `${theme.shape.borderRadius}px`,
+    color: `${theme.palette.text.primary} !important`,
+    fontSize: "14px",
     fontWeight: 300,
-    overflow: 'hidden !important',
-    padding: '5px 0px',
-    position: 'relative',
-    textIndent: '10px',
-    textOverflow: 'ellipsis',
-    textTransform: 'none',
-    whiteSpace: 'nowrap',
-    width: '180px',
+    overflow: "hidden !important",
+    padding: "5px 0px",
+    position: "relative",
+    textIndent: "10px",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+    width: "180px",
 
-    '&:disabled': {
-      backgroundColor: config.palette.newGreyScales['400'],
+    "&:disabled": {
+      backgroundColor: theme.palette.action.disabled,
     },
 
-    '&:hover': {
-      backgroundColor: config.palette.newGreyScales['400'],
+    "&::after": {
+      content: "none",
     },
 
-    '&::after': {
-      content: 'none',
-    },
-
-    '&::before': {
-      content: 'none',
+    "&::before": {
+      content: "none",
     },
   },
-}))
+}));

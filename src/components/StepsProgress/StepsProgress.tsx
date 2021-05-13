@@ -1,54 +1,81 @@
-import * as React from 'react'
-import { StepsProgressProps } from './types'
-import useStyles from './styles'
-import clsx from 'clsx'
+import React from "react";
+
+import { StepsProgressProps } from "./types";
+
+import useStyles from "./styles";
+
+import clsx from "clsx";
 
 const StepsProgress: React.FC<StepsProgressProps> = ({
-  steps,
   currentStep,
+  steps,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <ul className={classes.container}>
-      {Object.values(steps).slice(0, -1).map((step, indx) => (
-        <>
-          {indx === 0 &&
-            <li className={classes.stepProgress}>
+      {
+        Object.values(steps).map((step, index) => {
+          if (index === 0) {
+            return (
+              <li key={step.toString()} className={classes.stepProgress}>
+                <span
+                  className={clsx(
+                    classes.stepCircle,
+                    currentStep > index && classes.stepCircleBefore,
+                    index + 1 === currentStep && classes.stepCircleCurrent,
+                  )}
+                />
+
+                <label
+                  className={
+                    clsx(
+                      classes.stepTitle,
+                      currentStep > index && classes.stepTitle,
+                      index + 1 === currentStep && classes.stepTitleCurrent,
+                    )
+                  }
+                  style={{ transform: "translateX(-32px) translateY(24px)" }}
+                >
+                  {step}
+                </label>
+              </li>
+            );
+          }
+
+          return (
+            <li key={step} className={classes.stepProgress}>
+              <progress
+                className={clsx(classes.progress,
+                  index === currentStep && classes.progressCurrent,
+                  index > currentStep && classes.progressAfter)}
+              />
+
               <span
                 className={clsx(
                   classes.stepCircle,
-                  currentStep > indx && classes.stepCircleBefore,
-                  indx + 1 === currentStep && classes.stepCircleCurrent,
+                  currentStep > index && classes.stepCircleBefore,
+                  index + 1 === currentStep && classes.stepCircleCurrent,
                 )}
               />
+
               <label
-                className={classes.stepTitle}
-                style={{ transform: 'translateX(-32px) translateY(24px)' }}
+                className={
+                  clsx(
+                    classes.stepTitle,
+                    currentStep > index && classes.stepTitle,
+                    index + 1 === currentStep && classes.stepTitleCurrent,
+                  )
+                }
               >
                 {step}
               </label>
-            </li>}
-
-          {indx !== 0 &&
-            <li className={classes.stepProgress}>
-              <progress
-                className={clsx(classes.progress,
-                  indx === currentStep && classes.progressCurrent,
-                  indx > currentStep && classes.progressAfter)}
-              />
-              <span className={clsx(
-                classes.stepCircle,
-                currentStep > indx && classes.stepCircleBefore,
-                indx + 1 === currentStep && classes.stepCircleCurrent,
-              )}
-              />
-              <label className={classes.stepTitle}>{step}</label>
-            </li>}
-        </>
-      ))}
+            </li>
+          );
+        })
+      }
     </ul>
-  )
-}
+  );
+};
 
-export default StepsProgress
+export default StepsProgress;

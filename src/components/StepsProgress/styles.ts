@@ -1,74 +1,100 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
 
-export default makeStyles(({
-  stepCircle: {
-    display: 'block',
-    width: '20px',
-    height: '20px',
-    border: '3px solid ' + config.palette.greyScales[100],
-    borderRadius: '50%',
-  },
-  stepTitle: {
-    position: 'absolute',
-    height: '100%',
-    display: 'flex',
-    textAlign: 'center',
-    transform: 'translateY(24px) translateX(60px)',
-    fontSize: '14px',
-    lineHeight: '18px',
-    width: '80px',
-    fontWeight: 'normal',
-    color: config.palette.greyScales[300],
-    borderRadius: '50%',
-  },
-  stepCircleBefore: {
-    border: '3px solid ' + config.palette.primary,
-    color: config.palette.greyScales[500],
-  },
-  stepCircleCurrent: {
-    fontWeight: 'bold',
-  },
-  progress: {
-    '-webkit-appearance': 'none',
-    '-moz-appearance': 'none',
-    height: '4px',
-    width: '90px',
-    '&::-webkit-progress-bar': {
-      backgroundImage: config.palette.greyScales[100],
-      backgroundColor: config.palette.primary,
-    },
-    '&::-moz-progress-bar': {
-      backgroundImage: config.palette.greyScales[100],
-      backgroundColor: config.palette.primary,
-    },
-  },
-  progressAfter: {
-    '&::-webkit-progress-bar': {
-      backgroundColor: config.palette.greyScales[100],
-    },
-    '&::-moz-progress-bar': {
-      backgroundColor: config.palette.greyScales[100],
-    },
-  },
-  progressCurrent: {
-    '&::-webkit-progress-bar': {
-      backgroundImage: 'linear-gradient(to right, ' + config.palette.primary + ', ' + config.palette.greyScales[100] + ')',
-    },
-    '&::-moz-progress-bar': {
-      backgroundImage: 'linear-gradient(to right, ' + config.palette.primary + ', ' + config.palette.greyScales[100] + ')',
-    },
-  },
-  stepProgress: {
-    display: 'flex',
-    alignItems: 'center',
-  },
+import { makeStyles } from "@apisuite/fe-base";
+
+export default makeStyles((theme) => ({
   container: {
-    display: 'flex',
-    position: 'relative',
-    alignItems: 'center',
-    justifyContent: 'center',
-    margin: '36px 0 76px 0',
-    width: '100%',
+    alignItems: "center",
+    display: "flex",
+    justifyContent: "center",
+    margin: "36px 0 76px 0",
+    position: "relative",
+    width: "100%",
   },
-}))
+
+  progress: {
+    height: "4px",
+    width: "90px",
+    "-webkit-appearance": "none",
+    "-moz-appearance": "none",
+
+    "&::-webkit-progress-bar": {
+      backgroundImage: theme.palette.grey[200],
+      backgroundColor: theme.palette.primary.main,
+    },
+
+    "&::-moz-progress-bar": {
+      backgroundImage: theme.palette.grey[200],
+      backgroundColor: theme.palette.primary.main,
+    },
+  },
+
+  progressAfter: {
+    "&::-webkit-progress-bar": {
+      backgroundColor: theme.palette.grey[200],
+    },
+
+    "&::-moz-progress-bar": {
+      backgroundColor: theme.palette.grey[200],
+    },
+  },
+
+  progressCurrent: {
+    "&::-webkit-progress-bar": {
+      backgroundColor: theme.palette.grey[200],
+    },
+
+    "&::-moz-progress-bar": {
+      backgroundColor: theme.palette.grey[200],
+    },
+  },
+
+  stepCircle: {
+    border: "3px solid " + theme.palette.grey[200],
+    borderRadius: "50%",
+    display: "block",
+    height: "20px",
+    width: "20px",
+  },
+
+  stepCircleBefore: {
+    border: "3px solid " + theme.palette.primary.main,
+    color: theme.palette.grey[500],
+  },
+
+  stepCircleCurrent: {
+    fontWeight: "bold",
+  },
+
+  stepProgress: {
+    alignItems: "center",
+    display: "flex",
+  },
+
+  stepTitle: {
+    borderRadius: "50%",
+    color: theme.palette.grey[300],
+    display: "flex",
+    fontSize: "14px",
+    fontWeight: "normal",
+    height: "100%",
+    lineHeight: "18px",
+    position: "absolute",
+    textAlign: "center",
+    transform: "translateY(24px) translateX(60px)",
+    width: "80px",
+  },
+
+  stepTitleCurrent: {
+    borderRadius: "50%",
+    color: theme.palette.secondary.main,
+    display: "flex",
+    fontSize: "14px",
+    fontWeight: "normal",
+    height: "100%",
+    lineHeight: "18px",
+    position: "absolute",
+    textAlign: "center",
+    transform: "translateY(24px) translateX(60px)",
+    width: "80px",
+  },
+}));

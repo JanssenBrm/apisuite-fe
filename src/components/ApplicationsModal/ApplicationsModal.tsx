@@ -1,80 +1,82 @@
-import * as React from 'react'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  useTranslation,
+  Avatar,
+  Button,
+  Fade,
+  InputAdornment,
+  Menu,
+  MenuItem,
+  Modal,
+  TextField,
+  useConfig,
+  useTheme,
+} from "@apisuite/fe-base";
+import AddRoundedIcon from "@material-ui/icons/AddRounded";
+import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
+import Close from "@material-ui/icons/Close";
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
+import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
+import QueryBuilderRoundedIcon from "@material-ui/icons/QueryBuilderRounded";
+import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 
-import { useTranslation } from 'react-i18next'
+import { useForm } from "util/useForm";
+import { isValidImage, isValidURL } from "util/forms";
+import { getUserApp } from "store/applications/actions/getUserApp";
+import { createApp } from "store/applications/actions/createApp";
+import { updateApp } from "store/applications/actions/updatedApp";
+import { deleteApp } from "store/applications/actions/deleteApp";
+import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 
-import CustomizableDialog from 'components/CustomizableDialog/CustomizableDialog'
+import { ApplicationsModalProps } from "./types";
+import useStyles from "./styles";
+import { applicationsModalSelector } from "./selector";
 
-import { isValidImage, isValidURL } from 'components/FormField'
-
-import Avatar from '@material-ui/core/Avatar'
-import Button from '@material-ui/core/Button'
-import Fade from '@material-ui/core/Fade'
-import InputAdornment from '@material-ui/core/InputAdornment'
-import Menu from '@material-ui/core/Menu'
-import MenuItem from '@material-ui/core/MenuItem'
-import Modal from '@material-ui/core/Modal'
-import TextField from '@material-ui/core/TextField'
-
-import AddRoundedIcon from '@material-ui/icons/AddRounded'
-import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
-import Close from '@material-ui/icons/Close'
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
-import FileCopyOutlinedIcon from '@material-ui/icons/FileCopyOutlined'
-import ImageSearchRoundedIcon from '@material-ui/icons/ImageSearchRounded'
-import QueryBuilderRoundedIcon from '@material-ui/icons/QueryBuilderRounded'
-import RefreshRoundedIcon from '@material-ui/icons/RefreshRounded'
-
-import ApplicationsModalProps from './types'
-
-import useStyles from './styles'
-
-import { useForm } from 'util/useForm'
-
-import { config } from 'constants/global'
-
-const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
+export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   allUserAppNames,
-  createAppAction,
-  deleteAppAction,
-  getUserAppAction,
   isModalOpen,
   modalDetails,
   modalMode,
-  mostRecentlySelectedAppDetails,
-  settings,
   toggleModal,
-  updateAppAction,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
 
-  const [t] = useTranslation()
+  const { ownerInfo, portalName } = useConfig();
 
-  React.useEffect(() => {
+  const theme = useTheme();
+
+  console.log("theme", theme);
+
+  useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
     of all information we presently have on a particular app. */
     if (modalDetails.userAppID && modalDetails.userID) {
-      getUserAppAction(modalDetails.userAppID, modalDetails.userID)
+      dispatch(getUserApp({ appId: modalDetails.userAppID, orgId: modalDetails.userID }));
     }
-  }, [modalMode])
+  }, [modalMode, modalDetails, dispatch]);
 
-  const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false)
-  const [validImage, setValidImage] = React.useState<boolean>(true)
+  const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false);
+  const [validImage, setValidImage] = React.useState<boolean>(true);
 
   const validateAvatar = (avatar: string) => {
-    if (avatar !== '') {
+    if (avatar !== "") {
       (
         async () => {
-          const valid = await isValidImage(avatar)
+          const valid = await isValidImage(avatar);
 
-          setValidImage(valid)
+          setValidImage(valid);
         }
-      )()
+      )();
     }
-  }
+  };
 
   /*
   App details
-
   Note:
   - 'formState' refers to our own, local copy of an app's details.
   - 'mostRecentlySelectedAppDetails' refers to our stored, back-end approved copy of all details
@@ -83,13 +85,13 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   // Performs some basic checks on user-provided URIs
   const uriBasicChecks = (uri: string | number) => {
-    const stringURI = uri ? uri.toString() : null
+    const stringURI = uri ? uri.toString() : null;
 
-    if (stringURI === null || stringURI.length === 0) return true
-    if (stringURI.length > 0) return isValidURL(stringURI)
+    if (stringURI === null || stringURI.length === 0) return true;
+    if (stringURI.length > 0) return isValidURL(stringURI);
 
-    return false
-  }
+    return false;
+  };
 
   const {
     formState,
@@ -99,198 +101,198 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   } = useForm(
     // Initial app details
     {
-      appAvatarURL: '',
-      appClientID: '',
-      appClientSecret: '',
-      appFullDescription: '',
-      appLabels: '',
-      appName: '',
-      appPrivacyURL: '',
-      appRedirectURI: 'https://',
-      appShortDescription: '',
-      appSupportURL: '',
-      appTermsURL: '',
-      appWebsiteURL: '',
-      appYouTubeURL: '',
+      appAvatarURL: "",
+      appClientID: "",
+      appClientSecret: "",
+      appFullDescription: "",
+      appLabels: "",
+      appName: "",
+      appPrivacyURL: "",
+      appRedirectURI: "https://",
+      appShortDescription: "",
+      appSupportURL: "",
+      appTermsURL: "",
+      appWebsiteURL: "",
+      appYouTubeURL: "",
     },
     // Rules for (some) app details
     {
       appAvatarURL: {
         rules: [(URI) => {
-          const validURL = uriBasicChecks(URI)
+          const validURL = uriBasicChecks(URI);
 
           if (validURL) {
             if (URI === null || URI.toString().length === 0) {
-              setValidImage(true)
+              setValidImage(true);
             } else {
-              validateAvatar(URI.toString())
+              validateAvatar(URI.toString());
             }
           }
 
-          return validURL
+          return validURL;
         }],
-        message: t('dashboardTab.applicationsSubTab.appModal.appAvatarURLError', { config }),
+        message: t("dashboardTab.applicationsSubTab.appModal.appAvatarURLError"),
       },
 
       appPrivacyURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
       },
 
       appRedirectURI: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
       },
 
       appSupportURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
       },
 
       appTermsURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
       },
 
       appWebsiteURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
       },
 
       appYouTubeURL: {
         rules: [(URI) => uriBasicChecks(URI)],
-        message: t('dashboardTab.applicationsSubTab.appModal.allOtherURLsError', { config }),
+        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
       },
-    })
+    });
 
   /*
   Whenever 'modalMode' or 'mostRecentlySelectedAppDetails' changes, our form's values are 'reset' to:
   - Whatever is stored in 'mostRecentlySelectedAppDetails' (if 'modalMode' amounts to 'edit').
   - An empty string (if 'modalMode' amounts to 'new').
   */
-  React.useEffect(() => {
-    if (modalMode === 'edit') {
+  useEffect(() => {
+    if (modalMode === "edit") {
       resetForm({
-        appAvatarURL: mostRecentlySelectedAppDetails.logo ? mostRecentlySelectedAppDetails.logo : '',
-        appClientID: mostRecentlySelectedAppDetails.clientId ? mostRecentlySelectedAppDetails.clientId : '',
-        appClientSecret: mostRecentlySelectedAppDetails.clientSecret ? mostRecentlySelectedAppDetails.clientSecret : '',
-        appFullDescription: mostRecentlySelectedAppDetails.description ? mostRecentlySelectedAppDetails.description : '',
+        appAvatarURL: mostRecentlySelectedAppDetails.logo ? mostRecentlySelectedAppDetails.logo : "",
+        appClientID: mostRecentlySelectedAppDetails.clientId ? mostRecentlySelectedAppDetails.clientId : "",
+        appClientSecret: mostRecentlySelectedAppDetails.clientSecret ? mostRecentlySelectedAppDetails.clientSecret : "",
+        appFullDescription: mostRecentlySelectedAppDetails.description ? mostRecentlySelectedAppDetails.description : "",
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
-          ? mostRecentlySelectedAppDetails.labels.join(' ')
-          : '',
-        appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : '',
-        appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : '',
-        appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ? mostRecentlySelectedAppDetails.redirectUrl : '',
+          ? mostRecentlySelectedAppDetails.labels.join(" ")
+          : "",
+        appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : "",
+        appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : "",
+        appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ? mostRecentlySelectedAppDetails.redirectUrl : "",
         appShortDescription: mostRecentlySelectedAppDetails.shortDescription
           ? mostRecentlySelectedAppDetails.shortDescription
-          : '',
-        appSupportURL: mostRecentlySelectedAppDetails.supportUrl ? mostRecentlySelectedAppDetails.supportUrl : '',
-        appTermsURL: mostRecentlySelectedAppDetails.tosUrl ? mostRecentlySelectedAppDetails.tosUrl : '',
-        appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ? mostRecentlySelectedAppDetails.websiteUrl : '',
-        appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ? mostRecentlySelectedAppDetails.youtubeUrl : '',
-      })
+          : "",
+        appSupportURL: mostRecentlySelectedAppDetails.supportUrl ? mostRecentlySelectedAppDetails.supportUrl : "",
+        appTermsURL: mostRecentlySelectedAppDetails.tosUrl ? mostRecentlySelectedAppDetails.tosUrl : "",
+        appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ? mostRecentlySelectedAppDetails.websiteUrl : "",
+        appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ? mostRecentlySelectedAppDetails.youtubeUrl : "",
+      });
     } else {
       resetForm({
-        appAvatarURL: '',
-        appClientID: '',
-        appClientSecret: '',
-        appFullDescription: '',
-        appLabels: '',
-        appName: '',
-        appPrivacyURL: '',
-        appRedirectURI: 'https://',
-        appShortDescription: '',
-        appSupportURL: '',
-        appTermsURL: '',
-        appWebsiteURL: '',
-        appYouTubeURL: '',
-      })
+        appAvatarURL: "",
+        appClientID: "",
+        appClientSecret: "",
+        appFullDescription: "",
+        appLabels: "",
+        appName: "",
+        appPrivacyURL: "",
+        appRedirectURI: "https://",
+        appShortDescription: "",
+        appSupportURL: "",
+        appTermsURL: "",
+        appWebsiteURL: "",
+        appYouTubeURL: "",
+      });
     }
-  }, [modalMode, mostRecentlySelectedAppDetails])
+  }, [modalMode, mostRecentlySelectedAppDetails]);
 
   /* Optional URL selector */
 
-  const [anchorElement, setAnchorElement] = React.useState(null)
-  const [isShowing, setIsShowing] = React.useState([false, false, false, false])
+  const [anchorElement, setAnchorElement] = React.useState(null);
+  const [isShowing, setIsShowing] = React.useState([false, false, false, false]);
 
   /* Whenever the store's 'applications > currentApp' details become available
   (i.e., upon mounting this React.Component, and immediately after saving an app's details),
   we need to determine what optional URLs have been provided, and are meant to be shown. */
-  React.useEffect(() => {
+  useEffect(() => {
     setIsShowing([
       !!mostRecentlySelectedAppDetails.tosUrl,
       !!mostRecentlySelectedAppDetails.privacyUrl,
       !!mostRecentlySelectedAppDetails.youtubeUrl,
       !!mostRecentlySelectedAppDetails.supportUrl,
-    ])
-  }, [mostRecentlySelectedAppDetails])
+    ]);
+  }, [mostRecentlySelectedAppDetails]);
 
   const handleOpenSelector = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation()
+    event.stopPropagation();
 
-    setAnchorElement((event as any).currentTarget)
-  }
+    setAnchorElement((event as any).currentTarget);
+  };
 
   const handleCloseSelector = (event: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
-    event.stopPropagation()
+    event.stopPropagation();
 
-    setAnchorElement(null)
-  }
+    setAnchorElement(null);
+  };
 
   const handleShowOptionalURLField = (
     event: React.MouseEvent<HTMLLIElement, MouseEvent>,
     indexOfFormFieldToAdd: number,
   ) => {
-    event.stopPropagation()
+    event.stopPropagation();
 
-    const newIsShowingArray = [...isShowing]
+    const newIsShowingArray = [...isShowing];
 
-    newIsShowingArray[indexOfFormFieldToAdd] = true
+    newIsShowingArray[indexOfFormFieldToAdd] = true;
 
-    setIsShowing(newIsShowingArray)
-    setAnchorElement(null)
-  }
+    setIsShowing(newIsShowingArray);
+    setAnchorElement(null);
+  };
 
   const handleHideOptionalURLField = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     indexOfFormFieldToRemove: number,
   ) => {
-    event.stopPropagation()
+    event.stopPropagation();
 
-    const newIsShowingArray = [...isShowing]
+    const newIsShowingArray = [...isShowing];
 
-    newIsShowingArray[indexOfFormFieldToRemove] = false
+    newIsShowingArray[indexOfFormFieldToRemove] = false;
 
     if (indexOfFormFieldToRemove === 0 && formState.values.appTermsURL) {
-      formState.values.appTermsURL = ''
-      delete formState.errors.appTermsURL
-      formState.isDirty = !!mostRecentlySelectedAppDetails.tosUrl
+      formState.values.appTermsURL = "";
+      delete formState.errors.appTermsURL;
+      formState.isDirty = !!mostRecentlySelectedAppDetails.tosUrl;
     } else if (indexOfFormFieldToRemove === 1 && formState.values.appPrivacyURL) {
-      formState.values.appPrivacyURL = ''
-      delete formState.errors.appPrivacyURL
-      formState.isDirty = !!mostRecentlySelectedAppDetails.privacyUrl
+      formState.values.appPrivacyURL = "";
+      delete formState.errors.appPrivacyURL;
+      formState.isDirty = !!mostRecentlySelectedAppDetails.privacyUrl;
     } else if (indexOfFormFieldToRemove === 2 && formState.values.appYouTubeURL) {
-      formState.values.appYouTubeURL = ''
-      delete formState.errors.appYouTubeURL
-      formState.isDirty = !!mostRecentlySelectedAppDetails.youtubeUrl
+      formState.values.appYouTubeURL = "";
+      delete formState.errors.appYouTubeURL;
+      formState.isDirty = !!mostRecentlySelectedAppDetails.youtubeUrl;
     } else if (indexOfFormFieldToRemove === 3 && formState.values.appSupportURL) {
-      formState.values.appSupportURL = ''
-      delete formState.errors.appSupportURL
-      formState.isDirty = !!mostRecentlySelectedAppDetails.supportUrl
+      formState.values.appSupportURL = "";
+      delete formState.errors.appSupportURL;
+      formState.isDirty = !!mostRecentlySelectedAppDetails.supportUrl;
     }
 
-    setIsShowing(newIsShowingArray)
-    setAnchorElement(null)
-  }
+    setIsShowing(newIsShowingArray);
+    setAnchorElement(null);
+  };
 
   /* Avatar-related stuff, part two */
 
-  let appNameInitials = '...'
+  let appNameInitials = "...";
 
   if (formState.values.appName) {
-    const appNameInitialsArray = formState.values.appName.split(' ').filter((word) => {
-      return word.length > 0
-    })
+    const appNameInitialsArray = formState.values.appName.split(" ").filter((word) => {
+      return word.length > 0;
+    });
 
     appNameInitials = appNameInitialsArray.length >= 2
       ? `${appNameInitialsArray[0][0]}${appNameInitialsArray[1][0]}`
@@ -298,19 +300,19 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appNameInitialsArray[0].length === 1
           ? appNameInitialsArray[0][0]
           : `${appNameInitialsArray[0][0]}${appNameInitialsArray[0][1]}`
-      )
+      );
   }
 
   /* App-related actions */
 
   const checkForLabels = (stringOfLabels: string) => {
-    return stringOfLabels.length ? stringOfLabels.split(' ') : []
-  }
+    return stringOfLabels.length ? stringOfLabels.split(" ") : [];
+  };
 
   // Creating an app
 
-  const createApp = (event: React.ChangeEvent<{}>) => {
-    event.preventDefault()
+  const createNewApp = (event: React.ChangeEvent<any>) => {
+    event.preventDefault();
 
     const newAppDetails = {
       description: formState.values.appFullDescription,
@@ -324,17 +326,17 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       tosUrl: formState.values.appTermsURL,
       websiteUrl: formState.values.appWebsiteURL,
       youtubeUrl: formState.values.appYouTubeURL,
-    }
+    };
 
-    createAppAction(newAppDetails)
+    dispatch(createApp({ appData: newAppDetails }));
 
-    toggleModal()
-  }
+    toggleModal();
+  };
 
   // Updating an app
 
-  const updateApp = (event: React.ChangeEvent<{}>) => {
-    event.preventDefault()
+  const _updateApp = (event: React.ChangeEvent<any>) => {
+    event.preventDefault();
 
     const updatedAppDetails = {
       description: formState.values.appFullDescription,
@@ -349,53 +351,53 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       tosUrl: formState.values.appTermsURL,
       websiteUrl: formState.values.appWebsiteURL,
       youtubeUrl: formState.values.appYouTubeURL,
-    }
+    };
 
-    updateAppAction(updatedAppDetails)
+    dispatch(updateApp({ appData: updatedAppDetails }));
 
-    toggleModal()
-  }
+    toggleModal();
+  };
 
   // Deleting an app
 
-  const [openDialog, setOpenDialog] = React.useState(false)
+  const [openDialog, setOpenDialog] = React.useState(false);
 
   const handleOpenDialog = () => {
-    setOpenDialog(true)
-  }
+    setOpenDialog(true);
+  };
 
   const handleCloseDialog = () => {
-    setOpenDialog(false)
-  }
+    setOpenDialog(false);
+  };
 
-  const deleteApp = () => {
-    deleteAppAction(modalDetails.userAppID)
+  const _deleteApp = () => {
+    dispatch(deleteApp({ appId: modalDetails.userAppID }));
 
-    handleCloseDialog()
+    handleCloseDialog();
 
-    toggleModal()
-  }
+    toggleModal();
+  };
 
   return (
     <>
       <Modal
         onClose={() => {
           resetForm({
-            appAvatarURL: '',
-            appClientID: '',
-            appClientSecret: '',
-            appFullDescription: '',
-            appLabels: '',
-            appName: '',
-            appPrivacyURL: '',
-            appRedirectURI: 'https://',
-            appShortDescription: '',
-            appSupportURL: '',
-            appTermsURL: '',
-            appWebsiteURL: '',
-            appYouTubeURL: '',
-          })
-          toggleModal()
+            appAvatarURL: "",
+            appClientID: "",
+            appClientSecret: "",
+            appFullDescription: "",
+            appLabels: "",
+            appName: "",
+            appPrivacyURL: "",
+            appRedirectURI: "https://",
+            appShortDescription: "",
+            appSupportURL: "",
+            appTermsURL: "",
+            appWebsiteURL: "",
+            appYouTubeURL: "",
+          });
+          toggleModal();
         }}
         open={isModalOpen}
       >
@@ -405,11 +407,11 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             <div className={classes.modalHeaderContainer}>
               <div className={classes.logoAndNameContainer}>
                 {
-                  settings.logoURL
+                  ownerInfo.logo
                     ? (
                       <img
                         className={classes.imageLogo}
-                        src={settings.logoURL}
+                        src={ownerInfo.logo}
                       />
                     )
                     : (
@@ -420,7 +422,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 }
 
                 <h3 className={classes.portalName}>
-                  {settings.portalName}
+                  {portalName}
                 </h3>
               </div>
 
@@ -429,7 +431,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 onClick={toggleModal}
               >
                 <p>
-                  {t('dashboardTab.applicationsSubTab.appModal.closeButtonLabel', { config })}
+                  {t("dashboardTab.applicationsSubTab.appModal.closeButtonLabel")}
                 </p>
 
                 <CloseRoundedIcon />
@@ -440,10 +442,10 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             <div className={classes.modalBodyContainer}>
               {/* Modal's title */}
               {
-                modalMode === 'new'
+                modalMode === "new"
                   ? (
                     <h1 className={classes.newApplicationHeader}>
-                      {t('dashboardTab.applicationsSubTab.appModal.newAppLabel', { config })}
+                      {t("dashboardTab.applicationsSubTab.appModal.newAppLabel")}
                     </h1>
                   )
                   : (
@@ -467,8 +469,8 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <p className={classes.clientApplicationCardStatusText}>
                           {
                             mostRecentlySelectedAppDetails.subscriptions.length === 0
-                              ? t('dashboardTab.applicationsSubTab.appModal.draftAppStatus', { config })
-                              : t('dashboardTab.applicationsSubTab.appModal.subbedAppStatus', { config })
+                              ? t("dashboardTab.applicationsSubTab.appModal.draftAppStatus")
+                              : t("dashboardTab.applicationsSubTab.appModal.subbedAppStatus")
                           }
                         </p>
                       </div>
@@ -481,26 +483,26 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'App name and short description' subsection */}
                 <div className={classes.leftSubSectionContainer}>
                   <p className={classes.appNameAndShortDescriptionSubSectionTitle}>
-                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelOne', { config })}
+                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelOne")}
                   </p>
 
                   <TextField
                     className={classes.inputFields}
                     error={
                       (formState.touched.appName && formState.values.appName.length === 0) ||
-                      (modalMode === 'new' && allUserAppNames.includes(formState.values.appName))
+                      (modalMode === "new" && allUserAppNames.includes(formState.values.appName))
                     }
                     fullWidth
                     helperText={
                       (formState.touched.appName && formState.values.appName.length === 0)
-                        ? t('dashboardTab.applicationsSubTab.appModal.noAppNameError', { config })
+                        ? t("dashboardTab.applicationsSubTab.appModal.noAppNameError")
                         : (
-                          (modalMode === 'new' && allUserAppNames.includes(formState.values.appName))
-                            ? t('dashboardTab.applicationsSubTab.appModal.existingAppNameError', { config })
-                            : ''
+                          (modalMode === "new" && allUserAppNames.includes(formState.values.appName))
+                            ? t("dashboardTab.applicationsSubTab.appModal.existingAppNameError")
+                            : ""
                         )
                     }
-                    label={t('dashboardTab.applicationsSubTab.appModal.appNameFieldLabel', { config })}
+                    label={t("dashboardTab.applicationsSubTab.appModal.appNameFieldLabel")}
                     margin='dense'
                     name='appName'
                     onChange={handleChange}
@@ -513,7 +515,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   <TextField
                     className={classes.inputFields}
                     fullWidth
-                    label={t('dashboardTab.applicationsSubTab.appModal.appShortDescriptionFieldLabel', { config })}
+                    label={t("dashboardTab.applicationsSubTab.appModal.appShortDescriptionFieldLabel")}
                     margin='dense'
                     name='appShortDescription'
                     onChange={handleChange}
@@ -526,7 +528,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'App avatar' subsection */}
                 <div className={classes.rightSubSectionContainer}>
                   <p className={classes.appAvatarSubSectionDescription}>
-                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelTwo', { config })}
+                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelTwo")}
                   </p>
 
                   <div className={classes.appAvatarContainer}>
@@ -538,7 +540,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             className={classes.avatarIcons}
                             onClick={
                               () => {
-                                setAvatarInputIsInFocus(false)
+                                setAvatarInputIsInFocus(false);
                               }
                             }
                           />
@@ -548,7 +550,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             className={classes.avatarIcons}
                             onClick={
                               () => {
-                                setAvatarInputIsInFocus(true)
+                                setAvatarInputIsInFocus(true);
                               }
                             }
                           />
@@ -573,23 +575,23 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       helperText={
                         (formState.touched.appAvatarURL && formState.errors.appAvatarURL) || !validImage
                           ? formState.errorMsgs.appAvatarURL
-                          : t('dashboardTab.applicationsSubTab.appModal.appAvatarFieldSubLabel', { config })
+                          : t("dashboardTab.applicationsSubTab.appModal.appAvatarFieldSubLabel")
                       }
                       inputRef={(input) =>
                         avatarInputIsInFocus ? input && input.focus() : input && input.blur()}
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      label={t('dashboardTab.applicationsSubTab.appModal.appAvatarFieldLabel', { config })}
+                      label={t("dashboardTab.applicationsSubTab.appModal.appAvatarFieldLabel")}
                       margin='dense'
                       name='appAvatarURL'
                       onBlur={() => {
-                        setAvatarInputIsInFocus(false)
+                        setAvatarInputIsInFocus(false);
                       }}
                       onChange={handleChange}
                       onFocus={(focusEvent) => {
-                        handleFocus(focusEvent)
-                        setAvatarInputIsInFocus(true)
+                        handleFocus(focusEvent);
+                        setAvatarInputIsInFocus(true);
                       }}
                       type='url'
                       value={formState.values.appAvatarURL}
@@ -606,7 +608,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'Redirect URI' subsection */}
                 <div className={classes.leftSubSectionContainer}>
                   <p className={classes.redirectURISubSectionTitle}>
-                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelThree', { config })}
+                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
                   </p>
 
                   <TextField
@@ -616,9 +618,9 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     helperText={
                       formState.errors.appRedirectURI
                         ? formState.errorMsgs.appRedirectURI
-                        : ''
+                        : ""
                     }
-                    label={t('dashboardTab.applicationsSubTab.appModal.subSectionLabelThree', { config })}
+                    label={t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
                     margin='dense'
                     name='appRedirectURI'
                     onChange={handleChange}
@@ -631,69 +633,57 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'Client credentials' subsection */}
                 <div className={classes.rightSubSectionContainer}>
                   <p className={classes.clientCredentialsSubSectionDescription}>
-                    <>{t('dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartOne', { config })}</>
+                    <>{t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartOne")}</>
                     <a
                       href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2'
                       target='_blank'
                       rel='noopener noreferrer'
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartTwo', { config })}
+                      {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartTwo")}
                     </a>
                     <>.</>
                   </p>
 
                   <TextField
-                    className={
-                      modalMode === 'new'
-                        ? classes.disabledClientIDInputField
-                        /* TODO: Previously 'enabledClientIDInputField'.
-                        Revisit once it is possible to generate/edit new client IDs. */
-                        : classes.disabledClientIDInputField
-                    }
                     fullWidth
                     InputProps={{
                       endAdornment:
-                        <InputAdornment position='end'>
+                        <InputAdornment position="end">
                           <FileCopyOutlinedIcon />
                         </InputAdornment>,
                     }}
-                    label={t('dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel', { config })}
-                    margin='dense'
-                    name='appClientID'
+                    label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
+                    margin="dense"
+                    name="appClientID"
                     onChange={handleChange}
-                    type='text'
+                    type="text"
                     value={formState.values.appClientID}
-                    variant='outlined'
+                    variant="outlined"
+                    disabled
                   />
 
                   <div className={classes.clientSecretInputFieldContainer}>
                     <TextField
-                      className={
-                        modalMode === 'new'
-                          ? classes.disabledClientSecretInputField
-                          /* TODO: Previously 'enabledClientSecretInputField'.
-                          Revisit once it is possible to generate/edit new client secrets. */
-                          : classes.disabledClientSecretInputField
-                      }
                       fullWidth
                       InputProps={{
                         endAdornment:
-                          <InputAdornment position='end'>
+                          <InputAdornment position="end">
                             <FileCopyOutlinedIcon />
                           </InputAdornment>,
                       }}
-                      label={t('dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel', { config })}
-                      margin='dense'
-                      name='appClientSecret'
+                      label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
+                      margin="dense"
+                      name="appClientSecret"
                       onChange={handleChange}
-                      type='text'
+                      type="text"
                       value={formState.values.appClientSecret}
-                      variant='outlined'
+                      variant="outlined"
+                      disabled
                     />
 
                     <div
                       className={
-                        modalMode === 'new'
+                        modalMode === "new"
                           ? classes.disabledClientSecretInputFieldRefreshButton
                           /* TODO: Previously 'enabledClientSecretInputFieldRefreshButton'.
                           Revisit once it is possible to generate/edit new client secrets. */
@@ -713,13 +703,13 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'Full description' subsection */}
                 <div className={classes.leftSubSectionContainer}>
                   <p className={classes.additionalInfoSubSectionTitle}>
-                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelFive', { config })}
+                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFive")}
                   </p>
 
                   <TextField
                     className={classes.inputFields}
                     fullWidth
-                    label={t('dashboardTab.applicationsSubTab.appModal.appFullDescriptionFieldLabel', { config })}
+                    label={t("dashboardTab.applicationsSubTab.appModal.appFullDescriptionFieldLabel")}
                     margin='dense'
                     multiline
                     name='appFullDescription'
@@ -733,8 +723,8 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   <TextField
                     className={classes.inputFields}
                     fullWidth
-                    helperText={t('dashboardTab.applicationsSubTab.appModal.appLabelsFieldHelperText', { config })}
-                    label={t('dashboardTab.applicationsSubTab.appModal.appLabelsFieldLabel', { config })}
+                    helperText={t("dashboardTab.applicationsSubTab.appModal.appLabelsFieldHelperText")}
+                    label={t("dashboardTab.applicationsSubTab.appModal.appLabelsFieldLabel")}
                     margin='dense'
                     name='appLabels'
                     onChange={handleChange}
@@ -747,7 +737,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'Optional URLs' subsection */}
                 <div className={classes.rightSubSectionContainer}>
                   <p className={classes.optionalURLsSubSectionDescription}>
-                    {t('dashboardTab.applicationsSubTab.appModal.subSectionLabelSix', { config })}
+                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelSix")}
                   </p>
 
                   <div className={classes.appURLFieldWrapper}>
@@ -758,9 +748,9 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       helperText={
                         formState.errors.appWebsiteURL
                           ? formState.errorMsgs.appWebsiteURL
-                          : ''
+                          : ""
                       }
-                      label={t('dashboardTab.applicationsSubTab.appModal.appWebsiteURLFieldLabel', { config })}
+                      label={t("dashboardTab.applicationsSubTab.appModal.appWebsiteURLFieldLabel")}
                       margin='dense'
                       name='appWebsiteURL'
                       onChange={handleChange}
@@ -784,7 +774,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       className={classes.selectorTitle}
                       disabled
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.selectorTitle', { config })}
+                      {t("dashboardTab.applicationsSubTab.appModal.selectorTitle")}
                     </MenuItem>
 
                     <MenuItem
@@ -792,7 +782,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       disabled={isShowing[0]}
                       onClick={(clickEvent) => handleShowOptionalURLField(clickEvent, 0)}
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.appToSFieldLabel', { config })}
+                      {t("dashboardTab.applicationsSubTab.appModal.appToSFieldLabel")}
                     </MenuItem>
 
                     <MenuItem
@@ -800,7 +790,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       disabled={isShowing[1]}
                       onClick={(clickEvent) => handleShowOptionalURLField(clickEvent, 1)}
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.appPrivacyPolicyFieldLabel', { config })}
+                      {t("dashboardTab.applicationsSubTab.appModal.appPrivacyPolicyFieldLabel")}
                     </MenuItem>
 
                     <MenuItem
@@ -808,14 +798,14 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       disabled={isShowing[2]}
                       onClick={(clickEvent) => handleShowOptionalURLField(clickEvent, 2)}
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.appYouTubeChannelFieldLabel', { config })}
+                      {t("dashboardTab.applicationsSubTab.appModal.appYouTubeChannelFieldLabel")}
                     </MenuItem>
 
                     <MenuItem
                       className={classes.selectorOption}
                       disabled
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.appWebsiteFieldLabel', { config })}
+                      {t("dashboardTab.applicationsSubTab.appModal.appWebsiteFieldLabel")}
                     </MenuItem>
 
                     <MenuItem
@@ -823,7 +813,7 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       disabled={isShowing[3]}
                       onClick={(clickEvent) => handleShowOptionalURLField(clickEvent, 3)}
                     >
-                      {t('dashboardTab.applicationsSubTab.appModal.appSupportFieldLabel', { config })}
+                      {t("dashboardTab.applicationsSubTab.appModal.appSupportFieldLabel")}
                     </MenuItem>
                   </Menu>
 
@@ -837,9 +827,9 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         helperText={
                           formState.errors.appTermsURL
                             ? formState.errorMsgs.appTermsURL
-                            : ''
+                            : ""
                         }
-                        label={t('dashboardTab.applicationsSubTab.appModal.appToSURLFieldLabel', { config })}
+                        label={t("dashboardTab.applicationsSubTab.appModal.appToSURLFieldLabel")}
                         margin='dense'
                         name='appTermsURL'
                         onChange={handleChange}
@@ -864,9 +854,9 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         helperText={
                           formState.errors.appPrivacyURL
                             ? formState.errorMsgs.appPrivacyURL
-                            : ''
+                            : ""
                         }
-                        label={t('dashboardTab.applicationsSubTab.appModal.appPrivacyPolicyURLFieldLabel', { config })}
+                        label={t("dashboardTab.applicationsSubTab.appModal.appPrivacyPolicyURLFieldLabel")}
                         margin='dense'
                         name='appPrivacyURL'
                         onChange={handleChange}
@@ -891,9 +881,9 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         helperText={
                           formState.errors.appYouTubeURL
                             ? formState.errorMsgs.appYouTubeURL
-                            : ''
+                            : ""
                         }
-                        label={t('dashboardTab.applicationsSubTab.appModal.appYouTubeChannelURLFieldLabel', { config })}
+                        label={t("dashboardTab.applicationsSubTab.appModal.appYouTubeChannelURLFieldLabel")}
                         margin='dense'
                         name='appYouTubeURL'
                         onChange={handleChange}
@@ -918,9 +908,9 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         helperText={
                           formState.errors.appSupportURL
                             ? formState.errorMsgs.appSupportURL
-                            : ''
+                            : ""
                         }
-                        label={t('dashboardTab.applicationsSubTab.appModal.appSupportURLFieldLabel', { config })}
+                        label={t("dashboardTab.applicationsSubTab.appModal.appSupportURLFieldLabel")}
                         margin='dense'
                         name='appSupportURL'
                         onChange={handleChange}
@@ -942,34 +932,34 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               {/* 'App action' buttons section */}
               <div className={classes.buttonsContainer}>
                 {
-                  modalMode === 'new'
+                  modalMode === "new"
                     ? (
                       <>
                         <div>
                           <Button
-                            className={
-                              formState.values.appName.length !== 0 &&
-                                formState.values.appRedirectURI !== 'http://' &&
-                                formState.values.appRedirectURI !== 'https://' &&
+                            disabled={
+                              !(formState.values.appName.length !== 0 &&
+                                formState.values.appRedirectURI !== "http://" &&
+                                formState.values.appRedirectURI !== "https://" &&
                                 formState.values.appRedirectURI.length !== 0 &&
                                 (formState.isValid || Object.keys(formState.errors).length === 0) &&
                                 !(allUserAppNames.includes(formState.values.appName)) &&
-                                validImage
-                                ? classes.enabledAddOrEditButton
-                                : classes.disabledAddOrEditButton
+                                validImage)
                             }
-                            href='#'
-                            onClick={createApp}
+                            color="primary"
+                            variant="contained"
+                            size="large"
+                            disableElevation
+                            onClick={createNewApp}
                           >
-                            {t('dashboardTab.applicationsSubTab.appModal.addAppButtonLabel', { config })}
+                            {t("dashboardTab.applicationsSubTab.appModal.addAppButtonLabel")}
                           </Button>
 
                           <Button
                             className={classes.otherButtons}
-                            href='#'
                             onClick={toggleModal}
                           >
-                            {t('dashboardTab.applicationsSubTab.appModal.cancelModalButtonLabel', { config })}
+                            {t("dashboardTab.applicationsSubTab.appModal.cancelModalButtonLabel")}
                           </Button>
                         </div>
 
@@ -978,11 +968,11 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <div>
                             <p className={classes.infoBoxText}>
-                              {t('dashboardTab.applicationsSubTab.appModal.infoBoxTitleLabel', { config })}
+                              {t("dashboardTab.applicationsSubTab.appModal.infoBoxTitleLabel")}
                             </p>
 
                             <p className={classes.infoBoxText}>
-                              {t('dashboardTab.applicationsSubTab.appModal.infoBoxSubTitleLabel', { config })}
+                              {t("dashboardTab.applicationsSubTab.appModal.infoBoxSubTitleLabel")}
                             </p>
                           </div>
                         </div>
@@ -992,17 +982,17 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       <>
                         <div>
                           <Button
-                            className={
-                              formState.isDirty &&
-                                (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                                validImage
-                                ? classes.enabledAddOrEditButton
-                                : classes.disabledAddOrEditButton
+                            disabled={
+                              !(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
+                              && validImage)
                             }
-                            href='#'
-                            onClick={updateApp}
+                            color="primary"
+                            variant="contained"
+                            size="large"
+                            disableElevation
+                            onClick={_updateApp}
                           >
-                            {t('dashboardTab.applicationsSubTab.appModal.editAppButtonLabel', { config })}
+                            {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
                           </Button>
 
                           <Button
@@ -1011,24 +1001,22 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                             rel='noopener noreferrer'
                             target='_blank'
                           >
-                            {t('dashboardTab.applicationsSubTab.appModal.appSubsButtonLabel', { config })}
+                            {t("dashboardTab.applicationsSubTab.appModal.appSubsButtonLabel")}
                           </Button>
 
                           <Button
                             className={classes.removeAppButton}
-                            href='#'
                             onClick={handleOpenDialog}
                           >
-                            {t('dashboardTab.applicationsSubTab.appModal.removeAppButtonLabel', { config })}
+                            {t("dashboardTab.applicationsSubTab.appModal.removeAppButtonLabel")}
                           </Button>
                         </div>
 
                         <Button
                           className={classes.otherButtons}
-                          href='#'
                           onClick={toggleModal}
                         >
-                          {t('dashboardTab.applicationsSubTab.appModal.closeModalButtonLabel', { config })}
+                          {t("dashboardTab.applicationsSubTab.appModal.closeModalButtonLabel")}
                         </Button>
                       </>
                     )
@@ -1043,15 +1031,15 @@ const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         openDialog &&
         <CustomizableDialog
           closeDialogCallback={handleCloseDialog}
-          confirmButtonCallback={deleteApp}
-          confirmButtonLabel={t('dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel', { config })}
+          confirmButtonCallback={_deleteApp}
+          confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel")}
           open={openDialog}
-          providedText={t('dashboardTab.applicationsSubTab.appModal.dialogText', { config })}
-          providedTitle={t('dashboardTab.applicationsSubTab.appModal.dialogTitle', { config })}
+          optionalTitleIcon='warning'
+          providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialogSubText")}
+          providedText={t("dashboardTab.applicationsSubTab.appModal.dialogText")}
+          providedTitle={t("dashboardTab.applicationsSubTab.appModal.dialogTitle")}
         />
       }
     </>
-  )
-}
-
-export default ApplicationsModal
+  );
+};

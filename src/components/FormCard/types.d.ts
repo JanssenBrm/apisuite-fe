@@ -1,0 +1,22 @@
+
+export interface FormCardProps extends React.HTMLAttributes<HTMLDivElement> {
+  backLabel?: string,
+  buttonIcon?: any,
+  buttonDisabled?: boolean,
+  buttonLabel: string,
+  children: React.ReactNode,
+  closeRoute?: string,
+  customBackButtonStyles?: string,
+  customDisabledConfirmButtonStyles?: string,
+  customEnabledConfirmButtonStyles?: string,
+  error?: string | Error,
+  handleBackClick?: (e: React.FormEvent<HTMLFormElement>) => void,
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void,
+  loading?: boolean,
+  showBack?: boolean,
+  showReject?: boolean,
+  rejectDisabled?: boolean,
+  rejectLabel?: string,
+  handleReject?: React.MouseEventHandler<HTMLButtonElement>,
+  customRejectButtonStyles?: string,
+}

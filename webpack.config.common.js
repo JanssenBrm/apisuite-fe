@@ -2,41 +2,21 @@
  * Webpack Common configuration file
  */
 
-const fs = require('fs')
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const MiniCssExtractPlugin = require('mini-css-extract-plugin')
-const autoprefixer = require('autoprefixer')
-const Dotenv = require('dotenv-webpack')
-
-/**
- * Looks for `sandbox.config.json`. If it doesn't exist, create a copy of the
- * `develop` environment's one.
- */
-function getSandboxConfig () {
-  const pathToFile = path.join(__dirname, 'sandbox.config.json')
-  const pathToDevFile = path.join(__dirname, 'sandbox.config-develop.json')
-  if (!fs.existsSync(pathToFile)) {
-    fs.copyFileSync(pathToDevFile, pathToFile)
-  }
-  return require('./sandbox.config.json')
-}
-
-const sandboxConfig = getSandboxConfig()
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const autoprefixer = require("autoprefixer");
+const dotenv = require("dotenv");
+const webpack = require("webpack");
 
 module.exports = {
-  entry: path.resolve(__dirname, 'src', 'index'),
+  entry: path.resolve(__dirname, "src", "index"),
 
   output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/',
-  },
-
-  resolveLoader: {
-    alias: {
-      'conditional-loader': path.join(__dirname, './scripts/conditional-loader'),
-    },
+    path: path.resolve(__dirname, "dist"),
+    filename: "[name].js",
+    chunkFilename: "[name].js",
+    publicPath: "/",
   },
 
   module: {
@@ -44,55 +24,32 @@ module.exports = {
       {
         test: /\.(js|ts)x?$/,
         exclude: /node_modules/,
-        use: [
-          'babel-loader',
-          {
-            loader: 'conditional-loader',
-            options: { includes: sandboxConfig.includes },
-          }],
+        use: "babel-loader",
       },
       {
         test: /\.s?css$/,
         use: [
-          'css-hot-loader',
           MiniCssExtractPlugin.loader,
-          'css-loader',
+          "css-loader",
           {
-            loader: 'postcss-loader',
+            loader: "postcss-loader",
             options: {
-              plugins: () => ([autoprefixer()]),
+              postcssOptions: {
+                plugins: [autoprefixer()],
+              },
             },
           },
-          'sass-loader',
-          // {
-          //   loader: '@epegzz/sass-vars-loader',
-          //   options: {
-          //     syntax: 'scss',
-          //     files: [path.resolve(__dirname, 'src/theme/index.js')],
-          //   },
-          // },
+          "sass-loader",
         ],
       },
       {
-        test: /\.(gif|svg|webp|jpg|png|woff2)$/,
+        test: /\.(gif|svg|webp|jpg|png|ttf)$/,
         use: [
           {
-            loader: 'file-loader',
+            loader: "file-loader",
             options: {
               esModule: false,
-              name: 'assets/images/[name]-[hash].[ext]',
-            },
-          },
-        ],
-      },
-      {
-        test: /\.(woff|woff2|eot|ttf)$/,
-        use: [
-          {
-            loader: 'url-loader',
-            options: {
-              limit: 8192,
-              name: 'assets/fonts/[name]-[hash].[ext]',
+              name: "assets/images/[name]-[contenthash].[ext]",
             },
           },
         ],
@@ -101,30 +58,50 @@ module.exports = {
   },
 
   plugins: [
-    new Dotenv({ systemvars: true }),
-    new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src', 'index.html') }),
-    new MiniCssExtractPlugin({ filename: 'style.css' }),
+    new webpack.DefinePlugin({
+      "process.env": JSON.stringify(dotenv.config().parsed),
+    }),
+    new webpack.ProvidePlugin({
+      Buffer: ["buffer", "Buffer"],
+    }),
+    new HtmlWebpackPlugin({ template: path.resolve(__dirname, "src", "index.html") }),
+    new MiniCssExtractPlugin({ filename: "[name]-[contenthash].css" }),
   ],
 
   resolve: {
     symlinks: false,
-    extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
+    extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
     modules: [
-      path.resolve(__dirname, 'src'),
-      'node_modules',
+      path.resolve(__dirname, "src"),
+      "node_modules",
     ],
+    fallback: {
+      util: false,
+      path: false,
+      crypto: false,
+      https: false,
+      http: false,
+      vm: false,
+      os: false,
+      tty: false,
+      console: false,
+      constants: false,
+      assert: false,
+      fs: false,
+      zlib: false,
+    },
   },
 
   optimization: {
-    runtimeChunk: 'single',
+    runtimeChunk: "single",
     splitChunks: {
       cacheGroups: {
         commons: {
           test: /[\\/]node_modules[\\/]/,
-          name: 'vendors',
-          chunks: 'all',
+          name: "vendors",
+          chunks: "all",
         },
       },
     },
   },
-}
+};

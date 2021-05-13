@@ -1,35 +1,39 @@
-import { makeStyles } from '@material-ui/styles'
-import { config } from 'constants/global'
+import { makeStyles } from "@apisuite/fe-base";
 
-export default makeStyles(({
-  snackbar: {
-    display: 'flex',
-    position: 'relative',
-    margin: 8,
-  },
+export default makeStyles((theme) => ({
   content: {
-    display: 'flex',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
+    alignItems: "center",
+    borderRadius: `${theme.shape.borderRadius}px`,
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
     padding: 20,
-    borderRadius: config.dimensions.borderRadius,
   },
+
+  error: {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.primary.contrastText,
+  },
+
   icon: {
-    display: 'flex',
-    alignItems: 'center',
+    alignItems: "center",
+    display: "flex",
     fontSize: 24,
     marginRight: 10,
   },
+
+  snackbar: {
+    display: "flex",
+    margin: 8,
+    position: "relative",
+  },
+
+  success: {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.primary.contrastText,
+  },
+
   text: {
     margin: 0,
   },
-  success: {
-    backgroundColor: config.palette.primary,
-    color: 'white',
-  },
-  error: {
-    backgroundColor: config.palette.feedback.error,
-    color: 'white',
-  },
-}))
+}));

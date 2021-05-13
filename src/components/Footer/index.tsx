@@ -1,12 +1,11 @@
-import { connect } from 'react-redux'
+import { connect } from "react-redux";
 
-import { Store } from 'store/types'
+import { Store } from "store/types";
 
-import Footer from './Footer'
+import Footer from "./Footer";
 
-const mapStateToProps = ({ auth, settings }: Store) => ({
+const mapStateToProps = ({ auth }: Store) => ({
   auth,
-  settings,
-})
+});
 
-export default connect(mapStateToProps)(Footer)
+export default connect(mapStateToProps)(Footer);

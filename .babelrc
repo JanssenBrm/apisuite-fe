@@ -9,19 +9,12 @@
     "@babel/typescript"
   ],
   "env": {
-    "dev": {
+    "development": {
       "plugins": ["react-hot-loader/babel"]
-    },
-    "test": {
-      "presets": [["@babel/env"]],
-      "plugins": ["@babel/plugin-transform-runtime"]
     },
     "production": {
       "plugins": ["babel-plugin-jsx-remove-data-test-id"]
     }
   },
-  "plugins": [
-    "@babel/plugin-syntax-dynamic-import",
-    "@babel/plugin-proposal-class-properties"
-  ]
+  "plugins": ["@babel/plugin-proposal-class-properties"]
 }
