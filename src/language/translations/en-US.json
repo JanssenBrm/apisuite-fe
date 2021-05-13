@@ -81,11 +81,14 @@
     "options": {
       "signIn": "Sign in",
       "signUp": "Sign up"
-    }
+    },
+    "ssoFooterSignUp": "Don't have a {{provider}} account?",
+    "ssoFooterSignUpLink": "Sign Up here.",
+    "notAvailableView": "This page is not available with SSO enabled. Please use the navigation menu."
   },
   "signInForm": {
     "regularSignInButtonLabel": "Sign in",
-    "alternativeSignInButtonLabel": "Sign in with",
+    "alternativeSignInButtonLabel": "Sign in with {{provider}}",
     "separatorLabel": "or",
     "fieldLabels": {
       "email": "E-mail",
@@ -265,8 +268,7 @@
               "moreThanOneApp": "Select an app",
               "noApps": "No apps to display"
             },
-            "infoBoxNotificationTextPartOne": "Subscriptions provide production access. This access request will be reviewed by ",
-            "infoBoxNotificationTextPartTwo": " first.",
+            "infoBoxNotificationText": "Subscriptions provide production access. This access request will be reviewed by {{clientName}} first.",
             "warningBoxNotificationText": "If you revoke the subscription of the client application, access will automatically be removed."
           },
           "apiProductSubsContainer": {

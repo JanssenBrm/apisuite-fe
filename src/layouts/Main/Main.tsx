@@ -1,15 +1,15 @@
-import * as React from 'react'
-import clsx from 'clsx'
-import { LayoutProps } from './types'
-import Navigation from 'components/Navigation'
-import Footer from 'components/Footer'
-import useStyles from './styles'
+import React from "react";
+import clsx from "clsx";
+import { LayoutProps } from "./types";
+import { Navigation } from "components/Navigation";
+import Footer from "components/Footer";
+import useStyles from "./styles";
 
 const MainLayout: React.FC<LayoutProps> = ({
   children,
   contractibleMenu = false,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <div className={classes.root}>
@@ -19,8 +19,6 @@ const MainLayout: React.FC<LayoutProps> = ({
       />
       <div
         className={clsx(
-          'layout-container',
-          'layout-main',
           classes.container,
           { [classes.contractible]: contractibleMenu },
         )}
@@ -29,7 +27,7 @@ const MainLayout: React.FC<LayoutProps> = ({
       </div>
       <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

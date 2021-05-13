@@ -1,414 +1,263 @@
-import React from 'react'
-import { useSelector } from 'react-redux'
-import { useHistory } from 'react-router-dom'
-import clsx from 'clsx'
-import { useConfig, Avatar, Tabs, Tab } from '@apisuite/fe-base'
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import clsx from "clsx";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useConfig, Tabs, Tab, Avatar } from "@apisuite/fe-base";
+import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
+import PowerSettingsNewRoundedIcon from "@material-ui/icons/PowerSettingsNewRounded";
+import RoomServiceRoundedIcon from "@material-ui/icons/RoomServiceRounded";
 
-import AmpStoriesRoundedIcon from '@material-ui/icons/AmpStoriesRounded'
-import PowerSettingsNewRoundedIcon from '@material-ui/icons/PowerSettingsNewRounded'
-import RoomServiceRoundedIcon from '@material-ui/icons/RoomServiceRounded'
-import { getAuth } from 'containers/Auth/selectors'
-import Link from 'components/Link'
-import SvgIcon from 'components/SvgIcon'
+import { testIds } from "testIds";
+import { ROLES } from "constants/global";
+import { logout } from "store/auth/actions/logout";
+import { toggleNotificationCard } from "store/notificationCards/actions/toggleNotificationCard";
+import SvgIcon from "components/SvgIcon";
+import Link from "components/Link";
+import { linker } from "util/linker";
+import { getSSOLoginURL } from "util/getSSOLoginURL";
 
-import { useMenu, goBackConfig } from './useMenu'
-import useStyles from './styles'
-import './styles.scss'
+import { useMenu } from "./useMenu";
+import useStyles from "./styles";
+import { navigationSelector } from "./selector";
+import { NavigationProps } from "./types";
+import { NavigationLeftActionTypes } from "./constants";
 
-import { NavigationProps, TabMenus } from './types'
+export const Navigation: React.FC<NavigationProps> = ({ contractible = false, className, ...rest }) => {
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const { portalName, ownerInfo, sso, providerSignupURL } = useConfig();
+  const { user, userProfile, notificationCards } = useSelector(navigationSelector);
+  const { topTabs, initTabs, loginTabs, goBack } = useMenu();
+  const tabs = user ? loginTabs : initTabs;
 
-const Navigation: React.FC<NavigationProps> = ({
-  contractible = false,
-  logout,
-  // Temporary until notification cards become clearer
-  notificationCards,
-  profile,
-  title,
-  toggleInform,
-  // Temporary until notification cards become clearer
-  toggleInstanceOwnerNotificationCards,
-  toggleNonInstanceOwnerNotificationCards,
-  ...rest
-}) => {
-  const classes = useStyles()
+  const { activeTab, subTabs, activeSubTab } = useMemo(() => {
+    const activeTab = tabs.find((tab) => tab.active);
+    const subTabs = activeTab ? activeTab.subTabs : [];
+    const activeSubTab = subTabs?.find((tab) => tab.active);
 
-  const history = useHistory()
-  const { portalName, ownerInfo } = useConfig()
+    return { activeTab, subTabs, activeSubTab };
+  }, [tabs]);
 
-  const auth = useSelector(getAuth)
-  const user = auth.user
-  const userProfile = profile.profile.user
+  // Expand functionality
+  // Note: contractible prop was not changed to prevent breaking changes
+  const [expand, setExpand] = useState(contractible);
 
-  // User's initials (to be used in his Avatar, in the absence of a picture)
-  let splitName
-  let initials
+  // sync expand with contractible
+  useEffect(() => {
+    setExpand(contractible);
+  }, [contractible]);
 
-  if (user) {
-    splitName = userProfile.name.split(' ')
-    initials = splitName[0].charAt(0).toLocaleUpperCase()
-  }
+  // sync notifications amount
+  const [amountOfNotifications, setAmountOfNotifications] = useState(0);
 
-  const [scrollPos, setScrollPos] = React.useState(0)
-  const scrolled = contractible && (scrollPos >= 10)
-
-  const scrollHandler = React.useCallback(() => {
-    setScrollPos(window.scrollY)
-  }, [])
-
-  const [activeMenuName, setActiveMenuName] = React.useState('init')
-  const [goBackLabel, setGoBackLabel] = React.useState('')
-  const [topTabs, initTabs, loginTabs] = useMenu()
-  const allTabs: TabMenus = {
-    init: initTabs,
-    login: loginTabs,
-  }
-  const tabs = allTabs[activeMenuName]
-
-  const { activeTab, subTabs, activeSubTab } = React.useMemo(() => {
-    const activeTab = tabs.find((tab) => tab.active)
-    const subTabs = !!activeTab && activeTab.subTabs
-    const activeSubTab = !!subTabs && subTabs.find((tab) => tab.active)
-
-    return { activeTab, subTabs, activeSubTab }
-  }, [tabs])
-
-  const handleGobackClick = React.useCallback(() => history.goBack(), [])
-
-  React.useEffect(() => {
-    setActiveMenuName(user ? 'login' : 'init')
-  }, [user])
-
-  React.useEffect(() => {
-    const { pathname } = history.location
-    const goBack = goBackConfig.find((item) => pathname.indexOf(item.path) === 0)
-
-    if (goBack) {
-      setGoBackLabel(goBack.label)
-    } else {
-      setGoBackLabel('')
-    }
-  }, [history.location.pathname])
-
-  React.useEffect(() => {
-    if (!contractible) {
-      return
-    }
-
-    window.addEventListener('scroll', scrollHandler)
-
-    return () => {
-      window.removeEventListener('scroll', scrollHandler)
-    }
-  }, [contractible])
-
-  const [amountOfNotifications, setAmountOfNotifications] = React.useState(0)
-
-  React.useEffect(() => {
-    if (user?.role.name !== 'admin') {
+  useEffect(() => {
+    if (user?.role.name !== "admin") {
       if (amountOfNotifications !== notificationCards.instanceOwnerNotificationCardsData.length) {
-        setAmountOfNotifications(notificationCards.instanceOwnerNotificationCardsData.length)
+        setAmountOfNotifications(notificationCards.instanceOwnerNotificationCardsData.length);
       }
     } else {
       if (amountOfNotifications !== notificationCards.nonInstanceOwnerNotificationCardsData.length) {
-        setAmountOfNotifications(notificationCards.nonInstanceOwnerNotificationCardsData.length)
+        setAmountOfNotifications(notificationCards.nonInstanceOwnerNotificationCardsData.length);
       }
     }
-  }, [notificationCards])
+  }, [notificationCards, amountOfNotifications, user?.role.name]);
+
+  // for go back label click
+  const handleGoBackClick = useCallback(() => history.goBack(), [history]);
+
+  const scrollHandler = useCallback(() => {
+    const notScrolled = window.scrollY < 1;
+
+    if (notScrolled !== expand) {
+      // if not scrolled expand
+      setExpand(notScrolled);
+    }
+  }, [expand]);
+
+  useEffect(() => {
+    // we only listen to scroll if contractible is enabled
+    if (!contractible) {
+      return;
+    }
+
+    window.addEventListener("scroll", scrollHandler);
+
+    return () => {
+      window.removeEventListener("scroll", scrollHandler);
+    };
+  }, [contractible, scrollHandler]);
+
+  // toggle card
+  function handleNotificationClick () {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    dispatch(toggleNotificationCard());
+  }
+
+  const handleSSOTabs = (route: string): { route: string; target: string } => {
+    const res = {
+      route,
+      target: "_blank",
+    };
+    // FIXME: Use ENUM for string comparinsion
+    if (sso.length && route === "/auth/signin") {
+      res.route = getSSOLoginURL(sso);
+      res.target = "_self";
+    }
+    if (sso.length && route === "/auth/signup") {
+      res.route = linker(providerSignupURL);
+    }
+
+    return res;
+  };
+
+  // main tabs
+  const tabsToRender = tabs.map((tab) => {
+    // TODO: why is this rule here?
+    if (tab.isProfileTab) return null;
+
+    return (
+      <Tab
+        key={`nav-tab-${tab.label}`}
+        className={clsx(classes.tab, {
+          [classes.activeTab]: tab.active,
+          // we contract the tabs to a smaller size when navigation is expanded
+          contract: expand,
+        })}
+        label={tab.label}
+        value={tab.route}
+        to={tab.route}
+        component={Link}
+        disableRipple
+      />
+    );
+  });
 
   return (
     <div
-      className={clsx('navigation', {
-        contractible,
-        scrolled,
-      })}
       {...rest}
+      data-test-id={testIds.navigation}
+      className={clsx(classes.root, className, { expand })}
     >
-      <header className={clsx({ scrolled })}>
-        <div className={classes.headerContentsContainer}>
+      <header className={clsx({ expand })}>
+        <Link className={classes.logoLink} to={user?.role.name === ROLES.admin.value ? "/dashboard" : "/"}>
+          {/* Portal logo image */}
+          {ownerInfo.logo && <img className={classes.logoImage} src={ownerInfo.logo} />}
+          {/* Portal logo fallback */}
+          {!ownerInfo.logo && <AmpStoriesRoundedIcon className={classes.logo} />}
+
+          <h3>{portalName}</h3>
+        </Link>
+
+        {/* A div that grows as much as it can - this ultimately aligns the tabs to the navigation far right */}
+        <div className={classes.space} />
+
+        <Tabs
+          value={expand ? false : activeTab?.route || false}
+          classes={{ indicator: classes.tabIndicator }}
+        >
+          {/* Only shows tabs on top if navigation not expanded */}
+          {!expand && tabsToRender}
+
+          {/* top tabs are only useful when the user does not exist */}
+          {!user && topTabs.map((tab) => {
+            const tabWithSSO = handleSSOTabs(tab.route);
+            return (
+              <Tab
+                key={`nav-tab-${tab.label}`}
+                // we contract the tabs to a smaller size when navigation is expanded
+                className={clsx(classes.tab, { contract: expand })}
+                externalTarget={tabWithSSO.target}
+                label={tab.label}
+                value={tabWithSSO.route}
+                to={tabWithSSO.route}
+                component={Link}
+                disableRipple
+              />
+            );
+          })}
+        </Tabs>
+
+        {/* Login info */}
+        {user && (
           <Link
-            className={classes.logoAndNameContainer}
-            to={user?.role.name !== 'admin' ? '/' : '/dashboard'}
+            className={classes.profileLink}
+            to='/profile'
           >
-            {
-              ownerInfo.logo ? (
-                <img
-                  className={classes.imageLogo}
-                  src={ownerInfo.logo}
-                />
-              )
-                : (
-                  <AmpStoriesRoundedIcon
-                    className={
-                      !scrolled
-                        ? classes.regularLogo
-                        : classes.alternativeLogo
-                    }
-                  />
-                )
-            }
+            {/* Only show name if navigation expanded */}
+            {expand && <span>{userProfile.name}</span>}
 
-            <h3 className={classes.portalName}>
-              {portalName}
-            </h3>
+            <Avatar
+              alt="User's photo"
+              className={classes.userAvatar}
+              src={userProfile.avatar}
+            >
+              {userProfile.name.charAt(0).toLocaleUpperCase()}
+            </Avatar>
           </Link>
-
-          {!user && (
-            <div className='tabs pretabs'>
-              <Tabs
-                aria-label='Header-level navigation tabs'
-                value={(activeTab && activeTab.route) || false}
-              >
-                {topTabs.map((tab, idx) =>
-                  <Tab
-                    className={
-                      (contractible && !scrolled)
-                        ? classes.transparentMenuTab
-                        : classes.opaqueMenuTab
-                    }
-                    component={Link}
-                    disableRipple
-                    key={`nav-tab-${idx}`}
-                    label={tab.label}
-                    to={tab.route}
-                    value={tab.route}
-                  />,
-                )}
-              </Tabs>
-            </div>
-          )}
-        </div>
-
-        <nav className={clsx('container', { scrolled })}>
-          <div className='tabs maintabs'>
-            <Tabs
-              aria-label='Navigation tabs'
-              classes={{
-                indicator: (contractible && !scrolled)
-                  ? classes.transparentMenuActiveTabOverLine
-                  : classes.opaqueMenuActiveTabOverLine,
-              }}
-              value={(activeTab && activeTab.route) || false}
-            >
-              {
-                tabs.map((tab, idx) => {
-                  if (tab.isProfileTab) return
-
-                  return !(contractible && !scrolled && tab.yetToLogIn)
-                    ? (
-                      <Tab
-                        className={
-                          `
-${(contractible && !scrolled)
-                        ? classes.transparentMenuTab
-                        : classes.opaqueMenuTab
-                      }
-${tab.active ? ' ' + classes.activeTab : ''}
-${contractible && !scrolled && tab.yetToLogIn ? ' ' + classes.yetToLogIn : ''}
-`
-                        }
-                        component={Link}
-                        disableRipple
-                        key={`nav-tab-${idx}`}
-                        label={tab.label}
-                        to={tab.route}
-                        value={tab.route}
-                      />
-                    )
-                    : null
-                })
-              }
-            </Tabs>
-          </div>
-        </nav>
-
-        {
-          user && (
-            <div
-              className={
-                (contractible && !scrolled)
-                  ? classes.transparentMenuUserNameAndAvatarContainer
-                  : classes.opaqueMenuUserNameAndAvatarContainer
-              }
-            >
-              {
-                (contractible && !scrolled) &&
-                <Link
-                  className={classes.linkToProfile}
-                  to='/profile'
-                >
-                  <span className={classes.userName}>
-                    {userProfile.name}
-                  </span>
-                </Link>
-              }
-
-              <Link
-                className={classes.linkToProfile}
-                to='/profile'
-              >
-                <Avatar
-                  alt="User's photo"
-                  className={classes.userAvatar}
-                  src={userProfile.avatar}
-                >
-                  {initials}
-                </Avatar>
-              </Link>
-            </div>
-          )
-        }
+        )}
       </header>
 
-      {!!subTabs && (
-        <div className={clsx('sub-container', { scrolled })}>
-          <div
-            className={
-              `
-tabs
-${(
-          goBackLabel ||
-                (
-                  activeTab && activeTab.label === 'Dashboard' &&
-                  activeSubTab && activeSubTab.label === 'Overview'
-                )
-        )
-          ? ` ${classes.subTabsAndExtraButton}`
-          : ` ${classes.subTabs}`
-        }
-`
-            }
+      {/* show tabs on bottom if navigation expanded */}
+      {expand && (
+        <div className={classes.positionBottomTabs}>
+          <Tabs
+            value={activeTab?.route || false}
+            classes={{ indicator: classes.positionBottomTabIndicator }}
           >
-            {/* Assistant icon (to be shown on the 'Overview' sub-tab of the 'Dashboard' tab) */}
-            {
-              activeTab && activeTab.label === 'Dashboard' &&
-              activeSubTab && activeSubTab.label === 'Overview' &&
-              (
-                <div className={classes.assistantContainer}>
-                  <div
-                    className={
-                      (contractible && !scrolled)
-                        ? classes.regularAssistantButton
-                        : classes.alternativeAssistantButton
-                    }
-                    onClick={
-                      user?.role.name !== 'admin'
-                        ? () => {
-                          // If the user has scrolled, (...)
-                          if (scrolled) {
-                            // (...) scroll all the way to the top, (...)
-                            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-
-                            // (...) and if notification cards are not being shown, display them.
-                            if (!(notificationCards.showNonInstanceOwnerNotificationCards)) {
-                              toggleNonInstanceOwnerNotificationCards()
-                            }
-                          } else {
-                            /* If the user has NOT scrolled, then he's already at the top,
-                            so we toggle notification cards as regular. */
-                            toggleNonInstanceOwnerNotificationCards()
-                          }
-                        }
-
-                        : () => {
-                          // If the user has scrolled, (...)
-                          if (scrolled) {
-                            // (...) scroll all the way to the top, (...)
-                            window.scrollTo({ top: 0, left: 0, behavior: 'smooth' })
-
-                            // (...) and if notification cards are not being shown, display them.
-                            if (!(notificationCards.showInstanceOwnerNotificationCards)) {
-                              toggleInstanceOwnerNotificationCards()
-                            }
-                          } else {
-                            /* If the user has NOT scrolled, then he's already at the top,
-                            so we toggle notification cards as regular. */
-                            toggleInstanceOwnerNotificationCards()
-                          }
-                        }
-
-                    }
-                    role='button'
-                  >
-                    <RoomServiceRoundedIcon />
-                  </div>
-
-                  {
-                    user?.role.name !== 'admin'
-                      ? (
-                        (amountOfNotifications && !notificationCards.showNonInstanceOwnerNotificationCards) &&
-                        <div
-                          className={
-                            (contractible && !scrolled)
-                              ? classes.regularAssistantAmountOfNotifications
-                              : classes.alternativeAssistantAmountOfNotifications
-                          }
-                        >
-                          <p>{amountOfNotifications}</p>
-                        </div>
-                      ) : (
-                        (amountOfNotifications && !notificationCards.showInstanceOwnerNotificationCards) &&
-                        <div
-                          className={
-                            (contractible && !scrolled)
-                              ? classes.regularAssistantAmountOfNotifications
-                              : classes.alternativeAssistantAmountOfNotifications
-                          }
-                        >
-                          <p>{amountOfNotifications}</p>
-                        </div>
-                      )
-                  }
-                </div>
-              )
-            }
-
-            {/* Navigation's 'back to (...)' button (if there is one to be shown on a particular sub-tab) */}
-            {
-              !!goBackLabel && (
-                <div
-                  className={classes.goBackButton}
-                  onClick={handleGobackClick}
-                  role='button'
-                >
-                  <SvgIcon name='chevron-left-circle' size={28} />
-                  <span>{goBackLabel}</span>
-                </div>
-              )
-            }
-
-            <Tabs
-              aria-label='Navigation sub-tabs'
-              classes={{
-                indicator: (contractible && !scrolled)
-                  ? classes.transparentSubMenuActiveTabUnderLine
-                  : classes.opaqueSubMenuActiveTabUnderLine,
-              }}
-              value={(activeSubTab && activeSubTab.route) || false}
-            >
-              {subTabs.map((tab, idx) =>
-                <Tab
-                  className={
-                    `
-${classes.subTab}
-${tab.active ? ' ' + classes.activeTab : ''}
-${tab.isLogout ? ' ' + classes.logOutTab : ''}
-`
-                  }
-                  component={Link}
-                  disableRipple
-                  key={`nav-sub-tab-${idx}`}
-                  label={tab.isLogout ? <PowerSettingsNewRoundedIcon /> : tab.label}
-                  onClick={tab.isLogout ? logout : () => null}
-                  to={tab.route}
-                  value={tab.route}
-                />,
-              )}
-            </Tabs>
-          </div>
+            {tabsToRender}
+          </Tabs>
         </div>
       )}
-    </div>
-  )
-}
 
-export default Navigation
+      {/* Render sub tabs if any */}
+      {!!subTabs?.length && (
+        <nav className={clsx({ expand })}>
+          {/* Navigation's 'back to (...)' button (if there is one to be shown on a particular sub-tab) */}
+          {goBack?.type === NavigationLeftActionTypes.goBack && (
+            <div
+              className={classes.goBackButton}
+              onClick={handleGoBackClick}
+              role='button'
+            >
+              <SvgIcon name='chevron-left-circle' size={28} />
+              <span>{goBack.label}</span>
+            </div>
+          )}
+
+          {goBack?.type === NavigationLeftActionTypes.openCard && (
+            <div
+              className={clsx(classes.notification, { expand })}
+              onClick={handleNotificationClick}
+              role='button'
+            >
+              <RoomServiceRoundedIcon color='inherit' />
+              <span className={clsx({ expand })}>{amountOfNotifications}</span>
+            </div>
+          )}
+
+          {/* A div that grows as much as it can - this ultimately aligns the tabs to the navigation far right */}
+          <div className={classes.space} />
+
+          <Tabs
+            value={activeSubTab?.route || false}
+            classes={{ indicator: expand ? classes.subTabAlternativeIndicator : classes.subTabIndicator }}
+          >
+            {subTabs.map((tab) => (
+              <Tab
+                key={`nav-tab-${tab.label}`}
+                className={clsx(classes.subTab, { [classes.activeTab]: tab.active, expand })}
+                label={tab.isLogout ? <PowerSettingsNewRoundedIcon /> : tab.label}
+                value={tab.route}
+                component={tab.isLogout ? "div" : Link}
+                onClick={tab.isLogout ? () => dispatch(logout({})) : undefined}
+                to={tab.isLogout ? undefined : tab.route}
+                disableRipple
+              />
+            ))}
+          </Tabs>
+        </nav>
+      )}
+    </div>
+  );
+};
