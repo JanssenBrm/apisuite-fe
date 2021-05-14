@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import qs from "qs";
 import { useSelector, useDispatch } from "react-redux";
 import update from "immutability-helper";
-import { Button, IconButton, InputAdornment, TextField, TextFieldProps, Trans, useConfig, useTranslation } from "@apisuite/fe-base";
+import { Button, IconButton, InputAdornment, TextField, TextFieldProps, Typography, Trans, useConfig, useTranslation } from "@apisuite/fe-base";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import VpnKeyRoundedIcon from "@material-ui/icons/VpnKeyRounded";
@@ -22,6 +22,15 @@ import { LOCAL_STORAGE_KEYS } from "constants/global";
 import { LoadingView } from "./LoadingView";
 import useStyles from "./styles";
 import { invitationFormSelector } from "./selector";
+
+const AnchorBoldWrapper: React.FC<React.DetailedHTMLProps<
+React.AnchorHTMLAttributes<HTMLAnchorElement>, HTMLAnchorElement>> = (props) => {
+  return (
+    <strong>
+      <a {...props} />
+    </strong>
+  );
+};
 
 const InvitationConfirmationForm: React.FC<{
   invitation: Invitation,
@@ -106,9 +115,9 @@ const InvitationConfirmationForm: React.FC<{
             autoFocus
             fullWidth
             disabled
+            margin="dense"
             InputProps={{
               classes: { input: classes.textField },
-              margin: "dense",
             }}
           />
         </div>
@@ -123,9 +132,9 @@ const InvitationConfirmationForm: React.FC<{
             value={invitation.email}
             fullWidth
             disabled
+            margin="dense"
             InputProps={{
               classes: { input: classes.textField },
-              margin: "dense",
             }}
           />
         </div>
@@ -172,9 +181,9 @@ const InvitationConfirmationForm: React.FC<{
             autoFocus
             fullWidth
             disabled
+            margin={"dense"}
             InputProps={{
               classes: { input: classes.textField },
-              margin: "dense",
             }}
           />
         </div>
@@ -189,9 +198,9 @@ const InvitationConfirmationForm: React.FC<{
             value={invitation.email}
             fullWidth
             disabled
+            margin={"dense"}
             InputProps={{
               classes: { input: classes.textField },
-              margin: "dense",
             }}
           />
         </div>
@@ -208,9 +217,9 @@ const InvitationConfirmationForm: React.FC<{
               value={formInputs.name}
               error={!!formInputs.errors.name.length}
               fullWidth
+              margin={"dense"}
               InputProps={{
                 classes: { input: classes.textField },
-                margin: "dense",
               }}
               onChange={handleInputChanges}
             />
@@ -229,9 +238,9 @@ const InvitationConfirmationForm: React.FC<{
               value={formInputs.password}
               error={!!formInputs.errors.password.length}
               fullWidth
+              margin={"dense"}
               InputProps={{
                 classes: { input: classes.textField },
-                margin: "dense",
                 endAdornment:
                   <InputAdornment position="end">
                     <IconButton
@@ -281,6 +290,40 @@ export const InvitationForm = () => {
     }
   }, [dispatch, invitation.email, invitation.organization, invitationError, invitationToken]);
 
+  const getErrorView = () => {
+    return (
+      <>
+        <div>
+          <Typography variant="caption" display="block" gutterBottom>
+            <Trans
+              i18nKey="invitationForm.invalid"
+              values={{ org: invitation.organization }}>
+              {[
+                <strong key="org-name-1" />,
+              ]}
+            </Trans>
+          </Typography>
+        </div>
+        <Button variant="outlined" href="/" fullWidth>{t("invitationForm.backToPortal")}</Button>
+        <div>
+          <Typography variant="caption" display="block" gutterBottom>
+            <Trans
+              t={t}
+              i18nKey="invitationForm.contact"
+            >
+              {[
+                <AnchorBoldWrapper
+                  key="contact-key-1"
+                  href={supportURL}
+                />,
+              ]}
+            </Trans>
+          </Typography>
+        </div>
+      </>
+    );
+  };
+
   return (
     <>
       {
@@ -292,25 +335,7 @@ export const InvitationForm = () => {
               isLoading={!invitation?.email && !invitationError}
               isError={!!invitationError}
             >
-              <div>
-                <Trans
-                  t={t}
-                  i18nKey="invitationForm.invalid"
-                  defaults="Please contact <bold>{{org}}</bold> and request another invite."
-                  values={{ org: invitation.organization || "the organisation that invited" }}
-                  components={{ bold: <strong /> }}
-                />
-              </div>
-              <Button variant="outlined" href="/" fullWidth>{t("invitationForm.backToPortal")}</Button>
-              <div>
-                <Trans
-                  t={t}
-                  i18nKey="invitationForm.contact"
-                  defaults="You can also contact us directly through our <a href='{{url}}'><bold>Customer Suport<bold></a>."
-                  values={{ url: supportURL }}
-                  components={{ a: <a />, bold: <strong /> }}
-                />
-              </div>
+              {getErrorView()}
             </LoadingView>
           }
           {
@@ -332,25 +357,7 @@ export const InvitationForm = () => {
           isLoading={!!code}
           isError
         >
-          <div>
-            <Trans
-              t={t}
-              i18nKey="invitationForm.invalid"
-              defaults="Please contact <bold>{{org}}</bold> and request another invite."
-              values={{ org: invitation.organization || "the organisation that invited" }}
-              components={{ bold: <strong /> }}
-            />
-          </div>
-          <Button variant="outlined" href="/" fullWidth>{t("invitationForm.backToPortal")}</Button>
-          <div>
-            <Trans
-              t={t}
-              i18nKey="invitationForm.contact"
-              defaults="You can also contact us directly through our <a href='{{url}}'><bold>Customer Suport<bold></a>."
-              values={{ url: supportURL }}
-              components={{ a: <a />, bold: <strong /> }}
-            />
-          </div>
+          {getErrorView()}
         </LoadingView>
       }
     </>

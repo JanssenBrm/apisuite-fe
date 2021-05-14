@@ -1,5 +1,6 @@
 import React from "react";
 import qs from "qs";
+import clsx from "clsx";
 import { useHistory, useParams } from "react-router-dom";
 import { Button, Link, useConfig, useTranslation } from "@apisuite/fe-base";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
@@ -69,9 +70,7 @@ export const SignInOrUp: React.FC = () => {
   const renderRegisterInvitationOption = () => {
     return <>
       <option
-        className={view === "invitation"
-          ? classes.selectedOption
-          : classes.notSelectedOption}
+        className={clsx({ [classes.selectedOption]: view === "invitation", [classes.notSelectedOption]: view !== "invitation" })}
         onClick={() => changeView("invitation")}>
         {getMenuTranslation()}
       </option>
@@ -183,22 +182,14 @@ export const SignInOrUp: React.FC = () => {
                     view !== "invitation" &&
                     <>
                       <option
-                        className={
-                          view === "signin"
-                            ? classes.selectedOption
-                            : classes.notSelectedOption
-                        }
+                        className={clsx({ [classes.selectedOption]: view === "signin", [classes.notSelectedOption]: view !== "signin" })}
                         onClick={() => changeView("signin")}
                       >
                         {t("signInOrUpView.options.signIn")}
                       </option>
 
                       <option
-                        className={
-                          view === "signup"
-                            ? classes.selectedOption
-                            : classes.notSelectedOption
-                        }
+                        className={clsx({ [classes.selectedOption]: view === "signup", [classes.notSelectedOption]: view !== "signup" })}
                         onClick={() => changeView("signup")}
                       >
                         {t("signInOrUpView.options.signUp")}

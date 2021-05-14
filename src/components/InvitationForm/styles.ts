@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
     fontWeight: 300,
-    height: "200px",
+    height: 200,
     justifyContent: "space-evenly",
   },
   loading: {

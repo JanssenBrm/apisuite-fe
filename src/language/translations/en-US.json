@@ -597,8 +597,8 @@
   "invitationForm": {
     "accept": "Accept invitation",
     "backToPortal": "Go back to the Portal",
-    "contact": "You can also contact us directly through our <a href='{{url}}'><bold>Customer Suport<bold></a>.",
-    "invalid": "Please contact <bold>{{org}}</bold> and request another invite.",
+    "contact": "You can also contact us directly through our <0>Customer Suport</0>.",
+    "invalid": "Please contact <0>{{org}}</0> and request another invite.",
     "inviteSignIn": "Sign in",
     "inviteSignUp": "Sign up",
     "name": "Your profile name",
