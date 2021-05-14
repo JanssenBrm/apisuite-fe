@@ -27,12 +27,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   centerContent: {
-    display: "flex",
-    justifyContent: "center",
     alignItems: "center",
+    color: theme.palette.grey[400],
+    display: "flex",
+    flexDirection: "column",
+    fontWeight: 300,
     height: "200px",
-    color: "red",
-    fontWeight: 500,
+    justifyContent: "space-evenly",
   },
   loading: {
     color: theme.palette.secondary.main,
