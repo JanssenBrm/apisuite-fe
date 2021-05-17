@@ -44,6 +44,36 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     top: "11.5px",
   },
+  privacyPolicyDisclaimerContainer: {
+    display: "flex",
+    justifyContent: "center",
+    marginTop: "25px",
+  },
+  privacyPolicyDisclaimerLink: {
+    color: `${theme.palette.action.active} !important`,
+    fontSize: "12px",
+    fontWeight: 400,
+  },
+  privacyPolicyDisclaimerText: {
+    color: theme.palette.text.primary,
+    fontSize: "12px",
+    fontWeight: 300,
+    marginRight: "3.5px",
+  },
+  forgotPasswordLink: {
+    color: `${theme.palette.grey[400]} !important`,
+    cursor: "pointer",
+    display: "flex",
+    fontSize: "14px",
+    fontWeight: 400,
+    justifyContent: "center",
+    marginTop: "25px",
+    textDecoration: "underline",
+
+    "&:hover": {
+      color: `${theme.palette.grey[400]} !important`,
+    },
+  },
 }));
 
 export default useStyles;

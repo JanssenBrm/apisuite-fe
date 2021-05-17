@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import qs from "qs";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 import update from "immutability-helper";
 import { Button, IconButton, InputAdornment, TextField, TextFieldProps, Typography, Trans, useConfig, useTranslation } from "@apisuite/fe-base";
 import Visibility from "@material-ui/icons/Visibility";
@@ -42,6 +43,7 @@ const InvitationConfirmationForm: React.FC<{
   const classes = useStyles();
   const [t] = useTranslation();
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const [formInputs, setFormInputs] = useState({
     name: "",
@@ -102,7 +104,7 @@ const InvitationConfirmationForm: React.FC<{
         showReject
         rejectLabel={t("invitationForm.reject")}
         customRejectButtonStyles={classes.rejectButton}
-        handleReject={() => rejectInvitation({ token: token || "" })}
+        handleReject={() => dispatch(rejectInvitation({ token: token || "" }))}
       >
         <div className={classes.fieldContainer}>
           <TextField
@@ -168,7 +170,7 @@ const InvitationConfirmationForm: React.FC<{
         showReject
         rejectLabel={t("invitationForm.reject")}
         customRejectButtonStyles={classes.rejectButton}
-        handleReject={() => rejectInvitation({ token: token || "" })}
+        handleReject={() => dispatch(rejectInvitation({ token: token || "" }))}
       >
         <div className={classes.fieldContainer}>
           <TextField
@@ -257,6 +259,42 @@ const InvitationConfirmationForm: React.FC<{
           </div>
         }
       </FormCard>
+      {
+        !invitation.isUser && !isLogged &&
+        <div className={classes.privacyPolicyDisclaimerContainer}>
+          <Typography
+            className={classes.privacyPolicyDisclaimerText}
+            variant="caption"
+            display="block"
+            gutterBottom
+          >
+            <Trans
+              t={t}
+              i18nKey="invitationForm.privacyPolicyDisclaimer"
+            >
+              {[
+                /* FIXME: this url should maybe be dynamic */
+                <AnchorBoldWrapper
+                  key="contact-key-1"
+                  className={classes.privacyPolicyDisclaimerLink}
+                  href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/760938500/Privacy+Policy'
+                  rel='noopener noreferrer'
+                  target='_blank'
+                />,
+              ]}
+            </Trans>
+          </Typography>
+        </div>
+      }
+      {
+        invitation.isUser && !isLogged &&
+        <a
+          className={classes.forgotPasswordLink}
+          onClick={() => history.push("/forgot")}
+        >
+          {t("signInForm.forgotPasswordLinkLabel")}
+        </a>
+      }
     </div>
   );
 
