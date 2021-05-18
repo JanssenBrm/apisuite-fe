@@ -178,7 +178,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientSecret: mostRecentlySelectedAppDetails.clientSecret ? mostRecentlySelectedAppDetails.clientSecret : "",
         appFullDescription: mostRecentlySelectedAppDetails.description ? mostRecentlySelectedAppDetails.description : "",
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
-          ? mostRecentlySelectedAppDetails.labels.join(" ")
+          ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
         appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : "",
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : "",
@@ -305,8 +305,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   /* App-related actions */
 
-  const checkForLabels = (stringOfLabels: string) => {
-    return stringOfLabels.length ? stringOfLabels.split(" ") : [];
+  const checkForLabels = (labels: string) => {
+    return !labels.length
+      ? []
+      : labels
+        .split(",")
+        .map((l) => l.trim())
+        .filter((l) => l.length);
   };
 
   // Creating an app
