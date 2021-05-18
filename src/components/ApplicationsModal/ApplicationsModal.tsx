@@ -305,14 +305,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   /* App-related actions */
 
-  const checkForLabels = (labels: string) => {
-    return !labels.length
-      ? []
-      : labels
-        .split(",")
-        .map((l) => l.trim())
-        .filter((l) => l.length);
-  };
+  const checkForLabels = (labels: string) => (
+    labels.split(",")
+      .map((l) => l.trim())
+      .filter(Boolean)
+  );
 
   // Creating an app
 
