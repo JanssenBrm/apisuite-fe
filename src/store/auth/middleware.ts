@@ -9,6 +9,7 @@ import {
   ACCEPT_INVITATION_SUCCESS,
   INVITATION_SIGN_IN_SUCCESS,
   INVITATION_SIGN_UP_SUCCESS,
+  REJECT_INVITATION_SUCCESS,
 } from "./actions/invitation";
 
 export const COO_KEY = "apiSuiteSession";
@@ -41,7 +42,8 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
   } else if (action.type === ACCEPT_INVITATION_WITH_SIGN_IN_SUCCESS ||
     action.type === ACCEPT_INVITATION_SUCCESS ||
     action.type === INVITATION_SIGN_IN_SUCCESS ||
-    action.type === INVITATION_SIGN_UP_SUCCESS) {
+    action.type === INVITATION_SIGN_UP_SUCCESS ||
+    action.type === REJECT_INVITATION_SUCCESS) {
     history.push(action.path);
   }
 };

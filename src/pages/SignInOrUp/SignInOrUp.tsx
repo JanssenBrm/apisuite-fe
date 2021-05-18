@@ -40,11 +40,11 @@ export const SignInOrUp: React.FC = () => {
     setView(viewToDisplay);
   };
 
-  const isReady = () => {
+  const invitationHasNoError = () => {
     const invitationToken = qs.parse(window.location.search.slice(1)).token as string || undefined;
     const code = qs.parse(window.location.search.slice(1)).code as string || undefined;
 
-    if ((!invitationToken && !code && !auth.error) || auth.error) {
+    if (view === "invitation" && ((!invitationToken && !code && !auth.error) || auth.error)) {
       return false;
     }
     return true;
@@ -169,15 +169,15 @@ export const SignInOrUp: React.FC = () => {
           {!shouldRenderNotAvailableView() &&
             <>
               <h1 className={classes.formSideTitle}>
-                {isReady() ? t("signInOrUpView.welcomeTitle") : t("signInOrUpView.invalid")}
+                {invitationHasNoError() ? t("signInOrUpView.welcomeTitle") : t("signInOrUpView.invalid")}
               </h1>
               <p className={classes.formSideSubtitle}>
-                {isReady() && t(view === "invitation" ? "signInOrUpView.welcomeSubtitleInvitation" : "signInOrUpView.welcomeSubtitle", { org: auth.invitation?.organization || "Unknown" })}
+                {invitationHasNoError() && t(view === "invitation" ? "signInOrUpView.welcomeSubtitleInvitation" : "signInOrUpView.welcomeSubtitle", { org: auth.invitation?.organization || "Unknown" })}
               </p>
 
               <div>
                 <div className={classes.selector}>
-                  {view === "invitation" && isReady() ? renderRegisterInvitationOption() : null}
+                  {view === "invitation" && invitationHasNoError() ? renderRegisterInvitationOption() : null}
                   {
                     view !== "invitation" &&
                     <>
@@ -204,7 +204,7 @@ export const SignInOrUp: React.FC = () => {
                   {view === "invitation" && <InvitationForm />}
                 </div>
                 <div className={classes.formFooter}>
-                  {(view === "invitation" && !auth.authToken && !!sso?.length && isReady()) && renderSignUpFooter(providerSignupURL)}
+                  {(view === "invitation" && !auth.authToken && !!sso?.length && invitationHasNoError()) && renderSignUpFooter(providerSignupURL)}
                 </div>
               </div>
             </>}
