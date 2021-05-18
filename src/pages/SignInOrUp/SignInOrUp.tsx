@@ -23,7 +23,6 @@ export const SignInOrUp: React.FC = () => {
   const [t] = useTranslation();
   const { auth } = useSelector(signInOrUpSelector);
   const { ownerInfo, portalName, providerSignupURL, sso } = useConfig();
-  // singlesignon.com
 
   const { view: viewParameter } = useParams<{ view: string }>();
 
