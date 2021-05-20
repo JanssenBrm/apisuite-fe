@@ -141,7 +141,6 @@ export function * deleteAppActionSaga (action: DeleteAppAction) {
 }
 
 export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
-  const t = i18n.getFixedT("en-US");
   try {
     const requestAPIAccessUrl = `${API_URL}/apps/${action.appId}/request`;
 
@@ -157,11 +156,11 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
     });
 
     yield put(requestAPIAccessSuccess({}));
-    yield put(openNotification("success", t("applications.requestAPIAcessSuccess"), 3000));
+    yield put(openNotification("success", i18n.t("applications.requestAPIAcessSuccess"), 3000));
   } catch (error) {
     yield put(requestAPIAccessError({}));
     yield put(handleSessionExpire({}));
-    yield put(openNotification("error", t("applications.requestAPIAcessError"), 3000));
+    yield put(openNotification("error", i18n.t("applications.requestAPIAcessError"), 3000));
   }
 }
 
