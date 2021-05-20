@@ -1,6 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useConfig, useTranslation, Fab } from "@apisuite/fe-base";
+import { useConfig, useTranslation, Fab, Typography } from "@apisuite/fe-base";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
 import { Menus } from "@apisuite/extension-ui-types";
 import { getMenuEntries } from "util/extensions";
@@ -123,19 +123,19 @@ const SubSection = ({ subMenu, roleName }: { subMenu: string; roleName?: string 
   const allEntries = [...section.entries, ...extensionsMenuEntries];
 
   return (
-    <div className={classes.subSection} key={subMenu}>
-      <h3>{section.title}</h3>
+    <div key={subMenu}>
+      <Typography variant="body1">{section.title}</Typography>
 
       <>
-        {allEntries.map((entry, i) => {
+        {allEntries.map((entry) => {
           const { label, ...anchorProps } = entry;
 
           return (
-            <p key={i}>
+            <Typography component="p" variant="overline" key={entry.label}>
               {
                 entry.route && entry.route !== "#"
                   ? (
-                    <a {...anchorProps} href={entry.route} key={i}>
+                    <a {...anchorProps} href={entry.route} className={classes.subSectionAnchor}>
                       {label}
                     </a>
                   )
@@ -143,7 +143,7 @@ const SubSection = ({ subMenu, roleName }: { subMenu: string; roleName?: string 
                     label
                   )
               }
-            </p>
+            </Typography>
           );
         })}
       </>
@@ -194,9 +194,9 @@ const Footer: React.FC<FooterProps> = (
                 )
             }
 
-            <h3 className={classes.portalName}>
+            <Typography variant="h4">
               {portalName}
-            </h3>
+            </Typography>
           </div>
 
           <div className={classes.sectionsContainer}>
@@ -242,15 +242,17 @@ auth.user?.role.name === 'admin' &&
           <SocialLinks />
 
           <div className={classes.copyrightContainer}>
-            <a
+            <Typography
+              variant="subtitle2"
+              component="a"
               href='https://apisuite.io/'
               rel='noopener noreferrer'
               target='_blank'
             >
               &copy; {new Date().getFullYear()} {t("footer.copyrights.website")}
-            </a>
+            </Typography>
 
-            <p>{t("footer.copyrights.allRightsReserved")}</p>
+            <Typography variant="subtitle2">{t("footer.copyrights.allRightsReserved")}</Typography>
           </div>
 
           <LocaleSelect />

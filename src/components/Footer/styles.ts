@@ -97,11 +97,6 @@ export default makeStyles((theme) => ({
     width: "100%",
   },
 
-  portalName: {
-    fontSize: "22px",
-    fontWeight: 300,
-  },
-
   rightFooterContentsContainer: {
     alignItems: "center",
     display: "flex",
@@ -123,27 +118,7 @@ export default makeStyles((theme) => ({
     width: "100%",
   },
 
-  subSection: {
-    "& > h3": {
-      color: theme.palette.primary.contrastText,
-      fontSize: "16px",
-      fontWeight: "300",
-      lineHeight: "22px",
-      margin: "0",
-      padding: "0",
-    },
-
-    "& > p": {
-      color: theme.palette.grey[300],
-      fontSize: "14px",
-      fontWeight: "300",
-      lineHeight: "22px",
-      margin: "0",
-      padding: "0",
-
-      "& > a": {
-        textDecoration: "none",
-      },
-    },
+  subSectionAnchor: {
+    textDecoration: "none",
   },
 }));
