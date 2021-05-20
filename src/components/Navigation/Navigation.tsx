@@ -230,7 +230,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
               onClick={handleGoBackClick}
               role='button'
             >
-              <SvgIcon name='chevron-left-circle' size={28} />
+              <SvgIcon name='chevron-left-circle' size={24} />
               <Typography variant="overline">{goBack.label}</Typography>
             </div>
           )}
