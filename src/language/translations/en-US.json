@@ -609,5 +609,9 @@
       "name": "Please fill in your profile name.",
       "password": "Please fill in your password."
     }
+  },
+  "applications": {
+    "requestAPIAcessSuccess": "Access requested successfully.",
+    "requestAPIAcessError": "Failed to request access."
   }
 }

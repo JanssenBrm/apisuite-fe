@@ -13,6 +13,9 @@ import { getAllUserApps, getAllUserAppsError, getAllUserAppsSuccess, GET_ALL_USE
 import { requestAPIAccessError, requestAPIAccessSuccess, REQUEST_API_ACCESS } from "./actions/requestApiAccess";
 import { getUserAppError, getUserAppSuccess, GET_USER_APP } from "./actions/getUserApp";
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
+import { i18n } from "@apisuite/fe-base";
+import { openNotification } from "store/notificationStack/actions/notification";
+
 
 export function * createAppActionSaga (action: CreateAppAction) {
   try {
@@ -138,6 +141,7 @@ export function * deleteAppActionSaga (action: DeleteAppAction) {
 }
 
 export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
+  const t = i18n.getFixedT("en-US");
   try {
     const requestAPIAccessUrl = `${API_URL}/apps/${action.appId}/request`;
 
@@ -153,9 +157,11 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
     });
 
     yield put(requestAPIAccessSuccess({}));
+    yield put(openNotification("success", t("applications.requestAPIAcessSuccess"), 3000));
   } catch (error) {
     yield put(requestAPIAccessError({}));
     yield put(handleSessionExpire({}));
+    yield put(openNotification("error", t("applications.requestAPIAcessError"), 3000));
   }
 }
 
