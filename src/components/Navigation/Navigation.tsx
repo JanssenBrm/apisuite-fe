@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from "react";
 import clsx from "clsx";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useConfig, Tabs, Tab, Avatar } from "@apisuite/fe-base";
+import { useConfig, Tabs, Tab, Avatar, Typography } from "@apisuite/fe-base";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
 import PowerSettingsNewRoundedIcon from "@material-ui/icons/PowerSettingsNewRounded";
 import RoomServiceRoundedIcon from "@material-ui/icons/RoomServiceRounded";
@@ -124,7 +124,11 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           // we contract the tabs to a smaller size when navigation is expanded
           contract: expand,
         })}
-        label={tab.label}
+        label={(
+          <Typography variant="h6">
+            {tab.label}
+          </Typography>
+        )}
         value={tab.route}
         to={tab.route}
         component={Link}
@@ -146,7 +150,9 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           {/* Portal logo fallback */}
           {!ownerInfo.logo && <AmpStoriesRoundedIcon className={classes.logo} />}
 
-          <h3>{portalName}</h3>
+          <Typography variant="h3">
+            {portalName}
+          </Typography>
         </Link>
 
         {/* A div that grows as much as it can - this ultimately aligns the tabs to the navigation far right */}
@@ -168,7 +174,11 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
                 // we contract the tabs to a smaller size when navigation is expanded
                 className={clsx(classes.tab, { contract: expand })}
                 externalTarget={tabWithSSO.target}
-                label={tab.label}
+                label={(
+                  <Typography variant="h6">
+                    {tab.label}
+                  </Typography>
+                )}
                 value={tabWithSSO.route}
                 to={tabWithSSO.route}
                 component={Link}
@@ -185,7 +195,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
             to='/profile'
           >
             {/* Only show name if navigation expanded */}
-            {expand && <span>{userProfile.name}</span>}
+            {expand && <Typography variant="h6">{userProfile.name}</Typography>}
 
             <Avatar
               alt="User's photo"
@@ -221,7 +231,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
               role='button'
             >
               <SvgIcon name='chevron-left-circle' size={28} />
-              <span>{goBack.label}</span>
+              <Typography variant="overline">{goBack.label}</Typography>
             </div>
           )}
 
@@ -247,7 +257,12 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
               <Tab
                 key={`nav-tab-${tab.label}`}
                 className={clsx(classes.subTab, { [classes.activeTab]: tab.active, expand })}
-                label={tab.isLogout ? <PowerSettingsNewRoundedIcon /> : tab.label}
+
+                label={(
+                  <Typography variant="subtitle1">
+                    {tab.isLogout ? <PowerSettingsNewRoundedIcon /> : tab.label}
+                  </Typography>
+                )}
                 value={tab.route}
                 component={tab.isLogout ? "div" : Link}
                 onClick={tab.isLogout ? () => dispatch(logout({})) : undefined}

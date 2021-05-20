@@ -141,7 +141,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     cursor: "pointer",
     display: "flex",
-    color: theme.palette.label,
+    color: theme.palette.text.primary,
 
     "& > span": {
       fontSize: "16px",
