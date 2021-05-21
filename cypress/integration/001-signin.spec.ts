@@ -9,7 +9,7 @@ const getCredentials = (user = "johndoe") => {
   };
 };
 
-describe("Sign in", () => {
+xdescribe("Sign in", () => {
   before(() => {
     cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings.json" });
     cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis.json" });
@@ -44,7 +44,7 @@ describe("Sign in", () => {
       });
     });
 
-    cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: "profile.json" });
+    cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: "profile/profile.json" });
 
     cy.testID(testIds.signInEmail).clear().type(credentials.email);
     cy.testID(testIds.signInPwd).clear().type(credentials.pwd);

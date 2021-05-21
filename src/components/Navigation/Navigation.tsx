@@ -129,6 +129,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         to={tab.route}
         component={Link}
         disableRipple
+        data-test-id="tab"
       />
     );
   });
@@ -139,7 +140,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       data-test-id={testIds.navigation}
       className={clsx(classes.root, className, { expand })}
     >
-      <header className={clsx({ expand })}>
+      <header className={clsx({ expand })} data-test-id={testIds.header}>
         <Link className={classes.logoLink} to={user?.role.name === ROLES.admin.value ? "/dashboard" : "/"}>
           {/* Portal logo image */}
           {ownerInfo.logo && <img className={classes.logoImage} src={ownerInfo.logo} />}
@@ -173,6 +174,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
                 to={tabWithSSO.route}
                 component={Link}
                 disableRipple
+                data-test-id={testIds.tab}
               />
             );
           })}
@@ -200,7 +202,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
 
       {/* show tabs on bottom if navigation expanded */}
       {expand && (
-        <div className={classes.positionBottomTabs}>
+        <div className={classes.positionBottomTabs} data-test-id={testIds.subNav}>
           <Tabs
             value={activeTab?.route || false}
             classes={{ indicator: classes.positionBottomTabIndicator }}

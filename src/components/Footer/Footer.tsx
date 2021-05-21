@@ -21,7 +21,7 @@ const SocialLinks = () => {
   }
 
   return (
-    <div className={classes.iconsContainer}>
+    <div className={classes.iconsContainer} data-test-id={testIds.footerSocialIcons}>
       {socialURLs.map((socialUrl, index) => {
         switch (socialUrl.name) {
           case "facebook":
@@ -171,7 +171,7 @@ const Footer: React.FC<FooterProps> = (
       data-test-id={testIds.footer}
       className={classes.footer}
     >
-      <div className={classes.footerToTopShortcutContainer}>
+      <div className={classes.footerToTopShortcutContainer} data-test-id={testIds.footerToTopButton}>
         <Fab size='small' onClick={handleFabClick}>
           <SvgIcon name='chevron-up' size={24} />
         </Fab>
@@ -179,7 +179,7 @@ const Footer: React.FC<FooterProps> = (
 
       <div className={classes.footerContentsContainer}>
         <div className={classes.leftFooterContentsContainer}>
-          <div className={classes.logoAndPortalNameContainer}>
+          <div className={classes.logoAndPortalNameContainer} data-test-id={testIds.footerLogoAndPortalName}>
             {
               ownerInfo.logo ? (
                 <img
@@ -241,7 +241,7 @@ auth.user?.role.name === 'admin' &&
         <div className={classes.rightFooterContentsContainer}>
           <SocialLinks />
 
-          <div className={classes.copyrightContainer}>
+          <div className={classes.copyrightContainer} data-test-id={testIds.footerCredits}>
             <a
               href='https://apisuite.io/'
               rel='noopener noreferrer'

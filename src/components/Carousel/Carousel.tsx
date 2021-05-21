@@ -5,6 +5,7 @@ import RadioButtonCheckedRoundedIcon from "@material-ui/icons/RadioButtonChecked
 import RadioButtonUncheckedRoundedIcon from "@material-ui/icons/RadioButtonUncheckedRounded";
 import clsx from "clsx";
 
+import { testIds } from "testIds";
 import useStyles from "./styles";
 import { CarouselSlideProps, CarouselProps } from "./types";
 
@@ -103,6 +104,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   const carouselSlides = slidesArray.map((slide, index) =>
     <div
+      data-test-id={testIds.slide}
       key={`slide_${index}`}
       onMouseEnter={() => { setIsHoveringSlide(true); }}
       onMouseLeave={() => { setIsHoveringSlide(false); }}
@@ -127,6 +129,7 @@ export const Carousel: React.FC<CarouselProps> = ({
       }
       key={`slider_button_${index}`}
       onClick={() => handleCarouselSlideChange(index)}
+      data-test-id = {testIds.sliderIconButton}
     >
       {icon}
     </button>,

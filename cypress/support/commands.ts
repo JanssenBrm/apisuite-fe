@@ -4,6 +4,10 @@ Cypress.Commands.add("testID", (value) => {
   return cy.get(`[data-test-id=${value}]`);
 });
 
+Cypress.Commands.add("findChildrenByID", (parentID, childrenID) => {
+  return cy.get(`[data-test-id=${parentID}]`).find(`[data-test-id=${childrenID}]`);
+});
+
 Cypress.Commands.add("dismissCookiesBanner", () => {
   return cy.testID(testIds.cookieConsent).get("button").contains("I Accept").click();
 });

@@ -11,6 +11,8 @@ import APICatalog from "components/APICatalog";
 import { Carousel } from "components/Carousel";
 import Notice from "components/Notice";
 
+import { testIds } from "testIds";
+
 import carouselBackground from "assets/space-background.svg";
 import carouselSlide1 from "assets/carousel-slide-1.svg";
 import carouselSlide2 from "assets/carousel-slide-2.svg";
@@ -134,12 +136,12 @@ export const Sandbox: React.FC = () => {
       </section>
 
       {/* 'Steps' section */}
-      <section className={classes.stepsSectionContainer}>
+      <section className={classes.stepsSectionContainer} data-test-id={testIds.stepsSection}>
         <h1 className={classes.sectionIntroHeading}>
           {t("sandboxPage.stepsSection.intro")}
         </h1>
 
-        <section className={classes.stepsSectionDescriptionsContainer}>
+        <section className={classes.stepsSectionDescriptionsContainer} data-test-id={testIds.stepsSectionContent}>
           <section className={classes.stepsDescriptionContainerOne}>
             <h3 className={classes.stepsDescriptionHeading}>
               {
@@ -207,7 +209,7 @@ export const Sandbox: React.FC = () => {
 
           <section className={classes.stepsDescriptionContainerTwo}>
             <div className={classes.individualStepsContainer}>
-              <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
+              <div className={`${classes.individualStep} ${classes.individualStepsDivider}`} data-test-id={testIds.stepOne}>
                 <h1 className={classes.individualStepOne}>1.</h1>
 
                 <h3 className={classes.individualStepOne}>
@@ -233,7 +235,7 @@ export const Sandbox: React.FC = () => {
                 </Button>
               </div>
 
-              <div className={`${classes.individualStep} ${classes.individualStepsDivider}`}>
+              <div className={`${classes.individualStep} ${classes.individualStepsDivider}`} data-test-id={testIds.stepTwo}>
                 <h1 className={classes.individualStepTwo}>2.</h1>
 
                 <h3 className={classes.individualStepTwo}>
@@ -253,7 +255,7 @@ export const Sandbox: React.FC = () => {
                 </Button>
               </div>
 
-              <div className={classes.individualStep}>
+              <div className={classes.individualStep} data-test-id={testIds.stepThree}>
                 <h1 className={classes.individualStepThree}>3.</h1>
 
                 <h3 className={classes.individualStepThree}>
@@ -280,23 +282,23 @@ export const Sandbox: React.FC = () => {
       <hr className={classes.sectionSeparator} />
 
       {/* 'API Catalog' section */}
-      <section className={classes.apiCatalogSectionContainer}>
+      <section className={classes.apiCatalogSectionContainer} data-test-id={testIds.recentAdditionsTitle}>
         <h1 className={classes.sectionIntroHeading}>
           {t("sandboxPage.apiCatalog.intro")}
         </h1>
 
-        <section className={classes.apiCatalogContainer}>
+        <section className={classes.apiCatalogContainer} data-test-id={testIds.recentAdditionsCatalog}>
           {
             recentlyAddedAPIs.length === 0
-              ? <p>{t("sandboxPage.apiCatalog.paragraph")}</p>
-              : <APICatalog apisToDisplay={recentlyAddedAPIs} />
+              ? <p data-test-id={testIds.recentAdditionsEmpty}>{t("sandboxPage.apiCatalog.paragraph")}</p>
+              : <APICatalog apisToDisplay={recentlyAddedAPIs}/>
           }
         </section>
       </section>
 
       {/* Notice */}
       {socialURLs.length > 0 && (
-        <section className={classes.noticeContainer}>
+        <section className={classes.noticeContainer} data-test-id={testIds.notice}>
           <Notice
             noticeIcon={<CheckCircleOutlineRoundedIcon />}
             noticeText={
