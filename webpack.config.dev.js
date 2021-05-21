@@ -2,7 +2,7 @@
  * Webpack DEVELOPMENT configuration file
  */
 
-const path = require("path");
+const fs = require("fs");
 const webpack = require("webpack");
 
 module.exports = {
@@ -13,21 +13,16 @@ module.exports = {
   ],
 
   devServer: {
-    contentBase: path.resolve(__dirname, "src"),
-    publicPath: "/",
+    https: {
+      key: fs.readFileSync("./ssl/localhost.develop.apisuite.io-key.pem"),
+      cert: fs.readFileSync("./ssl/localhost.develop.apisuite.io.pem"),
+    },
+
     historyApiFallback: true,
     port: 9001,
     host: "localhost.develop.apisuite.io",
-    noInfo: false,
-    inline: true,
     hot: true,
-    stats: {
-      entrypoints: false,
-      children: false,
-      modules: false,
-      colors: true,
-      excludeAssets: (assetName) => assetName.endsWith(".map"),
-    },
+    liveReload: false,
   },
 
   devtool: "cheap-module-source-map",

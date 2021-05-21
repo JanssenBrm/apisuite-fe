@@ -172,8 +172,8 @@ const Footer: React.FC<FooterProps> = (
       className={classes.footer}
     >
       <div className={classes.footerToTopShortcutContainer} data-test-id={testIds.footerToTopButton}>
-        <Fab size='small' onClick={handleFabClick}>
-          <SvgIcon name='chevron-up' size={24} />
+        <Fab size="small" color="primary" onClick={handleFabClick}>
+          <SvgIcon name="chevron-up" size={24} />
         </Fab>
       </div>
 

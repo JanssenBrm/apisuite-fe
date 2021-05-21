@@ -5,7 +5,7 @@ export default makeStyles((theme) => ({
 
   modalContentsContainer: {
     backgroundColor: theme.palette.background.paper,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     boxShadow: "0px 0px 20px 0px rgba(0,0,0,0.3)",
     height: "100%",
     /* The 'outline' property is necessary to remove
@@ -101,7 +101,7 @@ export default makeStyles((theme) => ({
 
   alternativeSectionSeparator: {
     border: `1px solid ${theme.palette.grey["100"]}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     margin: "25px 0px",
     width: "100%",
   },
@@ -138,7 +138,7 @@ export default makeStyles((theme) => ({
     "& > :last-child": {
       backgroundColor: theme.palette.background.default,
       border: `1px solid ${theme.palette.grey["300"]}`,
-      borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+      borderRadius: `${theme.shape.borderRadius}px`,
       color: theme.palette.action.active,
       cursor: "pointer",
       height: "40px",
@@ -227,133 +227,37 @@ export default makeStyles((theme) => ({
   },
 
   clientSecretInputFieldContainer: {
+    position: "relative",
     display: "flex",
+    alignItems: "center",
+    background: theme.palette.common.white,
   },
 
-  disabledAddOrEditButton: {
-    backgroundColor: theme.palette.secondary.main,
-    border: `1px solid ${theme.palette.secondary.main}`,
-    color: `${theme.palette.secondary.contrastText} !important`,
-    fontSize: "16px",
-    fontWeight: 500,
-    opacity: 0.5,
-    padding: "6px 21px",
-    pointerEvents: "none",
-    textDecoration: "none",
-    textTransform: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
-    },
-  },
-
-  disabledClientIDInputField: {
-    backgroundColor: "#DCDFE2",
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    marginBottom: "25px",
-    marginTop: "0px",
-    maxWidth: "400px",
-    pointerEvents: "none",
-    width: "100%",
-
-    // Text field's label styles
-    "& > label": {
-      color: theme.palette.label,
-    },
-
-    "& label.Mui-focused": {
-      color: `${theme.palette.action.focus} !important`,
-    },
-
-    // Text field's input outline styles
-    "& .MuiOutlinedInput-root": {
-      "&:hover fieldset": {
-        borderColor: `${theme.palette.grey["300"]} !important`,
-      },
-
-      "&.Mui-focused fieldset": {
-        borderColor: `${theme.palette.action.focus} !important`,
-      },
-    },
-
-    // Text field's input text styles
-    "& .MuiInputBase-root": {
-      paddingRight: "8.5px !important",
-
-      "& .MuiInputBase-input": {
-        borderRight: "1px solid rgba(0, 0, 0, 0.2)",
-        color: theme.palette.label,
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-      },
-
-      "& .MuiInputAdornment-root": {
-        color: theme.palette.label,
-        pointerEvents: "none",
-      },
-    },
-  },
-
-  disabledClientSecretInputField: {
-    backgroundColor: "#DCDFE2",
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    marginBottom: "25px",
-    marginTop: "0px",
-    maxWidth: "350px",
-    pointerEvents: "none",
-    width: "100%",
-
-    // Text field's label styles
-    "& > label": {
-      color: theme.palette.label,
-    },
-
-    "& label.Mui-focused": {
-      color: `${theme.palette.action.focus} !important`,
-    },
-
-    // Text field's input outline styles
-    "& .MuiOutlinedInput-root": {
-      "&:hover fieldset": {
-        borderColor: `${theme.palette.grey[300]} !important`,
-      },
-
-      "&.Mui-focused fieldset": {
-        borderColor: `${theme.palette.action.focus} !important`,
-      },
-    },
-
-    // Text field's input text styles
-    "& .MuiInputBase-root": {
-      paddingRight: "8.5px !important",
-
-      "& .MuiInputBase-input": {
-        borderRight: "1px solid rgba(0, 0, 0, 0.2)",
-        color: theme.palette.label,
-        overflow: "hidden",
-        textOverflow: "ellipsis",
-        whiteSpace: "nowrap",
-      },
-
-      "& .MuiInputAdornment-root": {
-        color: theme.palette.label,
-        pointerEvents: "none",
-      },
+  copyCta: {
+    position: "absolute",
+    right: 50,
+    border: `1px solid ${theme.palette.action.disabled}`,
+    background: theme.palette.common.white,
+    borderTopRightRadius: theme.shape.borderRadius,
+    borderBottomRightRadius: theme.shape.borderRadius,
+    height: 40,
+    marginTop: 8,
+    marginBottom: 4,
+    "& > button": {
+      transform: "translateY(-4px)",
     },
   },
 
   disabledClientSecretInputFieldRefreshButton: {
-    backgroundColor: "#DCDFE2",
-    border: "1px solid rgba(0, 0, 0, 0.2)",
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
-    color: theme.palette.label,
-    height: "40px",
-    marginLeft: "10px",
+    border: `1px solid ${theme.palette.action.disabledBackground}`,
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.action.disabledBackground,
+    height: 40,
+    marginLeft: 10,
     padding: "7px 0px",
     pointerEvents: "none",
     textAlign: "center",
-    width: "47px",
+    width: 47,
   },
 
   draftClientApplicationCardStatusIcon: {
@@ -370,21 +274,6 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     display: "flex",
     marginTop: "20px",
-  },
-
-  enabledAddOrEditButton: {
-    backgroundColor: theme.palette.primary.main,
-    color: `${theme.palette.primary.contrastText} !important`,
-    border: `1px solid ${theme.palette.primary.main}`,
-    fontSize: "16px",
-    fontWeight: 500,
-    padding: "6px 21px",
-    textDecoration: "none",
-    textTransform: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.primary.main,
-    },
   },
 
   enabledClientIDInputField: {
@@ -483,7 +372,7 @@ export default makeStyles((theme) => ({
 
   enabledClientSecretInputFieldRefreshButton: {
     border: "1px solid rgba(0, 0, 0, 0.2)",
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: theme.palette.action.active,
     cursor: "pointer",
     height: "40px",
@@ -512,7 +401,7 @@ export default makeStyles((theme) => ({
   infoBox: {
     alignItems: "center",
     backgroundColor: theme.palette.info.light,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
     height: "100%",
     padding: "12px 10px",
@@ -616,14 +505,13 @@ export default makeStyles((theme) => ({
   otherButtons: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.action.active} !important`,
     fontSize: "16px",
     fontWeight: 500,
     marginLeft: "25px",
     padding: "6px 21px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.background.default,
@@ -640,22 +528,21 @@ export default makeStyles((theme) => ({
 
   regularSectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: theme.palette.dimensions.borderRadius,
-    margin: "0px 0px 25px 0px",
+    borderRadius: theme.shape.borderRadius,
+    margin: "25px 0px 25px 0px",
     width: "100%",
   },
 
   removeAppButton: {
     backgroundColor: theme.palette.error.main,
     border: `1px solid ${theme.palette.error.main}`,
-    borderRadius: `${theme.palette.dimensions.borderRadius}px`,
+    borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.primary.contrastText} !important`,
     fontSize: "16px",
     fontWeight: 500,
     marginLeft: "25px",
     padding: "6px 21px",
     textDecoration: "none",
-    textTransform: "none",
 
     "&:hover": {
       backgroundColor: theme.palette.error.main,
@@ -688,5 +575,25 @@ export default makeStyles((theme) => ({
     color: theme.palette.primary.main,
     fontSize: "14px",
     margin: "0px 12px 0px 12px",
+  },
+  row: {
+    position: "relative",
+    display: "flex",
+    alignItems: "center",
+  },
+
+  rowCta: {
+    position: "absolute",
+    right: 0,
+    border: `1px solid ${theme.palette.action.disabled}`,
+    background: theme.palette.common.white,
+    borderTopRightRadius: theme.shape.borderRadius,
+    borderBottomRightRadius: theme.shape.borderRadius,
+    height: 40,
+    marginTop: 8,
+    marginBottom: 4,
+    "& > button": {
+      transform: "translateY(-4px)",
+    },
   },
 }));

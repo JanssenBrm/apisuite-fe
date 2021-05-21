@@ -51,7 +51,7 @@ ${apiDetails.apiAccess
 `
               }
             >
-              {`v${apiDetails.apiVersion}`}
+              {apiDetails.apiVersion}
             </span>
             <span data-test-id={testIds.apiCardAccessType}>{apiDetails.apiAccess ? "Production access" : "API Documentation"}</span>
           </p>

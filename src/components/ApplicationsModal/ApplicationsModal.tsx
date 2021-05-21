@@ -5,13 +5,12 @@ import {
   Avatar,
   Button,
   Fade,
-  InputAdornment,
   Menu,
   MenuItem,
   Modal,
   TextField,
   useConfig,
-  useTheme,
+  IconButton,
 } from "@apisuite/fe-base";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
@@ -47,10 +46,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
 
   const { ownerInfo, portalName } = useConfig();
-
-  const theme = useTheme();
-
-  console.log("theme", theme);
 
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
@@ -178,7 +173,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientSecret: mostRecentlySelectedAppDetails.clientSecret ? mostRecentlySelectedAppDetails.clientSecret : "",
         appFullDescription: mostRecentlySelectedAppDetails.description ? mostRecentlySelectedAppDetails.description : "",
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
-          ? mostRecentlySelectedAppDetails.labels.join(" ")
+          ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
         appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : "",
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : "",
@@ -305,9 +300,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   /* App-related actions */
 
-  const checkForLabels = (stringOfLabels: string) => {
-    return stringOfLabels.length ? stringOfLabels.split(" ") : [];
-  };
+  const checkForLabels = (labels: string) => (
+    labels.split(",")
+      .map((l) => l.trim())
+      .filter(Boolean)
+  );
 
   // Creating an app
 
@@ -376,6 +373,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     handleCloseDialog();
 
     toggleModal();
+  };
+
+  const copyToClipboard = (value: string) => {
+    navigator.clipboard.writeText(value);
   };
 
   return (
@@ -644,54 +645,53 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     <>.</>
                   </p>
 
-                  <TextField
-                    className={
-                      modalMode === "new"
-                        ? classes.disabledClientIDInputField
-                        /* TODO: Previously 'enabledClientIDInputField'.
-                        Revisit once it is possible to generate/edit new client IDs. */
-                        : classes.disabledClientIDInputField
-                    }
-                    fullWidth
-                    InputProps={{
-                      endAdornment:
-                        <InputAdornment position='end'>
-                          <FileCopyOutlinedIcon />
-                        </InputAdornment>,
-                    }}
-                    label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
-                    margin='dense'
-                    name='appClientID'
-                    onChange={handleChange}
-                    type='text'
-                    value={formState.values.appClientID}
-                    variant='outlined'
-                  />
+
+                  <div className={classes.row}>
+                    <TextField
+                      fullWidth
+                      label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
+                      margin="dense"
+                      name="appClientID"
+                      onChange={handleChange}
+                      type="text"
+                      value={formState.values.appClientID}
+                      variant="outlined"
+                      disabled
+                    />
+
+                    <div className={classes.rowCta}>
+                      <IconButton
+                        size="medium"
+                        disabled={!formState.values.appClientID}
+                        onClick={() => copyToClipboard(formState.values.appClientID)}
+                      >
+                        <FileCopyOutlinedIcon />
+                      </IconButton>
+                    </div>
+                  </div>
 
                   <div className={classes.clientSecretInputFieldContainer}>
                     <TextField
-                      className={
-                        modalMode === "new"
-                          ? classes.disabledClientSecretInputField
-                          /* TODO: Previously 'enabledClientSecretInputField'.
-                          Revisit once it is possible to generate/edit new client secrets. */
-                          : classes.disabledClientSecretInputField
-                      }
                       fullWidth
-                      InputProps={{
-                        endAdornment:
-                          <InputAdornment position='end'>
-                            <FileCopyOutlinedIcon />
-                          </InputAdornment>,
-                      }}
                       label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
-                      margin='dense'
-                      name='appClientSecret'
+                      margin="dense"
+                      name="appClientSecret"
                       onChange={handleChange}
-                      type='text'
+                      type="text"
                       value={formState.values.appClientSecret}
-                      variant='outlined'
+                      variant="outlined"
+                      disabled
                     />
+
+                    <div className={classes.copyCta}>
+                      <IconButton
+                        size="medium"
+                        disabled={!formState.values.appClientSecret}
+                        onClick={() => copyToClipboard(formState.values.appClientSecret)}
+                      >
+                        <FileCopyOutlinedIcon />
+                      </IconButton>
+                    </div>
 
                     <div
                       className={
@@ -949,17 +949,19 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       <>
                         <div>
                           <Button
-                            className={
-                              formState.values.appName.length !== 0 &&
+                            disabled={
+                              !(formState.values.appName.length !== 0 &&
                                 formState.values.appRedirectURI !== "http://" &&
                                 formState.values.appRedirectURI !== "https://" &&
                                 formState.values.appRedirectURI.length !== 0 &&
                                 (formState.isValid || Object.keys(formState.errors).length === 0) &&
                                 !(allUserAppNames.includes(formState.values.appName)) &&
-                                validImage
-                                ? classes.enabledAddOrEditButton
-                                : classes.disabledAddOrEditButton
+                                validImage)
                             }
+                            color="primary"
+                            variant="contained"
+                            size="large"
+                            disableElevation
                             onClick={createNewApp}
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.addAppButtonLabel")}
@@ -992,13 +994,14 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       <>
                         <div>
                           <Button
-                            className={
-                              formState.isDirty &&
-                                (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                                validImage
-                                ? classes.enabledAddOrEditButton
-                                : classes.disabledAddOrEditButton
+                            disabled={
+                              !(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
+                              && validImage)
                             }
+                            color="primary"
+                            variant="contained"
+                            size="large"
+                            disableElevation
                             onClick={_updateApp}
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}

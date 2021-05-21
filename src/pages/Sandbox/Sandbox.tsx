@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useConfig, useTranslation, Button } from "@apisuite/fe-base";
+import { useConfig, useTranslation, Button, Trans } from "@apisuite/fe-base";
 import CheckCircleOutlineRoundedIcon from "@material-ui/icons/CheckCircleOutlineRounded";
 import ChromeReaderModeRoundedIcon from "@material-ui/icons/ChromeReaderModeRounded";
 import ControlCameraRoundedIcon from "@material-ui/icons/ControlCameraRounded";
@@ -178,11 +178,10 @@ export const Sandbox: React.FC = () => {
             </p>
 
             <Button
-              className={
-                !auth.user
-                  ? classes.stepsDescriptionRegisterButton
-                  : classes.stepsDescriptionContactSupportButton
-              }
+              className={classes.stepsDescriptionSupportButton}
+              variant="contained"
+              color="primary"
+              disableElevation
               href={
                 !auth.user
                   ? "/auth/signup"
@@ -228,6 +227,9 @@ export const Sandbox: React.FC = () => {
 
                 <Button
                   className={classes.individualStepButton}
+                  color="primary"
+                  variant="outlined"
+                  fullWidth
                   disabled={!auth.user}
                   href='/dashboard/apps'
                 >
@@ -248,6 +250,9 @@ export const Sandbox: React.FC = () => {
 
                 <Button
                   className={classes.individualStepButton}
+                  color="primary"
+                  variant="outlined"
+                  fullWidth
                   disabled={!auth.user}
                   href='/dashboard/subscriptions'
                 >
@@ -268,6 +273,9 @@ export const Sandbox: React.FC = () => {
 
                 <Button
                   className={classes.individualStepButton}
+                  color="primary"
+                  variant="outlined"
+                  fullWidth
                   disabled={!auth.user}
                   href='/dashboard/test'
                 >
@@ -300,19 +308,21 @@ export const Sandbox: React.FC = () => {
       {socialURLs.length > 0 && (
         <section className={classes.noticeContainer} data-test-id={testIds.notice}>
           <Notice
-            noticeIcon={<CheckCircleOutlineRoundedIcon />}
+            noticeIcon={
+              <CheckCircleOutlineRoundedIcon />
+            }
             noticeText={
               <p>
-                {portalName} {t("sandboxPage.notice.maintainedBy")} {clientName}.
-                {t("sandboxPage.notice.visitUs")}
-                <a
-                  href={socialURLs[0]?.url ?? "#"}
-                  rel='noopener noreferrer'
-                  target='_blank'
-                >
-                  {socialURLs[0].url}
-                </a>
-                  .
+                <Trans i18nKey="sandboxPage.notice" values={{ portalName, clientName, url: socialURLs[0].url }}>
+                  {[
+                    <a
+                      key="sandboxPage.notice"
+                      href={socialURLs[0].url}
+                      rel='noopener noreferrer'
+                      target='_blank'
+                    />,
+                  ]}
+                </Trans>
               </p>
             }
           />
