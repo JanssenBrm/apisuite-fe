@@ -39,6 +39,7 @@ describe("Landing Page - Unauthenticated User", () => {
   context("Navigation", () => {
     before(() => {
       cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
+      cy.intercept(`${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
       cy.visit("/");
       cy.dismissCookiesBanner();
     });
@@ -48,95 +49,103 @@ describe("Landing Page - Unauthenticated User", () => {
     });
 
     it("should have Owner logo and name, Sign Up button and Sign In tab, on top bar", () => {
-      cy.testID(testIds.header).find("a").should("have.length", 3);
+      cy.fixture("owner/owner.json").then(owner => {
+        cy.testID(testIds.header).find("a").should("have.length", 3);
 
-      cy.testID(testIds.header).find("a").eq(0)
-        .should("have.attr", "href", "/")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.have.attr", "target", "_blank");
-      cy.testID(testIds.header).find("a").eq(0).find("img")
-        .should("have.length", 1)
-        .and("have.attr", "src", "https://cloudcdn.apisuite.io/mep-logo.png");
-      cy.testID(testIds.header).find("a").eq(0).find("h3")
-        .should("have.length", 1)
-        .and("contain", "Proba-V MEP user portal");
+        cy.testID(testIds.header).find("a").eq(0)
+          .should("have.attr", "href", "/")
+          .and("not.have.class", "Mui-disabled")
+          .and("not.have.attr", "target", "_blank");
+        cy.testID(testIds.header).find("a").eq(0).find("img")
+          .should("have.length", 1)
+          .and("have.attr", "src", owner.logo);
+        cy.testID(testIds.header).find("a").eq(0).find("h3")
+          .should("have.length", 1)
+          .and("contain", "Proba-V MEP user portal");
 
-      cy.findChildrenByID(testIds.header, testIds.tab).should("have.length", 2);
-      cy.findChildrenByID(testIds.header, testIds.tab).eq(0)
-        .should("have.attr", "href", "/auth/signup")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.to.be.selected")
-        .and("not.have.attr", "target", "_blank");
-      cy.findChildrenByID(testIds.header, testIds.tab).eq(1)
-        .should("have.attr", "href", "/auth/signin")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.to.be.selected")
-        .and("not.have.attr", "target", "_blank");
+        cy.findChildrenByID(testIds.header, testIds.tab).should("have.length", 2);
+        cy.findChildrenByID(testIds.header, testIds.tab).eq(0)
+          .should("have.attr", "href", "/auth/signup")
+          .and("not.have.class", "Mui-disabled")
+          .and("not.to.be.selected")
+          .and("not.have.attr", "target", "_blank");
+        cy.findChildrenByID(testIds.header, testIds.tab).eq(1)
+          .should("have.attr", "href", "/auth/signin")
+          .and("not.have.class", "Mui-disabled")
+          .and("not.to.be.selected")
+          .and("not.have.attr", "target", "_blank");
+      });
     });
 
     it("should have API Products, Documentation and Support tabs, on sub-nav bar", () => {
-      cy.findChildrenByID(testIds.subNav, testIds.tab).should("have.length", 3);
-      cy.findChildrenByID(testIds.subNav, testIds.tab).eq(0)
-        .should("have.attr", "href", "/api-products")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.to.be.selected")
-        .and("not.have.attr", "target", "_blank");
-      cy.findChildrenByID(testIds.subNav, testIds.tab).eq(1)
-        .should("have.attr", "href", "/documentation")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.to.be.selected")
-        .and("not.have.attr", "target", "_blank");
-      cy.findChildrenByID(testIds.subNav, testIds.tab).eq(2)
-        .should("have.attr", "href", "https://intercom.help/api-suite/en/articles/4586659-api-portal-users")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.to.be.selected")
-        .and("have.attr", "target", "_blank");
+      cy.fixture("settings/settings.json").then(settings => {
+        cy.findChildrenByID(testIds.subNav, testIds.tab).should("have.length", 3);
+        cy.findChildrenByID(testIds.subNav, testIds.tab).eq(0)
+          .should("have.attr", "href", "/api-products")
+          .and("not.have.class", "Mui-disabled")
+          .and("not.to.be.selected")
+          .and("not.have.attr", "target", "_blank");
+        cy.findChildrenByID(testIds.subNav, testIds.tab).eq(1)
+          .should("have.attr", "href", settings.documentationURL)
+          .and("not.have.class", "Mui-disabled")
+          .and("not.to.be.selected")
+          .and("have.attr", "target", "_blank");
+        cy.findChildrenByID(testIds.subNav, testIds.tab).eq(2)
+          .should("have.attr", "href", settings.supportURL)
+          .and("not.have.class", "Mui-disabled")
+          .and("not.to.be.selected")
+          .and("have.attr", "target", "_blank");
+      });
     });
 
     it("should scroll down a bit and navigation bar gets merged with sub-navigation bar", () => {
-      cy.scrollTo(0,10);
-      cy.testID(testIds.navigation).should("be.visible").and("not.to.have.class", "expand");
-      cy.testID(testIds.navigation).find("a").should("have.length", 6);
+      cy.fixture("owner/owner.json").then(owner => {
+        cy.fixture("settings/settings.json").then(settings => {
+          cy.scrollTo(0,10);
+          cy.testID(testIds.navigation).should("be.visible").and("not.to.have.class", "expand");
+          cy.testID(testIds.navigation).find("a").should("have.length", 6);
 
-      cy.testID(testIds.header).find("a").eq(0)
-        .should("have.attr", "href", "/")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.have.attr", "target", "_blank");
-      cy.testID(testIds.header).find("a").eq(0).find("img")
-        .should("have.length", 1)
-        .and("have.attr", "src", "https://cloudcdn.apisuite.io/mep-logo.png");
-      cy.testID(testIds.header).find("a").eq(0).find("h3")
-        .should("have.length", 1)
-        .and("contain", "Proba-V MEP user portal");
+          cy.testID(testIds.header).find("a").eq(0)
+            .should("have.attr", "href", "/")
+            .and("not.have.class", "Mui-disabled")
+            .and("not.have.attr", "target", "_blank");
+          cy.testID(testIds.header).find("a").eq(0).find("img")
+            .should("have.length", 1)
+            .and("have.attr", "src", owner.logo);
+          cy.testID(testIds.header).find("a").eq(0).find("h3")
+            .should("have.length", 1)
+            .and("contain", "Proba-V MEP user portal");
 
-      cy.findChildrenByID(testIds.header, testIds.tab).should("have.length", 5);
-      cy.findChildrenByID(testIds.header, testIds.tab).eq(0)
-        .should("have.attr", "href", "/api-products")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.to.be.selected")
-        .and("not.have.attr", "target", "_blank");
-      cy.findChildrenByID(testIds.header, testIds.tab).eq(1)
-        .should("have.attr", "href", "/documentation")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.to.be.selected")
-        .and("not.have.attr", "target", "_blank");
-      cy.findChildrenByID(testIds.header, testIds.tab).eq(2)
-        .should("have.attr", "href", "https://intercom.help/api-suite/en/articles/4586659-api-portal-users")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.to.be.selected")
-        .and("have.attr", "target", "_blank");
-      cy.findChildrenByID(testIds.header, testIds.tab).eq(3)
-        .should("have.attr", "href", "/auth/signup")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.to.be.selected")
-        .and("not.have.attr", "target", "_blank");
-      cy.findChildrenByID(testIds.header, testIds.tab).eq(4)
-        .should("have.attr", "href", "/auth/signin")
-        .and("not.have.class", "Mui-disabled")
-        .and("not.to.be.selected")
-        .and("not.have.attr", "target", "_blank");
+          cy.findChildrenByID(testIds.header, testIds.tab).should("have.length", 5);
+          cy.findChildrenByID(testIds.header, testIds.tab).eq(0)
+            .should("have.attr", "href", "/api-products")
+            .and("not.have.class", "Mui-disabled")
+            .and("not.to.be.selected")
+            .and("not.have.attr", "target", "_blank");
+          cy.findChildrenByID(testIds.header, testIds.tab).eq(1)
+            .should("have.attr", "href", settings.documentationURL)
+            .and("not.have.class", "Mui-disabled")
+            .and("not.to.be.selected")
+            .and("have.attr", "target", "_blank");
+          cy.findChildrenByID(testIds.header, testIds.tab).eq(2)
+            .should("have.attr", "href", settings.supportURL)
+            .and("not.have.class", "Mui-disabled")
+            .and("not.to.be.selected")
+            .and("have.attr", "target", "_blank");
+          cy.findChildrenByID(testIds.header, testIds.tab).eq(3)
+            .should("have.attr", "href", "/auth/signup")
+            .and("not.have.class", "Mui-disabled")
+            .and("not.to.be.selected")
+            .and("not.have.attr", "target", "_blank");
+          cy.findChildrenByID(testIds.header, testIds.tab).eq(4)
+            .should("have.attr", "href", "/auth/signin")
+            .and("not.have.class", "Mui-disabled")
+            .and("not.to.be.selected")
+            .and("not.have.attr", "target", "_blank");
 
-      cy.testID(testIds.subNav).should("not.exist");
+          cy.testID(testIds.subNav).should("not.exist");
+        });
+      });
     });
   });
 
@@ -374,7 +383,12 @@ describe("Landing Page - Unauthenticated User", () => {
         cy.fixture("translations/en-US.json").then(enUS => {
           cy.testID(testIds.notice)
             .should("be.visible")
-            .and("have.text", `${settings.portalName} ${enUS.sandboxPage.notice.maintainedBy} ${settings.clientName}. ${enUS.sandboxPage.notice.visitUs} ${settings.socialURLs[0].url}`);
+            .and("have.text",
+              enUS.sandboxPage.notice
+                .replace("{{portalName}}", settings.portalName)
+                .replace("{{clientName}}", settings.clientName)
+                .replace("<0>{{url}}</0>", settings.socialURLs[0].url)
+            );
         });
       });
     });
