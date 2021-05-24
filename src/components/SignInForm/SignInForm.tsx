@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
 import update from "immutability-helper";
-import { useTranslation, TextField, IconButton, InputAdornment, TextFieldProps } from "@apisuite/fe-base";
+import { useTranslation, TextField, IconButton, InputAdornment, TextFieldProps, Typography, Box, useTheme } from "@apisuite/fe-base";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
@@ -15,12 +14,13 @@ import { signinFormSelector } from "./selector";
 import { ssoProviders } from "store/auth/actions/ssoProviders";
 import { login } from "store/auth/actions/login";
 import { testIds } from "testIds";
+import Link from "components/Link";
 
 export const SignInForm: React.FC = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const auth = useSelector(signinFormSelector);
   const classes = useStyles();
+  const { palette } = useTheme();
   const { t } = useTranslation();
 
   /* SSO sign in */
@@ -188,12 +188,20 @@ export const SignInForm: React.FC = () => {
         </div>
       </FormCard>
 
-      <a
-        className={classes.forgotPasswordLink}
-        onClick={() => history.push("/forgot")}
+      <Box
+        py={3}
+        display="flex"
+        justifyContent="center"
+        color={palette.text.secondary}
       >
-        {t("signInForm.forgotPasswordLinkLabel")}
-      </a>
+        <Typography
+          component={Link}
+          variant="body2"
+          to="/forgot"
+        >
+          {t("signInForm.forgotPasswordLinkLabel")}
+        </Typography>
+      </Box>
     </div>
   );
 };

@@ -15,5 +15,10 @@ export default makeStyles((theme) => ({
     "& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline": {
       borderColor: theme.palette.action.focus,
     },
+    "& .MuiTypography-root > a, & a.MuiTypography-root": {
+      "&:link, &:visited, &:hover, &:active": {
+        color: "inherit",
+      },
+    },
   },
 }));

@@ -32,7 +32,13 @@ const SocialLinks = () => {
           case "reddit":
           case "twitter":
             return (
-              <a key={`${index}-${socialUrl.name}`} href={socialUrl.url} target='_blank' rel='noopener noreferrer'>
+              <a
+                key={`${index}-${socialUrl.name}`}
+                className={classes.iconAnchor}
+                href={socialUrl.url}
+                target='_blank'
+                rel='noopener noreferrer'
+              >
                 <SvgIcon size={24} name={socialUrl.name} />
               </a>
             );

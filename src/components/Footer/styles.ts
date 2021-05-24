@@ -121,4 +121,11 @@ export default makeStyles((theme) => ({
   subSectionAnchor: {
     textDecoration: "none",
   },
+
+  iconAnchor: {
+    textDecoration: "none",
+    "&:link, &:visited, &:hover, &:active": {
+      color: "inherit",
+    },
+  },
 }));

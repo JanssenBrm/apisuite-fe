@@ -16,23 +16,16 @@ export default makeStyles((theme) => ({
   },
 
   actionsCatalogEntry: {
-    /* This outline sets the color of every catalog entry's innermost borders. */
-    outline: `1px solid ${theme.palette.primary.light}`,
-    textAlign: "center",
-    width: "300px",
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 300,
+    height: 184,
 
     "& > img": {
-      height: "100px",
-      paddingTop: "20px",
-      width: "100px",
-    },
-
-    "& > p": {
-      color: theme.palette.label,
-      fontSize: "16px",
-      fontWeight: 300,
-      paddingBottom: "65px",
-      textAlign: "center",
+      height: 56,
+      width: 56,
     },
   },
 

@@ -6,7 +6,7 @@ export default makeStyles((theme) => ({
     top: 0,
     left: 0,
     width: "100%",
-    zIndex: 999,
+    zIndex: theme.zIndex.appBar,
     backgroundColor: theme.palette.secondary.main,
 
     "&.expand": {
@@ -31,7 +31,7 @@ export default makeStyles((theme) => ({
       display: "flex",
       flexDirection: "row",
       justifyContent: "flex-end",
-      padding: "0 50px",
+      margin: "0 50px",
 
       "&.expand": {
         backgroundColor: "transparent",
@@ -76,6 +76,9 @@ export default makeStyles((theme) => ({
     display: "flex",
     alignItems: "center",
     textDecoration: "none",
+    "&:link, &:visited, &:hover, &:active": {
+      color: "inherit",
+    },
   },
   tab: {
     color: theme.palette.secondary.contrastText,

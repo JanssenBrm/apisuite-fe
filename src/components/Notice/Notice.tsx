@@ -18,9 +18,7 @@ const Notice: React.FC<NoticeProps> = ({
         {noticeIcon || <InfoRoundedIcon />}
       </div>
 
-      <div className={classes.noticeText}>
-        {noticeText}
-      </div>
+      {noticeText}
     </div>
   );
 };

@@ -19,28 +19,25 @@
       "notLoggedIn": {
         "heading": "Create a developer account first.",
         "paragraphOne": "Our API Portal enables you to register a free team-based account on the fly.",
-        "paragraphTwoPartOne": "Once activated, we assist you in 3 straightforward steps to start consuming our API products.",
-        "paragraphTwoPartTwo": "Not sure how to get there? The onboarding documentation will help you along.",
+        "paragraphTwo": "Once activated, we assist you in 3 straightforward steps to start consuming our API products.\n\nNot sure how to get there? The onboarding documentation will help you along.",
         "buttonLabel": "Sign up now"
       },
       "loggedIn": {
         "heading": "We value you as an interested developer!",
         "paragraphOne": "enables you to register your client apps and subscribe to our available API products.",
-        "paragraphTwoPartOne": "Whenever you are ready, we assist you in 3 straightforward steps to start consuming our API products.",
-        "paragraphTwoPartTwo": "Did you experience any issues with your account set-up?",
+        "paragraphTwo": "Whenever you are ready, we assist you in 3 straightforward steps to start consuming our API products.\n\nDid you experience any issues with your account set-up?",
         "buttonLabel": "Contact support"
       },
       "individualSteps": {
         "stepOne": {
           "header": "Add your app",
-          "paragraphPartOne": "You’ll need an app to send and receive API calls.",
-          "paragraphPartTwo": "Adding your app details will help us to enable this flow.",
+          "paragraph": "You’ll need an app to send and receive API calls.\n\nAdding your app details will help us to enable this flow.",
           "buttonLabel": "Add app"
         },
         "stepTwo": {
           "header": "Select an API",
           "paragraph": "In the \"Subscriptions\" section, we provide an overview of our available Sandbox APIs your apps can subscribe to.",
-          "buttonLabel": "Subscribe to API"
+          "buttonLabel": "Subscribe API"
         },
         "stepThree": {
           "header": "Get Started",
@@ -80,8 +77,7 @@
       "signIn": "Sign in",
       "signUp": "Sign up"
     },
-    "ssoFooterSignUp": "Don't have a {{provider}} account?",
-    "ssoFooterSignUpLink": "Sign Up here.",
+    "ssoFooterSignUp": "Don't have a {{provider}} account? <0>Sign Up here.</0>",
     "notAvailableView": "This page is not available with SSO enabled. Please use the navigation menu."
   },
   "signInForm": {
@@ -127,8 +123,7 @@
       "securityDetails": "Security details"
     },
     "togglePasswordVisibilityARIALabel": "Toggle password visibility",
-    "privacyPolicyDisclaimerPartOne": "By creating an account, you are agreeing to our",
-    "privacyPolicyDisclaimerPartTwo": "Privacy Policy"
+    "privacyPolicyDisclaimer": "By creating an account, you are agreeing to our <0>Privacy Policy<0/>."
   },
   "signUpConfirmation": {
     "titleText": "Thank you for joining us, ",
@@ -221,10 +216,10 @@
           "support": "Solve a problem"
         },
         "greetingCard": {
-          "greetingCardTextPartOne": "Hi",
-          "greetingCardTextPartTwo": "You're at the right place if you want to set up a new client app, get informed about our API products, or have a technical question.",
-          "greetingCardTextPartThree": "Don't find what you're looking for? Let us know, we're happy to accomodate!",
-          "greetingCardButtonLabel": "Contact"
+          "greet": "Hi {{name}}!",
+          "greetingCardText": "You're at the right place if you want to set up a new client app, get informed about our API products, or have a technical question.",
+          "greetingCardTextAdmin": "Don't find what you're looking for? Let us know, we're happy to accommodate!",
+          "greetingCardButtonLabel": "Contact {{clientName}}"
         },
         "notificationBanner": {
           "title": "We have an important notification for you",
