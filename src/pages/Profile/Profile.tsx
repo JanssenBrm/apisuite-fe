@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslation, Button, Avatar, TextField } from "@apisuite/fe-base";
+import { useTranslation, Button, Avatar, TextField, Typography, Box, Divider, useTheme } from "@apisuite/fe-base";
 import Close from "@material-ui/icons/Close";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
@@ -25,6 +25,7 @@ import useStyles from "./styles";
 export const Profile: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { spacing, palette } = useTheme();
   const [t] = useTranslation();
   const { profile } = useSelector(profileSelector);
   const [ssoIsActive, setSSOIsActive] = useState(false);
@@ -251,15 +252,15 @@ export const Profile: React.FC = () => {
       <section className={classes.allUserDetailsContainer}>
         <div className={classes.leftSideDetailsContainer}>
           <div className={classes.userNameAndRoleContainer}>
-            <p className={classes.userName}>
+            <Typography variant="h2">
               {
                 profile.user.name !== ""
                   ? profile.user.name
                   : t("profileTab.overviewSubTab.loadingDetails")
               }
-            </p>
+            </Typography>
 
-            <p className={classes.userRole}>
+            <Typography variant="subtitle1" className={classes.userRole}>
               {
                 !profileHasOrgDetails
                   ? t("profileTab.overviewSubTab.roleRelatedLabels.baseUser")
@@ -273,92 +274,97 @@ export const Profile: React.FC = () => {
                       )
                   )
               }
-            </p>
+            </Typography>
           </div>
 
-          <p className={classes.subtitle}>
-            {t("profileTab.overviewSubTab.subtitle")}
-          </p>
+          <Box mt={1.5}>
+            <Typography variant="body1" color="textSecondary">
+              {t("profileTab.overviewSubTab.subtitle")}
+            </Typography>
+          </Box>
 
-          <div>
-            <p className={classes.organisationDetailsTitle}>
+          <Box mt={3}>
+            <Typography variant="body1">
               {t("profileTab.overviewSubTab.orgRelatedLabels.selectorTitle")}
-            </p>
+            </Typography>
+          </Box>
 
-            {
-              profile.orgs_member.length !== 0
-                ? (
-                  <>
-                    <Select
-                      className={classes.organisationSelector}
-                      customCloseIcon={<ExpandLessRoundedIcon />}
-                      customOpenIcon={<ExpandMoreRoundedIcon />}
-                      fieldLabel={t("profileTab.overviewSubTab.orgRelatedLabels.selectorLabel")}
-                      onChange={handleOrganisationSelection}
-                      options={organisationSelector(profile.orgs_member)}
-                      selected={
-                        organisationSelector(profile.orgs_member).find((selectedOrganisation) => {
-                          return currentlySelectedOrganisation.value === ""
-                            ? (selectedOrganisation.value === profile.current_org.id)
-                            : (selectedOrganisation.value === currentlySelectedOrganisation.value);
-                        })
-                      }
-                    />
+          {
+            profile.orgs_member.length !== 0
+              ? (
+                <Box mt={3}>
+                  <Select
+                    customCloseIcon={<ExpandLessRoundedIcon />}
+                    customOpenIcon={<ExpandMoreRoundedIcon />}
+                    fieldLabel={t("profileTab.overviewSubTab.orgRelatedLabels.selectorLabel")}
+                    onChange={handleOrganisationSelection}
+                    options={organisationSelector(profile.orgs_member)}
+                    selected={
+                      organisationSelector(profile.orgs_member).find((selectedOrganisation) => {
+                        return currentlySelectedOrganisation.value === ""
+                          ? (selectedOrganisation.value === profile.current_org.id)
+                          : (selectedOrganisation.value === currentlySelectedOrganisation.value);
+                      })
+                    }
+                  />
 
+                  <Box clone mt={3}>
                     <Button
                       disabled={currentlySelectedOrganisation.value === profile.current_org.id}
                       size="large"
-                      variant="outlined"
-                      color="secondary"
+                      color="primary"
+                      variant="contained"
+                      disableElevation
                       onClick={switchOrganisation}
                     >
                       {t("profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel")}
                     </Button>
-                  </>
-                )
-                : (
-                  <Button
-                    className={classes.createOrganisationButton}
-                    href='profile/organisation'
-                  >
-                    {t("profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel")}
-                  </Button>
-                )
-            }
-          </div>
+                  </Box>
+                </Box>
+              )
+              : (
+                <Button
+                  className={classes.createOrganisationButton}
+                  href='profile/organisation'
+                >
+                  {t("profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel")}
+                </Button>
+              )
+          }
 
-          <hr
-            className={
-              profile.orgs_member.length !== 0
-                ? classes.regularSectionSeparator
-                : classes.alternativeSectionSeparator
-            }
-          />
+          <Box my={3}>
+            <Divider />
+          </Box>
 
-          <div className={classes.otherActionsContainerOne}>
+          <Box
+            display="flex"
+          >
             {
-              !ssoIsActive &&
-              <Button
-                className={classes.otherActionsButtons}
-                color="primary"
-                variant="outlined"
-                size="large"
-                href='profile/security'
-              >
-                {t("profileTab.overviewSubTab.otherActionsLabels.changePassword")}
-              </Button>
+              !ssoIsActive && (
+                <Button
+                  color="primary"
+                  variant="contained"
+                  size="large"
+                  disableElevation
+                  href='profile/security'
+                >
+                  {t("profileTab.overviewSubTab.otherActionsLabels.changePassword")}
+                </Button>
+              )
             }
+
+            <Box width={spacing(2)} />
 
             <Button
-              className={classes.otherActionsButtons}
               color="primary"
-              variant="outlined"
+              variant="contained"
               size="large"
+              disableElevation
               href='profile/team'
             >
               {t("profileTab.overviewSubTab.otherActionsLabels.viewTeam")}
             </Button>
-          </div>
+          </Box>
         </div>
 
         <div className={classes.rightSideDetailsContainer}>
@@ -442,11 +448,8 @@ export const Profile: React.FC = () => {
                 value={formState.values.userEmailAddress}
                 variant='outlined'
               />
-            </div>
 
-            {
-              !ssoIsActive &&
-              (
+              {!ssoIsActive && (
                 <>
                   <TextField
                     error={formState.touched.userPhoneNumber && formState.errors.userPhoneNumber}
@@ -466,25 +469,27 @@ export const Profile: React.FC = () => {
                     variant='outlined'
                   />
 
-                  <Button
-                    className={
-                      formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
-                        ? classes.enabledUpdateDetailsButton
-                        : classes.disabledUpdateDetailsButton
-                    }
-                    onClick={updateProfileDetails}
-                  >
-                    {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
-                  </Button>
+                  <Box mt={2}>
+                    <Button
+                      color="primary"
+                      variant="contained"
+                      size="large"
+                      disableElevation
+                      fullWidth
+                      onClick={updateProfileDetails}
+                    >
+                      {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
+                    </Button>
+                  </Box>
                 </>
-              )
-            }
+              )}
+            </div>
 
             <div className={classes.userStatusAndType}>
               {/* A mere dot */}
               <span>&#9679;</span>
 
-              <p>
+              <Typography variant="body2" color="textSecondary">
                 {
                   !profileHasOrgDetails
                     ? t("profileTab.overviewSubTab.roleRelatedLabels.baseUser")
@@ -498,25 +503,26 @@ export const Profile: React.FC = () => {
                         )
                     )
                 }
-              </p>
+              </Typography>
             </div>
           </div>
 
           {/* 'Logout' and 'Delete' buttons div */}
           <div className={classes.otherActionsContainerTwo}>
-            <Button
-              className={classes.deleteAccountButton}
-              color="primary"
-              variant="contained"
-              disableElevation
-              size="large"
-              onClick={handleDelete}
-            >
-              {t("profileTab.overviewSubTab.otherActionsLabels.deleteAccount")}
-            </Button>
+            <Box mr={1.5} color={palette.error.main}>
+              <Button
+                color="primary"
+                style={{ backgroundColor: palette.error.main }}
+                variant="contained"
+                disableElevation
+                size="large"
+                onClick={handleDelete}
+              >
+                {t("profileTab.overviewSubTab.otherActionsLabels.deleteAccount")}
+              </Button>
+            </Box>
 
             <Button
-              className={classes.otherActionsButtons}
               color="primary"
               variant="outlined"
               size="large"

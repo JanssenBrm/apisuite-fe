@@ -8,21 +8,6 @@ export default makeStyles((theme) => ({
     width: "100%",
   },
 
-  alternativeOrganisationDetailsTitle: {
-    color: theme.palette.secondary.main,
-    fontSize: "16px",
-    fontWeight: 500,
-    marginBottom: "40px",
-  },
-
-  alternativeSectionSeparator: {
-    border: `1px solid ${theme.palette.grey[100]}`,
-    borderRadius: theme.shape.borderRadius,
-    margin: "32.5px 0px",
-    maxWidth: "900px",
-    width: "100%",
-  },
-
   avatar: {
     background: theme.palette.gradient.light,
     cursor: "pointer",
@@ -50,10 +35,6 @@ export default makeStyles((theme) => ({
     fontWeight: 500,
     padding: "12px 20px",
     textDecoration: "none",
-  },
-
-  deleteAccountButton: {
-    marginRight: 12,
   },
 
   disabledUpdateDetailsButton: {
@@ -150,52 +131,9 @@ export default makeStyles((theme) => ({
     width: "100%",
   },
 
-  organisationDetailsTitle: {
-    color: theme.palette.secondary.main,
-    fontSize: "16px",
-    fontWeight: 500,
-    marginBottom: "40px",
-  },
-
-  organisationSelector: {
-    borderColor: theme.palette.label,
-    marginBottom: "35px",
-
-    // Selector
-    "& > .MuiFormControl-root": {
-      // Selector's label
-      "& > .MuiFormLabel-root": {
-        color: theme.palette.label,
-      },
-
-      // Selector's input (i.e., text)
-      "& > .MuiInputBase-root": {
-        "& > .MuiInputBase-input": {
-          color: theme.palette.action.active,
-        },
-      },
-    },
-  },
-
-  otherActionsButtons: {
-    color: `${theme.palette.primary.main} !important`,
-  },
-
-  otherActionsContainerOne: {
-    display: "flex",
-  },
-
   otherActionsContainerTwo: {
     display: "flex",
     justifyContent: "flex-end",
-  },
-
-  regularSectionSeparator: {
-    border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: `${theme.shape.borderRadius}px`,
-    margin: "32.5px 0px 32.5px 0px",
-    maxWidth: "900px",
-    width: "100%",
   },
 
   rightSideDetailsContainer: {
@@ -219,28 +157,10 @@ export default makeStyles((theme) => ({
     },
   },
 
-  subtitle: {
-    color: theme.palette.text.primary,
-    fontSize: "16px",
-    fontWeight: 300,
-    marginBottom: "25px",
-  },
-
   userDetailsContainer: {
     backgroundColor: theme.palette.background.paper,
     border: `1px solid ${theme.palette.label}`,
     borderRadius: theme.shape.borderRadius,
-  },
-
-  userName: {
-    color: theme.palette.secondary.main,
-    fontSize: "32px",
-    fontWeight: 300,
-    marginRight: "10px",
-    maxWidth: "355px",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-    whiteSpace: "nowrap",
   },
 
   userNameAndRoleContainer: {
@@ -253,10 +173,10 @@ export default makeStyles((theme) => ({
   userRole: {
     backgroundColor: theme.palette.primary.main,
     borderRadius: theme.shape.borderRadius,
-    color: theme.palette.secondary.contrastText,
-    fontSize: "14px",
+    color: theme.palette.primary.contrastText,
     fontWeight: 300,
     padding: "2px 7.5px",
+    marginLeft: theme.spacing(1),
   },
 
   userStatusAndType: {
@@ -268,13 +188,6 @@ export default makeStyles((theme) => ({
       color: theme.palette.primary.main,
       fontSize: "14px",
       marginRight: "12px",
-    },
-
-    "& > :last-child": {
-      color: theme.palette.label,
-      fontSize: "14px",
-      fontWeight: 300,
-      textAlign: "left",
     },
   },
 
