@@ -284,7 +284,7 @@ export const Profile: React.FC = () => {
           </Box>
 
           <Box mt={3}>
-            <Typography variant="body1">
+            <Typography variant="h3">
               {t("profileTab.overviewSubTab.orgRelatedLabels.selectorTitle")}
             </Typography>
           </Box>
