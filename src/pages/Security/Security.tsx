@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslation, Button, TextField, InputAdornment, IconButton } from "@apisuite/fe-base";
+import { useTranslation, Button, TextField, InputAdornment, IconButton, Typography, Container, Box, Grid } from "@apisuite/fe-base";
 import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 import VisibilityOffRoundedIcon from "@material-ui/icons/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
@@ -69,26 +69,25 @@ export const Security: React.FC = () => {
 
   return (
     <main className='page-container'>
-      <section className={classes.updatePasswordContainer}>
-        <p className={classes.securityTitle}>
+      <Container maxWidth="md">
+        <Typography variant="h2">
           {t("profileTab.securitySubTab.securityTitle")}
-        </p>
+        </Typography>
 
-        <p className={classes.securitySubtitle}>
-          {
-            !ssoIsActive
-              ? t("profileTab.securitySubTab.securitySubtitleWithoutActiveSSO")
-              : t("profileTab.securitySubTab.securitySubtitleWithActiveSSO")
-          }
-        </p>
+        <Typography variant="body1" color="textSecondary">
+          {!ssoIsActive ? t("profileTab.securitySubTab.securitySubtitleWithoutActiveSSO")
+            : t("profileTab.securitySubTab.securitySubtitleWithActiveSSO")}
+        </Typography>
 
-        <p className={classes.updatePasswordTitle}>
-          {t("profileTab.securitySubTab.updatePasswordTitle")}
-        </p>
+        <Grid container>
+          <Grid item xs>
+            <Box clone mt={3} mb={2}>
+              <Typography variant="h3">
+                {t("profileTab.securitySubTab.updatePasswordTitle")}
+              </Typography>
+            </Box>
 
-        {
-          ssoIsActive
-            ? (
+            {ssoIsActive ? (
               <div className={classes.infoBox}>
                 <InfoRoundedIcon className={classes.infoBoxIcon} />
 
@@ -99,110 +98,115 @@ export const Security: React.FC = () => {
                 </div>
               </div>
             )
-            : (
-              <>
-                <TextField
-                  className={classes.inputFields}
-                  fullWidth
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <IconButton
-                          onClick={(event) => handleShowPassword(event, 0)}
-                        >
-                          {
-                            showPassword[0]
-                              ? <VisibilityRoundedIcon />
-                              : <VisibilityOffRoundedIcon />
-                          }
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  label={t("profileTab.securitySubTab.fieldLabels.currentPasswordFieldLabel")}
-                  margin='dense'
-                  name='currentPassword'
-                  onChange={(changeEvent) => handlePasswordChanges(changeEvent, 0)}
-                  type={showPassword[0] ? "text" : "password"}
-                  value={providedPasswords[0]}
-                  variant='outlined'
-                />
+              : (
+                <>
+                  <TextField
+                    fullWidth
+                    InputProps={{
+                      endAdornment: (
+                        <InputAdornment position='end'>
+                          <IconButton
+                            onClick={(event) => handleShowPassword(event, 0)}
+                          >
+                            {
+                              showPassword[0]
+                                ? <VisibilityRoundedIcon />
+                                : <VisibilityOffRoundedIcon />
+                            }
+                          </IconButton>
+                        </InputAdornment>
+                      ),
+                    }}
+                    label={t("profileTab.securitySubTab.fieldLabels.currentPasswordFieldLabel")}
+                    margin='dense'
+                    name='currentPassword'
+                    onChange={(changeEvent) => handlePasswordChanges(changeEvent, 0)}
+                    type={showPassword[0] ? "text" : "password"}
+                    value={providedPasswords[0]}
+                    variant='outlined'
+                  />
 
-                <TextField
-                  className={classes.inputFields}
-                  error={
-                    providedPasswords[1].length === 0
-                      ? false
-                      : (
-                        providedPasswords[0] === providedPasswords[1]
-                          ? true
+                  <Box mb={3} mt={1.5}>
+                    <TextField
+                      fullWidth
+                      error={
+                        providedPasswords[1].length === 0
+                          ? false
                           : (
-                            !isValidPass(providedPasswords[1])
+                            providedPasswords[0] === providedPasswords[1]
+                              ? true
+                              : (
+                                !isValidPass(providedPasswords[1])
+                              )
                           )
-                      )
-                  }
-                  fullWidth
-                  helperText={
-                    providedPasswords[1].length === 0
-                      ? ""
-                      : (
-                        providedPasswords[0] === providedPasswords[1]
-                          ? t("profileTab.securitySubTab.errorMessages.samePasswordErrorMessage")
+                      }
+                      helperText={
+                        providedPasswords[1].length === 0
+                          ? ""
                           : (
-                            isValidPass(providedPasswords[1])
-                              ? ""
-                              : t("profileTab.securitySubTab.errorMessages.tooWeakPasswordErrorMessage")
+                            providedPasswords[0] === providedPasswords[1]
+                              ? t("profileTab.securitySubTab.errorMessages.samePasswordErrorMessage")
+                              : (
+                                isValidPass(providedPasswords[1])
+                                  ? ""
+                                  : t("profileTab.securitySubTab.errorMessages.tooWeakPasswordErrorMessage")
+                              )
                           )
-                      )
-                  }
-                  InputProps={{
-                    endAdornment: (
-                      <InputAdornment position='end'>
-                        <IconButton
-                          onClick={(event) => handleShowPassword(event, 1)}
-                        >
-                          {
-                            showPassword[1]
-                              ? <VisibilityRoundedIcon />
-                              : <VisibilityOffRoundedIcon />
-                          }
-                        </IconButton>
-                      </InputAdornment>
-                    ),
-                  }}
-                  label={t("profileTab.securitySubTab.fieldLabels.newPasswordFieldLabel")}
-                  margin='dense'
-                  name='newPassword'
-                  onChange={(changeEvent) => handlePasswordChanges(changeEvent, 1)}
-                  type={showPassword[1] ? "text" : "password"}
-                  value={providedPasswords[1]}
-                  variant='outlined'
-                />
+                      }
+                      InputProps={{
+                        endAdornment: (
+                          <InputAdornment position='end'>
+                            <IconButton
+                              onClick={(event) => handleShowPassword(event, 1)}
+                            >
+                              {
+                                showPassword[1]
+                                  ? <VisibilityRoundedIcon />
+                                  : <VisibilityOffRoundedIcon />
+                              }
+                            </IconButton>
+                          </InputAdornment>
+                        ),
+                      }}
+                      label={t("profileTab.securitySubTab.fieldLabels.newPasswordFieldLabel")}
+                      margin='dense'
+                      name='newPassword'
+                      onChange={(changeEvent) => handlePasswordChanges(changeEvent, 1)}
+                      type={showPassword[1] ? "text" : "password"}
+                      value={providedPasswords[1]}
+                      variant='outlined'
+                    />
+                  </Box>
 
-                <div className={classes.actionsContainer}>
                   <Button
-                    className={
-                      (providedPasswords[0] !== providedPasswords[1]) &&
-                (providedPasswords[0].length && providedPasswords[1].length) &&
-                (isValidPass(providedPasswords[1]))
-                        ? classes.enabledUpdatePasswordButton
-                        : classes.disabledUpdatePasswordButton
+                    variant="contained"
+                    color="primary"
+                    size="large"
+                    disableElevation
+                    disabled={
+                      !!((providedPasswords[0] !== providedPasswords[1]) &&
+                              (providedPasswords[0].length && providedPasswords[1].length) &&
+                              isValidPass(providedPasswords[1]))
                     }
                     onClick={handlePasswordChangeRequest}
                   >
                     {t("profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel")}
                   </Button>
-                </div>
-              </>
-            )
-        }
+                </>
+              )
+            }
+          </Grid>
 
-        <hr className={classes.sectionSeparator} />
+          <Grid item xs />
+        </Grid>
+
+        {/* FIXME: find what this is */}
+        {/* <hr className={classes.sectionSeparator} />
 
         <p className={classes.userActivityTitle}>
           {t("profileTab.securitySubTab.userActivityTitle")}
-        </p>
-      </section>
+        </p> */}
+      </Container>
     </main>
   );
 };
