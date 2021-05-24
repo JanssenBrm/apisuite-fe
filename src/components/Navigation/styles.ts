@@ -31,7 +31,7 @@ export default makeStyles((theme) => ({
       display: "flex",
       flexDirection: "row",
       justifyContent: "flex-end",
-      margin: "0 50px",
+      padding: "0 50px",
 
       "&.expand": {
         backgroundColor: "transparent",
