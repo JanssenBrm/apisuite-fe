@@ -1,82 +1,80 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from "@apisuite/fe-base";
 
-import { config } from 'constants/global'
-
-export default makeStyles({
+export default makeStyles((theme) => ({
   apiCatalogEntry: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    display: 'flex',
-    height: '200px',
-    marginBottom: '20px',
-    width: '440px',
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.grey["300"]}`,
+    borderRadius: `${theme.shape.borderRadius}px`,
+    display: "flex",
+    height: "200px",
+    marginBottom: "20px",
+    width: "440px",
   },
 
   apiCatalogEntryAvatar: {
-    padding: '24px 18px 24px 24px',
-    width: '110px',
+    padding: "24px 18px 24px 24px",
+    width: "110px",
 
-    '& > div': {
-      height: '60px',
-      margin: 'auto',
-      width: '60px',
+    "& > div": {
+      height: "60px",
+      margin: "auto",
+      width: "60px",
     },
   },
 
   apiCatalogEntryDescription: {
-    color: config.palette.newGreyScales['400'],
-    fontSize: '16px',
+    color: theme.palette.text.primary,
+    fontSize: "16px",
     fontWeight: 300,
-    lineHeight: '20px',
+    lineHeight: "20px",
   },
 
   apiCatalogEntryLink: {
-    textDecoration: 'none',
+    textDecoration: "none",
   },
 
   apiCatalogEntryName: {
-    color: config.palette.tertiary,
-    fontSize: '22px',
+    color: theme.palette.secondary.main,
+    fontSize: "22px",
     fontWeight: 400,
-    marginBottom: '8px',
+    marginBottom: "8px",
   },
 
   apiCatalogEntryText: {
-    padding: '32px 0px 0px 0px',
-    width: '310px',
+    padding: "32px 0px 0px 0px",
+    width: "310px",
 
-    '& > div': {
-      height: '60px',
-      width: '60px',
+    "& > div": {
+      height: "60px",
+      width: "60px",
     },
   },
 
   apiCatalogEntryVersion: {
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    marginRight: '8px',
-    padding: '5px 10px',
+    borderRadius: `${theme.shape.borderRadius}px`,
+    marginRight: "8px",
+    padding: "5px 10px",
   },
 
   apiCatalogEntryVersionAndAccess: {
-    color: config.palette.newGreyScales['400'],
-    fontSize: '14px',
+    color: theme.palette.text.primary,
+    fontSize: "14px",
     fontWeight: 300,
-    marginBottom: '8px',
+    marginBottom: "8px",
   },
 
   colorsOfAPIDocumentation: {
-    backgroundColor: config.palette.active,
-    color: '#FFFFFF',
+    backgroundColor: theme.palette.action.active,
+    color: theme.palette.background.default,
   },
 
   colorsOfProductionAPI: {
-    backgroundColor: config.palette.primary,
-    color: '#FFFFFF',
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.background.default,
   },
 
   colorsOfSandboxExtensionAPI: {
-    backgroundColor: config.palette.info,
-    color: '#FFFFFF',
+    backgroundColor: theme.palette.info.main,
+    color: theme.palette.background.default,
   },
-})
+}));

@@ -1,245 +1,190 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from "@apisuite/fe-base";
 
-import { config } from 'constants/global'
+export default makeStyles((theme) => ({
+  root: {
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    zIndex: 999,
+    backgroundColor: theme.palette.secondary.main,
 
-export default makeStyles(({
+    "&.expand": {
+      backgroundColor: "transparent",
+    },
+
+    "& header": {
+      flex: 1,
+      display: "flex",
+      flexDirection: "row",
+      margin: "0 50px",
+      color: theme.palette.secondary.contrastText,
+
+      "&.expand": {
+        borderBottom: `1px solid ${theme.palette.divider}`,
+        paddingTop: 25,
+      },
+    },
+
+    "& nav": {
+      backgroundColor: theme.palette.grey[100],
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      padding: "0 50px",
+
+      "&.expand": {
+        backgroundColor: "transparent",
+      },
+    },
+  },
+  tabIndicator: {
+    backgroundColor: theme.palette.primary.main,
+    height: 3,
+    top: 0,
+    transition: "none !important",
+  },
+  positionBottomTabIndicator: {
+    backgroundColor: theme.palette.primary.main,
+    height: 3,
+    top: 0,
+    transition: "none !important",
+  },
+  positionBottomTabs: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    margin: "0 50px",
+    color: theme.palette.secondary.contrastText,
+    transform: "translateY(-2px)",
+  },
+  space: {
+    flex: 1,
+  },
+  logo: {
+    width: 60,
+    height: "auto",
+    marginRight: 10,
+  },
+  // FIXME: this logic will probably not work with all images
+  logoImage: {
+    height: 60,
+    width: "auto",
+    marginRight: 10,
+  },
+  logoLink: {
+    display: "flex",
+    alignItems: "center",
+    textDecoration: "none",
+  },
+  tab: {
+    color: theme.palette.secondary.contrastText,
+    fontSize: "18px",
+    fontWeight: 300,
+    minWidth: "unset",
+    opacity: 1,
+    padding: "40px 16px",
+    "&.contract": {
+      padding: 16,
+    },
+  },
   activeTab: {
-    '& > span': {
+    "& > span": {
       fontWeight: 600,
     },
   },
-
-  alternativeAssistantAmountOfNotifications: {
-    backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
-    height: '24px',
-    pointerEvents: 'none',
-    textAlign: 'center',
-    transform: 'translate(-7px, -13.5px)',
-    width: '24px',
-
-    '& > p': {
-      color: config.palette.text.primary,
-      fontSize: '14px',
-      fontWeight: 400,
-      height: '24px',
-      lineHeight: '24px',
-      width: '24px',
+  subTab: {
+    color: theme.palette.text.primary,
+    fontSize: "16px",
+    fontWeight: 300,
+    minWidth: "unset",
+    opacity: 1,
+    padding: 16,
+    "&.expand": {
+      color: theme.palette.secondary.contrastText,
     },
   },
-
-  alternativeAssistantButton: {
-    backgroundColor: 'transparent',
-    borderRadius: '50%',
-    color: config.palette.active,
-    cursor: 'pointer',
-    height: '32px',
-    paddingTop: '1.5px',
-    textAlign: 'center',
-    width: '32px',
+  subTabIndicator: {
+    backgroundColor: theme.palette.secondary.main,
+    height: 3,
+    bottom: 0,
+    transition: "none !important",
   },
-
-  alternativeLogo: {
-    color: config.palette.primary,
-    height: 'auto',
-    marginRight: '10px',
-    width: '60px',
+  subTabAlternativeIndicator: {
+    backgroundColor: theme.palette.primary.light,
+    height: 3,
+    bottom: 3,
+    transition: "none !important",
   },
-
-  assistantContainer: {
-    display: 'flex',
+  profileLink: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    fontSize: "18px",
+    fontWeight: 300,
+    textDecoration: "none",
   },
+  userAvatar: {
+    background: theme.palette.gradient.light,
+    border: `2px solid ${theme.palette.primary.contrastText}`,
+    fontSize: "20px",
+    fontWeight: 300,
+    height: "33px",
+    width: "33px",
+    marginLeft: 20,
 
+    "&:hover": {
+      border: `2px solid ${theme.palette.primary.main}`,
+    },
+  },
   goBackButton: {
-    display: 'flex',
-    alignItems: 'center',
-    cursor: 'pointer',
+    alignItems: "center",
+    cursor: "pointer",
+    display: "flex",
+    color: theme.palette.label,
 
-    '& > span': {
-      fontSize: '16px',
+    "& > span": {
+      fontSize: "16px",
       fontWeight: 500,
     },
 
-    '& > svg': {
-      marginRight: '8px',
+    "& > svg": {
+      marginRight: "8px",
     },
   },
+  notification: {
+    position: "relative",
+    width: 32,
+    height: 32,
+    paddingTop: 1.5,
+    borderRadius: "50%",
+    backgroundColor: theme.palette.background.default,
+    color: theme.palette.secondary.main,
+    cursor: "pointer",
+    textAlign: "center",
+    alignSelf: "center",
 
-  headerContentsContainer: {
-    display: 'flex',
-    alignItems: 'center',
-  },
+    "&:not(.expand)": {
+      backgroundColor: "transparent",
+      color: theme.palette.text.hint,
+    },
 
-  imageLogo: {
-    height: 'auto',
-    marginRight: '10px',
-    padding: '5px',
-    width: '60px',
-  },
+    "& span": {
+      position: "absolute",
+      top: "-35%",
+      right: "-52%",
+      width: 24,
+      height: 24,
+      textAlign: "center",
+      borderRadius: theme.shape.borderRadius,
+      pointerEvents: "none",
+      backgroundColor: theme.palette.secondary.main,
+      color: theme.palette.secondary.contrastText,
 
-  linkToProfile: {
-    alignSelf: 'center',
-    textDecoration: 'none',
-  },
-
-  logOutIcon: {
-    cursor: 'pointer',
-    marginLeft: '12px',
-  },
-
-  logOutTab: {
-    padding: '4.5px !important',
-  },
-
-  logoAndNameContainer: {
-    display: 'flex',
-    alignItems: 'center',
-    textDecoration: 'none',
-  },
-
-  opaqueMenuActiveTabOverLine: {
-    backgroundColor: config.palette.primary,
-    height: '3px',
-    top: 0,
-    transition: 'none !important',
-  },
-
-  opaqueMenuTab: {
-    color: config.palette.primaryContrastText,
-    fontSize: '18px',
-    fontWeight: 300,
-    minWidth: 'unset',
-    opacity: 1,
-    padding: '40px 16px',
-    textTransform: 'none',
-  },
-
-  opaqueMenuUserNameAndAvatarContainer: {
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    position: 'relative',
-    right: 0,
-  },
-
-  opaqueSubMenuActiveTabUnderLine: {
-    backgroundColor: config.palette.tertiary,
-    height: '3px',
-    transition: 'none !important',
-  },
-
-  portalName: {
-    fontSize: '24px',
-    fontWeight: 400,
-  },
-
-  regularAssistantAmountOfNotifications: {
-    backgroundColor: config.palette.primary,
-    borderRadius: config.dimensions.borderRadius,
-    height: '24px',
-    pointerEvents: 'none',
-    textAlign: 'center',
-    transform: 'translate(-7px, -13.5px)',
-    width: '24px',
-
-    '& > p': {
-      color: config.palette.background.default,
-      fontSize: '14px',
-      fontWeight: 400,
-      height: '24px',
-      lineHeight: '24px',
-      width: '24px',
+      "&.expand": {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+      },
     },
   },
-
-  regularAssistantButton: {
-    backgroundColor: config.palette.background.default,
-    borderRadius: '50%',
-    color: config.palette.tertiary,
-    cursor: 'pointer',
-    height: '32px',
-    paddingTop: '1.5px',
-    textAlign: 'center',
-    width: '32px',
-  },
-
-  regularLogo: {
-    color: config.palette.primaryContrastText,
-    height: 'auto',
-    marginRight: '10px',
-    width: '60px',
-  },
-
-  subTab: {
-    color: config.palette.primaryContrastText,
-    fontSize: '16px',
-    fontWeight: 300,
-    minWidth: 'unset',
-    opacity: 1,
-    padding: '16px',
-    textTransform: 'none',
-  },
-
-  subTabs: {
-    display: 'flex',
-  },
-
-  subTabsAndExtraButton: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    width: '100%',
-  },
-
-  transparentMenuActiveTabOverLine: {
-    backgroundColor: config.palette.background.default,
-    height: '3px',
-    top: 0,
-    transition: 'none !important',
-  },
-
-  transparentMenuTab: {
-    color: config.palette.primaryContrastText,
-    fontSize: '18px',
-    fontWeight: 300,
-    minWidth: 'unset',
-    opacity: 1,
-    padding: '16px',
-    textTransform: 'none',
-  },
-
-  userAvatar: {
-    border: `2px solid ${config.palette.primaryContrastText}`,
-    fontSize: '20px',
-    fontWeight: 300,
-    height: '33px',
-    width: '33px',
-
-    '&:hover': {
-      border: `2px solid ${config.palette.primary}`,
-    },
-  },
-
-  transparentMenuUserNameAndAvatarContainer: {
-    alignItems: 'center',
-    display: 'flex',
-    justifyContent: 'flex-end',
-    position: 'absolute',
-    right: 0,
-  },
-
-  transparentSubMenuActiveTabUnderLine: {
-    backgroundColor: config.palette.focus,
-    height: '3px',
-    transition: 'none !important',
-  },
-
-  userName: {
-    fontSize: '18px',
-    fontWeight: 300,
-    marginRight: '20px',
-  },
-
-  yetToLogIn: {
-    display: 'none',
-  },
-}))
+}));

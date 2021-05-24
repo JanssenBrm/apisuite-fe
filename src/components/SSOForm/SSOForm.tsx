@@ -1,46 +1,45 @@
-import * as React from 'react'
-import { SSOFormProps } from './types'
-import useStyles from './styles'
-import { useTranslation } from 'react-i18next'
-import Button from 'components/Button'
-import { config } from 'constants/global'
+import React from "react";
+import { useTranslation, Button } from "@apisuite/fe-base";
+import VpnKeyRoundedIcon from "@material-ui/icons/VpnKeyRounded";
+
+import { SSOFormProps } from "./types";
+
+import useStyles from "./styles";
 
 const SSOForm: React.FC<SSOFormProps> = ({
   auth,
-  getProviders,
-  loginWith,
+  ssoLogin,
 }) => {
-  const classes = useStyles()
-  const [t] = useTranslation()
+  const classes = useStyles();
 
-  React.useEffect(() => {
-    if (auth.providers === null) {
-      getProviders()
-    }
-  }, [])
+  const [t] = useTranslation();
 
-  function handleSubmit (provider: string) {
-    loginWith({ provider })
-  }
+  const handleSubmit = (provider: string) => {
+    localStorage.setItem("attemptingSignInWithProvider", provider);
+
+    ssoLogin({ provider });
+  };
 
   return (
-    <div className={classes.loginWithContainer}>
+    <div className={classes.ssoFormContainer}>
       {
-        auth.providers?.map((prov, idx) => (
-          <div className={classes.loginWithButtonWrapper}>
+        auth.providers?.map((provider, index) => (
+          <div key={provider} className={classes.ssoSignInWithButtonContainer}>
             <Button
-              key={`${prov}-${idx}`}
-              label={`${t('loginForm.loginWith', { config })} ${prov}`}
-              onClick={() => handleSubmit(prov)}
-              fullWidth
-              background='secondary'
-              type='button'
-            />
+              className={classes.ssoSignInWithButton}
+              key={`${provider}${index}`}
+              onClick={() => handleSubmit(provider)}
+              startIcon={
+                <VpnKeyRoundedIcon className={classes.ssoSignInWithIcon} />
+              }
+            >
+              {t("signInForm.alternativeSignInButtonLabel", { provider })}
+            </Button>
           </div>
         ))
       }
     </div>
-  )
-}
+  );
+};
 
-export default SSOForm
+export default SSOForm;

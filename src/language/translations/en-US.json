@@ -3,7 +3,7 @@
     "newSlides": {
       "slideOne": {
         "slideText": "Sign up now to enjoy all portal features",
-        "slideButtonLabel": "Register"
+        "slideButtonLabel": "Sign up"
       },
       "slideTwo": {
         "slideText": "Take a look at our available APIs",
@@ -21,7 +21,7 @@
         "paragraphOne": "Our API Portal enables you to register a free team-based account without on the fly.",
         "paragraphTwoPartOne": "Once activated, we assist you in 3 straightforward steps to start consuming our API products.",
         "paragraphTwoPartTwo": "Not sure how to get there? The onboarding documentation will help you along.",
-        "buttonLabel": "Register now"
+        "buttonLabel": "Sign up now"
       },
       "loggedIn": {
         "heading": "We value you as an interested developer!",
@@ -69,35 +69,79 @@
     "paragraphThree": "By clicking \"I Accept\", you agree to essential cookie usage.",
     "buttonLabel": "I Accept"
   },
-  "loginForm": {
-    "title": "Log in",
-    "button": "Log in",
+  "customizableDialog": {
+    "cancelButtonLabel": "Cancel",
+    "confirmButtonLabel": "Confirm"
+  },
+  "signInOrUpView": {
+    "closeButtonLabel": "close",
+    "invalid": "This invitation is not valid!",
+    "welcomeTitle": "Welcome",
+    "welcomeSubtitle": "Please, feel free to sign in, or sign up for free.",
+    "welcomeSubtitleInvitation": "You have been invited to join {{org}}.",
+    "options": {
+      "signIn": "Sign in",
+      "signUp": "Sign up"
+    },
+    "ssoFooterSignUp": "Don't have a {{provider}} account?",
+    "ssoFooterSignUpLink": "Sign Up here.",
+    "notAvailableView": "This page is not available with SSO enabled. Please use the navigation menu."
+  },
+  "signInForm": {
+    "regularSignInButtonLabel": "Sign in",
+    "alternativeSignInButtonLabel": "Sign in with {{provider}}",
+    "separatorLabel": "or",
+    "fieldLabels": {
+      "email": "E-mail",
+      "password": "Password"
+    },
     "warnings": {
       "email": "Please enter a valid e-mail address.",
       "password": "Please fill in your password."
     },
-    "fields": {
-      "email": "E-mail address",
+    "togglePasswordVisibilityARIALabel": "Toggle password visibility",
+    "forgotPasswordLinkLabel": "Forgot Password?",
+    "ssoSignInPleaseHoldMessage": "Please hold..."
+  },
+  "signUpForm": {
+    "nextStepButtonLabel": "Next",
+    "previousStepButtonLabel": "Back",
+    "lastStepButtonLabel": "Finish",
+    "fieldLabels": {
+      "profileName": "Profile name",
+      "profileEmail": "E-mail",
+      "orgName": "Organisation name (optional)",
+      "orgWebsite": "Organisation website (optional)",
       "password": "Password"
     },
-    "loginWith": "Login With"
-  },
-  "registerForm": {
     "warnings": {
-      "name": "Please enter your name.",
-      "email": "Please enter a valid e-mail address.",
+      "email": "Please provide a valid e-mail address.",
       "emailInUse": "The provided e-mail address is already in use.",
-      "organisationName": "Please enter the name of your organisation.",
+      "invalidInvitation": "The invitation is not valid, or has expired.",
       "invalidWebsite": "Please provide a valid website for your organisation.",
-      "noPrefixWebsite": "Please include the 'http://' or 'https://' prefix to the provided web address.",
-      "vat": "Please enter your organisations' VAT.",
-      "password": "Password must have one lowercase, one uppercase, one symbol, and be at least 12 characters long."
+      "organisationName": "Please enter the name of your organisation.",
+      "organisationNeeded": "The provided website needs an organisation to be associated to.",
+      "password": "Your password must be at least 12 characters long, and contain 1 lowercase & 1 uppercase character, as well as 1 symbol.",
+      "profileName": "Please enter your name."
     },
     "steps": {
-      "personalDetails": "Personal Details",
-      "organisationDetails": "Organisation Details",
-      "securityStep": "Security Step"
-    }
+      "profileDetails": "Profile details",
+      "organisationDetails": "Organisation details",
+      "securityDetails": "Security details"
+    },
+    "togglePasswordVisibilityARIALabel": "Toggle password visibility",
+    "privacyPolicyDisclaimerPartOne": "By creating an account, you are agreeing to our",
+    "privacyPolicyDisclaimerPartTwo": "Privacy Policy"
+  },
+  "signUpConfirmation": {
+    "titleText": "Thank you for joining us, ",
+    "subtitleTextPartOne": "A",
+    "subtitleTextPartTwo": " verification link ",
+    "subtitleTextPartThree": "has been sent to your e-mail address. Please, follow its instructions to activate your account!",
+    "infoBoxText": "Once you activate your account, you'll be able to provide additional information."
+  },
+  "formCard": {
+    "holdMessage": "Please hold..."
   },
   "passwordRecovery": {
     "closeButtonLabel": "close",
@@ -137,7 +181,7 @@
     },
     "productionAccess": "Production access",
     "documentationAccess": "API Documentation",
-    "registerForMoreMessage": "Register for more options",
+    "registerForMoreMessage": "Sign up for more options",
     "textFilterPlaceholder": "Filter..."
   },
   "dashboardTab": {
@@ -225,8 +269,7 @@
               "moreThanOneApp": "Select an app",
               "noApps": "No apps to display"
             },
-            "infoBoxNotificationTextPartOne": "Subscriptions provide production access. This access request will be reviewed by ",
-            "infoBoxNotificationTextPartTwo": " first.",
+            "infoBoxNotificationText": "Subscriptions provide production access. This access request will be reviewed by {{clientName}} first.",
             "warningBoxNotificationText": "If you revoke the subscription of the client application, access will automatically be removed."
           },
           "apiProductSubsContainer": {
@@ -298,7 +341,8 @@
         "closeButtonLabel": "close",
         "closeModalButtonLabel": "Close",
         "dialogConfirmButtonLabel": "Delete",
-        "dialogText": "Are you sure you want to delete this app? This action is NOT reversible.",
+        "dialogText": "Are you sure you want to delete this app?",
+        "dialogSubText": "This action is not reversible.",
         "dialogTitle": "Delete app",
         "draftAppStatus": "Draft",
         "editAppButtonLabel": "Edit application",
@@ -347,27 +391,31 @@
     }
   },
   "profileTab": {
-    "overviewTab": {
+    "overviewSubTab": {
+      "loadingDetails": "Loading details...",
       "subtitle": "We've selected some profile-specific actions for you.",
       "orgRelatedLabels": {
         "selectorTitle": "Linked organisation",
         "selectorLabel": "Organisations",
-        "createOrgButtonLabel": "Create your organisation"
+        "createOrgButtonLabel": "Create your organisation",
+        "switchOrgButtonLabel": "Switch"
       },
       "otherActionsLabels": {
         "changePassword": "Change password",
         "viewTeam": "View team",
         "updateProfileDetails": "Update",
-        "logOut": "Log out",
-        "deleteProfile": "Delete profile",
-        "deleteProfileModalConfirmButton": "Delete",
-        "deleteProfileModalTitle": "Delete",
-        "deleteProfileModalWarningText": "Are you sure you want to delete your account? This action is not reversible."
+        "signOut": "Sign out",
+        "deleteAccount": "Delete account",
+        "deleteAccountModalConfirmButton": "Delete account",
+        "deleteAccountModalTitle": "Delete account",
+        "deleteAccountModalWarningText": "Are you sure you want to delete your API Suite acount, whose associated e-mail address is",
+        "deleteAccountModalWarningSubText": "This action is irreversible, and all the data associated with your account will be permanently deleted."
       },
       "roleRelatedLabels": {
         "admin": "Admin",
         "orgOwner": "Organisation owner",
-        "developer": "Developer"
+        "developer": "Developer",
+        "baseUser": "Base user"
       },
       "userRelatedLabels": {
         "userAvatarURL": "Avatar URL",
@@ -378,10 +426,15 @@
       "warningLabels": {
         "userAvatarURL": "The provided URL is not valid, or the image does not exist.",
         "userPhoneNumber": "Please enter a valid phone number."
-      }
+      },
+      "openIDInfoBoxContainerPartOne": "Your profile's name and e-mail address are provided by the Identity Provider service linked with this portal.",
+      "openIDInfoBoxContainerPartTwo": "Read here",
+      "openIDInfoBoxContainerPartThree": " on how to integrate an Open Identity service."
     },
     "securitySubTab": {
       "securityTitle": "Security",
+      "securitySubtitleWithoutActiveSSO": "Update your password, and check your latest activity in the portal.",
+      "securitySubtitleWithActiveSSO": "Check your latest activity in the portal.",
       "updatePasswordTitle": "Update password",
       "userActivityTitle": "User activity",
       "fieldLabels": {
@@ -398,7 +451,8 @@
       "errorMessages": {
         "samePasswordErrorMessage": "The new password should not be the same as the current one.",
         "tooWeakPasswordErrorMessage": "The provided password is too weak."
-      }
+      },
+      "activeSSOBoxText": "With SSO enabled, you can only change your account's password through the Identity Provider service linked to this portal."
     },
     "organisationSubTab": {
       "newOrgTitle": "New organisation",
@@ -487,11 +541,10 @@
     "welcomeTitle": "Welcome",
     "welcomeMsg": "Please feel free to login or register, it's completely free!",
     "loginBtn": "Login",
-    "registerBtn": "Register"
-  },
-  "registerConfirmation": {
-    "messageTitle": "Thanks for joining us!",
-    "message": "A verification link has been sent to your e-mail address. Please follow the instructions to finish your registration!"
+    "registerBtn": "Register",
+    "invitationSignInBtn": "Sign in to accept invitation",
+    "invitationSignUpBtn": "Sign up to accept invitation",
+    "invitationBtn": "Invitation"
   },
   "forgotPassword": {
     "messageTitle": "Forgot your password?",
@@ -540,5 +593,21 @@
   "apidetails": {
     "notfound": "No Swagger documentation found.",
     "goback": "Go back"
+  },
+  "invitationForm": {
+    "accept": "Accept invitation",
+    "backToPortal": "Go back to the Portal",
+    "contact": "You can also contact us directly through our <0>Customer Suport</0>.",
+    "invalid": "Please contact <0>{{org}}</0> and request another invite.",
+    "inviteSignIn": "Sign in",
+    "inviteSignUp": "Sign up",
+    "name": "Your profile name",
+    "privacyPolicyDisclaimer": "By creating an account, you are agreeing to our <0>Privacy Policy</0>.",
+    "reject": "Reject invitation",
+    "signin": "Sign in with {{provider}}",
+    "warnings": {
+      "name": "Please fill in your profile name.",
+      "password": "Please fill in your password."
+    }
   }
 }

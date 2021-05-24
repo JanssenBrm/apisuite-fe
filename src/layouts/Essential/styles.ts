@@ -1,7 +1,7 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles(({
   root: {
-    height: '100%',
+    height: "100%",
   },
-}))
+}));

@@ -10,7 +10,9 @@ set -e
 # Email       : delio@cloudoki.com
 ###################################################################
 
-# . ./install_dependencies.sh
+. ./generate_envfile.sh
+
+. ./install_dependencies.sh
 
 CONFIG=develop
 
@@ -18,11 +20,9 @@ if [[ "$CIRCLE_BRANCH" = "staging" || "$CIRCLE_BRANCH" = "production" ]]; then
   CONFIG=$CIRCLE_BRANCH
 fi
 
-cp "sandbox.config-$CONFIG.json" "sandbox.config.json"
+echo 127.0.0.1 localhost.develop.apisuite.io | sudo tee -a /etc/hosts
+
+sudo cat /etc/hosts
+
 npm install
-npm run pretest
-
-# NOTE: running pretest only for now (lint/types) since there are still no cypress tests
-# npm run test
-
-rm sandbox.config.json
+npm run test

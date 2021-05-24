@@ -1,27 +1,21 @@
 /*
- * Combine all sagas in the this file and export them.
- */
+* Combine all sagas in the this file and export them.
+*/
 
-import apiDetails from 'containers/APIDetails/sagas'
-import applications from 'containers/Applications/sagas'
-import auth from 'containers/Auth/sagas'
-import informDialog from 'components/InformDialog/sagas'
-import profile from 'containers/Profile/sagas'
-import register from 'components/RegisterForm/sagas'
-import security from 'containers/Security/sagas'
-import settings from 'containers/Settings/sagas'
-import subscriptions from 'containers/Subscriptions/sagas'
+import apiDetails from "./apiDetails/sagas";
+import applications from "store/applications/sagas";
+import auth from "store/auth/sagas";
+import profile from "./profile/sagas";
+import security from "./security/sagas";
+import subscriptions from "./subscriptions/sagas";
 
 const sagas = [
   apiDetails,
   applications,
   auth,
-  informDialog,
   profile,
-  register,
   security,
-  settings,
   subscriptions,
-]
+];
 
-export default sagas
+export default sagas;

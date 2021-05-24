@@ -1,162 +1,160 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from "@apisuite/fe-base";
 
-import { config } from 'constants/global'
-
-export default makeStyles(({
+export default makeStyles((theme) => ({
   apiAppsContainer: {
-    alignItems: 'center',
-    borderLeft: `1px solid ${config.palette.newGreyScales['100']}`,
-    display: 'flex',
-    width: '405px',
+    alignItems: "center",
+    borderLeft: `1px solid ${theme.palette.grey[200]}`,
+    display: "flex",
+    width: "405px",
   },
 
   apiDetailsLinkContainer: {
-    alignItems: 'center',
-    borderLeft: `1px solid ${config.palette.newGreyScales['100']}`,
-    display: 'flex',
-    justifyContent: 'center',
-    width: '40px',
+    alignItems: "center",
+    borderLeft: `1px solid ${theme.palette.grey[200]}`,
+    display: "flex",
+    justifyContent: "center",
+    width: "40px",
 
-    '& > a': {
-      color: config.palette.active,
-      height: '24px',
-      transform: 'scaleX(-1)',
-      width: '24px',
+    "& > a": {
+      color: theme.palette.action.active,
+      height: "24px",
+      transform: "scaleX(-1)",
+      width: "24px",
     },
   },
 
   apiName: {
-    alignItems: 'center',
-    color: config.palette.active,
-    display: 'flex',
-    fontSize: '16px',
+    alignItems: "center",
+    color: theme.palette.action.active,
+    display: "flex",
+    fontSize: "16px",
     fontWeight: 400,
-    paddingLeft: '40px',
+    paddingLeft: "40px",
   },
 
   apiNameAndAppsContainer: {
-    backgroundColor: config.palette.background.default,
-    borderTop: `1px solid ${config.palette.newGreyScales['100']}`,
-    display: 'flex',
-    height: '40px',
-    justifyContent: 'space-between',
-    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+    borderTop: `1px solid ${theme.palette.grey[200]}`,
+    display: "flex",
+    height: "40px",
+    justifyContent: "space-between",
+    width: "100%",
   },
 
   apiNameContainer: {
-    alignItems: 'center',
-    display: 'flex',
-    width: '455px',
+    alignItems: "center",
+    display: "flex",
+    width: "455px",
   },
 
   apiVersionDetailsContainer: {
-    alignItems: 'center',
-    borderTop: `1px solid ${config.palette.newGreyScales['100']}`,
-    display: 'flex',
-    height: '35px',
-    justifyContent: 'space-between',
-    padding: '0px 7.5px 00px 40px',
+    alignItems: "center",
+    borderTop: `1px solid ${theme.palette.grey[200]}`,
+    display: "flex",
+    height: "35px",
+    justifyContent: "space-between",
+    padding: "0px 7.5px 00px 40px",
   },
 
   apiVersionIconsContainer: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    width: '300px',
+    display: "flex",
+    justifyContent: "flex-end",
+    width: "300px",
   },
 
   apiVersionLink: {
-    textDecoration: 'none',
+    textDecoration: "none",
   },
 
   apiVersionName: {
-    color: config.palette.newGreyScales['400'],
-    fontSize: '14px',
+    color: theme.palette.text.primary,
+    fontSize: "14px",
     fontWeight: 300,
-    textAlign: 'center',
-    width: '300px',
+    textAlign: "center",
+    width: "300px",
   },
 
   apiVersionNumber: {
-    color: config.palette.tertiary,
-    fontSize: '14px',
+    color: theme.palette.secondary.main,
+    fontSize: "14px",
     fontWeight: 300,
-    textAlign: 'left',
-    width: '300px',
+    textAlign: "left",
+    width: "300px",
   },
 
   appNameIcon: {
-    backgroundColor: config.palette.primary,
-    borderRadius: '4px',
-    color: config.palette.primaryContrastText,
-    fontSize: '14px',
+    backgroundColor: theme.palette.primary.main,
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.primary.contrastText,
+    fontSize: "14px",
     fontWeight: 300,
-    justifyContent: 'center',
-    marginLeft: '12px',
-    textAlign: 'center',
-    textTransform: 'uppercase',
-    width: '35px',
+    justifyContent: "center",
+    marginLeft: "12px",
+    textAlign: "center",
+    textTransform: "uppercase",
+    width: "35px",
   },
 
   chevronIcon: {
-    color: config.palette.newGreyScales['400'],
+    color: theme.palette.text.primary,
   },
 
   deprecatedIcon: {
-    backgroundColor: config.palette.warning,
-    borderRadius: '4px',
-    color: config.palette.primaryContrastText,
-    marginRight: '20px',
-    padding: '5px',
+    backgroundColor: theme.palette.warning.main,
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.primary.contrastText,
+    marginRight: "20px",
+    padding: "5px",
   },
 
   mostRecentAPIVersionLink: {
-    color: config.palette.active,
-    height: '24px',
-    textDecoration: 'none',
-    transform: 'scaleX(-1)',
-    width: '24px',
+    color: theme.palette.action.active,
+    height: "24px",
+    textDecoration: "none",
+    transform: "scaleX(-1)",
+    width: "24px",
   },
 
   noSubsMessage: {
-    color: config.palette.newGreyScales['400'],
-    fontSize: '14px',
+    color: theme.palette.text.primary,
+    fontSize: "14px",
     fontWeight: 300,
-    padding: '10px 0px 10px 12px',
+    padding: "10px 0px 10px 12px",
   },
 
   tableBody: {
-    backgroundColor: config.palette.newGreyScales['25'],
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
-    borderBottomLeftRadius: `${config.dimensions.borderRadius}px`,
-    borderBottomRightRadius: `${config.dimensions.borderRadius}px`,
-    borderTop: 'none',
-    width: '100%',
+    backgroundColor: theme.palette.grey[50],
+    border: `1px solid ${theme.palette.grey["300"]}`,
+    borderBottomLeftRadius: `${theme.shape.borderRadius}px`,
+    borderBottomRightRadius: `${theme.shape.borderRadius}px`,
+    borderTop: "none",
+    width: "100%",
   },
 
   tableContentsContainer: {
-    width: '900px',
+    width: "900px",
   },
 
   tableHeader: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.newGreyScales['300']}`,
-    borderTopLeftRadius: `${config.dimensions.borderRadius}px`,
-    borderTopRightRadius: `${config.dimensions.borderRadius}px`,
-    display: 'flex',
-    justifyContent: 'space-between',
-    padding: '10px 47.5px 10px 40px',
-    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderTopLeftRadius: `${theme.shape.borderRadius}px`,
+    borderTopRightRadius: `${theme.shape.borderRadius}px`,
+    display: "flex",
+    justifyContent: "space-between",
+    padding: "10px 47.5px 10px 40px",
+    width: "100%",
 
-    '& > :first-child': {
-      color: config.palette.active,
-      fontSize: '16px',
+    "& > :first-child": {
+      color: theme.palette.action.active,
+      fontSize: "16px",
       fontWeight: 300,
     },
 
-    '& > :last-child': {
-      color: config.palette.newGreyScales['400'],
-      fontSize: '16px',
+    "& > :last-child": {
+      color: theme.palette.text.primary,
+      fontSize: "16px",
       fontWeight: 300,
     },
   },
-}))
+}));

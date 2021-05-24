@@ -1,46 +1,31 @@
-import * as React from 'react'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Button } from "@apisuite/fe-base";
+import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 
-import Button from '../Button'
+import { notificationCardSelector } from "./selector";
+import useStyles from "./styles";
+import { NotificationCardProps } from "./types";
+import { toggleNotificationCard } from "store/notificationCards/actions/toggleNotificationCard";
 
-import CloseRoundedIcon from '@material-ui/icons/CloseRounded'
-
-import useStyles from './styles'
-
-import { NotificationCardProps } from './types'
-
-const NotificationCard: React.FC<NotificationCardProps> = ({
-  // Temporary until notification cards become clearer
-  notificationCards,
+export const NotificationCard: React.FC<NotificationCardProps> = ({
   notificationCardText,
   notificationCardTitle,
   notificationCardButtonAction,
   notificationCardButtonClassName,
   notificationCardButtonLabel,
   notificationCardButtonLink,
-  // Temporary until notification cards become clearer
-  toggleInstanceOwnerNotificationCards,
-  toggleNonInstanceOwnerNotificationCards,
-  typeOfUser,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
+  const dispatch = useDispatch();
+  // Temporary until notification cards become clearer
+  const notificationCards = useSelector(notificationCardSelector);
 
-  const [showing, setShowing] = React.useState(
-    typeOfUser !== 'admin'
-      ? notificationCards.showNonInstanceOwnerNotificationCards
-      : notificationCards.showInstanceOwnerNotificationCards,
-  )
+  const [showing, setShowing] = React.useState(notificationCards.show);
 
-  React.useEffect(() => {
-    if (typeOfUser !== 'admin') {
-      if (showing !== notificationCards.showNonInstanceOwnerNotificationCards) {
-        setShowing(notificationCards.showNonInstanceOwnerNotificationCards)
-      }
-    } else {
-      if (showing !== notificationCards.showInstanceOwnerNotificationCards) {
-        setShowing(notificationCards.showInstanceOwnerNotificationCards)
-      }
-    }
-  }, [notificationCards])
+  useEffect(() => {
+    setShowing(notificationCards.show);
+  }, [notificationCards.show]);
 
   return (
     <section
@@ -56,7 +41,7 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
         </p>
 
         {
-          typeof notificationCardText === 'string'
+          typeof notificationCardText === "string"
             ? (
               <p className={classes.notificationCardText}>
                 {notificationCardText}
@@ -70,34 +55,29 @@ const NotificationCard: React.FC<NotificationCardProps> = ({
         notificationCardButtonClassName
           ? (
             <Button
-              customButtonClassName={notificationCardButtonClassName}
+              className={notificationCardButtonClassName}
               href={notificationCardButtonLink}
-              label={notificationCardButtonLabel}
               onClick={notificationCardButtonAction}
-            />
+            >
+              {notificationCardButtonLabel}
+            </Button>
           )
           : (
             <Button
-              background='tertiary'
-              color='tertiary'
+              className={classes.notificationCardButton}
               fullWidth
               href={notificationCardButtonLink}
-              label={notificationCardButtonLabel}
               onClick={notificationCardButtonAction}
-            />
+            >
+              {notificationCardButtonLabel}
+            </Button>
           )
       }
 
       <CloseRoundedIcon
         className={classes.notificationCardCloseButton}
-        onClick={
-          typeOfUser !== 'admin'
-            ? toggleNonInstanceOwnerNotificationCards
-            : toggleInstanceOwnerNotificationCards
-        }
+        onClick={() => dispatch(toggleNotificationCard())}
       />
     </section>
-  )
-}
-
-export default NotificationCard
+  );
+};

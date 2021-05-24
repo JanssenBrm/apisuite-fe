@@ -1,67 +1,87 @@
-import { makeStyles } from '@material-ui/styles'
+import { makeStyles } from "@apisuite/fe-base";
 
-import { config } from 'constants/global'
-
-const useStyles = makeStyles({
+export default makeStyles((theme) => ({
   cancelButton: {
-    backgroundColor: config.palette.background.default,
-    border: `1px solid ${config.palette.label}`,
-    borderRadius: `${config.dimensions.borderRadius}px`,
-    color: `${config.palette.active} !important`,
-    fontSize: '16px',
+    backgroundColor: theme.palette.background.default,
+    border: `1px solid ${theme.palette.grey[300]}`,
+    borderRadius: `${theme.shape.borderRadius}px`,
+    color: `${theme.palette.action.active} !important`,
+    fontSize: "16px",
     fontWeight: 500,
-    marginRight: '24px',
-    padding: '6px 21px',
-    textDecoration: 'none',
-    textTransform: 'none',
-    width: 'auto',
+    marginRight: "12px",
+    padding: "6px 21px",
+    textDecoration: "none",
+    width: "auto",
 
-    '&:hover': {
-      backgroundColor: config.palette.background.default,
+    "&:hover": {
+      backgroundColor: theme.palette.background.default,
     },
   },
 
   confirmButton: {
-    backgroundColor: config.palette.error,
-    border: `1px solid ${config.palette.error}`,
-    borderRadius: config.dimensions.borderRadius,
-    color: `${config.palette.primaryContrastText} !important`,
-    fontSize: '16px',
+    backgroundColor: theme.palette.error.main,
+    border: `1px solid ${theme.palette.error.main}`,
+    borderRadius: theme.shape.borderRadius,
+    color: `${theme.palette.primary.contrastText} !important`,
+    fontSize: "16px",
     fontWeight: 500,
-    padding: '6px 21px',
-    textDecoration: 'none',
-    textTransform: 'none',
-    width: 'auto',
+    padding: "6px 21px",
+    textDecoration: "none",
+    width: "auto",
 
-    '&:hover': {
-      backgroundColor: config.palette.error,
+    "&:hover": {
+      backgroundColor: theme.palette.error.main,
     },
   },
 
   dialogActionsContainer: {
-    display: 'flex',
-    padding: '0px 24px 20px 24px',
+    display: "flex",
+    padding: "0px 24px 20px 24px",
   },
 
   dialogContentContainer: {
-    padding: '20px 24px',
+    padding: "20px 24px",
+  },
 
-    '& > :first-child': {
-      color: config.palette.newGreyScales['400'],
-      fontSize: '16px',
-      fontWeight: 400,
-    },
+  dialogText: {
+    color: "#2F4152",
+    fontSize: "16px",
+    fontWeight: 400,
+    lineHeight: "20px",
+  },
+
+  dialogSubText: {
+    color: theme.palette.text.primary,
+    fontSize: "14px",
+    fontWeight: 300,
+    lineHeight: "20px",
   },
 
   dialogTitleContainer: {
-    backgroundColor: config.palette.newGreyScales['100'],
+    alignItems: "center",
+    backgroundColor: theme.palette.grey[50],
+    display: "flex",
+    padding: "15px 25px",
 
-    '& > :first-child': {
-      color: config.palette.tertiary,
-      fontSize: '24px',
+    // Dialog's optional title icon
+    "& > :first-child": {
+      marginRight: "10px",
+    },
+
+    // Dialog's title
+    "& > :last-child": {
+      color: theme.palette.secondary.main,
+      fontSize: "24px",
       fontWeight: 500,
+      padding: "0px",
     },
   },
-})
 
-export default useStyles
+  dialogTitleInfoIcon: {
+    color: "#46B5EF",
+  },
+
+  dialogTitleWarningIcon: {
+    color: theme.palette.warning.main,
+  },
+}));
