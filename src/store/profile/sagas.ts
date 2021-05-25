@@ -132,7 +132,7 @@ export function * getProfileSaga () {
   }
 }
 
-export function * updateProfileSaga ({ userId, ...rest }: UpdateProfileAction) {
+export function * updateProfileSaga ({ userId, type, ...rest }: UpdateProfileAction) {
   try {
     const response: UpdateProfileResponse = yield call(request, {
       // url: `${API_URL}/users/profile/update`,
