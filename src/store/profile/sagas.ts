@@ -203,7 +203,7 @@ export function * updateOrgSaga ({ orgId, orgInfo }: UpdateOrgAction) {
       headers: {
         "content-type": "application/json",
       },
-      data: JSON.stringify({ orgId, orgInfo }),
+      data: JSON.stringify(orgInfo),
     });
 
     yield put(updateOrgSuccess({}));
