@@ -1,18 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  useTranslation,
   Avatar,
   Button,
   Fade,
   Grid,
+  IconButton,
   Menu,
   MenuItem,
   Modal,
   TextField,
   Typography,
   useConfig,
-  IconButton,
+  useTranslation,
 } from "@apisuite/fe-base";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
@@ -20,23 +20,26 @@ import Close from "@material-ui/icons/Close";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
 import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
+import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 import QueryBuilderRoundedIcon from "@material-ui/icons/QueryBuilderRounded";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 
-import { useForm } from "util/useForm";
-import { isValidImage, isValidURL } from "util/forms";
-import { getUserApp } from "store/applications/actions/getUserApp";
+import { applicationsModalSelector } from "./selector";
 import { createApp } from "store/applications/actions/createApp";
-import { updateApp } from "store/applications/actions/updatedApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
-import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
 import { deleteAppMedia } from "store/applications/actions/deleteAppMedia";
+import { getUserApp } from "store/applications/actions/getUserApp";
+import { updateApp } from "store/applications/actions/updatedApp";
+import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import { MediaUpload } from "components/MediaUpload";
 
+import { getSections } from "util/extensions";
+import { isValidAppMetaKey, isValidImage, isValidURL } from "util/forms";
+import { useForm } from "util/useForm";
+
 import { ApplicationsModalProps } from "./types";
 import useStyles from "./styles";
-import { applicationsModalSelector } from "./selector";
 
 export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   allUserAppNames,
@@ -46,8 +49,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   toggleModal,
 }) => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+
   const { t } = useTranslation();
+
+  const dispatch = useDispatch();
+
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
 
   const { ownerInfo, portalName } = useConfig();
@@ -112,8 +118,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appShortDescription: "",
       appSupportURL: "",
       appTermsURL: "",
+      appVisibility: "private",
       appWebsiteURL: "",
       appYouTubeURL: "",
+      appMetaKey: "meta_",
+      appMetaValue: "",
+      appMetaTitle: "",
+      appMetaDescription: "",
     },
     // Rules for (some) app details
     {
@@ -188,8 +199,21 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           : "",
         appSupportURL: mostRecentlySelectedAppDetails.supportUrl ? mostRecentlySelectedAppDetails.supportUrl : "",
         appTermsURL: mostRecentlySelectedAppDetails.tosUrl ? mostRecentlySelectedAppDetails.tosUrl : "",
+        appVisibility: mostRecentlySelectedAppDetails.visibility ? mostRecentlySelectedAppDetails.visibility : "private",
         appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ? mostRecentlySelectedAppDetails.websiteUrl : "",
         appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ? mostRecentlySelectedAppDetails.youtubeUrl : "",
+        appMetaKey: mostRecentlySelectedAppDetails.metadata[0]?.key
+          ? mostRecentlySelectedAppDetails.metadata[0].key
+          : "",
+        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value
+          ? mostRecentlySelectedAppDetails.metadata[0].value
+          : "",
+        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title
+          ? mostRecentlySelectedAppDetails.metadata[0].title
+          : "",
+        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description
+          ? mostRecentlySelectedAppDetails.metadata[0].description
+          : "",
       });
     } else {
       resetForm({
@@ -204,8 +228,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appShortDescription: "",
         appSupportURL: "",
         appTermsURL: "",
+        appVisibility: "private",
         appWebsiteURL: "",
         appYouTubeURL: "",
+        appMetaKey: "meta_",
+        appMetaValue: "",
+        appMetaTitle: "",
+        appMetaDescription: "",
       });
     }
   }, [modalMode, mostRecentlySelectedAppDetails]);
@@ -305,13 +334,23 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   /* App-related actions */
 
+  // 1. Support functions
+
+  // 1.a. Label checking
+
   const checkForLabels = (labels: string) => (
     labels.split(",")
       .map((l) => l.trim())
       .filter(Boolean)
   );
 
-  // Creating an app
+  // 1.b. App visibility handling
+
+  const handleAppVisibility = (selectedAppVisibility: string) => {
+    formState.values.appVisibility = selectedAppVisibility;
+  };
+
+  // 2. Creating an app
 
   const createNewApp = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
@@ -320,12 +359,19 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       description: formState.values.appFullDescription,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
+      metadata: [{
+        key: formState.values.appMetaKey,
+        value: formState.values.appMetaValue,
+        title: formState.values.appMetaTitle,
+        description: formState.values.appMetaDescription,
+      }],
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
       redirectUrl: formState.values.appRedirectURI,
       shortDescription: formState.values.appShortDescription,
       supportUrl: formState.values.appSupportURL,
       tosUrl: formState.values.appTermsURL,
+      visibility: formState.values.appVisibility,
       websiteUrl: formState.values.appWebsiteURL,
       youtubeUrl: formState.values.appYouTubeURL,
     };
@@ -335,7 +381,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     toggleModal();
   };
 
-  // Updating an app
+  // 3. Updating an app
 
   const _updateApp = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
@@ -345,12 +391,19 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       id: modalDetails.userAppID,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
+      metadata: [{
+        key: formState.values.appMetaKey,
+        value: formState.values.appMetaValue,
+        title: formState.values.appMetaTitle,
+        description: formState.values.appMetaDescription,
+      }],
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
       redirectUrl: formState.values.appRedirectURI,
       shortDescription: formState.values.appShortDescription,
       supportUrl: formState.values.appSupportURL,
       tosUrl: formState.values.appTermsURL,
+      visibility: formState.values.appVisibility,
       websiteUrl: formState.values.appWebsiteURL,
       youtubeUrl: formState.values.appYouTubeURL,
     };
@@ -360,7 +413,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     toggleModal();
   };
 
-  // Deleting an app
+  // 4. Deleting an app
 
   const [openDialog, setOpenDialog] = React.useState(false);
 
@@ -419,8 +472,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appShortDescription: "",
             appSupportURL: "",
             appTermsURL: "",
+            appVisibility: "private",
             appWebsiteURL: "",
             appYouTubeURL: "",
+            appMetaKey: "meta_",
+            appMetaValue: "",
+            appMetaTitle: "",
+            appMetaDescription: "",
           });
           toggleModal();
         }}
@@ -755,19 +813,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     value={formState.values.appFullDescription}
                     variant='outlined'
                   />
-
-                  <TextField
-                    className={classes.inputFields}
-                    fullWidth
-                    helperText={t("dashboardTab.applicationsSubTab.appModal.appLabelsFieldHelperText")}
-                    label={t("dashboardTab.applicationsSubTab.appModal.appLabelsFieldLabel")}
-                    margin='dense'
-                    name='appLabels'
-                    onChange={handleChange}
-                    type='text'
-                    value={formState.values.appLabels}
-                    variant='outlined'
-                  />
                 </div>
 
                 {/* 'Optional URLs' subsection */}
@@ -986,6 +1031,133 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               />
 
               <hr className={classes.regularSectionSeparator} />
+              {/* 'Metadata' section */}
+              <div>
+                {/* 'Custom properties' text */}
+                <div className={classes.customPropsTextContainer}>
+                  <p>
+                    {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
+                  </p>
+
+                  <p>
+                    {t("dashboardTab.applicationsSubTab.appModal.customProps.subtitle")}
+                  </p>
+                </div>
+
+                {/* 'Custom properties' fields */}
+                <div className={classes.customPropsFieldsContainer}>
+                  <TextField
+                    className={classes.inputFields}
+                    error={
+                      formState.values.appMetaKey.length !== 0 &&
+                      formState.values.appMetaKey !== "meta_" &&
+                      !isValidAppMetaKey(formState.values.appMetaKey)
+                    }
+                    fullWidth
+                    helperText={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
+                    label={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
+                    margin="dense"
+                    name="appMetaKey"
+                    onChange={handleChange}
+                    type="text"
+                    value={formState.values.appMetaKey}
+                    variant="outlined"
+                  />
+
+                  <div className={classes.customPropsFieldsInnerContainer}>
+                    <TextField
+                      className={classes.inputFields}
+                      error={
+                        formState.values.appMetaKey.length !== 0 &&
+                        formState.values.appMetaKey !== "meta_" &&
+                        formState.values.appMetaValue.length === 0
+                      }
+                      fullWidth
+                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.valueFieldLabel")}
+                      margin="dense"
+                      name="appMetaValue"
+                      onChange={handleChange}
+                      type="text"
+                      value={formState.values.appMetaValue}
+                      variant="outlined"
+                    />
+
+                    <TextField
+                      className={classes.inputFields}
+                      error={
+                        formState.values.appMetaKey.length !== 0 &&
+                        formState.values.appMetaKey !== "meta_" &&
+                        formState.values.appMetaTitle.length === 0
+                      }
+                      fullWidth
+                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.titleFieldLabel")}
+                      margin="dense"
+                      name="appMetaTitle"
+                      onChange={handleChange}
+                      type="text"
+                      value={formState.values.appMetaTitle}
+                      variant="outlined"
+                    />
+
+                    <TextField
+                      className={classes.inputFields}
+                      fullWidth
+                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.descriptionFieldLabel")}
+                      margin="dense"
+                      name="appMetaDescription"
+                      onChange={handleChange}
+                      type="text"
+                      value={formState.values.appMetaDescription}
+                      variant="outlined"
+                    />
+                  </div>
+                </div>
+
+                <div className={classes.addCustomPropsContainer}>
+                  <Button
+                    className={classes.addCustomPropsButton}
+                    disabled
+                  >
+                    {t("dashboardTab.applicationsSubTab.appModal.customProps.addCustomPropsButtonLabel")}
+                  </Button>
+
+                  <div className={classes.infoBox}>
+                    <InfoRoundedIcon className={classes.infoBoxIcon} />
+
+                    <div>
+                      <p className={classes.infoBoxText}>
+                        <>
+                          {t("dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText")}
+                        </>
+                        <a
+                          className={classes.infoBoxLink}
+                          href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1450835969/Custom+Properties'
+                          rel='noopener noreferrer'
+                          target='_blank'
+                        >
+                          {t("dashboardTab.applicationsSubTab.appModal.customProps.infoBoxLinkText")}
+                        </a>
+                        <>.</>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr className={classes.regularSectionSeparator} />
+              {/* The following code checks if a Marketplace extension's section exists,
+and if it does, it passes along the form's state, and any necessary logic
+to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
+              {
+                getSections(
+                  "MARKETPLACE_APP_VISIBILITY",
+                  {
+                    formState,
+                    handleAppVisibility,
+                    handleChange,
+                  }
+                )
+              }
 
               {/* 'App action' buttons section */}
               <div className={classes.buttonsContainer}>
@@ -996,13 +1168,22 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <div>
                           <Button
                             disabled={
-                              !(formState.values.appName.length !== 0 &&
+                              !(
+                                formState.values.appName.length !== 0 &&
                                 formState.values.appRedirectURI !== "http://" &&
                                 formState.values.appRedirectURI !== "https://" &&
                                 formState.values.appRedirectURI.length !== 0 &&
+                                (
+                                  formState.values.appMetaKey.length !== 0 &&
+                                  isValidAppMetaKey(formState.values.appMetaKey) &&
+                                  formState.values.appMetaValue.length !== 0 &&
+                                  formState.values.appMetaTitle.length !== 0 &&
+                                  formState.values.appMetaTitle.length !== 0
+                                ) &&
                                 (formState.isValid || Object.keys(formState.errors).length === 0) &&
                                 !(allUserAppNames.includes(formState.values.appName)) &&
-                                validImage)
+                                validImage
+                              )
                             }
                             color="primary"
                             variant="contained"
@@ -1041,8 +1222,17 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <div>
                           <Button
                             disabled={
-                              !(formState.isDirty && (formState.isValid || Object.keys(formState.errors).length === 0)
-                              && validImage)
+                              !(
+                                formState.isDirty &&
+                                (formState.isValid || Object.keys(formState.errors).length === 0) &&
+                                (
+                                  formState.values.appMetaKey.length !== 0 &&
+                                  isValidAppMetaKey(formState.values.appMetaKey) &&
+                                  formState.values.appMetaValue.length !== 0 &&
+                                  formState.values.appMetaTitle.length !== 0 &&
+                                  formState.values.appMetaTitle.length !== 0
+                                ) &&
+                                validImage)
                             }
                             color="primary"
                             variant="contained"
