@@ -2,10 +2,11 @@ import { call, put, select, takeLatest } from "redux-saga/effects";
 
 import { API_URL } from "constants/endpoints";
 import request from "util/request";
+import qs from "qs";
 
 import { Store } from "store/types";
 import { AppData } from "./types";
-import { CreateAppAction, DeleteAppAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction } from "./actions/types";
+import { CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction, UploadAppMediaAction } from "./actions/types";
 import { createAppSuccess, createAppError, CREATE_APP } from "./actions/createApp";
 import { updateAppError, updateAppSuccess, UPDATE_APP } from "./actions/updatedApp";
 import { deleteAppError, deleteAppSuccess, DELETE_APP } from "./actions/deleteApp";
@@ -15,6 +16,9 @@ import { getUserAppError, getUserAppSuccess, GET_USER_APP } from "./actions/getU
 import { handleSessionExpire } from "store/auth/actions/expiredSession";
 import { i18n } from "@apisuite/fe-base";
 import { openNotification } from "store/notificationStack/actions/notification";
+import { uploadAppMediaError, uploadAppMediaSuccess, UPLOAD_APP_MEDIA } from "./actions/appMediaUpload";
+import { deleteAppMediaError, deleteAppMediaSuccess, DELETE_APP_MEDIA } from "./actions/deleteAppMedia";
+import { UploadResponse } from "./actions/types";
 
 
 export function * createAppActionSaga (action: CreateAppAction) {
@@ -98,6 +102,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
         updatedAt: response.updatedAt,
         websiteUrl: response.websiteUrl,
         youtubeUrl: response.youtubeUrl,
+        media: response.images,
       },
     }));
   } catch (error) {
@@ -196,6 +201,7 @@ export function * getAllUserAppsActionSaga () {
         updatedAt: userApp.updatedAt,
         websiteUrl: userApp.websiteUrl,
         youtubeUrl: userApp.youtubeUrl,
+        media: userApp.images,
       }
     ));
 
@@ -240,6 +246,7 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
         updatedAt: userApp.updatedAt,
         websiteUrl: userApp.websiteUrl,
         youtubeUrl: userApp.youtubeUrl,
+        media: userApp.images,
       }
     ));
 
@@ -252,6 +259,50 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
   }
 }
 
+export function * uploadAppMediaActionSaga (action: UploadAppMediaAction) {
+  try {
+    const requestAPIAccessUrl = `${API_URL}/apps/${action.appId}/media`;
+
+    const res: UploadResponse = yield call(request, {
+      url: requestAPIAccessUrl,
+      method: "PUT",
+      headers: {
+        "content-type": "multipart/form-data",
+      },
+      data: action.media,
+    });
+
+    yield put(uploadAppMediaSuccess(res));
+    yield put(openNotification("success", i18n.t("mediaUpload.uploadSuccess"), 3000));
+  } catch (error) {
+    yield put(uploadAppMediaError({}));
+    yield put(handleSessionExpire({}));
+    yield put(openNotification("error", i18n.t("mediaUpload.uploadError"), 3000));
+  }
+}
+
+export function * deleteAppMediaActionSaga (action: DeleteAppMediaAction) {
+  try {
+    const queryString = qs.stringify({
+      mediaURL: action.media,
+    });
+    const deleteMediaURL = `${API_URL}/apps/${action.appId}/media?${queryString}`;
+
+    console.log(deleteMediaURL);
+    yield call(request, {
+      url: deleteMediaURL,
+      method: "DELETE",
+    });
+
+    yield put(deleteAppMediaSuccess({ deleted: action.media }));
+    yield put(openNotification("success", i18n.t("mediaUpload.deleteSuccess"), 3000));
+  } catch (error) {
+    yield put(deleteAppMediaError({}));
+    yield put(handleSessionExpire({}));
+    yield put(openNotification("error", i18n.t("mediaUpload.deleteError"), 3000));
+  }
+}
+
 function * rootSaga () {
   yield takeLatest(CREATE_APP, createAppActionSaga);
   yield takeLatest(DELETE_APP, deleteAppActionSaga);
@@ -259,6 +310,8 @@ function * rootSaga () {
   yield takeLatest(GET_USER_APP, getUserAppActionSaga);
   yield takeLatest(REQUEST_API_ACCESS, requestAPIAccessActionSaga);
   yield takeLatest(UPDATE_APP, updateAppActionSaga);
+  yield takeLatest(UPLOAD_APP_MEDIA, uploadAppMediaActionSaga);
+  yield takeLatest(DELETE_APP_MEDIA, deleteAppMediaActionSaga);
 }
 
 export default rootSaga;

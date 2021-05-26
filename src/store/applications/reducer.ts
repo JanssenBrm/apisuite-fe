@@ -8,6 +8,8 @@ import { GET_ALL_USER_APPS_SUCCESS } from "./actions/getAllUserApps";
 import { GET_USER_APP_SUCCESS } from "./actions/getUserApp";
 import { REQUEST_API_ACCESS, REQUEST_API_ACCESS_ERROR, REQUEST_API_ACCESS_SUCCESS } from "./actions/requestApiAccess";
 import { UPDATE_APP, UPDATE_APP_ERROR, UPDATE_APP_SUCCESS } from "./actions/updatedApp";
+import { UPLOAD_APP_MEDIA_SUCCESS } from "./actions/appMediaUpload";
+import { DELETE_APP_MEDIA_SUCCESS } from "./actions/deleteAppMedia";
 
 /** Initial state */
 const initialState: ApplicationsStore = {
@@ -30,6 +32,7 @@ const initialState: ApplicationsStore = {
     updatedAt: "",
     websiteUrl: "",
     youtubeUrl: "",
+    media: [],
   },
   createAppStatus: {
     isError: false,
@@ -135,6 +138,7 @@ export default function reducer (
           updatedAt: { $set: action.appData.updatedAt },
           websiteUrl: { $set: action.appData.websiteUrl },
           youtubeUrl: { $set: action.appData.youtubeUrl },
+          media: { $set: action.appData.media },
         },
       });
     }
@@ -201,6 +205,26 @@ export default function reducer (
         updateAppStatus: {
           isError: { $set: true },
           isRequesting: { $set: false },
+        },
+      });
+    }
+
+    case UPLOAD_APP_MEDIA_SUCCESS: {
+      return update(state, {
+        currentApp: {
+          media: {
+            $set: [...state.currentApp.media, ...action.savedImages.map(i => i.url)],
+          },
+        },
+      });
+    }
+
+    case DELETE_APP_MEDIA_SUCCESS: {
+      return update(state, {
+        currentApp: {
+          media: {
+            $set: [...state.currentApp.media.filter((m) => m !== action.deleted)],
+          },
         },
       });
     }

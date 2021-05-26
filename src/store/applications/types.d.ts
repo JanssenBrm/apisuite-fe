@@ -34,6 +34,7 @@ export interface AppData {
   updatedAt: string,
   websiteUrl: string,
   youtubeUrl: string,
+  media: string[],
 }
 
 export interface ModalDetails {

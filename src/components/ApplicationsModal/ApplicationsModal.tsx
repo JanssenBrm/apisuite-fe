@@ -5,10 +5,12 @@ import {
   Avatar,
   Button,
   Fade,
+  Grid,
   Menu,
   MenuItem,
   Modal,
   TextField,
+  Typography,
   useConfig,
   IconButton,
 } from "@apisuite/fe-base";
@@ -27,7 +29,10 @@ import { getUserApp } from "store/applications/actions/getUserApp";
 import { createApp } from "store/applications/actions/createApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
+import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
+import { deleteAppMedia } from "store/applications/actions/deleteAppMedia";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
+import { MediaUpload } from "components/MediaUpload";
 
 import { ApplicationsModalProps } from "./types";
 import useStyles from "./styles";
@@ -377,6 +382,25 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   const copyToClipboard = (value: string) => {
     navigator.clipboard.writeText(value);
+  };
+
+  const uploadMedia = (files: File[]) => {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append(files[i].name, files[i]);
+    }
+
+    dispatch(uploadAppMedia({
+      appId: mostRecentlySelectedAppDetails.id,
+      media: formData,
+    }));
+  };
+
+  const deleteMedia = (file: string) => {
+    dispatch(deleteAppMedia({
+      appId: mostRecentlySelectedAppDetails.id,
+      media: file,
+    }));
   };
 
   return (
@@ -938,6 +962,28 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   }
                 </div>
               </div>
+
+              <hr className={classes.regularSectionSeparator} />
+
+              <Grid container direction="row" justify="space-between" alignItems="center" spacing={3}>
+                <Grid item xs={6}>
+                  <Typography className={classes.title} variant="h6" display="block" gutterBottom>
+                    {t("mediaUpload.title")}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography className={classes.description} variant="caption" display="block" gutterBottom>
+                    {t("mediaUpload.description")}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              <MediaUpload
+                images={mostRecentlySelectedAppDetails.media || []}
+                accept="image/*"
+                onFileLoaded={uploadMedia}
+                onDeletePressed={deleteMedia}
+              />
 
               <hr className={classes.regularSectionSeparator} />
 
