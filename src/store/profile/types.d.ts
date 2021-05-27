@@ -79,7 +79,7 @@ export type Profile = {
 
 export type Role = {
   id: string,
-  name: string,
+  name: "admin" | "organizationOwner" | "developer" | "baseUser",
 }
 
 export type Organization = {

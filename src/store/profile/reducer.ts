@@ -28,7 +28,7 @@ const initialState: ProfileStore = {
       id: 0,
     },
     Role: {
-      name: "",
+      name: "baseUser",
       id: "",
     },
   }],
@@ -38,7 +38,7 @@ const initialState: ProfileStore = {
       id: "",
       member_since: "",
       role: {
-        name: "",
+        name: "baseUser",
         id: "",
       },
     },
@@ -56,7 +56,7 @@ const initialState: ProfileStore = {
     },
   },
   roleOptions: [{
-    name: "",
+    name: "baseUser",
     id: "",
   }],
   org: {

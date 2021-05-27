@@ -626,6 +626,10 @@
     "requestAPIAcessSuccess": "Access requested successfully.",
     "requestAPIAcessError": "Failed to request access."
   },
+  "navigation": {
+    "signin": "Sign in",
+    "signup": "Register"
+  },
   "mediaUpload": {
     "description": "You can upload images and videos to be shown in your application's detail page.",
     "deleteSuccess": "Media deleted successfully.",
