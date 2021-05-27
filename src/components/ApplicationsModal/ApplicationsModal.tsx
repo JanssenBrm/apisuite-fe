@@ -59,6 +59,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   const { ownerInfo, portalName } = useConfig();
 
+  const metadataKeyDefaultPrefix = "meta_";
+
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
     of all information we presently have on a particular app. */
@@ -351,6 +353,15 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     formState.values.appVisibility = selectedAppVisibility;
   };
 
+  const getFormMetadata = () => {
+    return formState.values.appMetaKey.length ? [{
+      key: `${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`,
+      value: formState.values.appMetaValue,
+      title: formState.values.appMetaTitle,
+      description: formState.values.appMetaDescription,
+    }] : [];
+  };
+
   // 2. Creating an app
 
   const createNewApp = (event: React.ChangeEvent<any>) => {
@@ -360,12 +371,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       description: formState.values.appFullDescription,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
-      metadata: [{
-        key: `meta_${formState.values.appMetaKey}`,
-        value: formState.values.appMetaValue,
-        title: formState.values.appMetaTitle,
-        description: formState.values.appMetaDescription,
-      }],
+      metadata: getFormMetadata(),
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
       redirectUrl: formState.values.appRedirectURI,
@@ -392,12 +398,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       id: modalDetails.userAppID,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
-      metadata: [{
-        key: `meta_${formState.values.appMetaKey}`,
-        value: formState.values.appMetaValue,
-        title: formState.values.appMetaTitle,
-        description: formState.values.appMetaDescription,
-      }],
+      metadata: getFormMetadata(),
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
       redirectUrl: formState.values.appRedirectURI,
@@ -1051,12 +1052,12 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     className={classes.inputFields}
                     error={
                       formState.values.appMetaKey.length !== 0 &&
-                      !isValidAppMetaKey(`meta_${formState.values.appMetaKey}`)
+                      !isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`)
                     }
                     fullWidth
                     helperText={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
                     InputProps={{
-                      startAdornment: <InputAdornment className={classes.metaPrefix} position="start">meta_</InputAdornment>,
+                      startAdornment: <InputAdornment className={classes.metaPrefix} position="start">{metadataKeyDefaultPrefix}</InputAdornment>,
                     }}
                     label={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
                     margin="dense"
@@ -1184,7 +1185,7 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                                   ||
                                   (
                                     formState.values.appMetaKey.length !== 0 &&
-                                    isValidAppMetaKey(`meta_${formState.values.appMetaKey}`) &&
+                                    isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`) &&
                                     formState.values.appMetaValue.length !== 0 &&
                                     formState.values.appMetaTitle.length !== 0 &&
                                     formState.values.appMetaTitle.length !== 0
@@ -1247,7 +1248,7 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                                   // Metadata? Then, we need all mandatory fields to be filled in.
                                   (
                                     formState.values.appMetaKey.length !== 0 &&
-                                    isValidAppMetaKey(`meta_${formState.values.appMetaKey}`) &&
+                                    isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`) &&
                                     formState.values.appMetaValue.length !== 0 &&
                                     formState.values.appMetaTitle.length !== 0 &&
                                     formState.values.appMetaTitle.length !== 0
