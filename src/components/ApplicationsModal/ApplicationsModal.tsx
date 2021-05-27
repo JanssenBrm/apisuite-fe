@@ -386,7 +386,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
       metadata: [{
-        key: formState.values.appMetaKey,
+        key: `meta_${formState.values.appMetaKey}`,
         value: formState.values.appMetaValue,
         title: formState.values.appMetaTitle,
         description: formState.values.appMetaDescription,
