@@ -286,46 +286,45 @@ describe("Landing Page - Authenticated User", () => {
 
     it("should show the correct texts and buttons on the three steps section - Documentation URL set", () => {
       cy.fixture("translations/en-US.json").then(enUS=> {
-        // cy.fixture("settings/settings.json").then(settings=> {
-        cy.testID(testIds.stepOne)
-          .should("contain", "1.")
-          .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepOne.header)
-          .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartOne)
-          .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartTwo);
-        cy.testID(testIds.stepOne).find("a")
-          .should("have.length", 1)
-          .should("contain", enUS.sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel)
-          .and("not.have.class", "Mui-disabled")
-          .and("have.attr", "href", "/dashboard/apps");
+        cy.fixture("settings/settings.json").then(settings=> {
+          cy.testID(testIds.stepOne)
+            .should("contain", "1.")
+            .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepOne.header)
+            .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartOne)
+            .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartTwo);
+          cy.testID(testIds.stepOne).find("a")
+            .should("have.length", 1)
+            .should("contain", enUS.sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel)
+            .and("not.have.class", "Mui-disabled")
+            .and("have.attr", "href", "/dashboard/apps");
 
-        cy.testID(testIds.stepTwo)
-          .should("contain", "2.")
-          .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepTwo.header)
-          .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepTwo.paragraph);
-        cy.testID(testIds.stepTwo).find("a")
-          .should("have.length", 1)
-          .should("contain", enUS.sandboxPage.stepsSection.individualSteps.stepTwo.buttonLabel)
-          .and("not.have.class", "Mui-disabled")
-          .and("have.attr", "href", "/dashboard/subscriptions");
+          cy.testID(testIds.stepTwo)
+            .should("contain", "2.")
+            .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepTwo.header)
+            .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepTwo.paragraph);
+          cy.testID(testIds.stepTwo).find("a")
+            .should("have.length", 1)
+            .should("contain", enUS.sandboxPage.stepsSection.individualSteps.stepTwo.buttonLabel)
+            .and("not.have.class", "Mui-disabled")
+            .and("have.attr", "href", "/dashboard/subscriptions");
 
-        cy.testID(testIds.stepThree)
-          .should("contain", "3.")
-          .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepThree.header)
-          .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepThree.paragraph);
+          cy.testID(testIds.stepThree)
+            .should("contain", "3.")
+            .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepThree.header)
+            .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepThree.paragraph);
 
-        //TODO: Review this after settings association gets implemented
-        // cy.testID(testIds.stepThree).find("a")
-        //   .should("have.length", 1)
-        //   .should("contain", enUS.sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel)
-        //   .and("not.have.class", "Mui-disabled")
-        //   .and("have.attr", "href", settings.documentationURL);
-        // });
+          //TODO: Review this after settings association gets implemented
+          cy.testID(testIds.stepThree).find("a")
+            .should("have.length", 1)
+            .should("contain", enUS.sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel)
+            .and("not.have.class", "Mui-disabled")
+            .and("have.attr", "href", settings.documentationURL);
+        });
       });
     });
 
     it("should show the correct texts and buttons on the three steps section - No Documentation URL set", () => {
       cy.fixture("translations/en-US.json").then(enUS=> {
-        // cy.fixture("settings/settings-empty-url.json").then(settings=> {
         cy.testID(testIds.stepOne)
           .should("contain", "1.")
           .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepOne.header)
@@ -353,12 +352,11 @@ describe("Landing Page - Authenticated User", () => {
           .and("contain", enUS.sandboxPage.stepsSection.individualSteps.stepThree.paragraph);
 
         //TODO: Review this after settings association gets implemented
-        // cy.testID(testIds.stepThree).find("a")
-        //   .should("have.length", 1)
-        //   .should("contain", enUS.sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel)
-        //   .and("not.have.class", "Mui-disabled")
-        //   .and("have.attr", "href", "/documentation");
-        // });
+        cy.testID(testIds.stepThree).find("a")
+          .should("have.length", 1)
+          .should("contain", enUS.sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel)
+          .and("not.have.class", "Mui-disabled")
+          .and("have.attr", "href", "/documentation");
       });
     });
   });
@@ -428,10 +426,9 @@ describe("Landing Page - Authenticated User", () => {
               .should("be.visible")
               .and("contain", apis.rows[index].apiVersions[0].title)
               .and("contain", apis.rows[index].apiVersions[0].version)
-              .and("contain", apis.rows[index].apiVersions[0].live ? "Production access":"API Documentation");
-
+              .and("contain", apis.rows[index].apiVersions[0].live ? "Production access":"API Documentation")
+              .and("contain", apis.rows[index].docs[0].info); //This is failing
             //TODO: this needs to be reviewed later
-            // .and("contain", apis.rows[index].docs[0].info); //This is failing
           }
         });
       });
