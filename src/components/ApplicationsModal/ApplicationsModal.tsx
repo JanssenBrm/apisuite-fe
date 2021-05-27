@@ -6,6 +6,7 @@ import {
   Fade,
   Grid,
   IconButton,
+  InputAdornment,
   Menu,
   MenuItem,
   Modal,
@@ -121,7 +122,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appVisibility: "private",
       appWebsiteURL: "",
       appYouTubeURL: "",
-      appMetaKey: "meta_",
+      appMetaKey: "",
       appMetaValue: "",
       appMetaTitle: "",
       appMetaDescription: "",
@@ -203,7 +204,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ? mostRecentlySelectedAppDetails.websiteUrl : "",
         appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ? mostRecentlySelectedAppDetails.youtubeUrl : "",
         appMetaKey: mostRecentlySelectedAppDetails.metadata[0]?.key
-          ? mostRecentlySelectedAppDetails.metadata[0].key
+          ? mostRecentlySelectedAppDetails.metadata[0].key.slice(5)
           : "",
         appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value
           ? mostRecentlySelectedAppDetails.metadata[0].value
@@ -231,7 +232,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appVisibility: "private",
         appWebsiteURL: "",
         appYouTubeURL: "",
-        appMetaKey: "meta_",
+        appMetaKey: "",
         appMetaValue: "",
         appMetaTitle: "",
         appMetaDescription: "",
@@ -360,7 +361,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
       metadata: [{
-        key: formState.values.appMetaKey,
+        key: `meta_${formState.values.appMetaKey}`,
         value: formState.values.appMetaValue,
         title: formState.values.appMetaTitle,
         description: formState.values.appMetaDescription,
@@ -392,7 +393,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
       metadata: [{
-        key: formState.values.appMetaKey,
+        key: `meta_${formState.values.appMetaKey}`,
         value: formState.values.appMetaValue,
         title: formState.values.appMetaTitle,
         description: formState.values.appMetaDescription,
@@ -475,7 +476,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appVisibility: "private",
             appWebsiteURL: "",
             appYouTubeURL: "",
-            appMetaKey: "meta_",
+            appMetaKey: "",
             appMetaValue: "",
             appMetaTitle: "",
             appMetaDescription: "",
@@ -1050,11 +1051,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     className={classes.inputFields}
                     error={
                       formState.values.appMetaKey.length !== 0 &&
-                      formState.values.appMetaKey !== "meta_" &&
-                      !isValidAppMetaKey(formState.values.appMetaKey)
+                      !isValidAppMetaKey(`meta_${formState.values.appMetaKey}`)
                     }
                     fullWidth
                     helperText={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
+                    InputProps={{
+                      startAdornment: <InputAdornment className={classes.metaPrefix} position="start">meta_</InputAdornment>,
+                    }}
                     label={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
                     margin="dense"
                     name="appMetaKey"
@@ -1069,7 +1072,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       className={classes.inputFields}
                       error={
                         formState.values.appMetaKey.length !== 0 &&
-                        formState.values.appMetaKey !== "meta_" &&
                         formState.values.appMetaValue.length === 0
                       }
                       fullWidth
@@ -1086,7 +1088,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       className={classes.inputFields}
                       error={
                         formState.values.appMetaKey.length !== 0 &&
-                        formState.values.appMetaKey !== "meta_" &&
                         formState.values.appMetaTitle.length === 0
                       }
                       fullWidth
@@ -1174,11 +1175,20 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                                 formState.values.appRedirectURI !== "https://" &&
                                 formState.values.appRedirectURI.length !== 0 &&
                                 (
-                                  formState.values.appMetaKey.length !== 0 &&
-                                  isValidAppMetaKey(formState.values.appMetaKey) &&
-                                  formState.values.appMetaValue.length !== 0 &&
-                                  formState.values.appMetaTitle.length !== 0 &&
-                                  formState.values.appMetaTitle.length !== 0
+                                  (
+                                    formState.values.appMetaKey.length === 0 &&
+                                    formState.values.appMetaValue.length === 0 &&
+                                    formState.values.appMetaTitle.length === 0 &&
+                                    formState.values.appMetaTitle.length === 0
+                                  )
+                                  ||
+                                  (
+                                    formState.values.appMetaKey.length !== 0 &&
+                                    isValidAppMetaKey(`meta_${formState.values.appMetaKey}`) &&
+                                    formState.values.appMetaValue.length !== 0 &&
+                                    formState.values.appMetaTitle.length !== 0 &&
+                                    formState.values.appMetaTitle.length !== 0
+                                  )
                                 ) &&
                                 (formState.isValid || Object.keys(formState.errors).length === 0) &&
                                 !(allUserAppNames.includes(formState.values.appName)) &&
@@ -1226,11 +1236,22 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                                 formState.isDirty &&
                                 (formState.isValid || Object.keys(formState.errors).length === 0) &&
                                 (
-                                  formState.values.appMetaKey.length !== 0 &&
-                                  isValidAppMetaKey(formState.values.appMetaKey) &&
-                                  formState.values.appMetaValue.length !== 0 &&
-                                  formState.values.appMetaTitle.length !== 0 &&
-                                  formState.values.appMetaTitle.length !== 0
+                                  // No metadata? No problem.
+                                  (
+                                    formState.values.appMetaKey.length === 0 &&
+                                    formState.values.appMetaValue.length === 0 &&
+                                    formState.values.appMetaTitle.length === 0 &&
+                                    formState.values.appMetaTitle.length === 0
+                                  )
+                                  ||
+                                  // Metadata? Then, we need all mandatory fields to be filled in.
+                                  (
+                                    formState.values.appMetaKey.length !== 0 &&
+                                    isValidAppMetaKey(`meta_${formState.values.appMetaKey}`) &&
+                                    formState.values.appMetaValue.length !== 0 &&
+                                    formState.values.appMetaTitle.length !== 0 &&
+                                    formState.values.appMetaTitle.length !== 0
+                                  )
                                 ) &&
                                 validImage)
                             }

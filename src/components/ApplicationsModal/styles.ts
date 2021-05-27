@@ -540,6 +540,13 @@ export default makeStyles((theme) => ({
     width: "460px",
   },
 
+  metaPrefix: {
+    "& > p": {
+      marginRight: -8,
+      paddingTop: 1,
+    },
+  },
+
   modalBodyContainer: {
     display: "block",
     margin: "0 auto",
