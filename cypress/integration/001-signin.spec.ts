@@ -9,7 +9,7 @@ const getCredentials = (user = "johndoe") => {
   };
 };
 
-describe("Sign in", () => {
+xdescribe("Sign in", () => {
   before(() => {
     cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings.json" });
     cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis.json" });
