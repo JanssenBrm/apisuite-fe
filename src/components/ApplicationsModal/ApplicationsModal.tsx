@@ -4,11 +4,13 @@ import {
   Avatar,
   Button,
   Fade,
+  Grid,
   IconButton,
   Menu,
   MenuItem,
   Modal,
   TextField,
+  Typography,
   useConfig,
   useTranslation,
 } from "@apisuite/fe-base";
@@ -22,16 +24,21 @@ import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 import QueryBuilderRoundedIcon from "@material-ui/icons/QueryBuilderRounded";
 import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
 
-import { ApplicationsModalProps } from "./types";
 import { applicationsModalSelector } from "./selector";
 import { createApp } from "store/applications/actions/createApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
-import { getSections } from "util/extensions";
+import { deleteAppMedia } from "store/applications/actions/deleteAppMedia";
 import { getUserApp } from "store/applications/actions/getUserApp";
-import { isValidAppMetaKey, isValidImage, isValidURL } from "util/forms";
 import { updateApp } from "store/applications/actions/updatedApp";
-import { useForm } from "util/useForm";
+import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
+import { MediaUpload } from "components/MediaUpload";
+
+import { getSections } from "util/extensions";
+import { isValidAppMetaKey, isValidImage, isValidURL } from "util/forms";
+import { useForm } from "util/useForm";
+
+import { ApplicationsModalProps } from "./types";
 import useStyles from "./styles";
 
 export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
@@ -428,6 +435,25 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   const copyToClipboard = (value: string) => {
     navigator.clipboard.writeText(value);
+  };
+
+  const uploadMedia = (files: File[]) => {
+    const formData = new FormData();
+    for (let i = 0; i < files.length; i++) {
+      formData.append(files[i].name, files[i]);
+    }
+
+    dispatch(uploadAppMedia({
+      appId: mostRecentlySelectedAppDetails.id,
+      media: formData,
+    }));
+  };
+
+  const deleteMedia = (file: string) => {
+    dispatch(deleteAppMedia({
+      appId: mostRecentlySelectedAppDetails.id,
+      media: file,
+    }));
   };
 
   return (
@@ -984,6 +1010,27 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               <hr className={classes.regularSectionSeparator} />
 
+              <Grid container direction="row" justify="space-between" alignItems="center" spacing={3}>
+                <Grid item xs={6}>
+                  <Typography className={classes.title} variant="h6" display="block" gutterBottom>
+                    {t("mediaUpload.title")}
+                  </Typography>
+                </Grid>
+                <Grid item xs={6}>
+                  <Typography className={classes.description} variant="caption" display="block" gutterBottom>
+                    {t("mediaUpload.description")}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              <MediaUpload
+                images={mostRecentlySelectedAppDetails.media || []}
+                accept="image/*"
+                onFileLoaded={uploadMedia}
+                onDeletePressed={deleteMedia}
+              />
+
+              <hr className={classes.regularSectionSeparator} />
               {/* 'Metadata' section */}
               <div>
                 {/* 'Custom properties' text */}

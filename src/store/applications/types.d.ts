@@ -35,6 +35,7 @@ export interface AppData {
   visibility: string,
   websiteUrl: string,
   youtubeUrl: string,
+  media: string[],
   metadata: Metadata[],
 }
 

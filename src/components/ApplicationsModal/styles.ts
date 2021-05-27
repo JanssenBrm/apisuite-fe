@@ -668,4 +668,19 @@ export default makeStyles((theme) => ({
     fontSize: "14px",
     margin: "0px 12px 0px 12px",
   },
+
+  title: {
+    color: theme.palette.secondary.main,
+    fontSize: "16px",
+    fontWeight: 500,
+    lineHeight: "20px",
+    marginBottom: "37.5px",
+  },
+  description: {
+    color: theme.palette.grey[300],
+    fontSize: "14px",
+    fontWeight: 400,
+    lineHeight: "17px",
+    marginBottom: "22.5px",
+  },
 }));
