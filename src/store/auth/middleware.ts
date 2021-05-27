@@ -23,7 +23,10 @@ export const createAuthMiddleware = (history: History) => () => (next: Dispatch)
   } else if (action.type === LOGOUT || action.type === LOGOUT_ERROR) {
     cookie.remove(COO_KEY, { path: "/" });
     history.replace("/auth/signin");
-  } else if (action.type === REJECT_INVITATION_SUCCESS || action.type === LOGIN_USER_SUCCESS) {
+  } else if (action.type === REJECT_INVITATION_SUCCESS) {
+    history.push(action.path);
+    // FIXME: this is an hack
+  } else if (!cookie.get(COO_KEY) && action.type === LOGIN_USER_SUCCESS) {
     history.push(action.path);
   }
 };
