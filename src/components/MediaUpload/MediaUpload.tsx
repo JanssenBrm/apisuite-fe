@@ -3,7 +3,7 @@ import clsx from "clsx";
 import { useDropzone } from "react-dropzone";
 import DeleteForever from "@material-ui/icons/DeleteForever";
 import Publish from "@material-ui/icons/Publish";
-import { useTranslation, CardMedia, Grid, IconButton, Paper } from "@apisuite/fe-base";
+import { useTranslation, CardMedia, Grid, IconButton, Paper, Typography } from "@apisuite/fe-base";
 import useStyles from "./styles";
 import { MediaProps } from "./types";
 
@@ -52,10 +52,14 @@ export const MediaUpload: React.FC<MediaProps> = ({
 
   const rejectedFilesErrors = fileRejections.map(({ file, errors }) => (
     <div className={classes.mediaError} key={file.name}>
-      {file.name}
+      <Typography variant="caption" display="block" gutterBottom>
+        {file.name}
+      </Typography>
       <div>
         {errors.map(e => (
-          <span key={e.code}>{e.message}</span>
+          <Typography key={e.code} variant="caption" display="block" gutterBottom>
+            {e.message}
+          </Typography>
         ))}
       </div>
     </div>
@@ -70,19 +74,25 @@ export const MediaUpload: React.FC<MediaProps> = ({
         isDragReject && classes.rejectStyle,
       )}>
         <legend>{t("mediaUpload.legend")}</legend>
-        <Grid container direction="row" justify="space-between" alignItems="center" spacing={3}>
-          <div className={clsx(classes.media, classes.mediaUpload)} {...getRootProps()}>
-            <input {...getInputProps()} />
-            <Publish fontSize="large" className={classes.mediaIcon} />
-            <p>{t("mediaUpload.dragdrop")}</p>
-          </div>
+        <Grid container direction="row" justify="space-between" alignItems="center">
+          <Grid item xs={3}>
+            <Paper variant="outlined" className={clsx(classes.media, classes.mediaUpload)} {...getRootProps()}>
+              <input {...getInputProps()} />
+              <Publish fontSize="large" className={classes.mediaIcon} />
+              <Typography className={classes.mediaText} variant="body1" display="block" gutterBottom>
+                {t("mediaUpload.dragdrop")}
+              </Typography>
+            </Paper>
+          </Grid>
           {files()}
           <Grid item xs={12}>
             {rejectedFilesErrors}
           </Grid>
         </Grid>
       </fieldset>
-      <p className={classes.helperText}>{helperText || t("mediaUpload.helperText")}</p>
+      <Typography className={classes.helperText} variant="caption" display="block" gutterBottom>
+        {helperText || t("mediaUpload.helperText")}
+      </Typography>
     </>
   );
 };

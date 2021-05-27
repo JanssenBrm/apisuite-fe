@@ -35,11 +35,15 @@ export default makeStyles((theme) => ({
     fontSize: 11,
   },
   mediaIcon: {
+    color: theme.palette.grey[300],
     margin: 5,
   },
   mediaImg: {
     maxHeight: 130,
     objectFit: "contain",
+  },
+  mediaText: {
+    color: theme.palette.grey[300],
   },
   mediaUpload: {
     cursor: "pointer",
