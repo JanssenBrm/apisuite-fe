@@ -11,6 +11,8 @@ export enum testIds {
   header = "header",
   tab = "tab",
   subNav = "sub-nav",
+  userName = "user-name",
+  userAvatar = "user-avatar",
 
   // carousel
   slide = "carousel-slide",

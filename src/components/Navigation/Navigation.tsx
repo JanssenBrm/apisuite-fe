@@ -187,12 +187,13 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
             to='/profile'
           >
             {/* Only show name if navigation expanded */}
-            {expand && <span>{userProfile.name}</span>}
+            {expand && <span data-test-id={testIds.userName}>{userProfile.name}</span>}
 
             <Avatar
               alt="User's photo"
               className={classes.userAvatar}
               src={userProfile.avatar}
+              data-test-id={testIds.userAvatar}
             >
               {userProfile.name.charAt(0).toLocaleUpperCase()}
             </Avatar>
