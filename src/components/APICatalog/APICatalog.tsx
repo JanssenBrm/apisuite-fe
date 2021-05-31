@@ -8,6 +8,8 @@ import useStyles from "./styles";
 
 import { APICatalogProps, APIDetails } from "./types";
 
+import { testIds } from "testIds";
+
 const APICatalog: React.FC<APICatalogProps> = ({
   apisToDisplay,
 }) => {
@@ -21,8 +23,9 @@ const APICatalog: React.FC<APICatalogProps> = ({
       <div
         className={classes.apiCatalogEntry}
         key={`apiCatalogEntry${index}`}
+        data-test-id={testIds.apiCatalogCard}
       >
-        <div className={classes.apiCatalogEntryAvatar}>
+        <div className={classes.apiCatalogEntryAvatar} data-test-id={testIds.apiCardAvatar}>
           <Avatar
             className={apiDetails.apiAccess
               ? classes.colorsOfProductionAPI
@@ -32,11 +35,12 @@ const APICatalog: React.FC<APICatalogProps> = ({
           </Avatar>
         </div>
 
-        <div className={classes.apiCatalogEntryText}>
-          <p className={classes.apiCatalogEntryName}>{apiDetails.apiName}</p>
+        <div className={classes.apiCatalogEntryText} data-test-id={testIds.apiCardData}>
+          <p className={classes.apiCatalogEntryName} data-test-id={testIds.apiCardName}>{apiDetails.apiName}</p>
 
           <p className={classes.apiCatalogEntryVersionAndAccess}>
             <span
+              data-test-id={testIds.apiCardVersion}
               className={
                 `
 ${classes.apiCatalogEntryVersion}
@@ -49,10 +53,10 @@ ${apiDetails.apiAccess
             >
               {apiDetails.apiVersion}
             </span>
-            <>{apiDetails.apiAccess ? "Production access" : "API Documentation"}</>
+            <span data-test-id={testIds.apiCardAccessType}>{apiDetails.apiAccess ? "Production access" : "API Documentation"}</span>
           </p>
 
-          <p className={classes.apiCatalogEntryDescription}>
+          <p className={classes.apiCatalogEntryDescription} data-test-id={testIds.apiCardDescription}>
             {apiDetails.apiDescription}
           </p>
         </div>

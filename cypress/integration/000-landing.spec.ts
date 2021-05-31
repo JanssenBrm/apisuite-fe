@@ -2,7 +2,7 @@
 
 import { testIds } from "../../src/testIds";
 
-describe("Landing Page", () => {
+xdescribe("Landing Page", () => {
   before(() => {
     cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings.json" });
     cy.visit("/");
