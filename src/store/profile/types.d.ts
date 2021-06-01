@@ -64,6 +64,7 @@ export type Profile = {
     role: Role,
   },
   "orgs_member": Organization[],
+  ssoAccountURL: string,
   user: {
     avatar?: string,
     bio?: string,
@@ -78,7 +79,7 @@ export type Profile = {
 
 export type Role = {
   id: string,
-  name: string,
+  name: "admin" | "organizationOwner" | "developer" | "baseUser",
 }
 
 export type Organization = {

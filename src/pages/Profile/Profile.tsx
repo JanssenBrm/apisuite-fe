@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { Avatar, Button, TextField, useTranslation, Typography, Box, Divider, useTheme } from "@apisuite/fe-base";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslation, Button, Avatar, TextField, Typography, Box, Divider, useTheme } from "@apisuite/fe-base";
 import Close from "@material-ui/icons/Close";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
@@ -8,18 +8,17 @@ import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
 import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 
-import { updateProfile } from "store/profile/actions/updateProfile";
-import { switchOrg } from "store/profile/actions/switchOrg";
 import { deleteAccount } from "store/profile/actions/deleteAccount";
 import { getProfile } from "store/profile/actions/getProfile";
-import { logout } from "store/auth/actions/logout";
-import { useForm } from "util/useForm";
+import { getSSOAccountURLSelector, profileSelector } from "./selectors";
 import { isValidImage, isValidPhoneNumber, isValidURL } from "util/forms";
+import { logout } from "store/auth/actions/logout";
 import { Organization } from "store/profile/types";
-import Select from "components/Select";
 import { SelectOption } from "components/Select/types";
-
-import { profileSelector } from "./selectors";
+import { switchOrg } from "store/profile/actions/switchOrg";
+import { updateProfile } from "store/profile/actions/updateProfile";
+import { useForm } from "util/useForm";
+import Select from "components/Select";
 import useStyles from "./styles";
 
 export const Profile: React.FC = () => {
@@ -28,6 +27,8 @@ export const Profile: React.FC = () => {
   const { spacing, palette } = useTheme();
   const [t] = useTranslation();
   const { profile } = useSelector(profileSelector);
+  const ssoAccountURL = useSelector(getSSOAccountURLSelector);
+
   const [ssoIsActive, setSSOIsActive] = useState(false);
 
   useEffect(() => {
@@ -108,6 +109,7 @@ export const Profile: React.FC = () => {
               and then we need to check if the URI points to an actual image.
               If any of these conditions are not met, we display an error message. */
               const doesImageExist = isValidURL(stringURI);
+
               if (doesImageExist) {
                 validateAvatar(stringURI);
               }
@@ -150,7 +152,7 @@ export const Profile: React.FC = () => {
           : "",
       },
     );
-  // FIXME: adding resetForm to the dependencies causes an infinite loop
+    // FIXME: adding resetForm to the dependencies causes an infinite loop
   }, [profile]);
 
   /* Organisation details */
@@ -181,6 +183,18 @@ export const Profile: React.FC = () => {
     };
 
     setCurrentlySelectedOrganisation(newlySelectedOrganisation);
+  };
+
+  const switchOrganisation = (event: React.ChangeEvent<any>) => {
+    event.preventDefault();
+
+    if (
+      currentlySelectedOrganisation &&
+      currentlySelectedOrganisation.value &&
+      currentlySelectedOrganisation.value !== profile.current_org.id
+    ) {
+      dispatch(switchOrg({ id: profile.user.id, orgId: currentlySelectedOrganisation.value }));
+    }
   };
 
   useEffect(() => {
@@ -223,16 +237,8 @@ export const Profile: React.FC = () => {
     }
   };
 
-  const switchOrganisation = (event: React.ChangeEvent<any>) => {
-    event.preventDefault();
-
-    if (
-      currentlySelectedOrganisation &&
-      currentlySelectedOrganisation.value &&
-      currentlySelectedOrganisation.value !== profile.current_org.id
-    ) {
-      dispatch(switchOrg({ id: profile.user.id, orgId: currentlySelectedOrganisation.value }));
-    }
+  const redirectToIdentityProvider = (identityProviderURL: string) => {
+    window.open(identityProviderURL, "_blank");
   };
 
   /* Account deletion */
@@ -482,6 +488,19 @@ export const Profile: React.FC = () => {
                     </Button>
                   </Box>
                 </>
+              )}
+
+              {ssoIsActive && (
+                <Button
+                  className={
+                    ssoAccountURL
+                      ? classes.enabledUpdateDetailsButton
+                      : classes.disabledUpdateDetailsButton
+                  }
+                  onClick={() => redirectToIdentityProvider(ssoAccountURL)}
+                >
+                  {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
+                </Button>
               )}
             </div>
 
