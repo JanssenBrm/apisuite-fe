@@ -20,10 +20,29 @@ To include an extension to an APISuite portal instance, follow these steps:
 
     Import, register and configure the extension in `extensions.ts` as demonstrated in the file itself.
 
-## Declaring extensions to be installed in the CI/CD pipeline
+## Declaring extensions to be installed
 
-In the files `extensions.(dev|stg|prod).json`, one can declare the extensions that should be added to the build of the Portal in each respective environment during the CircleCI build process.
+Create an extension declaration file `extensions.(dev|stg|prod).json`, with the env matching what was declared in the .env file.
+This file will control which extensions should be added to the build of the Portal in each respective environment.
 
-For an example, look at the [extensions.dev.json](extensions.dev.json) file, the declaration syntax is self-explanatory.
+Sample declaration:
+```
+{
+  "extensions": [
+    {
+      "path": "github:APISuite/apisuite-marketplace-extension-ui#v1.0.11",
+      "name": "@apisuite/apisuite-marketplace-extension-ui",
+      "className": "MarketplaceExtension",
+      "config": {}
+    },
+    {
+      "path": "github:APISuite/apisuite-billing-extension-ui#v1.0.7",
+      "name": "@apisuite/apisuite-billing-extension-ui",
+      "className": "BillingExtension",
+      "config": {}
+    }
+  ]
+}
+```
 
 Before the build process, the script [scripts/extensions-installer.js](scripts/extensions-installer.js) will be executed which reads the correct `extensions.*.dev` file and adds the declared extensions to `package.json` and registers them for run-time instancing in `extensions.ts`. 
