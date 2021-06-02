@@ -564,8 +564,9 @@
   "rbac": {
     "team": {
       "title": "Manage Team",
+      "subtitle": "As organisation owner, you can invite other users to your team.\nIf users already exists in Cloudoki’s Portal, we’ll simply invite them to join your organisation too.",
       "header": "Organisation members",
-      "actions": "Role",
+      "actions": "User role",
       "invite": "Invite member",
       "send": "send"
     }

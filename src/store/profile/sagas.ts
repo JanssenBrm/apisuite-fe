@@ -68,9 +68,12 @@ export function * inviteMemberSaga ({ type, ...rest }: InviteTeamMemberAction) {
     });
 
     yield put(inviteTeamMemberSuccess({}));
+    // FIXME: not translated
     yield put(openNotification("success", "Member was successfully invited.", 3000));
   } catch (error) {
+    // FIXME: not translated
     yield put(inviteTeamMemberError({ error: error.message || "Invitation failed." }));
+    // FIXME: not translated
     yield put(openNotification("error", "Error inviting member.", 3000));
     yield put(handleSessionExpire({}));
   }

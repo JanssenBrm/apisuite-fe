@@ -1,19 +1,9 @@
 import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
-  actions: {
-    paddingRight: 178,
-  },
-
   auth: {
     color: theme.palette.text.secondary,
     fontSize: 14,
-  },
-
-  contentContainer: {
-    margin: "0 auto",
-    maxWidth: 900,
-    transform: "translateX(-8px)",
   },
 
   emailTextfield: {
@@ -44,12 +34,9 @@ export default makeStyles((theme) => ({
 
   header: {
     alignItems: "center",
-    color: theme.palette.text.primary,
     display: "flex",
     flexDirection: "row",
-    height: 42,
-    justifyContent: "space-between",
-    paddingLeft: 10,
+    height: 47,
     width: "100%",
   },
 
@@ -66,7 +53,7 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
     marginTop: 24,
     overflow: "hidden",
-    padding: "12px 30px 12px 10px",
+    padding: "12px 30px",
     width: "100%",
   },
 
@@ -75,12 +62,6 @@ export default makeStyles((theme) => ({
     opacity: 0.5,
     position: "relative",
     top: 4,
-  },
-
-  loadingPage: {
-    alignItems: "center",
-    display: "flex",
-    justifyContent: "center",
   },
 
   name: {
@@ -95,21 +76,12 @@ export default makeStyles((theme) => ({
     width: 220,
   },
 
-  root: {
-    backgroundColor: theme.palette.grey[100],
-    minHeight: "100%",
-  },
-
   row: {
     borderTop: "1px solid " + theme.palette.grey[300],
     display: "flex",
     justifyContent: "space-between",
     padding: "16px 30px 16px 10px",
     width: "100%",
-  },
-
-  select: {
-    width: 182,
   },
 
   table: {
@@ -131,5 +103,11 @@ export default makeStyles((theme) => ({
     fontSize: 26,
     fontWeight: 300,
     marginBottom: 54,
+  },
+
+  tableRow: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
   },
 }));
