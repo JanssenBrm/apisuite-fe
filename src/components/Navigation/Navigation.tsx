@@ -181,7 +181,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
             )}
 
             <Box mx={2} clone color={palette.secondary.contrastText}>
-              <Typography variant="h5">
+              <Typography variant="h3">
                 {portalName}
               </Typography>
             </Box>
