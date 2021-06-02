@@ -143,50 +143,54 @@ export const SignInOrUp: React.FC = () => {
           )}
         </Typography>
 
-        <Box pt={6}>
-          {/* TODO: this tabs should be refactored to have a better reasoning about which tabs should be available */}
-          <Tabs
-            value={view}
-            variant="fullWidth"
-            textColor="primary"
-            indicatorColor="primary"
-            style={{ borderBottom: `1px solid ${palette.divider}` }}
-            onChange={(_, value) => changeView(value)}
-          >
-            {view !== "invitation" && (
+        {!sso.length && (
+          <Box pt={6}>
+            {/* TODO: this tabs should be refactored to have a better reasoning about which tabs should be available */}
+            <Tabs
+              value={view}
+              variant="fullWidth"
+              textColor="primary"
+              indicatorColor="primary"
+              style={{ borderBottom: `1px solid ${palette.divider}` }}
+              onChange={(_, value) => changeView(value)}
+            >
+              {view !== "invitation" && (
               // This is weird, but we only have one tab on this case
-              <Tab
-                value="signin"
-                label={t("signInOrUpView.options.signIn")}
-              />
-            )}
+                <Tab
+                  value="signin"
+                  label={t("signInOrUpView.options.signIn")}
+                />
+              )}
 
-            {view !== "invitation" && (
+              {view !== "invitation" && (
               // This is weird, but we only have one tab on this case
-              <Tab
-                value="signup"
-                label={t("signInOrUpView.options.signUp")}
-              />
-            )}
+                <Tab
+                  value="signup"
+                  label={t("signInOrUpView.options.signUp")}
+                />
+              )}
 
-            {view === "invitation" && (
+              {view === "invitation" && (
               // This is weird, but we only have one tab on this case
-              <Tab
-                value="invitation"
-                label={getMenuTranslation()}
-              />
-            )}
-          </Tabs>
-        </Box>
+                <Tab
+                  value="invitation"
+                  label={getMenuTranslation()}
+                />
+              )}
+            </Tabs>
+          </Box>
+        )}
 
         {shouldRenderNotAvailableView() && (
-          <Button
-            variant="contained"
-            color="primary"
-            fullWidth
-            href={view === "signin" ? getSSOLoginURL(sso) : linker(providerSignupURL)}>
-            {t(view === "signin" ? "signInOrUpView.options.signIn" : "signInOrUpView.options.signUp")}
-          </Button>
+          <Box pt={6}>
+            <Button
+              variant="contained"
+              color="primary"
+              fullWidth
+              href={view === "signin" ? getSSOLoginURL(sso) : linker(providerSignupURL)}>
+              {t(view === "signin" ? "signInOrUpView.options.signIn" : "signInOrUpView.options.signUp")}
+            </Button>
+          </Box>
         )}
 
         {!shouldRenderNotAvailableView() && (
