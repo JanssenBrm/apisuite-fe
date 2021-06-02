@@ -434,9 +434,7 @@
         "userAvatarURL": "The provided URL is not valid, or the image does not exist.",
         "userPhoneNumber": "Please enter a valid phone number."
       },
-      "openIDInfoBoxContainerPartOne": "Your profile's name and e-mail address are provided by the Identity Provider service linked with this portal.",
-      "openIDInfoBoxContainerPartTwo": "Read here",
-      "openIDInfoBoxContainerPartThree": " on how to integrate an Open Identity service."
+      "openIDInfoBox": "Your profile's name and e-mail address are provided by the Identity Provider service linked with this portal.\n<0>Read here</0> on how to integrate an Open Identity service."
     },
     "securitySubTab": {
       "securityTitle": "Security",

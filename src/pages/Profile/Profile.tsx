@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Avatar, Button, TextField, useTranslation, Typography, Box, Divider, useTheme } from "@apisuite/fe-base";
+import { Avatar, Button, TextField, useTranslation, Typography, Box, Divider, useTheme, Icon, Trans, Grid, Paper } from "@apisuite/fe-base";
 import { useDispatch, useSelector } from "react-redux";
 import Close from "@material-ui/icons/Close";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
 import ExpandLessRoundedIcon from "@material-ui/icons/ExpandLessRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
-import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
 
 import { deleteAccount } from "store/profile/actions/deleteAccount";
 import { getProfile } from "store/profile/actions/getProfile";
@@ -20,11 +19,14 @@ import { updateProfile } from "store/profile/actions/updateProfile";
 import { useForm } from "util/useForm";
 import Select from "components/Select";
 import useStyles from "./styles";
+import Notice from "components/Notice";
+import Link from "components/Link";
+import { PageContainer } from "components/PageContainer";
 
 export const Profile: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const { spacing, palette } = useTheme();
+  const { palette } = useTheme();
   const [t] = useTranslation();
   const { profile } = useSelector(profileSelector);
   const ssoAccountURL = useSelector(getSSOAccountURLSelector);
@@ -254,9 +256,14 @@ export const Profile: React.FC = () => {
   };
 
   return (
-    <main className='page-container'>
-      <section className={classes.allUserDetailsContainer}>
-        <div className={classes.leftSideDetailsContainer}>
+    <PageContainer>
+      <Grid
+        container
+        component={Box}
+        justify="space-between"
+        spacing={3}
+      >
+        <Grid item md={7}>
           <div className={classes.userNameAndRoleContainer}>
             <Typography variant="h2">
               {
@@ -295,71 +302,73 @@ export const Profile: React.FC = () => {
             </Typography>
           </Box>
 
-          {
-            profile.orgs_member.length !== 0
-              ? (
-                <Box mt={3}>
-                  <Select
-                    customCloseIcon={<ExpandLessRoundedIcon />}
-                    customOpenIcon={<ExpandMoreRoundedIcon />}
-                    fieldLabel={t("profileTab.overviewSubTab.orgRelatedLabels.selectorLabel")}
-                    onChange={handleOrganisationSelection}
-                    options={organisationSelector(profile.orgs_member)}
-                    selected={
-                      organisationSelector(profile.orgs_member).find((selectedOrganisation) => {
-                        return currentlySelectedOrganisation.value === ""
-                          ? (selectedOrganisation.value === profile.current_org.id)
-                          : (selectedOrganisation.value === currentlySelectedOrganisation.value);
-                      })
-                    }
-                  />
+          {!!profile.orgs_member.length && (
+            <Box mt={3}>
+              <Select
+                customCloseIcon={<ExpandLessRoundedIcon />}
+                customOpenIcon={<ExpandMoreRoundedIcon />}
+                fieldLabel={t("profileTab.overviewSubTab.orgRelatedLabels.selectorLabel")}
+                onChange={handleOrganisationSelection}
+                options={organisationSelector(profile.orgs_member)}
+                selected={
+                  organisationSelector(profile.orgs_member).find((selectedOrganisation) => {
+                    return currentlySelectedOrganisation.value === ""
+                      ? (selectedOrganisation.value === profile.current_org.id)
+                      : (selectedOrganisation.value === currentlySelectedOrganisation.value);
+                  })
+                }
+              />
 
-                  <Box clone mt={3}>
-                    <Button
-                      disabled={currentlySelectedOrganisation.value === profile.current_org.id}
-                      size="large"
-                      color="primary"
-                      variant="contained"
-                      disableElevation
-                      onClick={switchOrganisation}
-                    >
-                      {t("profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel")}
-                    </Button>
-                  </Box>
-                </Box>
-              )
-              : (
+              <Box clone mt={3}>
                 <Button
-                  className={classes.createOrganisationButton}
-                  href='profile/organisation'
+                  disabled={currentlySelectedOrganisation.value === profile.current_org.id}
+                  size="large"
+                  color="primary"
+                  variant="contained"
+                  disableElevation
+                  onClick={switchOrganisation}
                 >
-                  {t("profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel")}
+                  {t("profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel")}
                 </Button>
-              )
-          }
+              </Box>
+            </Box>
+          )}
 
-          <Box my={3}>
+          {!profile.orgs_member.length && (
+            <Button
+              color="primary"
+              variant="contained"
+              disableElevation
+              size="large"
+              href='profile/organisation'
+            >
+              {t("profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel")}
+            </Button>
+          )}
+
+          <Box my={4}>
             <Divider />
           </Box>
 
-          <Box
-            display="flex"
-          >
+          <Box display="flex">
             {
               !ssoIsActive && (
-                <Button
-                  color="primary"
-                  variant="contained"
-                  size="large"
-                  disableElevation
-                  href='profile/security'
+                <Box
+                  clone
+                  mr={2}
                 >
-                  {t("profileTab.overviewSubTab.otherActionsLabels.changePassword")}
-                </Button>
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    size="large"
+                    disableElevation
+                    href='profile/security'
+                  >
+                    {t("profileTab.overviewSubTab.otherActionsLabels.changePassword")}
+                  </Button>
+                </Box>
               )
             }
-
-            <Box width={spacing(2)} />
 
             <Button
               color="primary"
@@ -371,163 +380,179 @@ export const Profile: React.FC = () => {
               {t("profileTab.overviewSubTab.otherActionsLabels.viewTeam")}
             </Button>
           </Box>
-        </div>
+        </Grid>
 
-        <div className={classes.rightSideDetailsContainer}>
+        <Grid container md={5} justify="flex-end">
           {/* 'Form' div */}
-          <div className={classes.formFieldsContainer}>
-            <div>
-              {
-                avatarHasBeenClicked
-                  ? (
-                    <Close
-                      className={classes.avatarIcons}
-                      onClick={() => setAvatarHasBeenClicked(!avatarHasBeenClicked)}
-                    />
-                  )
-                  : (
-                    <ImageSearchRoundedIcon
-                      className={classes.avatarIcons}
-                      onClick={() => setAvatarHasBeenClicked(!avatarHasBeenClicked)}
-                    />
-                  )
-              }
-
-              <Avatar
-                className={classes.avatar}
-                src={formState.values.userAvatarURL}
-                onClick={() => setAvatarHasBeenClicked(!avatarHasBeenClicked)}
-              >
-                {userNameInitials}
-              </Avatar>
-
-              {
-                avatarHasBeenClicked
-                  ? (
-                    <TextField
-                      error={(formState.touched.userAvatarURL && formState.errors.userAvatarURL) || !validImage}
-                      fullWidth
-                      helperText={
-                        ((formState.touched.userAvatarURL &&
-                          formState.errors.userAvatarURL) || !validImage) &&
-                        formState.errorMsgs.userAvatarURL
-                      }
-                      label={t("profileTab.overviewSubTab.userRelatedLabels.userAvatarURL")}
-                      margin='dense'
-                      name='userAvatarURL'
-                      onChange={handleChange}
-                      onFocus={handleFocus}
-                      type='url'
-                      value={formState.values.userAvatarURL}
-                      variant='outlined'
-                    />
-                  )
-                  : null
-              }
-            </div>
-
-            <hr className={classes.formSectionSeparator} />
-
-            <div className={classes.spaceHorizontal}>
-              <TextField
-                disabled={ssoIsActive}
-                fullWidth
-                label={t("profileTab.overviewSubTab.userRelatedLabels.userName")}
-                margin='dense'
-                name='userName'
-                onChange={handleChange}
-                onFocus={handleFocus}
-                type='text'
-                value={formState.values.userName}
-                variant='outlined'
-              />
-
-              <TextField
-                disabled={ssoIsActive}
-                fullWidth
-                label={t("profileTab.overviewSubTab.userRelatedLabels.userEmailAddress")}
-                margin='dense'
-                name='userEmailAddress'
-                onChange={handleChange}
-                onFocus={handleFocus}
-                type='email'
-                value={formState.values.userEmailAddress}
-                variant='outlined'
-              />
-
-              {!ssoIsActive && (
-                <>
-                  <TextField
-                    error={formState.touched.userPhoneNumber && formState.errors.userPhoneNumber}
-                    fullWidth
-                    helperText={
-                      formState.touched.userPhoneNumber &&
-                      formState.errors.userPhoneNumber &&
-                      formState.errorMsgs.userPhoneNumber
-                    }
-                    label={t("profileTab.overviewSubTab.userRelatedLabels.userPhoneNumber")}
-                    margin='dense'
-                    name='userPhoneNumber'
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    type='tel'
-                    value={formState.values.userPhoneNumber}
-                    variant='outlined'
-                  />
-
-                  <Box mt={2}>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      size="large"
-                      disableElevation
-                      fullWidth
-                      onClick={updateProfileDetails}
-                    >
-                      {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
-                    </Button>
-                  </Box>
-                </>
-              )}
-
-              {ssoIsActive && (
-                <Button
-                  className={
-                    ssoAccountURL
-                      ? classes.enabledUpdateDetailsButton
-                      : classes.disabledUpdateDetailsButton
-                  }
-                  onClick={() => redirectToIdentityProvider(ssoAccountURL)}
-                >
-                  {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
-                </Button>
-              )}
-            </div>
-
-            <div className={classes.userStatusAndType}>
-              {/* A mere dot */}
-              <span>&#9679;</span>
-
-              <Typography variant="body2" color="textSecondary">
+          <Box
+            clone
+            position="relative"
+            width={320}
+          >
+            <Paper variant="outlined">
+              <div>
                 {
-                  !profileHasOrgDetails
-                    ? t("profileTab.overviewSubTab.roleRelatedLabels.baseUser")
+                  avatarHasBeenClicked
+                    ? (
+                      <Close
+                        className={classes.avatarIcons}
+                        onClick={() => setAvatarHasBeenClicked(!avatarHasBeenClicked)}
+                      />
+                    )
                     : (
-                      profile.current_org.role.name === "admin"
-                        ? t("profileTab.overviewSubTab.roleRelatedLabels.admin")
-                        : (
-                          profile.current_org.role.name === "organizationOwner"
-                            ? t("profileTab.overviewSubTab.roleRelatedLabels.orgOwner")
-                            : t("profileTab.overviewSubTab.roleRelatedLabels.developer")
-                        )
+                      <ImageSearchRoundedIcon
+                        className={classes.avatarIcons}
+                        onClick={() => setAvatarHasBeenClicked(!avatarHasBeenClicked)}
+                      />
                     )
                 }
-              </Typography>
-            </div>
-          </div>
+
+                <Avatar
+                  className={classes.avatar}
+                  src={formState.values.userAvatarURL}
+                  onClick={() => setAvatarHasBeenClicked(!avatarHasBeenClicked)}
+                >
+                  {userNameInitials}
+                </Avatar>
+
+                {
+                  avatarHasBeenClicked
+                    ? (
+                      <Box px={1.5} pb={2}>
+                        <TextField
+                          error={(formState.touched.userAvatarURL && formState.errors.userAvatarURL) || !validImage}
+                          fullWidth
+                          helperText={
+                            ((formState.touched.userAvatarURL &&
+                          formState.errors.userAvatarURL) || !validImage) &&
+                        formState.errorMsgs.userAvatarURL
+                          }
+                          label={t("profileTab.overviewSubTab.userRelatedLabels.userAvatarURL")}
+                          margin='dense'
+                          name='userAvatarURL'
+                          onChange={handleChange}
+                          onFocus={handleFocus}
+                          type='url'
+                          value={formState.values.userAvatarURL}
+                          variant='outlined'
+                        />
+                      </Box>
+                    )
+                    : null
+                }
+              </div>
+
+              <Divider />
+
+              <Box px={1.5} pt={3}>
+                <TextField
+                  disabled={ssoIsActive}
+                  fullWidth
+                  label={t("profileTab.overviewSubTab.userRelatedLabels.userName")}
+                  margin='dense'
+                  name='userName'
+                  onChange={handleChange}
+                  onFocus={handleFocus}
+                  type='text'
+                  value={formState.values.userName}
+                  variant='outlined'
+                />
+
+                <Box my={3}>
+                  <TextField
+                    disabled={ssoIsActive}
+                    fullWidth
+                    label={t("profileTab.overviewSubTab.userRelatedLabels.userEmailAddress")}
+                    margin='dense'
+                    name='userEmailAddress'
+                    onChange={handleChange}
+                    onFocus={handleFocus}
+                    type='email'
+                    value={formState.values.userEmailAddress}
+                    variant='outlined'
+                  />
+                </Box>
+
+                {!ssoIsActive && (
+                  <>
+                    <TextField
+                      error={formState.touched.userPhoneNumber && formState.errors.userPhoneNumber}
+                      fullWidth
+                      helperText={
+                        formState.touched.userPhoneNumber &&
+                      formState.errors.userPhoneNumber &&
+                      formState.errorMsgs.userPhoneNumber
+                      }
+                      label={t("profileTab.overviewSubTab.userRelatedLabels.userPhoneNumber")}
+                      margin='dense'
+                      name='userPhoneNumber'
+                      onChange={handleChange}
+                      onFocus={handleFocus}
+                      type='tel'
+                      value={formState.values.userPhoneNumber}
+                      variant='outlined'
+                    />
+
+                    <Box mt={3}>
+                      <Button
+                        color="primary"
+                        variant="contained"
+                        size="large"
+                        disableElevation
+                        fullWidth
+                        onClick={updateProfileDetails}
+                      >
+                        {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
+                      </Button>
+                    </Box>
+                  </>
+                )}
+
+                {ssoIsActive && (
+                  <Button
+                    color="primary"
+                    variant="contained"
+                    size="large"
+                    disableElevation
+                    fullWidth
+                    disabled={!ssoAccountURL}
+                    onClick={() => redirectToIdentityProvider(ssoAccountURL)}
+                  >
+                    {t("profileTab.overviewSubTab.otherActionsLabels.updateProfileDetails")}
+                  </Button>
+                )}
+              </Box>
+
+              {/* FIXME: use i18n interpolation */}
+              <div className={classes.userStatusAndType}>
+                {/* A mere dot */}
+                <span>&#9679;</span>
+
+                <Typography variant="body2" color="textSecondary">
+                  {
+                    !profileHasOrgDetails
+                      ? t("profileTab.overviewSubTab.roleRelatedLabels.baseUser")
+                      : (
+                        profile.current_org.role.name === "admin"
+                          ? t("profileTab.overviewSubTab.roleRelatedLabels.admin")
+                          : (
+                            profile.current_org.role.name === "organizationOwner"
+                              ? t("profileTab.overviewSubTab.roleRelatedLabels.orgOwner")
+                              : t("profileTab.overviewSubTab.roleRelatedLabels.developer")
+                          )
+                      )
+                  }
+                </Typography>
+              </div>
+            </Paper>
+          </Box>
 
           {/* 'Logout' and 'Delete' buttons div */}
-          <div className={classes.otherActionsContainerTwo}>
+          <Box
+            display="flex"
+            justifyContent="flex-end"
+            mt={3}
+          >
             <Box mr={1.5} color={palette.error.main}>
               <Button
                 color="primary"
@@ -549,11 +574,32 @@ export const Profile: React.FC = () => {
             >
               {t("profileTab.overviewSubTab.otherActionsLabels.signOut")}
             </Button>
-          </div>
-        </div>
+          </Box>
 
-        {
-          openDialog &&
+          <Box mt={5}>
+            <Notice
+              noticeIcon={<Icon>info</Icon>}
+              noticeText={
+                <Typography variant="body2" style={{ color: palette.info.contrastText, whiteSpace: "pre-line" }}>
+                  <Trans i18nKey="profileTab.overviewSubTab.openIDInfoBox">
+                    {[
+                      <Link
+                        key="sandboxPage.notice"
+                        to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/760774663/Open+ID"
+                        rel='noopener noreferrer'
+                        target='_blank'
+                      />,
+                    ]}
+                  </Trans>
+                </Typography>
+              }
+            />
+          </Box>
+        </Grid>
+      </Grid>
+
+      {
+        openDialog &&
           <CustomizableDialog
             closeDialogCallback={handleCloseDialog}
             confirmButtonCallback={() => {
@@ -571,36 +617,7 @@ export const Profile: React.FC = () => {
             providedSubText={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalWarningSubText")}
             providedTitle={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalTitle")}
           />
-        }
-      </section>
-
-      {
-        ssoIsActive &&
-        <section className={classes.openIDInfoBoxContainer}>
-          <div className={classes.infoBox}>
-            <InfoRoundedIcon className={classes.infoBoxIcon} />
-
-            <div>
-              <p className={classes.infoBoxText}>
-                {t("profileTab.overviewSubTab.openIDInfoBoxContainerPartOne")}
-              </p>
-
-              <p className={classes.infoBoxText}>
-                <span>
-                  <a
-                    href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/760774663/Open+ID'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    {t("profileTab.overviewSubTab.openIDInfoBoxContainerPartTwo")}
-                  </a>
-                </span>
-                <span>{t("profileTab.overviewSubTab.openIDInfoBoxContainerPartThree")}</span>
-              </p>
-            </div>
-          </div>
-        </section>
       }
-    </main>
+    </PageContainer>
   );
 };
