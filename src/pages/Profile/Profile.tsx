@@ -257,12 +257,7 @@ export const Profile: React.FC = () => {
 
   return (
     <PageContainer>
-      <Grid
-        container
-        component={Box}
-        justify="space-between"
-        spacing={3}
-      >
+      <Grid container>
         <Grid item md={7}>
           <div className={classes.userNameAndRoleContainer}>
             <Typography variant="h2">

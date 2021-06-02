@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslation, Button, TextField, InputAdornment, IconButton, Typography, Container, Box, Grid } from "@apisuite/fe-base";
-import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
+import { useTranslation, Button, TextField, InputAdornment, IconButton, Typography, Box, Grid, Icon, useTheme, Divider } from "@apisuite/fe-base";
 import VisibilityOffRoundedIcon from "@material-ui/icons/VisibilityOffRounded";
 import VisibilityRoundedIcon from "@material-ui/icons/VisibilityRounded";
 import { updatePasswordRequest } from "store/security/actions/updatePassword";
@@ -9,13 +8,14 @@ import { updatePasswordRequest } from "store/security/actions/updatePassword";
 import { isValidPass } from "util/forms";
 
 import { securitySelector } from "./selector";
-import useStyles from "./styles";
 import { getProfile } from "store/profile/actions/getProfile";
+import { PageContainer } from "components/PageContainer";
+import Notice from "components/Notice";
 
 export const Security: React.FC = () => {
-  const classes = useStyles();
   const [t] = useTranslation();
   const dispatch = useDispatch();
+  const { palette } = useTheme();
   const { profile } = useSelector(securitySelector);
   const [ssoIsActive, setSSOIsActive] = React.useState(false);
 
@@ -68,146 +68,147 @@ export const Security: React.FC = () => {
   };
 
   return (
-    <main className='page-container'>
-      <Container maxWidth="md">
-        <Typography variant="h2">
-          {t("profileTab.securitySubTab.securityTitle")}
-        </Typography>
+    <PageContainer>
+      <Typography variant="h2">
+        {t("profileTab.securitySubTab.securityTitle")}
+      </Typography>
 
-        <Typography variant="body1" color="textSecondary">
-          {!ssoIsActive ? t("profileTab.securitySubTab.securitySubtitleWithoutActiveSSO")
-            : t("profileTab.securitySubTab.securitySubtitleWithActiveSSO")}
-        </Typography>
+      <Typography variant="body1" color="textSecondary">
+        {!ssoIsActive ? t("profileTab.securitySubTab.securitySubtitleWithoutActiveSSO")
+          : t("profileTab.securitySubTab.securitySubtitleWithActiveSSO")}
+      </Typography>
 
-        <Grid container>
-          <Grid item xs>
-            <Box clone mt={3} mb={2}>
-              <Typography variant="h3">
-                {t("profileTab.securitySubTab.updatePasswordTitle")}
-              </Typography>
-            </Box>
+      <Grid container>
+        <Grid item md>
+          <Box clone mt={3} mb={2}>
+            <Typography variant="h3">
+              {t("profileTab.securitySubTab.updatePasswordTitle")}
+            </Typography>
+          </Box>
 
-            {ssoIsActive ? (
-              <div className={classes.infoBox}>
-                <InfoRoundedIcon className={classes.infoBoxIcon} />
-
-                <div>
-                  <p className={classes.infoBoxText}>
+          {ssoIsActive && (
+            <Box mt={3}>
+              <Notice
+                noticeIcon={<Icon>info</Icon>}
+                noticeText={
+                  <Typography variant="body2" style={{ color: palette.info.contrastText }}>
                     {t("profileTab.securitySubTab.activeSSOBoxText")}
-                  </p>
-                </div>
-              </div>
-            )
-              : (
-                <>
-                  <TextField
-                    fullWidth
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment position='end'>
-                          <IconButton
-                            onClick={(event) => handleShowPassword(event, 0)}
-                          >
-                            {
-                              showPassword[0]
-                                ? <VisibilityRoundedIcon />
-                                : <VisibilityOffRoundedIcon />
-                            }
-                          </IconButton>
-                        </InputAdornment>
-                      ),
-                    }}
-                    label={t("profileTab.securitySubTab.fieldLabels.currentPasswordFieldLabel")}
-                    margin='dense'
-                    name='currentPassword'
-                    onChange={(changeEvent) => handlePasswordChanges(changeEvent, 0)}
-                    type={showPassword[0] ? "text" : "password"}
-                    value={providedPasswords[0]}
-                    variant='outlined'
-                  />
+                  </Typography>
+                }
+              />
+            </Box>
+          )}
 
-                  <Box mb={3} mt={1.5}>
-                    <TextField
-                      fullWidth
-                      error={
-                        providedPasswords[1].length === 0
-                          ? false
+          {!ssoIsActive && (
+            <>
+              <TextField
+                fullWidth
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position='end'>
+                      <IconButton
+                        onClick={(event) => handleShowPassword(event, 0)}
+                      >
+                        {
+                          showPassword[0]
+                            ? <VisibilityRoundedIcon />
+                            : <VisibilityOffRoundedIcon />
+                        }
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+                label={t("profileTab.securitySubTab.fieldLabels.currentPasswordFieldLabel")}
+                margin='dense'
+                name='currentPassword'
+                onChange={(changeEvent) => handlePasswordChanges(changeEvent, 0)}
+                type={showPassword[0] ? "text" : "password"}
+                value={providedPasswords[0]}
+                variant='outlined'
+              />
+
+              <Box mb={3} mt={1.5}>
+                <TextField
+                  fullWidth
+                  error={
+                    providedPasswords[1].length === 0
+                      ? false
+                      : (
+                        providedPasswords[0] === providedPasswords[1]
+                          ? true
                           : (
-                            providedPasswords[0] === providedPasswords[1]
-                              ? true
-                              : (
-                                !isValidPass(providedPasswords[1])
-                              )
+                            !isValidPass(providedPasswords[1])
                           )
-                      }
-                      helperText={
-                        providedPasswords[1].length === 0
-                          ? ""
+                      )
+                  }
+                  helperText={
+                    providedPasswords[1].length === 0
+                      ? ""
+                      : (
+                        providedPasswords[0] === providedPasswords[1]
+                          ? t("profileTab.securitySubTab.errorMessages.samePasswordErrorMessage")
                           : (
-                            providedPasswords[0] === providedPasswords[1]
-                              ? t("profileTab.securitySubTab.errorMessages.samePasswordErrorMessage")
-                              : (
-                                isValidPass(providedPasswords[1])
-                                  ? ""
-                                  : t("profileTab.securitySubTab.errorMessages.tooWeakPasswordErrorMessage")
-                              )
+                            isValidPass(providedPasswords[1])
+                              ? ""
+                              : t("profileTab.securitySubTab.errorMessages.tooWeakPasswordErrorMessage")
                           )
-                      }
-                      InputProps={{
-                        endAdornment: (
-                          <InputAdornment position='end'>
-                            <IconButton
-                              onClick={(event) => handleShowPassword(event, 1)}
-                            >
-                              {
-                                showPassword[1]
-                                  ? <VisibilityRoundedIcon />
-                                  : <VisibilityOffRoundedIcon />
-                              }
-                            </IconButton>
-                          </InputAdornment>
-                        ),
-                      }}
-                      label={t("profileTab.securitySubTab.fieldLabels.newPasswordFieldLabel")}
-                      margin='dense'
-                      name='newPassword'
-                      onChange={(changeEvent) => handlePasswordChanges(changeEvent, 1)}
-                      type={showPassword[1] ? "text" : "password"}
-                      value={providedPasswords[1]}
-                      variant='outlined'
-                    />
-                  </Box>
+                      )
+                  }
+                  InputProps={{
+                    endAdornment: (
+                      <InputAdornment position='end'>
+                        <IconButton
+                          onClick={(event) => handleShowPassword(event, 1)}
+                        >
+                          {
+                            showPassword[1]
+                              ? <VisibilityRoundedIcon />
+                              : <VisibilityOffRoundedIcon />
+                          }
+                        </IconButton>
+                      </InputAdornment>
+                    ),
+                  }}
+                  label={t("profileTab.securitySubTab.fieldLabels.newPasswordFieldLabel")}
+                  margin='dense'
+                  name='newPassword'
+                  onChange={(changeEvent) => handlePasswordChanges(changeEvent, 1)}
+                  type={showPassword[1] ? "text" : "password"}
+                  value={providedPasswords[1]}
+                  variant='outlined'
+                />
+              </Box>
 
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    size="large"
-                    disableElevation
-                    disabled={
-                      !!((providedPasswords[0] !== providedPasswords[1]) &&
-                              (providedPasswords[0].length && providedPasswords[1].length) &&
-                              isValidPass(providedPasswords[1]))
-                    }
-                    onClick={handlePasswordChangeRequest}
-                  >
-                    {t("profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel")}
-                  </Button>
-                </>
-              )
-            }
-          </Grid>
-
-          <Grid item xs />
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                disableElevation
+                disabled={
+                  !!((providedPasswords[0] !== providedPasswords[1]) &&
+                            (providedPasswords[0].length && providedPasswords[1].length) &&
+                            isValidPass(providedPasswords[1]))
+                }
+                onClick={handlePasswordChangeRequest}
+              >
+                {t("profileTab.securitySubTab.buttonLabels.updatePasswordButtonLabel")}
+              </Button>
+            </>
+          )}
         </Grid>
 
-        {/* FIXME: find what this is */}
-        {/* <hr className={classes.sectionSeparator} />
+        <Grid item md />
+      </Grid>
 
-        <p className={classes.userActivityTitle}>
-          {t("profileTab.securitySubTab.userActivityTitle")}
-        </p> */}
-      </Container>
-    </main>
+      <Box my={5}>
+        <Divider />
+      </Box>
+
+      {/* TODO: remove text secondary after we develop user activity */}
+      <Typography variant="h2" color="textSecondary">
+        {t("profileTab.securitySubTab.userActivityTitle")}
+      </Typography>
+    </PageContainer>
   );
 };
 
