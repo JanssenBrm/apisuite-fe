@@ -2,9 +2,12 @@ import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   menuItem: {
-    fontSize: 16,
+    ...theme.typography.body1,
     "& a": {
       textDecoration: "none",
+    },
+    "& a:link, & a:visited, & a:hover, & a:active": {
+      color: "inherit",
     },
     paddingBottom: 10,
     paddingLeft: 10,
@@ -14,8 +17,6 @@ export default makeStyles((theme) => ({
     borderTopWidth: 0,
     borderBottomWidth: 0,
     borderColor: theme.palette.grey[500],
-    color: theme.palette.text.primary,
-    fontWeight: 500,
   },
   selected: {
     color: theme.palette.text.secondary,
