@@ -7,12 +7,13 @@ export default makeStyles((theme) => ({
   },
 
   avatarIcons: {
-    color: theme.palette.action.active,
-    cursor: "pointer",
-    height: "20px",
     position: "absolute",
-    transform: "translate(371.5px, 10px)",
-    width: "20px",
+    color: theme.palette.action.active,
+    width: 20,
+    height: 20,
+    top: theme.spacing(1.5),
+    right: theme.spacing(1.5),
+    cursor: "pointer",
     zIndex: 2,
   },
 
@@ -147,7 +148,6 @@ export default makeStyles((theme) => ({
   },
 
   inputFields: {
-    marginBottom: "25px",
     marginTop: "0px",
     maxWidth: "500px",
     width: "100%",
@@ -248,6 +248,7 @@ export default makeStyles((theme) => ({
 
   orgURLFieldWrapper: {
     display: "flex",
+    marginTop: theme.spacing(6),
 
     "& > :first-child": {
       marginRight: "10px",
@@ -272,15 +273,6 @@ export default makeStyles((theme) => ({
 
   rightSideDetailsContainer: {
     maxWidth: "400px",
-    width: "100%",
-  },
-
-  secondSectionSeparator: {
-    border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: theme.shape.borderRadius,
-    marginBottom: "15px",
-    marginTop: "0px",
-    maxWidth: "900px",
     width: "100%",
   },
 
