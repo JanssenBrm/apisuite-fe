@@ -107,7 +107,7 @@ export default makeStyles((theme) => ({
 
   tableRow: {
     "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover,
+      backgroundColor: theme.palette.grey[50],
     },
   },
 }));
