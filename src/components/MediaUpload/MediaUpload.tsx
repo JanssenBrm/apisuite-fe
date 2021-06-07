@@ -92,7 +92,7 @@ export const MediaUpload: React.FC<MediaProps> = ({
           </Grid>
         </Grid>
       </fieldset>
-      <Typography className={classes.helperText} variant="caption" display="block" gutterBottom>
+      <Typography className={classes.helperText} variant="body2" display="block" gutterBottom>
         {helperText || t("mediaUpload.helperText")}
       </Typography>
     </>

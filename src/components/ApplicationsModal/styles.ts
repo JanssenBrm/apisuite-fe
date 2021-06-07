@@ -28,8 +28,6 @@ export default makeStyles((theme) => ({
 
     "& > p": {
       color: theme.palette.label,
-      fontSize: "14px",
-      fontWeight: 300,
       marginRight: "15px",
       textDecoration: "underline",
     },
@@ -53,6 +51,7 @@ export default makeStyles((theme) => ({
     height: "auto",
     marginRight: "10px",
     width: "60px",
+    fontSize: "inherit",
   },
 
   imageLogo: {
@@ -77,9 +76,6 @@ export default makeStyles((theme) => ({
   },
 
   newApplicationHeader: {
-    color: theme.palette.secondary.main,
-    fontSize: "22px",
-    fontWeight: 400,
     margin: "20px 0px 0px 0px",
   },
 
@@ -120,7 +116,7 @@ export default makeStyles((theme) => ({
   alternativeSectionSeparator: {
     border: `1px solid ${theme.palette.grey["100"]}`,
     borderRadius: `${theme.shape.borderRadius}px`,
-    margin: "25px 0px",
+    margin: theme.spacing(5, 0),
     width: "100%",
   },
 
@@ -171,17 +167,16 @@ export default makeStyles((theme) => ({
   avatarIcons: {
     color: theme.palette.action.active,
     cursor: "pointer",
-    height: "20px",
+    height: "24px",
     position: "absolute",
     right: "7.5px",
     top: "7.5px",
-    width: "20px",
+    width: "24px",
     zIndex: 2,
   },
 
   avatarURLInputField: {
     marginTop: "0px",
-    maxWidth: "400px",
     width: "100%",
 
     // Text field's label styles
@@ -336,7 +331,6 @@ export default makeStyles((theme) => ({
   editApplicationHeaderStatusContainer: {
     alignItems: "center",
     display: "flex",
-    marginTop: "20px",
   },
 
   enabledClientIDInputField: {
@@ -472,12 +466,6 @@ export default makeStyles((theme) => ({
     width: "400px",
   },
 
-  infoBoxIcon: {
-    alignSelf: "flex-start",
-    fill: "#46B5EF",
-    marginRight: 5,
-  },
-
   infoBoxLink: {
     fontWeight: 700,
     textDecoration: "none",
@@ -605,7 +593,7 @@ export default makeStyles((theme) => ({
   regularSectionSeparator: {
     border: `1px solid ${theme.palette.grey[200]}`,
     borderRadius: theme.shape.borderRadius,
-    margin: "25px 0px 25px 0px",
+    margin: theme.spacing(5, 0),
     width: "100%",
   },
 
@@ -673,7 +661,7 @@ export default makeStyles((theme) => ({
   subscribedClientApplicationCardStatusIcon: {
     color: theme.palette.primary.main,
     fontSize: "14px",
-    margin: "0px 12px 0px 12px",
+    margin: "0px 0px 0px 12px",
   },
 
   title: {
