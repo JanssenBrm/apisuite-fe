@@ -3,7 +3,6 @@ import { makeStyles } from "@apisuite/fe-base";
 export default makeStyles((theme) => ({
   helperText: {
     color: theme.palette.grey[300],
-    fontSize: 15,
     margin: "5px 0",
     maxWidth: "100%",
   },

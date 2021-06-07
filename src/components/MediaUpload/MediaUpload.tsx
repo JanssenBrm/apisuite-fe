@@ -73,7 +73,9 @@ export const MediaUpload: React.FC<MediaProps> = ({
         isDragAccept && classes.acceptStyle,
         isDragReject && classes.rejectStyle,
       )}>
-        <legend>{t("mediaUpload.legend")}</legend>
+        <Typography variant="caption" component="legend">
+          {t("mediaUpload.legend")}
+        </Typography>
         <Grid container direction="row" justify="flex-start" alignItems="center">
           <Grid item xs={3}>
             <Paper variant="outlined" className={clsx(classes.media, classes.mediaUpload)} {...getRootProps()}>
