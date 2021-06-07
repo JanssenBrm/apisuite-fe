@@ -14,22 +14,6 @@ export default makeStyles((theme) => ({
     display: "flex",
     justifyContent: "center",
     width: "40px",
-
-    "& > a": {
-      color: theme.palette.action.active,
-      height: "24px",
-      transform: "scaleX(-1)",
-      width: "24px",
-    },
-  },
-
-  apiName: {
-    alignItems: "center",
-    color: theme.palette.action.active,
-    display: "flex",
-    fontSize: "16px",
-    fontWeight: 400,
-    paddingLeft: "40px",
   },
 
   apiNameAndAppsContainer: {
@@ -45,6 +29,7 @@ export default makeStyles((theme) => ({
     alignItems: "center",
     display: "flex",
     width: "455px",
+    paddingLeft: 40,
   },
 
   apiVersionDetailsContainer: {
@@ -66,53 +51,12 @@ export default makeStyles((theme) => ({
     textDecoration: "none",
   },
 
-  apiVersionName: {
-    color: theme.palette.text.primary,
-    fontSize: "14px",
-    fontWeight: 300,
-    textAlign: "center",
-    width: "300px",
-  },
-
-  apiVersionNumber: {
-    color: theme.palette.secondary.main,
-    fontSize: "14px",
-    fontWeight: 300,
-    textAlign: "left",
-    width: "300px",
-  },
-
-  appNameIcon: {
-    backgroundColor: theme.palette.primary.main,
-    borderRadius: theme.shape.borderRadius,
-    color: theme.palette.primary.contrastText,
-    fontSize: "14px",
-    fontWeight: 300,
-    justifyContent: "center",
-    marginLeft: "12px",
-    textAlign: "center",
-    textTransform: "uppercase",
-    width: "35px",
-  },
-
-  chevronIcon: {
-    color: theme.palette.text.primary,
-  },
-
   deprecatedIcon: {
     backgroundColor: theme.palette.warning.main,
     borderRadius: theme.shape.borderRadius,
     color: theme.palette.primary.contrastText,
     marginRight: "20px",
     padding: "5px",
-  },
-
-  mostRecentAPIVersionLink: {
-    color: theme.palette.action.active,
-    height: "24px",
-    textDecoration: "none",
-    transform: "scaleX(-1)",
-    width: "24px",
   },
 
   noSubsMessage: {

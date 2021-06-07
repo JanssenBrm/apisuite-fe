@@ -24,12 +24,12 @@ export default makeStyles((theme) => ({
     width: "40px",
   },
   live: {
-    backgroundColor: theme.palette.primary.main,
-    color: theme.palette.primary.contrastText,
+    backgroundColor: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
   },
   docs: {
     backgroundColor: theme.palette.action.active,
-    color: theme.palette.primary.contrastText,
+    color: theme.palette.secondary.contrastText,
   },
   centerVertical: {
     display: "flex",

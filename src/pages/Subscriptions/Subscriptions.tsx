@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useTranslation, Button } from "@apisuite/fe-base";
-import SportsSoccerRoundedIcon from "@material-ui/icons/SportsSoccerRounded";
+import { useTranslation, Button, Typography, Box, Icon, Trans, useTheme } from "@apisuite/fe-base";
 
 import { getAPIs } from "store/subscriptions/actions/getAPIs";
 import { getAllUserApps } from "store/applications/actions/getAllUserApps";
@@ -12,10 +11,13 @@ import rocket from "assets/rocket.svg";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { subscriptionsSelector } from "./selectors";
+import { PageContainer } from "components/PageContainer";
+import Notice from "components/Notice";
 
 export const Subscriptions: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { palette } = useTheme();
   const { t } = useTranslation();
   const { auth, subscriptions } = useSelector(subscriptionsSelector);
 
@@ -40,23 +42,24 @@ export const Subscriptions: React.FC = () => {
   };
 
   return (
-    <main className='page-container'>
+    <PageContainer>
       {
         subscriptions.apis.length === 0
           ? (
-            <section className={classes.noDataToShowContentContainer}>
+            <>
               <div className={classes.noDataToShowImageContainer}>
                 <img className={classes.noDataToShowImage} src={rocket} />
               </div>
 
-              <div className={classes.addSubscriptionButtonContainer}>
-                <Button
-                  className={classes.addSubscriptionButton}
-                  onClick={toggleModal}
-                >
-                  {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel")}
-                </Button>
-              </div>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                disableElevation
+                onClick={toggleModal}
+              >
+                {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel")}
+              </Button>
 
               <Link
                 className={classes.noDataToShowLink}
@@ -64,57 +67,67 @@ export const Subscriptions: React.FC = () => {
               >
                 {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.linkText")}
               </Link>
-            </section>
+            </>
           )
           : (
-            <section className={classes.dataToShowContentContainer}>
-              <h1 className={classes.dataToShowTitle}>
+            <>
+              <Typography variant="h2">
                 {t("dashboardTab.subscriptionsSubTab.hasDataToShow.title")}
-              </h1>
+              </Typography>
 
-              <p className={classes.dataToShowDescription}>
-                {t("dashboardTab.subscriptionsSubTab.hasDataToShow.description")}
-              </p>
+              <Box mt={1.5}>
+                <Typography variant="body1" color="textSecondary">
+                  {t("dashboardTab.subscriptionsSubTab.hasDataToShow.description")}
+                </Typography>
+              </Box>
 
-              <div className={classes.dataToShowSubscriptionsTable}>
+              <Box
+                my={4}
+                display="flex"
+                flexDirection="row"
+              >
                 <SubscriptionsTable />
-              </div>
+              </Box>
 
-              <div className={classes.addSubscriptionButtonContainer}>
-                <Button
-                  className={classes.addSubscriptionButton}
-                  onClick={toggleModal}
-                >
-                  {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel")}
-                </Button>
-              </div>
+              <Button
+                variant="contained"
+                color="primary"
+                size="large"
+                disableElevation
+                onClick={toggleModal}
+              >
+                {t("dashboardTab.subscriptionsSubTab.hasNoDataToShow.buttonLabel")}
+              </Button>
 
-              <div className={classes.infoBox}>
-                <SportsSoccerRoundedIcon className={classes.infoBoxIcon} />
-
-                <p className={classes.infoBoxText}>
-                  <>{t("dashboardTab.subscriptionsSubTab.hasDataToShow.notificationTextPartOne")} &quot;</>
-                  <a
-                    href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions'
-                    rel='noopener noreferrer'
-                    target='_blank'
-                  >
-                    {t("dashboardTab.subscriptionsSubTab.hasDataToShow.notificationTextPartTwo")}
-                  </a>
-                  <>&quot;.</>
-                </p>
-              </div>
-            </section>
+              <Box mt={5}>
+                <Notice
+                  noticeIcon={<Icon>support</Icon>}
+                  noticeText={
+                    <Typography variant="body2" align="center" style={{ color: palette.info.contrastText }}>
+                      <Trans i18nKey="dashboardTab.subscriptionsSubTab.hasDataToShow.notificationText">
+                        {[
+                          <Link
+                            key="dashboardTab.subscriptionsSubTab.hasDataToShow.notificationText"
+                            to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580517951/API+Subscriptions"
+                            rel='noopener noreferrer'
+                            target='_blank'
+                          />,
+                        ]}
+                      </Trans>
+                    </Typography>
+                  }
+                />
+              </Box>
+            </>
           )
       }
 
-      {
-        isModalOpen &&
+      {isModalOpen && (
         <SubscriptionsModal
           isModalOpen={isModalOpen}
           toggleModal={toggleModal}
         />
-      }
-    </main>
+      )}
+    </PageContainer>
   );
 };
