@@ -5,6 +5,7 @@ dist
 cypress.env.json
 sandbox.config.json
 *.env
+extensions.*.json
 
 **/cypress/screenshots/
 **/cypress/video/
