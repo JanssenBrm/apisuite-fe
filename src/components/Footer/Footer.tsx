@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useConfig, useTranslation, Fab, Typography } from "@apisuite/fe-base";
-import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
+import { useConfig, useTranslation, Fab, Typography, Box } from "@apisuite/fe-base";
 import { Menus } from "@apisuite/extension-ui-types";
 import { getMenuEntries } from "util/extensions";
 import LocaleSelect from "language/LocaleSelect";
 import { getRoleName } from "pages/Profile/selectors";
 import SvgIcon from "components/SvgIcon";
+import { Logo } from "components/Logo";
 
 import useStyles from "./styles";
 import { FooterProps, MenuSection, MenuSections } from "./types";
@@ -165,7 +165,7 @@ const Footer: React.FC<FooterProps> = (
 ) => {
   const classes = useStyles();
   const roleName = useSelector(getRoleName);
-  const { ownerInfo, portalName } = useConfig();
+  const { ownerInfo, portalName, navigation } = useConfig();
   const [t] = useTranslation();
 
   const handleFabClick = () => {
@@ -186,23 +186,13 @@ const Footer: React.FC<FooterProps> = (
       <div className={classes.footerContentsContainer}>
         <div className={classes.leftFooterContentsContainer}>
           <div className={classes.logoAndPortalNameContainer}>
-            {
-              ownerInfo.logo ? (
-                <img
-                  className={classes.imageLogo}
-                  src={ownerInfo.logo}
-                />
-              )
-                : (
-                  <AmpStoriesRoundedIcon
-                    className={classes.iconLogo}
-                  />
-                )
-            }
+            <Logo src={ownerInfo.logo} icon={navigation.title.iconFallbackName} />
 
-            <Typography variant="h4">
-              {portalName}
-            </Typography>
+            <Box clone ml={1}>
+              <Typography variant="h4">
+                {portalName}
+              </Typography>
+            </Box>
           </div>
 
           <div className={classes.sectionsContainer}>

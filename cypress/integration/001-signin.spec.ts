@@ -30,7 +30,7 @@ describe("Sign in", () => {
     cy.testID(testIds.signInEmail).type(credentials.email);
     cy.testID(testIds.signInPwd).type(credentials.pwd);
 
-    cy.get("button").contains("Sign in").click();
+    cy.get("form").contains("Sign in").click();
     cy.contains("Invalid credentials").should("be.visible");
   });
 
@@ -49,7 +49,7 @@ describe("Sign in", () => {
     cy.testID(testIds.signInEmail).clear().type(credentials.email);
     cy.testID(testIds.signInPwd).clear().type(credentials.pwd);
 
-    cy.get("button").contains("Sign in").click();
+    cy.get("form").contains("Sign in").click();
     cy.url().should("eq", `${Cypress.config().baseUrl}/dashboard`);
   });
 

@@ -235,8 +235,7 @@
           "title": "Available APIs",
           "subtitle": "actions"
         },
-        "notificationTextPartOne": "API Subscriptions allow you to control access and to stay informed. But there’s more. Read ",
-        "notificationTextPartTwo": "API Subscriptions explained"
+        "notificationText": "API Subscriptions allow you to control access and to stay informed. But there’s more. Read \"<0>API Subscriptions explained</0>\"."
       },
       "hasNoDataToShow": {
         "buttonLabel": "Add Subscription",
