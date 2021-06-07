@@ -285,7 +285,7 @@
     "applicationsSubTab": {
       "noOrganisationsButtonLabel": "Set up your Organisation",
       "noApplicationsButtonLabel": "Register your first app",
-      "documentationLink": "Read why apps are used",
+      "documentationLink": "<0>Read why apps are used</0>",
       "noOrganisationWarning": "You need to create an Organisation before you can create your first app. Click on the \"Set up your Organisation\" button above to start.",
       "listOfAppsSection": {
         "title": "Applications",
@@ -347,8 +347,7 @@
         "selectorTitle": "Useful links",
         "subbedAppStatus": "Subscribed",
         "subSectionLabelFive": "Additional information",
-        "subSectionLabelFourPartOne": "The client credentials for ",
-        "subSectionLabelFourPartTwo": "OAuth2 secured API access",
+        "subSectionLabelFour": "The client credentials for <0>OAuth2 secured API access</0>.",
         "subSectionLabelOne": "General information",
         "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
         "subSectionLabelThree": "Redirect URI",
@@ -362,8 +361,7 @@
           "titleFieldLabel": "Title",
           "descriptionFieldLabel": "Description",
           "addCustomPropsButtonLabel": "Add new property",
-          "infoBoxRegularText": "Read more on how to optimize the use of custom properties, and check some examples in our ",
-          "infoBoxLinkText": "documentation",
+          "infoBoxRegularText": "Read more on how to optimize the use of custom properties, and check some examples in our <0>documentation</0>.",
           "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
           "subSectionLabelThree": "Redirect URI",
           "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us."
