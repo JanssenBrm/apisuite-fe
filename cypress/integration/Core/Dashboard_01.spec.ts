@@ -19,7 +19,7 @@ users.forEach(user => {
 
     context("Cookie Consent", () => {
       beforeEach(() => {
-        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings2.json" });
+        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept(`${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept(`${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
         cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
@@ -74,12 +74,12 @@ users.forEach(user => {
       });
 
       it("should show a grid with 6 different actions linked to the corresponding pages", () => {
-        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings2.json" });
+        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
 
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
 
-        cy.fixture("settings/settings2.json").then(settings=> {
+        cy.fixture("settings/settings.json").then(settings=> {
           cy.fixture("translations/en-US.json").then(enUS=> {
             cy.testID(testIds.actionsSection).should("be.visible");
 
@@ -141,7 +141,7 @@ users.forEach(user => {
 
     context("Greetings Section", () => {
       before(() => {
-        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings2.json" });
+        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept(`${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept(`${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
         cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
@@ -156,7 +156,7 @@ users.forEach(user => {
 
       it("should show a greetings card with 2 paragraph and a contact button", () => {
         cy.fixture(`profile/${user.filename}`).then(profile=> {
-          cy.fixture("settings/settings2.json").then(settings=> {
+          cy.fixture("settings/settings.json").then(settings=> {
             cy.fixture("translations/en-US.json").then(enUS=> {
               cy.testID(testIds.greetingSection).should("be.visible");
 
@@ -179,7 +179,7 @@ users.forEach(user => {
 
     context("API Catalog recent additions", () => {
       beforeEach(() => {
-        cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings2.json" });
+        cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
@@ -287,7 +287,7 @@ users.forEach(user => {
       });
 
       it("should not show the info panel if there is no website", () => {
-        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings2.json" });
+        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
 
@@ -327,7 +327,7 @@ users.forEach(user => {
       });
 
       it("should show the page footer", () => {
-        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings2.json" });
+        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
 
@@ -335,11 +335,11 @@ users.forEach(user => {
       });
 
       it("should show the portal name and logo", () => {
-        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings2.json" });
+        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
 
-        cy.fixture("settings/settings2.json").then(settings => {
+        cy.fixture("settings/settings.json").then(settings => {
           cy.fixture("owner/owner.json").then(owner => {
             cy.testID(testIds.footerLogoAndPortalName).should("be.visible");
 
@@ -369,7 +369,7 @@ users.forEach(user => {
       });
 
       it("should not show the social icons", () => {
-        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings2.json" });
+        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
 
@@ -381,7 +381,7 @@ users.forEach(user => {
       // });
 
       it("should show the copyrights", () => {
-        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings2.json" });
+        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
 
@@ -399,7 +399,7 @@ users.forEach(user => {
       });
 
       it("should scroll to the top of the current page", () => {
-        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings2.json" });
+        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
 

@@ -12,12 +12,7 @@ describe("Landing Page - Authenticated User", () => {
       cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
       cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
-      // cy.request("POST", `${Cypress.env("api_url")}/auth/login`,
-      //   {
-      //     email: "joaocaseiro+1@cloudoki.com",
-      //     password: "Cloudoki.123",
-      //   }
-      // );
+      cy.setCookie("hk", "234astgbhnm");
       cy.setCookie("apiSuiteSession", "SET_SESSION");
 
       cy.visit("/");
@@ -49,7 +44,7 @@ describe("Landing Page - Authenticated User", () => {
   });
 
 
-  context("Navigation", () => {
+  xcontext("Navigation", () => {
     before(() => {
       cy.intercept("GET", `${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
       cy.intercept("GET", `${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
@@ -57,12 +52,7 @@ describe("Landing Page - Authenticated User", () => {
       cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
       cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
-      // cy.request("POST", `${Cypress.env("api_url")}/auth/login`,
-      //   {
-      //     email: "joaocaseiro+1@cloudoki.com",
-      //     password: "Cloudoki.123",
-      //   }
-      // );
+      cy.setCookie("hk", "234astgbhnm");
       cy.setCookie("apiSuiteSession", "SET_SESSION");
 
       cy.visit("/");
@@ -193,12 +183,7 @@ describe("Landing Page - Authenticated User", () => {
       cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
       cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
-      // cy.request("POST", `${Cypress.env("api_url")}/auth/login`,
-      //   {
-      //     email: "joaocaseiro+1@cloudoki.com",
-      //     password: "Cloudoki.123",
-      //   }
-      // );
+      cy.setCookie("hk", "234astgbhnm");
       cy.setCookie("apiSuiteSession", "SET_SESSION");
 
       cy.visit("/");
@@ -246,12 +231,7 @@ describe("Landing Page - Authenticated User", () => {
       cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
       cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
-      // cy.request("POST", `${Cypress.env("api_url")}/auth/login`,
-      //   {
-      //     email: "joaocaseiro+1@cloudoki.com",
-      //     password: "Cloudoki.123",
-      //   }
-      // );
+      cy.setCookie("hk", "234astgbhnm");
       cy.setCookie("apiSuiteSession", "SET_SESSION");
 
       cy.visit("/");
@@ -369,12 +349,7 @@ describe("Landing Page - Authenticated User", () => {
       cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: "profile/profile-developer.json" });
       cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
-      // cy.request("POST", `${Cypress.env("api_url")}/auth/login`,
-      //   {
-      //     email: "joaocaseiro+1@cloudoki.com",
-      //     password: "Cloudoki.123",
-      //   }
-      // );
+      cy.setCookie("hk", "234astgbhnm");
       cy.setCookie("apiSuiteSession", "SET_SESSION");
     });
 
@@ -472,12 +447,7 @@ describe("Landing Page - Authenticated User", () => {
       cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: "profile/profile-developer.json" });
       cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
-      // cy.request("POST", `${Cypress.env("api_url")}/auth/login`,
-      //   {
-      //     email: "joaocaseiro+1@cloudoki.com",
-      //     password: "Cloudoki.123",
-      //   }
-      // );
+      cy.setCookie("hk", "234astgbhnm");
       cy.setCookie("apiSuiteSession", "SET_SESSION");
     });
 
@@ -517,12 +487,7 @@ describe("Landing Page - Authenticated User", () => {
       cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: "profile/profile-developer.json" });
       cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
-      // cy.request("POST", `${Cypress.env("api_url")}/auth/login`,
-      //   {
-      //     email: "joaocaseiro+1@cloudoki.com",
-      //     password: "Cloudoki.123",
-      //   }
-      // );
+      cy.setCookie("hk", "234astgbhnm");
       cy.setCookie("apiSuiteSession", "SET_SESSION");
     });
 
