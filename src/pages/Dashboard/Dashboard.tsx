@@ -12,6 +12,8 @@ import Notice from "components/Notice";
 import NotificationBanner from "components/NotificationBanner";
 import { NotificationCard } from "components/NotificationCard";
 
+import { testIds } from "testIds";
+
 import apiSVG from "assets/icons/API.svg";
 import billingSVG from "assets/icons/Billing.svg";
 import dataCloudSVG from "assets/icons/DataCloud.svg";
@@ -101,6 +103,7 @@ export const Dashboard: React.FC = () => {
               ? classes.actionsCatalogSectionWithNotificationCards
               : classes.actionsCatalogSectionWithoutNotificationCards
           }
+          data-test-id={testIds.actionsSection}
         >
           <ActionsCatalog
             actionsToDisplay={
@@ -176,7 +179,7 @@ export const Dashboard: React.FC = () => {
         </section>
 
         {/* 'Greeting card' section */}
-        <section className={classes.greetingCardSection}>
+        <section className={classes.greetingCardSection} data-test-id={testIds.greetingSection}>
           <GreetingCard
             greetingCardText={
               <div className={classes.customGreetingCardTextContainer}>
@@ -184,13 +187,13 @@ export const Dashboard: React.FC = () => {
                   typeOfUser !== "admin"
                     ? (
                       <>
-                        <p className={classes.customGreetingCardText}>
+                        <p className={classes.customGreetingCardText} data-test-id={testIds.greetingCardParagraphOne}>
                           <>{t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartOne")} </>
                           <>{profile.profile.user.name}! </>
                           {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartTwo")}
                         </p>
 
-                        <p className={classes.customGreetingCardText}>
+                        <p className={classes.customGreetingCardText} data-test-id={testIds.greetingCardParagraphTwo}>
                           {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartThree")}
                         </p>
                       </>
@@ -234,14 +237,14 @@ export const Dashboard: React.FC = () => {
               <hr className={classes.sectionSeparator} />
 
               <section className={classes.apiCatalogSectionContainer}>
-                <h1 className={classes.sectionIntroHeading}>
+                <h1 className={classes.sectionIntroHeading} data-test-id={testIds.recentAdditionsTitle}>
                   {t("sandboxPage.apiCatalog.intro")}
                 </h1>
 
-                <section className={classes.apiCatalogContainer}>
+                <section className={classes.apiCatalogContainer} data-test-id={testIds.recentAdditionsCatalog}>
                   {
                     recentlyAddedAPIs.length === 0
-                      ? <p>{t("sandboxPage.apiCatalog.paragraph")}</p>
+                      ? <p data-test-id={testIds.recentAdditionsEmpty}>{t("sandboxPage.apiCatalog.paragraph")}</p>
                       : <APICatalog apisToDisplay={recentlyAddedAPIs} />
                   }
                 </section>
@@ -253,7 +256,7 @@ export const Dashboard: React.FC = () => {
         {/* Notice */}
         {
           hasSocials() && (
-            <section className={classes.noticeContainer}>
+            <section className={classes.noticeContainer} data-test-id={testIds.notice}>
               <Notice
                 noticeIcon={
                   <CheckCircleOutlineRoundedIcon />

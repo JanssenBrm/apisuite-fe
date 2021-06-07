@@ -4,6 +4,8 @@ import { Button } from "@apisuite/fe-base";
 import useStyles from "./styles";
 import { GreetingCardProps } from "./types";
 
+import { testIds } from "testIds";
+
 const GreetingCard: React.FC<GreetingCardProps> = ({
   greetingCardText,
   greetingCardButtonLabel,
@@ -30,6 +32,7 @@ const GreetingCard: React.FC<GreetingCardProps> = ({
         disableElevation
         color="secondary"
         size="large"
+        data-test-id={testIds.greetingCardButton}
       >
         {greetingCardButtonLabel}
       </Button>

@@ -5,6 +5,7 @@ import Link from "components/Link";
 import useStyles from "./styles";
 
 import { ActionsCatalogProps, ActionDetails } from "./types";
+import { testIds } from "testIds";
 
 const ActionsCatalog: React.FC<ActionsCatalogProps> = ({
   actionsToDisplay,
@@ -16,6 +17,7 @@ const ActionsCatalog: React.FC<ActionsCatalogProps> = ({
       <div
         className={classes.actionsCatalogEntry}
         key={`actionsCatalogEntry${index}`}
+        data-test-id={testIds.actionsEntry}
       >
         <img
           className={actionDetails.actionLink === "" ? classes.disabledAction : ""}

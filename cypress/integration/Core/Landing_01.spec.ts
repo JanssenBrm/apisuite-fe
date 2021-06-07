@@ -301,7 +301,7 @@ describe("Landing Page - Unauthenticated User", () => {
             .should("be.visible")
             .and("contain", enUS.sandboxPage.apiCatalog.intro);
           cy.testID(testIds.recentAdditionsEmpty).should("not.exist");
-          cy.testID(testIds.recentAdditionsCatalog).find("a").should("have.length", apis.pagination.rowCount);
+          cy.testID(testIds.recentAdditionsCatalog).find("a").should("have.length", 2);
           cy.testID(testIds.recentAdditionsCatalog).find("a").eq(0)
             .should("have.attr", "href", `/api-products/details/${
               apis.rows[0].apiVersions[0].apiId
@@ -315,7 +315,7 @@ describe("Landing Page - Unauthenticated User", () => {
               apis.rows[1].apiVersions[0].id
             }`);
 
-          cy.testID(testIds.apiCatalogCard).should("have.length", apis.pagination.rowCount);
+          cy.testID(testIds.apiCatalogCard).should("have.length", 2);
 
           for (let index = 0; index < 2; index++) {
             cy.testID(testIds.apiCatalogCard).eq(index)

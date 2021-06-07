@@ -25,6 +25,10 @@ export enum testIds {
   stepTwo = "step-two",
   stepThree = "step-three",
 
+  // actions section
+  actionsSection = "actions-section",
+  actionsEntry = "actions-entry",
+
   // API catalog recent additions
   recentAdditionsTitle = "recent-additions-title",
   recentAdditionsCatalog = "recent-additions-catalog",
@@ -37,6 +41,12 @@ export enum testIds {
   apiCardVersion = "api-card-version",
   apiCardAccessType = "api-card-access-type",
   apiCardDescription = "api-card-description",
+
+  // greeting card
+  greetingSection = "greeting-section",
+  greetingCardButton = "greeeting-card-button",
+  greetingCardParagraphOne = "greeting-paragraph-one",
+  greetingCardParagraphTwo = "greeting-paragraph-two",
 
   // notice
   notice = "notice",
