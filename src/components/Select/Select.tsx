@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField } from "@apisuite/fe-base";
+import { Paper, TextField } from "@apisuite/fe-base";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 
 import { SelectProps, SelectOption } from "./types";
@@ -25,6 +25,7 @@ const Select: React.FC<SelectProps> = ({
       groupBy={(option: SelectOption) => option.group}
       options={options.sort((optionA, optionB) => -optionB.group.localeCompare(optionA.group))}
       popupIcon={customOpenIcon}
+      PaperComponent={(props) => <Paper {...props} elevation={3} />}
       renderInput={(params) => (
         <TextField
           {...params}
