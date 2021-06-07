@@ -6,6 +6,7 @@ import { Avatar, Box, Grid, Icon, TabConfig, Typography, useConfig, useTheme, us
 import { testIds } from "testIds";
 import { logout } from "store/auth/actions/logout";
 import Link from "components/Link";
+import { Logo } from "components/Logo";
 
 import { navigationSelector } from "./selector";
 import { NavigationProps } from "./types";
@@ -171,14 +172,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         >
           <Link to={navigation.title.route}>
             {/* Portal logo image */}
-            {ownerInfo.logo && <img width={125} height="auto" src={ownerInfo.logo} />}
-
-            {/* Portal logo fallback */}
-            {!ownerInfo.logo && (
-              <Box color={palette.secondary.contrastText} display="flex" alignItems="center">
-                <Icon fontSize="large" color={expand ? "inherit" : "primary"}>{navigation.title.iconFallbackName}</Icon>
-              </Box>
-            )}
+            <Logo src={ownerInfo.logo} icon={navigation.title.iconFallbackName} expand={expand} />
 
             <Box mx={2} clone color={palette.secondary.contrastText}>
               <Typography variant="h3">
