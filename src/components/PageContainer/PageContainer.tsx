@@ -1,10 +1,21 @@
 import React from "react";
 import clsx from "clsx";
 
-import useStyles from "./styles";
-import { Box, BoxProps } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 
-export const PageContainer: React.FC<BoxProps> = ({ className, ...rest }) => {
+import useStyles from "./styles";
+import { BoxProps } from "./types";
+
+export const PageContainer: React.FC<BoxProps> = ({
+  className,
+  disablePaddingY=false,
+  ...rest
+}) => {
   const classes = useStyles();
-  return <Box pt={30} pb={7.5} className={clsx(classes.root, className)} {...rest} />;
+  return <Box
+    pt={disablePaddingY ? 0 : 30}
+    pb={disablePaddingY ? 0 : 7.5}
+    className={clsx(classes.root, className)}
+    {...rest}
+  />;
 };
