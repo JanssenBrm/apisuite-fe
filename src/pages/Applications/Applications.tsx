@@ -14,6 +14,7 @@ import { ApplicationsModal } from "components/ApplicationsModal";
 import Link from "components/Link";
 import Notice from "components/Notice";
 import { PageContainer } from "components/PageContainer";
+import { ROLES } from "constants/global";
 
 import adrift from "assets/adrift.svg";
 import authFundamentals from "assets/authFundamentals.svg";
@@ -390,18 +391,22 @@ export const Applications: React.FC = () => {
   return (
     <PageContainer>
       {
-        // If the user has yet to create/join an organisation, (...)
-        !hasCurrentOrgDetails
-          ? renderNoOrgView()
-          : (
-            // If the user has already created/joined an organisation, but has yet to create any apps, (...)
-            !allUserApps.length
-              ? renderNoAppsView()
-              : (
-                // If the user has already created one or more apps, we list them out (...)
-                renderAppsView()
-              )
-          )
+        user?.role.id === `${ROLES.baseUser.level}` ?
+          <Box width={1}>
+            { getSections(MARKETPLACE_SECTION) }
+          </Box>
+          // If the user has yet to create/join an organisation, (...)
+          : !hasCurrentOrgDetails
+            ? renderNoOrgView()
+            : (
+              // If the user has already created/joined an organisation, but has yet to create any apps, (...)
+              !allUserApps.length
+                ? renderNoAppsView()
+                : (
+                  // If the user has already created one or more apps, we list them out (...)
+                  renderAppsView()
+                )
+            )
       }
 
       {
