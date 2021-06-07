@@ -127,35 +127,29 @@ export default makeStyles((theme) => ({
   /* 1.2.2 'Client applications' section */
 
   clientAppNotificationContainer: {
-    maxWidth: "400px",
+    maxWidth: 400,
     width: "100%",
-
-    "& > :first-child": {
-      color: theme.palette.text.primary,
-      fontSize: "14px",
-      fontWeight: 400,
-      marginBottom: "25px",
-    },
+    paddingTop: theme.spacing(2.5),
   },
 
   clientAppSelectorContainer: {
-    marginRight: "40px",
-    maxWidth: "420px",
+    marginRight: 40,
+    maxWidth: 420,
     width: "100%",
 
-    "& > :first-child": {
-      color: theme.palette.secondary.main,
-      fontSize: "16px",
-      fontWeight: 500,
-      marginBottom: "25px",
-    },
+    // "& > :first-child": {
+    //   color: theme.palette.secondary.main,
+    //   fontSize: "16px",
+    //   fontWeight: 500,
+    //   marginBottom: "25px",
+    // },
 
     "& > :last-child": {
       color: theme.palette.action.active,
       border: `1px solid ${theme.palette.grey[400]}`,
       borderRadius: theme.shape.borderRadius,
-      height: "40px",
-      maxWidth: "420px",
+      height: 40,
+      maxWidth: 420,
       width: "100%",
 
       /* Overriding Material UI's styles for the 'Select' component */
@@ -176,54 +170,6 @@ export default makeStyles((theme) => ({
     display: "flex",
   },
 
-  infoBox: {
-    alignItems: "center",
-    backgroundColor: theme.palette.info.light,
-    borderRadius: theme.shape.borderRadius,
-    display: "flex",
-    height: "100%",
-    marginBottom: "25px",
-    maxHeight: "65px",
-    textAlign: "left",
-  },
-
-  infoBoxIcon: {
-    fill: "#46B5EF",
-    transform: "translate(7px, -7px)",
-  },
-
-  infoBoxText: {
-    color: "#035E86",
-    fontSize: "14px",
-    fontWeight: 400,
-    lineHeight: "18px",
-    margin: "0px 10px 0px 15px",
-  },
-
-  warningBox: {
-    alignItems: "center",
-    backgroundColor: "#FFDCB9",
-    borderRadius: `${theme.shape.borderRadius}px`,
-    display: "flex",
-    height: "100%",
-    marginBottom: "25px",
-    maxHeight: "65px",
-    textAlign: "left",
-  },
-
-  warningBoxIcon: {
-    fill: theme.palette.warning.main,
-    transform: "translate(7px, -7px)",
-  },
-
-  warningBoxText: {
-    color: "#80460B",
-    fontSize: "14px",
-    fontWeight: 400,
-    lineHeight: "18px",
-    margin: "0px 10px 0px 15px",
-  },
-
   /* 1.2.3 'API product subscriptions' section */
 
   alternativeAPIProductDetailsContainer: {
@@ -235,19 +181,6 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
     padding: "10px 16.75px 10px 40px",
     width: "100%",
-  },
-
-  apiProductName: {
-    color: theme.palette.action.active,
-    fontSize: "16px",
-    fontWeight: 500,
-  },
-
-  apiProductVersion: {
-    color: theme.palette.text.primary,
-    fontSize: "14px",
-    fontWeight: 300,
-    marginRight: "14.75px",
   },
 
   apiProductVersionAndSelectionContainer: {
@@ -314,149 +247,6 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
     padding: "10px 55px 10px 40px",
     width: "100%",
-
-    "& > :first-child": {
-      color: theme.palette.action.active,
-      fontSize: "16px",
-      fontWeight: 400,
-    },
-
-    "& > :last-child": {
-      color: theme.palette.text.primary,
-      fontSize: "16px",
-      fontWeight: 300,
-    },
-  },
-
-  titleAndSubtitleContainer: {
-    display: "flex",
-
-    "& > :first-child": {
-      color: theme.palette.secondary.main,
-      fontSize: "16px",
-      fontWeight: 500,
-      marginBottom: "25px",
-      marginRight: "40px",
-      maxWidth: "420px",
-      width: "100%",
-    },
-
-    "& > :last-child": {
-      color: theme.palette.text.primary,
-      fontSize: "14px",
-      fontWeight: 400,
-      lineHeight: "18px",
-      marginBottom: "25px",
-      maxWidth: "400px",
-      width: "100%",
-    },
-  },
-
-  /* 1.2.4 'Buttons' section */
-
-  buttonsContainer: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-
-  disabledOtherButtons: {
-    backgroundColor: theme.palette.background.default,
-    border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.shape.borderRadius}px`,
-    color: `${theme.palette.action.active} !important`,
-    cursor: "pointer",
-    fontSize: "16px",
-    fontWeight: 500,
-    marginLeft: "25px",
-    opacity: 0.5,
-    padding: "12px 21px",
-    pointerEvents: "none",
-    textDecoration: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.background.default,
-    },
-  },
-
-  disabledRequestAccessButton: {
-    backgroundColor: theme.palette.secondary.main,
-    border: `1px solid ${theme.palette.secondary.main}`,
-    borderRadius: `${theme.shape.borderRadius}px`,
-    color: `${theme.palette.background.default} !important`,
-    fontSize: "16px",
-    fontWeight: 500,
-    opacity: 0.5,
-    padding: "12px 21px",
-    pointerEvents: "none",
-    textDecoration: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
-
-  disabledRevokeAccessButton: {
-    backgroundColor: theme.palette.warning.main,
-    border: `1px solid ${theme.palette.warning.main}`,
-    borderRadius: `${theme.shape.borderRadius}px`,
-    color: `${theme.palette.background.default} !important`,
-    fontSize: "16px",
-    fontWeight: 500,
-    opacity: 0.5,
-    padding: "12px 21px",
-    pointerEvents: "none",
-    textDecoration: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.warning.main,
-    },
-  },
-
-  enabledOtherButtons: {
-    backgroundColor: theme.palette.background.paper,
-    border: `1px solid ${theme.palette.label}`,
-    borderRadius: `${theme.shape.borderRadius}px`,
-    color: `${theme.palette.action.active} !important`,
-    cursor: "pointer",
-    fontSize: "16px",
-    fontWeight: 500,
-    marginLeft: "25px",
-    padding: "12px 21px",
-    textDecoration: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.background.default,
-    },
-  },
-
-  enabledRequestAccessButton: {
-    backgroundColor: theme.palette.primary.main,
-    border: `1px solid ${theme.palette.primary.main}`,
-    borderRadius: `${theme.shape.borderRadius}px`,
-    color: `${theme.palette.background.default} !important`,
-    cursor: "pointer",
-    fontSize: "16px",
-    fontWeight: 500,
-    opacity: 1,
-    padding: "12px 21px",
-    textDecoration: "none",
-
-    "&:hover": {
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
-
-  enabledRevokeAccessButton: {
-    backgroundColor: theme.palette.warning.main,
-    border: `1px solid ${theme.palette.warning.main}`,
-    borderRadius: `${theme.shape.borderRadius}px`,
-    color: `${theme.palette.background.default} !important`,
-    cursor: "pointer",
-    fontSize: "16px",
-    fontWeight: 500,
-    opacity: 1,
-    padding: "12px 21px",
-    textDecoration: "none",
   },
 
   leftSideButtonsContainer: {
