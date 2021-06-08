@@ -95,9 +95,5 @@ export default makeStyles((theme) => ({
 
   customNotificationBannerParagraph: {
     color: theme.palette.primary.contrastText,
-    fontSize: "16px",
-    fontWeight: 300,
-    lineHeight: "22px",
-    marginRight: "15px",
   },
 }));

@@ -271,7 +271,7 @@ export const Dashboard: React.FC = () => {
           : (
             <NotificationBanner
               customNotificationBannerContents={
-                <p className={classes.customNotificationBannerParagraph}>
+                <Typography variant="body1" className={classes.customNotificationBannerParagraph}>
                   {t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartOne")}
 
                   <br />
@@ -281,7 +281,7 @@ export const Dashboard: React.FC = () => {
                   >
                     {t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartTwo")}
                   </a>
-                </p>
+                </Typography>
               }
               notificationBannerTitle={
                 t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.title")
