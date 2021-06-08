@@ -1,25 +1,24 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useConfig, useTranslation, Button, Fade, MenuItem, Modal, Select } from "@apisuite/fe-base";
-import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
+import { useConfig, useTranslation, Button, Fade, MenuItem, Modal, Select, Typography, Icon, Box, Grid, useTheme } from "@apisuite/fe-base";
 import CheckBoxOutlineBlankRoundedIcon from "@material-ui/icons/CheckBoxOutlineBlankRounded";
 import CheckBoxRoundedIcon from "@material-ui/icons/CheckBoxRounded";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
-import QueryBuilderRoundedIcon from "@material-ui/icons/QueryBuilderRounded";
-import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
 
 import { requestAPIAccess } from "store/applications/actions/requestApiAccess";
 import { allUserAppsSelector, apisByNameSelector } from "pages/Subscriptions/selectors";
 
 import { SubscriptionsModalProps } from "./types";
 import useStyles from "./styles";
+import { Logo } from "components/Logo";
+import Notice from "components/Notice";
 
 export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalOpen, toggleModal }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { palette } = useTheme();
   const { t } = useTranslation();
-  const { portalName, ownerInfo, clientName } = useConfig();
+  const { portalName, ownerInfo, clientName, navigation } = useConfig();
   // FIXME: unify these
   const apisByName = useSelector(apisByNameSelector);
   const allUserApps = useSelector(allUserAppsSelector);
@@ -149,50 +148,48 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
           {/* Modal header */}
           <div className={classes.modalHeaderContainer}>
             <div className={classes.logoAndNameContainer}>
-              {
-                ownerInfo.logo ? (
-                  <img
-                    className={classes.imageLogo}
-                    src={ownerInfo.logo}
-                  />
-                )
-                  : (
-                    <AmpStoriesRoundedIcon
-                      className={classes.iconLogo}
-                    />
-                  )
-              }
+              <Logo src={ownerInfo.logo} icon={navigation.title.iconFallbackName} />
 
-              <h3 className={classes.portalName}>
+              <Typography variant="h3">
                 {portalName}
-              </h3>
+              </Typography>
             </div>
 
             <div
               className={classes.closeModalButtonContainer}
               onClick={resetModalSelections}
             >
-              <p>
+              <Typography variant="body2">
                 {t("dashboardTab.subscriptionsSubTab.subsModal.modalHeader.closeButtonLabel")}
-              </p>
+              </Typography>
 
-              <CloseRoundedIcon />
+              <Icon>close</Icon>
             </div>
           </div>
 
           {/* Modal body */}
           <div className={classes.modalBodyContainer}>
             {/* Modal's title */}
-            <h1 className={classes.header}>
-              {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.header")}
-            </h1>
+            <Box clone mt={5}>
+              <Typography variant="h3">
+                {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.header")}
+              </Typography>
+            </Box>
 
             {/* 'Steps' section */}
             <ol className={classes.stepsContainer}>
-              <li>{t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepOne")}</li>
-              <li>{t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepTwo")}</li>
-              <li>{t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepThree")}</li>
-              <li>{t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepFour")}</li>
+              <Typography component="li" variant="body1">
+                {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepOne")}
+              </Typography>
+              <Typography component="li" variant="body1">
+                {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepTwo")}
+              </Typography>
+              <Typography component="li" variant="body1">
+                {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepThree")}
+              </Typography>
+              <Typography component="li" variant="body1">
+                {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.steps.stepFour")}
+              </Typography>
             </ol>
 
             <hr className={classes.sectionSeparator} />
@@ -200,9 +197,11 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
             {/* 'Client applications' section */}
             <div className={classes.clientAppsContainer}>
               <div className={classes.clientAppSelectorContainer}>
-                <p>
-                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.title")}
-                </p>
+                <Box clone mb={3}>
+                  <Typography variant="h6">
+                    {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.title")}
+                  </Typography>
+                </Box>
 
                 <Select
                   disableUnderline
@@ -239,34 +238,18 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
               </div>
 
               <div className={classes.clientAppNotificationContainer}>
-                <p>
-                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.subtitle")}
-                </p>
-
-                {
-                  (selectedClientApp.subscriptions.length === 0)
-                    ? (
-                      <div className={classes.infoBox}>
-                        <QueryBuilderRoundedIcon className={classes.infoBoxIcon} />
-
-                        <p className={classes.infoBoxText}>
-                          {t(
-                            "dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationText",
-                            { clientName },
-                          )}
-                        </p>
-                      </div>
-                    )
-                    : (
-                      <div className={classes.warningBox}>
-                        <ReportProblemOutlinedIcon className={classes.warningBoxIcon} />
-
-                        <p className={classes.warningBoxText}>
-                          {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.warningBoxNotificationText")}
-                        </p>
-                      </div>
-                    )
-                }
+                {/* TODO: bring back warning colors and icon */}
+                <Notice
+                  noticeIcon={<Icon>info</Icon>}
+                  noticeText={
+                    <Typography variant="body2" style={{ color: palette.info.contrastText }}>
+                      {t(
+                        !selectedClientApp.subscriptions.length ? "dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.infoBoxNotificationText" : "dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.warningBoxNotificationText",
+                        { clientName },
+                      )}
+                    </Typography>
+                  }
+                />
               </div>
             </div>
 
@@ -274,25 +257,35 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
 
             {/* 'API product subscriptions' section */}
             <div className={classes.apiProductsSubsContainer}>
-              <div className={classes.titleAndSubtitleContainer}>
-                <p>
-                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.title")}
-                </p>
+              <Grid container>
+                <Grid item md>
+                  <Typography variant="h6">
+                    {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.title")}
+                  </Typography>
+                </Grid>
 
-                <p>
-                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.subtitle")}
-                </p>
-              </div>
+                <Grid item md>
+                  <Typography variant="body2" color="textSecondary">
+                    {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.subtitle")}
+                  </Typography>
+                </Grid>
+              </Grid>
+
+              <br />
 
               <div className={classes.apiProductsSubsTable}>
                 <div className={classes.tableHeader}>
-                  <p>
-                    {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.title")}
-                  </p>
+                  <Typography variant="body1">
+                    <b>
+                      {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.title")}
+                    </b>
+                  </Typography>
 
-                  <p>
-                    {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.subtitle")}
-                  </p>
+                  <Typography variant="body1">
+                    <b>
+                      {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.apiProductSubsContainer.apiProductsTable.subtitle")}
+                    </b>
+                  </Typography>
                 </div>
 
                 <div className={classes.tableBody}>
@@ -315,20 +308,22 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                             */
                             // onClick={() => handleAPIProductsSelection(api, index)}
                             >
-                              <p className={classes.apiProductName}>
+                              <Typography variant="body1">
                                 {api.name}
-                              </p>
+                              </Typography>
 
                               <div className={classes.apiProductVersionAndSelectionContainer}>
-                                <p className={classes.apiProductVersion}>
-                                  {api.versions.length !== 0 && api.versions[0].version}
-                                </p>
+                                <Typography variant="body1">
+                                  {!!api.versions.length && `v${api.versions[0].version}`}
+                                </Typography>
 
-                                {
-                                  isAPIProductSelected[index]
-                                    ? <CheckBoxRoundedIcon className={classes.selectedAPIProduct} />
-                                    : <CheckBoxOutlineBlankRoundedIcon className={classes.notSelectedAPIProduct} />
-                                }
+                                <Box ml={1.5}>
+                                  {
+                                    isAPIProductSelected[index]
+                                      ? <CheckBoxRoundedIcon className={classes.selectedAPIProduct} />
+                                      : <CheckBoxOutlineBlankRoundedIcon className={classes.notSelectedAPIProduct} />
+                                  }
+                                </Box>
                               </div>
                             </div>
                           );
@@ -336,7 +331,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                       )
                       : (
                         <div className={classes.noAPIProductsToShow}>
-                          <p>Please, select an app</p>
+                          <Typography variant="body1">Please, select an app</Typography>
                         </div>
                       )
                   }
@@ -347,69 +342,51 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
             <hr className={classes.sectionSeparator} />
 
             {/* 'Buttons' section */}
-            <div className={classes.buttonsContainer}>
-              <div className={classes.leftSideButtonsContainer}>
+            <Grid container justify="space-between">
+              <Grid item md={10}>
                 <Button
-                  className={
-                    (selectedClientApp.subscriptions.length === 0)
-                      ? (
-                        selectedClientApp.id === ""
-                          ? classes.disabledRequestAccessButton
-                          : classes.enabledRequestAccessButton
-                      )
-                      : (
-                        selectedClientApp.id === ""
-                          ? classes.disabledRevokeAccessButton
-                          /* Previously ': classes.enabledRevokeAccessButton'.
-                          Go back on this change once the 'revoke' action is possible. */
-                          : classes.disabledRevokeAccessButton
-                      )
-                  }
-                  onClick={
-                    (selectedClientApp.subscriptions.length === 0)
-                      ? handleAPIProductAccessRequest
-                      : () => null
-                  }
+                  variant="contained"
+                  color="primary"
+                  size="large"
+                  disableElevation
+                  disabled={!selectedClientApp.subscriptions.length || !selectedClientApp.id?.toString().length}
+                  onClick={handleAPIProductAccessRequest}
                 >
                   {
-                    (selectedClientApp.subscriptions.length === 0)
+                    !selectedClientApp.id?.toString().length
                       ? (t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.requestAccess"))
                       : (t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.revokeAccess"))
                   }
                 </Button>
 
-                <Button
-                  className={classes.enabledOtherButtons}
-                  href='/profile/organisation'
-                >
-                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewOrganisation")}
-                </Button>
+                <Box clone mx={3}>
+                  <Button
+                    variant="outlined"
+                    size="large"
+                    href="/profile/organisation"
+                  >
+                    {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewOrganisation")}
+                  </Button>
+                </Box>
 
                 <Button
-                  className={
-                    isClientAppSelected
-                      ? classes.enabledOtherButtons
-                      : classes.disabledOtherButtons
-                  }
-                  href={
-                    isClientAppSelected
-                      ? `/dashboard/apps/${selectedClientApp.id}`
-                      : "#"
-                  }
+                  variant="outlined"
+                  size="large"
+                  disabled={!isClientAppSelected}
+                  href={`/dashboard/apps/${selectedClientApp.id}`}
                 >
                   {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp")}
                 </Button>
-              </div>
+              </Grid>
 
-              <div className={classes.rightSideButtonsContainer}>
-                <Button
-                  className={classes.enabledOtherButtons}
-                  onClick={resetModalSelections}
-                >
-                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel")}
-                </Button>
-              </div>
-            </div>
+              <Button
+                variant="outlined"
+                size="large"
+                onClick={resetModalSelections}
+              >
+                {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.cancel")}
+              </Button>
+            </Grid>
           </div>
         </div>
       </Fade>

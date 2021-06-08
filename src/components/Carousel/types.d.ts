@@ -1,6 +1,5 @@
 export type CarouselSlideProps = {
   carouselSlideButton?: boolean,
-  carouselSlideButtonCustomStyling?: string,
   carouselSlideButtonLabel?: string,
   carouselSlideButtonLink?: string,
   carouselSlideButtonOnClick?: () => void,

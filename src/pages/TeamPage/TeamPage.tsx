@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useTranslation, Button, CircularProgress, TextField, TextFieldProps } from "@apisuite/fe-base";
+import { useTranslation, Button, CircularProgress, TextField, TextFieldProps, Grid, Box, Typography, Paper, Table, TableContainer, TableHead, TableRow, TableCell, TableBody, MenuItem, Select, Icon, useTheme } from "@apisuite/fe-base";
 
 import { ROLES } from "constants/global";
-import Select from "components/Select";
 import { FetchTeamMembersResponse, Role } from "store/profile/types";
 import { User } from "store/auth/types";
 import { isValidEmail } from "util/forms";
-
-import { SelectOption } from "components/Select/types";
 
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,6 +14,7 @@ import { fetchRoleOptions } from "store/profile/actions/fetchRoleOptions";
 import { changeRole } from "store/profile/actions/changeRole";
 import { resetProfileErrors } from "store/profile/actions/resetProfileErrors";
 import { inviteTeamMember } from "store/profile/actions/inviteTeamMember";
+import { PageContainer } from "components/PageContainer";
 
 const AUTHORIZED_ROLES = [
   ROLES.admin.value,
@@ -27,6 +25,7 @@ export const TeamPage: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
+  const { spacing } = useTheme();
   const { currentOrganisation, members, roleOptions, user, requestStatuses } = useSelector(teamPageSelector);
 
   const [inviteVisible, showInvite] = useState(false);
@@ -59,23 +58,20 @@ export const TeamPage: React.FC = () => {
     }
   }, [dispatch, currentOrganisation]);
 
-  function chooseRole (e: React.ChangeEvent<any>, option: SelectOption) {
-    if (e && option) {
-      setInput({
-        ...input,
-        roleId: option.value,
-      });
-    }
+  function chooseRole ({ target }: React.ChangeEvent<any>) {
+    setInput({
+      ...input,
+      roleId: target.value,
+    });
   }
 
-  const handleChangeRole = (userId: number, orgId: string) => (e: React.ChangeEvent<any>, option: SelectOption) => {
-    e.preventDefault();
+  const handleChangeRole = (userId: number, orgId: string) => ({ target }: React.ChangeEvent<any>) => {
     // TODO: review; there's is something wrongly typed somewhere
-    if (option.value) {
+    if (target.value) {
       dispatch(changeRole({
         org_id: orgId.toString(),
         user_id: userId.toString(),
-        role_id: option.value.toString(),
+        role_id: target.value,
       }));
     }
   };
@@ -93,17 +89,15 @@ export const TeamPage: React.FC = () => {
     return AUTHORIZED_ROLES.includes(role);
   };
 
-  const isEmpty = (members: FetchTeamMembersResponse[], roleOptions: Role[]) => {
-    // check if the arrays contain empty data
-    const hasEmptyMember = members.every((m) => !(m.Organization?.id && m.Role?.id && m.User?.id));
-    const hasEmptyRole = roleOptions.every((r) => !(r?.id && r?.name));
-
-    return hasEmptyMember || hasEmptyRole;
-  };
-
   const getUserMemberRole = (user: User) => {
     const member = members.find((member) => user.id === member.User?.id);
     return member?.Role || user.role;
+  };
+
+  const changeRoleDisabled = (member: FetchTeamMembersResponse) => {
+    if (!user) return true;
+
+    return getUserMemberRole(user).name === "developer" || user.id === member.User.id || ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level;
   };
 
   useEffect(() => {
@@ -122,19 +116,6 @@ export const TeamPage: React.FC = () => {
         dispatch(inviteTeamMember({ email: input.email, role_id: input.roleId.toString() }));
       }}
     >
-      <Button
-        disabled={input.email.length === 0 || inputErrors.email || inputErrors.role}
-        type='submit'
-        color="secondary"
-        variant="contained"
-        disableElevation
-      >
-        {
-          requestStatuses.inviteMemberRequest.isRequesting
-            ? <CircularProgress className={classes.loading} size={20} />
-            : t("rbac.team.send")
-        }
-      </Button>
 
       <TextField
         autoFocus
@@ -153,57 +134,111 @@ export const TeamPage: React.FC = () => {
         type='email'
         value={input.email}
         variant='outlined'
+        margin="dense"
       />
 
-      <Select
-        className={classes.select}
-        onChange={chooseRole}
-        options={selectOptions(roleOptions)}
-      />
+      <Box width={248}>
+        <Select
+          value={input.roleId}
+          variant="outlined"
+          margin="dense"
+          onChange={chooseRole}
+          fullWidth
+        >
+          {selectOptions(roleOptions).map((opt) => <MenuItem key={opt.value} value={opt.value}>{opt.label}</MenuItem>)}
+        </Select>
+      </Box>
+
+      <Button
+        disabled={input.email.length === 0 || inputErrors.email || inputErrors.role}
+        type='submit'
+        color="primary"
+        variant="contained"
+        size="large"
+        disableElevation
+      >
+        {
+          requestStatuses.inviteMemberRequest.isRequesting
+            ? <CircularProgress className={classes.loading} size={20} />
+            : t("rbac.team.send")
+        }
+      </Button>
     </form>
   );
 
-  const showMembers = () => (
-    <>
-      <div className={classes.table}>
-        <div className={classes.header}>
-          <div>{t("rbac.team.header")}</div>
-          <div className={classes.actions}>{t("rbac.team.actions")}</div>
-        </div>
+  const loading = requestStatuses.getMembersRequest.isRequesting || requestStatuses.getRolesRequest.isRequesting;
 
-        {
-          !isEmpty(members, roleOptions) && members.map((member, indx) => (
-            member.User &&
-            <div key={indx} className={classes.row}>
-              <div>
-                <div className={classes.name}>
-                  {member.User.name}
-                </div>
+  return (
+    <PageContainer>
+      <Grid container>
+        <Grid item md>
+          <Typography variant="h2">
+            {t("rbac.team.title")}
+          </Typography>
 
-                <div>
-                  <p className={classes.auth}>{`Current role: ${ROLES[member.Role.name]?.label}`}</p>
-                </div>
-              </div>
+          <Box mt={1.5} mb={5}>
+            <Typography variant="body1" color="textSecondary">
+              {t("rbac.team.subtitle")}
+            </Typography>
+          </Box>
 
-              {
-                user &&
-                <Select
-                  className={classes.select}
-                  disabled={getUserMemberRole(user).name === "developer" || user.id === member.User.id || ROLES[getUserMemberRole(user).name].level > ROLES[member.Role.name].level}
-                  onChange={handleChangeRole(member.User.id, member.Organization.id)}
-                  options={selectOptions(roleOptions)}
-                  selected={selectOptions(roleOptions).find(option => option.label === ROLES[member.Role.name].label)}
-                />
-              }
-            </div>
-          ))
-        }
-      </div>
+          {loading && (
+            <Box display="flex" justifyContent="center" alignItems="center">
+              <CircularProgress size={50} />
+            </Box>
+          )}
 
-      {
-        !inviteVisible && user
-          ? (
-            canInvite(getUserMemberRole(user).name) &&
+          {!loading && (
+            // TODO: move to fe-base Table component
+            <TableContainer component={Paper} variant="outlined">
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell style={{ paddingLeft: spacing(5) }}>{t("rbac.team.header")}</TableCell>
+                    <TableCell align="center">{t("rbac.team.actions")}</TableCell>
+                  </TableRow>
+                </TableHead>
+
+                <TableBody>
+                  {members.map((member) => (
+                    <TableRow key={member.User.id} className={classes.tableRow}>
+                      <TableCell scope="row" style={{ paddingLeft: spacing(5) }}>
+                        {member.User.name}
+                        <br />
+                        <Typography variant="body2" color="textSecondary">
+                          {ROLES[member.Role.name]?.label}
+                        </Typography>
+                      </TableCell>
+
+                      <TableCell width={205}>
+                        <Select
+                          variant="outlined"
+                          value={member.Role.name}
+                          margin="dense"
+                          fullWidth
+                          disabled={changeRoleDisabled(member)}
+                          onChange={handleChangeRole(member.User.id, member.Organization.id)}
+                        >
+                          {Object.entries(ROLES)
+                          // eslint-disable-next-line @typescript-eslint/no-unused-vars
+                            .map(([_, role]) => (
+                              <MenuItem key={role.value} value={role.value}>{role.label}</MenuItem>
+                            ))}
+                        </Select>
+                      </TableCell>
+
+                      {/* TODO: options placeholder - not finished */}
+                      <TableCell align="center" width={70}>
+                        <Icon color="disabled">more_vert</Icon>
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          )}
+
+          {!inviteVisible && user ? canInvite(getUserMemberRole(user).name) && (
             <Button
               onClick={toggle}
               style={{ marginTop: 24 }}
@@ -214,29 +249,12 @@ export const TeamPage: React.FC = () => {
               {t("rbac.team.invite")}
             </Button>
           )
-          : inviteCard()
-      }
-    </>
-  );
-
-  const loading = requestStatuses.getMembersRequest.isRequesting || requestStatuses.getRolesRequest.isRequesting;
-
-  return (
-    <div className={`page-container ${classes.root}`}>
-      <section className={classes.contentContainer}>
-        <h1 className={classes.title}>{t("rbac.team.title")}</h1>
-
-        <>
-          {
-            loading &&
-            <div className={classes.loadingPage}>
-              <CircularProgress size={50} />
-            </div>
+            : inviteCard()
           }
+        </Grid>
 
-          {!loading && showMembers()}
-        </>
-      </section>
-    </div>
+        <Grid />
+      </Grid>
+    </PageContainer>
   );
 };

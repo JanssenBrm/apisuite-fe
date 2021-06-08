@@ -5,6 +5,7 @@ import { StepsProgressProps } from "./types";
 import useStyles from "./styles";
 
 import clsx from "clsx";
+import { Typography } from "@material-ui/core";
 
 const StepsProgress: React.FC<StepsProgressProps> = ({
   currentStep,
@@ -27,7 +28,7 @@ const StepsProgress: React.FC<StepsProgressProps> = ({
                   )}
                 />
 
-                <label
+                <Typography variant="body2"
                   className={
                     clsx(
                       classes.stepTitle,
@@ -38,7 +39,7 @@ const StepsProgress: React.FC<StepsProgressProps> = ({
                   style={{ transform: "translateX(-32px) translateY(24px)" }}
                 >
                   {step}
-                </label>
+                </Typography>
               </li>
             );
           }
@@ -59,7 +60,7 @@ const StepsProgress: React.FC<StepsProgressProps> = ({
                 )}
               />
 
-              <label
+              <Typography variant="body2"
                 className={
                   clsx(
                     classes.stepTitle,
@@ -69,7 +70,7 @@ const StepsProgress: React.FC<StepsProgressProps> = ({
                 }
               >
                 {step}
-              </label>
+              </Typography>
             </li>
           );
         })

@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
-import { useTranslation, Avatar, Button, Fade, Menu, MenuItem, TextField } from "@apisuite/fe-base";
+import { useDispatch, useSelector } from "react-redux";
+import { useTranslation, Avatar, Button, Fade, Menu, MenuItem, TextField, Divider, Box, Typography, Grid } from "@apisuite/fe-base";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
 import Close from "@material-ui/icons/Close";
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
@@ -7,13 +8,13 @@ import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
 
 import { useForm } from "util/useForm";
 import { isValidImage, isValidURL } from "util/forms";
-
-import useStyles from "./styles";
-import { useDispatch, useSelector } from "react-redux";
 import { fetchOrg } from "store/profile/actions/fetchOrg";
 import { createOrg } from "store/profile/actions/createOrg";
 import { updateOrg } from "store/profile/actions/updateOrg";
+import { PageContainer } from "components/PageContainer";
+
 import { organisationSelector } from "./selector";
+import useStyles from "./styles";
 
 export const Organisation: React.FC = () => {
   const classes = useStyles();
@@ -266,37 +267,33 @@ export const Organisation: React.FC = () => {
   };
 
   return (
-    <main className='page-container'>
-      <section className={classes.orgDetailsContainer}>
-        <section className={classes.orgTitleAndSubtitleContainer}>
-          <p className={classes.orgTitle}>
-            {
-              org.name
-                ? org.name
-                : t("profileTab.organisationSubTab.newOrgTitle")
-            }
-          </p>
+    <PageContainer>
+      <Typography variant="h2">
+        {org.name ? org.name : t("profileTab.organisationSubTab.newOrgTitle")}
+      </Typography>
 
-          <p className={classes.orgSubtitle}>
-            {t("profileTab.organisationSubTab.orgSubtitle")}
-          </p>
-        </section>
+      <Box mt={1.5} mb={5}>
+        <Typography variant="body1" color="textSecondary">
+          {t("profileTab.organisationSubTab.orgSubtitle")}
+        </Typography>
+      </Box>
 
-        <section className={classes.orgMainDetailsContainer}>
-          <section className={classes.leftSideDetailsContainer}>
-            <TextField
-              className={classes.inputFields}
-              fullWidth
-              InputLabelProps={{ shrink: true }}
-              label={t("profileTab.organisationSubTab.fieldLabels.orgNameLabel")}
-              margin='dense'
-              name='orgName'
-              onChange={handleChange}
-              type='text'
-              value={formState.values.orgName}
-              variant='outlined'
-            />
+      <Grid container justify="space-between">
+        <Grid item md={6}>
+          <TextField
+            className={classes.inputFields}
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            label={t("profileTab.organisationSubTab.fieldLabels.orgNameLabel")}
+            margin='dense'
+            name='orgName'
+            onChange={handleChange}
+            type='text'
+            value={formState.values.orgName}
+            variant='outlined'
+          />
 
+          <Box mt={3}>
             <TextField
               className={classes.inputFields}
               fullWidth
@@ -309,186 +306,197 @@ export const Organisation: React.FC = () => {
               value={formState.values.orgVAT}
               variant='outlined'
             />
-          </section>
+          </Box>
+        </Grid>
 
-          <section className={classes.rightSideDetailsContainer}>
-            {/* TODO: Eventually add 'upload' capabilities to the following 'Avatar' as an 'onClick' event */}
-            {
-              avatarInputIsInFocus
-                ? (
-                  <Close
-                    className={classes.avatarIcons}
-                    onClick={
-                      () => {
-                        setAvatarInputIsInFocus(false);
-                      }
-                    }
-                  />
-                )
-                : (
-                  <ImageSearchRoundedIcon
-                    className={classes.avatarIcons}
-                    onClick={
-                      () => {
-                        setAvatarInputIsInFocus(true);
-                      }
-                    }
-                  />
-                )
-            }
-
-            <Avatar
-              className={
-                avatarInputIsInFocus || formState.values.orgAvatarURL
-                  ? classes.focusedAvatar
-                  : classes.notFocusedAvatar
+        <Grid
+          component={Box}
+          item
+          md={5}
+          justify="flex-end"
+          position="relative"
+        >
+          {/* TODO: Eventually add 'upload' capabilities to the following 'Avatar' as an 'onClick' event */}
+          {avatarInputIsInFocus ? (
+            <Close
+              className={classes.avatarIcons}
+              onClick={
+                () => {
+                  setAvatarInputIsInFocus(false);
+                }
               }
-              src={formState.values.orgAvatarURL}
-            >
-              {orgNameInitials}
-            </Avatar>
-
-            <TextField
-              className={classes.avatarURLInputField}
-              error={(formState.touched.orgAvatarURL && formState.errors.orgAvatarURL) || !validImage}
-              fullWidth
-              helperText={
-                (formState.touched.orgAvatarURL && formState.errors.orgAvatarURL) || !validImage
-                  ? formState.errorMsgs.orgAvatarURL
-                  : t("profileTab.organisationSubTab.fieldLabels.orgAvatarSubLabel")
-              }
-              inputRef={(input) =>
-                avatarInputIsInFocus ? input && input.focus() : input && input.blur()}
-              InputLabelProps={{
-                shrink: true,
-              }}
-              label={t("profileTab.organisationSubTab.fieldLabels.orgAvatarLabel")}
-              margin='dense'
-              name='orgAvatarURL'
-              onBlur={() => {
-                setAvatarInputIsInFocus(false);
-              }}
-              onChange={handleChange}
-              onFocus={(focusEvent) => {
-                handleFocus(focusEvent);
-                setAvatarInputIsInFocus(true);
-              }}
-              type='url'
-              value={formState.values.orgAvatarURL}
-              variant='outlined'
             />
-          </section>
-        </section>
+          )
+            : (
+              <ImageSearchRoundedIcon
+                className={classes.avatarIcons}
+                onClick={
+                  () => {
+                    setAvatarInputIsInFocus(true);
+                  }
+                }
+              />
+            )
+          }
 
-        <hr className={classes.firstSectionSeparator} />
+          <Avatar
+            className={
+              avatarInputIsInFocus || formState.values.orgAvatarURL
+                ? classes.focusedAvatar
+                : classes.notFocusedAvatar
+            }
+            src={formState.values.orgAvatarURL}
+          >
+            {orgNameInitials}
+          </Avatar>
 
-        <section className={classes.orgAdditionalDetailsContainer}>
-          <section className={classes.leftSideDetailsContainer}>
-            <p className={classes.orgAdditionalDetailsTitle}>
+          <TextField
+            className={classes.avatarURLInputField}
+            error={(formState.touched.orgAvatarURL && formState.errors.orgAvatarURL) || !validImage}
+            fullWidth
+            helperText={
+              (formState.touched.orgAvatarURL && formState.errors.orgAvatarURL) || !validImage
+                ? formState.errorMsgs.orgAvatarURL
+                : t("profileTab.organisationSubTab.fieldLabels.orgAvatarSubLabel")
+            }
+            inputRef={(input) =>
+              avatarInputIsInFocus ? input && input.focus() : input && input.blur()}
+            InputLabelProps={{
+              shrink: true,
+            }}
+            label={t("profileTab.organisationSubTab.fieldLabels.orgAvatarLabel")}
+            margin='dense'
+            name='orgAvatarURL'
+            onBlur={() => {
+              setAvatarInputIsInFocus(false);
+            }}
+            onChange={handleChange}
+            onFocus={(focusEvent) => {
+              handleFocus(focusEvent);
+              setAvatarInputIsInFocus(true);
+            }}
+            type='url'
+            value={formState.values.orgAvatarURL}
+            variant='outlined'
+          />
+        </Grid>
+      </Grid>
+
+      <Box my={5}>
+        <Divider />
+      </Box>
+
+      <Grid container>
+        <Grid item md={7}>
+          <Box clone mb={3}>
+            <Typography variant="h6">
               {t("profileTab.organisationSubTab.orgAdditionalDetailsTitle")}
-            </p>
+            </Typography>
+          </Box>
 
+          <TextField
+            className={classes.inputFields}
+            fullWidth
+            InputLabelProps={{ shrink: true }}
+            label={t("profileTab.organisationSubTab.fieldLabels.orgDescriptionLabel")}
+            margin='dense'
+            multiline
+            name='orgDescription'
+            onChange={handleChange}
+            rows={5}
+            type='text'
+            value={formState.values.orgDescription}
+            variant='outlined'
+          />
+        </Grid>
+
+        <Grid item md={5}>
+          <div className={classes.orgURLFieldWrapper}>
             <TextField
               className={classes.inputFields}
+              error={formState.errors.orgWebsiteURL}
               fullWidth
+              helperText={
+                formState.errors.orgWebsiteURL
+                  ? formState.errorMsgs.orgWebsiteURL
+                  : ""
+              }
               InputLabelProps={{ shrink: true }}
-              label={t("profileTab.organisationSubTab.fieldLabels.orgDescriptionLabel")}
+              label={t("profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel")}
               margin='dense'
-              multiline
-              name='orgDescription'
+              name='orgWebsiteURL'
               onChange={handleChange}
-              rows={5}
-              type='text'
-              value={formState.values.orgDescription}
+              type='url'
+              value={formState.values.orgWebsiteURL}
               variant='outlined'
             />
-          </section>
 
-          <section className={classes.rightSideDetailsContainer}>
-            <p className={classes.orgAdditionalDetailsSubtitle}>
-              {t("profileTab.organisationSubTab.orgAdditionalDetailsSubtitle")}
-            </p>
-
-            <div className={classes.orgURLFieldWrapper}>
-              <TextField
-                className={classes.inputFields}
-                error={formState.errors.orgWebsiteURL}
-                fullWidth
-                helperText={
-                  formState.errors.orgWebsiteURL
-                    ? formState.errorMsgs.orgWebsiteURL
-                    : ""
-                }
-                InputLabelProps={{ shrink: true }}
-                label={t("profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel")}
-                margin='dense'
-                name='orgWebsiteURL'
-                onChange={handleChange}
-                type='url'
-                value={formState.values.orgWebsiteURL}
-                variant='outlined'
-              />
-
-              <div onClick={handleOpenSelector}>
-                <AddRoundedIcon />
-              </div>
+            <div onClick={handleOpenSelector}>
+              <AddRoundedIcon />
             </div>
+          </div>
 
-            <Menu
-              anchorEl={anchorElement}
-              onClose={handleCloseSelector}
-              open={Boolean(anchorElement)}
-              TransitionComponent={Fade}
+          <Box clone mt={1.5}>
+            <Typography variant="body2" color="textSecondary">
+              {t("profileTab.organisationSubTab.orgAdditionalDetailsSubtitle")}
+            </Typography>
+          </Box>
+
+          <Menu
+            anchorEl={anchorElement}
+            onClose={handleCloseSelector}
+            open={Boolean(anchorElement)}
+            TransitionComponent={Fade}
+          >
+            <MenuItem
+              className={classes.selectorTitle}
+              disabled
             >
-              <MenuItem
-                className={classes.selectorTitle}
-                disabled
-              >
-                {t("profileTab.organisationSubTab.selectorTitle")}
-              </MenuItem>
+              {t("profileTab.organisationSubTab.selectorTitle")}
+            </MenuItem>
 
-              <MenuItem
-                className={classes.selectorOption}
-                disabled={isShowing[0]}
-                onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 0)}
-              >
-                {t("profileTab.organisationSubTab.fieldLabels.orgToSLabel")}
-              </MenuItem>
+            <MenuItem
+              className={classes.selectorOption}
+              disabled={isShowing[0]}
+              onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 0)}
+            >
+              {t("profileTab.organisationSubTab.fieldLabels.orgToSLabel")}
+            </MenuItem>
 
-              <MenuItem
-                className={classes.selectorOption}
-                disabled={isShowing[1]}
-                onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 1)}
-              >
-                {t("profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel")}
-              </MenuItem>
+            <MenuItem
+              className={classes.selectorOption}
+              disabled={isShowing[1]}
+              onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 1)}
+            >
+              {t("profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel")}
+            </MenuItem>
 
-              <MenuItem
-                className={classes.selectorOption}
-                disabled={isShowing[2]}
-                onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 2)}
-              >
-                {t("profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel")}
-              </MenuItem>
+            <MenuItem
+              className={classes.selectorOption}
+              disabled={isShowing[2]}
+              onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 2)}
+            >
+              {t("profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel")}
+            </MenuItem>
 
-              <MenuItem
-                className={classes.selectorOption}
-                disabled
-              >
-                {t("profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel")}
-              </MenuItem>
+            <MenuItem
+              className={classes.selectorOption}
+              disabled
+            >
+              {t("profileTab.organisationSubTab.fieldLabels.orgWebsiteLabel")}
+            </MenuItem>
 
-              <MenuItem
-                className={classes.selectorOption}
-                disabled={isShowing[3]}
-                onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 3)}
-              >
-                {t("profileTab.organisationSubTab.fieldLabels.orgSupportLabel")}
-              </MenuItem>
-            </Menu>
+            <MenuItem
+              className={classes.selectorOption}
+              disabled={isShowing[3]}
+              onClick={(clickEvent) => handleShowOrgURLField(clickEvent, 3)}
+            >
+              {t("profileTab.organisationSubTab.fieldLabels.orgSupportLabel")}
+            </MenuItem>
+          </Menu>
 
-            {
-              isShowing[0] &&
+          {
+            isShowing[0] &&
               <div className={classes.orgURLFieldWrapper}>
                 <TextField
                   className={classes.inputFields}
@@ -513,10 +521,10 @@ export const Organisation: React.FC = () => {
                   <CloseRoundedIcon />
                 </div>
               </div>
-            }
+          }
 
-            {
-              isShowing[1] &&
+          {
+            isShowing[1] &&
               <div className={classes.orgURLFieldWrapper}>
                 <TextField
                   className={classes.inputFields}
@@ -541,10 +549,10 @@ export const Organisation: React.FC = () => {
                   <CloseRoundedIcon />
                 </div>
               </div>
-            }
+          }
 
-            {
-              isShowing[2] &&
+          {
+            isShowing[2] &&
               <div className={classes.orgURLFieldWrapper}>
                 <TextField
                   className={classes.inputFields}
@@ -569,10 +577,10 @@ export const Organisation: React.FC = () => {
                   <CloseRoundedIcon />
                 </div>
               </div>
-            }
+          }
 
-            {
-              isShowing[3] &&
+          {
+            isShowing[3] &&
               <div className={classes.orgURLFieldWrapper}>
                 <TextField
                   className={classes.inputFields}
@@ -597,44 +605,28 @@ export const Organisation: React.FC = () => {
                   <CloseRoundedIcon />
                 </div>
               </div>
-            }
-          </section>
-        </section>
+          }
+        </Grid>
+      </Grid>
 
-        <hr className={classes.secondSectionSeparator} />
+      <Box my={5}>
+        <Divider />
+      </Box>
 
-        {
-          org.name
-            ? (
-              <Button
-                className={
-                  formState.isDirty &&
-                (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                validImage
-                    ? classes.enabledUpdateDetailsButton
-                    : classes.disabledUpdateDetailsButton
-                }
-                onClick={updateOrgDetails}
-              >
-                {t("profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel")}
-              </Button>
-            )
-            : (
-              <Button
-                className={
-                  formState.isDirty &&
-                (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                validImage
-                    ? classes.enabledCreateOrgButton
-                    : classes.disabledCreateOrgButton
-                }
-                onClick={createOrgDetails}
-              >
-                {t("profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel")}
-              </Button>
-            )
+      <Button
+        color="primary"
+        variant="contained"
+        size="large"
+        disableElevation
+        disabled={
+          !(formState.isDirty && (formState.isValid || !Object.keys(formState.errors).length) && validImage)
         }
-      </section>
-    </main>
+        onClick={org.name ? updateOrgDetails : createOrgDetails}
+      >
+        {t(
+          org.name ? "profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel" : "profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel"
+        )}
+      </Button>
+    </PageContainer>
   );
 };

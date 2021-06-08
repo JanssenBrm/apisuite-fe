@@ -1,14 +1,13 @@
 import React from "react";
 import qs from "qs";
-import clsx from "clsx";
 import { useHistory, useParams } from "react-router-dom";
-import { Button, Link, useConfig, useTranslation } from "@apisuite/fe-base";
+import { Box, Button, Grid, Icon, Tabs, Tab, Typography, useConfig, useTheme, useTranslation, Trans } from "@apisuite/fe-base";
 import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
 
 import { InvitationForm } from "components/InvitationForm";
 import { SignInForm } from "components/SignInForm";
 import { SignUpForm } from "components/SignUpForm";
+import Link from "components/Link";
 import { getSSOLoginURL } from "util/getSSOLoginURL";
 import { linker } from "util/linker";
 
@@ -19,6 +18,7 @@ import { signInOrUpSelector } from "./selector";
 
 export const SignInOrUp: React.FC = () => {
   const classes = useStyles();
+  const { palette, zIndex, breakpoints, spacing } = useTheme();
   const history = useHistory();
   const [t] = useTranslation();
   const { auth } = useSelector(signInOrUpSelector);
@@ -67,151 +67,156 @@ export const SignInOrUp: React.FC = () => {
     return t("login.invitationBtn");
   };
 
-  const renderRegisterInvitationOption = () => {
-    return <>
-      <option
-        className={clsx({ [classes.selectedOption]: view === "invitation", [classes.notSelectedOption]: view !== "invitation" })}
-        onClick={() => changeView("invitation")}>
-        {getMenuTranslation()}
-      </option>
-    </>;
-  };
-
-  const renderSignUpFooter = (signUpURL: string) => {
-    return (
-      <div className={classes.invitationFooter}>
-        {t("signInOrUpView.ssoFooterSignUp", { provider: sso[0] })} <Link href={linker(signUpURL)}>{t("signInOrUpView.ssoFooterSignUpLink")}</Link>
-      </div>
-    );
-  };
-
   const shouldRenderNotAvailableView = () => {
-    return (view === "signin" || view === "signup") && !!sso?.length;
+    return (view === "signin" || view === "signup") && !!sso.length;
   };
 
-  const renderNotAvailableView = () => {
-    return (
-      <div className={classes.notAvailableView}>
-        <h1 className={classes.formSideTitle}>
-          {t("signInOrUpView.welcomeTitle")}
-        </h1>
-        <p className={classes.formSideSubtitle}>
-          {t("signInOrUpView.welcomeSubtitle", { org: auth.invitation?.organization || "Unknown" })}
-        </p>
-        <div className={classes.form}>
-          {
-            view === "signin" &&
+  return (
+    <Grid
+      component={Box}
+      container
+      direction="row"
+      minHeight="100%"
+    >
+      <Box
+        display="flex"
+        flexWrap="nowrap"
+        position="absolute"
+        width="100%"
+        p={6}
+        zIndex={zIndex.appBar}
+      >
+        <Grid
+          component={Box}
+          container
+          onClick={() => history.push("/")}
+        >
+          {ownerInfo.logo ? (
+            <img
+              className={classes.imageLogo}
+              src={ownerInfo.logo}
+            />
+          ) : (
+            <AmpStoriesRoundedIcon
+              className={classes.iconLogo}
+            />
+          )}
+
+          <Typography variant="h3">
+            {portalName}
+          </Typography>
+        </Grid>
+
+        <Box
+          display="flex"
+          justifyContent="flex-end"
+          alignItems="center"
+          color={palette.common.white}
+          onClick={() => history.push("/")}
+        >
+          <Box mr={1} clone>
+            <Typography variant="body2" color="inherit">
+              {t("signInOrUpView.closeButtonLabel")}
+            </Typography>
+          </Box>
+
+          <Icon>close</Icon>
+        </Box>
+      </Box>
+
+      <Grid
+        component={Box}
+        container
+        direction="column"
+        pt={20}
+        px={6}
+        maxWidth={breakpoints.values.sm}
+      >
+        <Typography variant="h1">
+          {invitationHasNoError() ? t("signInOrUpView.welcomeTitle") : t("signInOrUpView.invalid")}
+        </Typography>
+
+        <Typography variant="h5" color="textSecondary">
+          {invitationHasNoError() && t(
+            view === "invitation" ? "signInOrUpView.welcomeSubtitleInvitation" : "signInOrUpView.welcomeSubtitle",
+            { org: auth.invitation?.organization || "" }
+          )}
+        </Typography>
+
+        {!sso.length && (
+          <Box pt={6}>
+            {/* TODO: this tabs should be refactored to have a better reasoning about which tabs should be available */}
+            <Tabs
+              value={view}
+              variant="fullWidth"
+              textColor="primary"
+              indicatorColor="primary"
+              style={{ borderBottom: `1px solid ${palette.divider}` }}
+              onChange={(_, value) => changeView(value)}
+            >
+              {view !== "invitation" && (
+              // This is weird, but we only have one tab on this case
+                <Tab
+                  value="signin"
+                  label={t("signInOrUpView.options.signIn")}
+                />
+              )}
+
+              {view !== "invitation" && (
+              // This is weird, but we only have one tab on this case
+                <Tab
+                  value="signup"
+                  label={t("signInOrUpView.options.signUp")}
+                />
+              )}
+
+              {view === "invitation" && (
+              // This is weird, but we only have one tab on this case
+                <Tab
+                  value="invitation"
+                  label={getMenuTranslation()}
+                />
+              )}
+            </Tabs>
+          </Box>
+        )}
+
+        {shouldRenderNotAvailableView() && (
+          <Box pt={6}>
             <Button
               variant="contained"
               color="primary"
               fullWidth
-              className={classes.ssoButton}
-              href={getSSOLoginURL(sso)}>
-              {t("signInOrUpView.options.signIn")}
+              href={view === "signin" ? getSSOLoginURL(sso) : linker(providerSignupURL)}>
+              {t(view === "signin" ? "signInOrUpView.options.signIn" : "signInOrUpView.options.signUp")}
             </Button>
-          }
-          {
-            view === "signup" &&
-            <Button
-              variant="contained"
-              color="primary" fullWidth
-              className={classes.ssoButton}
-              href={linker(providerSignupURL)}>
-              {t("signInOrUpView.options.signUp")}
-            </Button>
-          }
-        </div>
-      </div>
-    );
-  };
+          </Box>
+        )}
 
-  return (
-    <main className={classes.mainContainer}>
-      <header className={classes.headerContainer}>
-        <div
-          className={classes.logoAndNameContainer}
-          onClick={() => history.push("/")}
-        >
-          {
-            ownerInfo.logo
-              ? (
-                <img
-                  className={classes.imageLogo}
-                  src={ownerInfo.logo}
-                />
-              )
-              : (
-                <AmpStoriesRoundedIcon
-                  className={classes.iconLogo}
-                />
-              )
-          }
+        {!shouldRenderNotAvailableView() && (
+          <>
+            {view === "signin" && <SignInForm />}
+            {view === "signup" && <SignUpForm />}
+          </>
+        )}
 
-          <h3 className={classes.portalName}>
-            {portalName}
-          </h3>
-        </div>
+        {view === "invitation" && <InvitationForm />}
 
-        <div
-          className={classes.closeButtonContainer}
-          onClick={() => history.push("/")}
-        >
-          <p>
-            {t("signInOrUpView.closeButtonLabel")}
-          </p>
-          <CloseRoundedIcon />
-        </div>
-      </header>
+        {(view === "invitation" && !auth.authToken && !!sso?.length && invitationHasNoError()) && (
+          <Box
+            maxWidth={550}
+            margin={`${spacing(2)} auto`}
+          >
+            <Trans i18nKey="signInOrUpView.ssoFooterSignUp" values={{ provider: sso[0] }}>
+              {[
+                <Link key="signInOrUpView.ssoFooterSignUp" to={linker(providerSignupURL)} />,
+              ]}
+            </Trans>
+          </Box>
+        )}
+      </Grid>
 
-      <section className={classes.pageContentContainer}>
-        <div className={classes.formSideContentContainer}>
-          {shouldRenderNotAvailableView() && renderNotAvailableView()}
-          {!shouldRenderNotAvailableView() &&
-            <>
-              <h1 className={classes.formSideTitle}>
-                {invitationHasNoError() ? t("signInOrUpView.welcomeTitle") : t("signInOrUpView.invalid")}
-              </h1>
-              <p className={classes.formSideSubtitle}>
-                {invitationHasNoError() && t(view === "invitation" ? "signInOrUpView.welcomeSubtitleInvitation" : "signInOrUpView.welcomeSubtitle", { org: auth.invitation?.organization || "Unknown" })}
-              </p>
-
-              <div>
-                <div className={classes.selector}>
-                  {view === "invitation" && invitationHasNoError() ? renderRegisterInvitationOption() : null}
-                  {
-                    view !== "invitation" &&
-                    <>
-                      <option
-                        className={clsx({ [classes.selectedOption]: view === "signin", [classes.notSelectedOption]: view !== "signin" })}
-                        onClick={() => changeView("signin")}
-                      >
-                        {t("signInOrUpView.options.signIn")}
-                      </option>
-
-                      <option
-                        className={clsx({ [classes.selectedOption]: view === "signup", [classes.notSelectedOption]: view !== "signup" })}
-                        onClick={() => changeView("signup")}
-                      >
-                        {t("signInOrUpView.options.signUp")}
-                      </option>
-                    </>
-                  }
-                </div>
-
-                <div className={classes.form}>
-                  {view === "signin" && <SignInForm />}
-                  {view === "signup" && <SignUpForm />}
-                  {view === "invitation" && <InvitationForm />}
-                </div>
-                <div className={classes.formFooter}>
-                  {(view === "invitation" && !auth.authToken && !!sso?.length && invitationHasNoError()) && renderSignUpFooter(providerSignupURL)}
-                </div>
-              </div>
-            </>}
-        </div>
-
-        <div className={classes.imageSideContentContainer} />
-      </section>
-    </main>
+      <Grid item xs className={classes.imageSideContentContainer} />
+    </Grid>
   );
 };

@@ -1,8 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { useTranslation } from "@apisuite/fe-base";
-import ChevronRightRoundedIcon from "@material-ui/icons/ChevronRightRounded";
-import MenuOpenRoundedIcon from "@material-ui/icons/MenuOpenRounded";
+import { Box, Icon, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
 
 import { apisByNameSelector } from "pages/Subscriptions/selectors";
@@ -13,6 +11,7 @@ import useStyles from "./styles";
 
 export const SubscriptionsTable: React.FC = () => {
   const classes = useStyles();
+  const { shape, palette } = useTheme();
   const { t } = useTranslation();
   const apisByName = useSelector(apisByNameSelector);
 
@@ -26,12 +25,16 @@ export const SubscriptionsTable: React.FC = () => {
         : appSplitName[0].slice(0, 2);
 
       return (
-        <p
-          className={classes.appNameIcon}
+        <Box
           key={`${appName}${key}`}
+          borderRadius={shape.borderRadius}
+          style={{ backgroundColor: palette.primary.main, color: palette.primary.contrastText }}
+          ml={1.5}
+          width={35}
+          textAlign="center"
         >
-          {appInitials}
-        </p>
+          <Typography variant="body2" color="inherit">{appInitials}</Typography>
+        </Box>
       );
     });
 
@@ -46,7 +49,7 @@ export const SubscriptionsTable: React.FC = () => {
           {/* API's name and subscribed apps */}
           <div className={classes.apiNameAndAppsContainer}>
             <div className={classes.apiNameContainer}>
-              <p className={classes.apiName}>{api.name}</p>
+              <Typography variant="body1">{api.name}</Typography>
             </div>
 
             <div className={classes.apiAppsContainer}>
@@ -56,53 +59,50 @@ export const SubscriptionsTable: React.FC = () => {
                     generateAppIcons(api.apps)
                   )
                   : (
-                    <p className={classes.noSubsMessage}>Subscribe applications...</p>
+                    <Typography variant="subtitle1">Subscribe applications...</Typography>
                   )
               }
             </div>
 
             <div className={classes.apiDetailsLinkContainer}>
-              <Link
-                className={classes.mostRecentAPIVersionLink}
-                to={
-                  api.versions.length
-                    ? `/api-products/details/${api.versions[0].apiId}/spec/${api.versions[0].id}`
-                    : "/api-products"
-                }
-              >
-                <MenuOpenRoundedIcon />
-              </Link>
+              {!!api.versions.length && (
+                <Link to={`/api-products/details/${api.versions[0].apiId}/spec/${api.versions[0].id}`}>
+                  <Icon>menu_open</Icon>
+                </Link>
+              )}
+
+              {!api.versions.length && (
+                <Icon color="disabled">menu_open</Icon>
+              )}
             </div>
           </div>
 
           {/* API's versions */}
-          {
-            api.versions.map((apiVersion, index) => {
-              return (
-                <Link
-                  className={classes.apiVersionLink}
-                  key={`${apiVersion.title}${index}`}
-                  to={`/api-products/details/${apiVersion.apiId}/spec/${apiVersion.id}`}
-                >
-                  <div className={classes.apiVersionDetailsContainer}>
-                    <p className={classes.apiVersionNumber}>{apiVersion.version}</p>
+          {api.versions.map((apiVersion, index) => {
+            return (
+              <Link
+                className={classes.apiVersionLink}
+                key={`${apiVersion.title}${index}`}
+                to={`/api-products/details/${apiVersion.apiId}/spec/${apiVersion.id}`}
+              >
+                <div className={classes.apiVersionDetailsContainer}>
+                  <Typography variant="body1">{apiVersion.version}</Typography>
 
-                    <p className={classes.apiVersionName}>{apiVersion.title}</p>
+                  <Typography variant="body1">{apiVersion.title}</Typography>
 
-                    <div className={classes.apiVersionIconsContainer}>
-                      {
-                        apiVersion.deprecated
-                          ? <ReportProblemOutlinedIcon className={classes.deprecatedIcon} />
-                          : null
-                      }
+                  <div className={classes.apiVersionIconsContainer}>
+                    {
+                      apiVersion.deprecated
+                        ? <ReportProblemOutlinedIcon className={classes.deprecatedIcon} />
+                        : null
+                    }
 
-                      <ChevronRightRoundedIcon className={classes.chevronIcon} />
-                    </div>
+                    <Icon>chevron_right</Icon>
                   </div>
-                </Link>
-              );
-            })
-          }
+                </div>
+              </Link>
+            );
+          })}
         </div>
       );
     });
@@ -113,9 +113,13 @@ export const SubscriptionsTable: React.FC = () => {
   return (
     <div className={classes.tableContentsContainer}>
       <div className={classes.tableHeader}>
-        <p>{t("dashboardTab.subscriptionsSubTab.hasDataToShow.subscriptionsTable.title")}</p>
+        <Typography variant="body1">
+          <b>{t("dashboardTab.subscriptionsSubTab.hasDataToShow.subscriptionsTable.title")}</b>
+        </Typography>
 
-        <p>{t("dashboardTab.subscriptionsSubTab.hasDataToShow.subscriptionsTable.subtitle")}</p>
+        <Typography variant="body1">
+          <b>{t("dashboardTab.subscriptionsSubTab.hasDataToShow.subscriptionsTable.subtitle")}</b>
+        </Typography>
       </div>
 
       <div className={classes.tableBody}>

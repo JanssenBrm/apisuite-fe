@@ -2,25 +2,29 @@ import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   carouselSlideButtonStyling: {
+    ...theme.typography.button,
     backgroundColor: theme.palette.primary.main,
-    borderRadius: `${theme.shape.borderRadius}px`,
-    color: `${theme.palette.primary.contrastText} !important`,
-    cursor: "pointer",
-    fontSize: "16px",
-    fontWeight: 500,
+    borderRadius: theme.shape.borderRadius,
+    color: theme.palette.primary.contrastText,
     margin: "0px auto",
     padding: "17px 40px",
     textDecoration: "none",
-    width: "200px",
+    width: 200,
+    transition: theme.transitions.create(["background-color", "color"], {
+      duration: theme.transitions.duration.short,
+    }),
 
     "&:hover": {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.primary.dark,
     },
   },
 
   carouselSlideInnerContainer: {
-    display: "block",
-    textAlign: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    color: theme.palette.common.white,
   },
 
   carouselSlideOuterContainer: {
@@ -28,13 +32,6 @@ export default makeStyles((theme) => ({
     display: "flex",
     height: "auto",
     justifyContent: "center",
-  },
-
-  carouselSlideText: {
-    color: theme.palette.background.default,
-    fontSize: "22px",
-    fontWeight: 300,
-    marginBottom: "30px",
   },
 
   carouselSlider: {
@@ -106,7 +103,6 @@ export default makeStyles((theme) => ({
     minHeight: "550px",
 
     "& > :nth-child(1)": {
-      paddingBottom: "40px",
       paddingTop: "165px",
     },
   },

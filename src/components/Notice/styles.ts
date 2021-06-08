@@ -1,32 +1,44 @@
 import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
-  noticeContentsContainer: {
+  noticeBackgoundInfo:{
     backgroundColor: theme.palette.info.light,
-    border: `1px solid ${theme.palette.info.light}`,
+  },
+
+  noticeBackgoundError:{
+    backgroundColor: theme.palette.error.light,
+  },
+
+  noticeBackgoundWarning:{
+    backgroundColor: theme.palette.warning.light,
+  },
+
+  noticeContentsContainer: {
     borderRadius: `${theme.shape.borderRadius}px`,
     display: "flex",
-    padding: "12px",
+    padding: 8,
     width: "100%",
+    alignItems: "center",
+    "& p": {
+      letterSpacing: "0.1px",
+    },
   },
 
   noticeIcon: {
-    alignItems: "center",
-    color: theme.palette.info.main,
     display: "flex",
-    justifyContent: "center",
-    marginRight: "10px",
+    marginRight: 8,
+    alignSelf: "flex-start",
   },
 
-  noticeText: {
-    "& > p": {
-      color: "#035E86",
-      fontSize: "14px",
-      fontWeight: 400,
+  noticeIconInfo:{
+    color: theme.palette.info.main,
+  },
 
-      "& > a": {
-        textDecoration: "none",
-      },
-    },
+  noticeIconError:{
+    color: theme.palette.error.main,
+  },
+
+  noticeIconWarning:{
+    color: theme.palette.warning.main,
   },
 }));

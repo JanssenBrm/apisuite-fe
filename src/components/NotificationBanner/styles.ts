@@ -18,17 +18,10 @@ const useStyles = makeStyles((theme) => ({
 
   notificationBannerHeader: {
     color: theme.palette.primary.contrastText,
-    fontSize: "24px",
-    fontWeight: 400,
-    margin: "0px 15px 15px 0px",
   },
 
   notificationBannerParagraph: {
     color: theme.palette.primary.contrastText,
-    fontSize: "16px",
-    fontWeight: 300,
-    lineHeight: "22px",
-    marginRight: "15px",
   },
 
   notificationBannerTextContainer: {
