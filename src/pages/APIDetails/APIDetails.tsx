@@ -5,10 +5,12 @@ import { useTranslation, CircularProgress } from "@apisuite/fe-base";
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 
-import { apiDetailsSelector } from "./selector";
-import useStyles from "./styles";
 import { APIDetailParams } from "store/apiDetails/types";
 import { geAPIVersion } from "store/apiDetails/actions/getAPIVersion";
+import { PageContainer } from "components/PageContainer";
+
+import { apiDetailsSelector } from "./selector";
+import useStyles from "./styles";
 
 export const APIDetails: React.FC = () => {
   const classes = useStyles();
@@ -30,16 +32,8 @@ export const APIDetails: React.FC = () => {
     return !!(apiDetails && apiDetails.version && apiDetails.version.spec);
   };
 
-  const getAccessStyle = (): string => {
-    return apiDetails.version.live ? classes.live : classes.docs;
-  };
-
-  const getBadgeStyle = (): string => {
-    return !apiDetails.version.live ? classes.live : classes.docs;
-  };
-
   return (
-    <div className={classes.root}>
+    <PageContainer>
       {
         !apiDetails.requested &&
         <div className={classes.centerVertical}>
@@ -49,29 +43,20 @@ export const APIDetails: React.FC = () => {
       {
         apiDetails.requested &&
         <>
-          {
-            hasSpec() &&
-            <>
-              <div className={`${classes.header} ${getAccessStyle()}`}>
-                <h3>{apiDetails.version.title}</h3>
-                <span className={`${classes.badge} ${getBadgeStyle()}`}>{apiDetails.version.version}</span>
-              </div>
-              <div className={classes.swagger}>
-                <SwaggerUI spec={apiDetails.version.spec || {}} />
-              </div>
-            </>
-          }
-          {
-            !hasSpec() &&
+          {hasSpec() && (
+            <SwaggerUI spec={apiDetails.version.spec || {}} />
+          )}
+
+          {!hasSpec() && (
             <>
               <div className={`${classes.header} ${classes.docs}`}>&nbsp;</div>
               <div className={classes.centerVertical}>
                 <h2>{t("apidetails.notfound")}</h2>
               </div>
             </>
-          }
+          )}
         </>
       }
-    </div>
+    </PageContainer>
   );
 };

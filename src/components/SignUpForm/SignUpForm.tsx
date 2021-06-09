@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Redirect } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslation } from "@apisuite/fe-base";
+import { Box, Trans, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 
 import StepsProgress from "components/StepsProgress";
 
@@ -9,16 +9,16 @@ import { ProfileDetailsForm } from "./ProfileDetailsForm";
 import { OrganisationDetailsForm } from "./OrganisationDetailsForm";
 import { SecurityDetailsForm } from "./SecurityDetailsForm";
 
-import useStyles from "./styles";
 import { signUpFormSelector } from "./selector";
 import { submitSignUpCredentials } from "store/auth/actions/submitSignUpCredentials";
 import { submitSignUpOrganisation } from "store/auth/actions/submitSignUpOrganisation";
 import { submitSignUpDetails } from "store/auth/actions/submitSignUpDetails";
+import Link from "components/Link";
 
 export const SignUpForm: React.FC = () => {
   const dispatch = useDispatch();
-  const classes = useStyles();
   const [t] = useTranslation();
+  const { palette } = useTheme();
   const { signUpError, isSignUpWorking } = useSelector(signUpFormSelector);
   const mounted = useRef(false);
   const submittedStep = useRef(0);
@@ -121,23 +121,21 @@ export const SignUpForm: React.FC = () => {
 
       {signUpFormStep(step)}
 
-      <div className={classes.privacyPolicyDisclaimerContainer}>
-        <p className={classes.privacyPolicyDisclaimerText}>
-          {t("signUpForm.privacyPolicyDisclaimerPartOne")}
-        </p>
-
-        {/* FIXME: the translations support interpolation, plus this url should be dynamic no? */}
-        <a
-          className={classes.privacyPolicyDisclaimerLink}
-          href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/760938500/Privacy+Policy'
-          rel='noopener noreferrer'
-          target='_blank'
-        >
-          {t("signUpForm.privacyPolicyDisclaimerPartTwo")}
-        </a>
-
-        <p className={classes.privacyPolicyDisclaimerText}>.</p>
-      </div>
+      <Box py={3} clone>
+        <Typography variant="caption" align="center">
+          <Trans i18nKey="signUpForm.privacyPolicyDisclaimer">
+            {[
+              <Link
+                key="signUpForm.privacyPolicyDisclaimer"
+                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/760938500/Privacy+Policy"
+                rel='noopener noreferrer'
+                target='_blank'
+                style={{ color: palette.text.hint }}
+              />,
+            ]}
+          </Trans>
+        </Typography>
+      </Box>
     </>
   );
 };

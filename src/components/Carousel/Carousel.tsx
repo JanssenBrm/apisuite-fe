@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import ReactSlidy from "react-slidy/lib";
-import { useTheme, Fade, Button } from "@apisuite/fe-base";
+import { useTheme, Fade, Typography, Box, ButtonBase } from "@apisuite/fe-base";
 import RadioButtonCheckedRoundedIcon from "@material-ui/icons/RadioButtonCheckedRounded";
 import RadioButtonUncheckedRoundedIcon from "@material-ui/icons/RadioButtonUncheckedRounded";
 import clsx from "clsx";
@@ -9,13 +9,13 @@ import useStyles from "./styles";
 import { CarouselSlideProps, CarouselProps } from "./types";
 
 import "react-slidy/lib/index.scss";
+import Link from "components/Link";
 
 // Carousel slides
 const CarouselSlide: React.FC<CarouselSlideProps> = ({
   carouselSlideButton,
-  carouselSlideButtonCustomStyling,
   carouselSlideButtonLabel,
-  carouselSlideButtonLink,
+  carouselSlideButtonLink = "/",
   carouselSlideButtonOnClick,
   carouselSlideContentsPlacement,
   carouselSlideImage,
@@ -38,18 +38,26 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       }
 
       <div className={classes.carouselSlideInnerContainer}>
-        <p className={classes.carouselSlideText}>{carouselSlideText}</p>
+        <Box m={4}>
+          <Typography
+            variant="h4"
+            color="inherit"
+            display="block"
+          >
+            {carouselSlideText}
+          </Typography>
+        </Box>
 
-        {
-          carouselSlideButton &&
-          <Button
-            className={carouselSlideButtonCustomStyling || classes.carouselSlideButtonStyling}
-            href={carouselSlideButtonLink}
+        {carouselSlideButton && (
+          <ButtonBase
+            className={classes.carouselSlideButtonStyling}
+            component={Link}
+            to={carouselSlideButtonLink}
             onClick={carouselSlideButtonOnClick}
           >
             {carouselSlideButtonLabel}
-          </Button>
-        }
+          </ButtonBase>
+        )}
       </div>
     </div>
   );

@@ -2,28 +2,24 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   Avatar,
+  Box,
   Button,
   Fade,
   Grid,
+  Icon,
   IconButton,
   InputAdornment,
   Menu,
   MenuItem,
   Modal,
   TextField,
+  Trans,
   Typography,
   useConfig,
+  useTheme,
   useTranslation,
 } from "@apisuite/fe-base";
-import AddRoundedIcon from "@material-ui/icons/AddRounded";
-import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
-import Close from "@material-ui/icons/Close";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
-import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
-import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
-import QueryBuilderRoundedIcon from "@material-ui/icons/QueryBuilderRounded";
-import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
+import clsx from "clsx";
 
 import { applicationsModalSelector } from "./selector";
 import { createApp } from "store/applications/actions/createApp";
@@ -33,7 +29,10 @@ import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
 import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
+import Link from "components/Link";
+import { Logo } from "components/Logo";
 import { MediaUpload } from "components/MediaUpload";
+import Notice from "components/Notice";
 
 import { getSections } from "util/extensions";
 import { isValidAppMetaKey, isValidImage, isValidURL } from "util/forms";
@@ -41,6 +40,7 @@ import { useForm } from "util/useForm";
 
 import { ApplicationsModalProps } from "./types";
 import useStyles from "./styles";
+import { PageContainer } from "components/PageContainer";
 
 export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   allUserAppNames,
@@ -54,10 +54,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const { t } = useTranslation();
 
   const dispatch = useDispatch();
+  const { palette } = useTheme();
 
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
 
-  const { ownerInfo, portalName } = useConfig();
+  const { ownerInfo, portalName, navigation } = useConfig();
 
   const metadataKeyDefaultPrefix = "meta_";
 
@@ -530,84 +531,103 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             <div className={classes.modalHeaderContainer}>
               <div className={classes.logoAndNameContainer}>
                 {
-                  ownerInfo.logo
-                    ? (
-                      <img
-                        className={classes.imageLogo}
-                        src={ownerInfo.logo}
-                      />
-                    )
-                    : (
-                      <AmpStoriesRoundedIcon
-                        className={classes.iconLogo}
-                      />
-                    )
+                  <Box fontSize="60px">
+                    <Logo
+                      src={ownerInfo.logo}
+                      icon={navigation.title.iconFallbackName}
+                    />
+                  </Box>
                 }
 
-                <h3 className={classes.portalName}>
+                <Typography variant="h3" display="block" gutterBottom>
                   {portalName}
-                </h3>
+                </Typography>
               </div>
 
               <div
                 className={classes.closeModalButtonContainer}
                 onClick={toggleModal}
               >
-                <p>
-                  {t("dashboardTab.applicationsSubTab.appModal.closeButtonLabel")}
-                </p>
+                <Box>
+                  <Typography variant="caption" display="block" gutterBottom>
+                    {t("dashboardTab.applicationsSubTab.appModal.closeButtonLabel")}
+                  </Typography>
+                </Box>
 
-                <CloseRoundedIcon />
+                <Icon>close</Icon>
               </div>
             </div>
 
             {/* Modal body */}
-            <div className={classes.modalBodyContainer}>
+            <PageContainer disablePaddingY={true}>
               {/* Modal's title */}
               {
                 modalMode === "new"
                   ? (
-                    <h1 className={classes.newApplicationHeader}>
-                      {t("dashboardTab.applicationsSubTab.appModal.newAppLabel")}
-                    </h1>
+                    <Box py={3}>
+                      <Typography variant="h2" display="block" gutterBottom>
+                        {t("dashboardTab.applicationsSubTab.appModal.newAppLabel")}
+                      </Typography>
+                    </Box>
                   )
                   : (
                     <div className={classes.editApplicationHeaderContainer}>
-                      <h1 className={classes.editApplicationHeader}>
-                        {mostRecentlySelectedAppDetails.name}
-                      </h1>
+                      <Box>
+                        <Typography variant="h2" display="block" gutterBottom>
+                          {mostRecentlySelectedAppDetails.name}
+                        </Typography>
+                      </Box>
 
                       <div className={classes.editApplicationHeaderStatusContainer}>
-                        {/* A mere dot */}
-                        <span
-                          className={
-                            mostRecentlySelectedAppDetails.subscriptions.length === 0
-                              ? classes.draftClientApplicationCardStatusIcon
-                              : classes.subscribedClientApplicationCardStatusIcon
-                          }
-                        >
-                          <>&#9679;</>
-                        </span>
+                        <Box display="flex">
+                          {/* A mere dot */}
+                          <Box
+                            className={
+                              clsx(
+                                classes.subscribedClientApplicationCardStatusIcon,
+                                !mostRecentlySelectedAppDetails.subscriptions.length &&
+                                classes.draftClientApplicationCardStatusIcon,
+                              )
+                            }
+                            pb={1.5}
+                            pr={1}
+                          >
+                            <Icon fontSize="small">circle</Icon>
+                          </Box>
 
-                        <p className={classes.clientApplicationCardStatusText}>
-                          {
-                            mostRecentlySelectedAppDetails.subscriptions.length === 0
-                              ? t("dashboardTab.applicationsSubTab.appModal.draftAppStatus")
-                              : t("dashboardTab.applicationsSubTab.appModal.subbedAppStatus")
-                          }
-                        </p>
+                          <Box pb={1.5} clone>
+                            <Typography variant="body2" style={{ color: palette.text.secondary }}>
+                              {
+                                mostRecentlySelectedAppDetails.subscriptions.length === 0
+                                  ? t("dashboardTab.applicationsSubTab.appModal.draftAppStatus")
+                                  : t("dashboardTab.applicationsSubTab.appModal.subbedAppStatus")
+                              }
+                            </Typography>
+                          </Box>
+                        </Box>
                       </div>
                     </div>
                   )
               }
 
               {/* 'General information' section */}
-              <div className={classes.sectionContainer}>
+              <Grid container>
                 {/* 'App name and short description' subsection */}
-                <div className={classes.leftSubSectionContainer}>
-                  <p className={classes.appNameAndShortDescriptionSubSectionTitle}>
-                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelOne")}
-                  </p>
+                <Grid item md={12} spacing={3}>
+                  <Grid item md={6} spacing={3}>
+                    <Box pb={1.5}>
+                      <Typography variant="h6" display="block" gutterBottom>
+                        {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelOne")}
+                      </Typography>
+                    </Box>
+                    <Box pb={5}>
+                      <Typography variant="body2" display="block" gutterBottom style={{ color: palette.text.secondary }}>
+                        {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelTwo")}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Grid item md={6} spacing={3}>
 
                   <TextField
                     className={classes.inputFields}
@@ -646,37 +666,38 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     value={formState.values.appShortDescription}
                     variant='outlined'
                   />
-                </div>
+                </Grid>
 
                 {/* 'App avatar' subsection */}
-                <div className={classes.rightSubSectionContainer}>
-                  <p className={classes.appAvatarSubSectionDescription}>
-                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelTwo")}
-                  </p>
+                <Grid item md={6} spacing={3}>
 
                   <div className={classes.appAvatarContainer}>
                     {/* TODO: Eventually add 'upload' capabilities to the following 'Avatar' as an 'onClick' event */}
                     {
                       avatarInputIsInFocus
                         ? (
-                          <Close
+                          <Icon
                             className={classes.avatarIcons}
                             onClick={
                               () => {
                                 setAvatarInputIsInFocus(false);
                               }
                             }
-                          />
+                          >
+                            close
+                          </Icon>
                         )
                         : (
-                          <ImageSearchRoundedIcon
+                          <Icon
                             className={classes.avatarIcons}
                             onClick={
                               () => {
                                 setAvatarInputIsInFocus(true);
                               }
                             }
-                          />
+                          >
+                            image_search
+                          </Icon>
                         )
                     }
 
@@ -721,19 +742,38 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       variant='outlined'
                     />
                   </div>
-                </div>
-              </div>
+                </Grid>
+              </Grid>
 
               <hr className={classes.alternativeSectionSeparator} />
 
               {/* 'Access details' section */}
-              <div className={classes.sectionContainer}>
+              <Grid container>
                 {/* 'Redirect URI' subsection */}
-                <div className={classes.leftSubSectionContainer}>
-                  <p className={classes.redirectURISubSectionTitle}>
-                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
-                  </p>
-
+                <Grid md={12} spacing={3}>
+                  <Grid md={6} spacing={3}>
+                    <Box pb={1.5}>
+                      <Typography variant="h6" display="block" gutterBottom>
+                        {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
+                      </Typography>
+                    </Box>
+                    <Box pb={5}>
+                      <Typography variant="body2" display="block" gutterBottom style={{ color: palette.text.secondary }}>
+                        <Trans i18nKey="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour">
+                          {[
+                            <Link
+                              key="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour"
+                              to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2"
+                              rel='noopener noreferrer'
+                              target='_blank'
+                            />,
+                          ]}
+                        </Trans>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Grid item md={6} spacing={3}>
                   <TextField
                     className={classes.inputFields}
                     error={formState.errors.appRedirectURI}
@@ -751,23 +791,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     value={formState.values.appRedirectURI}
                     variant='outlined'
                   />
-                </div>
+                </Grid>
 
                 {/* 'Client credentials' subsection */}
-                <div className={classes.rightSubSectionContainer}>
-                  <p className={classes.clientCredentialsSubSectionDescription}>
-                    <>{t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartOne")}</>
-                    <a
-                      href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2'
-                      target='_blank'
-                      rel='noopener noreferrer'
-                    >
-                      {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartTwo")}
-                    </a>
-                    <>.</>
-                  </p>
-
-
+                <Grid item md={6} spacing={3}>
                   <div className={classes.row}>
                     <TextField
                       fullWidth
@@ -787,7 +814,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         disabled={!formState.values.appClientID}
                         onClick={() => copyToClipboard(formState.values.appClientID)}
                       >
-                        <FileCopyOutlinedIcon />
+                        <Icon>content_copy</Icon>
                       </IconButton>
                     </div>
                   </div>
@@ -811,7 +838,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         disabled={!formState.values.appClientSecret}
                         onClick={() => copyToClipboard(formState.values.appClientSecret)}
                       >
-                        <FileCopyOutlinedIcon />
+                        <Icon>content_copy</Icon>
                       </IconButton>
                     </div>
 
@@ -824,21 +851,32 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           : classes.disabledClientSecretInputFieldRefreshButton
                       }
                     >
-                      <RefreshRoundedIcon />
+                      <Icon>refresh</Icon>
                     </div>
                   </div>
-                </div>
-              </div>
+                </Grid>
+              </Grid>
 
               <hr className={classes.regularSectionSeparator} />
 
               {/* 'Additional information' section */}
-              <div className={classes.sectionContainer}>
+              <Grid container>
                 {/* 'Full description' subsection */}
-                <div className={classes.leftSubSectionContainer}>
-                  <p className={classes.additionalInfoSubSectionTitle}>
-                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFive")}
-                  </p>
+                <Grid md={12} spacing={3}>
+                  <Grid md={6} spacing={3}>
+                    <Box pb={1.5}>
+                      <Typography variant="h6" display="block" gutterBottom>
+                        {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFive")}
+                      </Typography>
+                    </Box>
+                    <Box pb={5}>
+                      <Typography variant="body2" display="block" gutterBottom style={{ color: palette.text.secondary }}>
+                        {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelSix")}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Grid item md={6} spacing={3}>
 
                   <TextField
                     className={classes.inputFields}
@@ -853,14 +891,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     value={formState.values.appFullDescription}
                     variant='outlined'
                   />
-                </div>
+                </Grid>
 
                 {/* 'Optional URLs' subsection */}
-                <div className={classes.rightSubSectionContainer}>
-                  <p className={classes.optionalURLsSubSectionDescription}>
-                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelSix")}
-                  </p>
-
+                <Grid item md={6} spacing={3}>
                   <div className={classes.appURLFieldWrapper}>
                     <TextField
                       className={classes.inputFields}
@@ -881,7 +915,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     />
 
                     <div onClick={handleOpenSelector}>
-                      <AddRoundedIcon />
+                      <Icon>add</Icon>
                     </div>
                   </div>
 
@@ -960,7 +994,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 0)}>
-                        <CloseRoundedIcon />
+                        <Icon>close</Icon>
                       </div>
                     </div>
                   }
@@ -987,7 +1021,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 1)}>
-                        <CloseRoundedIcon />
+                        <Icon>close</Icon>
                       </div>
                     </div>
                   }
@@ -1014,7 +1048,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 2)}>
-                        <CloseRoundedIcon />
+                        <Icon>close</Icon>
                       </div>
                     </div>
                   }
@@ -1041,36 +1075,42 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 3)}>
-                        <CloseRoundedIcon />
+                        <Icon>close</Icon>
                       </div>
                     </div>
                   }
-                </div>
-              </div>
+                </Grid>
+              </Grid>
 
               {
                 modalMode !== "new" && <>
                   <hr className={classes.regularSectionSeparator} />
 
-                  <Grid container direction="row" justify="space-between" alignItems="center" spacing={3}>
-                    <Grid item xs={6}>
-                      <Typography className={classes.title} variant="h6" display="block" gutterBottom>
-                        {t("mediaUpload.title")}
-                      </Typography>
+                  <Grid container direction="row" justify="space-between" alignItems="center">
+                    <Grid md={12} spacing={3}>
+                      <Grid md={6} spacing={3}>
+                        <Box pb={1.5}>
+                          <Typography variant="h6" display="block" gutterBottom>
+                            {t("mediaUpload.title")}
+                          </Typography>
+                        </Box>
+                        <Box pb={5}>
+                          <Typography variant="body2" display="block" gutterBottom style={{ color: palette.text.secondary }}>
+                            {t("mediaUpload.description")}
+                          </Typography>
+                        </Box>
+                      </Grid>
                     </Grid>
-                    <Grid item xs={6}>
-                      <Typography className={classes.description} variant="caption" display="block" gutterBottom>
-                        {t("mediaUpload.description")}
-                      </Typography>
+
+                    <Grid item md={12}>
+                      <MediaUpload
+                        images={mostRecentlySelectedAppDetails.media || []}
+                        accept="image/*"
+                        onFileLoaded={uploadMedia}
+                        onDeletePressed={deleteMedia}
+                      />
                     </Grid>
                   </Grid>
-
-                  <MediaUpload
-                    images={mostRecentlySelectedAppDetails.media || []}
-                    accept="image/*"
-                    onFileLoaded={uploadMedia}
-                    onDeletePressed={deleteMedia}
-                  />
                 </>
               }
 
@@ -1078,15 +1118,20 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               {/* 'Metadata' section */}
               <div>
                 {/* 'Custom properties' text */}
-                <div className={classes.customPropsTextContainer}>
-                  <p>
-                    {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
-                  </p>
-
-                  <p>
-                    {t("dashboardTab.applicationsSubTab.appModal.customProps.subtitle")}
-                  </p>
-                </div>
+                <Grid md={12} spacing={3}>
+                  <Grid md={6} spacing={3}>
+                    <Box pb={1.5}>
+                      <Typography variant="h6" display="block" gutterBottom>
+                        {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
+                      </Typography>
+                    </Box>
+                    <Box pb={5}>
+                      <Typography variant="body2" display="block" gutterBottom style={{ color: palette.text.secondary }}>
+                        {t("dashboardTab.applicationsSubTab.appModal.customProps.subtitle")}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
 
                 {/* 'Custom properties' fields */}
                 <div className={classes.customPropsFieldsContainer}>
@@ -1157,35 +1202,37 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   </div>
                 </div>
 
-                <div className={classes.addCustomPropsContainer}>
-                  <Button
-                    className={classes.addCustomPropsButton}
-                    disabled
-                  >
-                    {t("dashboardTab.applicationsSubTab.appModal.customProps.addCustomPropsButtonLabel")}
-                  </Button>
+                <Grid container>
+                  <Grid item md={6} spacing={3}>
+                    <Button
+                      className={classes.addCustomPropsButton}
+                      disabled
+                    >
+                      {t("dashboardTab.applicationsSubTab.appModal.customProps.addCustomPropsButtonLabel")}
+                    </Button>
+                  </Grid>
 
-                  <div className={classes.infoBox}>
-                    <InfoRoundedIcon className={classes.infoBoxIcon} />
-
-                    <div>
-                      <p className={classes.infoBoxText}>
-                        <>
-                          {t("dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText")}
-                        </>
-                        <a
-                          className={classes.infoBoxLink}
-                          href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1450835969/Custom+Properties'
-                          rel='noopener noreferrer'
-                          target='_blank'
-                        >
-                          {t("dashboardTab.applicationsSubTab.appModal.customProps.infoBoxLinkText")}
-                        </a>
-                        <>.</>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  <Grid item md={6} spacing={3}>
+                    <Notice
+                      type="info"
+                      noticeIcon={<Icon>info</Icon>}
+                      noticeText={
+                        <Typography variant="body2" display="block" style={{ color: palette.info.dark }}>
+                          <Trans i18nKey="dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText">
+                            {[
+                              <Link
+                                key="dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText"
+                                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1450835969/Custom+Properties"
+                                rel='noopener noreferrer'
+                                target='_blank'
+                              />,
+                            ]}
+                          </Trans>
+                        </Typography>
+                      }
+                    />
+                  </Grid>
+                </Grid>
               </div>
 
               <hr className={classes.regularSectionSeparator} />
@@ -1208,8 +1255,8 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                 {
                   modalMode === "new"
                     ? (
-                      <>
-                        <div>
+                      <Grid container>
+                        <Grid item md={6} spacing={3}>
                           <Button
                             disabled={
                               !(
@@ -1238,22 +1285,25 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.cancelModalButtonLabel")}
                           </Button>
-                        </div>
+                        </Grid>
 
-                        <div className={classes.infoBox}>
-                          <QueryBuilderRoundedIcon className={classes.infoBoxIcon} />
-
-                          <div>
-                            <p className={classes.infoBoxText}>
-                              {t("dashboardTab.applicationsSubTab.appModal.infoBoxTitleLabel")}
-                            </p>
-
-                            <p className={classes.infoBoxText}>
-                              {t("dashboardTab.applicationsSubTab.appModal.infoBoxSubTitleLabel")}
-                            </p>
-                          </div>
-                        </div>
-                      </>
+                        <Grid item md={6} spacing={3}>
+                          <Notice
+                            type="info"
+                            noticeIcon={<Icon>query_builder</Icon>}
+                            noticeText={
+                              <Box display="flex" flexDirection="column">
+                                <Typography variant="body2" display="block" style={{ color: palette.info.dark }}>
+                                  {t("dashboardTab.applicationsSubTab.appModal.infoBoxTitleLabel")}
+                                </Typography>
+                                <Typography variant="body2" display="block" style={{ color: palette.info.dark }}>
+                                  {t("dashboardTab.applicationsSubTab.appModal.infoBoxSubTitleLabel")}
+                                </Typography>
+                              </Box>
+                            }
+                          />
+                        </Grid>
+                      </Grid>
                     )
                     : (
                       <>
@@ -1296,7 +1346,7 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                     )
                 }
               </div>
-            </div>
+            </PageContainer>
           </div>
         </Fade>
       </Modal>
