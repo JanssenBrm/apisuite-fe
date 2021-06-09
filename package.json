@@ -13,7 +13,7 @@
     "prebuild": "npm run lint",
     "build": "cross-env NODE_ENV=production webpack --progress",
     "pretest": "npm run lint",
-    "test": "start-server-and-test dev http://localhost:9001 cy:run",
+    "test": "START_SERVER_AND_TEST_INSECURE=1 start-server-and-test dev https://localhost:9001 cy:run",
     "commit": "git-cz",
     "prestart": "npm run build",
     "start": "serve -l 8080 -s dist",
@@ -25,7 +25,7 @@
     "convert-translation": "./node_modules/.bin/convert-translation"
   },
   "dependencies": {
-    "@apisuite/fe-base": "1.0.0-next.5",
+    "@apisuite/fe-base": "1.0.0-next.6",
     "@material-ui/icons": "4.11.2",
     "@material-ui/lab": "4.0.0-alpha.58",
     "axios": "0.21.1",
@@ -37,6 +37,7 @@
     "react": "17.0.2",
     "react-cookie-consent": "6.2.3",
     "react-dom": "17.0.2",
+    "react-dropzone": "^11.3.2",
     "react-redux": "7.2.4",
     "react-router-dom": "5.2.0",
     "react-scrollspy": "3.4.3",
