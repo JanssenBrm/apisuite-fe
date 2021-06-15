@@ -494,7 +494,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       visibilityChanged,
     ];
 
-    return (formState.isValid || Object.keys(formState.errors).length === 0) 
+    return (formState.isValid || Object.keys(formState.errors).length === 0)
       && hasRequired
       && changed.some((v) => v)
       && validMetadata()
@@ -1128,6 +1128,23 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               }
 
               <hr className={classes.regularSectionSeparator} />
+              {/*
+              FIXME: the hr above should be rendered by the extension
+              TODO: document getSections so that comments like this are not needed
+              The following code checks if a Marketplace extension's section exists,
+and if it does, it passes along the form's state, and any necessary logic
+to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
+              {
+                getSections(
+                  "MARKETPLACE_APP_VISIBILITY",
+                  {
+                    formState,
+                    handleAppVisibility,
+                    handleChange,
+                  }
+                )
+              }
+
               {/* 'Metadata' section */}
               <div>
                 {/* 'Custom properties' text */}
@@ -1249,19 +1266,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               </div>
 
               <hr className={classes.regularSectionSeparator} />
-              {/* The following code checks if a Marketplace extension's section exists,
-and if it does, it passes along the form's state, and any necessary logic
-to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
-              {
-                getSections(
-                  "MARKETPLACE_APP_VISIBILITY",
-                  {
-                    formState,
-                    handleAppVisibility,
-                    handleChange,
-                  }
-                )
-              }
 
               {/* 'App action' buttons section */}
               <div className={classes.buttonsContainer}>
