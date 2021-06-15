@@ -131,89 +131,95 @@ export const SignInOrUp: React.FC = () => {
         pt={20}
         px={6}
         maxWidth={breakpoints.values.sm}
+        margin="auto"
       >
-        <Typography variant="h1">
-          {invitationHasNoError() ? t("signInOrUpView.welcomeTitle") : t("signInOrUpView.invalid")}
-        </Typography>
+        <Grid item xs>
+          <Typography variant="h1">
+            {invitationHasNoError() ? t("signInOrUpView.welcomeTitle") : t("signInOrUpView.invalid")}
+          </Typography>
 
-        <Typography variant="h5" color="textSecondary">
-          {invitationHasNoError() && t(
-            view === "invitation" ? "signInOrUpView.welcomeSubtitleInvitation" : "signInOrUpView.welcomeSubtitle",
-            { org: auth.invitation?.organization || "" }
+          <Typography variant="h5" color="textSecondary">
+            {invitationHasNoError() && t(
+              view === "invitation" ? "signInOrUpView.welcomeSubtitleInvitation" : "signInOrUpView.welcomeSubtitle",
+              { org: auth.invitation?.organization || "" }
+            )}
+          </Typography>
+        </Grid>
+
+        <Grid item xs>
+          {!sso.length && (
+            <Box pt={6}>
+              {/* TODO: this tabs should be refactored to have a better reasoning
+                        about which tabs should be available */}
+              <Tabs
+                value={view}
+                variant="fullWidth"
+                textColor="primary"
+                indicatorColor="primary"
+                style={{ borderBottom: `1px solid ${palette.divider}` }}
+                onChange={(_, value) => changeView(value)}
+              >
+                {view !== "invitation" && (
+                // This is weird, but we only have one tab on this case
+                  <Tab
+                    value="signin"
+                    label={t("signInOrUpView.options.signIn")}
+                  />
+                )}
+
+                {view !== "invitation" && (
+                // This is weird, but we only have one tab on this case
+                  <Tab
+                    value="signup"
+                    label={t("signInOrUpView.options.signUp")}
+                  />
+                )}
+
+                {view === "invitation" && (
+                // This is weird, but we only have one tab on this case
+                  <Tab
+                    value="invitation"
+                    label={getMenuTranslation()}
+                  />
+                )}
+              </Tabs>
+            </Box>
           )}
-        </Typography>
 
-        {!sso.length && (
-          <Box pt={6}>
-            {/* TODO: this tabs should be refactored to have a better reasoning about which tabs should be available */}
-            <Tabs
-              value={view}
-              variant="fullWidth"
-              textColor="primary"
-              indicatorColor="primary"
-              style={{ borderBottom: `1px solid ${palette.divider}` }}
-              onChange={(_, value) => changeView(value)}
+          {shouldRenderNotAvailableView() && (
+            <Box pt={6}>
+              <Button
+                variant="contained"
+                color="primary"
+                fullWidth
+                href={view === "signin" ? getSSOLoginURL(sso) : linker(providerSignupURL)}>
+                {t(view === "signin" ? "signInOrUpView.options.signIn" : "signInOrUpView.options.signUp")}
+              </Button>
+            </Box>
+          )}
+
+          {!shouldRenderNotAvailableView() && (
+            <>
+              {view === "signin" && <SignInForm />}
+              {view === "signup" && <SignUpForm />}
+            </>
+          )}
+
+          {view === "invitation" && <InvitationForm />}
+
+          {(view === "invitation" && !auth.authToken && !!sso?.length && invitationHasNoError()) && (
+            <Box
+              maxWidth={550}
+              margin={`${spacing(2)} auto`}
             >
-              {view !== "invitation" && (
-              // This is weird, but we only have one tab on this case
-                <Tab
-                  value="signin"
-                  label={t("signInOrUpView.options.signIn")}
-                />
-              )}
-
-              {view !== "invitation" && (
-              // This is weird, but we only have one tab on this case
-                <Tab
-                  value="signup"
-                  label={t("signInOrUpView.options.signUp")}
-                />
-              )}
-
-              {view === "invitation" && (
-              // This is weird, but we only have one tab on this case
-                <Tab
-                  value="invitation"
-                  label={getMenuTranslation()}
-                />
-              )}
-            </Tabs>
-          </Box>
-        )}
-
-        {shouldRenderNotAvailableView() && (
-          <Box pt={6}>
-            <Button
-              variant="contained"
-              color="primary"
-              fullWidth
-              href={view === "signin" ? getSSOLoginURL(sso) : linker(providerSignupURL)}>
-              {t(view === "signin" ? "signInOrUpView.options.signIn" : "signInOrUpView.options.signUp")}
-            </Button>
-          </Box>
-        )}
-
-        {!shouldRenderNotAvailableView() && (
-          <>
-            {view === "signin" && <SignInForm />}
-            {view === "signup" && <SignUpForm />}
-          </>
-        )}
-
-        {view === "invitation" && <InvitationForm />}
-
-        {(view === "invitation" && !auth.authToken && !!sso?.length && invitationHasNoError()) && (
-          <Box
-            maxWidth={550}
-            margin={`${spacing(2)} auto`}
-          >
-            <Trans i18nKey="signInOrUpView.ssoFooterSignUp" values={{ provider: sso[0] }}>
-              {[
-                <Link key="signInOrUpView.ssoFooterSignUp" to={linker(providerSignupURL)} />,
-              ]}
-            </Trans>
-          </Box>
-        )}
+              <Trans i18nKey="signInOrUpView.ssoFooterSignUp" values={{ provider: sso[0] }}>
+                {[
+                  <Link key="signInOrUpView.ssoFooterSignUp" to={linker(providerSignupURL)} />,
+                ]}
+              </Trans>
+            </Box>
+          )}
+        </Grid>
       </Grid>
 
       <Grid item xs className={classes.imageSideContentContainer} />
