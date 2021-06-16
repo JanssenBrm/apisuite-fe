@@ -505,8 +505,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appWebsiteURL: "",
             appYouTubeURL: "",
           });
-          toggleModal();
           mostRecentlySelectedAppDetails.media = [];
+          toggleModal();
         }}
         open={isModalOpen}
       >
