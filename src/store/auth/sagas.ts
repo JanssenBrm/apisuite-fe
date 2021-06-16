@@ -232,7 +232,10 @@ function * ssoLoginWorker ({ provider }: SSOLoginAction) {
 
     const ssoLoginUrl = `${API_URL}/auth/oidc/${provider}?state=${state}`;
 
-    const response: { url: string } = yield call(window.fetch, ssoLoginUrl);
+    const response: { url: string } = yield call(window.fetch, ssoLoginUrl, {
+      method: "GET",
+      redirect: "manual",
+    });
 
     window.location.href = response.url;
   } catch (error) {
@@ -401,7 +404,10 @@ export function * invitationSSOSignInSaga ({ token, provider }: InvitationSSOSig
     localStorage.setItem(LOCAL_STORAGE_KEYS.SSO_INVITATION_STATE_STORAGE, token);
 
     const ssoLoginURL = `${API_URL}/auth/oidc/${provider}?state=${state}&invite=true`;
-    const response: { url: string } = yield call(window.fetch, ssoLoginURL);
+    const response: { url: string } = yield call(window.fetch, ssoLoginURL, {
+      method: "GET",
+      redirect: "manual",
+    });
 
     window.location.href = response.url;
   } catch (error) {

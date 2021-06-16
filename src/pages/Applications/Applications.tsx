@@ -196,7 +196,12 @@ export const Applications: React.FC = () => {
   of all app-related information we presently have on a particular user the first time, and
   following any changes to 'applications > userApps' (i.e., 'allUserApps'). */
   useEffect(() => {
-    if (user) {
+    if (
+      user &&
+      !createUserAppStatus.isRequesting &&
+      !deleteUserAppStatus.isRequesting &&
+      !updateUserAppStatus.isRequesting
+    ) {
       dispatch(getAllUserApps({ userId: user.id }));
     }
   }, [createUserAppStatus, deleteUserAppStatus, dispatch, updateUserAppStatus, user]);
