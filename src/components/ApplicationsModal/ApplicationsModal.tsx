@@ -46,7 +46,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
     of all information we presently have on a particular app. */
     if (modalDetails.userAppID && modalDetails.userID) {
-      dispatch(getUserApp({ appId: modalDetails.userAppID, orgId: modalDetails.userID }));
+      dispatch(getUserApp({ appId: modalDetails.userAppID }));
     }
   }, [dispatch, modalDetails, modalMode]);
 
