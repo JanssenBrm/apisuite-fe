@@ -288,6 +288,7 @@ export const Organisation: React.FC = () => {
             margin='dense'
             name='orgName'
             onChange={handleChange}
+            required
             type='text'
             value={formState.values.orgName}
             variant='outlined'
