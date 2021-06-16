@@ -314,7 +314,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
 
                               <div className={classes.apiProductVersionAndSelectionContainer}>
                                 <Typography variant="body1">
-                                  {!!api.versions.length && `v${api.versions[0].version}`}
+                                  {!!api.versions.length && api.versions[0].version}
                                 </Typography>
 
                                 <Box ml={1.5}>
