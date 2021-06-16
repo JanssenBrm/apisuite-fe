@@ -12,7 +12,7 @@ import { fetchOrg } from "store/profile/actions/fetchOrg";
 import { createOrg } from "store/profile/actions/createOrg";
 import { updateOrg } from "store/profile/actions/updateOrg";
 import { PageContainer } from "components/PageContainer";
-
+import { ROLES } from "constants/global";
 import { organisationSelector } from "./selector";
 import useStyles from "./styles";
 
@@ -20,13 +20,15 @@ export const Organisation: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { profile, org } = useSelector(organisationSelector);
+  const { auth, profile, org } = useSelector(organisationSelector);
 
   useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'profile > org')
     of all organisation-related information we presently have. */
-    dispatch(fetchOrg({ org_id: profile.current_org.id }));
-  }, [dispatch, profile.current_org.id]);
+    if (auth.user?.role.name !== ROLES.baseUser.value) {
+      dispatch(fetchOrg({ org_id: profile.current_org.id }));
+    }
+  }, [auth, dispatch, profile.current_org.id]);
 
   /*
   Organisation details
