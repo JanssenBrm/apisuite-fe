@@ -1,6 +1,7 @@
 import React from "react";
 
 import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
+import { Box, Typography } from "@apisuite/fe-base";
 
 import useStyles from "./styles";
 
@@ -25,15 +26,19 @@ const NotificationBanner: React.FC<NotificationBannerProps> = ({
       ? (
         <section className={classes.notificationBannerContentsContainer}>
           <div className={classes.notificationBannerTextContainer}>
-            <h2 className={classes.notificationBannerHeader}>
-              {notificationBannerTitle}
-            </h2>
+            <Box pb={1}>
+              <Typography variant="h3" className={classes.notificationBannerHeader}>
+                {notificationBannerTitle}
+              </Typography>
+            </Box>
 
             {
               customNotificationBannerContents || (
-                <p className={classes.notificationBannerParagraph}>
-                  {notificationBannerText}
-                </p>
+                <Box mr={2}>
+                  <Typography variant="body1" className={classes.notificationBannerParagraph}>
+                    {notificationBannerText}
+                  </Typography>
+                </Box>
               )
             }
           </div>

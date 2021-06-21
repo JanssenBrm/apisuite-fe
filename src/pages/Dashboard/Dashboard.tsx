@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Trans, useConfig, useTranslation } from "@apisuite/fe-base";
-import CheckCircleOutlineRoundedIcon from "@material-ui/icons/CheckCircleOutlineRounded";
+import { Box, Button, Container, Divider, Grid, Icon, Paper, Trans, Typography, useConfig, useTheme, useTranslation } from "@apisuite/fe-base";
 
 import { DEFAULT_INSTANCE_OWNER_SUPPORT_URL, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
 import { getAPIs } from "store/subscriptions/actions/getAPIs";
 import ActionsCatalog from "components/ActionsCatalog";
 import APICatalog from "components/APICatalog";
-import GreetingCard from "components/GreetingCard";
 import Notice from "components/Notice";
 import NotificationBanner from "components/NotificationBanner";
 import { NotificationCard } from "components/NotificationCard";
@@ -26,10 +24,12 @@ import teamSVG from "assets/icons/Team.svg";
 
 import { dashboardSelector } from "./selector";
 import useStyles from "./styles";
+import Link from "components/Link";
 
 export const Dashboard: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const { palette } = useTheme();
   const { t } = useTranslation();
   const { socialURLs, supportURL, clientName, portalName } = useConfig();
   const { auth, subscriptions, notificationCards, profile } = useSelector(dashboardSelector);
@@ -73,13 +73,9 @@ export const Dashboard: React.FC = () => {
     }
   }, [subscriptions]);
 
-  const hasSocials = () => {
-    return socialURLs.length > 0;
-  };
-
   return (
     <>
-      <main className={`page-container ${classes.dashboardContentsContainer}`}>
+      <main className="page-container">
         {/* 'Dashboard' page's header image */}
         <section
           className={notificationCards.show ? classes.expandedHeaderImageSection : classes.regularHeaderImageSection}
@@ -96,189 +92,181 @@ export const Dashboard: React.FC = () => {
           />
         </section>
 
-        {/* 'Actions Catalog' section */}
-        <section
-          className={
-            notificationCards.show
-              ? classes.actionsCatalogSectionWithNotificationCards
-              : classes.actionsCatalogSectionWithoutNotificationCards
-          }
-          data-test-id={testIds.actionsSection}
-        >
-          <ActionsCatalog
-            actionsToDisplay={
-              typeOfUser !== "admin"
-                ? [
-                  {
-                    actionImage: teamSVG,
-                    actionLink: "/profile/team",
-                    actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.team"),
-                  },
-                  {
-                    actionImage: sandboxSVG,
-                    actionLink: "/dashboard/apps",
-                    actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.sandbox"),
-                  },
-                  {
-                    actionImage: shieldSVG,
-                    actionLink: "/dashboard/subscriptions",
-                    actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.shield"),
-                  },
-                  {
-                    actionImage: fingerprintSVG,
-                    // TODO: Create an 'Update your password' view or mechanism, and link to it
-                    actionLink: "",
-                    actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.fingerprint"),
-                  },
-                  {
-                    actionImage: apiSVG,
-                    actionLink: "/dashboard/subscriptions",
-                    actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.api"),
-                  },
-                  {
-                    actionImage: supportSVG,
-                    actionLink: supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
-                    actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.support"),
-                  },
-                ]
-                : [
-                  {
-                    actionImage: apiSVG,
-                    actionLink: "/dashboard/admin/api-catalog",
-                    actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.api"),
-                  },
-                  {
-                    actionImage: dataCloudSVG,
-                    actionLink: "/dashboard/admin/integrations",
-                    actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.dataCloud"),
-                  },
-                  {
-                    actionImage: settingsSVG,
-                    actionLink: "/dashboard/admin",
-                    actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.settings"),
-                  },
-                  {
-                    actionImage: billingSVG,
-                    // TODO: Create a 'Billing' view or mechanism, and link to it
-                    actionLink: "",
-                    actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.billing"),
-                  },
-                  {
-                    actionImage: teamSVG,
-                    actionLink: "/profile/team",
-                    actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.team"),
-                  },
-                  {
-                    actionImage: supportSVG,
-                    actionLink: supportURL || DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
-                    actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.support"),
-                  },
-                ]
+        <Container maxWidth="md">
+          {/* 'Actions Catalog' section */}
+          <section
+            className={
+              notificationCards.show
+                ? classes.actionsCatalogSectionWithNotificationCards
+                : classes.actionsCatalogSectionWithoutNotificationCards
             }
-          />
-        </section>
+            data-test-id={testIds.actionsSection}
+          >
+            <ActionsCatalog
+              actionsToDisplay={
+                typeOfUser !== "admin"
+                  ? [
+                    {
+                      actionImage: teamSVG,
+                      actionLink: "/profile/team",
+                      actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.team"),
+                    },
+                    {
+                      actionImage: sandboxSVG,
+                      actionLink: "/dashboard/apps",
+                      actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.sandbox"),
+                    },
+                    {
+                      actionImage: shieldSVG,
+                      actionLink: "/dashboard/subscriptions",
+                      actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.shield"),
+                    },
+                    {
+                      actionImage: fingerprintSVG,
+                      actionLink: "/profile/security",
+                      actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.fingerprint"),
+                    },
+                    {
+                      actionImage: apiSVG,
+                      actionLink: "/dashboard/subscriptions",
+                      actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.api"),
+                    },
+                    {
+                      actionImage: supportSVG,
+                      actionLink: supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL,
+                      actionText: t("dashboardTab.landingPageSubTab.regularUser.actionsCatalog.support"),
+                    },
+                  ]
+                  : [
+                    {
+                      actionImage: apiSVG,
+                      actionLink: "/dashboard/admin/api-catalog",
+                      actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.api"),
+                    },
+                    {
+                      actionImage: dataCloudSVG,
+                      actionLink: "/dashboard/admin/integrations",
+                      actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.dataCloud"),
+                    },
+                    {
+                      actionImage: settingsSVG,
+                      actionLink: "/dashboard/admin",
+                      actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.settings"),
+                    },
+                    {
+                      actionImage: billingSVG,
+                      // TODO: Create a 'Billing' view or mechanism, and link to it
+                      actionLink: "",
+                      actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.billing"),
+                    },
+                    {
+                      actionImage: teamSVG,
+                      actionLink: "/profile/team",
+                      actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.team"),
+                    },
+                    {
+                      actionImage: supportSVG,
+                      actionLink: supportURL || DEFAULT_INSTANCE_OWNER_SUPPORT_URL,
+                      actionText: t("dashboardTab.landingPageSubTab.adminUser.actionsCatalog.support"),
+                    },
+                  ]
+              }
+            />
+          </section>
 
-        {/* 'Greeting card' section */}
-        <section className={classes.greetingCardSection} data-test-id={testIds.greetingSection}>
-          <GreetingCard
-            greetingCardText={
-              <div className={classes.customGreetingCardTextContainer}>
-                {
-                  typeOfUser !== "admin"
-                    ? (
-                      <>
-                        <p className={classes.customGreetingCardText} data-test-id={testIds.greetingCardParagraphOne}>
-                          <>{t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartOne")} </>
-                          <>{profile.profile.user.name}! </>
-                          {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartTwo")}
-                        </p>
+          <Grid
+            component={Box}
+            clone
+            p={5}
+            container
+            direction="row"
+            wrap="nowrap"
+            data-test-id={testIds.greetingSection}
+          >
+            <Paper elevation={3}>
+              <Grid item xs>
+                <Typography variant="h6" gutterBottom data-test-id={testIds.greetingCardParagraphOne}>
+                  {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greet", { name: profile.profile.user.name })}
+                </Typography>
 
-                        <p className={classes.customGreetingCardText} data-test-id={testIds.greetingCardParagraphTwo}>
-                          {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextPartThree")}
-                        </p>
-                      </>
-                    )
-                    : (
-                      <>
-                        <p className={classes.customGreetingCardText}>
-                          <>{t("dashboardTab.landingPageSubTab.adminUser.greetingCard.greetingCardTextPartOne")} </>
-                          <>{profile.profile.user.name}! </>
-                        </p>
+                <Typography variant="h6" data-test-id={testIds.greetingCardParagraphTwo}>
+                  {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardText")}
+                </Typography>
 
-                        <p className={classes.customGreetingCardText}>
-                          {t("dashboardTab.landingPageSubTab.adminUser.greetingCard.greetingCardTextPartTwo")}
-                        </p>
-                      </>
-                    )
-                }
-              </div>
-            }
-            greetingCardButtonLabel={
-              typeOfUser !== "admin"
-                ? (
-                  t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardButtonLabel") +
-                  ` ${clientName}`
-                )
-                : t("dashboardTab.landingPageSubTab.adminUser.greetingCard.greetingCardButtonLabel")
-            }
-            greetingCardButtonLink={
-              typeOfUser !== "admin"
-                ? (supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL)
-                : "/dashboard/admin"
-            }
-          />
-        </section>
+                {typeOfUser !== "admin" && (
+                  <Typography variant="h6" data-test-id={testIds.greetingCardParagraphThree}>
+                    {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextAdmin")}
+                  </Typography>
+                )}
+              </Grid>
 
-        {/* 'API Catalog' section */}
-        {
-          typeOfUser !== "admin" &&
-          (
+              <Box pl={5} display="flex" alignItems="center" width="max-content">
+                <Button
+                  href={typeOfUser !== "admin" ? (supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL) : "/dashboard/admin"}
+                  variant="contained"
+                  disableElevation
+                  color="secondary"
+                  size="large"
+                  data-test-id={testIds.greetingCardButton}
+                >
+                  {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardButtonLabel", {
+                    clientName,
+                  })}
+                </Button>
+              </Box>
+            </Paper>
+          </Grid>
+
+          {/* 'API Catalog' section */}
+          {typeOfUser !== "admin" && (
             <>
-              <hr className={classes.sectionSeparator} />
+              <Box my={5}>
+                <Divider style={{ backgroundColor: palette.primary.main }} />
+              </Box>
 
-              <section className={classes.apiCatalogSectionContainer}>
-                <h1 className={classes.sectionIntroHeading} data-test-id={testIds.recentAdditionsTitle}>
-                  {t("sandboxPage.apiCatalog.intro")}
-                </h1>
+              <Typography variant="h2" data-test-id={testIds.recentAdditionsTitle}>
+                {t("sandboxPage.apiCatalog.intro")}
+              </Typography>
 
-                <section className={classes.apiCatalogContainer} data-test-id={testIds.recentAdditionsCatalog}>
-                  {
-                    recentlyAddedAPIs.length === 0
-                      ? <p data-test-id={testIds.recentAdditionsEmpty}>{t("sandboxPage.apiCatalog.paragraph")}</p>
-                      : <APICatalog apisToDisplay={recentlyAddedAPIs} />
-                  }
-                </section>
-              </section>
-            </>
-          )
-        }
-
-        {/* Notice */}
-        {
-          hasSocials() && (
-            <section className={classes.noticeContainer} data-test-id={testIds.notice}>
-              <Notice
-                noticeIcon={
-                  <CheckCircleOutlineRoundedIcon />
+              <Grid
+                component={Box}
+                container
+                direction="row"
+                justifyContent="space-between"
+                mt={5}
+                data-test-id={testIds.recentAdditionsCatalog}
+              >
+                {
+                  recentlyAddedAPIs.length === 0
+                    ? <p data-test-id={testIds.recentAdditionsEmpty}>{t("sandboxPage.apiCatalog.paragraph")}</p>
+                    : <APICatalog apisToDisplay={recentlyAddedAPIs} />
                 }
+              </Grid>
+            </>
+          )}
+
+          {socialURLs.length > 0 && (
+            <Box py={5} data-test-id={testIds.notice}>
+              <Notice
+                noticeIcon={<Icon>domain_verification</Icon>}
                 noticeText={
-                  <p>
+                  <Typography variant="body2" align="center" style={{ color: palette.info.contrastText }}>
                     <Trans i18nKey="sandboxPage.notice" values={{ portalName, clientName, url: socialURLs[0].url }}>
                       {[
-                        <a
+                        <Link
                           key="sandboxPage.notice"
-                          href={socialURLs[0].url}
+                          to={socialURLs[0].url}
                           rel='noopener noreferrer'
                           target='_blank'
                         />,
                       ]}
                     </Trans>
-                  </p>
+                  </Typography>
                 }
               />
-            </section>
-          )
-        }
+            </Box>
+          )}
+        </Container>
       </main>
 
       {/* Notification banner */}
@@ -288,7 +276,7 @@ export const Dashboard: React.FC = () => {
           : (
             <NotificationBanner
               customNotificationBannerContents={
-                <p className={classes.customNotificationBannerParagraph}>
+                <Typography variant="body1" className={classes.customNotificationBannerParagraph}>
                   {t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartOne")}
 
                   <br />
@@ -298,7 +286,7 @@ export const Dashboard: React.FC = () => {
                   >
                     {t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.textPartTwo")}
                   </a>
-                </p>
+                </Typography>
               }
               notificationBannerTitle={
                 t("dashboardTab.landingPageSubTab.adminUser.notificationBanner.title")

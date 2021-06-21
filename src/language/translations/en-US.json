@@ -19,28 +19,25 @@
       "notLoggedIn": {
         "heading": "Create a developer account first.",
         "paragraphOne": "Our API Portal enables you to register a free team-based account on the fly.",
-        "paragraphTwoPartOne": "Once activated, we assist you in 3 straightforward steps to start consuming our API products.",
-        "paragraphTwoPartTwo": "Not sure how to get there? The onboarding documentation will help you along.",
+        "paragraphTwo": "Once activated, we assist you in 3 straightforward steps to start consuming our API products.\n\nNot sure how to get there? The onboarding documentation will help you along.",
         "buttonLabel": "Sign up now"
       },
       "loggedIn": {
         "heading": "We value you as an interested developer!",
         "paragraphOne": "enables you to register your client apps and subscribe to our available API products.",
-        "paragraphTwoPartOne": "Whenever you are ready, we assist you in 3 straightforward steps to start consuming our API products.",
-        "paragraphTwoPartTwo": "Did you experience any issues with your account set-up?",
+        "paragraphTwo": "Whenever you are ready, we assist you in 3 straightforward steps to start consuming our API products.\n\nDid you experience any issues with your account set-up?",
         "buttonLabel": "Contact support"
       },
       "individualSteps": {
         "stepOne": {
           "header": "Add your app",
-          "paragraphPartOne": "You’ll need an app to send and receive API calls.",
-          "paragraphPartTwo": "Adding your app details will help us to enable this flow.",
+          "paragraph": "You’ll need an app to send and receive API calls.\n\nAdding your app details will help us to enable this flow.",
           "buttonLabel": "Add app"
         },
         "stepTwo": {
           "header": "Select an API",
           "paragraph": "In the \"Subscriptions\" section, we provide an overview of our available Sandbox APIs your apps can subscribe to.",
-          "buttonLabel": "Subscribe to API"
+          "buttonLabel": "Subscribe API"
         },
         "stepThree": {
           "header": "Get Started",
@@ -51,7 +48,9 @@
     },
     "apiCatalog": {
       "intro": "API Catalog recent additions",
-      "paragraph": "No APIs have been recently added."
+      "paragraph": "No APIs have been recently added.",
+      "productionAccess": " Production access",
+      "documentationAccess": " API Documentation"
     },
     "notice": "{{portalName}} is maintained by {{clientName}}. You can visit us at <0>{{url}}</0>."
   },
@@ -80,8 +79,7 @@
       "signIn": "Sign in",
       "signUp": "Sign up"
     },
-    "ssoFooterSignUp": "Don't have a {{provider}} account?",
-    "ssoFooterSignUpLink": "Sign Up here.",
+    "ssoFooterSignUp": "Don't have a {{provider}} account? <0>Sign Up here.</0>",
     "notAvailableView": "This page is not available with SSO enabled. Please use the navigation menu."
   },
   "signInForm": {
@@ -127,8 +125,7 @@
       "securityDetails": "Security details"
     },
     "togglePasswordVisibilityARIALabel": "Toggle password visibility",
-    "privacyPolicyDisclaimerPartOne": "By creating an account, you are agreeing to our",
-    "privacyPolicyDisclaimerPartTwo": "Privacy Policy"
+    "privacyPolicyDisclaimer": "By creating an account, you are agreeing to our <0>Privacy Policy<0/>."
   },
   "signUpConfirmation": {
     "titleText": "Thank you for joining us, ",
@@ -160,6 +157,7 @@
     "recoveryEmailHasBeenSentPartTwo": "If you have an",
     "recoveryEmailHasBeenSentPartThree": "account registered with",
     "recoveryEmailHasBeenSentPartFour": ", you will receive a link to recover your password.",
+    "infoBoxText": "If the e-mail we've just sent you does not show up on your inbox, please check your Spam or Junk folders or, ultimately, <0>contact support</0>.",
     "infoBoxTextPartOne": "If the e-mail we've just sent you does not show up on your inbox, please check your Spam or Junk folders or, ultimately,",
     "infoBoxTextPartTwo": "contact support",
     "togglePasswordVisibilityARIALabel": "Toggle password visibility"
@@ -221,10 +219,10 @@
           "support": "Solve a problem"
         },
         "greetingCard": {
-          "greetingCardTextPartOne": "Hi",
-          "greetingCardTextPartTwo": "You're at the right place if you want to set up a new client app, get informed about our API products, or have a technical question.",
-          "greetingCardTextPartThree": "Don't find what you're looking for? Let us know, we're happy to accomodate!",
-          "greetingCardButtonLabel": "Contact"
+          "greet": "Hi {{name}}!",
+          "greetingCardText": "You're at the right place if you want to set up a new client app, get informed about our API products, or have a technical question.",
+          "greetingCardTextAdmin": "Don't find what you're looking for? Let us know, we're happy to accommodate!",
+          "greetingCardButtonLabel": "Contact {{clientName}}"
         },
         "notificationBanner": {
           "title": "We have an important notification for you",
@@ -240,8 +238,7 @@
           "title": "Available APIs",
           "subtitle": "actions"
         },
-        "notificationTextPartOne": "API Subscriptions allow you to control access and to stay informed. But there’s more. Read ",
-        "notificationTextPartTwo": "API Subscriptions explained"
+        "notificationText": "API Subscriptions allow you to control access and to stay informed. But there’s more. Read \"<0>API Subscriptions explained</0>\"."
       },
       "hasNoDataToShow": {
         "buttonLabel": "Add Subscription",
@@ -290,7 +287,7 @@
     "applicationsSubTab": {
       "noOrganisationsButtonLabel": "Set up your Organisation",
       "noApplicationsButtonLabel": "Register your first app",
-      "documentationLink": "Read why apps are used",
+      "documentationLink": "<0>Read why apps are used</0>",
       "noOrganisationWarning": "You need to create an Organisation before you can create your first app. Click on the \"Set up your Organisation\" button above to start.",
       "listOfAppsSection": {
         "title": "Applications",
@@ -352,11 +349,10 @@
         "selectorTitle": "Useful links",
         "subbedAppStatus": "Subscribed",
         "subSectionLabelFive": "Additional information",
-        "subSectionLabelFourPartOne": "The client credentials for ",
-        "subSectionLabelFourPartTwo": "OAuth2 secured API access",
+        "subSectionLabelFour": "The client credentials for <0>OAuth2 secured API access</0>.",
         "subSectionLabelOne": "General information",
         "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
-        "subSectionLabelThree": "Redirect URI",
+        "subSectionLabelThree": "Access details",
         "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us.",
         "customProps": {
           "title": "Custom properties",
@@ -367,11 +363,13 @@
           "titleFieldLabel": "Title",
           "descriptionFieldLabel": "Description",
           "addCustomPropsButtonLabel": "Add new property",
-          "infoBoxRegularText": "Read more on how to optimize the use of custom properties, and check some examples in our ",
-          "infoBoxLinkText": "documentation",
+          "infoBoxRegularText": "Read more on how to optimize the use of custom properties, and check some examples in our <0>documentation</0>.",
           "subSectionLabelSix": "You have the option to provide multiple useful links related to the application.",
           "subSectionLabelThree": "Redirect URI",
           "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us."
+        },
+        "errors": {
+          "shortDescriptionLimit": "The short description has a maximum limit of 60 characters."
         }
       }
     },
@@ -439,9 +437,7 @@
         "userAvatarURL": "The provided URL is not valid, or the image does not exist.",
         "userPhoneNumber": "Please enter a valid phone number."
       },
-      "openIDInfoBoxContainerPartOne": "Your profile's name and e-mail address are provided by the Identity Provider service linked with this portal.",
-      "openIDInfoBoxContainerPartTwo": "Read here",
-      "openIDInfoBoxContainerPartThree": " on how to integrate an Open Identity service."
+      "openIDInfoBox": "Your profile's name and e-mail address are provided by the Identity Provider service linked with this portal.\n<0>Read here</0> on how to integrate an Open Identity service."
     },
     "securitySubTab": {
       "securityTitle": "Security",
@@ -571,8 +567,9 @@
   "rbac": {
     "team": {
       "title": "Manage Team",
+      "subtitle": "As organisation owner, you can invite other users to your team.\nIf users already exists in Cloudoki’s Portal, we’ll simply invite them to join your organisation too.",
       "header": "Organisation members",
-      "actions": "Role",
+      "actions": "User role",
       "invite": "Invite member",
       "send": "send"
     }

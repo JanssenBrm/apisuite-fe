@@ -1,16 +1,16 @@
 import React from "react";
-
 import Link from "components/Link";
 
 import useStyles from "./styles";
-
 import { ActionsCatalogProps, ActionDetails } from "./types";
 import { testIds } from "testIds";
+import { Box, Typography, useTheme } from "@material-ui/core";
 
 const ActionsCatalog: React.FC<ActionsCatalogProps> = ({
   actionsToDisplay,
 }) => {
   const classes = useStyles();
+  const { palette } = useTheme();
 
   const generateActionsCatalogEntry = (actionDetails: ActionDetails, index: number) => {
     return (
@@ -24,7 +24,11 @@ const ActionsCatalog: React.FC<ActionsCatalogProps> = ({
           src={actionDetails.actionImage}
         />
 
-        <p>{actionDetails.actionText}</p>
+        <Box color={palette.grey[700]} clone>
+          <Typography variant="body1">
+            {actionDetails.actionText}
+          </Typography>
+        </Box>
       </div>
     );
   };

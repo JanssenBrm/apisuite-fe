@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useConfig, useTranslation, Button, Trans } from "@apisuite/fe-base";
-import CheckCircleOutlineRoundedIcon from "@material-ui/icons/CheckCircleOutlineRounded";
+import { useConfig, useTranslation, Button, Trans, Typography, Box, Paper, Grid, Container, useTheme, Divider, Icon } from "@apisuite/fe-base";
 import ChromeReaderModeRoundedIcon from "@material-ui/icons/ChromeReaderModeRounded";
 import ControlCameraRoundedIcon from "@material-ui/icons/ControlCameraRounded";
 import FlightLandRoundedIcon from "@material-ui/icons/FlightLandRounded";
@@ -21,9 +20,11 @@ import carouselSlide3 from "assets/carousel-slide-3.svg";
 import { sandboxSelector } from "./selector";
 import useStyles from "./styles";
 import { getAPIs } from "store/subscriptions/actions/getAPIs";
+import Link from "components/Link";
 
 export const Sandbox: React.FC = () => {
   const classes = useStyles();
+  const { palette, spacing } = useTheme();
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { socialURLs, portalName, clientName, supportURL } = useConfig();
@@ -135,68 +136,53 @@ export const Sandbox: React.FC = () => {
         />
       </section>
 
-      {/* 'Steps' section */}
-      <section className={classes.stepsSectionContainer} data-test-id={testIds.stepsSection}>
-        <h1 className={classes.sectionIntroHeading}>
-          {t("sandboxPage.stepsSection.intro")}
-        </h1>
+      <Container maxWidth="md">
+        <Box my={5} data-test-id={testIds.stepsSection}>
+          <Typography variant="h2">
+            {t("sandboxPage.stepsSection.intro")}
+          </Typography>
+        </Box>
 
-        <section className={classes.stepsSectionDescriptionsContainer} data-test-id={testIds.stepsSectionContent}>
-          <section className={classes.stepsDescriptionContainerOne}>
-            <h3 className={classes.stepsDescriptionHeading}>
+        <Grid
+          container
+          direction="row"
+          xs
+          data-test-id={testIds.stepsSectionContent}
+        >
+          <Box maxWidth={360 - spacing(2.5)} pr={2.5} data-test-id={testIds.stepsSectionLeftSide}>
+            <Typography variant="h3" gutterBottom>
               {
                 !auth.user
                   ? t("sandboxPage.stepsSection.notLoggedIn.heading")
                   : t("sandboxPage.stepsSection.loggedIn.heading")
               }
-            </h3>
+            </Typography>
 
-            <p className={classes.stepsDescriptionParagraphOne}>
+            <Typography variant="h5" gutterBottom>
               {
                 !auth.user
                   ? t("sandboxPage.stepsSection.notLoggedIn.paragraphOne")
                   : `${portalName} ${t("sandboxPage.stepsSection.loggedIn.paragraphOne")}`
               }
-            </p>
+            </Typography>
 
-            <p className={classes.stepsDescriptionParagraphTwo}>
-              <span>
-                {
-                  !auth.user
-                    ? t("sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartOne")
-                    : t("sandboxPage.stepsSection.loggedIn.paragraphTwoPartOne")
-                }
-              </span>
-
-              <>
-                {
-                  !auth.user
-                    ? t("sandboxPage.stepsSection.notLoggedIn.paragraphTwoPartTwo")
-                    : t("sandboxPage.stepsSection.loggedIn.paragraphTwoPartTwo")
-                }
-              </>
-            </p>
+            <Typography variant="body2" gutterBottom style={{ whiteSpace: "pre-line" }}>
+              {
+                !auth.user
+                  ? t("sandboxPage.stepsSection.notLoggedIn.paragraphTwo")
+                  : t("sandboxPage.stepsSection.loggedIn.paragraphTwo")
+              }
+            </Typography>
 
             <Button
               className={classes.stepsDescriptionSupportButton}
               variant="contained"
               color="primary"
+              size="large"
               disableElevation
-              href={
-                !auth.user
-                  ? "/auth/signup"
-                  : supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL
-              }
-              rel={
-                auth.user
-                  ? "noopener noreferrer"
-                  : ""
-              }
-              target={
-                auth.user
-                  ? "_blank"
-                  : ""
-              }
+              href={!auth.user ? "/auth/signup" : supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL}
+              rel={auth.user ? "noopener noreferrer" : ""}
+              target={ auth.user ? "_blank" : ""}
             >
               {
                 !auth.user
@@ -204,130 +190,174 @@ export const Sandbox: React.FC = () => {
                   : t("sandboxPage.stepsSection.loggedIn.buttonLabel")
               }
             </Button>
-          </section>
+          </Box>
 
-          <section className={classes.stepsDescriptionContainerTwo}>
-            <div className={classes.individualStepsContainer}>
-              <div className={`${classes.individualStep} ${classes.individualStepsDivider}`} data-test-id={testIds.stepOne}>
-                <h1 className={classes.individualStepOne}>1.</h1>
+          <Grid
+            component={Paper}
+            variant="outlined"
+            container
+            md
+            wrap="nowrap"
+          >
+            <Grid
+              component={Box}
+              item
+              xs={4}
+              p={2}
+              display="flex"
+              flexDirection="column"
+              borderRight={`1px solid ${palette.divider}`}
+              data-test-id={testIds.stepOne}
+            >
+              <Box mb={4}>
+                <Typography variant="h1" color="primary" align="center">
+                  <b>1.</b>
+                </Typography>
+              </Box>
 
-                <h3 className={classes.individualStepOne}>
+              <Box mb={3}>
+                <Typography variant="body1" color="primary" align="center">
                   {t("sandboxPage.stepsSection.individualSteps.stepOne.header")}
-                </h3>
+                </Typography>
+              </Box>
 
-                <p>
-                  <span>
-                    {t("sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartOne")}
-                  </span>
+              <Box mb={4}>
+                <Typography variant="body2" color="textPrimary" align="center">
+                  {t("sandboxPage.stepsSection.individualSteps.stepOne.paragraph")}
+                </Typography>
+              </Box>
 
-                  <>
-                    {t("sandboxPage.stepsSection.individualSteps.stepOne.paragraphPartTwo")}
-                  </>
-                </p>
+              <Button
+                className={classes.stepCta}
+                color="primary"
+                variant="outlined"
+                size="large"
+                fullWidth
+                disabled={!auth.user}
+                href='/dashboard/subscriptions'
+              >
+                {t("sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel")}
+              </Button>
+            </Grid>
 
-                <Button
-                  className={classes.individualStepButton}
-                  color="primary"
-                  variant="outlined"
-                  fullWidth
-                  disabled={!auth.user}
-                  href='/dashboard/apps'
-                >
-                  {t("sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel")}
-                </Button>
-              </div>
+            <Grid
+              component={Box}
+              item
+              xs={4}
+              p={2}
+              display="flex"
+              flexDirection="column"
+              borderRight={`1px solid ${palette.divider}`}
+              data-test-id={testIds.stepTwo}
+            >
+              <Box mb={5}>
+                <Typography variant="h1" color="primary" align="center">
+                  <b>2.</b>
+                </Typography>
+              </Box>
 
-              <div className={`${classes.individualStep} ${classes.individualStepsDivider}`} data-test-id={testIds.stepTwo}>
-                <h1 className={classes.individualStepTwo}>2.</h1>
-
-                <h3 className={classes.individualStepTwo}>
+              <Box mb={4}>
+                <Typography variant="body1" color="primary" align="center">
                   {t("sandboxPage.stepsSection.individualSteps.stepTwo.header")}
-                </h3>
+                </Typography>
+              </Box>
 
-                <p>
+              <Box mb={4}>
+                <Typography variant="body2" color="textPrimary" align="center">
                   {t("sandboxPage.stepsSection.individualSteps.stepTwo.paragraph")}
-                </p>
+                </Typography>
+              </Box>
 
-                <Button
-                  className={classes.individualStepButton}
-                  color="primary"
-                  variant="outlined"
-                  fullWidth
-                  disabled={!auth.user}
-                  href='/dashboard/subscriptions'
-                >
-                  {t("sandboxPage.stepsSection.individualSteps.stepTwo.buttonLabel")}
-                </Button>
-              </div>
+              <Button
+                className={classes.stepCta}
+                color="primary"
+                variant="outlined"
+                size="large"
+                fullWidth
+                disabled={!auth.user}
+                href='/dashboard/subscriptions'
+              >
+                {t("sandboxPage.stepsSection.individualSteps.stepTwo.buttonLabel")}
+              </Button>
+            </Grid>
 
-              <div className={classes.individualStep} data-test-id={testIds.stepThree}>
-                <h1 className={classes.individualStepThree}>3.</h1>
+            <Grid
+              component={Box}
+              item
+              xs={4}
+              p={2}
+              display="flex"
+              flexDirection="column"
+              data-test-id={testIds.stepThree}
+            >
+              <Box mb={5}>
+                <Typography variant="h1" color="primary" align="center">
+                  <b>3.</b>
+                </Typography>
+              </Box>
 
-                <h3 className={classes.individualStepThree}>
+              <Box mb={4}>
+                <Typography variant="body1" color="primary" align="center">
                   {t("sandboxPage.stepsSection.individualSteps.stepThree.header")}
-                </h3>
+                </Typography>
+              </Box>
 
-                <p>
+              <Box mb={4}>
+                <Typography variant="body2" color="textPrimary" align="center">
                   {t("sandboxPage.stepsSection.individualSteps.stepThree.paragraph")}
-                </p>
+                </Typography>
+              </Box>
 
-                <Button
-                  className={classes.individualStepButton}
-                  color="primary"
-                  variant="outlined"
-                  fullWidth
-                  disabled={!auth.user}
-                  href='/dashboard/test'
-                >
-                  {t("sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel")}
-                </Button>
-              </div>
-            </div>
-          </section>
-        </section>
-      </section>
+              <Button
+                className={classes.stepCta}
+                color="primary"
+                variant="outlined"
+                size="large"
+                fullWidth
+                disabled={!auth.user}
+                href='/dashboard/test'
+              >
+                {t("sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel")}
+              </Button>
+            </Grid>
+          </Grid>
+        </Grid>
 
-      <hr className={classes.sectionSeparator} />
+        <Divider style={{ margin: `${spacing(5)}px 0`, backgroundColor: palette.primary.main }} />
 
-      {/* 'API Catalog' section */}
-      <section className={classes.apiCatalogSectionContainer} data-test-id={testIds.recentAdditionsTitle}>
-        <h1 className={classes.sectionIntroHeading}>
-          {t("sandboxPage.apiCatalog.intro")}
-        </h1>
+        <Box mb={5} data-test-id={testIds.recentAdditionsTitle}>
+          <Typography variant="h2" >
+            {t("sandboxPage.apiCatalog.intro")}
+          </Typography>
+        </Box>
 
-        <section className={classes.apiCatalogContainer} data-test-id={testIds.recentAdditionsCatalog}>
-          {
-            recentlyAddedAPIs.length === 0
-              ? <p data-test-id={testIds.recentAdditionsEmpty}>{t("sandboxPage.apiCatalog.paragraph")}</p>
-              : <APICatalog apisToDisplay={recentlyAddedAPIs}/>
-          }
-        </section>
-      </section>
+        <Box mb={6} data-test-id={testIds.recentAdditionsCatalog}>
+          {!recentlyAddedAPIs.length ? <Typography variant="body1" data-test-id={testIds.recentAdditionsEmpty}>
+            {t("sandboxPage.apiCatalog.paragraph")}
+          </Typography>
+            : <APICatalog apisToDisplay={recentlyAddedAPIs} />}
+        </Box>
 
-      {/* Notice */}
-      {socialURLs.length > 0 && (
-        <section className={classes.noticeContainer} data-test-id={testIds.notice}>
+        {socialURLs.length > 0 && (
           <Notice
-            noticeIcon={
-              <CheckCircleOutlineRoundedIcon />
-            }
+            noticeIcon={<Icon>domain_verification</Icon>}
             noticeText={
-              <p>
+              <Typography variant="body2" align="center" style={{ color: palette.info.contrastText }}>
                 <Trans i18nKey="sandboxPage.notice" values={{ portalName, clientName, url: socialURLs[0].url }}>
                   {[
-                    <a
+                    <Link
                       key="sandboxPage.notice"
-                      href={socialURLs[0].url}
+                      to={socialURLs[0].url}
                       rel='noopener noreferrer'
                       target='_blank'
                     />,
                   ]}
                 </Trans>
-              </p>
+              </Typography>
             }
           />
-        </section>
-      )}
+        )}
+      </Container>
     </main>
   );
 };

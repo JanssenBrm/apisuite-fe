@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef } from "react";
 import ReactSlidy from "react-slidy/lib";
-import { useTheme, Fade, Button } from "@apisuite/fe-base";
+import { useTheme, Fade, Typography, Box, ButtonBase } from "@apisuite/fe-base";
 import RadioButtonCheckedRoundedIcon from "@material-ui/icons/RadioButtonCheckedRounded";
 import RadioButtonUncheckedRoundedIcon from "@material-ui/icons/RadioButtonUncheckedRounded";
 import clsx from "clsx";
@@ -10,13 +10,13 @@ import useStyles from "./styles";
 import { CarouselSlideProps, CarouselProps } from "./types";
 
 import "react-slidy/lib/index.scss";
+import Link from "components/Link";
 
 // Carousel slides
 const CarouselSlide: React.FC<CarouselSlideProps> = ({
   carouselSlideButton,
-  carouselSlideButtonCustomStyling,
   carouselSlideButtonLabel,
-  carouselSlideButtonLink,
+  carouselSlideButtonLink = "/",
   carouselSlideButtonOnClick,
   carouselSlideContentsPlacement,
   carouselSlideImage,
@@ -39,18 +39,26 @@ const CarouselSlide: React.FC<CarouselSlideProps> = ({
       }
 
       <div className={classes.carouselSlideInnerContainer}>
-        <p className={classes.carouselSlideText}>{carouselSlideText}</p>
+        <Box m={4}>
+          <Typography
+            variant="h4"
+            color="inherit"
+            display="block"
+          >
+            {carouselSlideText}
+          </Typography>
+        </Box>
 
-        {
-          carouselSlideButton &&
-          <Button
-            className={carouselSlideButtonCustomStyling || classes.carouselSlideButtonStyling}
-            href={carouselSlideButtonLink}
+        {carouselSlideButton && (
+          <ButtonBase
+            className={classes.carouselSlideButtonStyling}
+            component={Link}
+            to={carouselSlideButtonLink}
             onClick={carouselSlideButtonOnClick}
           >
             {carouselSlideButtonLabel}
-          </Button>
-        }
+          </ButtonBase>
+        )}
       </div>
     </div>
   );
@@ -93,8 +101,7 @@ export const Carousel: React.FC<CarouselProps> = ({
     if (slidesAutoPlay) {
       timer.current = setInterval(() => {
         runSlides();
-      // TODO: fix type
-      }, timeBetweenSlides) as any;
+      }, timeBetweenSlides) as NodeJS.Timeout;
     }
 
     return () => {
@@ -157,16 +164,13 @@ export const Carousel: React.FC<CarouselProps> = ({
       >
         <div
           className={classes.carouselSlider}
-          style={
-            carouselBackgroundImage
-              ? {
-                background: `url(${carouselBackgroundImage})`,
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-              }
-              // TODO: update this config
-              : { backgroundColor: carouselBackgroundColor || palette.grey[700] }
-          }
+          style={{
+            background: carouselBackgroundImage
+              ? `url(${carouselBackgroundImage})`
+              : (carouselBackgroundColor || palette.grey[700]),
+            backgroundRepeat: "no-repeat",
+            backgroundSize: "cover",
+          }}
         >
           <ReactSlidy
             initialSlide={initialSlide || 0}

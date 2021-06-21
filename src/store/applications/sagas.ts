@@ -52,7 +52,9 @@ export function * createAppActionSaga (action: CreateAppAction) {
     yield put(createAppSuccess({}));
   } catch (error) {
     yield put(createAppError(error));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -112,7 +114,9 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
     }));
   } catch (error) {
     yield put(updateAppError(error));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -145,7 +149,9 @@ export function * deleteAppActionSaga (action: DeleteAppAction) {
       yield put(deleteAppSuccess({}));
     } else {
       yield put(deleteAppError({}));
-      yield put(handleSessionExpire({}));
+      if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+        yield put(handleSessionExpire({}));
+      }
     }
   }
 }
@@ -169,7 +175,9 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
     yield put(openNotification("success", i18n.t("applications.requestAPIAcessSuccess"), 3000));
   } catch (error) {
     yield put(requestAPIAccessError({}));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
     yield put(openNotification("error", i18n.t("applications.requestAPIAcessError"), 3000));
   }
 }
@@ -217,54 +225,54 @@ export function * getAllUserAppsActionSaga () {
     }));
   } catch (error) {
     yield put(getAllUserAppsError(error));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
 export function * getUserAppActionSaga (action: GetUserAppAction) {
   try {
-    const getAllUserAppsActionUrl = `${API_URL}/apps`;
+    const getUserAppActionUrl = `${API_URL}/apps/${action.appId}`;
 
-    const response: any[] = yield call(request, {
-      url: getAllUserAppsActionUrl,
+    const response: Record<string, never> = yield call(request, {
+      url: getUserAppActionUrl,
       method: "GET",
       headers: {
         "content-type": "application/x-www-form-urlencoded",
       },
     });
 
-    const allUserApps = response.map((userApp) => (
-      {
-        clientId: userApp.clientId,
-        clientSecret: userApp.clientSecret,
-        createdAt: userApp.createdAt,
-        description: userApp.description,
-        id: userApp.id,
-        labels: userApp.labels,
-        logo: userApp.logo,
-        metadata: userApp.metadata,
-        name: userApp.name,
-        orgId: userApp.orgId,
-        privacyUrl: userApp.privacyUrl,
-        redirectUrl: userApp.redirectUrl,
-        shortDescription: userApp.shortDescription,
-        subscriptions: userApp.subscriptions,
-        supportUrl: userApp.supportUrl,
-        tosUrl: userApp.tosUrl,
-        updatedAt: userApp.updatedAt,
-        visibility: userApp.visibility,
-        websiteUrl: userApp.websiteUrl,
-        youtubeUrl: userApp.youtubeUrl,
-        media: userApp.images,
-      }
-    ));
+    const requestedUserApp = {
+      clientId: response.clientId,
+      clientSecret: response.clientSecret,
+      createdAt: response.createdAt,
+      description: response.description,
+      id: response.id,
+      labels: response.labels,
+      logo: response.logo,
+      metadata: response.metadata,
+      name: response.name,
+      orgId: response.orgId,
+      privacyUrl: response.privacyUrl,
+      redirectUrl: response.redirectUrl,
+      shortDescription: response.shortDescription,
+      subscriptions: response.subscriptions,
+      supportUrl: response.supportUrl,
+      tosUrl: response.tosUrl,
+      updatedAt: response.updatedAt,
+      visibility: response.visibility,
+      websiteUrl: response.websiteUrl,
+      youtubeUrl: response.youtubeUrl,
+      media: response.images,
+    };
 
-    const indexOfUserAppWeWant = allUserApps.findIndex((userApp: AppData) => userApp.id === action.appId);
-
-    yield put(getUserAppSuccess({ appData: allUserApps[indexOfUserAppWeWant] }));
+    yield put(getUserAppSuccess({ appData: requestedUserApp }));
   } catch (error) {
     yield put(getUserAppError(error));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
   }
 }
 
@@ -285,7 +293,9 @@ export function * uploadAppMediaActionSaga (action: UploadAppMediaAction) {
     yield put(openNotification("success", i18n.t("mediaUpload.uploadSuccess"), 3000));
   } catch (error) {
     yield put(uploadAppMediaError({}));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
     yield put(openNotification("error", i18n.t("mediaUpload.uploadError"), 3000));
   }
 }
@@ -297,7 +307,6 @@ export function * deleteAppMediaActionSaga (action: DeleteAppMediaAction) {
     });
     const deleteMediaURL = `${API_URL}/apps/${action.appId}/media?${queryString}`;
 
-    console.log(deleteMediaURL);
     yield call(request, {
       url: deleteMediaURL,
       method: "DELETE",
@@ -307,7 +316,9 @@ export function * deleteAppMediaActionSaga (action: DeleteAppMediaAction) {
     yield put(openNotification("success", i18n.t("mediaUpload.deleteSuccess"), 3000));
   } catch (error) {
     yield put(deleteAppMediaError({}));
-    yield put(handleSessionExpire({}));
+    if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
+      yield put(handleSessionExpire({}));
+    }
     yield put(openNotification("error", i18n.t("mediaUpload.deleteError"), 3000));
   }
 }

@@ -1,46 +1,30 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  Avatar,
-  Button,
-  Fade,
-  Grid,
-  IconButton,
-  InputAdornment,
-  Menu,
-  MenuItem,
-  Modal,
-  TextField,
-  Typography,
-  useConfig,
-  useTranslation,
+  Avatar, Box, Button, Fade, Grid, Icon,
+  IconButton, InputAdornment, Menu, MenuItem, Modal, TextField,
+  Trans, Typography, useConfig, useTheme, useTranslation,
 } from "@apisuite/fe-base";
-import AddRoundedIcon from "@material-ui/icons/AddRounded";
-import AmpStoriesRoundedIcon from "@material-ui/icons/AmpStoriesRounded";
-import Close from "@material-ui/icons/Close";
-import CloseRoundedIcon from "@material-ui/icons/CloseRounded";
-import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
-import ImageSearchRoundedIcon from "@material-ui/icons/ImageSearchRounded";
-import InfoRoundedIcon from "@material-ui/icons/InfoRounded";
-import QueryBuilderRoundedIcon from "@material-ui/icons/QueryBuilderRounded";
-import RefreshRoundedIcon from "@material-ui/icons/RefreshRounded";
+import clsx from "clsx";
 
-import { applicationsModalSelector } from "./selector";
+import { Logo } from "components/Logo";
+import { MediaUpload } from "components/MediaUpload";
+import { PageContainer } from "components/PageContainer";
+import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
+import Link from "components/Link";
+import Notice from "components/Notice";
 import { createApp } from "store/applications/actions/createApp";
 import { deleteApp } from "store/applications/actions/deleteApp";
 import { deleteAppMedia } from "store/applications/actions/deleteAppMedia";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
-import CustomizableDialog from "components/CustomizableDialog/CustomizableDialog";
-import { MediaUpload } from "components/MediaUpload";
-
 import { getSections } from "util/extensions";
 import { isValidAppMetaKey, isValidImage, isValidURL } from "util/forms";
 import { useForm } from "util/useForm";
-
-import { ApplicationsModalProps } from "./types";
+import { applicationsModalSelector } from "./selector";
 import useStyles from "./styles";
+import { ApplicationsModalProps } from "./types";
 
 export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   allUserAppNames,
@@ -50,14 +34,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   toggleModal,
 }) => {
   const classes = useStyles();
-
+  const { palette } = useTheme();
   const { t } = useTranslation();
-
+  const { navigation, ownerInfo, portalName } = useConfig();
   const dispatch = useDispatch();
-
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
-
-  const { ownerInfo, portalName } = useConfig();
 
   const metadataKeyDefaultPrefix = "meta_";
 
@@ -65,12 +46,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
     of all information we presently have on a particular app. */
     if (modalDetails.userAppID && modalDetails.userID) {
-      dispatch(getUserApp({ appId: modalDetails.userAppID, orgId: modalDetails.userID }));
+      dispatch(getUserApp({ appId: modalDetails.userAppID }));
     }
-  }, [modalMode, modalDetails, dispatch]);
+  }, [dispatch, modalDetails, modalMode]);
 
   const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false);
   const [validImage, setValidImage] = React.useState<boolean>(true);
+  const [visibilityChanged, setVisibilityChange] = React.useState<boolean>(false);
 
   const validateAvatar = (avatar: string) => {
     if (avatar !== "") {
@@ -115,6 +97,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appClientSecret: "",
       appFullDescription: "",
       appLabels: "",
+      appMetaDescription: "",
+      appMetaKey: "",
+      appMetaTitle: "",
+      appMetaValue: "",
       appName: "",
       appPrivacyURL: "",
       appRedirectURI: "https://",
@@ -124,10 +110,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appVisibility: "private",
       appWebsiteURL: "",
       appYouTubeURL: "",
-      appMetaKey: "",
-      appMetaValue: "",
-      appMetaTitle: "",
-      appMetaDescription: "",
     },
     // Rules for (some) app details
     {
@@ -156,6 +138,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appRedirectURI: {
         rules: [(URI) => uriBasicChecks(URI)],
         message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
+      },
+
+      appShortDescription: {
+        rules: [(text) => text.toString().length <= 60],
+        message: t("dashboardTab.applicationsSubTab.appModal.errors.shortDescriptionLimit"),
       },
 
       appSupportURL: {
@@ -194,6 +181,18 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
           ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
+        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description
+          ? mostRecentlySelectedAppDetails.metadata[0].description
+          : "",
+        appMetaKey: mostRecentlySelectedAppDetails.metadata[0]?.key
+          ? mostRecentlySelectedAppDetails.metadata[0].key.slice(5)
+          : "",
+        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title
+          ? mostRecentlySelectedAppDetails.metadata[0].title
+          : "",
+        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value
+          ? mostRecentlySelectedAppDetails.metadata[0].value
+          : "",
         appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : "",
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : "",
         appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ? mostRecentlySelectedAppDetails.redirectUrl : "",
@@ -205,18 +204,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appVisibility: mostRecentlySelectedAppDetails.visibility ? mostRecentlySelectedAppDetails.visibility : "private",
         appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ? mostRecentlySelectedAppDetails.websiteUrl : "",
         appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ? mostRecentlySelectedAppDetails.youtubeUrl : "",
-        appMetaKey: mostRecentlySelectedAppDetails.metadata[0]?.key
-          ? mostRecentlySelectedAppDetails.metadata[0].key.slice(5)
-          : "",
-        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value
-          ? mostRecentlySelectedAppDetails.metadata[0].value
-          : "",
-        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title
-          ? mostRecentlySelectedAppDetails.metadata[0].title
-          : "",
-        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description
-          ? mostRecentlySelectedAppDetails.metadata[0].description
-          : "",
       });
     } else {
       resetForm({
@@ -225,6 +212,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientSecret: "",
         appFullDescription: "",
         appLabels: "",
+        appMetaDescription: "",
+        appMetaKey: "",
+        appMetaTitle: "",
+        appMetaValue: "",
         appName: "",
         appPrivacyURL: "",
         appRedirectURI: "https://",
@@ -234,10 +225,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appVisibility: "private",
         appWebsiteURL: "",
         appYouTubeURL: "",
-        appMetaKey: "",
-        appMetaValue: "",
-        appMetaTitle: "",
-        appMetaDescription: "",
       });
     }
   }, [modalMode, mostRecentlySelectedAppDetails]);
@@ -351,6 +338,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   const handleAppVisibility = (selectedAppVisibility: string) => {
     formState.values.appVisibility = selectedAppVisibility;
+    setVisibilityChange(formState.values.appVisibility !== mostRecentlySelectedAppDetails.visibility);
   };
 
   const getFormMetadata = () => {
@@ -458,6 +446,41 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     }));
   };
 
+  const validMetadata = () => {
+    if (formState.values.appMetaKey.length === 0) {
+      return formState.values.appMetaValue.length === 0 &&
+        formState.values.appMetaTitle.length === 0 &&
+        formState.values.appMetaTitle.length === 0;
+    } else {
+      return isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`) &&
+        formState.values.appMetaValue.length !== 0 &&
+        formState.values.appMetaTitle.length !== 0 &&
+        formState.values.appMetaTitle.length !== 0;
+    }
+  };
+
+  const hasChanged = () => {
+    // FIXME: the form needs to be replaced
+    // formState.errors does not update on error so this was needed
+    const required = [
+      formState.values.appName.length !== 0,
+      formState.values.appRedirectURI.length !== 0,
+    ];
+
+    const hasRequired = required.every((val) => val);
+
+    const changed = [
+      formState.isDirty,
+      visibilityChanged,
+    ];
+
+    return (formState.isValid || Object.keys(formState.errors).length === 0)
+      && hasRequired
+      && changed.some((v) => v)
+      && validMetadata()
+      && validImage;
+  };
+
   return (
     <>
       <Modal
@@ -468,6 +491,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appClientSecret: "",
             appFullDescription: "",
             appLabels: "",
+            appMetaDescription: "",
+            appMetaKey: "",
+            appMetaTitle: "",
+            appMetaValue: "",
             appName: "",
             appPrivacyURL: "",
             appRedirectURI: "https://",
@@ -477,11 +504,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appVisibility: "private",
             appWebsiteURL: "",
             appYouTubeURL: "",
-            appMetaKey: "",
-            appMetaValue: "",
-            appMetaTitle: "",
-            appMetaDescription: "",
           });
+          mostRecentlySelectedAppDetails.media = [];
           toggleModal();
         }}
         open={isModalOpen}
@@ -492,84 +516,105 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             <div className={classes.modalHeaderContainer}>
               <div className={classes.logoAndNameContainer}>
                 {
-                  ownerInfo.logo
-                    ? (
-                      <img
-                        className={classes.imageLogo}
-                        src={ownerInfo.logo}
-                      />
-                    )
-                    : (
-                      <AmpStoriesRoundedIcon
-                        className={classes.iconLogo}
-                      />
-                    )
+                  <Box fontSize="60px">
+                    <Logo
+                      icon={navigation.title.iconFallbackName}
+                      src={ownerInfo.logo}
+                    />
+                  </Box>
                 }
 
-                <h3 className={classes.portalName}>
+                <Typography display="block" gutterBottom variant="h3">
                   {portalName}
-                </h3>
+                </Typography>
               </div>
 
               <div
                 className={classes.closeModalButtonContainer}
                 onClick={toggleModal}
               >
-                <p>
-                  {t("dashboardTab.applicationsSubTab.appModal.closeButtonLabel")}
-                </p>
+                <Box>
+                  <Typography display="block" gutterBottom variant="caption">
+                    {t("dashboardTab.applicationsSubTab.appModal.closeButtonLabel")}
+                  </Typography>
+                </Box>
 
-                <CloseRoundedIcon />
+                <Icon>close</Icon>
               </div>
             </div>
 
             {/* Modal body */}
-            <div className={classes.modalBodyContainer}>
+            <PageContainer disablePaddingY={true}>
               {/* Modal's title */}
               {
                 modalMode === "new"
                   ? (
-                    <h1 className={classes.newApplicationHeader}>
-                      {t("dashboardTab.applicationsSubTab.appModal.newAppLabel")}
-                    </h1>
+                    <Box py={3}>
+                      <Typography display="block" gutterBottom variant="h2">
+                        {t("dashboardTab.applicationsSubTab.appModal.newAppLabel")}
+                      </Typography>
+                    </Box>
                   )
                   : (
                     <div className={classes.editApplicationHeaderContainer}>
-                      <h1 className={classes.editApplicationHeader}>
-                        {mostRecentlySelectedAppDetails.name}
-                      </h1>
+                      <Box>
+                        <Typography display="block" gutterBottom variant="h2">
+                          {mostRecentlySelectedAppDetails.name}
+                        </Typography>
+                      </Box>
 
                       <div className={classes.editApplicationHeaderStatusContainer}>
-                        {/* A mere dot */}
-                        <span
-                          className={
-                            mostRecentlySelectedAppDetails.subscriptions.length === 0
-                              ? classes.draftClientApplicationCardStatusIcon
-                              : classes.subscribedClientApplicationCardStatusIcon
-                          }
-                        >
-                          <>&#9679;</>
-                        </span>
+                        <Box display="flex">
+                          {/* A mere dot */}
+                          <Box
+                            className={
+                              clsx(
+                                classes.subscribedClientApplicationCardStatusIcon,
+                                !mostRecentlySelectedAppDetails.subscriptions.length &&
+                                classes.draftClientApplicationCardStatusIcon,
+                              )
+                            }
+                            pb={1.5}
+                            pr={1}
+                          >
+                            <Icon fontSize="small">circle</Icon>
+                          </Box>
 
-                        <p className={classes.clientApplicationCardStatusText}>
-                          {
-                            mostRecentlySelectedAppDetails.subscriptions.length === 0
-                              ? t("dashboardTab.applicationsSubTab.appModal.draftAppStatus")
-                              : t("dashboardTab.applicationsSubTab.appModal.subbedAppStatus")
-                          }
-                        </p>
+                          <Box clone pb={1.5}>
+                            <Typography style={{ color: palette.text.secondary }} variant="body2">
+                              {
+                                mostRecentlySelectedAppDetails.subscriptions.length === 0
+                                  ? t("dashboardTab.applicationsSubTab.appModal.draftAppStatus")
+                                  : t("dashboardTab.applicationsSubTab.appModal.subbedAppStatus")
+                              }
+                            </Typography>
+                          </Box>
+                        </Box>
                       </div>
                     </div>
                   )
               }
 
               {/* 'General information' section */}
-              <div className={classes.sectionContainer}>
+              <Grid container>
                 {/* 'App name and short description' subsection */}
-                <div className={classes.leftSubSectionContainer}>
-                  <p className={classes.appNameAndShortDescriptionSubSectionTitle}>
-                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelOne")}
-                  </p>
+                <Grid item md={12} spacing={3}>
+                  <Grid item md={6} spacing={3}>
+                    <Box pb={1.5}>
+                      <Typography display="block" gutterBottom variant="h6">
+                        {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelOne")}
+                      </Typography>
+                    </Box>
+
+                    <Box pb={5}>
+                      <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
+                        {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelTwo")}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+
+                <Grid item md={6} spacing={3}>
 
                   <TextField
                     className={classes.inputFields}
@@ -592,6 +637,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     name='appName'
                     onChange={handleChange}
                     onFocus={handleFocus}
+                    required
                     type='text'
                     value={formState.values.appName}
                     variant='outlined'
@@ -599,7 +645,13 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                   <TextField
                     className={classes.inputFields}
+                    error={formState.errors.appShortDescription}
                     fullWidth
+                    helperText={
+                      formState.errors.appShortDescription
+                        ? formState.errorMsgs.appShortDescription
+                        : ""
+                    }
                     label={t("dashboardTab.applicationsSubTab.appModal.appShortDescriptionFieldLabel")}
                     margin='dense'
                     name='appShortDescription'
@@ -608,37 +660,38 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     value={formState.values.appShortDescription}
                     variant='outlined'
                   />
-                </div>
+                </Grid>
 
                 {/* 'App avatar' subsection */}
-                <div className={classes.rightSubSectionContainer}>
-                  <p className={classes.appAvatarSubSectionDescription}>
-                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelTwo")}
-                  </p>
+                <Grid item md={6} spacing={3}>
 
                   <div className={classes.appAvatarContainer}>
                     {/* TODO: Eventually add 'upload' capabilities to the following 'Avatar' as an 'onClick' event */}
                     {
                       avatarInputIsInFocus
                         ? (
-                          <Close
+                          <Icon
                             className={classes.avatarIcons}
                             onClick={
                               () => {
                                 setAvatarInputIsInFocus(false);
                               }
                             }
-                          />
+                          >
+                            close
+                          </Icon>
                         )
                         : (
-                          <ImageSearchRoundedIcon
+                          <Icon
                             className={classes.avatarIcons}
                             onClick={
                               () => {
                                 setAvatarInputIsInFocus(true);
                               }
                             }
-                          />
+                          >
+                            image_search
+                          </Icon>
                         )
                     }
 
@@ -683,19 +736,79 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       variant='outlined'
                     />
                   </div>
-                </div>
-              </div>
+                </Grid>
+              </Grid>
 
               <hr className={classes.alternativeSectionSeparator} />
 
-              {/* 'Access details' section */}
-              <div className={classes.sectionContainer}>
-                {/* 'Redirect URI' subsection */}
-                <div className={classes.leftSubSectionContainer}>
-                  <p className={classes.redirectURISubSectionTitle}>
-                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
-                  </p>
+              {
+                modalMode !== "new" &&
+                <>
+                  <Grid alignItems="center" container direction="row" justify="space-between">
+                    <Grid md={12} spacing={3}>
+                      <Grid md={6} spacing={3}>
+                        <Box pb={1.5}>
+                          <Typography display="block" gutterBottom variant="h6">
+                            {t("mediaUpload.title")}
+                          </Typography>
+                        </Box>
 
+                        <Box pb={5}>
+                          <Typography
+                            display="block"
+                            gutterBottom
+                            style={{ color: palette.text.secondary }}
+                            variant="body2"
+                          >
+                            {t("mediaUpload.description")}
+                          </Typography>
+                        </Box>
+                      </Grid>
+                    </Grid>
+
+                    <Grid item md={12}>
+                      <MediaUpload
+                        accept="image/*"
+                        images={mostRecentlySelectedAppDetails.media || []}
+                        onDeletePressed={deleteMedia}
+                        onFileLoaded={uploadMedia}
+                      />
+                    </Grid>
+                  </Grid>
+
+                  <hr className={classes.regularSectionSeparator} />
+                </>
+              }
+
+              {/* 'Access details' section */}
+              <Grid container>
+                {/* 'Redirect URI' subsection */}
+                <Grid md={12} spacing={3}>
+                  <Grid md={6} spacing={3}>
+                    <Box pb={1.5}>
+                      <Typography display="block" gutterBottom variant="h6">
+                        {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
+                      </Typography>
+                    </Box>
+
+                    <Box pb={5}>
+                      <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
+                        <Trans i18nKey="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour">
+                          {[
+                            <Link
+                              key="dashboardTab.applicationsSubTab.appModal.subSectionLabelFour"
+                              rel='noopener noreferrer'
+                              target='_blank'
+                              to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2"
+                            />,
+                          ]}
+                        </Trans>
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+
+                <Grid item md={6} spacing={3}>
                   <TextField
                     className={classes.inputFields}
                     error={formState.errors.appRedirectURI}
@@ -709,29 +822,18 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     margin='dense'
                     name='appRedirectURI'
                     onChange={handleChange}
+                    required
                     type='url'
                     value={formState.values.appRedirectURI}
                     variant='outlined'
                   />
-                </div>
+                </Grid>
 
                 {/* 'Client credentials' subsection */}
-                <div className={classes.rightSubSectionContainer}>
-                  <p className={classes.clientCredentialsSubSectionDescription}>
-                    <>{t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartOne")}</>
-                    <a
-                      href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2'
-                      target='_blank'
-                      rel='noopener noreferrer'
-                    >
-                      {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFourPartTwo")}
-                    </a>
-                    <>.</>
-                  </p>
-
-
+                <Grid item md={6} spacing={3}>
                   <div className={classes.row}>
                     <TextField
+                      disabled
                       fullWidth
                       label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
                       margin="dense"
@@ -740,22 +842,22 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       type="text"
                       value={formState.values.appClientID}
                       variant="outlined"
-                      disabled
                     />
 
                     <div className={classes.rowCta}>
                       <IconButton
-                        size="medium"
                         disabled={!formState.values.appClientID}
                         onClick={() => copyToClipboard(formState.values.appClientID)}
+                        size="medium"
                       >
-                        <FileCopyOutlinedIcon />
+                        <Icon>content_copy</Icon>
                       </IconButton>
                     </div>
                   </div>
 
                   <div className={classes.clientSecretInputFieldContainer}>
                     <TextField
+                      disabled
                       fullWidth
                       label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
                       margin="dense"
@@ -764,16 +866,15 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       type="text"
                       value={formState.values.appClientSecret}
                       variant="outlined"
-                      disabled
                     />
 
                     <div className={classes.copyCta}>
                       <IconButton
-                        size="medium"
                         disabled={!formState.values.appClientSecret}
                         onClick={() => copyToClipboard(formState.values.appClientSecret)}
+                        size="medium"
                       >
-                        <FileCopyOutlinedIcon />
+                        <Icon>content_copy</Icon>
                       </IconButton>
                     </div>
 
@@ -786,21 +887,33 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                           : classes.disabledClientSecretInputFieldRefreshButton
                       }
                     >
-                      <RefreshRoundedIcon />
+                      <Icon>refresh</Icon>
                     </div>
                   </div>
-                </div>
-              </div>
+                </Grid>
+              </Grid>
 
               <hr className={classes.regularSectionSeparator} />
 
               {/* 'Additional information' section */}
-              <div className={classes.sectionContainer}>
+              <Grid container>
                 {/* 'Full description' subsection */}
-                <div className={classes.leftSubSectionContainer}>
-                  <p className={classes.additionalInfoSubSectionTitle}>
-                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFive")}
-                  </p>
+                <Grid md={12} spacing={3}>
+                  <Grid md={6} spacing={3}>
+                    <Box pb={1.5}>
+                      <Typography display="block" gutterBottom variant="h6">
+                        {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFive")}
+                      </Typography>
+                    </Box>
+
+                    <Box pb={5}>
+                      <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
+                        {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelSix")}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
+                <Grid item md={6} spacing={3}>
 
                   <TextField
                     className={classes.inputFields}
@@ -815,14 +928,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     value={formState.values.appFullDescription}
                     variant='outlined'
                   />
-                </div>
+                </Grid>
 
                 {/* 'Optional URLs' subsection */}
-                <div className={classes.rightSubSectionContainer}>
-                  <p className={classes.optionalURLsSubSectionDescription}>
-                    {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelSix")}
-                  </p>
-
+                <Grid item md={6} spacing={3}>
                   <div className={classes.appURLFieldWrapper}>
                     <TextField
                       className={classes.inputFields}
@@ -843,7 +952,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     />
 
                     <div onClick={handleOpenSelector}>
-                      <AddRoundedIcon />
+                      <Icon>add</Icon>
                     </div>
                   </div>
 
@@ -922,7 +1031,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 0)}>
-                        <CloseRoundedIcon />
+                        <Icon>close</Icon>
                       </div>
                     </div>
                   }
@@ -949,7 +1058,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 1)}>
-                        <CloseRoundedIcon />
+                        <Icon>close</Icon>
                       </div>
                     </div>
                   }
@@ -976,7 +1085,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 2)}>
-                        <CloseRoundedIcon />
+                        <Icon>close</Icon>
                       </div>
                     </div>
                   }
@@ -1003,48 +1112,48 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 3)}>
-                        <CloseRoundedIcon />
+                        <Icon>close</Icon>
                       </div>
                     </div>
                   }
-                </div>
-              </div>
-
-              <hr className={classes.regularSectionSeparator} />
-
-              <Grid container direction="row" justify="space-between" alignItems="center" spacing={3}>
-                <Grid item xs={6}>
-                  <Typography className={classes.title} variant="h6" display="block" gutterBottom>
-                    {t("mediaUpload.title")}
-                  </Typography>
-                </Grid>
-                <Grid item xs={6}>
-                  <Typography className={classes.description} variant="caption" display="block" gutterBottom>
-                    {t("mediaUpload.description")}
-                  </Typography>
                 </Grid>
               </Grid>
 
-              <MediaUpload
-                images={mostRecentlySelectedAppDetails.media || []}
-                accept="image/*"
-                onFileLoaded={uploadMedia}
-                onDeletePressed={deleteMedia}
-              />
+              {/*
+              FIXME: the hr above should be rendered by the extension
+              TODO: document getSections so that comments like this are not needed
+              The following code checks if a Marketplace extension's section exists,
+and if it does, it passes along the form's state, and any necessary logic
+to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
+              {
+                getSections(
+                  "MARKETPLACE_APP_VISIBILITY",
+                  {
+                    formState,
+                    handleAppVisibility,
+                    handleChange,
+                  }
+                )
+              }
 
-              <hr className={classes.regularSectionSeparator} />
               {/* 'Metadata' section */}
               <div>
                 {/* 'Custom properties' text */}
-                <div className={classes.customPropsTextContainer}>
-                  <p>
-                    {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
-                  </p>
+                <Grid md={12} spacing={3}>
+                  <Grid md={6} spacing={3}>
+                    <Box pb={1.5}>
+                      <Typography display="block" gutterBottom variant="h6">
+                        {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
+                      </Typography>
+                    </Box>
 
-                  <p>
-                    {t("dashboardTab.applicationsSubTab.appModal.customProps.subtitle")}
-                  </p>
-                </div>
+                    <Box pb={5}>
+                      <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
+                        {t("dashboardTab.applicationsSubTab.appModal.customProps.subtitle")}
+                      </Typography>
+                    </Box>
+                  </Grid>
+                </Grid>
 
                 {/* 'Custom properties' fields */}
                 <div className={classes.customPropsFieldsContainer}>
@@ -1115,92 +1224,66 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   </div>
                 </div>
 
-                <div className={classes.addCustomPropsContainer}>
-                  <Button
-                    className={classes.addCustomPropsButton}
-                    disabled
-                  >
-                    {t("dashboardTab.applicationsSubTab.appModal.customProps.addCustomPropsButtonLabel")}
-                  </Button>
+                <Grid container>
+                  <Grid item md={6} spacing={3}>
+                    <Button
+                      className={classes.addCustomPropsButton}
+                      disabled
+                    >
+                      {t("dashboardTab.applicationsSubTab.appModal.customProps.addCustomPropsButtonLabel")}
+                    </Button>
+                  </Grid>
 
-                  <div className={classes.infoBox}>
-                    <InfoRoundedIcon className={classes.infoBoxIcon} />
-
-                    <div>
-                      <p className={classes.infoBoxText}>
-                        <>
-                          {t("dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText")}
-                        </>
-                        <a
-                          className={classes.infoBoxLink}
-                          href='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1450835969/Custom+Properties'
-                          rel='noopener noreferrer'
-                          target='_blank'
-                        >
-                          {t("dashboardTab.applicationsSubTab.appModal.customProps.infoBoxLinkText")}
-                        </a>
-                        <>.</>
-                      </p>
-                    </div>
-                  </div>
-                </div>
+                  <Grid item md={6} spacing={3}>
+                    <Notice
+                      noticeIcon={<Icon>info</Icon>}
+                      noticeText={
+                        <Typography variant="body2" display="block" style={{ color: palette.info.dark }}>
+                          <Trans i18nKey="dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText">
+                            {[
+                              <Link
+                                key="dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText"
+                                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1450835969/Custom+Properties"
+                                rel='noopener noreferrer'
+                                target='_blank'
+                              />,
+                            ]}
+                          </Trans>
+                        </Typography>
+                      }
+                      type="info"
+                    />
+                  </Grid>
+                </Grid>
               </div>
 
               <hr className={classes.regularSectionSeparator} />
-              {/* The following code checks if a Marketplace extension's section exists,
-and if it does, it passes along the form's state, and any necessary logic
-to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
-              {
-                getSections(
-                  "MARKETPLACE_APP_VISIBILITY",
-                  {
-                    formState,
-                    handleAppVisibility,
-                    handleChange,
-                  }
-                )
-              }
 
               {/* 'App action' buttons section */}
               <div className={classes.buttonsContainer}>
                 {
                   modalMode === "new"
                     ? (
-                      <>
-                        <div>
+                      <Grid container>
+                        <Grid item md={6} spacing={3}>
                           <Button
+                            color="primary"
                             disabled={
                               !(
                                 formState.values.appName.length !== 0 &&
                                 formState.values.appRedirectURI !== "http://" &&
                                 formState.values.appRedirectURI !== "https://" &&
                                 formState.values.appRedirectURI.length !== 0 &&
-                                (
-                                  (
-                                    formState.values.appMetaKey.length === 0 &&
-                                    formState.values.appMetaValue.length === 0 &&
-                                    formState.values.appMetaTitle.length === 0 &&
-                                    formState.values.appMetaTitle.length === 0
-                                  )
-                                  ||
-                                  (
-                                    formState.values.appMetaKey.length !== 0 &&
-                                    isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`) &&
-                                    formState.values.appMetaValue.length !== 0 &&
-                                    formState.values.appMetaTitle.length !== 0 &&
-                                    formState.values.appMetaTitle.length !== 0
-                                  )
-                                ) &&
+                                validMetadata() &&
                                 (formState.isValid || Object.keys(formState.errors).length === 0) &&
                                 !(allUserAppNames.includes(formState.values.appName)) &&
                                 validImage
                               )
                             }
-                            color="primary"
-                            variant="contained"
-                            size="large"
                             disableElevation
                             onClick={createNewApp}
+                            size="large"
+                            variant="contained"
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.addAppButtonLabel")}
                           </Button>
@@ -1211,56 +1294,37 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.cancelModalButtonLabel")}
                           </Button>
-                        </div>
+                        </Grid>
 
-                        <div className={classes.infoBox}>
-                          <QueryBuilderRoundedIcon className={classes.infoBoxIcon} />
+                        <Grid item md={6} spacing={3}>
+                          <Notice
+                            noticeIcon={<Icon>query_builder</Icon>}
+                            noticeText={
+                              <Box display="flex" flexDirection="column">
+                                <Typography display="block" style={{ color: palette.info.dark }} variant="body2">
+                                  {t("dashboardTab.applicationsSubTab.appModal.infoBoxTitleLabel")}
+                                </Typography>
 
-                          <div>
-                            <p className={classes.infoBoxText}>
-                              {t("dashboardTab.applicationsSubTab.appModal.infoBoxTitleLabel")}
-                            </p>
-
-                            <p className={classes.infoBoxText}>
-                              {t("dashboardTab.applicationsSubTab.appModal.infoBoxSubTitleLabel")}
-                            </p>
-                          </div>
-                        </div>
-                      </>
+                                <Typography display="block" style={{ color: palette.info.dark }} variant="body2">
+                                  {t("dashboardTab.applicationsSubTab.appModal.infoBoxSubTitleLabel")}
+                                </Typography>
+                              </Box>
+                            }
+                            type="info"
+                          />
+                        </Grid>
+                      </Grid>
                     )
                     : (
                       <>
                         <div>
                           <Button
-                            disabled={
-                              !(
-                                formState.isDirty &&
-                                (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                                (
-                                  // No metadata? No problem.
-                                  (
-                                    formState.values.appMetaKey.length === 0 &&
-                                    formState.values.appMetaValue.length === 0 &&
-                                    formState.values.appMetaTitle.length === 0 &&
-                                    formState.values.appMetaTitle.length === 0
-                                  )
-                                  ||
-                                  // Metadata? Then, we need all mandatory fields to be filled in.
-                                  (
-                                    formState.values.appMetaKey.length !== 0 &&
-                                    isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`) &&
-                                    formState.values.appMetaValue.length !== 0 &&
-                                    formState.values.appMetaTitle.length !== 0 &&
-                                    formState.values.appMetaTitle.length !== 0
-                                  )
-                                ) &&
-                                validImage)
-                            }
                             color="primary"
-                            variant="contained"
-                            size="large"
+                            disabled={!hasChanged()}
                             disableElevation
                             onClick={_updateApp}
+                            size="large"
+                            variant="contained"
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.editAppButtonLabel")}
                           </Button>
@@ -1292,7 +1356,7 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                     )
                 }
               </div>
-            </div>
+            </PageContainer>
           </div>
         </Fade>
       </Modal>

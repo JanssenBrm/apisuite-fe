@@ -46,6 +46,7 @@ export default makeStyles((theme) => ({
     left: "50%",
     position: "absolute",
     transform: "translateY(-60px)",
+    marginLeft: "-20px",
   },
 
   iconLogo: {
@@ -97,11 +98,6 @@ export default makeStyles((theme) => ({
     width: "100%",
   },
 
-  portalName: {
-    fontSize: "22px",
-    fontWeight: 300,
-  },
-
   rightFooterContentsContainer: {
     alignItems: "center",
     display: "flex",
@@ -123,27 +119,14 @@ export default makeStyles((theme) => ({
     width: "100%",
   },
 
-  subSection: {
-    "& > h3": {
-      color: theme.palette.primary.contrastText,
-      fontSize: "16px",
-      fontWeight: "300",
-      lineHeight: "22px",
-      margin: "0",
-      padding: "0",
-    },
+  subSectionAnchor: {
+    textDecoration: "none",
+  },
 
-    "& > p": {
-      color: theme.palette.grey[300],
-      fontSize: "14px",
-      fontWeight: "300",
-      lineHeight: "22px",
-      margin: "0",
-      padding: "0",
-
-      "& > a": {
-        textDecoration: "none",
-      },
+  iconAnchor: {
+    textDecoration: "none",
+    "&:link, &:visited, &:hover, &:active": {
+      color: "inherit",
     },
   },
 }));

@@ -1,28 +1,36 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useTranslation, Avatar, Button } from "@apisuite/fe-base";
-import HeightRoundedIcon from "@material-ui/icons/HeightRounded";
-import OpenInNewRoundedIcon from "@material-ui/icons/OpenInNewRounded";
-import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
-
-import { AppData, ModalDetails } from "store/applications/types";
-import { getAllUserApps } from "store/applications/actions/getAllUserApps";
-import { getSections } from "util/extensions";
-import { ApplicationsModal } from "components/ApplicationsModal";
-import Link from "components/Link";
+import {
+  Avatar, Box, Button, Card, CardContent,
+  Grid, Icon, Trans, Typography, useTheme, useTranslation,
+} from "@apisuite/fe-base";
+import clsx from "clsx";
 
 import adrift from "assets/adrift.svg";
 import authFundamentals from "assets/authFundamentals.svg";
 import launchApp from "assets/launchApp.svg";
-
+import { ApplicationCard } from "components/ApplicationCard/ApplicationCard";
+import { ApplicationsModal } from "components/ApplicationsModal";
+import { PageContainer } from "components/PageContainer";
+import Link from "components/Link";
+import Notice from "components/Notice";
+import { ROLES } from "constants/global";
+import { AppData, ModalDetails } from "store/applications/types";
+import { getAllUserApps } from "store/applications/actions/getAllUserApps";
+import { getSections } from "util/extensions";
 import { applicationsSelector } from "./selector";
 import useStyles from "./styles";
 
 export const Applications: React.FC = () => {
   const classes = useStyles();
-  const dispatch = useDispatch();
+  const { palette } = useTheme();
   const { t } = useTranslation();
-  const { allUserApps, currentOrganisation, user } = useSelector(applicationsSelector);
+  const dispatch = useDispatch();
+  const {
+    allUserApps, createUserAppStatus, currentOrganisation, deleteUserAppStatus, updateUserAppStatus, user,
+  } = useSelector(applicationsSelector);
+
+  const MARKETPLACE_SECTION = "SUBBED_MARKETPLACE_APPS";
 
   const [hasCurrentOrgDetails, setHasCurrentOrgDetails] = useState(false);
 
@@ -60,13 +68,67 @@ export const Applications: React.FC = () => {
 
   let allUserAppNames: string[] = [];
 
+  const getCardContent = (app: AppData) => {
+    return <>
+      <Box clone py={1.5}>
+        <Typography className={classes.clientApplicationCardTitle} variant="h4">
+          {app.name}
+        </Typography>
+      </Box>
+
+      <Box clone pb={1.5}>
+        <Typography
+          className={classes.clientApplicationCardDescription}
+          style={{ color: palette.text.secondary }}
+          variant="body1"
+        >
+          {
+            app.shortDescription
+              ? app.shortDescription
+              : (
+                app.description
+                  ? app.description
+                  : t("dashboardTab.applicationsSubTab.listOfAppsSection.noAppDescription")
+              )
+          }
+        </Typography>
+      </Box>
+
+      <Box display="flex" pt={1.5}>
+        {/* A mere dot */}
+        <Box
+          className={
+            clsx(
+              classes.subscribedClientApplicationCardStatusIcon,
+              !app.subscriptions.length && classes.draftClientApplicationCardStatusIcon,
+            )
+          }
+          pb={1.5}
+          pr={1}
+        >
+          <Icon fontSize="small">circle</Icon>
+        </Box>
+
+        <Box clone pb={1.5}>
+          <Typography style={{ color: palette.text.secondary }} variant="body2">
+            {
+              app.subscriptions.length === 0
+                ? t("dashboardTab.applicationsSubTab.listOfAppsSection.draftAppStatus")
+                : t("dashboardTab.applicationsSubTab.listOfAppsSection.subscribedAppStatus")
+            }
+          </Typography>
+        </Box>
+      </Box>
+    </>;
+  };
+
   /* Generates an 'app card' for every app a user has. */
   const appCardGenerator = (allUserAppsArray: AppData[]) => {
     if (allUserAppsArray.length === 0) {
       return (
-        <p className={classes.loadingClientApplicationCards}>
+        <Typography style={{ color: palette.text.primary }} variant="body1">
           {t("dashboardTab.applicationsSubTab.listOfAppsSection.loadingApps")}
-        </p>
+        </Typography>
       );
     }
 
@@ -79,80 +141,38 @@ export const Applications: React.FC = () => {
       allUserAppNames = [...allUserAppNames, userApp.name];
 
       return (
-        <div
-          className={classes.clientApplicationCard}
-          key={`appCard${index}`}
-          onClick={() => {
-            if (user) {
-              toggleModal("edit", user.id, userApp.id);
-            }
-          }}
-        >
-          <div className={classes.clientApplicationCardTopSection}>
-            <HeightRoundedIcon className={
-              userApp.logo !== ""
-                ? classes.clientApplicationCardWithImageIcon
-                : classes.clientApplicationCardWithAvatarIcon
-            }
-            />
-
-            {
-              userApp.logo !== ""
-                ? (
-                  <img
-                    className={classes.clientApplicationCardImage}
-                    src={userApp.logo}
-                  />
-                )
-                : (
-                  <Avatar
-                    className={classes.clientApplicationCardAvatar}
-                  >
-                    {appNameInitials}
-                  </Avatar>
-                )
-            }
-          </div>
-
-          <div className={classes.clientApplicationCardBottomSection}>
-            <p className={classes.clientApplicationCardTitle}>
-              {userApp.name}
-            </p>
-
-            <p className={classes.clientApplicationCardDescription}>
-              {
-                userApp.shortDescription
-                  ? userApp.shortDescription
-                  : (
-                    userApp.description
-                      ? userApp.description
-                      : t("dashboardTab.applicationsSubTab.listOfAppsSection.noAppDescription")
-                  )
-              }
-            </p>
-
-            <div className={classes.clientApplicationCardStatus}>
-              {/* A mere dot */}
-              <span
-                className={
-                  userApp.subscriptions.length === 0
-                    ? classes.draftClientApplicationCardStatusIcon
-                    : classes.subscribedClientApplicationCardStatusIcon
-                }
-              >
-                <>&#9679;</>
-              </span>
-
-              <p className={classes.clientApplicationCardStatusText}>
+        <Grid item key={`appCard${index}`} xs={4}>
+          <ApplicationCard
+            cardContent={getCardContent(userApp)}
+            contentStyle={classes.clientApplicationCardBottomSection}
+            icon="open_in_full"
+            media={
+              <Box textAlign="center">
                 {
-                  userApp.subscriptions.length === 0
-                    ? t("dashboardTab.applicationsSubTab.listOfAppsSection.draftAppStatus")
-                    : t("dashboardTab.applicationsSubTab.listOfAppsSection.subscribedAppStatus")
+                  userApp.logo !== ""
+                    ? (
+                      <Avatar
+                        className={classes.clientApplicationCardAvatar}
+                        src={userApp.logo}
+                      />
+                    )
+                    : (
+                      <Avatar
+                        className={classes.clientApplicationCardAvatar}
+                      >
+                        {appNameInitials}
+                      </Avatar>
+                    )
                 }
-              </p>
-            </div>
-          </div>
-        </div>
+              </Box>
+            }
+            onClick={() => {
+              if (user) {
+                toggleModal("edit", user.id, userApp.id);
+              }
+            }}
+          />
+        </Grid>
       );
     });
 
@@ -176,164 +196,241 @@ export const Applications: React.FC = () => {
   of all app-related information we presently have on a particular user the first time, and
   following any changes to 'applications > userApps' (i.e., 'allUserApps'). */
   useEffect(() => {
-    if (user) {
+    if (
+      user &&
+      !createUserAppStatus.isRequesting &&
+      !deleteUserAppStatus.isRequesting &&
+      !updateUserAppStatus.isRequesting
+    ) {
       dispatch(getAllUserApps({ userId: user.id }));
     }
-  }, [user, dispatch]);
+  }, [createUserAppStatus, deleteUserAppStatus, dispatch, updateUserAppStatus, user]);
+
+  const renderNoOrgView = () => (
+    <Box alignItems="center" display="flex" flexDirection="column" justifyContent="center">
+      <Box clone pb={5} textAlign="center">
+        <img className={classes.firstUseImage} src={adrift} />
+      </Box>
+
+      <Button
+        className={classes.firstUseButton}
+        href='/profile/organisation'
+      >
+        {t("dashboardTab.applicationsSubTab.noOrganisationsButtonLabel")}
+      </Button>
+
+      <Box clone py={3}>
+        <Typography align="center" variant="body1">
+          <Trans i18nKey="dashboardTab.applicationsSubTab.documentationLink">
+            {[
+              <Link
+                key="dashboardTab.applicationsSubTab.documentationLink"
+                rel='noopener noreferrer'
+                style={{ color: palette.text.secondary }}
+                target='_blank'
+                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications"
+              />,
+            ]}
+          </Trans>
+        </Typography>
+      </Box>
+
+      <Notice
+        noticeIcon={<Icon>warning_amber</Icon>}
+        noticeText={
+          <Typography align="center" style={{ color: palette.warning.dark }} variant="body2">
+            {t("dashboardTab.applicationsSubTab.noOrganisationWarning")}
+          </Typography>
+        }
+        type="warning"
+      />
+    </Box>
+  );
+
+  const renderNoAppsView = () => (
+    <Box alignItems="center" display="flex" flexDirection="column" justifyContent="center">
+      <Box clone pb={5} textAlign="center">
+        <img className={classes.firstUseImage} src={adrift} />
+      </Box>
+
+      <Button
+        className={classes.firstUseButton}
+        onClick={() => toggleModal("new", 0, 0)}
+      >
+        {t("dashboardTab.applicationsSubTab.noApplicationsButtonLabel")}
+      </Button>
+
+      <Box clone py={3}>
+        <Typography align="center" variant="body1">
+          <Trans i18nKey="dashboardTab.applicationsSubTab.documentationLink">
+            {[
+              <Link
+                key="dashboardTab.applicationsSubTab.documentationLink"
+                rel='noopener noreferrer'
+                style={{ color: palette.text.secondary }}
+                target='_blank'
+                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications"
+              />,
+            ]}
+          </Trans>
+        </Typography>
+      </Box>
+
+      <hr className={classes.sectionSeparator} />
+
+      {/* Subscribed Marketplace applications container */}
+      <Box width={1}>
+        {getSections(MARKETPLACE_SECTION)}
+      </Box>
+    </Box>
+  );
+
+  const renderAppsView = () => (
+    <>
+      <Box display="flex" flexDirection="column">
+        <Box pb={2}>
+          <Typography variant="h2">
+            {t("dashboardTab.applicationsSubTab.listOfAppsSection.clientApplicationsTitle")}
+          </Typography>
+        </Box>
+
+        <Box pb={5}>
+          <Typography style={{ color: palette.text.secondary }} variant="body1">
+            {t("dashboardTab.applicationsSubTab.listOfAppsSection.subtitle")}
+          </Typography>
+        </Box>
+
+        {/* Client applications container */}
+        <div>
+          <Grid container spacing={3}>
+            {appCardGenerator(allUserApps)}
+            <Grid item key="appCard-addNew" xs={4}>
+              <Card elevation={1}>
+                <CardContent
+                  className={classes.clientApplicationCardBottomSection}
+                  style={{
+                    alignItems: "center",
+                    display: "flex",
+                    justifyContent: "center",
+                    minHeight: "337px",
+                  }}
+                >
+                  <Button
+                    className={classes.registerNewClientApplicationCardButton}
+                    onClick={() => toggleModal("new", 0, 0)}
+                  >
+                    {t("dashboardTab.applicationsSubTab.listOfAppsSection.registerNewAppButtonLabel")}
+                  </Button>
+                </CardContent>
+              </Card>
+            </Grid>
+          </Grid>
+        </div>
+
+        {/* Subscribed Marketplace applications container */}
+        <Box width={1}>
+          {getSections(MARKETPLACE_SECTION)}
+        </Box>
+      </Box>
+
+      <Box width={1}>
+        <Box clone py={2}>
+          <Typography variant="h3">
+            {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.title")}
+          </Typography>
+        </Box>
+
+        <Grid container spacing={3}>
+          <Grid item xs={6}>
+            <Link style={{ textDecoration: "none" }} to='/documentation'>
+              <ApplicationCard
+                cardContent={
+                  <>
+                    <Box clone pb={3} px={3}>
+                      <Typography style={{ color: palette.primary.main }} variant="h3">
+                        {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardTitle")}
+                      </Typography>
+                    </Box>
+
+                    <Box clone pb={3} px={3}>
+                      <Typography style={{ color: palette.text.secondary }} variant="body1">
+                        {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardSubtitle")}
+                      </Typography>
+                    </Box>
+                  </>
+                }
+                icon="open_in_new"
+                media={
+                  <Box px={5} py={3}>
+                    <img
+                      src={launchApp}
+                      style={{ height: "120px", maxHeight: "120px" }}
+                      title="Documentation Image"
+                    />
+                  </Box>
+                }
+              />
+            </Link>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Link
+              style={{ textDecoration: "none" }}
+              to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2'
+            >
+              <ApplicationCard
+                cardContent={
+                  <>
+                    <Box clone pb={3} px={3}>
+                      <Typography style={{ color: palette.primary.main }} variant="h3">
+                        {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsTitle")}
+                      </Typography>
+                    </Box>
+
+                    <Box clone pb={3} px={3}>
+                      <Typography style={{ color: palette.text.secondary }} variant="body1">
+                        {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsSubtitle")}
+                      </Typography>
+                    </Box>
+                  </>
+                }
+                icon="open_in_new"
+                media={
+                  <Box px={5} py={3}>
+                    <img
+                      src={authFundamentals}
+                      style={{ height: "120px", maxHeight: "120px" }}
+                      title="Auth Fundamentals Image"
+                    />
+                  </Box>
+                }
+              />
+            </Link>
+          </Grid>
+        </Grid>
+      </Box>
+    </>
+  );
 
   return (
-    <main className={classes.pageContentsContainer}>
+    <PageContainer>
       {
-        // If the user has yet to create/join an organisation, (...)
-        !hasCurrentOrgDetails
-          ? (
-            <section className={classes.firstUseContentContainer}>
-              <div className={classes.firstUseImageContainer}>
-                <img className={classes.firstUseImage} src={adrift} />
-              </div>
-
-              <div className={classes.firstUseButtonContainer}>
-                <Button
-                  className={classes.firstUseButton}
-                  href='/profile/organisation'
-                >
-                  {t("dashboardTab.applicationsSubTab.noOrganisationsButtonLabel")}
-                </Button>
-              </div>
-
-              <Link
-                className={classes.firstUseLink}
-                to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications'
-              >
-                {t("dashboardTab.applicationsSubTab.documentationLink")}
-              </Link>
-
-              <div className={classes.warningBox}>
-                <ReportProblemOutlinedIcon className={classes.warningBoxIcon} />
-
-                <p className={classes.warningBoxText}>
-                  {t("dashboardTab.applicationsSubTab.noOrganisationWarning")}
-                </p>
-              </div>
-            </section>
-          )
-          : (
-            // If the user has already created/joined an organisation, but has yet to create any apps, (...)
-            allUserApps.length === 0
-              ? (
-                <section className={classes.firstUseContentContainer}>
-                  <div className={classes.firstUseImageContainer}>
-                    <img className={classes.firstUseImage} src={adrift} />
-                  </div>
-
-                  <div className={classes.firstUseButtonContainer}>
-                    <Button
-                      className={classes.firstUseButton}
-                      onClick={() => toggleModal("new", 0, 0)}
-                    >
-                      {t("dashboardTab.applicationsSubTab.noApplicationsButtonLabel")}
-                    </Button>
-                  </div>
-
-                  <Link
-                    className={classes.firstUseLink}
-                    to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580321305/Client+Applications'
-                  >
-                    {t("dashboardTab.applicationsSubTab.documentationLink")}
-                  </Link>
-
-                  <hr className={classes.sectionSeparator} />
-
-                  {/* Subscribed Marketplace applications container */}
-                  <div className={classes.hasNoUserAppsButHasMarketplaceAppSubsContainer}>
-                    {
-                      getSections("SUBBED_MARKETPLACE_APPS")
-                    }
-                  </div>
-                </section>
-              )
-              : (
-                // If the user has already created one or more apps, we list them out (...)
-                <>
-                  <section className={classes.clientApplicationsContentContainer}>
-                    <h1 className={classes.clientApplicationsTitle}>
-                      {t("dashboardTab.applicationsSubTab.listOfAppsSection.title")}
-                    </h1>
-
-                    <p className={classes.clientApplicationsSubtitle}>
-                      {t("dashboardTab.applicationsSubTab.listOfAppsSection.subtitle")}
-                    </p>
-
-                    {/* Client applications container */}
-                    <div>
-                      <p className={classes.clientApplicationsContainerTitle}>
-                        {t("dashboardTab.applicationsSubTab.listOfAppsSection.clientApplicationsTitle")}
-                      </p>
-
-                      <Button
-                        className={classes.registerNewClientApplicationCardButton}
-                        onClick={() => toggleModal("new", 0, 0)}
-                      >
-                        {t("dashboardTab.applicationsSubTab.listOfAppsSection.registerNewAppButtonLabel")}
-                      </Button>
-
-                      <div className={classes.clientApplicationCardsContainer}>
-                        {appCardGenerator(allUserApps)}
-                      </div>
-                    </div>
-
-                    {/* Subscribed Marketplace applications container */}
-                    <div>
-                      {
-                        getSections("SUBBED_MARKETPLACE_APPS")
-                      }
-                    </div>
-                  </section>
-
-                  <section className={classes.knowledgeBaseContentContainer}>
-                    <h1 className={classes.knowledgeBaseTitle}>
-                      {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.title")}
-                    </h1>
-
-                    <div className={classes.knowledgeBaseCardsContainer}>
-                      <Link
-                        className={classes.knowledgeBaseCard}
-                        to='/documentation'
-                      >
-                        <OpenInNewRoundedIcon className={classes.knowledgeBaseCardIcon} />
-
-                        <img className={classes.knowledgeBaseCardImage} src={launchApp} />
-
-                        <p className={classes.knowledgeBaseCardTitle}>
-                          {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardTitle")}
-                        </p>
-
-                        <p className={classes.knowledgeBaseCardDescription}>
-                          {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.launchAppCardSubtitle")}
-                        </p>
-                      </Link>
-
-                      <Link
-                        className={classes.knowledgeBaseCard}
-                        to='https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/580386833/Open+Authentication+2'
-                      >
-                        <OpenInNewRoundedIcon className={classes.knowledgeBaseCardIcon} />
-
-                        <img className={classes.knowledgeBaseCardImage} src={authFundamentals} />
-
-                        <p className={classes.knowledgeBaseCardTitle}>
-                          {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsTitle")}
-                        </p>
-
-                        <p className={classes.knowledgeBaseCardDescription}>
-                          {t("dashboardTab.applicationsSubTab.knowledgeBaseSection.authFundamentalsSubtitle")}
-                        </p>
-                      </Link>
-                    </div>
-                  </section>
-                </>
-              )
-          )
+        user?.role.id === `${ROLES.baseUser.level}` ?
+          <Box width={1}>
+            {getSections(MARKETPLACE_SECTION)}
+          </Box>
+          // If the user has yet to create/join an organisation, (...)
+          : !hasCurrentOrgDetails
+            ? renderNoOrgView()
+            : (
+              // If the user has already created/joined an organisation, but has yet to create any apps, (...)
+              !allUserApps.length
+                ? renderNoAppsView()
+                : (
+                  // If the user has already created one or more apps, we list them out (...)
+                  renderAppsView()
+                )
+            )
       }
 
       {
@@ -346,6 +443,6 @@ export const Applications: React.FC = () => {
           toggleModal={() => toggleModal("", 0, 0)}
         />
       }
-    </main>
+    </PageContainer>
   );
 };

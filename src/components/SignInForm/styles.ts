@@ -28,21 +28,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 
-  forgotPasswordLink: {
-    color: `${theme.palette.grey[400]} !important`,
-    cursor: "pointer",
-    display: "flex",
-    fontSize: "14px",
-    fontWeight: 400,
-    justifyContent: "center",
-    marginTop: "25px",
-    textDecoration: "underline",
-
-    "&:hover": {
-      color: `${theme.palette.grey[400]} !important`,
-    },
-  },
-
   inputField: {
     backgroundColor: theme.palette.background.paper,
     borderRadius: `${theme.shape.borderRadius}px`,
@@ -55,7 +40,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   signInContainer: {
-    height: "100%",
     width: "100%",
   },
 

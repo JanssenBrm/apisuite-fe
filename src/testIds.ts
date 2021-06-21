@@ -29,6 +29,7 @@ export enum testIds {
   // steps section
   stepsSection = "steps-section",
   stepsSectionContent = "steps-section-content",
+  stepsSectionLeftSide = "steps-section-left-side",
   stepOne = "step-one",
   stepTwo = "step-two",
   stepThree = "step-three",
@@ -55,9 +56,11 @@ export enum testIds {
   greetingCardButton = "greeeting-card-button",
   greetingCardParagraphOne = "greeting-paragraph-one",
   greetingCardParagraphTwo = "greeting-paragraph-two",
+  greetingCardParagraphThree = "greeting-paragraph-three",
 
   // notice
   notice = "notice",
+  noticeText = "notice-text",
 
   // footer
   footerToTopButton = "footer-to-top-button",

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@apisuite/fe-base";
+import { Button, Paper } from "@apisuite/fe-base";
 
 import useStyles from "./styles";
 import { GreetingCardProps } from "./types";
@@ -14,7 +14,7 @@ const GreetingCard: React.FC<GreetingCardProps> = ({
   const classes = useStyles();
 
   return (
-    <section className={classes.greetingCardContentsContainer}>
+    <Paper elevation={3}>
       {
         typeof greetingCardText === "string"
           ? (
@@ -36,7 +36,7 @@ const GreetingCard: React.FC<GreetingCardProps> = ({
       >
         {greetingCardButtonLabel}
       </Button>
-    </section>
+    </Paper>
   );
 };
 

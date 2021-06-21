@@ -25,12 +25,6 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.primary.main,
   },
 
-  privacyPolicyDisclaimerContainer: {
-    display: "flex",
-    justifyContent: "center",
-    marginTop: "25px",
-  },
-
   privacyPolicyDisclaimerLink: {
     color: `${theme.palette.action.active} !important`,
     fontSize: "12px",
@@ -45,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
   },
 
   signUpContainer: {
-    height: "100%",
     width: "100%",
   },
 }));

@@ -91,7 +91,6 @@ export type RequestAPIAccessActionError = {
 export type GetUserAppAction = {
   type: typeof GET_USER_APP,
   appId: number,
-  orgId: number,
 }
 
 export type GetUserAppActionSuccess = {

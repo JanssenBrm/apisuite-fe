@@ -50,8 +50,10 @@
         }
      },
      "apiCatalog":{
-        "intro":"API Catalog recent additions",
-        "paragraph":"No APIs have been recently added."
+        "intro":"API Catalogue recent additions",
+        "paragraph":"No APIs have been recently added.",
+        "productionAccess":" Production access",
+        "documentationAccess":" API Documentation"
      },
      "notice":"{{portalName}} is maintained by {{clientName}}. You can visit us at <0>{{url}}</0>."
   },
@@ -238,8 +240,7 @@
               "title":"Available APIs",
               "subtitle":"actions"
            },
-           "notificationTextPartOne":"API Subscriptions allow you to control access and to stay informed. But there’s more. Read ",
-           "notificationTextPartTwo":"API Subscriptions explained"
+           "notificationText":"API Subscriptions allow you to control access and to stay informed. But there’s more. Read \"<0>API Subscriptions explained</0>\"."
         },
         "hasNoDataToShow":{
            "buttonLabel":"Add Subscription",
@@ -289,7 +290,7 @@
      "applicationsSubTab":{
         "noOrganisationsButtonLabel":"Set up your Organisation",
         "noApplicationsButtonLabel":"Register your first app",
-        "documentationLink":"Read why apps are used",
+        "documentationLink":"<0>Read why apps are used</0>",
         "noOrganisationWarning":"You need to create an Organisation before you can create your first app. Click on the \"Set up your Organisation\" button above to start.",
         "listOfAppsSection":{
            "title":"Applications",
@@ -351,11 +352,10 @@
            "selectorTitle":"Useful links",
            "subbedAppStatus":"Subscribed",
            "subSectionLabelFive":"Additional information",
-           "subSectionLabelFourPartOne":"The client credentials for ",
-           "subSectionLabelFourPartTwo":"OAuth2 secured API access",
+           "subSectionLabelFour":"The client credentials for <0>OAuth2 secured API access</0>.",
            "subSectionLabelOne":"General information",
            "subSectionLabelSix":"You have the option to provide multiple useful links related to the application.",
-           "subSectionLabelThree":"Redirect URI",
+           "subSectionLabelThree":"Access details",
            "subSectionLabelTwo":"By providing plenty of information, you increase your chances for a one-shot subscription approval by us."
         }
      },
@@ -554,7 +554,7 @@
         "title":"Manage Team",
         "subtitle":"As organisation owner, you can invite other users to your team.\nIf users already exists in Cloudoki’s Portal, we’ll simply invite them to join your organisation too.",
         "header":"Organisation members",
-        "actions":"Role",
+        "actions":"User role",
         "invite":"Invite member",
         "send":"send"
      }
