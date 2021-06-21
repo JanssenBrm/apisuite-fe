@@ -2,16 +2,20 @@
 
 import { testIds } from "../../../src/testIds";
 
-const users = [{
-  type: "Base User",
-  filename: "profile-baseUser",
-},{
-  type: "Developer",
-  filename: "profile-developer",
-},{
-  type: "Organisation Owner",
-  filename: "profile-orgOwner",
-}];
+const users = [
+  // {
+  //   type: "baseUser",
+  //   filename: "profile-baseUser",
+  // },
+  {
+    type: "developer",
+    filename: "profile-developer",
+  },
+  {
+    type: "organizationOwner",
+    filename: "profile-orgOwner",
+  },
+];
 
 users.forEach(user => {
 
@@ -22,9 +26,10 @@ users.forEach(user => {
         cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
         cy.intercept(`${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
         cy.intercept(`${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
-        cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
-        cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
+        cy.intercept(`${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
+        cy.intercept(`${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
+        cy.clearCookies();
         cy.setCookie("hk", "234astgbhnm");
         cy.setCookie("apiSuiteSession", "SET_SESSION");
 
@@ -57,8 +62,114 @@ users.forEach(user => {
     });
 
 
-    //TODO: add tests for navigation
-    // context("Navigation", () => {});
+    context("Navigation", () => {
+      before(() => {
+        cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
+        cy.intercept(`${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
+        cy.intercept(`${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
+        cy.intercept(`${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
+        cy.intercept(`${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
+
+        cy.clearCookies();
+        cy.setCookie("hk", "234astgbhnm");
+        cy.setCookie("apiSuiteSession", "SET_SESSION");
+
+        cy.visit("/dashboard");
+        cy.dismissCookiesBanner();
+      });
+
+      it("should show the portal owner logo and name", () => {
+        cy.fixture("owner/owner.json").then(owner => {
+          cy.fixture("settings/settings.json").then(settings => {
+            cy.testID(testIds.navigation).should("be.visible");
+
+            cy.testID(testIds.navigationLogoAndTitle)
+              .should("be.visible")
+              .and("have.attr", "href", settings.navigation.title.route);
+
+            cy.testID(testIds.navigationLogo)
+              .should("be.visible")
+              .and("have.attr", "src", owner.logo);
+
+            cy.testID(testIds.navigationTitle)
+              .should("be.visible")
+              .and("have.text", settings.portalName);
+          });
+        });
+      });
+
+      it("should show the corresponding tabs on the navigation bar and sub-navigation bars", () => {
+        cy.fixture("settings/settings.json").then(settings => {
+          const fixedTabs = settings.navigation[user.type].tabs.filter((tab: { fixed: boolean })=>tab.fixed === true);
+
+          cy.findChildrenByID(testIds.navigationTopFixedTabs, testIds.navigationTab)
+            .should("have.length", fixedTabs.length);
+
+          for (let i = 0; i < fixedTabs.length; i++) {
+            cy.findChildrenByID(testIds.navigationTopFixedTabs, testIds.navigationTab).eq(i).find("a")
+              .should("be.visible")
+              .and("have.attr", "href", fixedTabs[i].action);
+          }
+
+          const notFixedTabs =
+            settings.navigation[user.type].tabs.filter((tab: { fixed: boolean })=>tab.fixed === false);
+
+          cy.findChildrenByID(testIds.navigationTopNotFixedTabs, testIds.navigationTab)
+            .should("have.length", notFixedTabs.length);
+
+          for (let i = 0; i < notFixedTabs.length; i++) {
+            cy.findChildrenByID(testIds.navigationTopNotFixedTabs, testIds.navigationTab).eq(i).find("a")
+              .should("be.visible")
+              .and("have.attr", "href", notFixedTabs[i].action);
+          }
+
+          const subTabs =
+            settings.navigation[user.type].tabs.find((tab: { label: { fallback: string} })=>{
+              cy.log(tab.label.fallback);
+              return tab.label.fallback == "Dashboard";
+            }).subTabs;
+
+          cy.findChildrenByID(testIds.navigationSubNav, testIds.navigationTab)
+            .should("have.length", subTabs.length);
+
+          for (let i = 0; i < subTabs.length; i++) {
+            cy.findChildrenByID(testIds.navigationSubNav, testIds.navigationTab).eq(i).find("a")
+              .should("be.visible")
+              .and("have.attr", "href", subTabs[i].action);
+          }
+        });
+      });
+
+      it("should scroll down a bit and show the corresponding tabs on the navigation bar and sub-navigation bars", () => {
+        cy.scrollTo(0,10);
+
+        cy.testID(testIds.navigationTopNotFixedTabs).should("not.exist");
+
+        cy.fixture("settings/settings.json").then(settings => {
+          const fixedTabs = settings.navigation[user.type].tabs;
+          for (let i = 0; i < fixedTabs.length; i++) {
+            cy.findChildrenByID(testIds.navigationTopFixedTabs, testIds.navigationTab).eq(i).find("a")
+              .should("be.visible")
+              .and("have.attr", "href", fixedTabs[i].action);
+          }
+
+          const subTabs =
+            settings.navigation[user.type].tabs.find((tab: { label: { fallback: string} })=>{
+              cy.log(tab.label.fallback);
+              return tab.label.fallback == "Dashboard";
+            }).subTabs;
+
+          cy.findChildrenByID(testIds.navigationSubNav, testIds.navigationTab)
+            .should("have.length", subTabs.length);
+
+          for (let i = 0; i < subTabs.length; i++) {
+            cy.findChildrenByID(testIds.navigationSubNav, testIds.navigationTab).eq(i).find("a")
+              .should("be.visible")
+              .and("have.attr", "href", subTabs[i].action);
+          }
+        });
+      });
+    });
 
 
     context("Actions Section", () => {
@@ -69,6 +180,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
+        cy.clearCookies();
         cy.setCookie("hk", "234astgbhnm");
         cy.setCookie("apiSuiteSession", "SET_SESSION");
       });
@@ -147,6 +259,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
+        cy.clearCookies();
         cy.setCookie("hk", "234astgbhnm");
         cy.setCookie("apiSuiteSession", "SET_SESSION");
 
@@ -184,6 +297,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
+        cy.clearCookies();
         cy.setCookie("hk", "234astgbhnm");
         cy.setCookie("apiSuiteSession", "SET_SESSION");
       });
@@ -282,6 +396,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
+        cy.clearCookies();
         cy.setCookie("hk", "234astgbhnm");
         cy.setCookie("apiSuiteSession", "SET_SESSION");
       });
@@ -322,6 +437,7 @@ users.forEach(user => {
         cy.intercept("GET", `${Cypress.env("api_url")}/users/profile`, { fixture: `profile/${user.filename}.json` });
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
 
+        cy.clearCookies();
         cy.setCookie("hk", "234astgbhnm");
         cy.setCookie("apiSuiteSession", "SET_SESSION");
       });

@@ -8,11 +8,19 @@ export enum testIds {
 
 
   // navigation
+  navigationLogoAndTitle = "navigation-logo-and-title",
+  navigationLogo = "navigation-logo",
+  navigationTitle = "navigation-title",
+  navigationTopFixedTabs = "navigation-top-fixed-tabs",
+  navigationTopNotFixedTabs = "navigation-top-not-fixed-tabs",
+  navigationSubNav = "navigation-sub-nav",
+  navigationTab = "navigation-tab",
   header = "header",
   tab = "tab",
   subNav = "sub-nav",
   userName = "user-name",
   userAvatar = "user-avatar",
+
 
   // carousel
   slide = "carousel-slide",

@@ -101,6 +101,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         py={subTab || expand ? 2 : 5}
         style={adjustTop ? { transform: "translateY(-2px)" } : undefined}
         color={!expand && subTab ? palette.text.primary : palette.secondary.contrastText}
+        data-test-id={testIds.navigationTab}
       >
         {/* routing actions - starts with `/` or `http` */}
         {/^(\/|http)/.test(action) && (
@@ -169,9 +170,9 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           alignItems="center"
           style={{ textDecoration: "none" }}
         >
-          <Link to={navigation.title.route}>
+          <Link to={navigation.title.route} data-test-id={testIds.navigationLogoAndTitle}>
             {/* Portal logo image */}
-            {ownerInfo.logo && <img width={125} height="auto" src={ownerInfo.logo} />}
+            {ownerInfo.logo && <img width={125} height="auto" src={ownerInfo.logo} data-test-id={testIds.navigationLogo}/>}
 
             {/* Portal logo fallback */}
             {!ownerInfo.logo && (
@@ -180,7 +181,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
               </Box>
             )}
 
-            <Box mx={2} clone color={palette.secondary.contrastText}>
+            <Box mx={2} clone color={palette.secondary.contrastText} data-test-id={testIds.navigationTitle}>
               <Typography variant="h5">
                 {portalName}
               </Typography>
@@ -191,6 +192,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
 
         {/* Top & Fixed Tabs */}
         <Grid
+          data-test-id={testIds.navigationTopFixedTabs}
           container
           xs
           direction="row"
@@ -212,6 +214,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           justifyContent="flex-end"
           flexWrap="nowrap"
           mx={6}
+          data-test-id={testIds.navigationTopNotFixedTabs}
         >
           {navigation[role].tabs.map((tab) => {
             if (tab.fixed) return null;
@@ -230,6 +233,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           flexWrap="nowrap"
           px={6}
           style={{ background: expand ? "transparent" : palette.grey[100] }}
+          data-test-id={testIds.navigationSubNav}
         >
           {/* Back left action */}
           {backAction && (

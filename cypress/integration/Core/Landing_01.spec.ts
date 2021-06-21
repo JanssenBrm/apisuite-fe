@@ -40,116 +40,76 @@ describe("Landing Page - Unauthenticated User", () => {
   });
 
 
-  //TODO: refactor
-  xcontext("Navigation", () => {
+  context("Navigation", () => {
     before(() => {
       cy.intercept(`${Cypress.env("api_url")}/settings`, { fixture: "settings/settings.json" });
       cy.intercept(`${Cypress.env("api_url")}/owner`, { fixture: "owner/owner.json" });
+      cy.intercept(`${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
+      cy.intercept(`${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
+
       cy.visit("/");
       cy.dismissCookiesBanner();
     });
 
-    it("should show a navigation bar and start expanded", () => {
-      cy.testID(testIds.navigation).should("be.visible").and("have.class", "expand");
-    });
-
-    it("should have Owner logo and name, Sign Up button and Sign In tab, on top bar", () => {
-      cy.fixture("owner/owner.json").then(owner => {
-        cy.testID(testIds.header).find("a").should("have.length", 3);
-
-        cy.testID(testIds.header).find("a").eq(0)
-          .should("have.attr", "href", "/")
-          .and("not.have.class", "Mui-disabled")
-          .and("not.have.attr", "target", "_blank");
-        cy.testID(testIds.header).find("a").eq(0).find("img")
-          .should("have.length", 1)
-          .and("have.attr", "src", owner.logo);
-        cy.testID(testIds.header).find("a").eq(0).find("h3")
-          .should("have.length", 1)
-          .and("contain", "Proba-V MEP user portal");
-
-        cy.findChildrenByID(testIds.header, testIds.tab).should("have.length", 2);
-        cy.findChildrenByID(testIds.header, testIds.tab).eq(0)
-          .should("have.attr", "href", "/auth/signup")
-          .and("not.have.class", "Mui-disabled")
-          .and("not.to.be.selected")
-          .and("not.have.attr", "target", "_blank");
-        cy.findChildrenByID(testIds.header, testIds.tab).eq(1)
-          .should("have.attr", "href", "/auth/signin")
-          .and("not.have.class", "Mui-disabled")
-          .and("not.to.be.selected")
-          .and("not.have.attr", "target", "_blank");
-      });
-    });
-
-    it("should have API Products, Documentation and Support tabs, on sub-nav bar", () => {
-      cy.fixture("settings/settings.json").then(settings => {
-        cy.findChildrenByID(testIds.subNav, testIds.tab).should("have.length", 3);
-        cy.findChildrenByID(testIds.subNav, testIds.tab).eq(0)
-          .should("have.attr", "href", "/api-products")
-          .and("not.have.class", "Mui-disabled")
-          .and("not.to.be.selected")
-          .and("not.have.attr", "target", "_blank");
-        cy.findChildrenByID(testIds.subNav, testIds.tab).eq(1)
-          .should("have.attr", "href", settings.documentationURL)
-          .and("not.have.class", "Mui-disabled")
-          .and("not.to.be.selected")
-          .and("have.attr", "target", "_blank");
-        cy.findChildrenByID(testIds.subNav, testIds.tab).eq(2)
-          .should("have.attr", "href", settings.supportURL)
-          .and("not.have.class", "Mui-disabled")
-          .and("not.to.be.selected")
-          .and("have.attr", "target", "_blank");
-      });
-    });
-
-    it("should scroll down a bit and navigation bar gets merged with sub-navigation bar", () => {
+    it("should show the portal owner logo and name", () => {
       cy.fixture("owner/owner.json").then(owner => {
         cy.fixture("settings/settings.json").then(settings => {
-          cy.scrollTo(0,10);
-          cy.testID(testIds.navigation).should("be.visible").and("not.to.have.class", "expand");
-          cy.testID(testIds.navigation).find("a").should("have.length", 6);
+          cy.testID(testIds.navigation).should("be.visible");
 
-          cy.testID(testIds.header).find("a").eq(0)
-            .should("have.attr", "href", "/")
-            .and("not.have.class", "Mui-disabled")
-            .and("not.have.attr", "target", "_blank");
-          cy.testID(testIds.header).find("a").eq(0).find("img")
-            .should("have.length", 1)
+          cy.testID(testIds.navigationLogoAndTitle)
+            .should("be.visible")
+            .and("have.attr", "href", settings.navigation.title.route);
+
+          cy.testID(testIds.navigationLogo)
+            .should("be.visible")
             .and("have.attr", "src", owner.logo);
-          cy.testID(testIds.header).find("a").eq(0).find("h3")
-            .should("have.length", 1)
-            .and("contain", "Proba-V MEP user portal");
 
-          cy.findChildrenByID(testIds.header, testIds.tab).should("have.length", 5);
-          cy.findChildrenByID(testIds.header, testIds.tab).eq(0)
-            .should("have.attr", "href", "/api-products")
-            .and("not.have.class", "Mui-disabled")
-            .and("not.to.be.selected")
-            .and("not.have.attr", "target", "_blank");
-          cy.findChildrenByID(testIds.header, testIds.tab).eq(1)
-            .should("have.attr", "href", settings.documentationURL)
-            .and("not.have.class", "Mui-disabled")
-            .and("not.to.be.selected")
-            .and("have.attr", "target", "_blank");
-          cy.findChildrenByID(testIds.header, testIds.tab).eq(2)
-            .should("have.attr", "href", settings.supportURL)
-            .and("not.have.class", "Mui-disabled")
-            .and("not.to.be.selected")
-            .and("have.attr", "target", "_blank");
-          cy.findChildrenByID(testIds.header, testIds.tab).eq(3)
-            .should("have.attr", "href", "/auth/signup")
-            .and("not.have.class", "Mui-disabled")
-            .and("not.to.be.selected")
-            .and("not.have.attr", "target", "_blank");
-          cy.findChildrenByID(testIds.header, testIds.tab).eq(4)
-            .should("have.attr", "href", "/auth/signin")
-            .and("not.have.class", "Mui-disabled")
-            .and("not.to.be.selected")
-            .and("not.have.attr", "target", "_blank");
-
-          cy.testID(testIds.subNav).should("not.exist");
+          cy.testID(testIds.navigationTitle)
+            .should("be.visible")
+            .and("have.text", settings.portalName);
         });
+      });
+    });
+
+    it("should show the corresponding tabs on the navigation bar and sub-navigation bars", () => {
+      cy.fixture("settings/settings.json").then(settings => {
+        const fixedTabs = settings.navigation["anonymous"].tabs.filter((tab: { fixed: boolean })=>tab.fixed === true);
+
+        cy.findChildrenByID(testIds.navigationTopFixedTabs, testIds.navigationTab)
+          .should("have.length", fixedTabs.length);
+
+        for (let i = 0; i < fixedTabs.length; i++) {
+          cy.findChildrenByID(testIds.navigationTopFixedTabs, testIds.navigationTab).eq(i).find("a")
+            .should("be.visible")
+            .and("have.attr", "href", fixedTabs[i].action);
+        }
+
+        const notFixedTabs =
+          settings.navigation["anonymous"].tabs.filter((tab: { fixed: boolean })=>tab.fixed === false);
+
+        cy.findChildrenByID(testIds.navigationTopNotFixedTabs, testIds.navigationTab)
+          .should("have.length", notFixedTabs.length);
+
+        for (let i = 0; i < notFixedTabs.length; i++) {
+          cy.findChildrenByID(testIds.navigationTopNotFixedTabs, testIds.navigationTab).eq(i).find("a")
+            .should("be.visible")
+            .and("have.attr", "href", notFixedTabs[i].action);
+        }
+      });
+    });
+
+    it("should scroll down a bit and show the corresponding tabs on the navigation bar and sub-navigation bars", () => {
+      cy.scrollTo(0,10);
+
+      cy.testID(testIds.navigationTopNotFixedTabs).should("not.exist");
+
+      cy.fixture("settings/settings.json").then(settings => {
+        const fixedTabs = settings.navigation["anonymous"].tabs;
+        for (let i = 0; i < fixedTabs.length; i++) {
+          cy.findChildrenByID(testIds.navigationTopFixedTabs, testIds.navigationTab).eq(i).find("a")
+            .should("be.visible")
+            .and("have.attr", "href", fixedTabs[i].action);
+        }
       });
     });
   });
