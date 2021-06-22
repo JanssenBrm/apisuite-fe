@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Avatar, Box, Button, Fade, Grid, Icon,
   IconButton, InputAdornment, Menu, MenuItem, Modal, TextField,
@@ -38,7 +39,27 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const { t } = useTranslation();
   const { navigation, ownerInfo, portalName } = useConfig();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
+  const [openCloseWarning, setOpenCloseWarning] = React.useState(false);
+  const [confirmAction, setConfirmAction] = React.useState("toggleModal");
+
+  const handleCloseEditWarning = () => {
+    setOpenCloseWarning(false);
+  };
+
+  const dialogFunctions: { [index:string] : () => void } = {
+    toggleModal: toggleModal,
+    subscriptions: () => history.push("/dashboard/subscriptions"),
+  };
+
+  const checkNextAction = (fn: string) => {
+    if (newHasChanged() || hasChanged()) {
+      setConfirmAction(fn);
+      return setOpenCloseWarning(true);
+    }
+    dialogFunctions[fn]();
+  };
 
   const metadataKeyDefaultPrefix = "meta_";
 
@@ -483,6 +504,17 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       && validImage;
   };
 
+  const newHasChanged = () => {
+    return formState.values.appName.length !== 0 &&
+    formState.values.appRedirectURI !== "http://" &&
+    formState.values.appRedirectURI !== "https://" &&
+    formState.values.appRedirectURI.length !== 0 &&
+    validMetadata() &&
+    (formState.isValid || Object.keys(formState.errors).length === 0) &&
+    !(allUserAppNames.includes(formState.values.appName)) &&
+    validImage;
+  };
+
   return (
     <>
       <Modal
@@ -534,10 +566,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               <div
                 className={classes.closeModalButtonContainer}
-                onClick={toggleModal}
+                onClick={() => checkNextAction("toggleModal")}
               >
                 <Box>
-                  <Typography display="block" gutterBottom variant="caption">
+                  <Typography gutterBottom variant="caption">
                     {t("dashboardTab.applicationsSubTab.appModal.closeButtonLabel")}
                   </Typography>
                 </Box>
@@ -1267,18 +1299,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <Grid item md={6}>
                           <Button
                             color="primary"
-                            disabled={
-                              !(
-                                formState.values.appName.length !== 0 &&
-                                formState.values.appRedirectURI !== "http://" &&
-                                formState.values.appRedirectURI !== "https://" &&
-                                formState.values.appRedirectURI.length !== 0 &&
-                                validMetadata() &&
-                                (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                                !(allUserAppNames.includes(formState.values.appName)) &&
-                                validImage
-                              )
-                            }
+                            disabled={!newHasChanged()}
                             disableElevation
                             onClick={createNewApp}
                             size="large"
@@ -1289,7 +1310,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <Button
                             className={classes.otherButtons}
-                            onClick={toggleModal}
+                            onClick={() => checkNextAction("toggleModal")}
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.cancelModalButtonLabel")}
                           </Button>
@@ -1330,9 +1351,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <Button
                             className={classes.otherButtons}
-                            href='/dashboard/subscriptions'
-                            rel='noopener noreferrer'
-                            target='_blank'
+                            onClick={() => checkNextAction("subscriptions")}
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.appSubsButtonLabel")}
                           </Button>
@@ -1347,7 +1366,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                         <Button
                           className={classes.otherButtons}
-                          onClick={toggleModal}
+                          onClick={() => checkNextAction("toggleModal")}
                         >
                           {t("dashboardTab.applicationsSubTab.appModal.closeModalButtonLabel")}
                         </Button>
@@ -1363,6 +1382,9 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       {
         openDialog &&
         <CustomizableDialog
+          cancelButtonProps={{
+            variant:"outlined",
+          }}
           closeDialogCallback={handleCloseDialog}
           confirmButtonCallback={_deleteApp}
           confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel")}
@@ -1371,6 +1393,26 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialogSubText")}
           providedText={t("dashboardTab.applicationsSubTab.appModal.dialogText")}
           providedTitle={t("dashboardTab.applicationsSubTab.appModal.dialogTitle")}
+        />
+      }
+
+      {
+        openCloseWarning &&
+        <CustomizableDialog
+          cancelButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.cancelButtonLabel")}
+          cancelButtonStyle={classes.cancelButton}
+          closeDialogCallback={handleCloseEditWarning}
+          confirmButtonCallback={dialogFunctions[confirmAction]}
+          confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.confirmButtonLabel")}
+          confirmButtonStyle={classes.confirmButton}
+          confirmButtonProps={{
+            variant:"outlined",
+          }}
+          open={openCloseWarning}
+          optionalTitleIcon='warning'
+          providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.subText")}
+          providedText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.text")}
+          providedTitle={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.title")}
         />
       }
     </>
