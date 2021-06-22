@@ -415,7 +415,7 @@ export const Applications: React.FC = () => {
   return (
     <PageContainer>
       {
-        user?.role.id === `${ROLES.baseUser.level}` ?
+        user?.role.name === `${ROLES.baseUser.label}` ?
           <Box width={1}>
             {getSections(MARKETPLACE_SECTION)}
           </Box>
