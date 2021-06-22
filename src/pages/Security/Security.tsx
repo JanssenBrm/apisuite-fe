@@ -205,7 +205,7 @@ export const Security: React.FC = () => {
       </Box>
 
       {/* TODO: remove text secondary after we develop user activity */}
-      <Typography variant="h2" color="textSecondary">
+      <Typography variant="h3" color="textSecondary">
         {t("profileTab.securitySubTab.userActivityTitle")}
       </Typography>
     </PageContainer>
