@@ -119,7 +119,7 @@ function * loginUserWorker () {
         lName: userName[userName.length - 1],
         id: Number(userId),
         role: {
-          id: currentOrg?.role?.id ?? `${ROLES.baseUser.level}`,
+          id: currentOrg?.role?.id,
           name: currentOrg?.role?.name ?? ROLES.baseUser.value,
         },
       },
