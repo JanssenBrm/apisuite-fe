@@ -68,7 +68,6 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
 
           <Avatar
             alt="User's photo"
-            // className={classes.userAvatar}
             src={userProfile.avatar}
           >
             {userProfile.name.charAt(0).toLocaleUpperCase()}
@@ -147,10 +146,12 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       component={Box}
       container
       direction="column"
+      justifyContent="center"
       position="fixed"
       top={0}
       left={0}
       width="100%"
+      minHeight={120}
       zIndex={zIndex.appBar}
       style={{ background: expand ? "transparent" : palette.secondary.main }}
     >
