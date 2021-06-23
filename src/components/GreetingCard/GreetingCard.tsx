@@ -26,13 +26,13 @@ const GreetingCard: React.FC<GreetingCardProps> = ({
       }
 
       <Button
+        data-test-id={testIds.greetingCardButton}
         className={classes.greetingCardButton}
         href={greetingCardButtonLink}
         variant="contained"
         disableElevation
         color="secondary"
         size="large"
-        data-test-id={testIds.greetingCardButton}
       >
         {greetingCardButtonLabel}
       </Button>

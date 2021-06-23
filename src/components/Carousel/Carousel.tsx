@@ -129,6 +129,7 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   const carouselSliderIconButtons = iconsOfSliderButtonsArray ? (iconsOfSliderButtonsArray.map((icon, index) =>
     <button
+      data-test-id = {testIds.sliderIconButton}
       className={
         index === slideNumber
           ? classes.selectedCarouselSliderIconButton
@@ -136,7 +137,6 @@ export const Carousel: React.FC<CarouselProps> = ({
       }
       key={`slider_button_${index}`}
       onClick={() => handleCarouselSlideChange(index)}
-      data-test-id = {testIds.sliderIconButton}
     >
       {icon}
     </button>,

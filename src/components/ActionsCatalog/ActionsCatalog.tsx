@@ -15,9 +15,9 @@ const ActionsCatalog: React.FC<ActionsCatalogProps> = ({
   const generateActionsCatalogEntry = (actionDetails: ActionDetails, index: number) => {
     return (
       <div
+        data-test-id={testIds.actionsEntry}
         className={classes.actionsCatalogEntry}
         key={`actionsCatalogEntry${index}`}
-        data-test-id={testIds.actionsEntry}
       >
         <img
           className={actionDetails.actionLink === "" ? classes.disabledAction : ""}

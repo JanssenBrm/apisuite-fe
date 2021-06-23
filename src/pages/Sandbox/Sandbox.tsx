@@ -137,19 +137,19 @@ export const Sandbox: React.FC = () => {
       </section>
 
       <Container maxWidth="md">
-        <Box my={5} data-test-id={testIds.stepsSection}>
+        <Box data-test-id={testIds.stepsSection} my={5}>
           <Typography variant="h2">
             {t("sandboxPage.stepsSection.intro")}
           </Typography>
         </Box>
 
         <Grid
+          data-test-id={testIds.stepsSectionContent}
           container
           direction="row"
           xs
-          data-test-id={testIds.stepsSectionContent}
         >
-          <Box maxWidth={360 - spacing(2.5)} pr={2.5} data-test-id={testIds.stepsSectionLeftSide}>
+          <Box data-test-id={testIds.stepsSectionLeftSide} maxWidth={360 - spacing(2.5)} pr={2.5}>
             <Typography variant="h3" gutterBottom>
               {
                 !auth.user
@@ -200,6 +200,7 @@ export const Sandbox: React.FC = () => {
             wrap="nowrap"
           >
             <Grid
+              data-test-id={testIds.stepOne}
               component={Box}
               item
               xs={4}
@@ -207,7 +208,6 @@ export const Sandbox: React.FC = () => {
               display="flex"
               flexDirection="column"
               borderRight={`1px solid ${palette.divider}`}
-              data-test-id={testIds.stepOne}
             >
               <Box mb={4}>
                 <Typography variant="h1" color="primary" align="center">
@@ -241,6 +241,7 @@ export const Sandbox: React.FC = () => {
             </Grid>
 
             <Grid
+              data-test-id={testIds.stepTwo}
               component={Box}
               item
               xs={4}
@@ -248,7 +249,6 @@ export const Sandbox: React.FC = () => {
               display="flex"
               flexDirection="column"
               borderRight={`1px solid ${palette.divider}`}
-              data-test-id={testIds.stepTwo}
             >
               <Box mb={5}>
                 <Typography variant="h1" color="primary" align="center">
@@ -282,13 +282,13 @@ export const Sandbox: React.FC = () => {
             </Grid>
 
             <Grid
+              data-test-id={testIds.stepThree}
               component={Box}
               item
               xs={4}
               p={2}
               display="flex"
               flexDirection="column"
-              data-test-id={testIds.stepThree}
             >
               <Box mb={5}>
                 <Typography variant="h1" color="primary" align="center">
@@ -325,14 +325,14 @@ export const Sandbox: React.FC = () => {
 
         <Divider style={{ margin: `${spacing(5)}px 0`, backgroundColor: palette.primary.main }} />
 
-        <Box mb={5} data-test-id={testIds.recentAdditionsTitle}>
+        <Box data-test-id={testIds.recentAdditionsTitle} mb={5}>
           <Typography variant="h2" >
             {t("sandboxPage.apiCatalog.intro")}
           </Typography>
         </Box>
 
-        <Box mb={6} data-test-id={testIds.recentAdditionsCatalog}>
-          {!recentlyAddedAPIs.length ? <Typography variant="body1" data-test-id={testIds.recentAdditionsEmpty}>
+        <Box data-test-id={testIds.recentAdditionsCatalog} mb={6}>
+          {!recentlyAddedAPIs.length ? <Typography data-test-id={testIds.recentAdditionsEmpty} variant="body1">
             {t("sandboxPage.apiCatalog.paragraph")}
           </Typography>
             : <APICatalog apisToDisplay={recentlyAddedAPIs} />}

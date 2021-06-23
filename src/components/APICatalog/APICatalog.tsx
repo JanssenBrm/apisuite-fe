@@ -34,6 +34,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
 
         return (
           <Grid
+            data-test-id={testIds.apiCatalogCard}
             key={apiDetails.id}
             component={Box}
             clone
@@ -43,10 +44,9 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
             m={1.5}
             height={200}
             onClick={handleOnCardClick(apiDetails)}
-            data-test-id={testIds.apiCatalogCard}
           >
             <Paper variant="outlined">
-              <Grid item xs={2} data-test-id={testIds.apiCardAvatar}>
+              <Grid data-test-id={testIds.apiCardAvatar} item xs={2}>
                 <Avatar
                   classes={{
                     colorDefault: apiDetails.apiAccess
@@ -64,7 +64,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
                 pt={1}
                 pl={2}
               >
-                <Typography variant="h5" gutterBottom data-test-id={testIds.apiCardName}>
+                <Typography data-test-id={testIds.apiCardName} variant="h5" gutterBottom>
                   {apiDetails.apiName}
                 </Typography>
 
@@ -82,7 +82,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
                   overflow="hidden"
                   clone
                 >
-                  <Typography variant="subtitle1" data-test-id={testIds.apiCardDescription}>
+                  <Typography data-test-id={testIds.apiCardDescription} variant="subtitle1">
                     {apiDetails.apiDescription}
                   </Typography>
                 </Box>

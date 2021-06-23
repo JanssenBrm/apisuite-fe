@@ -16,7 +16,7 @@ export const Tag: React.FC<{ v: string; color?: string }> = ({ v, color }) => {
       style={{ backgroundColor: color || palette.grey[500] }}
       width="max-content"
     >
-      <Typography component="span" variant="subtitle1" color="inherit" data-test-id={testIds.apiCardVersion}>
+      <Typography data-test-id={testIds.apiCardVersion} component="span" variant="subtitle1" color="inherit">
         {v}
       </Typography>
     </Box>

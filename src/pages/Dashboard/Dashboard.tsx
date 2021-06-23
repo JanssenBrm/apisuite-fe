@@ -95,12 +95,12 @@ export const Dashboard: React.FC = () => {
         <Container maxWidth="md">
           {/* 'Actions Catalog' section */}
           <section
+            data-test-id={testIds.actionsSection}
             className={
               notificationCards.show
                 ? classes.actionsCatalogSectionWithNotificationCards
                 : classes.actionsCatalogSectionWithoutNotificationCards
             }
-            data-test-id={testIds.actionsSection}
           >
             <ActionsCatalog
               actionsToDisplay={
@@ -175,26 +175,26 @@ export const Dashboard: React.FC = () => {
           </section>
 
           <Grid
+            data-test-id={testIds.greetingSection}
             component={Box}
             clone
             p={5}
             container
             direction="row"
             wrap="nowrap"
-            data-test-id={testIds.greetingSection}
           >
             <Paper elevation={3}>
               <Grid item xs>
-                <Typography variant="h6" gutterBottom data-test-id={testIds.greetingCardParagraphOne}>
+                <Typography data-test-id={testIds.greetingCardParagraphOne} variant="h6" gutterBottom>
                   {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greet", { name: profile.profile.user.name })}
                 </Typography>
 
-                <Typography variant="h6" data-test-id={testIds.greetingCardParagraphTwo}>
+                <Typography data-test-id={testIds.greetingCardParagraphTwo} variant="h6">
                   {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardText")}
                 </Typography>
 
                 {typeOfUser !== "admin" && (
-                  <Typography variant="h6" data-test-id={testIds.greetingCardParagraphThree}>
+                  <Typography data-test-id={testIds.greetingCardParagraphThree} variant="h6">
                     {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextAdmin")}
                   </Typography>
                 )}
@@ -202,12 +202,12 @@ export const Dashboard: React.FC = () => {
 
               <Box pl={5} display="flex" alignItems="center" width="max-content">
                 <Button
+                  data-test-id={testIds.greetingCardButton}
                   href={typeOfUser !== "admin" ? (supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL) : "/dashboard/admin"}
                   variant="contained"
                   disableElevation
                   color="secondary"
                   size="large"
-                  data-test-id={testIds.greetingCardButton}
                 >
                   {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardButtonLabel", {
                     clientName,
@@ -224,17 +224,17 @@ export const Dashboard: React.FC = () => {
                 <Divider style={{ backgroundColor: palette.primary.main }} />
               </Box>
 
-              <Typography variant="h2" data-test-id={testIds.recentAdditionsTitle}>
+              <Typography data-test-id={testIds.recentAdditionsTitle} variant="h2">
                 {t("sandboxPage.apiCatalog.intro")}
               </Typography>
 
               <Grid
+                data-test-id={testIds.recentAdditionsCatalog}
                 component={Box}
                 container
                 direction="row"
                 justifyContent="space-between"
                 mt={5}
-                data-test-id={testIds.recentAdditionsCatalog}
               >
                 {
                   recentlyAddedAPIs.length === 0
@@ -246,7 +246,7 @@ export const Dashboard: React.FC = () => {
           )}
 
           {socialURLs.length > 0 && (
-            <Box py={5} data-test-id={testIds.notice}>
+            <Box data-test-id={testIds.notice} py={5}>
               <Notice
                 noticeIcon={<Icon>domain_verification</Icon>}
                 noticeText={
