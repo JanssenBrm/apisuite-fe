@@ -15,5 +15,10 @@ declare namespace Cypress {
      * @example cy.dismissCookiesBanner()
     */
     dismissCookiesBanner(): Chainable<Element>,
+    /**
+     * Set a session
+     * @example cy.setSession()
+    */
+    setSession(): Chainable<Element>,
   }
 }
