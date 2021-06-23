@@ -2,83 +2,43 @@ import { makeStyles } from "@apisuite/fe-base";
 
 export default makeStyles((theme) => ({
   cancelButton: {
-    backgroundColor: theme.palette.background.default,
-    border: `1px solid ${theme.palette.grey[300]}`,
-    borderRadius: `${theme.shape.borderRadius}px`,
-    color: `${theme.palette.action.active} !important`,
-    fontSize: "16px",
-    fontWeight: 500,
-    marginRight: "12px",
-    padding: "6px 21px",
-    textDecoration: "none",
-    width: "auto",
-
-    "&:hover": {
-      backgroundColor: theme.palette.background.default,
-    },
-  },
-
-  confirmButton: {
-    backgroundColor: theme.palette.error.main,
-    border: `1px solid ${theme.palette.error.main}`,
-    borderRadius: theme.shape.borderRadius,
-    color: `${theme.palette.primary.contrastText} !important`,
-    fontSize: "16px",
-    fontWeight: 500,
-    padding: "6px 21px",
-    textDecoration: "none",
-    width: "auto",
-
-    "&:hover": {
-      backgroundColor: theme.palette.error.main,
-    },
+    marginRight: theme.spacing(1),
   },
 
   dialogActionsContainer: {
     display: "flex",
-    padding: "0px 24px 20px 24px",
+    padding: theme.spacing(0, 3, 2.5, 3),
   },
 
   dialogContentContainer: {
-    padding: "20px 24px",
+    padding: theme.spacing(2.5, 3),
   },
 
-  dialogText: {
-    color: "#2F4152",
-    fontSize: "16px",
-    fontWeight: 400,
-    lineHeight: "20px",
-  },
-
-  dialogSubText: {
-    color: theme.palette.text.primary,
-    fontSize: "14px",
-    fontWeight: 300,
-    lineHeight: "20px",
+  dialogTitleCenter: {
+    display: "flex",
+    alignItems: "center",
   },
 
   dialogTitleContainer: {
     alignItems: "center",
     backgroundColor: theme.palette.grey[50],
     display: "flex",
-    padding: "15px 25px",
+    padding: theme.spacing(1, 3),
 
     // Dialog's optional title icon
     "& > :first-child": {
-      marginRight: "10px",
+      marginRight: theme.spacing(1),
     },
 
     // Dialog's title
     "& > :last-child": {
       color: theme.palette.secondary.main,
-      fontSize: "24px",
-      fontWeight: 500,
       padding: "0px",
     },
   },
 
   dialogTitleInfoIcon: {
-    color: "#46B5EF",
+    color: theme.palette.info.main,
   },
 
   dialogTitleWarningIcon: {

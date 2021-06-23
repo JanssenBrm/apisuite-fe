@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
 import {
   Avatar, Box, Button, Fade, Grid, Icon,
   IconButton, InputAdornment, Menu, MenuItem, Modal, TextField,
@@ -38,7 +39,27 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const { t } = useTranslation();
   const { navigation, ownerInfo, portalName } = useConfig();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
+  const [openCloseWarning, setOpenCloseWarning] = React.useState(false);
+  const [confirmAction, setConfirmAction] = React.useState("toggleModal");
+
+  const handleCloseEditWarning = () => {
+    setOpenCloseWarning(false);
+  };
+
+  const dialogFunctions: { [index:string] : () => void } = {
+    toggleModal: toggleModal,
+    subscriptions: () => history.push("/dashboard/subscriptions"),
+  };
+
+  const checkNextAction = (fn: string) => {
+    if (newHasChanged() || hasChanged()) {
+      setConfirmAction(fn);
+      return setOpenCloseWarning(true);
+    }
+    dialogFunctions[fn]();
+  };
 
   const metadataKeyDefaultPrefix = "meta_";
 
@@ -95,6 +116,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appAvatarURL: "",
       appClientID: "",
       appClientSecret: "",
+      appDirectURL: "",
       appFullDescription: "",
       appLabels: "",
       appMetaDescription: "",
@@ -128,6 +150,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           return validURL;
         }],
         message: t("dashboardTab.applicationsSubTab.appModal.appAvatarURLError"),
+      },
+
+      appDirectURL: {
+        rules: [(URI) => uriBasicChecks(URI)],
+        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
       },
 
       appPrivacyURL: {
@@ -174,42 +201,36 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   useEffect(() => {
     if (modalMode === "edit") {
       resetForm({
-        appAvatarURL: mostRecentlySelectedAppDetails.logo ? mostRecentlySelectedAppDetails.logo : "",
-        appClientID: mostRecentlySelectedAppDetails.clientId ? mostRecentlySelectedAppDetails.clientId : "",
-        appClientSecret: mostRecentlySelectedAppDetails.clientSecret ? mostRecentlySelectedAppDetails.clientSecret : "",
-        appFullDescription: mostRecentlySelectedAppDetails.description ? mostRecentlySelectedAppDetails.description : "",
+        appAvatarURL: mostRecentlySelectedAppDetails.logo ?? "",
+        appClientID: mostRecentlySelectedAppDetails.clientId ?? "",
+        appClientSecret: mostRecentlySelectedAppDetails.clientSecret ?? "",
+        appDirectURL: mostRecentlySelectedAppDetails.directUrl ?? "",
+        appFullDescription: mostRecentlySelectedAppDetails.description ?? "",
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
           ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
-        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description
-          ? mostRecentlySelectedAppDetails.metadata[0].description
-          : "",
+        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description ?? "",
         appMetaKey: mostRecentlySelectedAppDetails.metadata[0]?.key
           ? mostRecentlySelectedAppDetails.metadata[0].key.slice(5)
           : "",
-        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title
-          ? mostRecentlySelectedAppDetails.metadata[0].title
-          : "",
-        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value
-          ? mostRecentlySelectedAppDetails.metadata[0].value
-          : "",
-        appName: mostRecentlySelectedAppDetails.name ? mostRecentlySelectedAppDetails.name : "",
-        appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ? mostRecentlySelectedAppDetails.privacyUrl : "",
-        appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ? mostRecentlySelectedAppDetails.redirectUrl : "",
-        appShortDescription: mostRecentlySelectedAppDetails.shortDescription
-          ? mostRecentlySelectedAppDetails.shortDescription
-          : "",
-        appSupportURL: mostRecentlySelectedAppDetails.supportUrl ? mostRecentlySelectedAppDetails.supportUrl : "",
-        appTermsURL: mostRecentlySelectedAppDetails.tosUrl ? mostRecentlySelectedAppDetails.tosUrl : "",
-        appVisibility: mostRecentlySelectedAppDetails.visibility ? mostRecentlySelectedAppDetails.visibility : "private",
-        appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ? mostRecentlySelectedAppDetails.websiteUrl : "",
-        appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ? mostRecentlySelectedAppDetails.youtubeUrl : "",
+        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title ?? "",
+        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value ?? "",
+        appName: mostRecentlySelectedAppDetails.name ?? "",
+        appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ?? "",
+        appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ?? "",
+        appShortDescription: mostRecentlySelectedAppDetails.shortDescription ?? "",
+        appSupportURL: mostRecentlySelectedAppDetails.supportUrl ?? "",
+        appTermsURL: mostRecentlySelectedAppDetails.tosUrl ?? "",
+        appVisibility: mostRecentlySelectedAppDetails.visibility ?? "private",
+        appWebsiteURL: mostRecentlySelectedAppDetails.websiteUrl ?? "",
+        appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ?? "",
       });
     } else {
       resetForm({
         appAvatarURL: "",
         appClientID: "",
         appClientSecret: "",
+        appDirectURL: "",
         appFullDescription: "",
         appLabels: "",
         appMetaDescription: "",
@@ -357,6 +378,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const newAppDetails = {
       description: formState.values.appFullDescription,
+      directUrl: formState.values.appDirectURL,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
       metadata: getFormMetadata(),
@@ -383,6 +405,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const updatedAppDetails = {
       description: formState.values.appFullDescription,
+      directUrl: formState.values.appDirectURL,
       id: modalDetails.userAppID,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
@@ -481,6 +504,17 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       && validImage;
   };
 
+  const newHasChanged = () => {
+    return formState.values.appName.length !== 0 &&
+    formState.values.appRedirectURI !== "http://" &&
+    formState.values.appRedirectURI !== "https://" &&
+    formState.values.appRedirectURI.length !== 0 &&
+    validMetadata() &&
+    (formState.isValid || Object.keys(formState.errors).length === 0) &&
+    !(allUserAppNames.includes(formState.values.appName)) &&
+    validImage;
+  };
+
   return (
     <>
       <Modal
@@ -489,6 +523,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appAvatarURL: "",
             appClientID: "",
             appClientSecret: "",
+            appDirectURL: "",
             appFullDescription: "",
             appLabels: "",
             appMetaDescription: "",
@@ -515,14 +550,12 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             {/* Modal header */}
             <div className={classes.modalHeaderContainer}>
               <div className={classes.logoAndNameContainer}>
-                {
-                  <Box fontSize="60px">
-                    <Logo
-                      icon={navigation.title.iconFallbackName}
-                      src={ownerInfo.logo}
-                    />
-                  </Box>
-                }
+                <Box>
+                  <Logo
+                    icon={navigation.title.iconFallbackName}
+                    src={ownerInfo.logo}
+                  />
+                </Box>
 
                 <Typography display="block" gutterBottom variant="h3">
                   {portalName}
@@ -531,10 +564,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               <div
                 className={classes.closeModalButtonContainer}
-                onClick={toggleModal}
+                onClick={() => checkNextAction("toggleModal")}
               >
                 <Box>
-                  <Typography display="block" gutterBottom variant="caption">
+                  <Typography gutterBottom variant="caption">
                     {t("dashboardTab.applicationsSubTab.appModal.closeButtonLabel")}
                   </Typography>
                 </Box>
@@ -596,10 +629,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               }
 
               {/* 'General information' section */}
-              <Grid container>
+              <Grid container spacing={3}>
                 {/* 'App name and short description' subsection */}
-                <Grid item md={12} spacing={3}>
-                  <Grid item md={6} spacing={3}>
+                <Grid item md={12}>
+                  <Grid item md={6}>
                     <Box pb={1.5}>
                       <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelOne")}
@@ -614,7 +647,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   </Grid>
                 </Grid>
 
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
 
                   <TextField
                     className={classes.inputFields}
@@ -744,9 +777,9 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               {
                 modalMode !== "new" &&
                 <>
-                  <Grid alignItems="center" container direction="row" justify="space-between">
-                    <Grid md={12} spacing={3}>
-                      <Grid md={6} spacing={3}>
+                  <Grid alignItems="center" container direction="row" justify="space-between" spacing={3}>
+                    <Grid item md={12}>
+                      <Grid item md={6}>
                         <Box pb={1.5}>
                           <Typography display="block" gutterBottom variant="h6">
                             {t("mediaUpload.title")}
@@ -781,10 +814,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               }
 
               {/* 'Access details' section */}
-              <Grid container>
+              <Grid container spacing={3}>
                 {/* 'Redirect URI' subsection */}
-                <Grid md={12} spacing={3}>
-                  <Grid md={6} spacing={3}>
+                <Grid item md={12}>
+                  <Grid item md={6}>
                     <Box pb={1.5}>
                       <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
@@ -808,7 +841,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   </Grid>
                 </Grid>
 
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
                   <TextField
                     className={classes.inputFields}
                     error={formState.errors.appRedirectURI}
@@ -830,7 +863,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 </Grid>
 
                 {/* 'Client credentials' subsection */}
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
                   <div className={classes.row}>
                     <TextField
                       disabled
@@ -896,10 +929,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
               <hr className={classes.regularSectionSeparator} />
 
               {/* 'Additional information' section */}
-              <Grid container>
+              <Grid container spacing={3}>
                 {/* 'Full description' subsection */}
-                <Grid md={12} spacing={3}>
-                  <Grid md={6} spacing={3}>
+                <Grid item md={12}>
+                  <Grid item md={6}>
                     <Box pb={1.5}>
                       <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.subSectionLabelFive")}
@@ -913,7 +946,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     </Box>
                   </Grid>
                 </Grid>
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
 
                   <TextField
                     className={classes.inputFields}
@@ -931,7 +964,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 </Grid>
 
                 {/* 'Optional URLs' subsection */}
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
                   <div className={classes.appURLFieldWrapper}>
                     <TextField
                       className={classes.inputFields}
@@ -1119,15 +1152,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 </Grid>
               </Grid>
 
-              {/*
-              FIXME: the hr above should be rendered by the extension
-              TODO: document getSections so that comments like this are not needed
-              The following code checks if a Marketplace extension's section exists,
-and if it does, it passes along the form's state, and any necessary logic
-to handle an app's visibility and labeling ('handleAppVisibility', and 'handleChange', respectively). */}
+              <hr className={classes.regularSectionSeparator} />
+
               {
                 getSections(
-                  "MARKETPLACE_APP_VISIBILITY",
+                  "MARKETPLACE_APP_SETTINGS",
                   {
                     formState,
                     handleAppVisibility,
@@ -1139,8 +1168,8 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
               {/* 'Metadata' section */}
               <div>
                 {/* 'Custom properties' text */}
-                <Grid md={12} spacing={3}>
-                  <Grid md={6} spacing={3}>
+                <Grid container spacing={3}>
+                  <Grid item md={6}>
                     <Box pb={1.5}>
                       <Typography display="block" gutterBottom variant="h6">
                         {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
@@ -1224,8 +1253,8 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                   </div>
                 </div>
 
-                <Grid container>
-                  <Grid item md={6} spacing={3}>
+                <Grid container spacing={3}>
+                  <Grid item md={6}>
                     <Button
                       className={classes.addCustomPropsButton}
                       disabled
@@ -1234,7 +1263,7 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                     </Button>
                   </Grid>
 
-                  <Grid item md={6} spacing={3}>
+                  <Grid item md={6}>
                     <Notice
                       noticeIcon={<Icon>info</Icon>}
                       noticeText={
@@ -1264,22 +1293,11 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
                 {
                   modalMode === "new"
                     ? (
-                      <Grid container>
-                        <Grid item md={6} spacing={3}>
+                      <Grid container spacing={3}>
+                        <Grid item md={6}>
                           <Button
                             color="primary"
-                            disabled={
-                              !(
-                                formState.values.appName.length !== 0 &&
-                                formState.values.appRedirectURI !== "http://" &&
-                                formState.values.appRedirectURI !== "https://" &&
-                                formState.values.appRedirectURI.length !== 0 &&
-                                validMetadata() &&
-                                (formState.isValid || Object.keys(formState.errors).length === 0) &&
-                                !(allUserAppNames.includes(formState.values.appName)) &&
-                                validImage
-                              )
-                            }
+                            disabled={!newHasChanged()}
                             disableElevation
                             onClick={createNewApp}
                             size="large"
@@ -1290,13 +1308,15 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
 
                           <Button
                             className={classes.otherButtons}
-                            onClick={toggleModal}
+                            onClick={() => checkNextAction("toggleModal")}
+                            color="primary"
+                            variant="outlined"
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.cancelModalButtonLabel")}
                           </Button>
                         </Grid>
 
-                        <Grid item md={6} spacing={3}>
+                        <Grid item md={6}>
                           <Notice
                             noticeIcon={<Icon>query_builder</Icon>}
                             noticeText={
@@ -1331,9 +1351,9 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
 
                           <Button
                             className={classes.otherButtons}
-                            href='/dashboard/subscriptions'
-                            rel='noopener noreferrer'
-                            target='_blank'
+                            onClick={() => checkNextAction("subscriptions")}
+                            color="primary"
+                            variant="outlined"
                           >
                             {t("dashboardTab.applicationsSubTab.appModal.appSubsButtonLabel")}
                           </Button>
@@ -1348,7 +1368,9 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
 
                         <Button
                           className={classes.otherButtons}
-                          onClick={toggleModal}
+                          onClick={() => checkNextAction("toggleModal")}
+                          color="primary"
+                          variant="outlined"
                         >
                           {t("dashboardTab.applicationsSubTab.appModal.closeModalButtonLabel")}
                         </Button>
@@ -1364,14 +1386,45 @@ to handle an app's visibility and labeling ('handleAppVisibility', and 'handleCh
       {
         openDialog &&
         <CustomizableDialog
+          cancelButtonProps={{
+            variant:"outlined",
+            color: "primary",
+          }}
           closeDialogCallback={handleCloseDialog}
           confirmButtonCallback={_deleteApp}
           confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel")}
+          confirmButtonProps={{
+            variant: "contained",
+            color: "primary",
+          }}
           open={openDialog}
           optionalTitleIcon='warning'
           providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialogSubText")}
           providedText={t("dashboardTab.applicationsSubTab.appModal.dialogText")}
           providedTitle={t("dashboardTab.applicationsSubTab.appModal.dialogTitle")}
+        />
+      }
+
+      {
+        openCloseWarning &&
+        <CustomizableDialog
+          cancelButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.cancelButtonLabel")}
+          cancelButtonProps={{
+            variant: "contained",
+            color: "primary",
+          }}
+          closeDialogCallback={handleCloseEditWarning}
+          confirmButtonCallback={dialogFunctions[confirmAction]}
+          confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.confirmButtonLabel")}
+          confirmButtonProps={{
+            variant: "outlined",
+            color: "primary",
+          }}
+          open={openCloseWarning}
+          optionalTitleIcon='warning'
+          providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.subText")}
+          providedText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.text")}
+          providedTitle={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.title")}
         />
       }
     </>

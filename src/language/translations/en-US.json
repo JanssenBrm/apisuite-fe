@@ -368,6 +368,15 @@
           "subSectionLabelThree": "Redirect URI",
           "subSectionLabelTwo": "By providing plenty of information, you increase your chances for a one-shot subscription approval by us."
         },
+        "dialog": {
+          "warning": {
+            "cancelButtonLabel": "Stay and save",
+            "confirmButtonLabel": "Leave without saving",
+            "subText": "All changes you made will be lost. Do you really want to leave without saving?",
+            "text": "You are about to leave this page without saving!",
+            "title": "Unsaved changes"
+          }
+        },
         "errors": {
           "shortDescriptionLimit": "The short description has a maximum limit of 60 characters."
         }
