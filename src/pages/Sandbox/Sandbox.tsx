@@ -5,7 +5,7 @@ import ChromeReaderModeRoundedIcon from "@material-ui/icons/ChromeReaderModeRoun
 import ControlCameraRoundedIcon from "@material-ui/icons/ControlCameraRounded";
 import FlightLandRoundedIcon from "@material-ui/icons/FlightLandRounded";
 
-import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
+import { API_DOCS_CONTENT_TARGET, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
 import APICatalog from "components/APICatalog";
 import { Carousel } from "components/Carousel";
 import Notice from "components/Notice";
@@ -27,7 +27,7 @@ export const Sandbox: React.FC = () => {
   const { palette, spacing } = useTheme();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { socialURLs, portalName, clientName, supportURL } = useConfig();
+  const { socialURLs, portalName, clientName, supportURL, documentationURL } = useConfig();
   const { auth, subscriptions } = useSelector(sandboxSelector);
 
   const [recentlyAddedAPIs, setRecentlyAddedAPIs] = useState<any[]>([]);
@@ -39,6 +39,7 @@ export const Sandbox: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    console.log("Subscriptions", subscriptions);
     /* Once 'subscriptions' info is made available, we process it so as to display it
     on our 'API Catalog' section. */
     const allAvailableAPIs = subscriptions.apis;
@@ -52,7 +53,8 @@ export const Sandbox: React.FC = () => {
           hasMoreDetails: api.apiVersions.length > 0,
           id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
           apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
-          apiDescription: api?.docs?.info || "No description presently available.",
+          // FIXME: not translated
+          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || "No description presently available.",
           apiVersion: api.apiVersions.length ? api.apiVersions[0].version : "No version available",
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
@@ -234,7 +236,7 @@ export const Sandbox: React.FC = () => {
                 size="large"
                 fullWidth
                 disabled={!auth.user}
-                href='/dashboard/subscriptions'
+                href='/dashboard/apps'
               >
                 {t("sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel")}
               </Button>
@@ -315,7 +317,7 @@ export const Sandbox: React.FC = () => {
                 size="large"
                 fullWidth
                 disabled={!auth.user}
-                href='/dashboard/test'
+                href={documentationURL}
               >
                 {t("sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel")}
               </Button>
