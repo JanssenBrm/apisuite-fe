@@ -29,7 +29,7 @@ export default makeStyles((theme) => ({
   },
 
   success: {
-    backgroundColor: theme.palette.primary.main,
+    backgroundColor: theme.palette.success.main,
     color: theme.palette.primary.contrastText,
   },
 
