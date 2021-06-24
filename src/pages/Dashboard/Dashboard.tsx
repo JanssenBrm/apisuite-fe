@@ -2,13 +2,15 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Box, Button, Container, Divider, Grid, Icon, Paper, Trans, Typography, useConfig, useTheme, useTranslation } from "@apisuite/fe-base";
 
-import { DEFAULT_INSTANCE_OWNER_SUPPORT_URL, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
+import { API_DOCS_CONTENT_TARGET, DEFAULT_INSTANCE_OWNER_SUPPORT_URL, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
 import { getAPIs } from "store/subscriptions/actions/getAPIs";
 import ActionsCatalog from "components/ActionsCatalog";
 import APICatalog from "components/APICatalog";
 import Notice from "components/Notice";
 import NotificationBanner from "components/NotificationBanner";
 import { NotificationCard } from "components/NotificationCard";
+
+import { testIds } from "testIds";
 
 import apiSVG from "assets/icons/API.svg";
 import billingSVG from "assets/icons/Billing.svg";
@@ -56,7 +58,8 @@ export const Dashboard: React.FC = () => {
           hasMoreDetails: api.apiVersions.length > 0,
           id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
           apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
-          apiDescription: api?.docs?.info || "No description presently available.",
+          // FIXME: not translated
+          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || "No description presently available.",
           apiVersion: api.apiVersions.length ? api.apiVersions[0].version : "No version available",
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
@@ -93,6 +96,7 @@ export const Dashboard: React.FC = () => {
         <Container maxWidth="md">
           {/* 'Actions Catalog' section */}
           <section
+            data-test-id={testIds.actionsSection}
             className={
               notificationCards.show
                 ? classes.actionsCatalogSectionWithNotificationCards
@@ -172,6 +176,7 @@ export const Dashboard: React.FC = () => {
           </section>
 
           <Grid
+            data-test-id={testIds.greetingSection}
             component={Box}
             clone
             p={5}
@@ -181,16 +186,16 @@ export const Dashboard: React.FC = () => {
           >
             <Paper elevation={3}>
               <Grid item xs>
-                <Typography variant="h6" gutterBottom>
+                <Typography data-test-id={testIds.greetingCardParagraphOne} variant="h6" gutterBottom>
                   {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greet", { name: profile.profile.user.name })}
                 </Typography>
 
-                <Typography variant="h6" >
+                <Typography data-test-id={testIds.greetingCardParagraphTwo} variant="h6">
                   {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardText")}
                 </Typography>
 
                 {typeOfUser !== "admin" && (
-                  <Typography variant="h6" >
+                  <Typography data-test-id={testIds.greetingCardParagraphThree} variant="h6">
                     {t("dashboardTab.landingPageSubTab.regularUser.greetingCard.greetingCardTextAdmin")}
                   </Typography>
                 )}
@@ -198,6 +203,7 @@ export const Dashboard: React.FC = () => {
 
               <Box pl={5} display="flex" alignItems="center" width="max-content">
                 <Button
+                  data-test-id={testIds.greetingCardButton}
                   href={typeOfUser !== "admin" ? (supportURL || DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL) : "/dashboard/admin"}
                   variant="contained"
                   disableElevation
@@ -219,11 +225,12 @@ export const Dashboard: React.FC = () => {
                 <Divider style={{ backgroundColor: palette.primary.main }} />
               </Box>
 
-              <Typography variant="h2">
+              <Typography data-test-id={testIds.recentAdditionsTitle} variant="h2">
                 {t("sandboxPage.apiCatalog.intro")}
               </Typography>
 
               <Grid
+                data-test-id={testIds.recentAdditionsCatalog}
                 component={Box}
                 container
                 direction="row"
@@ -232,7 +239,7 @@ export const Dashboard: React.FC = () => {
               >
                 {
                   recentlyAddedAPIs.length === 0
-                    ? <p>{t("sandboxPage.apiCatalog.paragraph")}</p>
+                    ? <p data-test-id={testIds.recentAdditionsEmpty}>{t("sandboxPage.apiCatalog.paragraph")}</p>
                     : <APICatalog apisToDisplay={recentlyAddedAPIs} />
                 }
               </Grid>
@@ -240,7 +247,7 @@ export const Dashboard: React.FC = () => {
           )}
 
           {socialURLs.length > 0 && (
-            <Box py={5}>
+            <Box data-test-id={testIds.notice} py={5}>
               <Notice
                 noticeIcon={<Icon>domain_verification</Icon>}
                 noticeText={

@@ -42,3 +42,9 @@ export enum LOCAL_STORAGE_KEYS {
 }
 
 export const DESTINATION_PATH = "APIS_DESTINATION_RETURN_TO_PATH";
+export enum API_DOCS_CONTENT_TARGET {
+  PRODUCT_INTRO = "product_intro",
+  FEATURE = "feature",
+  USE_CASE = "use_case",
+  HIGHLIGHT = "highlight",
+}

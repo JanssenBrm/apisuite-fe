@@ -3,6 +3,7 @@ import Link from "components/Link";
 
 import useStyles from "./styles";
 import { ActionsCatalogProps, ActionDetails } from "./types";
+import { testIds } from "testIds";
 import { Box, Typography, useTheme } from "@material-ui/core";
 
 const ActionsCatalog: React.FC<ActionsCatalogProps> = ({
@@ -14,6 +15,7 @@ const ActionsCatalog: React.FC<ActionsCatalogProps> = ({
   const generateActionsCatalogEntry = (actionDetails: ActionDetails, index: number) => {
     return (
       <div
+        data-test-id={testIds.actionsEntry}
         className={classes.actionsCatalogEntry}
         key={`actionsCatalogEntry${index}`}
       >

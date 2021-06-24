@@ -1,0 +1,17 @@
+{
+  "id": 1,
+  "name": "Portal Test Name",
+  "description": "Portal test description",
+  "vat": "",
+  "website": "http://testportal.com",
+  "terms": null,
+  "logo": "https://raw.githubusercontent.com/Cloudoki/finecast/master/Hackfridays.png",
+  "org_code": "50cf1d5d-032a-48cd-a462-9bbc504786a8",
+  "tosUrl": "",
+  "privacyUrl": "",
+  "youtubeUrl": "",
+  "websiteUrl": "test.io",
+  "supportUrl": "",
+  "createdAt": "2021-02-24T10:52:12.530Z",
+  "updatedAt": "2021-04-27T15:12:01.990Z"
+}

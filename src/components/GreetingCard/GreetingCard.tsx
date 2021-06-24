@@ -4,6 +4,8 @@ import { Button, Paper } from "@apisuite/fe-base";
 import useStyles from "./styles";
 import { GreetingCardProps } from "./types";
 
+import { testIds } from "testIds";
+
 const GreetingCard: React.FC<GreetingCardProps> = ({
   greetingCardText,
   greetingCardButtonLabel,
@@ -24,6 +26,7 @@ const GreetingCard: React.FC<GreetingCardProps> = ({
       }
 
       <Button
+        data-test-id={testIds.greetingCardButton}
         className={classes.greetingCardButton}
         href={greetingCardButtonLink}
         variant="contained"

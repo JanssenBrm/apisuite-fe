@@ -8,6 +8,8 @@ import useStyles from "./styles";
 
 import { NoticeProps } from "./types";
 
+import { testIds } from "testIds";
+
 const Notice: React.FC<NoticeProps> = ({
   type="info",
   noticeIcon,
@@ -17,12 +19,14 @@ const Notice: React.FC<NoticeProps> = ({
   const classes = useStyles();
 
   return (
-    <div className={clsx(
-      classes.noticeContentsContainer,
-      type === "info" && classes.noticeBackgoundInfo,
-      type === "error" && classes.noticeBackgoundError,
-      type === "warning" && classes.noticeBackgoundWarning,
-    )}>
+    <div
+      data-test-id={testIds.notice}
+      className={clsx(
+        classes.noticeContentsContainer,
+        type === "info" && classes.noticeBackgoundInfo,
+        type === "error" && classes.noticeBackgoundError,
+        type === "warning" && classes.noticeBackgoundWarning,
+      )}>
       <div className={clsx(
         classes.noticeIcon,
         type === "info" && classes.noticeIconInfo,
@@ -33,7 +37,7 @@ const Notice: React.FC<NoticeProps> = ({
         {noticeIcon || <InfoRoundedIcon />}
       </div>
 
-      {noticeText}
+      <span data-test-id={testIds.noticeText}>{noticeText}</span>
     </div>
   );
 };

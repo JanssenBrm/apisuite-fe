@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation, Button, InputBase } from "@apisuite/fe-base";
 
+import { API_DOCS_CONTENT_TARGET } from "constants/global";
 import APICatalog from "components/APICatalog";
 import { APIDetails } from "components/APICatalog/types";
 import { SubscriptionsModal } from "components/SubscriptionsModal";
@@ -68,7 +69,8 @@ export const APIProducts: React.FC = () => {
           /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
           'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
           link to its corresponding 'API Details' view if it has versions. */
-          apiDescription: api?.docs?.info || "No description presently available.",
+          // FIXME: not translated
+          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || "No description presently available.",
           apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",

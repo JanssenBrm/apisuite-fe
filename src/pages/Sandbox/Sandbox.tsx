@@ -5,10 +5,12 @@ import ChromeReaderModeRoundedIcon from "@material-ui/icons/ChromeReaderModeRoun
 import ControlCameraRoundedIcon from "@material-ui/icons/ControlCameraRounded";
 import FlightLandRoundedIcon from "@material-ui/icons/FlightLandRounded";
 
-import { DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
+import { API_DOCS_CONTENT_TARGET, DEFAULT_NON_INSTANCE_OWNER_SUPPORT_URL } from "constants/global";
 import APICatalog from "components/APICatalog";
 import { Carousel } from "components/Carousel";
 import Notice from "components/Notice";
+
+import { testIds } from "testIds";
 
 import carouselBackground from "assets/space-background.svg";
 import carouselSlide1 from "assets/carousel-slide-1.svg";
@@ -25,7 +27,7 @@ export const Sandbox: React.FC = () => {
   const { palette, spacing } = useTheme();
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { socialURLs, portalName, clientName, supportURL } = useConfig();
+  const { socialURLs, portalName, clientName, supportURL, documentationURL } = useConfig();
   const { auth, subscriptions } = useSelector(sandboxSelector);
 
   const [recentlyAddedAPIs, setRecentlyAddedAPIs] = useState<any[]>([]);
@@ -37,6 +39,7 @@ export const Sandbox: React.FC = () => {
   }, [dispatch]);
 
   useEffect(() => {
+    console.log("Subscriptions", subscriptions);
     /* Once 'subscriptions' info is made available, we process it so as to display it
     on our 'API Catalog' section. */
     const allAvailableAPIs = subscriptions.apis;
@@ -50,7 +53,8 @@ export const Sandbox: React.FC = () => {
           hasMoreDetails: api.apiVersions.length > 0,
           id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
           apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
-          apiDescription: api?.docs?.info || "No description presently available.",
+          // FIXME: not translated
+          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || "No description presently available.",
           apiVersion: api.apiVersions.length ? api.apiVersions[0].version : "No version available",
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
@@ -135,18 +139,19 @@ export const Sandbox: React.FC = () => {
       </section>
 
       <Container maxWidth="md">
-        <Box my={5}>
+        <Box data-test-id={testIds.stepsSection} my={5}>
           <Typography variant="h2">
             {t("sandboxPage.stepsSection.intro")}
           </Typography>
         </Box>
 
         <Grid
+          data-test-id={testIds.stepsSectionContent}
           container
           direction="row"
           xs
         >
-          <Box maxWidth={360 - spacing(2.5)} pr={2.5}>
+          <Box data-test-id={testIds.stepsSectionLeftSide} maxWidth={360 - spacing(2.5)} pr={2.5}>
             <Typography variant="h3" gutterBottom>
               {
                 !auth.user
@@ -197,6 +202,7 @@ export const Sandbox: React.FC = () => {
             wrap="nowrap"
           >
             <Grid
+              data-test-id={testIds.stepOne}
               component={Box}
               item
               xs={4}
@@ -230,13 +236,14 @@ export const Sandbox: React.FC = () => {
                 size="large"
                 fullWidth
                 disabled={!auth.user}
-                href='/dashboard/subscriptions'
+                href='/dashboard/apps'
               >
                 {t("sandboxPage.stepsSection.individualSteps.stepOne.buttonLabel")}
               </Button>
             </Grid>
 
             <Grid
+              data-test-id={testIds.stepTwo}
               component={Box}
               item
               xs={4}
@@ -277,6 +284,7 @@ export const Sandbox: React.FC = () => {
             </Grid>
 
             <Grid
+              data-test-id={testIds.stepThree}
               component={Box}
               item
               xs={4}
@@ -309,7 +317,7 @@ export const Sandbox: React.FC = () => {
                 size="large"
                 fullWidth
                 disabled={!auth.user}
-                href='/dashboard/test'
+                href={documentationURL}
               >
                 {t("sandboxPage.stepsSection.individualSteps.stepThree.buttonLabel")}
               </Button>
@@ -319,14 +327,16 @@ export const Sandbox: React.FC = () => {
 
         <Divider style={{ margin: `${spacing(5)}px 0`, backgroundColor: palette.primary.main }} />
 
-        <Box mb={5}>
+        <Box data-test-id={testIds.recentAdditionsTitle} mb={5}>
           <Typography variant="h2" >
             {t("sandboxPage.apiCatalog.intro")}
           </Typography>
         </Box>
 
-        <Box mb={6}>
-          {!recentlyAddedAPIs.length ? <Typography variant="body1">{t("sandboxPage.apiCatalog.paragraph")}</Typography>
+        <Box data-test-id={testIds.recentAdditionsCatalog} mb={6}>
+          {!recentlyAddedAPIs.length ? <Typography data-test-id={testIds.recentAdditionsEmpty} variant="body1">
+            {t("sandboxPage.apiCatalog.paragraph")}
+          </Typography>
             : <APICatalog apisToDisplay={recentlyAddedAPIs} />}
         </Box>
 

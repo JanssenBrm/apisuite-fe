@@ -21,7 +21,7 @@ const SocialLinks = () => {
   }
 
   return (
-    <div className={classes.iconsContainer}>
+    <div data-test-id={testIds.footerSocialIcons} className={classes.iconsContainer}>
       {socialURLs.map((socialUrl, index) => {
         switch (socialUrl.name) {
           case "facebook":
@@ -177,7 +177,7 @@ const Footer: React.FC<FooterProps> = (
       data-test-id={testIds.footer}
       className={classes.footer}
     >
-      <div className={classes.footerToTopShortcutContainer}>
+      <div data-test-id={testIds.footerToTopButton} className={classes.footerToTopShortcutContainer}>
         <Fab size="small" color="primary" onClick={handleFabClick}>
           <SvgIcon name="chevron-up" size={24} />
         </Fab>
@@ -185,7 +185,7 @@ const Footer: React.FC<FooterProps> = (
 
       <div className={classes.footerContentsContainer}>
         <div className={classes.leftFooterContentsContainer}>
-          <div className={classes.logoAndPortalNameContainer}>
+          <div data-test-id={testIds.footerLogoAndPortalName} className={classes.logoAndPortalNameContainer}>
             <Logo src={ownerInfo.logo} icon={navigation.title.iconFallbackName} />
 
             <Box clone ml={1}>
@@ -237,7 +237,7 @@ auth.user?.role.name === 'admin' &&
         <div className={classes.rightFooterContentsContainer}>
           <SocialLinks />
 
-          <div className={classes.copyrightContainer}>
+          <div data-test-id={testIds.footerCredits} className={classes.copyrightContainer}>
             <Typography
               variant="subtitle2"
               component="a"

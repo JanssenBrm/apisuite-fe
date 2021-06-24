@@ -92,6 +92,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
 
     return (
       <Box
+        data-test-id={testIds.navigationTab}
         key={key}
         position="relative"
         display="flex"
@@ -171,11 +172,15 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
           alignItems="center"
           style={{ textDecoration: "none" }}
         >
-          <Link to={navigation.title.route}>
+          <Link data-test-id={testIds.navigationLogoAndTitle} to={navigation.title.route}>
             {/* Portal logo image */}
-            <Logo src={ownerInfo.logo} icon={navigation.title.iconFallbackName} expand={expand} />
+            <Logo
+              src={ownerInfo.logo}
+              icon={navigation.title.iconFallbackName}
+              expand={expand}
+            />
 
-            <Box mx={2} clone color={palette.secondary.contrastText}>
+            <Box data-test-id={testIds.navigationTitle} mx={2} clone color={palette.secondary.contrastText}>
               <Typography variant="h3">
                 {portalName}
               </Typography>
@@ -186,6 +191,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
 
         {/* Top & Fixed Tabs */}
         <Grid
+          data-test-id={testIds.navigationTopFixedTabs}
           container
           xs
           direction="row"
@@ -202,6 +208,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       {/* Top not Fixed tabs */}
       {expand && (
         <Box
+          data-test-id={testIds.navigationTopNotFixedTabs}
           display="flex"
           flexDirection="row"
           justifyContent="flex-end"
@@ -219,6 +226,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       {/* Bottom nav */}
       {subTabs && (
         <Box
+          data-test-id={testIds.navigationSubNav}
           display="flex"
           flexDirection="row"
           justifyContent="flex-end"

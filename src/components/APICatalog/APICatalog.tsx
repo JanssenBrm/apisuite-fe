@@ -6,6 +6,8 @@ import { Tag } from "components/Tag";
 import useStyles from "./styles";
 import { APICatalogProps, APIDetails } from "./types";
 
+import { testIds } from "testIds";
+
 const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
   const classes = useStyles();
   const { palette } = useTheme();
@@ -32,6 +34,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
 
         return (
           <Grid
+            data-test-id={testIds.apiCatalogCard}
             key={apiDetails.id}
             component={Box}
             clone
@@ -43,7 +46,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
             onClick={handleOnCardClick(apiDetails)}
           >
             <Paper variant="outlined">
-              <Grid item xs={2}>
+              <Grid data-test-id={testIds.apiCardAvatar} item xs={2}>
                 <Avatar
                   classes={{
                     colorDefault: apiDetails.apiAccess
@@ -61,16 +64,16 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
                 pt={1}
                 pl={2}
               >
-                <Typography variant="h5" gutterBottom>
+                <Typography data-test-id={testIds.apiCardName} variant="h5" gutterBottom>
                   {apiDetails.apiName}
                 </Typography>
 
                 <Typography variant="subtitle1" gutterBottom>
-                  <Tag v={apiDetails.apiVersion} color={tagColor} />
+                  <Tag v={apiDetails.apiVersion} color={tagColor}/>
                   {
                     apiDetails.apiAccess
-                      ? t("sandboxPage.apiCatalog.productionAccess")
-                      : t("sandboxPage.apiCatalog.documentationAccess")
+                      ? <span data-test-id={testIds.apiCardAccessType}>{t("sandboxPage.apiCatalog.productionAccess")}</span>
+                      : <span data-test-id={testIds.apiCardAccessType}>{t("sandboxPage.apiCatalog.documentationAccess")}</span>
                   }
                 </Typography>
 
@@ -79,7 +82,7 @@ const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
                   overflow="hidden"
                   clone
                 >
-                  <Typography variant="subtitle1">
+                  <Typography data-test-id={testIds.apiCardDescription} variant="subtitle1">
                     {apiDetails.apiDescription}
                   </Typography>
                 </Box>

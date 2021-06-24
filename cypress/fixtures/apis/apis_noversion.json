@@ -1,0 +1,28 @@
+{
+  "rows": [
+    {
+      "id": 1,
+      "name": "openEO API",
+      "baseUri": "https://openeo.org",
+      "baseUriSandbox": null,
+      "docs": [
+        {
+          "title": "Swagger Petstore - OpenAPI 3.0",
+          "info": "",
+          "target": "product_intro"
+        }
+      ],
+      "publishedAt": "2021-02-24T07:46:38.697Z",
+      "type": "cloud",
+      "createdAt": "2021-02-24T07:46:38.698Z",
+      "updatedAt": "2021-02-24T07:46:38.698Z",
+      "apiVersions": []
+    }
+  ],
+  "pagination": {
+    "rowCount": 1,
+    "pageCount": 1,
+    "page": 1,
+    "pageSize": 10
+  }
+}
