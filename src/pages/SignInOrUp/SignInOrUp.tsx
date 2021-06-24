@@ -133,6 +133,7 @@ export const SignInOrUp: React.FC = () => {
         direction="column"
         pt={20}
         px={6}
+        pb={20}
         maxWidth={breakpoints.values.sm}
         margin="auto"
       >
