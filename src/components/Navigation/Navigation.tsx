@@ -99,7 +99,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
         alignItems="center"
         pl={2}
         pr={label.type === "icon" ? 3 : 2}
-        py={subTab || expand ? 2 : 5}
+        py={subTab || expand ? 2 : 6}
         style={adjustTop ? { transform: "translateY(-2px)" } : undefined}
         color={!expand && subTab ? palette.text.primary : palette.secondary.contrastText}
       >
@@ -152,7 +152,6 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       top={0}
       left={0}
       width="100%"
-      minHeight={120}
       zIndex={zIndex.appBar}
       style={{ background: expand ? "transparent" : palette.secondary.main }}
     >
