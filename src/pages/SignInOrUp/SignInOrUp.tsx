@@ -131,9 +131,9 @@ export const SignInOrUp: React.FC = () => {
         component={Box}
         container
         direction="column"
-        pt={20}
+        pt={view === "invitation" || !sso.length ? 2.5 : 0}
+        pb={view === "invitation" || !sso.length ? 1 : 0}
         px={6}
-        pb={20}
         maxWidth={breakpoints.values.sm}
         margin="auto"
       >
