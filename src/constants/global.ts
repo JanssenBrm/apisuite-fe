@@ -40,3 +40,10 @@ export enum LOCAL_STORAGE_KEYS {
   SSO_INVITATION_STATE_STORAGE = "ssoInvitationStateStorage",
   SSO_PROVIDER_STATE_STORAGE = "attemptingSignInWithProvider",
 }
+
+export enum API_DOCS_CONTENT_TARGET {
+  PRODUCT_INTRO = "product_intro",
+  FEATURE = "feature",
+  USE_CASE = "use_case",
+  HIGHLIGHT = "highlight",
+}
