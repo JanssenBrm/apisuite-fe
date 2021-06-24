@@ -293,7 +293,8 @@ users.forEach(user => {
           .and("contain", enUS.sandboxPage.apiCatalog.paragraph);
       });
 
-      it("should show the section title and a card for each recent API added", () => {
+      //TODO: Test needs business confirmation related to the amount of API products being displayed
+      xit("should show the section title and a card for each recent API added", () => {
         cy.intercept("GET", `${Cypress.env("api_url")}/apis`, { fixture: "apis/apis.json" });
         cy.visit("/dashboard");
         cy.dismissCookiesBanner();
