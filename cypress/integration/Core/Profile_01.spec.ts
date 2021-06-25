@@ -9,31 +9,42 @@ import profile_developer from "../../fixtures/profile/profile-developer.json";
 import profile_organizationOwner from "../../fixtures/profile/profile-orgOwner.json";
 
 type roles = "admin" | "baseUser" | "developer" | "organizationOwner";
-const users: { type: roles; filename: string; name: string }[] = [
+interface UserRole {
+  role: roles,
+  filename: string,
+  name: string,
+  currentOrg: string | undefined,
+}
+
+const userRoles: UserRole[] = [
   {
-    type: "developer",
+    role: "developer",
     filename: "profile-developer",
     name: profile_developer.user.name,
+    currentOrg: profile_developer.current_org.name,
   },
   {
-    type: "organizationOwner",
+    role: "organizationOwner",
     filename: "profile-orgOwner",
     name: profile_organizationOwner.user.name,
+    currentOrg: profile_organizationOwner.current_org.name,
   },
   {
-    type: "admin",
+    role: "admin",
     filename: "profile-admin",
     name: profile_admin.user.name,
+    currentOrg: profile_admin.current_org.name,
   },
   {
-    type: "baseUser",
+    role: "baseUser",
     filename: "profile-baseUser",
     name: profile_baseUser.user.name,
+    currentOrg: undefined,
   },
 ];
 
-users.forEach((user) => {
-  describe(`Profile - Overview - ${user.type}`, () => {
+userRoles.forEach((user) => {
+  describe(`Profile - Overview - ${user.role}`, () => {
     context("Left side section", () => {
       before(() => {
         cy.intercept("GET", `${Cypress.env("api_url")}/translations/en-US`, { fixture: "translations/en-US.json" });
@@ -55,7 +66,7 @@ users.forEach((user) => {
       it("should show the user role", () => {
         let roleDisplayName = "";
 
-        switch (user.type) {
+        switch (user.role) {
           case "admin":
             roleDisplayName = enUS.profileTab.overviewSubTab.roleRelatedLabels.admin;
             break;
@@ -78,6 +89,34 @@ users.forEach((user) => {
         cy.testID(testIds.profileOverviewSubtitle)
           .should("be.visible")
           .and("have.text", enUS.profileTab.overviewSubTab.subtitle);
+      });
+
+      it.only("should show the org selector based on user role", () => {
+        if (user.role !== "baseUser") {
+          cy.testID(testIds.profileOverviewSelectorTitle)
+            .should("be.visible")
+            .and("have.text", enUS.profileTab.overviewSubTab.orgRelatedLabels.selectorTitle);
+
+          cy.testID(testIds.profileOverviewSelectorComponent)
+            .within(() => {
+              cy.get("input")
+                .should("be.visible")
+                .and("have.value", user.currentOrg);  
+            });
+
+          cy.testID(testIds.profileOverviewSelectorButton)
+            .should("be.visible")
+            .and("have.text", enUS.profileTab.overviewSubTab.orgRelatedLabels.switchOrgButtonLabel);
+        } else {
+          cy.testID(testIds.profileOverviewSelectorTitle)
+            .should("not.exist");
+
+          cy.testID(testIds.profileOverviewSelectorComponent)
+            .should("not.exist");
+
+          cy.testID(testIds.profileOverviewSelectorButton)
+            .should("not.exist");
+        }
       });
     });
   });
