@@ -60,3 +60,18 @@ fatal: Could not read from remote repository.
 ```
 
 There's something wrong with your SSH Key setup. Read this [documentation](https://docs.github.com/en/github/authenticating-to-github/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
+
+## Tests
+
+Run tests with `npm test` or `npm run cy` for independent test selection and visualization.
+
+### Rules & Conventions
+
+- keep all test IDs in `src/testIds.ts`
+- always insert test ID attribute as first attribute in the element
+```
+<Grid
+    data-test-id={testIds.greetingSection}
+    ...
+```
+
