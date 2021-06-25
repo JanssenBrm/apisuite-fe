@@ -295,7 +295,7 @@ export const Profile: React.FC = () => {
           </div>
 
           <Box mt={1.5}>
-            <Typography variant="body1" color="textSecondary">
+            <Typography data-test-id={testIds.profileOverviewSubtitle} variant="body1" color="textSecondary">
               {t("profileTab.overviewSubTab.subtitle")}
             </Typography>
           </Box>

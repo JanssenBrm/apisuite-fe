@@ -73,6 +73,12 @@ users.forEach((user) => {
           .should("be.visible")
           .and("have.text", roleDisplayName);
       });
+
+      it("should show the subtitle", () => {
+        cy.testID(testIds.profileOverviewSubtitle)
+          .should("be.visible")
+          .and("have.text", enUS.profileTab.overviewSubTab.subtitle);
+      });
     });
   });
 });
