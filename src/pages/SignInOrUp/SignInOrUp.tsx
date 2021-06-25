@@ -26,7 +26,9 @@ export const SignInOrUp: React.FC = () => {
   const history = useHistory();
   const [t] = useTranslation();
   const { auth } = useSelector(signInOrUpSelector);
-  const { navigation, ownerInfo, portalName, providerSignupURL, sso } = useConfig();
+  const { navigation, ownerInfo, portalName, providerSignupURL } = useConfig();
+
+  const sso: string[] = [];
 
   const { view: viewParameter } = useParams<{ view: string }>();
 
@@ -131,7 +133,7 @@ export const SignInOrUp: React.FC = () => {
         component={Box}
         container
         direction="column"
-        pt={view === "invitation" || !sso.length ? 2.5 : 0}
+        pt={view === "invitation" || !sso.length ? 20 : 0}
         pb={view === "invitation" || !sso.length ? 1 : 0}
         px={6}
         maxWidth={breakpoints.values.sm}
