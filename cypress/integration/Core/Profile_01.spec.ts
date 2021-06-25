@@ -91,7 +91,7 @@ userRoles.forEach((user) => {
           .and("have.text", enUS.profileTab.overviewSubTab.subtitle);
       });
 
-      it.only("should show the org selector based on user role", () => {
+      it("should show the org selector based on user role", () => {
         if (user.role !== "baseUser") {
           cy.testID(testIds.profileOverviewSelectorTitle)
             .should("be.visible")
@@ -101,7 +101,7 @@ userRoles.forEach((user) => {
             .within(() => {
               cy.get("input")
                 .should("be.visible")
-                .and("have.value", user.currentOrg);  
+                .and("have.value", user.currentOrg);
             });
 
           cy.testID(testIds.profileOverviewSelectorButton)
