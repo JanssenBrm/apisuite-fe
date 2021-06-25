@@ -24,6 +24,7 @@ import useStyles from "./styles";
 import Notice from "components/Notice";
 import Link from "components/Link";
 import { PageContainer } from "components/PageContainer";
+import { testIds } from "testIds";
 
 export const Profile: React.FC = () => {
   const classes = useStyles();
@@ -268,7 +269,7 @@ export const Profile: React.FC = () => {
       <Grid container>
         <Grid item md={7}>
           <div className={classes.userNameAndRoleContainer}>
-            <Typography variant="h2">
+            <Typography data-test-id={testIds.profileOverviewTitle} variant="h2">
               {
                 profile.user.name !== ""
                   ? profile.user.name
@@ -276,7 +277,7 @@ export const Profile: React.FC = () => {
               }
             </Typography>
 
-            <Typography variant="subtitle1" className={classes.userRole}>
+            <Typography data-test-id={testIds.profileOverviewRole} variant="subtitle1" className={classes.userRole}>
               {
                 !profileHasOrgDetails
                   ? t("profileTab.overviewSubTab.roleRelatedLabels.baseUser")
@@ -376,7 +377,7 @@ export const Profile: React.FC = () => {
             }
 
             {
-              profileHasOrgDetails && 
+              profileHasOrgDetails &&
               <Button
                 color="primary"
                 variant="contained"

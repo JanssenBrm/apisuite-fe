@@ -5,8 +5,6 @@ export enum testIds {
   cookieConsent = "cookieConsent",
   footer = "footer",
 
-
-
   // navigation
   navigationLogoAndTitle = "navigation-logo-and-title",
   navigationLogo = "navigation-logo",
@@ -20,7 +18,6 @@ export enum testIds {
   subNav = "sub-nav",
   userName = "user-name",
   userAvatar = "user-avatar",
-
 
   // carousel
   slide = "carousel-slide",
@@ -78,4 +75,8 @@ export enum testIds {
   signUpOrganisationName = "signUpOrganisationName",
   signUpOrganisationWebSite = "signUpOrganisationWebSite",
   signUpOrganisationPwd = "signUpOrganisationPwd",
+
+  // profile overview
+  profileOverviewTitle = "profile-overview-title",
+  profileOverviewRole = "profile-overview-role"
 }
