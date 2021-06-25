@@ -78,5 +78,9 @@ export enum testIds {
 
   // profile overview
   profileOverviewTitle = "profile-overview-title",
-  profileOverviewRole = "profile-overview-role"
+  profileOverviewRole = "profile-overview-role",
+  profileOverviewSubtitle = "profile-overview-subtitle",
+  profileOverviewSelectorTitle = "profile-overview-selector-title",
+  profileOverviewSelectorComponent = "profile-overview-selector-component",
+  profileOverviewSelectorButton = "profile-overview-selector-button",
 }

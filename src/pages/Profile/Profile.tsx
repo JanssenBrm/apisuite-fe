@@ -295,14 +295,14 @@ export const Profile: React.FC = () => {
           </div>
 
           <Box mt={1.5}>
-            <Typography variant="body1" color="textSecondary">
+            <Typography data-test-id={testIds.profileOverviewSubtitle} variant="body1" color="textSecondary">
               {t("profileTab.overviewSubTab.subtitle")}
             </Typography>
           </Box>
 
           {!isBaseUser() && <>
             <Box mt={3}>
-              <Typography variant="h3">
+              <Typography data-test-id={testIds.profileOverviewSelectorTitle} variant="h3">
                 {t("profileTab.overviewSubTab.orgRelatedLabels.selectorTitle")}
               </Typography>
             </Box>
@@ -310,6 +310,7 @@ export const Profile: React.FC = () => {
             {!!profile.orgs_member.length && (
               <Box mt={3}>
                 <Select
+                  data-test-id={testIds.profileOverviewSelectorComponent}
                   customCloseIcon={<ExpandLessRoundedIcon />}
                   customOpenIcon={<ExpandMoreRoundedIcon />}
                   fieldLabel={t("profileTab.overviewSubTab.orgRelatedLabels.selectorLabel")}
@@ -326,6 +327,7 @@ export const Profile: React.FC = () => {
 
                 <Box clone mt={3}>
                   <Button
+                    data-test-id={testIds.profileOverviewSelectorButton}
                     disabled={currentlySelectedOrganisation.value === profile.current_org.id}
                     size="large"
                     color="primary"
