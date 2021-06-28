@@ -43,8 +43,13 @@ export const SignUpForm: React.FC = () => {
       }
 
       case 2: {
-        dispatch(submitSignUpOrganisation({ details: { orgName: firstInput, website: secondInput! } }));
-        submittedStep.current = 2;
+        if (firstInput) {
+          dispatch(submitSignUpOrganisation({ details: { orgName: firstInput, website: secondInput! } }));
+          submittedStep.current = 2;
+        } else {
+          setStep(3);
+        }
+
         break;
       }
 
