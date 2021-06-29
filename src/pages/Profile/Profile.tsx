@@ -585,25 +585,30 @@ export const Profile: React.FC = () => {
             </Button>
           </Box>
 
-          <Box mt={5}>
-            <Notice
-              noticeIcon={<Icon>info</Icon>}
-              noticeText={
-                <Typography variant="body2" style={{ color: palette.info.contrastText, whiteSpace: "pre-line" }}>
-                  <Trans i18nKey="profileTab.overviewSubTab.openIDInfoBox">
-                    {[
-                      <Link
-                        key="sandboxPage.notice"
-                        to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/760774663/Open+ID"
-                        rel='noopener noreferrer'
-                        target='_blank'
-                      />,
-                    ]}
-                  </Trans>
-                </Typography>
-              }
-            />
-          </Box>
+          {/* SSO-related notice */}
+          {
+            ssoIsActive && (
+              <Box mt={5}>
+                <Notice
+                  noticeIcon={<Icon>info</Icon>}
+                  noticeText={
+                    <Typography variant="body2" style={{ color: palette.info.contrastText, whiteSpace: "pre-line" }}>
+                      <Trans i18nKey="profileTab.overviewSubTab.openIDInfoBox">
+                        {[
+                          <Link
+                            key="sandboxPage.notice"
+                            to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/760774663/Open+ID"
+                            rel='noopener noreferrer'
+                            target='_blank'
+                          />,
+                        ]}
+                      </Trans>
+                    </Typography>
+                  }
+                />
+              </Box>
+            )
+          }
         </Grid>
       </Grid>
 
