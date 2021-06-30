@@ -53,9 +53,8 @@ export const Sandbox: React.FC = () => {
           hasMoreDetails: api.apiVersions.length > 0,
           id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
           apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
-          // FIXME: not translated
-          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || "No description presently available.",
-          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : "No version available",
+          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || t("fallbacks.noDescription"),
+          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : t("fallbacks.noVersion"),
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
           /* An API that is 'live' (i.e., 'production accessible') is one that has versions, and has

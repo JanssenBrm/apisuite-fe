@@ -72,12 +72,11 @@ export const APIProducts: React.FC = () => {
           /* Determines if an 'API Catalog' entry will be clickable, and link to its corresponding
           'API Details' view. For the time being, an 'API Catalog' entry should be clickable and
           link to its corresponding 'API Details' view if it has versions. */
-          // FIXME: not translated
-          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || "No description presently available.",
+          apiDescription: api?.docs?.find((x) => x.target === API_DOCS_CONTENT_TARGET.PRODUCT_INTRO)?.info || t("fallbacks.noDescription"),
           apiName: api.apiVersions.length ? api.apiVersions[0].title : api.name,
           // Used to link an 'API Catalog' entry to its corresponding 'API Details' view.
           apiRoutingId: api.apiVersions.length ? `${api.apiVersions[0].id}` : "",
-          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : "No version available",
+          apiVersion: api.apiVersions.length ? api.apiVersions[0].version : t("fallbacks.noVersion"),
           hasMoreDetails: api.apiVersions.length > 0,
           id: api.apiVersions.length ? api.apiVersions[0].apiId : api.id,
         };

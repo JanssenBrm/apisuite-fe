@@ -645,5 +645,9 @@
     "title": "Content Preview",
     "uploadSuccess": "Media uploaded successfully.",
     "uploadError": "Error uploading media."
+  },
+  "fallbacks": {
+    "noDescription": "No description presently available.",
+    "noVersion": "No version available"
   }
 }
