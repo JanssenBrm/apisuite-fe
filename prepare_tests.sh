@@ -14,14 +14,6 @@ set -e
 
 . ./install_dependencies.sh
 
-CONFIG=develop
-
-if [[ "$CIRCLE_BRANCH" = "staging" || "$CIRCLE_BRANCH" = "production" ]]; then
-  CONFIG=$CIRCLE_BRANCH
-fi
-
 echo 127.0.0.1 localhost.develop.apisuite.io | sudo tee -a /etc/hosts
 
 sudo cat /etc/hosts
-
-npm install

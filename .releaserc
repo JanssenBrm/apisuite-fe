@@ -1,8 +1,6 @@
 {
   "branches": [
-    { "name": "develop", "prerelease": true },
-    { "name": "staging", "prerelease": true },
-    { "name": "production" }
+    { "name": "master" }
   ],
   "plugins": [
     "@semantic-release/commit-analyzer",
