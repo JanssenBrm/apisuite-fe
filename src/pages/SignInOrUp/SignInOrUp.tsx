@@ -26,9 +26,7 @@ export const SignInOrUp: React.FC = () => {
   const history = useHistory();
   const [t] = useTranslation();
   const { auth } = useSelector(signInOrUpSelector);
-  const { navigation, ownerInfo, portalName, providerSignupURL } = useConfig();
-
-  const sso: string[] = [];
+  const { navigation, ownerInfo, portalName, providerSignupURL, sso } = useConfig();
 
   const { view: viewParameter } = useParams<{ view: string }>();
 
