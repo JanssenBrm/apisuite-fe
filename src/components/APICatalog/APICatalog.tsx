@@ -1,82 +1,86 @@
 import React from "react";
+import { useHistory } from "react-router";
+import { Avatar, Box, Grid, Paper, Typography, useTheme } from "@apisuite/fe-base";
 
-import Link from "components/Link";
-
-import { Avatar } from "@apisuite/fe-base";
-
+import { Tag } from "components/Tag";
 import useStyles from "./styles";
-
 import { APICatalogProps, APIDetails } from "./types";
 
-const APICatalog: React.FC<APICatalogProps> = ({
-  apisToDisplay,
-}) => {
+const APICatalog: React.FC<APICatalogProps> = ({ apisToDisplay }) => {
   const classes = useStyles();
+  const { palette } = useTheme();
+  const history = useHistory();
 
-  const generateAPICatalogEntry = (apiDetails: APIDetails, index: number) => {
-    const apiSplitName = apiDetails.apiName.split(" ");
-    const apiInitials = apiSplitName[0].slice(0, 2);
-
-    return (
-      <div
-        className={classes.apiCatalogEntry}
-        key={`apiCatalogEntry${index}`}
-      >
-        <div className={classes.apiCatalogEntryAvatar}>
-          <Avatar
-            className={apiDetails.apiAccess
-              ? classes.colorsOfProductionAPI
-              : classes.colorsOfAPIDocumentation}
-          >
-            {apiInitials}
-          </Avatar>
-        </div>
-
-        <div className={classes.apiCatalogEntryText}>
-          <p className={classes.apiCatalogEntryName}>{apiDetails.apiName}</p>
-
-          <p className={classes.apiCatalogEntryVersionAndAccess}>
-            <span
-              className={
-                `
-${classes.apiCatalogEntryVersion}
-${apiDetails.apiAccess
-        ? classes.colorsOfProductionAPI
-        : classes.colorsOfAPIDocumentation
-      }
-`
-              }
-            >
-              {apiDetails.apiVersion}
-            </span>
-            <>{apiDetails.apiAccess ? "Production access" : "API Documentation"}</>
-          </p>
-
-          <p className={classes.apiCatalogEntryDescription}>
-            {apiDetails.apiDescription}
-          </p>
-        </div>
-      </div>
-    );
+  const handleOnCardClick = (details: APIDetails) => () => {
+    history.push(`/api-products/details/${details.id}/spec/${details.apiRoutingId}`);
   };
 
-  const apiCatalogEntries = apisToDisplay.map((apiDetails, index) => {
-    if (!apiDetails) return <div key={`apiCatalogEntry${index}`} />;
-    if (apiDetails.hasMoreDetails) {
-      return (
-        <Link
-          className={classes.apiCatalogEntryLink}
-          to={`/api-products/details/${apiDetails.id}/spec/${apiDetails.apiRoutingId}`}
-        >
-          {generateAPICatalogEntry(apiDetails, index)}
-        </Link>
-      );
-    } else {
-      return generateAPICatalogEntry(apiDetails, index);
-    }
-  });
+  return (
+    <Grid
+      component={Box}
+      container
+    >
+      {apisToDisplay.map((apiDetails) => {
+        if (!apiDetails) return null;
 
-  return <>{apiCatalogEntries}</>;
+        const tagColor = apiDetails.apiAccess ? palette.primary.main : palette.secondary.light;
+
+        return (
+          <Grid
+            key={apiDetails.id}
+            component={Box}
+            clone
+            xs
+            container
+            p={3}
+            mr={3}
+            height={200}
+            onClick={handleOnCardClick(apiDetails)}
+          >
+            <Paper variant="outlined">
+              <Grid item xs={2}>
+                <Avatar
+                  classes={{
+                    colorDefault: apiDetails.apiAccess
+                      ? classes.colorsOfProductionAPI : classes.colorsOfAPIDocumentation,
+                  }}
+                >
+                  {apiDetails.apiName.slice(0, 2)}
+                </Avatar>
+              </Grid>
+
+              <Grid
+                component={Box}
+                item
+                xs={10}
+                pt={1}
+                pl={2}
+              >
+                <Typography variant="h5" gutterBottom>
+                  {apiDetails.apiName}
+                </Typography>
+
+                <Typography variant="subtitle1" gutterBottom>
+                  {/* FIXME: not translated */}
+                  <Tag v={apiDetails.apiVersion} color={tagColor} /> {apiDetails.apiAccess ? "Production access" : "API Documentation"}
+                </Typography>
+
+                <Box
+                  maxHeight={50}
+                  overflow="hidden"
+                  clone
+                >
+                  <Typography variant="subtitle1">
+                    {apiDetails.apiDescription}
+                  </Typography>
+                </Box>
+              </Grid>
+            </Paper>
+          </Grid>
+        );
+      })}
+    </Grid>
+  );
 };
 
 export default APICatalog;

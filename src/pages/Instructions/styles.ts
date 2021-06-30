@@ -24,15 +24,6 @@ export default makeStyles((theme) => ({
     width: 688,
   },
 
-  contentContainer: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-around",
-    margin: "0 auto",
-    maxWidth: 900,
-    transform: "translateX(-8px)",
-  },
-
   description: {
     display: "flex",
     marginBottom: 20,
@@ -93,11 +84,6 @@ export default makeStyles((theme) => ({
     color: "black",
     fontSize: 16,
     fontWeight: 400,
-  },
-
-  root: {
-    backgroundColor: theme.palette.grey[50],
-    minHeight: "100%",
   },
 
   sideMenuContainer: {

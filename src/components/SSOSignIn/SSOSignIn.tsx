@@ -1,19 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import qs from "qs";
-import { useTranslation } from "@apisuite/fe-base";
+import { Box, Typography, useTranslation } from "@apisuite/fe-base";
 
 import { LOCAL_STORAGE_KEYS } from "constants/global";
-import useStyles from "./styles";
 import { SSOSignInProps } from "./types";
 
-const SSOSignIn: React.FC<SSOSignInProps> = ({
-  ssoTokenExchange,
-}) => {
-  const classes = useStyles();
-
+const SSOSignIn: React.FC<SSOSignInProps> = ({ ssoTokenExchange }) => {
   const [t] = useTranslation();
 
-  React.useEffect(() => {
+  useEffect(() => {
     // URL parameters
     const allURLParameters = qs.parse(window.location.search.slice(1));
     const stateParameter = allURLParameters.state;
@@ -28,9 +23,9 @@ const SSOSignIn: React.FC<SSOSignInProps> = ({
   }, [ssoTokenExchange]);
 
   return (
-    <p className={classes.pleaseHoldMessage}>
-      {t("signInForm.ssoSignInPleaseHoldMessage")}
-    </p>
+    <Box display="flex" justifyContent="center" alignItems="center" height="100%">
+      <Typography variant="h2">{t("signInForm.ssoSignInPleaseHoldMessage")}</Typography>
+    </Box>
   );
 };
 

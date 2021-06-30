@@ -17,13 +17,6 @@ export default makeStyles((theme) => ({
     margin: "0 auto",
   },
 
-  sectionIntroHeading: {
-    color: theme.palette.secondary.main,
-    fontSize: "32px",
-    fontWeight: 300,
-    margin: "40px 0px",
-  },
-
   sectionSeparator: {
     border: `1px solid ${theme.palette.grey["300"]}`,
     borderRadius: theme.shape.borderRadius,
@@ -49,118 +42,8 @@ export default makeStyles((theme) => ({
     flexDirection: "row",
   },
 
-  individualStepsDivider: {
-    borderRight: `1px solid ${theme.palette.grey[300]}`,
-  },
-
-  individualStep: {
-    alignItems: "center",
-    display: "flex",
-    flexDirection: "column",
-    padding: "24px 18px",
-    width: "200px",
-
-    "& > h1": {
-      fontSize: "42px",
-      fontWeight: "700",
-      marginBottom: "30px",
-    },
-
-    "& > h3": {
-      marginBottom: "20px",
-      fontSize: "20px",
-      fontWeight: 300,
-      textAlign: "center",
-    },
-
-    "& > p": {
-      color: theme.palette.text.primary,
-      fontSize: "14px",
-      height: "100px",
-      lineHeight: "18px",
-      textAlign: "center",
-      marginBottom: "55px",
-
-      "& > span": {
-        display: "block",
-        margin: "0px 0px 15px 0px",
-      },
-    },
-  },
-
-  individualStepButton: {
-    "& > span": {
-      color: theme.palette.primary.main,
-    },
-  },
-
-  individualStepOne: {
-    color: theme.palette.primary.light,
-  },
-
-  individualStepTwo: {
-    color: theme.palette.primary.main,
-  },
-
-  individualStepThree: {
-    color: theme.palette.primary.dark,
-  },
-
-  stepsSectionContainer: {
-    display: "block",
-    margin: "0 auto 40px auto",
-    maxWidth: "900px",
-    width: "100%",
-  },
-
-  stepsDescriptionContainerOne: {
-    display: "block",
-    marginRight: "40px",
-    maxWidth: "260px",
-    width: "100%",
-  },
-
-  stepsDescriptionContainerTwo: {
-    display: "block",
-    maxWidth: "600px",
-    width: "100%",
-  },
-
   stepsDescriptionSupportButton: {
-    color: `${theme.palette.secondary.contrastText} !important`,
-  },
-
-  stepsSectionDescriptionsContainer: {
-    display: "flex",
-    maxWidth: "900px",
-    width: "100%",
-  },
-
-  stepsDescriptionHeading: {
-    color: theme.palette.secondary.main,
-    fontSize: "24px",
-    fontWeight: 500,
-    margin: "0px 0px 12px 0px",
-  },
-
-  stepsDescriptionParagraphOne: {
-    color: theme.palette.action.active,
-    fontSize: "20px",
-    fontWeight: 200,
-    margin: "12px 0px",
-  },
-
-  stepsDescriptionParagraphTwo: {
-    color: theme.palette.text.primary,
-    fontSize: "16px",
-    fontWeight: 300,
-    lineHeight: "20px",
-    margin: "12px 0px",
-
-    "& > span": {
-      display: "block",
-      margin: "12px 0px",
-    },
+    marginTop: theme.spacing(4),
   },
 
   // JSS for the 'API Catalog' section
@@ -172,17 +55,21 @@ export default makeStyles((theme) => ({
     justifyContent: "space-between",
   },
 
-  apiCatalogSectionContainer: {
-    display: "block",
-    margin: "40px auto 20px auto",
-    maxWidth: "900px",
-    width: "100%",
-  },
-
-  // JSS for the 'notice'
-
   noticeContainer: {
     margin: "0px auto -30px auto",
     maxWidth: "900px",
+  },
+
+  stepCta: {
+    border: "2px solid",
+    marginTop: "auto",
+
+    "&:hover": {
+      border: "2px solid",
+    },
+
+    "&.Mui-disabled":  {
+      border: `2px solid ${theme.palette.action.disabledBackground}`,
+    },
   },
 }));

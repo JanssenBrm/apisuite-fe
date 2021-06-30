@@ -1,9 +1,12 @@
 import React from "react";
-import { useConfig, useTranslation, useTheme } from "@apisuite/fe-base";
+import { useConfig, useTranslation, useTheme, Grid, Box, Typography } from "@apisuite/fe-base";
 import { Light as SyntaxHighlighter } from "react-syntax-highlighter";
 import bash from "react-syntax-highlighter/dist/esm/languages/hljs/bash";
 import FileCopyOutlinedIcon from "@material-ui/icons/FileCopyOutlined";
+
+import { PageContainer } from "components/PageContainer";
 import NavMenu from "components/NavMenu";
+
 import useStyles from "./styles";
 
 SyntaxHighlighter.registerLanguage("bash", bash);
@@ -92,44 +95,72 @@ https://${infra.remoteAPI}/v1/pets`,
   };
 
   return (
-    <div className={`page-container ${classes.root}`}>
-      <section className={classes.contentContainer}>
-        <h1 className={classes.title}>{t("dashboardTab.testSubTab.title")}</h1>
+    <PageContainer>
+      <Grid container>
+        <Grid item md={8}>
+          <Box mb={5}>
+            <Typography variant="h2">
+              {t("dashboardTab.testSubTab.title")}
+            </Typography>
 
-        <div className={classes.mainContainer}>
-          <div className={classes.content}>
-            <p className={classes.description}>
+            <Typography variant="body1" color="textSecondary">
               {t("dashboardTab.testSubTab.description")}
-            </p>
+            </Typography>
+          </Box>
 
-            {
-              steps.map((step, index) => (
-                <div key={index} className={classes.stepContainer}>
-                  <h2
-                    id={`step-${index + 1}`}
-                    className={classes.stepTitle}
-                  >
-                    {t("dashboardTab.testSubTab.stepIntro")} {index + 1}: {step.stepTitle}
-                  </h2>
+          {steps.map((step, index) => (
+            <Box key={step.stepTitle} mb={5}>
+              <Typography
+                id={`step-${index + 1}`}
+                variant="h3"
+              >
+                {t("dashboardTab.testSubTab.stepIntro")} {index + 1}: {step.stepTitle}
+              </Typography>
 
-                  <p className={classes.description}>
-                    {step.stepText}
-                  </p>
+              <Box mt={1.5} mb={3}>
+                <Typography variant="body1">
+                  {step.stepText}
+                </Typography>
+              </Box>
 
-                  {
-                    step.stepNote.length > 0 &&
-                    <div className={classes.noteContainer}>
-                      <div className={classes.noteContent}>
-                        <div className={classes.noteTitle}>Note</div>
-                        <div className={classes.note}>{step.stepNote}</div>
-                      </div>
-                    </div>
-                  }
+              {step.stepNote.length > 0 && (
+                <div className={classes.noteContainer}>
+                  <div className={classes.noteContent}>
+                    <Typography variant="body1">Note</Typography>
+                    <Typography variant="body2" style={{ color: palette.primary.contrastText }}>
+                      {step.stepNote}
+                    </Typography>
+                  </div>
+                </div>
+              )}
+
+              <div className={classes.iconRow}>
+                <FileCopyOutlinedIcon
+                  className={classes.clipboardIcon}
+                  onClick={() => { navigator.clipboard.writeText(step.command); }}
+                />
+              </div>
+
+              <SyntaxHighlighter
+                language='bash'
+                style={codeStyle}
+                className={classes.codeBlock}
+              >
+                {step.command}
+              </SyntaxHighlighter>
+
+              {step.response && (
+                <>
+                  <Box clone mb={1.5}>
+                    <Typography variant="body1">
+                      {step.response}
+                    </Typography>
+                  </Box>
 
                   <div className={classes.iconRow}>
                     <FileCopyOutlinedIcon
                       className={classes.clipboardIcon}
-                      onClick={() => { navigator.clipboard.writeText(step.command); }}
+                      onClick={() => { navigator.clipboard.writeText(step.responseCode); }}
                     />
                   </div>
 
@@ -138,57 +169,40 @@ https://${infra.remoteAPI}/v1/pets`,
                     style={codeStyle}
                     className={classes.codeBlock}
                   >
-                    {step.command}
+                    {step.responseCode}
                   </SyntaxHighlighter>
+                </>
+              )}
+            </Box>
+          ))}
 
-                  {
-                    step.response &&
-                    <>
-                      <p className={classes.description}>
-                        {step.response}
-                      </p>
+          <Typography variant="h3">
+            {t("dashboardTab.testSubTab.finalRemarksPartOne")}
+          </Typography>
 
-                      <div className={classes.iconRow}>
-                        <FileCopyOutlinedIcon
-                          className={classes.clipboardIcon}
-                          onClick={() => { navigator.clipboard.writeText(step.responseCode); }}
-                        />
-                      </div>
-
-                      <SyntaxHighlighter
-                        language='bash'
-                        style={codeStyle}
-                        className={classes.codeBlock}
-                      >
-                        {step.responseCode}
-                      </SyntaxHighlighter>
-                    </>
-                  }
-                </div>
-              ))
-            }
-
-            <h2 className={classes.stepTitle}>
-              {t("dashboardTab.testSubTab.finalRemarksPartOne")}
-            </h2>
-
-            <p className={classes.description}>
+          <Box mt={1.5} mb={3}>
+            <Typography variant="body1">
               {t("dashboardTab.testSubTab.finalRemarksPartTwo")}
-            </p>
-          </div>
+            </Typography>
+          </Box>
+        </Grid>
 
-          <div className={classes.navigation}>
-            <div className={classes.sideMenuContainer}>
-              <NavMenu
-                options={steps.map((step, index) => (
-                  `${t("dashboardTab.testSubTab.stepIntro")} ${index + 1}: ${step.stepTitle}`
-                ))}
-              />
-            </div>
+        <Grid
+          component={Box}
+          item
+          md={4}
+          pt={15}
+        >
+          <div className={classes.sideMenuContainer}>
+            <NavMenu
+              options={steps.map((step, index) => (
+                `${t("dashboardTab.testSubTab.stepIntro")} ${index + 1}: ${step.stepTitle}`
+              ))}
+            />
           </div>
-        </div>
-      </section>
-    </div>
+        </Grid>
+      </Grid>
+    </PageContainer>
   );
 };
 

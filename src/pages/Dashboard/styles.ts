@@ -3,15 +3,6 @@ import { makeStyles } from "@apisuite/fe-base";
 import dashboardSpaceBackground from "assets/dashboardSpaceBackground.svg";
 
 export default makeStyles((theme) => ({
-  // General JSS
-
-  dashboardContentsContainer: {
-    backgroundColor: theme.palette.background.default,
-    position: "relative",
-  },
-
-  // JSS for the header image
-
   expandedHeaderImageSection: {
     background: "url(" + dashboardSpaceBackground + ")",
     backgroundColor: theme.palette.background.default,
@@ -86,52 +77,11 @@ export default makeStyles((theme) => ({
     transition: "margin 0.5s",
   },
 
-  customGreetingCardText: {
-    fontSize: "20px",
-    fontWeight: 200,
-
-    "&:first-of-type": {
-      marginBottom: "20px",
-    },
-  },
-
-  customGreetingCardTextContainer: {
-    width: "625px",
-    paddingRight: "15px",
-  },
-
-  greetingCardSection: {
-    marginBottom: "45px",
-  },
-
-  // JSS for the 'API Catalog' section
-
-  apiCatalogContainer: {
-    display: "flex",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    justifyContent: "space-between",
-  },
-
-  apiCatalogSectionContainer: {
-    display: "block",
-    margin: "40px auto 20px auto",
-    maxWidth: "900px",
-    width: "100%",
-  },
-
   sectionIntroHeading: {
     color: theme.palette.secondary.main,
     fontSize: "32px",
     fontWeight: 300,
     margin: "40px 0px",
-  },
-
-  sectionSeparator: {
-    border: `1px solid ${theme.palette.grey[200]}`,
-    borderRadius: theme.shape.borderRadius,
-    maxWidth: "900px",
-    width: "100%",
   },
 
   // JSS for the notice
@@ -145,9 +95,5 @@ export default makeStyles((theme) => ({
 
   customNotificationBannerParagraph: {
     color: theme.palette.primary.contrastText,
-    fontSize: "16px",
-    fontWeight: 300,
-    lineHeight: "22px",
-    marginRight: "15px",
   },
 }));

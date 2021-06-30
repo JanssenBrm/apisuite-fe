@@ -16,17 +16,14 @@ const useStyles = makeStyles((theme) => ({
   },
 
   cookiesConsentHeader: {
+    ...theme.typography.h3,
     color: theme.palette.primary.contrastText,
-    fontSize: "24px",
-    fontWeight: 400,
     margin: "0px 80px 12px 0px",
   },
 
   cookiesConsentParagraph: {
+    ...theme.typography.body1,
     color: theme.palette.primary.contrastText,
-    fontSize: "16px",
-    fontWeight: 300,
-    lineHeight: "22px",
     marginRight: "80px",
 
     "&:first-of-type": {
