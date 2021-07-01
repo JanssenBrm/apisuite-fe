@@ -436,13 +436,19 @@ export const Applications: React.FC = () => {
             )
       }
 
-      <ApplicationsModal
-        allUserAppNames={allUserAppNames}
-        isModalOpen={isModalOpen}
-        modalDetails={modalDetails}
-        modalMode={modalMode}
-        toggleModal={() => toggleModal("", 0, 0)}
-      />
+      {/* FIXME
+      * Reverted back this change because it appears to solve the problem, but we actually loose the animation.
+      * We should take a closer look at how we want to handle this Modal's in the future.
+      */}
+      {isModalOpen && (
+        <ApplicationsModal
+          allUserAppNames={allUserAppNames}
+          isModalOpen={isModalOpen}
+          modalDetails={modalDetails}
+          modalMode={modalMode}
+          toggleModal={() => toggleModal("", 0, 0)}
+        />
+      )}
     </PageContainer>
   );
 };
