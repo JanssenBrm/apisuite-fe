@@ -234,7 +234,7 @@ export const APIProducts: React.FC = () => {
               alignItems="center"
               height={50}
             >
-              {!auth.user && (
+              {auth.user && (
                 <>
                   <Icon fontSize="small">circle</Icon>
 
@@ -250,7 +250,7 @@ export const APIProducts: React.FC = () => {
                 </>
               )}
 
-              {auth.user &&(
+              {!auth.user &&(
                 <Typography variant="body1">
                   <Link to="/auth/signup">
                     {t("apiProductsTab.registerForMoreMessage")}
