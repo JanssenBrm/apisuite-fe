@@ -4,6 +4,7 @@ import { matchPath } from "react-router";
 import { Avatar, Box, Grid, Icon, TabConfig, Typography, useConfig, useTheme, useTranslation } from "@apisuite/fe-base";
 
 import { testIds } from "testIds";
+import { ROLES } from "constants/global";
 import { logout } from "store/auth/actions/logout";
 import Link from "components/Link";
 import { Logo } from "components/Logo";
@@ -18,7 +19,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
   const { t } = useTranslation();
   const { user, currentOrg } = useSelector(navigationSelector);
   // FIXME: checking the id because profile is never undefined
-  const role = currentOrg?.role?.id ? currentOrg.role.name : "anonymous";
+  const role = currentOrg?.role?.id ? currentOrg.role.name : user.id ? ROLES.baseUser.value : "anonymous";
 
   // Expand functionality
   // Note: contractible prop was not changed to prevent breaking changes
