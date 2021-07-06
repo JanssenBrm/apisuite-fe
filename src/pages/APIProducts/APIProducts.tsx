@@ -316,28 +316,21 @@ export const APIProducts: React.FC = () => {
             </div>
           </div>
 
-          {/* FIXME */}
-          {
-            recentlyUpdatedAPIs.length === 0
-              ? (
-                <Typography variant="body1" align="center">
-                  {t("apiProductsTab.retrievingAPIProductMessage")}
-                </Typography>
-              )
-              : (
-                (apiFilters[0].length === 0 && !apiFilters[1] && !apiFilters[2] && !apiFilters[3])
-                  ? (
-                    <div className={classes.apiCatalogContainer}>
-                      <APICatalog apisToDisplay={recentlyUpdatedAPIs} />
-                    </div>
-                  )
-                  : (
-                    <div className={classes.apiCatalogContainer}>
-                      <APICatalog apisToDisplay={filteredAPIs} />
-                    </div>
-                  )
-              )
-          }
+          {!recentlyUpdatedAPIs.length && (
+            <Typography variant="body1" align="center">
+              {t("apiProductsTab.retrievingAPIProductMessage")}
+            </Typography>
+          )}
+
+          {recentlyUpdatedAPIs.length && (
+            <div className={classes.apiCatalogContainer}>
+              <APICatalog
+                apisToDisplay={
+                  apiFilters[0].length === 0 && !apiFilters[1] && !apiFilters[2] && !apiFilters[3]
+                    ? recentlyUpdatedAPIs : filteredAPIs}
+              />
+            </div>
+          )}
         </PageContainer>
       </Box>
 
