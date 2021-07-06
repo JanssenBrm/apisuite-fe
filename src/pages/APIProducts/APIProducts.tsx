@@ -322,7 +322,7 @@ export const APIProducts: React.FC = () => {
             </Typography>
           )}
 
-          {recentlyUpdatedAPIs.length && (
+          {!!recentlyUpdatedAPIs.length && (
             <div className={classes.apiCatalogContainer}>
               <APICatalog
                 apisToDisplay={
