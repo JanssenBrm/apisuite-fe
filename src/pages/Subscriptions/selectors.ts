@@ -9,36 +9,34 @@ export const subscriptionsSelector = createSelector(
   },
 );
 
-export const allUserAppsSelector = createSelector(
-  ({ applications }: Store) => applications,
-  (applications) => applications.userApps,
-);
-
-export const apisByNameSelector = createSelector(
+export const apisAndAppsSelector = createSelector(
   ({ subscriptions }: Store) => subscriptions,
   ({ applications }: Store) => applications,
   (subscriptions, applications) => {
     const allApis = subscriptions.apis;
     const allApps = applications.userApps;
 
-    return allApis.map((api) => {
-      const filteredApps = allApps.filter((app) => {
-        return app.subscriptions.includes(api.id);
-      });
+    return {
+      apis: allApis.map((api) => {
+        const filteredApps = allApps.filter((app) => {
+          return app.subscriptions.includes(api.id);
+        });
 
-      const apps = filteredApps.map((filteredApp) => {
+        const apps = filteredApps.map((filteredApp) => {
+          return {
+            appName: filteredApp.name,
+            appId: filteredApp.id,
+          };
+        });
+
         return {
-          appName: filteredApp.name,
-          appId: filteredApp.id,
+          name: api.name,
+          versions: api.apiVersions,
+          apps,
+          description: api.docs,
         };
-      });
-
-      return {
-        name: api.name,
-        versions: api.apiVersions,
-        apps,
-        description: api.docs,
-      };
-    });
+      }),
+      apps: allApps,
+    };
   },
 );

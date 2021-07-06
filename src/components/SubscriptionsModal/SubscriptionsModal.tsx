@@ -6,7 +6,7 @@ import CheckBoxRoundedIcon from "@material-ui/icons/CheckBoxRounded";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 
 import { requestAPIAccess } from "store/applications/actions/requestApiAccess";
-import { allUserAppsSelector, apisByNameSelector } from "pages/Subscriptions/selectors";
+import { apisAndAppsSelector } from "pages/Subscriptions/selectors";
 
 import { SubscriptionsModalProps } from "./types";
 import useStyles from "./styles";
@@ -19,9 +19,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
   const { palette } = useTheme();
   const { t } = useTranslation();
   const { portalName, ownerInfo, clientName, navigation } = useConfig();
-  // FIXME: unify these
-  const apisByName = useSelector(apisByNameSelector);
-  const allUserApps = useSelector(allUserAppsSelector);
+  const { apps, apis } = useSelector(apisAndAppsSelector);
 
   /* 'Client app' selection */
 
@@ -46,14 +44,14 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
   };
 
   const [selectedClientApp, setSelectedClientApp] = React.useState(
-    allUserApps.length === 1
+    apps.length === 1
       // If there's one single user app, we default the 'Client app' selection to it
-      ? allUserApps[0]
+      ? apps[0]
       // If there's more than one single user app, we leave the 'Client app' selection up to the user
       : initialClientApp,
   );
   const [isClientAppSelected, setIsClientAppSelected] = React.useState(
-    allUserApps.length === 1,
+    apps.length === 1,
   );
 
   const handleClientAppSelection = (dataOfSelectedApp: any) => {
@@ -65,57 +63,8 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
 
   // const [selectedAPIProducts, setSelectedAPIProducts] = React.useState([])
   const [isAPIProductSelected, setIsAPIProductSelected] = React.useState(
-    new Array(apisByName.length).fill(true),
+    new Array(apis.length).fill(true),
   );
-
-  /*
-  TODO: Keep 'handleAPIProductsSelection' commented - for now, Koen wants all API Products to be selected by default.
-  The selection and deselection features are to be added at a later date.
-  */
-  // const handleAPIProductsSelection = (dataOfSelectedAPIProduct: any, indexOfSelectedAPIProduct: number) => {
-  //   const currentSelectionOfAPIProducts = [...selectedAPIProducts]
-  //   const currentStateOfSelectedAPIProducts = [...isAPIProductSelected]
-
-  //   // If there are API products that have already been selected, (...)
-  //   if (currentSelectionOfAPIProducts.length > 0) {
-  //     /* (...) we need to check if the currently selected API product is one that
-  //     has already been previously selected, so as to handle selections and deselections. */
-  //     const indexOfAPIProduct = currentSelectionOfAPIProducts.findIndex((apiProduct: any) => {
-  //       return apiProduct.versions[0].id === dataOfSelectedAPIProduct.versions[0].id
-  //     })
-
-  //     // If the currently selected API product has NOT been selected yet, we handle its selection.
-  //     if (indexOfAPIProduct === -1) {
-  //       const newSelectionOfAPIProducts = currentSelectionOfAPIProducts.concat(dataOfSelectedAPIProduct)
-  //       const newStateOfSelectedAPIProducts = currentStateOfSelectedAPIProducts
-  //       newStateOfSelectedAPIProducts[indexOfSelectedAPIProduct] = true
-
-  //       setSelectedAPIProducts(newSelectionOfAPIProducts)
-  //       setIsAPIProductSelected(newStateOfSelectedAPIProducts)
-
-  //       return
-  //     }
-
-  //     // If the currently selected API product has already been selected, we handle its deselection.
-  //     currentSelectionOfAPIProducts.splice(indexOfSelectedAPIProduct, 1)
-  //     const newSelectionOfAPIProducts = currentSelectionOfAPIProducts
-  //     const newStateOfSelectedAPIProducts = currentStateOfSelectedAPIProducts
-  //     newStateOfSelectedAPIProducts[indexOfSelectedAPIProduct] = false
-
-  //     setSelectedAPIProducts(newSelectionOfAPIProducts)
-  //     setIsAPIProductSelected(newStateOfSelectedAPIProducts)
-
-  //     return
-  //   }
-
-  //   // If no API products have already been selected, (...)
-  //   const newSelectionOfAPIProducts = currentSelectionOfAPIProducts.concat(dataOfSelectedAPIProduct)
-  //   const newStateOfSelectedAPIProducts = currentStateOfSelectedAPIProducts
-  //   newStateOfSelectedAPIProducts[indexOfSelectedAPIProduct] = true
-
-  //   setSelectedAPIProducts(newSelectionOfAPIProducts)
-  //   setIsAPIProductSelected(newStateOfSelectedAPIProducts)
-  // }
 
   /* Selections reset */
 
@@ -124,7 +73,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
     setIsClientAppSelected(false);
 
     // setSelectedAPIProducts([])
-    setIsAPIProductSelected(new Array(apisByName.length).fill(true));
+    setIsAPIProductSelected(new Array(apis.length).fill(true));
 
     toggleModal();
   };
@@ -215,14 +164,14 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                 >
                   <MenuItem disabled value=''>
                     {
-                      allUserApps.length > 0
+                      apps.length > 0
                         ? t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.selectorLabel.moreThanOneApp")
                         : t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.clientApps.selectorLabel.noApps")
                     }
                   </MenuItem>
 
                   {
-                    allUserApps.map((userApp, index) => {
+                    apps.map((userApp, index) => {
                       return (
                         <MenuItem
                           key={`userApp${index}`}
@@ -290,9 +239,9 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
 
                 <div className={classes.tableBody}>
                   {
-                    apisByName.length > 0 && isClientAppSelected
+                    apis.length > 0 && isClientAppSelected
                       ? (
-                        apisByName.map((api, index) => {
+                        apis.map((api, index) => {
                           return (
                             <div
                               className={

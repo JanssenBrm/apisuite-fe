@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Box, Icon, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 import ReportProblemOutlinedIcon from "@material-ui/icons/ReportProblemOutlined";
 
-import { apisByNameSelector } from "pages/Subscriptions/selectors";
+import { apisAndAppsSelector } from "pages/Subscriptions/selectors";
 import { AppInfo } from "store/subscriptions/types";
 import Link from "components/Link";
 
@@ -13,7 +13,7 @@ export const SubscriptionsTable: React.FC = () => {
   const classes = useStyles();
   const { shape, palette } = useTheme();
   const { t } = useTranslation();
-  const apisByName = useSelector(apisByNameSelector);
+  const { apis } = useSelector(apisAndAppsSelector);
 
   const generateAppIcons = (appNamesArray: AppInfo[]) => {
     const sortedAppNamesArray = appNamesArray.sort();
@@ -42,7 +42,7 @@ export const SubscriptionsTable: React.FC = () => {
   };
 
   const generateTableEntries = () => {
-    const tableEntriesArray = apisByName.map((api, index) => {
+    const tableEntriesArray = apis.map((api, index) => {
       return (
         // Will contain a particular API's details (its name, subscribed apps, and versions)
         <div key={`apiDetailsContainer${index}`}>
