@@ -1,5 +1,5 @@
 import React from "react";
-import { useTranslation, Button } from "@apisuite/fe-base";
+import { useTranslation, Button, Typography } from "@apisuite/fe-base";
 
 import { FormCardProps } from "./types";
 
@@ -87,11 +87,13 @@ const FormCard: React.FC<FormCardProps> = ({
         error &&
         <div className={classes.errorPlaceholder}>
           <div className={classes.errorAlert}>
-            {
-              typeof error === "string"
-                ? error
-                : error.message
-            }
+            <Typography variant="body2">
+              {
+                typeof error === "string"
+                  ? error
+                  : error.message
+              }
+            </Typography>
           </div>
         </div>
       }

@@ -59,6 +59,8 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.background.default,
     minHeight: "50px",
     padding: "12px 25px",
+    display: "flex",
+    alignItems: "center",
   },
 
   errorPlaceholder: {
