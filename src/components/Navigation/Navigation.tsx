@@ -81,7 +81,9 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
     if (label.type === "text") {
       LabelComponent = (
         <Typography variant={subTab ? "subtitle1" : "h6"} style={active ? { fontWeight: 700 } : undefined}>
-          {t([label.key || "", label.fallback || ""])}
+          {/* This empty char will allow the this typography to grow naturally as if it has text */}
+          {!label.fallback?.length && <>&zwnj;</>}
+          {!!label.fallback?.length && t([label.key || "", label.fallback])}
         </Typography>
       );
     }
@@ -225,7 +227,8 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
       )}
 
       {/* Bottom nav */}
-      {subTabs && (
+      {/* At least one tab must match the path for it to appear */}
+      {subTabs?.find((tab) => matchPath(location.pathname, { path: tab.action, exact: true })) && (
         <Box
           data-test-id={testIds.navigationSubNav}
           display="flex"
