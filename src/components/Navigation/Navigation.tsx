@@ -59,7 +59,7 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
   function renderTab({ label, action }: TabConfig, { adjustTop = false, subTab = false, exact = false } = {}) {
     let LabelComponent;
     const key = `nav-tab-${label.key}${label.type}${label.fallback}${label.iconName}`;
-    const active = !!matchPath(location.pathname, { path: action, exact });
+    let active = !!matchPath(location.pathname, { path: action, exact });
 
     if (label.type === "avatar") {
       LabelComponent = (
@@ -79,11 +79,19 @@ export const Navigation: React.FC<NavigationProps> = ({ contractible = false, cl
     }
 
     if (label.type === "text") {
+      const isEmpty = !label.fallback?.length;
+
+      // TODO: we force inactive sub tab on empty fallbacks so we have a way to show back actions without any
+      // relevant match in current navigation. Maybe review this in the future.
+      if (isEmpty) {
+        active = false;
+      }
+
       LabelComponent = (
         <Typography variant={subTab ? "subtitle1" : "h6"} style={active ? { fontWeight: 700 } : undefined}>
           {/* This empty char will allow the this typography to grow naturally as if it has text */}
-          {!label.fallback?.length && <>&zwnj;</>}
-          {!!label.fallback?.length && t([label.key || "", label.fallback])}
+          {isEmpty && <>&zwnj;</>}
+          {!isEmpty && t([label.key || "", label.fallback || ""])}
         </Typography>
       );
     }
