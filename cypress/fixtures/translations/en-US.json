@@ -421,12 +421,6 @@
         "deleteAccountModalWarningText": "Are you sure you want to delete your API Suite acount, whose associated e-mail address is",
         "deleteAccountModalWarningSubText": "This action is irreversible, and all the data associated with your account will be permanently deleted."
       },
-      "roleRelatedLabels": {
-        "admin": "Admin",
-        "orgOwner": "Organisation owner",
-        "developer": "Developer",
-        "baseUser": "Base user"
-      },
       "userRelatedLabels": {
         "userAvatarURL": "Avatar URL",
         "userEmailAddress": "E-mail address",
@@ -589,7 +583,13 @@
     "organizationWebsite": "Organisation website",
     "organizationLogo": "Organisation logo URL",
     "organizationTerms": "Organisation terms of use",
-    "vat": "VAT"
+    "vat": "VAT",
+    "role": {
+      "name": "Base user",
+      "name_admin": "Admin",
+      "name_organizationOwner": "Organisation owner",
+      "name_developer": "Developer"
+    }
   },
   "actions": {
     "save": "Save",

@@ -1,4 +1,5 @@
 import { call, put, select, takeLatest } from "redux-saga/effects";
+import { i18n } from "@apisuite/fe-base";
 
 import { API_URL } from "constants/endpoints";
 import { CHANGE_ROLE, changeRoleError, changeRoleSuccess } from "./actions/changeRole";
@@ -72,13 +73,10 @@ export function * inviteMemberSaga ({ type, ...rest }: InviteTeamMemberAction) {
     });
 
     yield put(inviteTeamMemberSuccess({}));
-    // FIXME: not translated
-    yield put(openNotification("success", "Member was successfully invited.", 3000));
+    yield put(openNotification("success", i18n.t("messages.inviteMember.success"), 3000));
   } catch (error) {
-    // FIXME: not translated
     yield put(inviteTeamMemberError({ error: error.message || "Invitation failed." }));
-    // FIXME: not translated
-    yield put(openNotification("error", "Error inviting member.", 3000));
+    yield put(openNotification("error", i18n.t("messages.inviteMember.error"), 3000));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
       yield put(handleSessionExpire({}));
     }

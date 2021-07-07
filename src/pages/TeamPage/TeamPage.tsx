@@ -121,8 +121,7 @@ export const TeamPage: React.FC = () => {
         autoFocus
         error={inputErrors.email}
         fullWidth={false}
-        // FIXME: not translated
-        helperText={inputErrors.email && "Please insert a valid email."}
+        helperText={inputErrors.email && t("warnings.insertValidEmail")}
         id='email-field'
         InputProps={{
           classes: { input: classes.emailTextfield },

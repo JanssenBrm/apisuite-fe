@@ -278,19 +278,7 @@ export const Profile: React.FC = () => {
             </Typography>
 
             <Typography data-test-id={testIds.profileOverviewRole} variant="subtitle1" className={classes.userRole}>
-              {
-                !profileHasOrgDetails
-                  ? t("profileTab.overviewSubTab.roleRelatedLabels.baseUser")
-                  : (
-                    profile.current_org.role.name === "admin"
-                      ? t("profileTab.overviewSubTab.roleRelatedLabels.admin")
-                      : (
-                        profile.current_org.role.name === "organizationOwner"
-                          ? t("profileTab.overviewSubTab.roleRelatedLabels.orgOwner")
-                          : t("profileTab.overviewSubTab.roleRelatedLabels.developer")
-                      )
-                  )
-              }
+              {t("labels.role.name", { context: profileHasOrgDetails ? profile.current_org.role.name : undefined })}
             </Typography>
           </div>
 
@@ -536,21 +524,8 @@ export const Profile: React.FC = () => {
                   <Icon fontSize="small">circle</Icon>
                 </Box>
 
-                {/* FIXME: use i18n interpolation */}
                 <Typography variant="body2" color="textSecondary">
-                  {
-                    !profileHasOrgDetails
-                      ? t("profileTab.overviewSubTab.roleRelatedLabels.baseUser")
-                      : (
-                        profile.current_org.role.name === "admin"
-                          ? t("profileTab.overviewSubTab.roleRelatedLabels.admin")
-                          : (
-                            profile.current_org.role.name === "organizationOwner"
-                              ? t("profileTab.overviewSubTab.roleRelatedLabels.orgOwner")
-                              : t("profileTab.overviewSubTab.roleRelatedLabels.developer")
-                          )
-                      )
-                  }
+                  {t("labels.role.name", { context: profileHasOrgDetails ? profile.current_org.role.name : undefined })}
                 </Typography>
               </div>
             </Paper>

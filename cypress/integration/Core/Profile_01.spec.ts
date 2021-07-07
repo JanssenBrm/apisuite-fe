@@ -68,16 +68,16 @@ userRoles.forEach((user) => {
 
         switch (user.role) {
           case "admin":
-            roleDisplayName = enUS.profileTab.overviewSubTab.roleRelatedLabels.admin;
+            roleDisplayName = enUS.labels.role.name_admin;
             break;
           case "organizationOwner":
-            roleDisplayName = enUS.profileTab.overviewSubTab.roleRelatedLabels.orgOwner;
+            roleDisplayName = enUS.labels.role.name_organizationOwner;
             break;
           case "developer":
-            roleDisplayName = enUS.profileTab.overviewSubTab.roleRelatedLabels.developer;
+            roleDisplayName = enUS.labels.role.name_developer;
             break;
           default:
-            roleDisplayName = enUS.profileTab.overviewSubTab.roleRelatedLabels.baseUser;
+            roleDisplayName = enUS.labels.role.name;
         }
 
         cy.testID(testIds.profileOverviewRole)
