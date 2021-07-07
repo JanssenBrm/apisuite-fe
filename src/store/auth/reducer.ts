@@ -104,18 +104,6 @@ const reducer: Reducer<AuthStore, AuthActions> = (state = initialState, action) 
       return initialState;
     }
 
-    // FIXME: why do we do this? this might not work as expected
-    // case LOCATION_CHANGE: {
-    //   if (action.payload.action === 'POP') {
-    //     return update(state, {
-    //       error: { $set: undefined },
-    //       providers: { $set: null },
-    //     })
-    //   }
-
-    //   return state
-    // }
-
     case SSO_PROVIDERS_SUCCESS: {
       return update(state, {
         providers: { $set: action.providers },

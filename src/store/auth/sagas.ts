@@ -159,9 +159,6 @@ function * recoverPasswordSaga ({ password, token }: RecoverPasswordAction) {
 
     yield put(recoverPasswordSuccess({}));
 
-    // FIXME: use middleware
-    // action.history.replace('auth/login')
-
     yield put(openNotification("success", "Password successfully changed! You may now sign in.", 3000));
   } catch (error) {
     recoverPasswordError({ error: error.message });
