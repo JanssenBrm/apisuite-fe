@@ -129,7 +129,7 @@
   },
   "signUpConfirmation": {
     "titleText": "Thank you for joining us, ",
-    "subtitleText": "A verification <0>link</0> has been sent to your e-mail address. Please, follow its instructions to activate your account!",
+    "subtitleText": "A <0>verification link</0> has been sent to your e-mail address. Please, follow its instructions to activate your account!",
     "infoBoxText": "Once you activate your account, you'll be able to provide additional information."
   },
   "formCard": {
