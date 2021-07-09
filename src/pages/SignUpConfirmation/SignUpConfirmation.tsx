@@ -1,6 +1,6 @@
 import React from "react";
 import { useHistory, useParams } from "react-router-dom";
-import { useConfig, useTheme, useTranslation, Box, Grid, Icon, Typography } from "@apisuite/fe-base";
+import { useConfig, useTheme, useTranslation, Box, Grid, Icon, Typography, Trans } from "@apisuite/fe-base";
 import { Logo } from "components/Logo";
 import Notice from "components/Notice";
 
@@ -14,7 +14,6 @@ export const SignUpConfirmation: React.FC = () => {
   const { breakpoints, palette, zIndex } = useTheme();
   const { name } = useParams<{ name: string }>();
 
-  // FIXME subtitleTextPartOne Two and Three should use interpolation
   return (
     <Grid
       component={Box}
@@ -84,11 +83,11 @@ export const SignUpConfirmation: React.FC = () => {
 
           <Box pb={5}>
             <Typography variant="body1" color="textSecondary">
-              {t("signUpConfirmation.subtitleTextPartOne")}
-              <b>
-                {t("signUpConfirmation.subtitleTextPartTwo")}
-              </b>
-              {t("signUpConfirmation.subtitleTextPartThree")}
+              <Trans i18nKey="signUpConfirmation.subtitleText">
+                {[
+                  <b key="signUpConfirmation.subtitleText" />,
+                ]}
+              </Trans>
             </Typography>
           </Box>
         </Grid>
