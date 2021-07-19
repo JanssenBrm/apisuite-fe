@@ -532,11 +532,11 @@ export default makeStyles((theme) => ({
   },
 
   markdownIcon: {
-    bottom: theme.spacing(1),
+    bottom: theme.spacing(-3),
     color: theme.palette.text.hint,
     height: 24,
     position: "absolute",
-    right: theme.spacing(1),
+    right: 0,
     width: 24,
   },
 
