@@ -118,7 +118,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appClientID: "",
       appClientSecret: "",
       appDirectURL: "",
-      appFullDescription: "",
+      appDescription: "",
       appLabels: "",
       appMetaDescription: "",
       appMetaKey: "",
@@ -127,7 +127,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appName: "",
       appPrivacyURL: "",
       appRedirectURI: "https://",
-      appShortDescription: "",
+      appSummary: "",
       appSupportURL: "",
       appTermsURL: "",
       appVisibility: "private",
@@ -168,9 +168,9 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
       },
 
-      appShortDescription: {
+      appSummary: {
         rules: [(text) => text.toString().length <= 60],
-        message: t("dashboardTab.applicationsSubTab.appModal.errors.shortDescriptionLimit"),
+        message: t("dashboardTab.applicationsSubTab.appModal.errors.summaryLimit"),
       },
 
       appSupportURL: {
@@ -206,7 +206,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientID: mostRecentlySelectedAppDetails.clientId ?? "",
         appClientSecret: mostRecentlySelectedAppDetails.clientSecret ?? "",
         appDirectURL: mostRecentlySelectedAppDetails.directUrl ?? "",
-        appFullDescription: mostRecentlySelectedAppDetails.description ?? "",
+        appDescription: mostRecentlySelectedAppDetails.description ?? "",
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
           ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
@@ -219,7 +219,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appName: mostRecentlySelectedAppDetails.name ?? "",
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ?? "",
         appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ?? "",
-        appShortDescription: mostRecentlySelectedAppDetails.shortDescription ?? "",
+        appSummary: mostRecentlySelectedAppDetails.summary ?? "",
         appSupportURL: mostRecentlySelectedAppDetails.supportUrl ?? "",
         appTermsURL: mostRecentlySelectedAppDetails.tosUrl ?? "",
         appVisibility: mostRecentlySelectedAppDetails.visibility ?? "private",
@@ -232,7 +232,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientID: "",
         appClientSecret: "",
         appDirectURL: "",
-        appFullDescription: "",
+        appDescription: "",
         appLabels: "",
         appMetaDescription: "",
         appMetaKey: "",
@@ -241,7 +241,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appName: "",
         appPrivacyURL: "",
         appRedirectURI: "https://",
-        appShortDescription: "",
+        appSummary: "",
         appSupportURL: "",
         appTermsURL: "",
         appVisibility: "private",
@@ -378,7 +378,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     event.preventDefault();
 
     const newAppDetails = {
-      description: formState.values.appFullDescription,
+      description: formState.values.appDescription,
       directUrl: formState.values.appDirectURL,
       labels: checkForLabels(formState.values.appLabels),
       logo: formState.values.appAvatarURL,
@@ -386,7 +386,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
       redirectUrl: formState.values.appRedirectURI,
-      shortDescription: formState.values.appShortDescription,
+      summary: formState.values.appSummary,
       supportUrl: formState.values.appSupportURL,
       tosUrl: formState.values.appTermsURL,
       visibility: formState.values.appVisibility,
@@ -405,7 +405,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     event.preventDefault();
 
     const updatedAppDetails = {
-      description: formState.values.appFullDescription,
+      description: formState.values.appDescription,
       directUrl: formState.values.appDirectURL,
       id: modalDetails.userAppID,
       labels: checkForLabels(formState.values.appLabels),
@@ -414,7 +414,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       name: formState.values.appName,
       privacyUrl: formState.values.appPrivacyURL,
       redirectUrl: formState.values.appRedirectURI,
-      shortDescription: formState.values.appShortDescription,
+      summary: formState.values.appSummary,
       supportUrl: formState.values.appSupportURL,
       tosUrl: formState.values.appTermsURL,
       visibility: formState.values.appVisibility,
@@ -525,7 +525,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appClientID: "",
             appClientSecret: "",
             appDirectURL: "",
-            appFullDescription: "",
+            appDescription: "",
             appLabels: "",
             appMetaDescription: "",
             appMetaKey: "",
@@ -534,7 +534,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appName: "",
             appPrivacyURL: "",
             appRedirectURI: "https://",
-            appShortDescription: "",
+            appSummary: "",
             appSupportURL: "",
             appTermsURL: "",
             appVisibility: "private",
@@ -631,7 +631,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               {/* 'General information' section */}
               <Grid container spacing={3}>
-                {/* 'App name and short description' subsection */}
+                {/* 'App name and summary' subsection */}
                 <Grid item md={12}>
                   <Grid item md={6}>
                     <Box pb={1.5}>
@@ -679,19 +679,19 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                   <TextField
                     className={classes.inputFields}
-                    error={formState.errors.appShortDescription}
+                    error={formState.errors.appSummary}
                     fullWidth
                     helperText={
-                      formState.errors.appShortDescription
-                        ? formState.errorMsgs.appShortDescription
+                      formState.errors.appSummary
+                        ? formState.errorMsgs.appSummary
                         : ""
                     }
-                    label={t("dashboardTab.applicationsSubTab.appModal.appShortDescriptionFieldLabel")}
+                    label={t("dashboardTab.applicationsSubTab.appModal.appSummaryFieldLabel")}
                     margin='dense'
-                    name='appShortDescription'
+                    name='appSummary'
                     onChange={handleChange}
                     type='text'
-                    value={formState.values.appShortDescription}
+                    value={formState.values.appSummary}
                     variant='outlined'
                   />
                 </Grid>
@@ -774,16 +774,16 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                 <Grid item md={12}>
                   <TextField
-                    className={clsx(classes.inputFields, classes.fullDescriptionField)}
+                    className={clsx(classes.inputFields, classes.descriptionField)}
                     fullWidth
-                    label={t("dashboardTab.applicationsSubTab.appModal.appFullDescriptionFieldLabel")}
+                    label={t("dashboardTab.applicationsSubTab.appModal.appDescriptionFieldLabel")}
                     margin='dense'
                     multiline
-                    name='appFullDescription'
+                    name='appDescription'
                     onChange={handleChange}
                     rows={9}
                     type='text'
-                    value={formState.values.appFullDescription}
+                    value={formState.values.appDescription}
                     variant='outlined'
                     InputProps={{
                       endAdornment: (
