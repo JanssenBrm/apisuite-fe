@@ -453,7 +453,7 @@ export default makeStyles((theme) => ({
     zIndex: 2,
   },
 
-  fullDescriptionField: {
+  descriptionField: {
     maxWidth: "none !important",
   },
 
