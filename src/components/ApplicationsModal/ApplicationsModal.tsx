@@ -721,7 +721,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 <TableCell scope="row" style={{ borderBottom: "none", paddingLeft: spacing(5) }}>
                   <Controller
                     control={control}
-                    name={`appMetadata.${index}.key`}
+                    name={`appMetadata.${index}.key` as const}
                     render={({ field }) => (
                       <TextField
                         className={clsx(classes.inputFields, classes.inputNoMargin)}
@@ -741,7 +741,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 <TableCell scope="row" style={{ borderBottom: "none" }}>
                   <Controller
                     control={control}
-                    name={`appMetadata.${index}.value`}
+                    name={`appMetadata.${index}.value` as const}
                     render={({ field }) => (
                       <TextField
                         className={clsx(classes.inputFields, classes.inputNoMargin)}
@@ -759,7 +759,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 <TableCell colSpan={currMeta === index ? 2 : 1} scope="row" style={{ borderBottom: "none", paddingRight: spacing(currMeta === index ? 5 : 0) }}>
                   <Controller
                     control={control}
-                    name={`appMetadata.${index}.title`}
+                    name={`appMetadata.${index}.title` as const}
                     render={({ field }) => (
                       <TextField
                         className={clsx(classes.inputFields, classes.inputNoMargin)}
@@ -801,7 +801,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 <TableCell colSpan={4} scope="row" style={{ borderBottom: "none", paddingLeft: spacing(5), paddingRight: spacing(5) }}>
                   <Controller
                     control={control}
-                    name={`appMetadata.${index}.description`}
+                    name={`appMetadata.${index}.description` as const}
                     render={({ field }) => (
                       <TextField
                         className={clsx(classes.inputFields, classes.inputFullWidth)}
