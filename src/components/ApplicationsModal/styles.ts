@@ -94,9 +94,6 @@ export default makeStyles((theme) => ({
   /* 1.2 Modal's body */
 
   addCustomPropsButton: {
-    // TODO: Button is temporarily disabled, hence the following 'background-color'.
-    // Remove once 'custom properties' feature is fully complete.
-    backgroundColor: "rgba(0, 0, 0, 0.12)",
     borderRadius: theme.shape.borderRadius,
     color: theme.palette.text.hint,
     height: 42,
@@ -518,7 +515,18 @@ export default makeStyles((theme) => ({
       "& .MuiInputBase-input": {
         color: theme.palette.action.active,
       },
+      "& .MuiInputBase-input.Mui-disabled": {
+        color: theme.palette.text.disabled,
+      },
     },
+  },
+
+  inputFullWidth: {
+    maxWidth: "100% !important",
+  },
+
+  inputNoMargin: {
+    marginBottom: 0,
   },
 
   leftSubSectionContainer: {
@@ -593,7 +601,6 @@ export default makeStyles((theme) => ({
     border: `1px solid ${theme.palette.error.main}`,
     borderRadius: `${theme.shape.borderRadius}px`,
     color: `${theme.palette.primary.contrastText} !important`,
-    fontSize: "16px",
     fontWeight: 500,
     marginLeft: "25px",
     padding: "6px 21px",
@@ -653,6 +660,10 @@ export default makeStyles((theme) => ({
     color: theme.palette.primary.main,
     fontSize: "14px",
     margin: "0px 0px 0px 12px",
+  },
+
+  tableRow: {
+    backgroundColor: theme.palette.grey[50],
   },
 
   title: {
