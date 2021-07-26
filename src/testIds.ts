@@ -63,7 +63,7 @@ export enum testIds {
   footerToTopButton = "footer-to-top-button",
   footerLogoAndPortalName = "footer-logo-and-portal-name",
   footerCredits = "footer-credits",
-  footerSocialIcons= "footer-social-icons",
+  footerSocialIcons = "footer-social-icons",
 
   // sing in page
   signInEmail = "signInEmail",
@@ -83,4 +83,5 @@ export enum testIds {
   profileOverviewSelectorTitle = "profile-overview-selector-title",
   profileOverviewSelectorComponent = "profile-overview-selector-component",
   profileOverviewSelectorButton = "profile-overview-selector-button",
+  profileOverviewCreateOrgButton = "profile-overview-create-org-button",
 }

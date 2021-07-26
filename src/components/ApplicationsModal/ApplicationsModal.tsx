@@ -12,6 +12,8 @@ import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
+import markdownIcon from "assets/markdownIcon.svg";
+import { CustomizableTooltip } from "components/CustomizableTooltip";
 import { Logo } from "components/Logo";
 import { MediaUpload } from "components/MediaUpload";
 import { PageContainer } from "components/PageContainer";
@@ -52,7 +54,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     setOpenCloseWarning(false);
   };
 
-  const dialogFunctions: { [index:string] : () => void } = {
+  const dialogFunctions: { [index: string]: () => void } = {
     toggleModal: toggleModal,
     subscriptions: () => history.push("/dashboard/subscriptions"),
   };
@@ -159,8 +161,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         const URI = value || "";
         return uriBasicChecks(URI);
       }).required(t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError")),
-    appShortDescription: yup.string()
-      .max(60, t("dashboardTab.applicationsSubTab.appModal.errors.shortDescriptionLimit")),
+    appSummary: yup.string()
+      .max(60, t("dashboardTab.applicationsSubTab.appModal.errors.summaryLimit")),
     appSupportURL: yup.string()
       .test("isAppSupportURLValid", t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"), (value: string|undefined) => {
         const URI = value || "";
@@ -197,7 +199,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appClientID: "",
       appClientSecret: "",
       appDirectURL: "",
-      appFullDescription: "",
+      appDescription: "",
       appLabels: "",
       appMetadata: [] as Metadata[],
       appMetaDescription: "",
@@ -207,7 +209,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appName: "",
       appPrivacyURL: "",
       appRedirectURI: "https://",
-      appShortDescription: "",
+      appSummary: "",
       appSupportURL: "",
       appTermsURL: "",
       appVisibility: "private",
@@ -231,7 +233,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientID: mostRecentlySelectedAppDetails.clientId ?? "",
         appClientSecret: mostRecentlySelectedAppDetails.clientSecret ?? "",
         appDirectURL: mostRecentlySelectedAppDetails.directUrl ?? "",
-        appFullDescription: mostRecentlySelectedAppDetails.description ?? "",
+        appDescription: mostRecentlySelectedAppDetails.description ?? "",
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
           ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
@@ -243,7 +245,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appName: mostRecentlySelectedAppDetails.name ?? "",
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ?? "",
         appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ?? "",
-        appShortDescription: mostRecentlySelectedAppDetails.shortDescription ?? "",
+        appSummary: mostRecentlySelectedAppDetails.summary ?? "",
         appSupportURL: mostRecentlySelectedAppDetails.supportUrl ?? "",
         appTermsURL: mostRecentlySelectedAppDetails.tosUrl ?? "",
         appVisibility: mostRecentlySelectedAppDetails.visibility ?? "private",
@@ -256,7 +258,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appClientID: "",
         appClientSecret: "",
         appDirectURL: "",
-        appFullDescription: "",
+        appDescription: "",
         appLabels: "",
         appMetadata: [],
         appMetaDescription: "",
@@ -266,7 +268,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appName: "",
         appPrivacyURL: "",
         appRedirectURI: "https://",
-        appShortDescription: "",
+        appSummary: "",
         appSupportURL: "",
         appTermsURL: "",
         appVisibility: "private",
@@ -380,7 +382,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   // FIXME this mapping forces the core to know extension values // there should not exist a mapping
   const mapAppDetails = () => ({
-    description: getValues("appFullDescription"),
+    description: getValues("appDescription"),
     directUrl: getValues("appDirectURL"),
     labels: checkForLabels(getValues("appLabels")),
     logo: getValues("appAvatarURL"),
@@ -388,7 +390,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     name: getValues("appName"),
     privacyUrl: getValues("appPrivacyURL"),
     redirectUrl: getValues("appRedirectURI"),
-    shortDescription: getValues("appShortDescription"),
+    summary: getValues("appSummary"),
     supportUrl: getValues("appSupportURL"),
     tosUrl: getValues("appTermsURL"),
     visibility: getValues("appVisibility"),
@@ -932,7 +934,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appClientID: "",
             appClientSecret: "",
             appDirectURL: "",
-            appFullDescription: "",
+            appDescription: "",
             appLabels: "",
             appMetadata: [],
             appMetaDescription: "",
@@ -942,7 +944,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appName: "",
             appPrivacyURL: "",
             appRedirectURI: "https://",
-            appShortDescription: "",
+            appSummary: "",
             appSupportURL: "",
             appTermsURL: "",
             appVisibility: "private",
@@ -1039,7 +1041,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               {/* 'General information' section */}
               <Grid container spacing={3}>
-                {/* 'App name and short description' subsection */}
+                {/* 'App name and summary' subsection */}
                 <Grid item md={12}>
                   <Grid item md={6}>
                     <Box pb={1.5}>
@@ -1079,15 +1081,15 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                   <Controller
                     control={control}
-                    name="appShortDescription"
+                    name="appSummary"
                     render={({ field }) => (
                       <TextField
                         className={classes.inputFields}
-                        error={!!errors.appShortDescription}
+                        error={!!errors.appSummary}
                         {...field}
                         fullWidth
-                        helperText={errors.appShortDescription?.message}
-                        label={t("dashboardTab.applicationsSubTab.appModal.appShortDescriptionFieldLabel")}
+                        helperText={errors.appSummary?.message}
+                        label={t("dashboardTab.applicationsSubTab.appModal.appSummaryFieldLabel")}
                         margin="dense"
                         type="text"
                         variant="outlined"
@@ -1170,6 +1172,45 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                     />
                   </div>
                 </Grid>
+
+                <Grid item md={12}>
+                  <Controller
+                    control={control}
+                    name="appDescription"
+                    render={({ field }) => (
+                      <TextField
+                        className={clsx(classes.inputFields, classes.descriptionField)}
+                        {...field}
+                        fullWidth
+                        label={t("dashboardTab.applicationsSubTab.appModal.appDescriptionFieldLabel")}
+                        margin="dense"
+                        multiline
+                        rows={9}
+                        type="text"
+                        variant="outlined"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment
+                              className={classes.markdownIcon}
+                              position="end"
+                            >
+                              <CustomizableTooltip
+                                tooltipContent={
+                                  <Typography variant="caption">
+                                    {t("dashboardTab.applicationsSubTab.appModal.markdownTooltipText")}
+                                  </Typography>
+                                }
+                              >
+                                <img src={markdownIcon} style={{ height: 24, width: 24 }} />
+                              </CustomizableTooltip>
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    )}
+                  />
+                </Grid>
+
               </Grid>
 
               <hr className={classes.alternativeSectionSeparator} />
@@ -1340,7 +1381,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               {/* 'Additional information' section */}
               <Grid container spacing={3}>
-                {/* 'Full description' subsection */}
+                {/* Section's intro */}
                 <Grid item md={12}>
                   <Grid item md={6}>
                     <Box pb={1.5}>
@@ -1355,25 +1396,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                       </Typography>
                     </Box>
                   </Grid>
-                </Grid>
-                <Grid item md={6}>
-                  <Controller
-                    control={control}
-                    name="appFullDescription"
-                    render={({ field }) => (
-                      <TextField
-                        className={classes.inputFields}
-                        {...field}
-                        fullWidth
-                        label={t("dashboardTab.applicationsSubTab.appModal.appFullDescriptionFieldLabel")}
-                        margin="dense"
-                        multiline
-                        rows={4}
-                        type="text"
-                        variant="outlined"
-                      />
-                    )}
-                  />
                 </Grid>
 
                 {/* 'Optional URLs' subsection */}
@@ -1685,7 +1707,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         openDialog &&
         <CustomizableDialog
           cancelButtonProps={{
-            variant:"outlined",
+            variant: "outlined",
             color: "primary",
           }}
           closeDialogCallback={handleCloseDialog}

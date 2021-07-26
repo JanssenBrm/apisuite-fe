@@ -292,7 +292,7 @@
         "loadingApps": "Loading all apps...",
         "clientApplicationsTitle": "Client applications",
         "registerNewAppButtonLabel": "Register new app",
-        "noAppDescription": "No description provided.",
+        "noAppSummary": "No summary provided.",
         "subscribedAppStatus": "Subscribed",
         "draftAppStatus": "Draft"
       },
@@ -311,14 +311,15 @@
         "appAvatarURLError": "The provided URL is not valid, or the image does not exist.",
         "appClientIDFieldLabel": "Client ID",
         "appClientSecretFieldLabel": "Client Secret",
-        "appFullDescriptionFieldLabel": "Full description",
+        "appDescriptionFieldLabel": "Description",
+        "markdownTooltipText": "Markdown is supported",
         "appLabelsFieldLabel": "Labels",
         "appLabelsFieldHelperText": "Each provided label should be separated by a comma.",
         "appNameFieldLabel": "Application name",
         "appPrivacyPolicyFieldLabel": "Privacy Policy URL",
         "appPrivacyPolicyURLFieldLabel": "Privacy Policy URL",
         "appRedirectURIFieldLabel": "Redirect URI",
-        "appShortDescriptionFieldLabel": "Short description",
+        "appSummaryFieldLabel": "Summary",
         "appSubsButtonLabel": "Subscriptions",
         "appSupportFieldLabel": "Support URL",
         "appSupportURLFieldLabel": "Support URL",
@@ -382,7 +383,7 @@
           }
         },
         "errors": {
-          "shortDescriptionLimit": "The short description has a maximum limit of 60 characters."
+          "summaryLimit": "The summary has a maximum limit of 60 characters."
         }
       }
     },

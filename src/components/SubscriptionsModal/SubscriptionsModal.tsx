@@ -34,7 +34,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
     orgId: "",
     privacyUrl: "",
     redirectUrl: "",
-    shortDescription: "",
+    summary: "",
     subscriptions: [],
     supportUrl: "",
     tosUrl: "",

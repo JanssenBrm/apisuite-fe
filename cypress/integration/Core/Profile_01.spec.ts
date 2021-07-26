@@ -9,11 +9,18 @@ import profile_developer from "../../fixtures/profile/profile-developer.json";
 import profile_organizationOwner from "../../fixtures/profile/profile-orgOwner.json";
 
 type roles = "admin" | "baseUser" | "developer" | "organizationOwner";
+
+interface OrgsMember {
+  id: number,
+  name: string,
+}
+
 interface UserRole {
   role: roles,
   filename: string,
   name: string,
   currentOrg: string | undefined,
+  orgsMember: OrgsMember[],
 }
 
 const userRoles: UserRole[] = [
@@ -22,24 +29,28 @@ const userRoles: UserRole[] = [
     filename: "profile-developer",
     name: profile_developer.user.name,
     currentOrg: profile_developer.current_org.name,
+    orgsMember: profile_developer.orgs_member,
   },
   {
     role: "organizationOwner",
     filename: "profile-orgOwner",
     name: profile_organizationOwner.user.name,
     currentOrg: profile_organizationOwner.current_org.name,
+    orgsMember: profile_organizationOwner.orgs_member,
   },
   {
     role: "admin",
     filename: "profile-admin",
     name: profile_admin.user.name,
     currentOrg: profile_admin.current_org.name,
+    orgsMember: profile_admin.orgs_member,
   },
   {
     role: "baseUser",
     filename: "profile-baseUser",
     name: profile_baseUser.user.name,
     currentOrg: undefined,
+    orgsMember: profile_baseUser.orgs_member,
   },
 ];
 
@@ -115,6 +126,17 @@ userRoles.forEach((user) => {
             .should("not.exist");
 
           cy.testID(testIds.profileOverviewSelectorButton)
+            .should("not.exist");
+        }
+      });
+
+      it("should show the 'Create org' button based on user role", () => {
+        if (user.role !== "baseUser" && !user.orgsMember.length) {
+          cy.testID(testIds.profileOverviewCreateOrgButton)
+            .should("be.visible")
+            .and("have.text", enUS.profileTab.overviewSubTab.orgRelatedLabels.createOrgButtonLabel);
+        } else {
+          cy.testID(testIds.profileOverviewCreateOrgButton)
             .should("not.exist");
         }
       });

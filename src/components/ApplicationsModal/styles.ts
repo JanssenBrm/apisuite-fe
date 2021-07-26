@@ -450,6 +450,10 @@ export default makeStyles((theme) => ({
     zIndex: 2,
   },
 
+  descriptionField: {
+    maxWidth: "none !important",
+  },
+
   infoBox: {
     alignItems: "center",
     backgroundColor: theme.palette.info.light,
@@ -501,7 +505,8 @@ export default makeStyles((theme) => ({
 
       // Multiline text field's styles
       "&.MuiInputBase-multiline": {
-        height: "104.5px",
+        height: 200,
+        maxWidth: "none",
       },
     },
 
@@ -532,6 +537,15 @@ export default makeStyles((theme) => ({
   leftSubSectionContainer: {
     marginRight: "40px",
     width: "460px",
+  },
+
+  markdownIcon: {
+    bottom: theme.spacing(-3),
+    color: theme.palette.text.hint,
+    height: 24,
+    position: "absolute",
+    right: 0,
+    width: 24,
   },
 
   metaPrefix: {
@@ -615,7 +629,6 @@ export default makeStyles((theme) => ({
     width: "400px",
   },
 
-
   row: {
     alignItems: "center",
     display: "flex",
@@ -673,6 +686,7 @@ export default makeStyles((theme) => ({
     lineHeight: "20px",
     marginBottom: "37.5px",
   },
+
   description: {
     color: theme.palette.grey[300],
     fontSize: "14px",
