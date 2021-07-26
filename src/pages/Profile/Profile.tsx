@@ -331,6 +331,7 @@ export const Profile: React.FC = () => {
 
             {!profile.orgs_member.length && (
               <Button
+                data-test-id={testIds.profileOverviewCreateOrgButton}
                 color="primary"
                 variant="contained"
                 disableElevation
