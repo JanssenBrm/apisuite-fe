@@ -14,6 +14,14 @@ This is APISuite's core frontend repository.
 npm i
 ```
 
+### Custom build
+
+If you need to use your version of APISuite's portal (either because you're using a fork or want to install extensions), it is advised to use the existing Dockerfile.
+
+- Create the `.env` file and change the URLs accordingly
+- Create the extensions configuration file (see [EXTENSIONS.md](EXTENSIONS.md) for more details)
+- Make the Docker image: `docker build -t your-tag .`
+
 #### Handling private GitHub-hosted dependencies
 
 Some dependencies (node modules) might be hosted in private GitHub repos. This might be the case when using UI extensions. 

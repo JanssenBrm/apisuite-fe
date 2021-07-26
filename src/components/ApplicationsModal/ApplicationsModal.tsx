@@ -2,10 +2,15 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
-  Avatar, Box, Button, Fade, Grid, Icon, IconButton, InputAdornment, Menu, MenuItem,
-  Modal, TextField, Trans, Typography, useConfig, useTheme, useTranslation,
+  Avatar, Box, Button, Fade, Grid, Icon,
+  IconButton, InputAdornment, Menu, MenuItem, Modal, Paper,
+  Table, TableBody, TableCell, TableContainer, TableHead, TableRow,
+  TextField, Trans, Typography, useConfig, useTheme, useTranslation,
 } from "@apisuite/fe-base";
 import clsx from "clsx";
+import { useForm, Controller } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
 
 import markdownIcon from "assets/markdownIcon.svg";
 import { CustomizableTooltip } from "components/CustomizableTooltip";
@@ -21,9 +26,9 @@ import { deleteAppMedia } from "store/applications/actions/deleteAppMedia";
 import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
+import { Metadata } from "store/applications/types";
 import { getSections } from "util/extensions";
 import { isValidAppMetaKey, isValidImage, isValidURL } from "util/forms";
-import { useForm } from "util/useForm";
 import { applicationsModalSelector } from "./selector";
 import useStyles from "./styles";
 import { ApplicationsModalProps } from "./types";
@@ -36,7 +41,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   toggleModal,
 }) => {
   const classes = useStyles();
-  const { palette } = useTheme();
+  const { palette, spacing } = useTheme();
   const { t } = useTranslation();
   const { navigation, ownerInfo, portalName } = useConfig();
   const dispatch = useDispatch();
@@ -55,7 +60,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   };
 
   const checkNextAction = (fn: string) => {
-    if (newHasChanged() || hasChanged() || formState.isDirty) {
+    if (hasChanged()) {
       setConfirmAction(fn);
       return setOpenCloseWarning(true);
     }
@@ -73,19 +78,12 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   }, [dispatch, modalDetails, modalMode]);
 
   const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false);
-  const [validImage, setValidImage] = React.useState<boolean>(true);
-  const [visibilityChanged, setVisibilityChange] = React.useState<boolean>(false);
 
-  const validateAvatar = (avatar: string) => {
+  const validateAvatar = async (avatar: string) => {
     if (avatar !== "") {
-      (
-        async () => {
-          const valid = await isValidImage(avatar);
-
-          setValidImage(valid);
-        }
-      )();
+      return await isValidImage(avatar);
     }
+    return false;
   };
 
   /*
@@ -106,20 +104,104 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     return false;
   };
 
+  const appSchema = yup.object().shape({
+    appAvatarURL: yup.string()
+      .test("isAvatarValid", t("dashboardTab.applicationsSubTab.appModal.appAvatarURLError"), async (value: string|undefined) => {
+        const URI = value || "";
+        const validURL = uriBasicChecks(URI);
+
+        if (validURL) {
+          if (URI === null || URI.length === 0) {
+            return true;
+          } else {
+            return await validateAvatar(URI);
+          }
+        }
+
+        return validURL;
+      }),
+    appDirectURL: yup.string()
+      .test("isAppDirectURLValid", t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"), (value: string|undefined) => {
+        const URI = value || "";
+        return uriBasicChecks(URI);
+      }),
+    appMetadata: yup.array().of(
+      yup.object().shape({
+        description: yup.string(),
+        key: yup.string().test("isKeyValid", t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText"), (value: string|undefined) => {
+          return !isValidAppMetaKey(`${metadataKeyDefaultPrefix}${value}`);
+        }).required(),
+        title: yup.string().when("key", {
+          is: (key: string) => {
+            return key && key.length;
+          },
+          then: yup.string().required(),
+        }),
+        value: yup.string().when("key", {
+          is: (key: string) => {
+            return key && key.length;
+          },
+          then: yup.string().required(),
+        }),
+      }),
+    ),
+    appName: yup.string()
+      .test("isAppNameValid", t("dashboardTab.applicationsSubTab.appModal.existingAppNameError"),
+        (value: string|undefined) => {
+          return !(modalMode === "new" && allUserAppNames.includes(value || ""));
+        })
+      .required(t("dashboardTab.applicationsSubTab.appModal.noAppNameError")),
+    appPrivacyURL: yup.string()
+      .test("isAppPrivacyURLValid", t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"), (value: string|undefined) => {
+        const URI = value || "";
+        return uriBasicChecks(URI);
+      }),
+    appRedirectURI: yup.string()
+      .test("isAppRedirectURIValid", t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"), (value: string|undefined) => {
+        const URI = value || "";
+        return uriBasicChecks(URI);
+      }).required(t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError")),
+    appSummary: yup.string()
+      .max(60, t("dashboardTab.applicationsSubTab.appModal.errors.summaryLimit")),
+    appSupportURL: yup.string()
+      .test("isAppSupportURLValid", t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"), (value: string|undefined) => {
+        const URI = value || "";
+        return uriBasicChecks(URI);
+      }),
+    appTermsURL: yup.string()
+      .test("isAppTermsURLValid", t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"), (value: string|undefined) => {
+        const URI = value || "";
+        return uriBasicChecks(URI);
+      }),
+    appWebsiteURL: yup.string()
+      .test("isAppWebsiteURLValid", t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"), (value: string|undefined) => {
+        const URI = value || "";
+        return uriBasicChecks(URI);
+      }),
+    appYouTubeURL: yup.string()
+      .test("isAppYoutubeURLValid", t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"), (value: string|undefined) => {
+        const URI = value || "";
+        return uriBasicChecks(URI);
+      }),
+  });
+
   const {
-    formState,
-    handleChange,
-    handleFocus,
-    resetForm,
-  } = useForm(
-    // Initial app details
-    {
+    control,
+    formState: { errors, isDirty, isValid },
+    getValues,
+    register,
+    reset,
+    setValue,
+    trigger,
+  } = useForm({
+    defaultValues: {
       appAvatarURL: "",
       appClientID: "",
       appClientSecret: "",
       appDirectURL: "",
       appDescription: "",
       appLabels: "",
+      appMetadata: [] as Metadata[],
       appMetaDescription: "",
       appMetaKey: "",
       appMetaTitle: "",
@@ -134,65 +216,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appWebsiteURL: "",
       appYouTubeURL: "",
     },
-    // Rules for (some) app details
-    {
-      appAvatarURL: {
-        rules: [(URI) => {
-          const validURL = uriBasicChecks(URI);
-
-          if (validURL) {
-            if (URI === null || URI.toString().length === 0) {
-              setValidImage(true);
-            } else {
-              validateAvatar(URI.toString());
-            }
-          }
-
-          return validURL;
-        }],
-        message: t("dashboardTab.applicationsSubTab.appModal.appAvatarURLError"),
-      },
-
-      appDirectURL: {
-        rules: [(URI) => uriBasicChecks(URI)],
-        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
-      },
-
-      appPrivacyURL: {
-        rules: [(URI) => uriBasicChecks(URI)],
-        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
-      },
-
-      appRedirectURI: {
-        rules: [(URI) => uriBasicChecks(URI)],
-        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
-      },
-
-      appSummary: {
-        rules: [(text) => text.toString().length <= 60],
-        message: t("dashboardTab.applicationsSubTab.appModal.errors.summaryLimit"),
-      },
-
-      appSupportURL: {
-        rules: [(URI) => uriBasicChecks(URI)],
-        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
-      },
-
-      appTermsURL: {
-        rules: [(URI) => uriBasicChecks(URI)],
-        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
-      },
-
-      appWebsiteURL: {
-        rules: [(URI) => uriBasicChecks(URI)],
-        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
-      },
-
-      appYouTubeURL: {
-        rules: [(URI) => uriBasicChecks(URI)],
-        message: t("dashboardTab.applicationsSubTab.appModal.allOtherURLsError"),
-      },
-    });
+    mode: "onChange",
+    resolver: yupResolver(appSchema),
+    reValidateMode: "onChange",
+  });
 
   /*
   Whenever 'modalMode' or 'mostRecentlySelectedAppDetails' changes, our form's values are 'reset' to:
@@ -201,7 +228,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   */
   useEffect(() => {
     if (modalMode === "edit") {
-      resetForm({
+      reset({
         appAvatarURL: mostRecentlySelectedAppDetails.logo ?? "",
         appClientID: mostRecentlySelectedAppDetails.clientId ?? "",
         appClientSecret: mostRecentlySelectedAppDetails.clientSecret ?? "",
@@ -210,12 +237,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appLabels: mostRecentlySelectedAppDetails.labels.length > 0
           ? mostRecentlySelectedAppDetails.labels.join(", ")
           : "",
-        appMetaDescription: mostRecentlySelectedAppDetails.metadata[0]?.description ?? "",
-        appMetaKey: mostRecentlySelectedAppDetails.metadata[0]?.key
-          ? mostRecentlySelectedAppDetails.metadata[0].key.slice(5)
-          : "",
-        appMetaTitle: mostRecentlySelectedAppDetails.metadata[0]?.title ?? "",
-        appMetaValue: mostRecentlySelectedAppDetails.metadata[0]?.value ?? "",
+        appMetadata: mostRecentlySelectedAppDetails.metadata || [],
+        appMetaDescription: "",
+        appMetaKey: "",
+        appMetaTitle: "",
+        appMetaValue: "",
         appName: mostRecentlySelectedAppDetails.name ?? "",
         appPrivacyURL: mostRecentlySelectedAppDetails.privacyUrl ?? "",
         appRedirectURI: mostRecentlySelectedAppDetails.redirectUrl ?? "",
@@ -227,13 +253,14 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appYouTubeURL: mostRecentlySelectedAppDetails.youtubeUrl ?? "",
       });
     } else {
-      resetForm({
+      reset({
         appAvatarURL: "",
         appClientID: "",
         appClientSecret: "",
         appDirectURL: "",
         appDescription: "",
         appLabels: "",
+        appMetadata: [],
         appMetaDescription: "",
         appMetaKey: "",
         appMetaTitle: "",
@@ -249,7 +276,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appYouTubeURL: "",
       });
     }
-  }, [modalMode, mostRecentlySelectedAppDetails]);
+  }, [modalMode, mostRecentlySelectedAppDetails, reset]);
 
   /* Optional URL selector */
 
@@ -304,22 +331,14 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     newIsShowingArray[indexOfFormFieldToRemove] = false;
 
-    if (indexOfFormFieldToRemove === 0 && formState.values.appTermsURL) {
-      formState.values.appTermsURL = "";
-      delete formState.errors.appTermsURL;
-      formState.isDirty = !!mostRecentlySelectedAppDetails.tosUrl;
-    } else if (indexOfFormFieldToRemove === 1 && formState.values.appPrivacyURL) {
-      formState.values.appPrivacyURL = "";
-      delete formState.errors.appPrivacyURL;
-      formState.isDirty = !!mostRecentlySelectedAppDetails.privacyUrl;
-    } else if (indexOfFormFieldToRemove === 2 && formState.values.appYouTubeURL) {
-      formState.values.appYouTubeURL = "";
-      delete formState.errors.appYouTubeURL;
-      formState.isDirty = !!mostRecentlySelectedAppDetails.youtubeUrl;
-    } else if (indexOfFormFieldToRemove === 3 && formState.values.appSupportURL) {
-      formState.values.appSupportURL = "";
-      delete formState.errors.appSupportURL;
-      formState.isDirty = !!mostRecentlySelectedAppDetails.supportUrl;
+    if (indexOfFormFieldToRemove === 0 && getValues("appTermsURL")) {
+      reset({ ...getValues(), appTermsURL: "" }, { keepDirty: true });
+    } else if (indexOfFormFieldToRemove === 1 && getValues("appPrivacyURL")) {
+      reset({ ...getValues(), appPrivacyURL: "" }, { keepDirty: true });
+    } else if (indexOfFormFieldToRemove === 2 && getValues("appYouTubeURL")) {
+      reset({ ...getValues(), appYouTubeURL: "" }, { keepDirty: true });
+    } else if (indexOfFormFieldToRemove === 3 && getValues("appSupportURL")) {
+      reset({ ...getValues(), appSupportURL: "" }, { keepDirty: true });
     }
 
     setIsShowing(newIsShowingArray);
@@ -330,18 +349,20 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   let appNameInitials = "...";
 
-  if (formState.values.appName) {
-    const appNameInitialsArray = formState.values.appName.split(" ").filter((word) => {
+  if (getValues("appName")) {
+    const appNameInitialsArray = getValues("appName").split(" ").filter((word) => {
       return word.length > 0;
     });
 
-    appNameInitials = appNameInitialsArray.length >= 2
-      ? `${appNameInitialsArray[0][0]}${appNameInitialsArray[1][0]}`
-      : (
-        appNameInitialsArray[0].length === 1
-          ? appNameInitialsArray[0][0]
-          : `${appNameInitialsArray[0][0]}${appNameInitialsArray[0][1]}`
-      );
+    if (appNameInitialsArray.length) {
+      appNameInitials = appNameInitialsArray.length >= 2
+        ? `${appNameInitialsArray[0][0]}${appNameInitialsArray[1][0]}`
+        : (
+          appNameInitialsArray[0].length === 1
+            ? appNameInitialsArray[0][0]
+            : `${appNameInitialsArray[0][0]}${appNameInitialsArray[0][1]}`
+        );
+    }
   }
 
   /* App-related actions */
@@ -350,49 +371,39 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   // 1.a. Label checking
 
+  // FIXME move to the extension
   const checkForLabels = (labels: string) => (
     labels.split(",")
       .map((l) => l.trim())
       .filter(Boolean)
   );
 
-  // 1.b. App visibility handling
+  // 1.b. App metadata handling
 
-  const handleAppVisibility = (selectedAppVisibility: string) => {
-    formState.values.appVisibility = selectedAppVisibility;
-    setVisibilityChange(formState.values.appVisibility !== mostRecentlySelectedAppDetails.visibility);
-  };
-
-  const getFormMetadata = () => {
-    return formState.values.appMetaKey.length ? [{
-      key: `${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`,
-      value: formState.values.appMetaValue,
-      title: formState.values.appMetaTitle,
-      description: formState.values.appMetaDescription,
-    }] : [];
-  };
+  // FIXME this mapping forces the core to know extension values // there should not exist a mapping
+  const mapAppDetails = () => ({
+    description: getValues("appDescription"),
+    directUrl: getValues("appDirectURL"),
+    labels: checkForLabels(getValues("appLabels")),
+    logo: getValues("appAvatarURL"),
+    metadata: getValues("appMetadata"),
+    name: getValues("appName"),
+    privacyUrl: getValues("appPrivacyURL"),
+    redirectUrl: getValues("appRedirectURI"),
+    summary: getValues("appSummary"),
+    supportUrl: getValues("appSupportURL"),
+    tosUrl: getValues("appTermsURL"),
+    visibility: getValues("appVisibility"),
+    websiteUrl: getValues("appWebsiteURL"),
+    youtubeUrl: getValues("appYouTubeURL"),
+  });
 
   // 2. Creating an app
 
   const createNewApp = (event: React.ChangeEvent<any>) => {
     event.preventDefault();
 
-    const newAppDetails = {
-      description: formState.values.appDescription,
-      directUrl: formState.values.appDirectURL,
-      labels: checkForLabels(formState.values.appLabels),
-      logo: formState.values.appAvatarURL,
-      metadata: getFormMetadata(),
-      name: formState.values.appName,
-      privacyUrl: formState.values.appPrivacyURL,
-      redirectUrl: formState.values.appRedirectURI,
-      summary: formState.values.appSummary,
-      supportUrl: formState.values.appSupportURL,
-      tosUrl: formState.values.appTermsURL,
-      visibility: formState.values.appVisibility,
-      websiteUrl: formState.values.appWebsiteURL,
-      youtubeUrl: formState.values.appYouTubeURL,
-    };
+    const newAppDetails = mapAppDetails();
 
     dispatch(createApp({ appData: newAppDetails }));
 
@@ -405,21 +416,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     event.preventDefault();
 
     const updatedAppDetails = {
-      description: formState.values.appDescription,
-      directUrl: formState.values.appDirectURL,
       id: modalDetails.userAppID,
-      labels: checkForLabels(formState.values.appLabels),
-      logo: formState.values.appAvatarURL,
-      metadata: getFormMetadata(),
-      name: formState.values.appName,
-      privacyUrl: formState.values.appPrivacyURL,
-      redirectUrl: formState.values.appRedirectURI,
-      summary: formState.values.appSummary,
-      supportUrl: formState.values.appSupportURL,
-      tosUrl: formState.values.appTermsURL,
-      visibility: formState.values.appVisibility,
-      websiteUrl: formState.values.appWebsiteURL,
-      youtubeUrl: formState.values.appYouTubeURL,
+      ...mapAppDetails(),
     };
 
     dispatch(updateApp({ appData: updatedAppDetails }));
@@ -471,62 +469,474 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   };
 
   const validMetadata = () => {
-    if (formState.values.appMetaKey.length === 0) {
-      return formState.values.appMetaValue.length === 0 &&
-        formState.values.appMetaTitle.length === 0 &&
-        formState.values.appMetaTitle.length === 0;
+    if (getValues("appMetaKey").length === 0) {
+      return getValues("appMetaValue").length === 0 &&
+        getValues("appMetaTitle").length === 0 &&
+        getValues("appMetaTitle").length === 0;
     } else {
-      return isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`) &&
-        formState.values.appMetaValue.length !== 0 &&
-        formState.values.appMetaTitle.length !== 0 &&
-        formState.values.appMetaTitle.length !== 0;
+      return isValidAppMetaKey(`${metadataKeyDefaultPrefix}${getValues("appMetaKey")}`) &&
+        getValues("appMetaValue").length !== 0 &&
+        getValues("appMetaTitle").length !== 0 &&
+        getValues("appMetaTitle").length !== 0;
     }
   };
 
   const hasChanged = () => {
-    // FIXME: the form needs to be replaced
-    // formState.errors does not update on error so this was needed
-    const required = [
-      formState.values.appName.length !== 0,
-      formState.values.appRedirectURI.length !== 0,
-    ];
-
-    const hasRequired = required.every((val) => val);
-
-    const changed = [
-      formState.isDirty,
-      visibilityChanged,
-    ];
-
-    return (formState.isValid || Object.keys(formState.errors).length === 0)
-      && hasRequired
-      && changed.some((v) => v)
-      && validMetadata()
-      && validImage;
+    return (isValid || Object.keys(errors).length === 0)
+      && (isDirty || deletedMeta)
+      && validMetadata();
   };
 
-  const newHasChanged = () => {
-    return formState.values.appName.length !== 0 &&
-      formState.values.appRedirectURI !== "http://" &&
-      formState.values.appRedirectURI !== "https://" &&
-      formState.values.appRedirectURI.length !== 0 &&
-      validMetadata() &&
-      (formState.isValid || Object.keys(formState.errors).length === 0) &&
-      !(allUserAppNames.includes(formState.values.appName)) &&
-      validImage;
+  const [anchorEl, setAnchorEl] = React.useState<{ [x: number]: EventTarget & HTMLButtonElement}|null>(null);
+  const [addMeta, setAddMeta] = React.useState(getValues("appMetadata").length > 0);
+  const [currMeta, setCurrMeta] = React.useState(-1);
+  const [editedMeta, setEditedMeta] = React.useState<Metadata|null>(null);
+  const [deletedMeta, setDeletedMeta] = React.useState(false);
+
+  const handleClick = (currentTarget: EventTarget & HTMLButtonElement, index = 0) => {
+    setAnchorEl({
+      [index]: currentTarget,
+    });
+  };
+
+  const handleEdit = (index: number) => {
+    setAnchorEl(null);
+    setCurrMeta(index);
+    const metadata = {
+      ...getValues("appMetadata")[index],
+    };
+    setEditedMeta(metadata);
+  };
+
+  const handleSaveChanges = () => {
+    setCurrMeta(-1);
+    setEditedMeta(null);
+  };
+
+  const handleCancel = (index: number) => {
+    setCurrMeta(-1);
+    const metadata = getValues("appMetadata");
+    if (editedMeta) {
+      metadata[index] = editedMeta;
+      reset({
+        ...getValues(),
+        appMetadata: metadata,
+      }, {
+        keepErrors: true,
+        keepDirty: true,
+      });
+      trigger("appMetadata");
+      setEditedMeta(null);
+    }
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+    if (!editedMeta) setCurrMeta(-1);
+  };
+
+  const handleDeleteProperty = (index: number) => {
+    setAnchorEl(null);
+    setCurrMeta(-1);
+    const metadata = getValues("appMetadata");
+    metadata.splice(index, 1);
+    reset({
+      ...getValues(),
+      appMetadata: metadata,
+    }, {
+      keepErrors: true,
+      keepDirty: true,
+    });
+    trigger("appMetadata");
+    if (!metadata.length) {
+      setAddMeta(true);
+    }
+    setDeletedMeta(true);
+  };
+
+  const saveMetadata = () => {
+    const metadata = getValues("appMetadata");
+    metadata.push({
+      key: `${metadataKeyDefaultPrefix}${getValues("appMetaKey")}`,
+      value: getValues("appMetaValue"),
+      title: getValues("appMetaTitle"),
+      description: getValues("appMetaDescription") || "",
+    });
+    reset({
+      ...getValues(),
+      appMetadata: metadata,
+      appMetaDescription: "",
+      appMetaKey: "",
+      appMetaTitle: "",
+      appMetaValue: "",
+    },
+    {
+      keepErrors: true,
+      keepDirty: true,
+    });
+    trigger("appMetadata");
+    setAddMeta(false);
+  };
+
+  const editMetadataView = () => {
+    return <Box mb={1.5} key="edit_metadata_view_123">
+      <TableContainer component={Paper} variant="outlined">
+        <Table>
+          <TableBody>
+            <TableRow style={{ verticalAlign: "baseline" }}>
+              <TableCell scope="row" style={{ borderBottom: "none", paddingLeft: spacing(5), paddingTop: spacing(5) }}>
+                <Controller
+                  control={control}
+                  name="appMetaKey"
+                  render={({ field }) => (
+                    <TextField
+                      className={clsx(classes.inputFields, classes.inputNoMargin)}
+                      error={
+                        getValues("appMetaKey").length !== 0 &&
+                        !isValidAppMetaKey(`${metadataKeyDefaultPrefix}${getValues("appMetaKey")}`)
+                      }
+                      {...field}
+                      fullWidth
+                      helperText={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
+                      InputProps={{
+                        startAdornment: <InputAdornment className={classes.metaPrefix} position="start">{metadataKeyDefaultPrefix}</InputAdornment>,
+                      }}
+                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
+                      margin="dense"
+                      type="text"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </TableCell>
+
+              <TableCell scope="row" style={{ borderBottom: "none" }}>
+                <Controller
+                  control={control}
+                  name="appMetaValue"
+                  render={({ field }) => (
+                    <TextField
+                      className={clsx(classes.inputFields, classes.inputNoMargin)}
+                      error={
+                        getValues("appMetaKey").length !== 0 &&
+                        getValues("appMetaValue").length === 0
+                      }
+                      {...field}
+                      fullWidth
+                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.valueFieldLabel")}
+                      margin="dense"
+                      type="text"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </TableCell>
+
+              <TableCell scope="row" style={{ borderBottom: "none", paddingRight: spacing(5) }}>
+                <Controller
+                  control={control}
+                  name="appMetaTitle"
+                  render={({ field }) => (
+                    <TextField
+                      className={clsx(classes.inputFields, classes.inputNoMargin)}
+                      error={
+                        getValues("appMetaKey").length !== 0 &&
+                        getValues("appMetaTitle").length === 0
+                      }
+                      {...field}
+                      fullWidth
+                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.titleFieldLabel")}
+                      margin="dense"
+                      type="text"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </TableCell>
+
+            </TableRow>
+
+            <TableRow>
+              <TableCell colSpan={3} scope="row" style={{ borderBottom: "none", padding: spacing(0, 5) }}>
+                <Controller
+                  control={control}
+                  name="appMetaDescription"
+                  render={({ field }) => (
+                    <TextField
+                      className={clsx(classes.inputFields, classes.inputFullWidth)}
+                      {...field}
+                      fullWidth
+                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.descriptionFieldLabel")}
+                      margin="dense"
+                      type="text"
+                      variant="outlined"
+                    />
+                  )}
+                />
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell colSpan={3} scope="row" style={{ borderBottom: "none", paddingBottom: spacing(5), paddingLeft: spacing(5) }}>
+                <Button
+                  color="primary"
+                  onClick={() => saveMetadata()}
+                  variant="contained"
+                >
+                  {t("dashboardTab.applicationsSubTab.appModal.customProps.save")}
+                </Button>
+              </TableCell>
+            </TableRow>
+          </TableBody>
+        </Table>
+      </TableContainer>
+    </Box>;
+  };
+
+  const getMetadataTable = () => {
+    return (
+      <TableContainer component={Paper} key="view_metadata_table_123" style={{ marginBottom: spacing(1.5) }} variant="outlined">
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell scope="row" style={{ paddingLeft: spacing(5), width: 400 }}>
+                {t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
+              </TableCell>
+              <TableCell scope="row">
+                {t("dashboardTab.applicationsSubTab.appModal.customProps.valueFieldLabel")}
+              </TableCell>
+              <TableCell scope="row" style={{ paddingRight: spacing(5) }}>
+                {t("dashboardTab.applicationsSubTab.appModal.customProps.titleFieldLabel")}
+              </TableCell>
+              <TableCell scope="row" />
+            </TableRow>
+          </TableHead>
+
+          <TableBody>
+            {getValues("appMetadata").map((mdata, index) => ([
+              <TableRow
+                className={clsx({[classes.tableRow]: index%2 === 0})}
+                key={`${mdata.key}_key_${index}`}
+                style={{ verticalAlign: "baseline" }}
+              >
+                <TableCell scope="row" style={{ borderBottom: "none", paddingLeft: spacing(5) }}>
+                  <Controller
+                    control={control}
+                    name={`appMetadata.${index}.key` as const}
+                    render={({ field }) => (
+                      <TextField
+                        className={clsx(classes.inputFields, classes.inputNoMargin)}
+                        disabled={currMeta !== index}
+                        {...field}
+                        fullWidth
+                        helperText={currMeta === index && t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
+                        label={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
+                        margin="dense"
+                        type="text"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                </TableCell>
+
+                <TableCell scope="row" style={{ borderBottom: "none" }}>
+                  <Controller
+                    control={control}
+                    name={`appMetadata.${index}.value` as const}
+                    render={({ field }) => (
+                      <TextField
+                        className={clsx(classes.inputFields, classes.inputNoMargin)}
+                        disabled={currMeta !== index}
+                        {...field}
+                        label={t("dashboardTab.applicationsSubTab.appModal.customProps.valueFieldLabel")}
+                        margin="dense"
+                        type="text"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                </TableCell>
+
+                <TableCell colSpan={currMeta === index ? 2 : 1} scope="row" style={{ borderBottom: "none", paddingRight: spacing(currMeta === index ? 5 : 0) }}>
+                  <Controller
+                    control={control}
+                    name={`appMetadata.${index}.title` as const}
+                    render={({ field }) => (
+                      <TextField
+                        className={clsx(classes.inputFields, classes.inputNoMargin)}
+                        disabled={currMeta !== index}
+                        {...field}
+                        label={t("dashboardTab.applicationsSubTab.appModal.customProps.titleFieldLabel")}
+                        margin="dense"
+                        type="text"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                </TableCell>
+
+                {
+                  currMeta !== index && <TableCell scope="row" style={{ borderBottom: "none", paddingRight: spacing(5), verticalAlign: "top" }}>
+                    <IconButton onClick={(e) => handleClick(e.currentTarget, index)}>
+                      <Icon>more_vert</Icon>
+                    </IconButton>
+                    <Menu
+                      id={`custom-prop-menu-${index}`}
+                      anchorEl={anchorEl && anchorEl[index]}
+                      keepMounted
+                      open={Boolean(anchorEl && anchorEl[index])}
+                      onClose={handleClose}
+                    >
+                      <MenuItem disabled onClick={() => handleClose()}>{t("dashboardTab.applicationsSubTab.appModal.customProps.menuOptions")}</MenuItem>
+                      <MenuItem onClick={() => handleEdit(index)}>{t("dashboardTab.applicationsSubTab.appModal.customProps.menuOptionsEdit")}</MenuItem>
+                      <MenuItem onClick={() => handleDeleteProperty(index)}>{t("dashboardTab.applicationsSubTab.appModal.customProps.menuOptionsDelete")}</MenuItem>
+                    </Menu>
+                  </TableCell>
+                }
+              </TableRow>,
+              currMeta === index && <TableRow
+                className={clsx({ [classes.tableRow]: index%2 === 0 })}
+                key={`${mdata.key}_description_${index}`}
+                style={{ verticalAlign: "baseline" }}
+              >
+                <TableCell colSpan={4} scope="row" style={{ borderBottom: "none", paddingLeft: spacing(5), paddingRight: spacing(5) }}>
+                  <Controller
+                    control={control}
+                    name={`appMetadata.${index}.description` as const}
+                    render={({ field }) => (
+                      <TextField
+                        className={clsx(classes.inputFields, classes.inputFullWidth)}
+                        disabled={currMeta !== index}
+                        {...field}
+                        fullWidth
+                        label={t("dashboardTab.applicationsSubTab.appModal.customProps.descriptionFieldLabel")}
+                        margin="dense"
+                        type="text"
+                        variant="outlined"
+                      />
+                    )}
+                  />
+                </TableCell>
+              </TableRow>,
+              currMeta === index && <TableRow
+                className={clsx({ [classes.tableRow]: index%2 === 0 })}
+                key={`${mdata.key}_actions_${index}`}
+                style={{ verticalAlign: "baseline" }}
+              >
+                <TableCell scope="row" style={{ borderBottom: "none", paddingLeft: spacing(5) }}>
+                  <Button
+                    color="primary"
+                    onClick={handleSaveChanges}
+                    variant="contained"
+                  >
+                    {t("dashboardTab.applicationsSubTab.appModal.customProps.saveChanges")}
+                  </Button>
+                </TableCell>
+                <TableCell colSpan={3} scope="row" style={{ paddingRight: spacing(5) }}>
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <Button
+                      className={classes.removeAppButton}
+                      onClick={() => handleDeleteProperty(index)}
+                      style={{ marginRight: spacing(5) }}
+                      variant="contained"
+                    >
+                      {t("dashboardTab.applicationsSubTab.appModal.customProps.deleteProperty")}
+                    </Button>
+
+                    <Button
+                      className={classes.addCustomPropsButton}
+                      onClick={() => handleCancel(index)}
+                      variant="outlined"
+                    >
+                      {t("dashboardTab.applicationsSubTab.appModal.customProps.cancel")}
+                    </Button>
+                  </div>
+                </TableCell>
+              </TableRow>,
+            ]))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  const getMetadataSection = () => {
+    return (
+      <>
+        <div>
+          {/* 'Custom properties' text */}
+          <Grid container spacing={3}>
+            <Grid item md={6}>
+              <Box pb={1.5}>
+                <Typography display="block" gutterBottom variant="h6">
+                  {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
+                </Typography>
+              </Box>
+
+              <Box pb={5}>
+                <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
+                  {t("dashboardTab.applicationsSubTab.appModal.customProps.subtitle")}
+                </Typography>
+              </Box>
+            </Grid>
+          </Grid>
+
+          {/* 'Custom properties' fields */}
+          {!!getValues("appMetadata").length && getMetadataTable()}
+          {addMeta && editMetadataView()}
+
+          <Grid container spacing={3}>
+            <Grid item md={6}>
+              {
+                !addMeta && <Button
+                  className={classes.addCustomPropsButton}
+                  onClick={() => setAddMeta(true)}
+                  variant="outlined"
+                >
+                  {t("dashboardTab.applicationsSubTab.appModal.customProps.addCustomPropsButtonLabel")}
+                </Button>
+              }
+            </Grid>
+
+            <Grid item md={6}>
+              <Notice
+                noticeIcon={<Icon>info</Icon>}
+                noticeText={
+                  <Typography variant="body2" display="block" style={{ color: palette.info.dark }}>
+                    <Trans i18nKey="dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText">
+                      {[
+                        <Link
+                          key="dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText"
+                          to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1450835969/Custom+Properties"
+                          rel='noopener noreferrer'
+                          target='_blank'
+                        />,
+                      ]}
+                    </Trans>
+                  </Typography>
+                }
+                type="info"
+              />
+            </Grid>
+          </Grid>
+        </div>
+
+        <hr className={classes.regularSectionSeparator} />
+      </>
+    );
   };
 
   return (
     <>
       <Modal
         onClose={() => {
-          resetForm({
+          reset({
             appAvatarURL: "",
             appClientID: "",
             appClientSecret: "",
             appDirectURL: "",
             appDescription: "",
             appLabels: "",
+            appMetadata: [],
             appMetaDescription: "",
             appMetaKey: "",
             appMetaTitle: "",
@@ -591,7 +1001,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   )
                   : (
                     <div className={classes.editApplicationHeaderContainer}>
-                      <Box>
+                      <Box py={3}>
                         <Typography display="block" gutterBottom variant="h2">
                           {mostRecentlySelectedAppDetails.name}
                         </Typography>
@@ -650,54 +1060,46 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                 <Grid item md={6}>
 
-                  <TextField
-                    className={classes.inputFields}
-                    error={
-                      (formState.touched.appName && formState.values.appName.length === 0) ||
-                      (modalMode === "new" && allUserAppNames.includes(formState.values.appName))
-                    }
-                    fullWidth
-                    helperText={
-                      (formState.touched.appName && formState.values.appName.length === 0)
-                        ? t("dashboardTab.applicationsSubTab.appModal.noAppNameError")
-                        : (
-                          (modalMode === "new" && allUserAppNames.includes(formState.values.appName))
-                            ? t("dashboardTab.applicationsSubTab.appModal.existingAppNameError")
-                            : ""
-                        )
-                    }
-                    label={t("dashboardTab.applicationsSubTab.appModal.appNameFieldLabel")}
-                    margin='dense'
-                    name='appName'
-                    onChange={handleChange}
-                    onFocus={handleFocus}
-                    required
-                    type='text'
-                    value={formState.values.appName}
-                    variant='outlined'
+                  <Controller
+                    control={control}
+                    name="appName"
+                    render={({ field }) => (
+                      <TextField
+                        className={classes.inputFields}
+                        error={!!errors.appName}
+                        {...field}
+                        fullWidth
+                        helperText={errors.appName?.message}
+                        label={t("dashboardTab.applicationsSubTab.appModal.appNameFieldLabel")}
+                        margin="dense"
+                        required
+                        type="text"
+                        variant="outlined"
+                      />
+                    )}
                   />
 
-                  <TextField
-                    className={classes.inputFields}
-                    error={formState.errors.appSummary}
-                    fullWidth
-                    helperText={
-                      formState.errors.appSummary
-                        ? formState.errorMsgs.appSummary
-                        : ""
-                    }
-                    label={t("dashboardTab.applicationsSubTab.appModal.appSummaryFieldLabel")}
-                    margin='dense'
-                    name='appSummary'
-                    onChange={handleChange}
-                    type='text'
-                    value={formState.values.appSummary}
-                    variant='outlined'
+                  <Controller
+                    control={control}
+                    name="appSummary"
+                    render={({ field }) => (
+                      <TextField
+                        className={classes.inputFields}
+                        error={!!errors.appSummary}
+                        {...field}
+                        fullWidth
+                        helperText={errors.appSummary?.message}
+                        label={t("dashboardTab.applicationsSubTab.appModal.appSummaryFieldLabel")}
+                        margin="dense"
+                        type="text"
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
 
                 {/* 'App avatar' subsection */}
-                <Grid item md={6} spacing={3}>
+                <Grid item md={6}>
 
                   <div className={classes.appAvatarContainer}>
                     {/* TODO: Eventually add 'upload' capabilities to the following 'Avatar' as an 'onClick' event */}
@@ -731,78 +1133,81 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                     <Avatar
                       className={
-                        avatarInputIsInFocus || formState.values.appAvatarURL
+                        avatarInputIsInFocus || getValues("appAvatarURL")
                           ? classes.focusedAvatar
                           : classes.notFocusedAvatar
                       }
-                      src={formState.values.appAvatarURL}
+                      src={getValues("appAvatarURL")}
                     >
                       {appNameInitials}
                     </Avatar>
 
-                    <TextField
-                      className={classes.avatarURLInputField}
-                      error={(formState.touched.appAvatarURL && formState.errors.appAvatarURL) || !validImage}
-                      fullWidth
-                      helperText={
-                        (formState.touched.appAvatarURL && formState.errors.appAvatarURL) || !validImage
-                          ? formState.errorMsgs.appAvatarURL
-                          : t("dashboardTab.applicationsSubTab.appModal.appAvatarFieldSubLabel")
-                      }
-                      inputRef={(input) =>
-                        avatarInputIsInFocus ? input && input.focus() : input && input.blur()}
-                      InputLabelProps={{
-                        shrink: true,
-                      }}
-                      label={t("dashboardTab.applicationsSubTab.appModal.appAvatarFieldLabel")}
-                      margin='dense'
-                      name='appAvatarURL'
-                      onBlur={() => {
-                        setAvatarInputIsInFocus(false);
-                      }}
-                      onChange={handleChange}
-                      onFocus={(focusEvent) => {
-                        handleFocus(focusEvent);
-                        setAvatarInputIsInFocus(true);
-                      }}
-                      type='url'
-                      value={formState.values.appAvatarURL}
-                      variant='outlined'
+                    <Controller
+                      control={control}
+                      name="appAvatarURL"
+                      render={({ field }) => (
+                        <TextField
+                          className={classes.avatarURLInputField}
+                          error={!!errors.appAvatarURL}
+                          {...field}
+                          fullWidth
+                          helperText={errors.appAvatarURL?.message || t("dashboardTab.applicationsSubTab.appModal.appAvatarFieldSubLabel")}
+                          inputRef={(input) =>
+                            avatarInputIsInFocus ? input && input.focus() : input && input.blur()}
+                          InputLabelProps={{
+                            shrink: true,
+                          }}
+                          label={t("dashboardTab.applicationsSubTab.appModal.appAvatarFieldLabel")}
+                          margin="dense"
+                          onBlur={() => {
+                            setAvatarInputIsInFocus(false);
+                          }}
+                          onFocus={() => {
+                            setAvatarInputIsInFocus(true);
+                          }}
+                          type="url"
+                          variant="outlined"
+                        />
+                      )}
                     />
                   </div>
                 </Grid>
 
                 <Grid item md={12}>
-                  <TextField
-                    className={clsx(classes.inputFields, classes.descriptionField)}
-                    fullWidth
-                    label={t("dashboardTab.applicationsSubTab.appModal.appDescriptionFieldLabel")}
-                    margin='dense'
-                    multiline
-                    name='appDescription'
-                    onChange={handleChange}
-                    rows={9}
-                    type='text'
-                    value={formState.values.appDescription}
-                    variant='outlined'
-                    InputProps={{
-                      endAdornment: (
-                        <InputAdornment
-                          className={classes.markdownIcon}
-                          position="end"
-                        >
-                          <CustomizableTooltip
-                            tooltipContent={
-                              <Typography variant='caption'>
-                                {t("dashboardTab.applicationsSubTab.appModal.markdownTooltipText")}
-                              </Typography>
-                            }
-                          >
-                            <img src={markdownIcon} style={{ height: 24, width: 24 }} />
-                          </CustomizableTooltip>
-                        </InputAdornment>
-                      ),
-                    }}
+                  <Controller
+                    control={control}
+                    name="appDescription"
+                    render={({ field }) => (
+                      <TextField
+                        className={clsx(classes.inputFields, classes.descriptionField)}
+                        {...field}
+                        fullWidth
+                        label={t("dashboardTab.applicationsSubTab.appModal.appDescriptionFieldLabel")}
+                        margin="dense"
+                        multiline
+                        rows={9}
+                        type="text"
+                        variant="outlined"
+                        InputProps={{
+                          endAdornment: (
+                            <InputAdornment
+                              className={classes.markdownIcon}
+                              position="end"
+                            >
+                              <CustomizableTooltip
+                                tooltipContent={
+                                  <Typography variant="caption">
+                                    {t("dashboardTab.applicationsSubTab.appModal.markdownTooltipText")}
+                                  </Typography>
+                                }
+                              >
+                                <img src={markdownIcon} style={{ height: 24, width: 24 }} />
+                              </CustomizableTooltip>
+                            </InputAdornment>
+                          ),
+                        }}
+                      />
+                    )}
                   />
                 </Grid>
 
@@ -878,45 +1283,50 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 </Grid>
 
                 <Grid item md={6}>
-                  <TextField
-                    className={classes.inputFields}
-                    error={formState.errors.appRedirectURI}
-                    fullWidth
-                    helperText={
-                      formState.errors.appRedirectURI
-                        ? formState.errorMsgs.appRedirectURI
-                        : ""
-                    }
-                    label={t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
-                    margin='dense'
-                    name='appRedirectURI'
-                    onChange={handleChange}
-                    required
-                    type='url'
-                    value={formState.values.appRedirectURI}
-                    variant='outlined'
+                  <Controller
+                    control={control}
+                    name="appRedirectURI"
+                    render={({ field }) => (
+                      <TextField
+                        className={classes.inputFields}
+                        error={!!errors.appRedirectURI}
+                        {...field}
+                        fullWidth
+                        helperText={errors.appRedirectURI?.message}
+                        label={t("dashboardTab.applicationsSubTab.appModal.subSectionLabelThree")}
+                        margin="dense"
+                        required
+                        type="url"
+                        variant="outlined"
+                      />
+                    )}
                   />
                 </Grid>
 
                 {/* 'Client credentials' subsection */}
                 <Grid item md={6}>
                   <div className={classes.row}>
-                    <TextField
-                      disabled
-                      fullWidth
-                      label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
-                      margin="dense"
+                    <Controller
+                      control={control}
                       name="appClientID"
-                      onChange={handleChange}
-                      type="text"
-                      value={formState.values.appClientID}
-                      variant="outlined"
+                      render={({ field }) => (
+                        <TextField
+                          disabled
+                          {...field}
+                          fullWidth
+                          label={t("dashboardTab.applicationsSubTab.appModal.appClientIDFieldLabel")}
+                          margin="dense"
+                          name="appClientID"
+                          type="text"
+                          variant="outlined"
+                        />
+                      )}
                     />
 
                     <div className={classes.rowCta}>
                       <IconButton
-                        disabled={!formState.values.appClientID}
-                        onClick={() => copyToClipboard(formState.values.appClientID)}
+                        disabled={!getValues("appClientID")}
+                        onClick={() => copyToClipboard(getValues("appClientID"))}
                         size="medium"
                       >
                         <Icon>content_copy</Icon>
@@ -925,22 +1335,27 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   </div>
 
                   <div className={classes.clientSecretInputFieldContainer}>
-                    <TextField
-                      disabled
-                      fullWidth
-                      label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
-                      margin="dense"
+                    <Controller
+                      control={control}
                       name="appClientSecret"
-                      onChange={handleChange}
-                      type="text"
-                      value={formState.values.appClientSecret}
-                      variant="outlined"
+                      render={({ field }) => (
+                        <TextField
+                          disabled
+                          {...field}
+                          fullWidth
+                          label={t("dashboardTab.applicationsSubTab.appModal.appClientSecretFieldLabel")}
+                          margin="dense"
+                          name="appClientSecret"
+                          type="text"
+                          variant="outlined"
+                        />
+                      )}
                     />
 
                     <div className={classes.copyCta}>
                       <IconButton
-                        disabled={!formState.values.appClientSecret}
-                        onClick={() => copyToClipboard(formState.values.appClientSecret)}
+                        disabled={!getValues("appClientSecret")}
+                        onClick={() => copyToClipboard(getValues("appClientSecret"))}
                         size="medium"
                       >
                         <Icon>content_copy</Icon>
@@ -986,22 +1401,22 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 {/* 'Optional URLs' subsection */}
                 <Grid item md={6}>
                   <div className={classes.appURLFieldWrapper}>
-                    <TextField
-                      className={classes.inputFields}
-                      error={formState.errors.appWebsiteURL}
-                      fullWidth
-                      helperText={
-                        formState.errors.appWebsiteURL
-                          ? formState.errorMsgs.appWebsiteURL
-                          : ""
-                      }
-                      label={t("dashboardTab.applicationsSubTab.appModal.appWebsiteURLFieldLabel")}
-                      margin='dense'
-                      name='appWebsiteURL'
-                      onChange={handleChange}
-                      type='url'
-                      value={formState.values.appWebsiteURL}
-                      variant='outlined'
+                    <Controller
+                      control={control}
+                      name="appWebsiteURL"
+                      render={({ field }) => (
+                        <TextField
+                          className={classes.inputFields}
+                          error={!!errors.appWebsiteURL}
+                          {...field}
+                          fullWidth
+                          helperText={errors.appWebsiteURL?.message}
+                          label={t("dashboardTab.applicationsSubTab.appModal.appWebsiteURLFieldLabel")}
+                          margin="dense"
+                          type="url"
+                          variant="outlined"
+                        />
+                      )}
                     />
 
                     <div onClick={handleOpenSelector}>
@@ -1065,22 +1480,22 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   {
                     isShowing[0] &&
                     <div className={classes.appURLFieldWrapper}>
-                      <TextField
-                        className={classes.inputFields}
-                        error={formState.errors.appTermsURL}
-                        fullWidth
-                        helperText={
-                          formState.errors.appTermsURL
-                            ? formState.errorMsgs.appTermsURL
-                            : ""
-                        }
-                        label={t("dashboardTab.applicationsSubTab.appModal.appToSURLFieldLabel")}
-                        margin='dense'
-                        name='appTermsURL'
-                        onChange={handleChange}
-                        type='url'
-                        value={formState.values.appTermsURL}
-                        variant='outlined'
+                      <Controller
+                        control={control}
+                        name="appTermsURL"
+                        render={({ field }) => (
+                          <TextField
+                            className={classes.inputFields}
+                            error={!!errors.appTermsURL}
+                            {...field}
+                            fullWidth
+                            helperText={errors.appTermsURL?.message}
+                            label={t("dashboardTab.applicationsSubTab.appModal.appToSURLFieldLabel")}
+                            margin="dense"
+                            type="url"
+                            variant="outlined"
+                          />
+                        )}
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 0)}>
@@ -1092,22 +1507,22 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   {
                     isShowing[1] &&
                     <div className={classes.appURLFieldWrapper}>
-                      <TextField
-                        className={classes.inputFields}
-                        error={formState.errors.appPrivacyURL}
-                        fullWidth
-                        helperText={
-                          formState.errors.appPrivacyURL
-                            ? formState.errorMsgs.appPrivacyURL
-                            : ""
-                        }
-                        label={t("dashboardTab.applicationsSubTab.appModal.appPrivacyPolicyURLFieldLabel")}
-                        margin='dense'
-                        name='appPrivacyURL'
-                        onChange={handleChange}
-                        type='url'
-                        value={formState.values.appPrivacyURL}
-                        variant='outlined'
+                      <Controller
+                        control={control}
+                        name="appPrivacyURL"
+                        render={({ field }) => (
+                          <TextField
+                            className={classes.inputFields}
+                            error={!!errors.appPrivacyURL}
+                            {...field}
+                            fullWidth
+                            helperText={errors.appPrivacyURL?.message}
+                            label={t("dashboardTab.applicationsSubTab.appModal.appPrivacyPolicyURLFieldLabel")}
+                            margin="dense"
+                            type="url"
+                            variant="outlined"
+                          />
+                        )}
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 1)}>
@@ -1119,22 +1534,22 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   {
                     isShowing[2] &&
                     <div className={classes.appURLFieldWrapper}>
-                      <TextField
-                        className={classes.inputFields}
-                        error={formState.errors.appYouTubeURL}
-                        fullWidth
-                        helperText={
-                          formState.errors.appYouTubeURL
-                            ? formState.errorMsgs.appYouTubeURL
-                            : ""
-                        }
-                        label={t("dashboardTab.applicationsSubTab.appModal.appYouTubeChannelURLFieldLabel")}
-                        margin='dense'
-                        name='appYouTubeURL'
-                        onChange={handleChange}
-                        type='url'
-                        value={formState.values.appYouTubeURL}
-                        variant='outlined'
+                      <Controller
+                        control={control}
+                        name="appYouTubeURL"
+                        render={({ field }) => (
+                          <TextField
+                            className={classes.inputFields}
+                            error={!!errors.appYouTubeURL}
+                            {...field}
+                            fullWidth
+                            helperText={errors.appYouTubeURL?.message}
+                            label={t("dashboardTab.applicationsSubTab.appModal.appYouTubeChannelURLFieldLabel")}
+                            margin="dense"
+                            type="url"
+                            variant="outlined"
+                          />
+                        )}
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 2)}>
@@ -1146,22 +1561,22 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                   {
                     isShowing[3] &&
                     <div className={classes.appURLFieldWrapper}>
-                      <TextField
-                        className={classes.inputFields}
-                        error={formState.errors.appSupportURL}
-                        fullWidth
-                        helperText={
-                          formState.errors.appSupportURL
-                            ? formState.errorMsgs.appSupportURL
-                            : ""
-                        }
-                        label={t("dashboardTab.applicationsSubTab.appModal.appSupportURLFieldLabel")}
-                        margin='dense'
-                        name='appSupportURL'
-                        onChange={handleChange}
-                        type='url'
-                        value={formState.values.appSupportURL}
-                        variant='outlined'
+                      <Controller
+                        control={control}
+                        name="appSupportURL"
+                        render={({ field }) => (
+                          <TextField
+                            className={classes.inputFields}
+                            error={!!errors.appSupportURL}
+                            {...field}
+                            fullWidth
+                            helperText={errors.appSupportURL?.message}
+                            label={t("dashboardTab.applicationsSubTab.appModal.appSupportURLFieldLabel")}
+                            margin="dense"
+                            type="url"
+                            variant="outlined"
+                          />
+                        )}
                       />
 
                       <div onClick={(clickEvent) => handleHideOptionalURLField(clickEvent, 3)}>
@@ -1178,135 +1593,20 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                 getSections(
                   "MARKETPLACE_APP_SETTINGS",
                   {
-                    formState,
-                    handleAppVisibility,
-                    handleChange,
+                    formUtil: {
+                      control,
+                      errors,
+                      getValues,
+                      register,
+                      reset,
+                      setValue,
+                    },
+                    data: mostRecentlySelectedAppDetails,
                   }
                 )
               }
 
-              {/* 'Metadata' section */}
-              <div>
-                {/* 'Custom properties' text */}
-                <Grid container spacing={3}>
-                  <Grid item md={6}>
-                    <Box pb={1.5}>
-                      <Typography display="block" gutterBottom variant="h6">
-                        {t("dashboardTab.applicationsSubTab.appModal.customProps.title")}
-                      </Typography>
-                    </Box>
-
-                    <Box pb={5}>
-                      <Typography display="block" gutterBottom style={{ color: palette.text.secondary }} variant="body2">
-                        {t("dashboardTab.applicationsSubTab.appModal.customProps.subtitle")}
-                      </Typography>
-                    </Box>
-                  </Grid>
-                </Grid>
-
-                {/* 'Custom properties' fields */}
-                <div className={classes.customPropsFieldsContainer}>
-                  <TextField
-                    className={classes.inputFields}
-                    error={
-                      formState.values.appMetaKey.length !== 0 &&
-                      !isValidAppMetaKey(`${metadataKeyDefaultPrefix}${formState.values.appMetaKey}`)
-                    }
-                    fullWidth
-                    helperText={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldHelperText")}
-                    InputProps={{
-                      startAdornment: <InputAdornment className={classes.metaPrefix} position="start">{metadataKeyDefaultPrefix}</InputAdornment>,
-                    }}
-                    label={t("dashboardTab.applicationsSubTab.appModal.customProps.keyFieldLabel")}
-                    margin="dense"
-                    name="appMetaKey"
-                    onChange={handleChange}
-                    type="text"
-                    value={formState.values.appMetaKey}
-                    variant="outlined"
-                  />
-
-                  <div className={classes.customPropsFieldsInnerContainer}>
-                    <TextField
-                      className={classes.inputFields}
-                      error={
-                        formState.values.appMetaKey.length !== 0 &&
-                        formState.values.appMetaValue.length === 0
-                      }
-                      fullWidth
-                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.valueFieldLabel")}
-                      margin="dense"
-                      name="appMetaValue"
-                      onChange={handleChange}
-                      type="text"
-                      value={formState.values.appMetaValue}
-                      variant="outlined"
-                    />
-
-                    <TextField
-                      className={classes.inputFields}
-                      error={
-                        formState.values.appMetaKey.length !== 0 &&
-                        formState.values.appMetaTitle.length === 0
-                      }
-                      fullWidth
-                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.titleFieldLabel")}
-                      margin="dense"
-                      name="appMetaTitle"
-                      onChange={handleChange}
-                      type="text"
-                      value={formState.values.appMetaTitle}
-                      variant="outlined"
-                    />
-
-                    <TextField
-                      className={classes.inputFields}
-                      fullWidth
-                      label={t("dashboardTab.applicationsSubTab.appModal.customProps.descriptionFieldLabel")}
-                      margin="dense"
-                      name="appMetaDescription"
-                      onChange={handleChange}
-                      type="text"
-                      value={formState.values.appMetaDescription}
-                      variant="outlined"
-                    />
-                  </div>
-                </div>
-
-                <Grid container spacing={3}>
-                  <Grid item md={6}>
-                    <Button
-                      className={classes.addCustomPropsButton}
-                      disabled
-                    >
-                      {t("dashboardTab.applicationsSubTab.appModal.customProps.addCustomPropsButtonLabel")}
-                    </Button>
-                  </Grid>
-
-                  <Grid item md={6}>
-                    <Notice
-                      noticeIcon={<Icon>info</Icon>}
-                      noticeText={
-                        <Typography variant="body2" display="block" style={{ color: palette.info.dark }}>
-                          <Trans i18nKey="dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText">
-                            {[
-                              <Link
-                                key="dashboardTab.applicationsSubTab.appModal.customProps.infoBoxRegularText"
-                                to="https://cloudoki.atlassian.net/wiki/spaces/APIEC/pages/1450835969/Custom+Properties"
-                                rel='noopener noreferrer'
-                                target='_blank'
-                              />,
-                            ]}
-                          </Trans>
-                        </Typography>
-                      }
-                      type="info"
-                    />
-                  </Grid>
-                </Grid>
-              </div>
-
-              <hr className={classes.regularSectionSeparator} />
+              {getMetadataSection()}
 
               {/* 'App action' buttons section */}
               <div className={classes.buttonsContainer}>
@@ -1317,7 +1617,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <Grid item md={6}>
                           <Button
                             color="primary"
-                            disabled={!newHasChanged()}
+                            disabled={!hasChanged()}
                             disableElevation
                             onClick={createNewApp}
                             size="large"
@@ -1418,7 +1718,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             color: "primary",
           }}
           open={openDialog}
-          optionalTitleIcon='warning'
+          optionalTitleIcon="warning"
           providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialogSubText")}
           providedText={t("dashboardTab.applicationsSubTab.appModal.dialogText")}
           providedTitle={t("dashboardTab.applicationsSubTab.appModal.dialogTitle")}
@@ -1441,7 +1741,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             color: "primary",
           }}
           open={openCloseWarning}
-          optionalTitleIcon='warning'
+          optionalTitleIcon="warning"
           providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.subText")}
           providedText={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.text")}
           providedTitle={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.title")}
