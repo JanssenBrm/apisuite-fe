@@ -644,11 +644,11 @@
     "signup": "Register"
   },
   "mediaUpload": {
-    "description": "You can upload images and videos to be shown in your application's detail page.",
+    "description": "You can upload images to be shown in your application's detail page.",
     "deleteSuccess": "Media deleted successfully.",
     "deleteError": "Error deleting media.",
     "dragdrop": "Drag and drop files or click",
-    "helperText": "Only JPG/GIF/JPEG/PNG images are supported. The maximum image size is 2 MB.",
+    "helperText": "Only JPG/JPEG/PNG/GIF images are supported. The maximum image size is 2 MB.",
     "legend": "Uploaded Files",
     "title": "Content Preview",
     "uploadSuccess": "Media uploaded successfully.",
