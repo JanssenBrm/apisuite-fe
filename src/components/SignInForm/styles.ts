@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   },
 
   enabledConfirmButton: {
-    backgroundColor: theme.palette.secondary.main,
+    backgroundColor: theme.palette.primary.main,
     color: `${theme.palette.primary.contrastText} !important`,
     fontSize: "16px",
     fontWeight: 500,
@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     width: "100%",
 
     "&:hover": {
-      backgroundColor: theme.palette.secondary.main,
+      backgroundColor: theme.palette.primary.main,
     },
   },
 
