@@ -601,10 +601,7 @@ export const Profile: React.FC = () => {
               handleCloseDialog();
             }}
             confirmButtonLabel={t("profileTab.overviewSubTab.otherActionsLabels.deleteAccountModalConfirmButton")}
-            confirmButtonProps={{
-              variant: "contained",
-              color: "primary",
-            }}
+            confirmButtonStyle={classes.deleteAccountButtonStyles}
             open={openDialog}
             optionalTitleIcon='warning'
             providedText={
