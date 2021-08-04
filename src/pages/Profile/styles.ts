@@ -21,6 +21,11 @@ export default makeStyles((theme) => ({
     cursor: "pointer",
   },
 
+  deleteAccountButtonStyles: {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText,
+  },
+
   userNameAndRoleContainer: {
     alignItems: "center",
     display: "flex",

@@ -301,6 +301,11 @@ export default makeStyles((theme) => ({
     },
   },
 
+  deleteAppButtonStyles: {
+    backgroundColor: theme.palette.error.main,
+    color: theme.palette.error.contrastText,
+  },
+
   disabledClientSecretInputFieldRefreshButton: {
     border: `1px solid ${theme.palette.action.disabledBackground}`,
     borderRadius: theme.shape.borderRadius,

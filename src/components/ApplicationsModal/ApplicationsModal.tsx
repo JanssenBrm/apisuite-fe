@@ -1713,10 +1713,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
           closeDialogCallback={handleCloseDialog}
           confirmButtonCallback={_deleteApp}
           confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialogConfirmButtonLabel")}
-          confirmButtonProps={{
-            variant: "contained",
-            color: "primary",
-          }}
+          confirmButtonStyle={classes.deleteAppButtonStyles}
           open={openDialog}
           optionalTitleIcon="warning"
           providedSubText={t("dashboardTab.applicationsSubTab.appModal.dialogSubText")}
