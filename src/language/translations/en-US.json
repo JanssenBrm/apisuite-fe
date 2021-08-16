@@ -646,6 +646,7 @@
     "dragdrop": "Drag and drop files or click",
     "helperText": "Only JPG/JPEG/PNG/GIF images are supported. The maximum image size is 2 MB.",
     "legend": "Uploaded Files",
+    "headerImageLegend": "Hero image",
     "title": "Content Preview",
     "uploadSuccess": "Media uploaded successfully.",
     "uploadError": "Error uploading media."
