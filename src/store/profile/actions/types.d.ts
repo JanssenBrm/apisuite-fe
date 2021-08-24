@@ -170,6 +170,7 @@ export type GetProfileActionError = {
 
 export type InviteTeamMemberAction = {
   type: typeof INVITE_TEAM_MEMBER,
+  orgID: string,
   email: string,
   "role_id": string,
 }

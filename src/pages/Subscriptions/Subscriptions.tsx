@@ -11,6 +11,7 @@ import rocket from "assets/rocket.svg";
 import useStyles from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { subscriptionsSelector } from "./selectors";
+import { profileSelector } from "pages/Profile/selectors";
 import { PageContainer } from "components/PageContainer";
 import Notice from "components/Notice";
 
@@ -20,6 +21,7 @@ export const Subscriptions: React.FC = () => {
   const { palette } = useTheme();
   const { t } = useTranslation();
   const { auth, subscriptions } = useSelector(subscriptionsSelector);
+  const { profile } = useSelector(profileSelector);
 
   /* Retrieval of our APIs' data */
 
@@ -29,9 +31,9 @@ export const Subscriptions: React.FC = () => {
     have all the information it needs. */
     if (auth.user) {
       dispatch(getAPIs({}));
-      dispatch(getAllUserApps({}));
+      dispatch(getAllUserApps({orgID: profile.current_org.id}));
     }
-  }, [auth.user, dispatch]);
+  }, [auth.user, dispatch, profile]);
 
   /* Modal stuff */
 

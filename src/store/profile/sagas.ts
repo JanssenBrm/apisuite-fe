@@ -61,15 +61,18 @@ export function* fetchRoleOptionsSaga() {
   }
 }
 
-export function* inviteMemberSaga({ type, ...rest }: InviteTeamMemberAction) {
+export function* inviteMemberSaga(action: InviteTeamMemberAction) {
   try {
     yield call(request, {
-      url: `${API_URL}/users/invite`,
+      url: `${API_URL}/organizations/${action.orgID}/users`,
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      data: JSON.stringify({ ...rest }),
+      data: JSON.stringify({
+        email: action.email,
+        role_id: action.role_id,
+      }),
     });
 
     yield put(inviteTeamMemberSuccess({}));

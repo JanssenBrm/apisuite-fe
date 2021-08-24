@@ -193,13 +193,14 @@ export const Applications: React.FC = () => {
   useEffect(() => {
     if (
       user &&
+      currentOrganisation.id &&
       !createUserAppStatus.isRequesting &&
       !deleteUserAppStatus.isRequesting &&
       !updateUserAppStatus.isRequesting
     ) {
-      dispatch(getAllUserApps({}));
+      dispatch(getAllUserApps({orgID: currentOrganisation.id}));
     }
-  }, [createUserAppStatus, deleteUserAppStatus, dispatch, updateUserAppStatus, user]);
+  }, [createUserAppStatus, currentOrganisation, deleteUserAppStatus, dispatch, updateUserAppStatus, user]);
 
   const renderNoOrgView = () => (
     <Box alignItems="center" display="flex" flexDirection="column" justifyContent="center">

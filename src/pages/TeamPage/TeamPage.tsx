@@ -113,7 +113,11 @@ export const TeamPage: React.FC = () => {
       className={classes.inviteCard}
       onSubmit={(e) => {
         e.preventDefault();
-        dispatch(inviteTeamMember({ email: input.email, role_id: input.roleId.toString() }));
+        dispatch(inviteTeamMember({
+          orgID: currentOrganisation.id,
+          email: input.email,
+          role_id: input.roleId.toString(),
+        }));
       }}
     >
 
