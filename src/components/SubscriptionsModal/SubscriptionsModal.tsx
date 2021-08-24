@@ -81,9 +81,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
   /* 'API Product' access request */
 
   const handleAPIProductAccessRequest = () => {
-    const idOfSelectedClientApp = Number(selectedClientApp.id);
-
-    dispatch(requestAPIAccess({ appId: idOfSelectedClientApp }));
+    dispatch(requestAPIAccess({ orgID: selectedClientApp.orgId, appId: Number(selectedClientApp.id) }));
     resetModalSelections();
   };
 

@@ -5,7 +5,7 @@ import qs from "qs";
 
 import { AppData } from "./types";
 import { CREATE_APP, createAppError, createAppSuccess } from "./actions/createApp";
-import { CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction, UploadAppMediaAction } from "./actions/types";
+import { CreateAppAction, DeleteAppAction, DeleteAppMediaAction, GetAllUserAppsAction, GetUserAppAction, RequestAPIAccessAction, UpdateAppAction, UploadAppMediaAction } from "./actions/types";
 import { DELETE_APP, deleteAppError, deleteAppSuccess } from "./actions/deleteApp";
 import { GET_ALL_USER_APPS, getAllUserApps, getAllUserAppsError, getAllUserAppsSuccess } from "./actions/getAllUserApps";
 import { GET_USER_APP, getUserAppError, getUserAppSuccess } from "./actions/getUserApp";
@@ -20,7 +20,7 @@ import { uploadAppMediaError, uploadAppMediaSuccess, UPLOAD_APP_MEDIA } from "./
 import { deleteAppMediaError, deleteAppMediaSuccess, DELETE_APP_MEDIA } from "./actions/deleteAppMedia";
 import { UploadResponse } from "./actions/types";
 
-export function * createAppActionSaga (action: CreateAppAction) {
+export function* createAppActionSaga(action: CreateAppAction) {
   try {
     const data = {
       description: action.appData.description,
@@ -39,7 +39,7 @@ export function * createAppActionSaga (action: CreateAppAction) {
       youtubeUrl: action.appData.youtubeUrl,
     };
 
-    const createAppUrl = `${API_URL}/apps`;
+    const createAppUrl = `${API_URL}/organizations/${action.orgID}/apps`;
 
     yield call(request, {
       url: createAppUrl,
@@ -59,7 +59,7 @@ export function * createAppActionSaga (action: CreateAppAction) {
   }
 }
 
-export function * updateAppActionSaga (action: UpdateAppAction) {
+export function* updateAppActionSaga(action: UpdateAppAction) {
   try {
     const data = {
       description: action.appData.description,
@@ -78,7 +78,7 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
       youtubeUrl: action.appData.youtubeUrl,
     };
 
-    const updateAppUrl = `${API_URL}/apps/${action.appData.id}`;
+    const updateAppUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appData.id}`;
 
     const response: Record<string, never> = yield call(request, {
       url: updateAppUrl,
@@ -123,9 +123,9 @@ export function * updateAppActionSaga (action: UpdateAppAction) {
   }
 }
 
-export function * deleteAppActionSaga (action: DeleteAppAction) {
+export function* deleteAppActionSaga(action: DeleteAppAction) {
   try {
-    const deleteAppUrl = `${API_URL}/apps/${action.appId}`;
+    const deleteAppUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appId}`;
 
     yield call(request, {
       url: deleteAppUrl,
@@ -134,10 +134,6 @@ export function * deleteAppActionSaga (action: DeleteAppAction) {
         "content-type": "application/x-www-form-urlencoded",
       },
     });
-
-    if (action.orgId) {
-      yield put(getAllUserApps({}));
-    }
 
     yield put(deleteAppSuccess({}));
   } catch (error) {
@@ -149,9 +145,9 @@ export function * deleteAppActionSaga (action: DeleteAppAction) {
   }
 }
 
-export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
+export function* requestAPIAccessActionSaga(action: RequestAPIAccessAction) {
   try {
-    const requestAPIAccessUrl = `${API_URL}/apps/${action.appId}/request`;
+    const requestAPIAccessUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appId}/request`;
 
     const accessToken: string = yield select((state: Store) => state.auth.authToken);
 
@@ -167,9 +163,9 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
     yield put(requestAPIAccessSuccess({}));
     yield put(openNotification("success", i18n.t("applications.requestAPIAcessSuccess"), 3000));
 
-    // We need to get the APPs info after
-    // since the previous request returns `no content` and might not change in a near future
-    yield put(getAllUserApps({}));
+    /* We need to retrieve the user's apps after the above request, as we want up-to-date
+    info on every app's 'Request access' status. */
+    yield put(getAllUserApps({ orgID: action.orgID }));
   } catch (error) {
     yield put(requestAPIAccessError({}));
     if ((error && error.response && error.response.status === 401) || (error && error.status === 401)) {
@@ -179,9 +175,9 @@ export function * requestAPIAccessActionSaga (action: RequestAPIAccessAction) {
   }
 }
 
-export function * getAllUserAppsActionSaga () {
+export function* getAllUserAppsActionSaga(action: GetAllUserAppsAction) {
   try {
-    const getAllUserAppsActionUrl = `${API_URL}/apps`;
+    const getAllUserAppsActionUrl = `${API_URL}/organizations/${action.orgID}/apps`;
 
     const response: any[] = yield call(request, {
       url: getAllUserAppsActionUrl,
@@ -229,9 +225,9 @@ export function * getAllUserAppsActionSaga () {
   }
 }
 
-export function * getUserAppActionSaga (action: GetUserAppAction) {
+export function* getUserAppActionSaga(action: GetUserAppAction) {
   try {
-    const getUserAppActionUrl = `${API_URL}/apps/${action.appId}`;
+    const getUserAppActionUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appId}`;
 
     const response: Record<string, never> = yield call(request, {
       url: getUserAppActionUrl,
@@ -275,9 +271,9 @@ export function * getUserAppActionSaga (action: GetUserAppAction) {
   }
 }
 
-export function * uploadAppMediaActionSaga (action: UploadAppMediaAction) {
+export function* uploadAppMediaActionSaga(action: UploadAppMediaAction) {
   try {
-    const requestAPIAccessUrl = `${API_URL}/apps/${action.appId}/media`;
+    const requestAPIAccessUrl = `${API_URL}/organizations/${action.orgID}/apps/${action.appId}/media`;
 
     const res: UploadResponse = yield call(request, {
       url: requestAPIAccessUrl,
@@ -299,12 +295,12 @@ export function * uploadAppMediaActionSaga (action: UploadAppMediaAction) {
   }
 }
 
-export function * deleteAppMediaActionSaga (action: DeleteAppMediaAction) {
+export function* deleteAppMediaActionSaga(action: DeleteAppMediaAction) {
   try {
     const queryString = qs.stringify({
       mediaURL: action.media,
     });
-    const deleteMediaURL = `${API_URL}/apps/${action.appId}/media?${queryString}`;
+    const deleteMediaURL = `${API_URL}/organizations/${action.orgID}/apps/${action.appId}/media?${queryString}`;
 
     yield call(request, {
       url: deleteMediaURL,
@@ -322,7 +318,7 @@ export function * deleteAppMediaActionSaga (action: DeleteAppMediaAction) {
   }
 }
 
-function * rootSaga () {
+function* rootSaga() {
   yield takeLatest(CREATE_APP, createAppActionSaga);
   yield takeLatest(DELETE_APP, deleteAppActionSaga);
   yield takeLatest(GET_ALL_USER_APPS, getAllUserAppsActionSaga);

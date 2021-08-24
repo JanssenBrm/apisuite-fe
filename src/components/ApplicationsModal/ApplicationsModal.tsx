@@ -27,9 +27,11 @@ import { getUserApp } from "store/applications/actions/getUserApp";
 import { updateApp } from "store/applications/actions/updatedApp";
 import { uploadAppMedia } from "store/applications/actions/appMediaUpload";
 import { Metadata } from "store/applications/types";
+import { getProfile } from "store/profile/actions/getProfile";
 import { getSections } from "util/extensions";
 import { isValidAppMetaKey, isValidImage, isValidURL } from "util/forms";
 import { applicationsModalSelector } from "./selector";
+import { profileSelector } from "pages/Profile/selectors";
 import useStyles from "./styles";
 import { ApplicationsModalProps } from "./types";
 
@@ -47,6 +49,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const dispatch = useDispatch();
   const history = useHistory();
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
+  const { profile } = useSelector(profileSelector);
   const [openCloseWarning, setOpenCloseWarning] = React.useState(false);
   const [confirmAction, setConfirmAction] = React.useState("toggleModal");
 
@@ -70,10 +73,16 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const metadataKeyDefaultPrefix = "meta_";
 
   useEffect(() => {
+    /* Triggers the retrieval and storage (on the app's Store, under 'profile')
+    of all user-related information we presently have. */
+    dispatch(getProfile({}));
+  }, [dispatch]);
+
+  useEffect(() => {
     /* Triggers the retrieval and storage (on the app's Store, under 'applications > currentApp')
     of all information we presently have on a particular app. */
     if (modalDetails.userAppID && modalDetails.userID) {
-      dispatch(getUserApp({ appId: modalDetails.userAppID }));
+      dispatch(getUserApp({ orgID: profile.current_org.id, appId: modalDetails.userAppID }));
     }
   }, [dispatch, modalDetails, modalMode]);
 
@@ -405,7 +414,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
     const newAppDetails = mapAppDetails();
 
-    dispatch(createApp({ appData: newAppDetails }));
+    dispatch(createApp({ orgID: profile.current_org.id, appData: newAppDetails }));
 
     toggleModal();
   };
@@ -420,7 +429,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       ...mapAppDetails(),
     };
 
-    dispatch(updateApp({ appData: updatedAppDetails }));
+    dispatch(updateApp({ orgID: profile.current_org.id, appData: updatedAppDetails }));
 
     toggleModal();
   };
@@ -438,7 +447,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   };
 
   const _deleteApp = () => {
-    dispatch(deleteApp({ appId: modalDetails.userAppID }));
+    dispatch(deleteApp({ orgID: profile.current_org.id, appId: modalDetails.userAppID }));
 
     handleCloseDialog();
 
@@ -456,6 +465,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     }
 
     dispatch(uploadAppMedia({
+      orgID: profile.current_org.id,
       appId: mostRecentlySelectedAppDetails.id,
       media: formData,
     }));
@@ -463,6 +473,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   const deleteMedia = (file: string) => {
     dispatch(deleteAppMedia({
+      orgID: profile.current_org.id,
       appId: mostRecentlySelectedAppDetails.id,
       media: file,
     }));

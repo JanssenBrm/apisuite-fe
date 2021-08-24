@@ -20,6 +20,7 @@ import Link from "components/Link";
 
 import useStyles from "./styles";
 import { apiProductsSelector } from "./selector";
+import { profileSelector } from "pages/Profile/selectors";
 
 /* TODO: This view does NOT account for 'sandbox' accessible API products.
 In the future, add logic for this kind of API product. */
@@ -28,6 +29,7 @@ export const APIProducts: React.FC = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { auth, subscriptions } = useSelector(apiProductsSelector);
+  const { profile } = useSelector(profileSelector);
   const { palette } = useTheme();
 
   const initialAPIState: APIDetails = {
@@ -54,9 +56,9 @@ export const APIProducts: React.FC = () => {
     /* Triggers the retrieval and storage of all app-related information we presently
     have on a given user. */
     if (auth?.user) {
-      dispatch(getAllUserApps({}));
+      dispatch(getAllUserApps({orgID: profile.current_org.id}));
     }
-  }, [auth, dispatch]);
+  }, [auth, dispatch, profile]);
 
   useEffect(() => {
     /* Once 'subscriptions' info is made available, we process it so as to display it

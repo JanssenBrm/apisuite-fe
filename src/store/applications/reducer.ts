@@ -24,7 +24,7 @@ const initialState: ApplicationsStore = {
     logo: "",
     metadata: [],
     name: "",
-    orgId: 0,
+    orgId: "",
     privacyUrl: "",
     redirectUrl: "",
     summary: "",
