@@ -290,7 +290,7 @@ export const Profile: React.FC = () => {
 
           {isBaseUser() && <>
             <Box mt={3}>
-              <Typography data-test-id={testIds.profileOverviewSelectorTitle} variant="h3">
+              <Typography variant="h3">
                 {t("profileTab.overviewSubTab.orgRelatedLabels.selectorTitle")}
               </Typography>
             </Box>
