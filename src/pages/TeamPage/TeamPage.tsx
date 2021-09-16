@@ -212,13 +212,21 @@ export const TeamPage: React.FC = () => {
   ) => {
     if (!currentUser) return false;
 
-    const membersWithSameRole = teamMembers.filter((teamMember: FetchTeamMembersResponse) => {
-      return currentUser.id !== teamMember.User.id && teamMember.Role.name === getUserMemberRole(currentUser).name;
-    });
+    if (teamMembers.length === 1) return true;
 
-    if (AUTHORIZED_ROLES.includes(getUserMemberRole(currentUser).name) && membersWithSameRole.length > 0) return true;
+    const membersWithSameRole: FetchTeamMembersResponse[] = teamMembers.filter(
+      (teamMember: FetchTeamMembersResponse) => {
+        return currentUser.id !== teamMember.User.id && teamMember.Role.name === getUserMemberRole(currentUser).name;
+      }
+    );
 
-    if (currentUser.id === providedMember.User.id && getUserMemberRole(currentUser).name === ROLES.developer.value) {
+    if (currentUser.id === providedMember.User.id) {
+      if (AUTHORIZED_ROLES.includes(getUserMemberRole(currentUser).name) && membersWithSameRole.length) return true;
+
+      if (getUserMemberRole(currentUser).name === ROLES.developer.value) return true;
+    }
+    
+    if (ROLES[getUserMemberRole(currentUser).name].level <= ROLES[providedMember.Role.name].level) {
       return true;
     }
 
@@ -228,14 +236,14 @@ export const TeamPage: React.FC = () => {
   const [removeUserDialogOpen, setRemoveUserDialogOpen] = useState(false);
   const [idOfMemberToRemove, setIdOfMemberToRemove] = useState("");
 
-  const removeFromTeam = () => {
+  const removeFromTeam = (
+    orgID: string,
+    idOfCurrentUser: string,
+    idOfUserToRemove: string,
+  ) => {
     setRemoveUserDialogOpen(false);
 
-    dispatch(removeTeamMember({
-      orgID: currentOrganisation.id,
-      idOfCurrentUser: user!.id.toString(),
-      idOfUserToRemove: idOfMemberToRemove,
-    }));
+    dispatch(removeTeamMember({ orgID, idOfCurrentUser, idOfUserToRemove }));
 
     setIdOfMemberToRemove("");
   };
@@ -380,7 +388,7 @@ export const TeamPage: React.FC = () => {
           setRemoveUserDialogOpen(false);
           setIdOfMemberToRemove("");
         }}
-        confirmButtonCallback={() => removeFromTeam()}
+        confirmButtonCallback={() => removeFromTeam(currentOrganisation.id, user!.id.toString(), idOfMemberToRemove)}
         confirmButtonLabel={t("rbac.team.dialogs.removeUser.confirmButtonLabel")}
         confirmButtonStyle={classes.deleteAppButtonStyles}
         open={removeUserDialogOpen}
