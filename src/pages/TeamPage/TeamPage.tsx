@@ -60,7 +60,7 @@ export const TeamPage: React.FC = () => {
       label: ROLES[role.name]?.label,
       value: role.id,
       group: "Role",
-    }));
+    })).filter((role) => role.label !== ROLES.baseUser.label);
   };
 
   function chooseRole({ target }: React.ChangeEvent<any>) {
