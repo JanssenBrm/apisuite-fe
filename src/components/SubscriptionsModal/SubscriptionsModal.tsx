@@ -64,7 +64,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
   );
   const [isClientAppSelected, setIsClientAppSelected] = React.useState(
     appFromRedirect
-      ? appFromRedirect
+      ? true
       : apps.length === 1,
   );
 

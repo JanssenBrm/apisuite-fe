@@ -62,7 +62,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     regularGoToSubsView: () => history.push("/dashboard/subscriptions"),
     alternativeGoToSubsView: () => history.push("/dashboard/subscriptions", {
       fromAppsView: true,
-      appID: history.location.state?.appID,
+      appID: history.location.state?.appID || modalDetails.userAppID,
     }),
   };
 
@@ -865,6 +865,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       </TableContainer>
     );
   };
+
+  console.log("modalMode", modalMode);
 
   const getMetadataSection = () => {
     return (
@@ -1679,7 +1681,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <Button
                             className={classes.otherButtons}
-                            onClick={() => history.location.state?.fromSubsModal
+                            onClick={() =>  modalMode !== "new" || history.location.state?.fromSubsModal
                               ? checkNextAction("alternativeGoToSubsView")
                               : checkNextAction("regularGoToSubsView")}
                             color="primary"
