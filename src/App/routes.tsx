@@ -15,10 +15,12 @@ import { APIDetails } from "pages/APIDetails";
 import { APIProducts } from "pages/APIProducts";
 import { Applications } from "pages/Applications";
 import { Dashboard } from "pages/Dashboard";
+import { Documentation } from "pages/Documentation";
 import { HomePageRedirect } from "pages/HomePageRedirect";
 import Instructions from "pages/Instructions";
 import { Organisation } from "pages/Organisation";
 import { PasswordRecovery } from "pages/PasswordRecovery";
+import { MarkdownPages } from "pages/MarkdownPages";
 import { Profile } from "pages/Profile";
 import { RedirectPage } from "pages/RedirectPage";
 import { RequireAuth } from "components/RequireAuth";
@@ -63,9 +65,10 @@ export const routesConfig: AppRouteProps[] = [
   { path: "/dashboard", exact: true, auth: true, component: Dashboard, layoutProps: { contractibleMenu: true } },
   { path: "/dashboard/apps/:appID?", exact: true, auth: true, component: Applications },
   { path: "/dashboard/subscriptions", exact: true, auth: true, component: Subscriptions },
-  { path: "/dashboard/test", exact: true, auth: true, component: Instructions },
+  { path: "/dashboard/test", exact: true, component: Documentation },
   { path: "/documentation", exact: true, component: Instructions },
   { path: "/forgot", exact: true, component: PasswordRecovery, layout: EssentialLayout },
+  { path: "/pages/:page?", exact: true, component: MarkdownPages },
   { path: "/privacy", component: Privacy },
   { path: "/profile", exact: true, auth: true, component: Profile },
   { path: "/profile/organisation", exact: true, auth: true, component: Organisation },
