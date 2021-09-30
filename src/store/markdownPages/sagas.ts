@@ -1,5 +1,4 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { i18n } from "@apisuite/fe-base";
 
 import { API_URL } from "constants/endpoints";
 import { GetMarkdownPageResponse } from "./types";
@@ -12,7 +11,7 @@ import request from "util/request";
 export function* getMarkdownPageSaga(action: GetMarkdownPageAction) {
   try {
     const mdPage: GetMarkdownPageResponse = yield call(request, {
-      url: `${API_URL}/pages/${action.page}/${i18n.language}`,
+      url: `${API_URL}/pages/${action.page}/${action.language}`,
       method: "GET",
       headers: {
         "content-type": "application/json",

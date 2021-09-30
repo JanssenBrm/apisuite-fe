@@ -6,6 +6,7 @@ export type MarkdownPageActions = GetMarkdownPageAction | GetMarkdownPageActionS
 export type GetMarkdownPageAction = {
   type: typeof GET_MARKDOWN_PAGE,
   page: string,
+  language: string,
 }
 
 export type GetMarkdownPageActionSuccess = {

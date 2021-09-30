@@ -1,4 +1,4 @@
-import { useTheme, CircularProgress, Grid, Typography } from "@apisuite/fe-base";
+import { useTheme, CircularProgress, Grid, i18n, Typography } from "@apisuite/fe-base";
 import clsx from "clsx";
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,10 +39,15 @@ export const Markdown: React.FC<MarkdownProps> = ({
   const [headings, setHeaders] = useState<TOCHeader[] | undefined>(undefined);
   const [elementsIds, setElements] = useState<(HTMLElement|null)[]>([]);
   const [active, setActive] = useState<string|null>(null);
+  const [language, setLanguage] = useState<string>(i18n.language);
+
+  i18n.on("languageChanged", () => {
+    setLanguage(i18n.language);
+  });
 
   useEffect(() => {
-    dispatch(getMarkdownPage({ page }));
-  }, [dispatch, page]);
+    dispatch(getMarkdownPage({ page, language }));
+  }, [dispatch, page, language]);
 
   useEffect(() => {
     if (!isRequesting) {
