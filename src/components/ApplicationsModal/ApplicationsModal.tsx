@@ -76,8 +76,14 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     dialogFunctions[fn]();
   };
 
+  const checkHistory = (history: any) => {
+    history.location.state?.fromSubsModal
+      ? checkNextAction("alternativeGoToSubsView")
+      : checkNextAction("toggleModal");
+  };
+
   const confirmButtonAction = () => {
-    if (history.location.state?.fromSubsModal) {
+    if (modalMode !== "new" || history.location.state?.fromSubsModal) {
       dialogFunctions["alternativeGoToSubsView"]();
     } else {
       if (buttonClicked === "subs") {
@@ -866,8 +872,6 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
     );
   };
 
-  console.log("modalMode", modalMode);
-
   const getMetadataSection = () => {
     return (
       <>
@@ -980,10 +984,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               <div
                 className={classes.closeModalButtonContainer}
-                onClick={() => history.location.state?.fromSubsModal
-                  ? checkNextAction("alternativeGoToSubsView")
-                  : checkNextAction("toggleModal")
-                }
+                onClick={() => checkHistory(history)}
               >
                 <Box>
                   <Typography gutterBottom variant="caption">
@@ -1636,9 +1637,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <Button
                             className={classes.otherButtons}
-                            onClick={() => history.location.state?.fromSubsModal
-                              ? checkNextAction("alternativeGoToSubsView")
-                              : checkNextAction("toggleModal")}
+                            onClick={() => checkHistory(history)}
                             color="primary"
                             variant="outlined"
                           >
@@ -1700,9 +1699,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                         <Button
                           className={classes.otherButtons}
-                          onClick={() => history.location.state?.fromSubsModal
-                            ? checkNextAction("alternativeGoToSubsView")
-                            : checkNextAction("toggleModal")}
+                          onClick={() => checkHistory(history)}
                           color="primary"
                           variant="outlined"
                         >
