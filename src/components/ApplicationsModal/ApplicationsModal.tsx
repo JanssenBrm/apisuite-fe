@@ -53,6 +53,8 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const [openCloseWarning, setOpenCloseWarning] = React.useState(false);
   const [confirmAction, setConfirmAction] = React.useState("toggleModal");
 
+  const HTTPS_PREFIX = "https://";
+
   const handleCloseEditWarning = () => {
     setOpenCloseWarning(false);
   };
@@ -213,7 +215,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
       appMetadata: [] as Metadata[],
       appName: "",
       appPrivacyURL: "",
-      appRedirectURI: "https://",
+      appRedirectURI: HTTPS_PREFIX,
       appSummary: "",
       appSupportURL: "",
       appTermsURL: "",
@@ -283,7 +285,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
         appMetadata: [],
         appName: "",
         appPrivacyURL: "",
-        appRedirectURI: "https://",
+        appRedirectURI: HTTPS_PREFIX,
         appSummary: "",
         appSupportURL: "",
         appTermsURL: "",
@@ -928,7 +930,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             appMetadata: [],
             appName: "",
             appPrivacyURL: "",
-            appRedirectURI: "https://",
+            appRedirectURI: HTTPS_PREFIX,
             appSummary: "",
             appSupportURL: "",
             appTermsURL: "",
@@ -1602,7 +1604,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <Grid item md={6}>
                           <Button
                             color="primary"
-                            disabled={!hasChanged()}
+                            disabled={
+                              !getValues("appName") || getValues("appRedirectURI") === HTTPS_PREFIX ||
+                              !!errors.appName || !!errors.appRedirectURI
+                            }
                             disableElevation
                             onClick={createNewApp}
                             size="large"
