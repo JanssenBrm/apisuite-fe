@@ -1602,7 +1602,10 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
                         <Grid item md={6}>
                           <Button
                             color="primary"
-                            disabled={!hasChanged()}
+                            disabled={
+                              !getValues("appName") || getValues("appRedirectURI") === "https://" ||
+                              errors.appName || errors.appRedirectURI
+                            }
                             disableElevation
                             onClick={createNewApp}
                             size="large"
