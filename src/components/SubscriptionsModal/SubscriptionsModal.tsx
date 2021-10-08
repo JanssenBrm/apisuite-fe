@@ -12,14 +12,23 @@ import { SubscriptionsModalProps } from "./types";
 import useStyles from "./styles";
 import { Logo } from "components/Logo";
 import Notice from "components/Notice";
+import { Link } from "react-router-dom";
 
-export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalOpen, toggleModal }) => {
+export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, isModalOpen, toggleModal }) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const { palette } = useTheme();
   const { t } = useTranslation();
   const { portalName, ownerInfo, clientName, navigation } = useConfig();
   const { apps, apis } = useSelector(apisAndAppsSelector);
+
+  /* Redirection from the 'Applications modal' */
+
+  let appFromRedirect = null;
+
+  if (appID && apps.length) {
+    appFromRedirect = apps.find((app) => app.id === parseInt(appID));
+  }
 
   /* 'Client app' selection */
 
@@ -44,14 +53,17 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
   };
 
   const [selectedClientApp, setSelectedClientApp] = React.useState(
-    apps.length === 1
-      // If there's one single user app, we default the 'Client app' selection to it
-      ? apps[0]
-      // If there's more than one single user app, we leave the 'Client app' selection up to the user
-      : initialClientApp,
+    appFromRedirect
+    // If we've been redirected from the 'Applications modal', we default the 'Client app' selection to it
+      ? appFromRedirect
+      : apps.length === 1
+        // If there's one single user app, we default the 'Client app' selection to it
+        ? apps[0]
+        // If there's more than one single user app, we leave the 'Client app' selection up to the user
+        : initialClientApp,
   );
   const [isClientAppSelected, setIsClientAppSelected] = React.useState(
-    apps.length === 1,
+    !!appFromRedirect || apps.length === 1
   );
 
   const handleClientAppSelection = (dataOfSelectedApp: any) => {
@@ -318,9 +330,22 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ isModalO
                   variant="outlined"
                   size="large"
                   disabled={!isClientAppSelected}
-                  href={`/dashboard/apps/${selectedClientApp.id}`}
                 >
-                  {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp")}
+                  <Link
+                    style={{
+                      color: "inherit",
+                      textDecoration: "none",
+                    }}
+                    to={{
+                      pathname: `/dashboard/apps/${selectedClientApp.id}`,
+                      state: {
+                        fromSubsModal: true,
+                        appID: selectedClientApp.id,
+                      },
+                    }}
+                  >
+                    {t("dashboardTab.subscriptionsSubTab.subsModal.modalBody.buttons.reviewApp")}
+                  </Link>
                 </Button>
               </Grid>
 

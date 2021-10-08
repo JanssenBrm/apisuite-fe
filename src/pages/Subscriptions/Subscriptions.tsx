@@ -14,10 +14,12 @@ import { subscriptionsSelector } from "./selectors";
 import { profileSelector } from "pages/Profile/selectors";
 import { PageContainer } from "components/PageContainer";
 import Notice from "components/Notice";
+import { useHistory } from "react-router-dom";
 
 export const Subscriptions: React.FC = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const history: any = useHistory();
   const { palette } = useTheme();
   const { t } = useTranslation();
   const { auth, subscriptions } = useSelector(subscriptionsSelector);
@@ -42,6 +44,12 @@ export const Subscriptions: React.FC = () => {
   const toggleModal = () => {
     setModalOpen(!isModalOpen);
   };
+
+  useEffect(() => {
+    if (history.location.state?.appID) {
+      toggleModal();
+    }
+  }, [history.location.state?.appID]);
 
   return (
     <>
@@ -130,6 +138,8 @@ export const Subscriptions: React.FC = () => {
       </PageContainer>
 
       <SubscriptionsModal
+        // 'appID' is passed along to the 'SubscriptionsModal' component if the user comes from the Applications modal
+        appID={history.location.state?.fromAppsView ? history.location.state?.appID : ""}
         isModalOpen={isModalOpen}
         toggleModal={toggleModal}
       />

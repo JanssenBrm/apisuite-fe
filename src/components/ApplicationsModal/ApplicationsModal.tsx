@@ -47,11 +47,11 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
   const { t } = useTranslation();
   const { navigation, ownerInfo, portalName } = useConfig();
   const dispatch = useDispatch();
-  const history = useHistory();
+  const history: any = useHistory();
   const { mostRecentlySelectedAppDetails } = useSelector(applicationsModalSelector);
   const { profile } = useSelector(profileSelector);
   const [openCloseWarning, setOpenCloseWarning] = React.useState(false);
-  const [confirmAction, setConfirmAction] = React.useState("toggleModal");
+  const [buttonClicked, setButtonClicked] = React.useState("");
 
   const HTTPS_PREFIX = "https://";
 
@@ -61,15 +61,39 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
   const dialogFunctions: { [index: string]: () => void } = {
     toggleModal: toggleModal,
-    subscriptions: () => history.push("/dashboard/subscriptions"),
+    regularGoToSubsView: () => history.push("/dashboard/subscriptions"),
+    alternativeGoToSubsView: () => history.push("/dashboard/subscriptions", {
+      fromAppsView: true,
+      appID: history.location.state?.appID || modalDetails.userAppID,
+    }),
   };
 
   const checkNextAction = (fn: string) => {
     if (hasChanged()) {
-      setConfirmAction(fn);
+      fn !== "toggleModal" ? setButtonClicked("subs") : setButtonClicked("close");
+      
       return setOpenCloseWarning(true);
     }
+
     dialogFunctions[fn]();
+  };
+
+  const checkHistory = (history: any) => {
+    history.location.state?.fromSubsModal
+      ? checkNextAction("alternativeGoToSubsView")
+      : checkNextAction("toggleModal");
+  };
+
+  const confirmButtonAction = () => {
+    if (modalMode !== "new" || history.location.state?.fromSubsModal) {
+      dialogFunctions["alternativeGoToSubsView"]();
+    } else {
+      if (buttonClicked === "subs") {
+        dialogFunctions["regularGoToSubsView"]();
+      } else {
+        dialogFunctions["toggleModal"]();
+      }
+    }
   };
 
   const metadataKeyDefaultPrefix = "meta_";
@@ -962,7 +986,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
               <div
                 className={classes.closeModalButtonContainer}
-                onClick={() => checkNextAction("toggleModal")}
+                onClick={() => checkHistory(history)}
               >
                 <Box>
                   <Typography gutterBottom variant="caption">
@@ -1618,7 +1642,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <Button
                             className={classes.otherButtons}
-                            onClick={() => checkNextAction("toggleModal")}
+                            onClick={() => checkHistory(history)}
                             color="primary"
                             variant="outlined"
                           >
@@ -1661,7 +1685,9 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                           <Button
                             className={classes.otherButtons}
-                            onClick={() => checkNextAction("subscriptions")}
+                            onClick={() =>  modalMode !== "new" || history.location.state?.fromSubsModal
+                              ? checkNextAction("alternativeGoToSubsView")
+                              : checkNextAction("regularGoToSubsView")}
                             color="primary"
                             variant="outlined"
                           >
@@ -1678,7 +1704,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
 
                         <Button
                           className={classes.otherButtons}
-                          onClick={() => checkNextAction("toggleModal")}
+                          onClick={() => checkHistory(history)}
                           color="primary"
                           variant="outlined"
                         >
@@ -1721,7 +1747,7 @@ export const ApplicationsModal: React.FC<ApplicationsModalProps> = ({
             color: "primary",
           }}
           closeDialogCallback={handleCloseEditWarning}
-          confirmButtonCallback={dialogFunctions[confirmAction]}
+          confirmButtonCallback={confirmButtonAction}
           confirmButtonLabel={t("dashboardTab.applicationsSubTab.appModal.dialog.warning.confirmButtonLabel")}
           confirmButtonProps={{
             variant: "outlined",
