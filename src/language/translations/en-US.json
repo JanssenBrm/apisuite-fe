@@ -483,6 +483,7 @@
       "orgSubtitle": "You are the organisation owner.",
       "orgAdditionalDetailsTitle": "Additional information",
       "orgAdditionalDetailsSubtitle": "You have the option to provide multiple useful links related to your organisation.",
+      "orgAddressTitle": "Address details",
       "selectorTitle": "Useful links",
       "fieldLabels": {
         "orgNameLabel": "Organisation name",
@@ -494,7 +495,11 @@
         "orgPrivacyPolicyLabel": "Privacy Policy URL",
         "orgYouTubeChannelLabel": "YouTube Channel URL",
         "orgWebsiteLabel": "Website URL",
-        "orgSupportLabel": "Support URL"
+        "orgSupportLabel": "Support URL",
+        "orgAddressLabel": "Street address",
+        "orgPostalCodeLabel": "Postal code",
+        "orgCityLabel": "City",
+        "orgCountryLabel": "Country"
       },
       "buttonLabels": {
         "updateOrgButtonLabel": "Update",

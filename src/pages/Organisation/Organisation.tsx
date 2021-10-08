@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation, Avatar, Button, Fade, Menu, MenuItem, TextField, Divider, Box, Typography, Grid } from "@apisuite/fe-base";
 import AddRoundedIcon from "@material-ui/icons/AddRounded";
@@ -11,6 +11,7 @@ import { isValidImage, isValidURL } from "util/forms";
 import { fetchOrg } from "store/profile/actions/fetchOrg";
 import { createOrg } from "store/profile/actions/createOrg";
 import { updateOrg } from "store/profile/actions/updateOrg";
+import CountrySelector from "components/CountrySelector";
 import { PageContainer } from "components/PageContainer";
 import { ROLES } from "constants/global";
 import { organisationSelector } from "./selector";
@@ -32,7 +33,7 @@ export const Organisation: React.FC = () => {
 
   /*
   Organisation details
-
+  
   Note:
   - 'formState' refers to our own, local copy of a organisation's details.
   - 'org' refers to our stored, back-end approved copy of a user's organisation details (under 'profile > org').
@@ -72,6 +73,17 @@ export const Organisation: React.FC = () => {
     return false;
   };
 
+  /* Country selector */
+  const [selectedCountry, setSelectedCountry] = useState("");
+
+  const handleCountrySelection = (countryName: string) => {
+    setSelectedCountry(countryName);
+  };
+
+  useEffect(() => {
+    if (org.address.country) setSelectedCountry(org.address.country);
+  }, [org]);
+
   const {
     formState,
     handleChange,
@@ -89,6 +101,10 @@ export const Organisation: React.FC = () => {
       orgVAT: "",
       orgWebsiteURL: "",
       orgYouTubeURL: "",
+      orgAddress: "",
+      orgPostalCode: "",
+      orgCity: "",
+      orgCountry: "",
     },
     // Rules for the organisation details
     {
@@ -140,17 +156,21 @@ export const Organisation: React.FC = () => {
   to whatever is now in 'profile > org'. */
   useEffect(() => {
     resetForm({
-      orgAvatarURL: org.logo ? org.logo : "",
-      orgDescription: org.description ? org.description : "",
-      orgName: org.name ? org.name : "",
-      orgPrivacyURL: org.privacyUrl ? org.privacyUrl : "",
-      orgSupportURL: org.supportUrl ? org.supportUrl : "",
-      orgTermsURL: org.tosUrl ? org.tosUrl : "",
-      orgVAT: org.vat ? org.vat : "",
-      orgWebsiteURL: org.websiteUrl ? org.websiteUrl : "",
-      orgYouTubeURL: org.youtubeUrl ? org.youtubeUrl : "",
+      orgAvatarURL: org.logo || "",
+      orgDescription: org.description || "",
+      orgName: org.name || "",
+      orgPrivacyURL: org.privacyUrl || "",
+      orgSupportURL: org.supportUrl || "",
+      orgTermsURL: org.tosUrl || "",
+      orgVAT: org.vat || "",
+      orgWebsiteURL: org.websiteUrl || "",
+      orgYouTubeURL: org.youtubeUrl || "",
+      orgAddress: org.address?.address || "",
+      orgPostalCode: org.address?.postalCode || "",
+      orgCity: org.address?.city || "",
+      orgCountry: org.address?.country || "",
     });
-  // FIXME: adding resetForm to the dependencies causes an infinite loop
+    // FIXME: adding resetForm to the dependencies causes an infinite loop
   }, [org]);
 
   /* All organisation details */
@@ -169,6 +189,12 @@ export const Organisation: React.FC = () => {
         websiteUrl: formState.values.orgWebsiteURL,
         supportUrl: formState.values.orgSupportURL,
         logo: formState.values.orgAvatarURL,
+        address: {
+          address: formState.values.orgAddress || "",
+          postalCode: formState.values.orgPostalCode || "",
+          city: formState.values.orgCity || "",
+          country: selectedCountry || "",
+        },
       },
     }));
   };
@@ -188,6 +214,12 @@ export const Organisation: React.FC = () => {
       websiteUrl: formState.values.orgWebsiteURL,
       supportUrl: formState.values.orgSupportURL,
       logo: formState.values.orgAvatarURL,
+      address: {
+        address: formState.values.orgAddress || "",
+        postalCode: formState.values.orgPostalCode || "",
+        city: formState.values.orgCity || "",
+        country: selectedCountry || "",
+      },
     };
 
     dispatch(updateOrg({ orgId, orgInfo }));
@@ -500,136 +532,215 @@ export const Organisation: React.FC = () => {
 
           {
             isShowing[0] &&
-              <div className={classes.orgURLFieldWrapper}>
-                <TextField
-                  className={classes.inputFields}
-                  error={formState.errors.orgTermsURL}
-                  fullWidth
-                  helperText={
-                    formState.errors.orgTermsURL
-                      ? formState.errorMsgs.orgTermsURL
-                      : ""
-                  }
-                  InputLabelProps={{ shrink: true }}
-                  label={t("profileTab.organisationSubTab.fieldLabels.orgToSLabel")}
-                  margin='dense'
-                  name='orgTermsURL'
-                  onChange={handleChange}
-                  type='url'
-                  value={formState.values.orgTermsURL}
-                  variant='outlined'
-                />
+            <div className={classes.orgURLFieldWrapper}>
+              <TextField
+                className={classes.inputFields}
+                error={formState.errors.orgTermsURL}
+                fullWidth
+                helperText={
+                  formState.errors.orgTermsURL
+                    ? formState.errorMsgs.orgTermsURL
+                    : ""
+                }
+                InputLabelProps={{ shrink: true }}
+                label={t("profileTab.organisationSubTab.fieldLabels.orgToSLabel")}
+                margin='dense'
+                name='orgTermsURL'
+                onChange={handleChange}
+                type='url'
+                value={formState.values.orgTermsURL}
+                variant='outlined'
+              />
 
-                <div onClick={(clickEvent) => handleHideOrgURLField(clickEvent, 0)}>
-                  <CloseRoundedIcon />
-                </div>
+              <div onClick={(clickEvent) => handleHideOrgURLField(clickEvent, 0)}>
+                <CloseRoundedIcon />
               </div>
+            </div>
           }
 
           {
             isShowing[1] &&
-              <div className={classes.orgURLFieldWrapper}>
-                <TextField
-                  className={classes.inputFields}
-                  error={formState.errors.orgPrivacyURL}
-                  fullWidth
-                  helperText={
-                    formState.errors.orgPrivacyURL
-                      ? formState.errorMsgs.orgPrivacyURL
-                      : ""
-                  }
-                  InputLabelProps={{ shrink: true }}
-                  label={t("profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel")}
-                  margin='dense'
-                  name='orgPrivacyURL'
-                  onChange={handleChange}
-                  type='url'
-                  value={formState.values.orgPrivacyURL}
-                  variant='outlined'
-                />
+            <div className={classes.orgURLFieldWrapper}>
+              <TextField
+                className={classes.inputFields}
+                error={formState.errors.orgPrivacyURL}
+                fullWidth
+                helperText={
+                  formState.errors.orgPrivacyURL
+                    ? formState.errorMsgs.orgPrivacyURL
+                    : ""
+                }
+                InputLabelProps={{ shrink: true }}
+                label={t("profileTab.organisationSubTab.fieldLabels.orgPrivacyPolicyLabel")}
+                margin='dense'
+                name='orgPrivacyURL'
+                onChange={handleChange}
+                type='url'
+                value={formState.values.orgPrivacyURL}
+                variant='outlined'
+              />
 
-                <div onClick={(clickEvent) => handleHideOrgURLField(clickEvent, 1)}>
-                  <CloseRoundedIcon />
-                </div>
+              <div onClick={(clickEvent) => handleHideOrgURLField(clickEvent, 1)}>
+                <CloseRoundedIcon />
               </div>
+            </div>
           }
 
           {
             isShowing[2] &&
-              <div className={classes.orgURLFieldWrapper}>
-                <TextField
-                  className={classes.inputFields}
-                  error={formState.errors.orgYouTubeURL}
-                  fullWidth
-                  helperText={
-                    formState.errors.orgYouTubeURL
-                      ? formState.errorMsgs.orgYouTubeURL
-                      : ""
-                  }
-                  InputLabelProps={{ shrink: true }}
-                  label={t("profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel")}
-                  margin='dense'
-                  name='orgYouTubeURL'
-                  onChange={handleChange}
-                  type='url'
-                  value={formState.values.orgYouTubeURL}
-                  variant='outlined'
-                />
+            <div className={classes.orgURLFieldWrapper}>
+              <TextField
+                className={classes.inputFields}
+                error={formState.errors.orgYouTubeURL}
+                fullWidth
+                helperText={
+                  formState.errors.orgYouTubeURL
+                    ? formState.errorMsgs.orgYouTubeURL
+                    : ""
+                }
+                InputLabelProps={{ shrink: true }}
+                label={t("profileTab.organisationSubTab.fieldLabels.orgYouTubeChannelLabel")}
+                margin='dense'
+                name='orgYouTubeURL'
+                onChange={handleChange}
+                type='url'
+                value={formState.values.orgYouTubeURL}
+                variant='outlined'
+              />
 
-                <div onClick={(clickEvent) => handleHideOrgURLField(clickEvent, 2)}>
-                  <CloseRoundedIcon />
-                </div>
+              <div onClick={(clickEvent) => handleHideOrgURLField(clickEvent, 2)}>
+                <CloseRoundedIcon />
               </div>
+            </div>
           }
 
           {
             isShowing[3] &&
-              <div className={classes.orgURLFieldWrapper}>
-                <TextField
-                  className={classes.inputFields}
-                  error={formState.errors.orgSupportURL}
-                  fullWidth
-                  helperText={
-                    formState.errors.orgSupportURL
-                      ? formState.errorMsgs.orgSupportURL
-                      : ""
-                  }
-                  InputLabelProps={{ shrink: true }}
-                  label={t("profileTab.organisationSubTab.fieldLabels.orgSupportLabel")}
-                  margin='dense'
-                  name='orgSupportURL'
-                  onChange={handleChange}
-                  type='url'
-                  value={formState.values.orgSupportURL}
-                  variant='outlined'
-                />
+            <div className={classes.orgURLFieldWrapper}>
+              <TextField
+                className={classes.inputFields}
+                error={formState.errors.orgSupportURL}
+                fullWidth
+                helperText={
+                  formState.errors.orgSupportURL
+                    ? formState.errorMsgs.orgSupportURL
+                    : ""
+                }
+                InputLabelProps={{ shrink: true }}
+                label={t("profileTab.organisationSubTab.fieldLabels.orgSupportLabel")}
+                margin='dense'
+                name='orgSupportURL'
+                onChange={handleChange}
+                type='url'
+                value={formState.values.orgSupportURL}
+                variant='outlined'
+              />
 
-                <div onClick={(clickEvent) => handleHideOrgURLField(clickEvent, 3)}>
-                  <CloseRoundedIcon />
-                </div>
+              <div onClick={(clickEvent) => handleHideOrgURLField(clickEvent, 3)}>
+                <CloseRoundedIcon />
               </div>
+            </div>
           }
         </Grid>
       </Grid>
 
-      <Box my={5}>
+      <Box my={3}>
         <Divider />
       </Box>
 
-      <Button
-        color="primary"
-        variant="contained"
-        size="large"
-        disableElevation
-        disabled={
-          !(formState.isDirty && (formState.isValid || !Object.keys(formState.errors).length) && validImage)
-        }
-        onClick={org.name ? updateOrgDetails : createOrgDetails}
-      >
-        {t(
-          org.name ? "profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel" : "profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel"
-        )}
-      </Button>
+      <Box>
+        <Typography variant="h6">
+          {t("profileTab.organisationSubTab.orgAddressTitle")}
+        </Typography>
+      </Box>
+
+      <Box mb={3} mt={3}>
+        <TextField
+          className={classes.inputFields}
+          error={formState.errors.orgAddress}
+          fullWidth
+          label={t("profileTab.organisationSubTab.fieldLabels.orgAddressLabel")}
+          margin='dense'
+          name='orgAddress'
+          onChange={handleChange}
+          style={{
+            display: "block",
+            maxWidth: "100%",
+            width: "100%",
+          }}
+          type='text'
+          value={formState.values.orgAddress}
+          variant='outlined'
+        />
+      </Box>
+
+      <Grid container spacing={3}>
+        <Grid item md={2}>
+          <TextField
+            className={classes.inputFields}
+            fullWidth
+            label={t("profileTab.organisationSubTab.fieldLabels.orgPostalCodeLabel")}
+            margin='dense'
+            name='orgPostalCode'
+            onChange={handleChange}
+            type='text'
+            value={formState.values.orgPostalCode}
+            variant='outlined'
+          />
+        </Grid>
+
+        <Grid item md={4}>
+          <TextField
+            className={classes.inputFields}
+            fullWidth
+            label={t("profileTab.organisationSubTab.fieldLabels.orgCityLabel")}
+            margin='dense'
+            name='orgCity'
+            onChange={handleChange}
+            type='text'
+            value={formState.values.orgCity}
+            variant='outlined'
+          />
+        </Grid>
+
+        <Grid item md={6}>
+          {/* <TextField
+            className={classes.inputFields}
+            fullWidth
+            label={t("profileTab.organisationSubTab.fieldLabels.orgCountryLabel")}
+            margin='dense'
+            name='orgCountry'
+            onChange={handleChange}
+            type='text'
+            value={formState.values.orgCountry}
+            variant='outlined'
+          /> */}
+
+          <CountrySelector countrySelectionHandler={handleCountrySelection} selectedCountry={selectedCountry} />
+        </Grid>
+      </Grid>
+
+      <Box mt={3}>
+        <Button
+          color="primary"
+          variant="contained"
+          size="large"
+          disableElevation
+          disabled={
+            !(
+              formState.isDirty &&
+              (formState.isValid || !Object.keys(formState.errors).length) &&
+              validImage &&
+              selectedCountry === org.address.country
+            )
+          }
+          onClick={org.name ? updateOrgDetails : createOrgDetails}
+        >
+          {t(
+            org.name ? "profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel" : "profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel"
+          )}
+        </Button>
+      </Box>
     </PageContainer>
   );
 };
