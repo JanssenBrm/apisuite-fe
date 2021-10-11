@@ -730,9 +730,8 @@ export const Organisation: React.FC = () => {
             !(
               formState.isDirty &&
               (formState.isValid || !Object.keys(formState.errors).length) &&
-              validImage &&
-              selectedCountry === org.address.country
-            )
+              validImage
+            ) && selectedCountry === org.address.country
           }
           onClick={org.name ? updateOrgDetails : createOrgDetails}
         >

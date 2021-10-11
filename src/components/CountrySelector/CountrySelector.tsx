@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { i18n, TextField, useTheme } from "@apisuite/fe-base";
 import countries from "i18n-iso-countries";
 import { Autocomplete } from "@material-ui/lab";
@@ -8,10 +8,12 @@ import useStyles from "./styles";
 
 const CountrySelector: React.FC<CountrySelectorProps> = ({
   countrySelectionHandler,
-  // selectedCountry,
+  selectedCountry,
 }) => {
   const classes = useStyles();
   const { spacing } = useTheme();
+
+  /* Country selector set-up */
 
   const userLanguageCode = i18n.language.substr(0, 2);
 
@@ -30,16 +32,34 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({
       : countryCode;
   };
 
+  /* Country selector logic */
+
+  const [selectedCountryOption, setSelectedCountryOption] = useState<{
+    countryCode: string,
+    countryName: string,
+  }>({ countryCode: "", countryName: "" });
+
+  useEffect(() => {
+    const optionObject = autoCompleteOptions.find((option) => option.countryName === selectedCountry);
+
+    if (optionObject) setSelectedCountryOption(optionObject);
+  }, [selectedCountry]);
+
+  const [selectedCountryText, setSelectedCountryText] = useState("");
+
+  useEffect(() => {
+    setSelectedCountryText(selectedCountry);
+  }, [selectedCountry]);
+
   return (
     <Autocomplete
-      // defaultValue={
-      //   selectedCountry
-      //     ? autoCompleteOptions.find((option) => option.countryName === selectedCountry)
-      //     : undefined
-      // }
       disableClearable
       getOptionLabel={(option) => option.countryName}
-      onChange={(_event, value) => countrySelectionHandler(value!.countryName)}
+      // Handles the component's exhibited text
+      inputValue={selectedCountryText}
+      onInputChange={(_event, newSelectedCountryText) => {
+        setSelectedCountryText(newSelectedCountryText);
+      }}
       options={autoCompleteOptions}
       renderInput={
         (inputParameters) => {
@@ -62,6 +82,9 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({
         </React.Fragment>
       )}
       size='small'
+      // Handles the component's presently selected option
+      value={selectedCountryOption}
+      onChange={(_event, value) => countrySelectionHandler(value!.countryName)}
     />
   );
 };
