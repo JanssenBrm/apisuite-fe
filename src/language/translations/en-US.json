@@ -502,8 +502,8 @@
         "orgCountryLabel": "Country"
       },
       "buttonLabels": {
-        "updateOrgButtonLabel": "Update",
-        "createOrgButtonLabel": "Create organisation"
+        "updateOrg": "Update",
+        "createOrg": "Create organisation"
       },
       "warningLabels": {
         "orgAvatarURL": "The provided URL is not valid, or the image does not exist.",

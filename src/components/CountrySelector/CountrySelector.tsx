@@ -21,15 +21,14 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({
   countries.registerLocale(require(`i18n-iso-countries/langs/${userLanguageCode}.json`));
 
   const countryCodesAndNames = countries.getNames(userLanguageCode);
+  console.log(countryCodesAndNames);
   const autoCompleteOptions = Object.entries(countryCodesAndNames).map((country) => ({
     countryCode: country[0],
     countryName: country[1],
   }));
 
   const countryCodeToFlag = (countryCode: string) => {
-    return typeof String.fromCodePoint !== "undefined"
-      ? countryCode.replace(/./g, (code) => String.fromCodePoint(code.charCodeAt(0) + 127397))
-      : countryCode;
+    return countryCode.replace(/./g, (code) => String.fromCodePoint(code.charCodeAt(0) + 127397));
   };
 
   /* Country selector logic */
@@ -84,7 +83,7 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({
       size='small'
       // Handles the component's presently selected option
       value={selectedCountryOption}
-      onChange={(_event, value) => countrySelectionHandler(value!.countryName)}
+      onChange={(_event, value) => value && countrySelectionHandler(value.countryName)}
     />
   );
 };

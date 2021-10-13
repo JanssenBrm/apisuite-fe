@@ -704,18 +704,6 @@ export const Organisation: React.FC = () => {
         </Grid>
 
         <Grid item md={6}>
-          {/* <TextField
-            className={classes.inputFields}
-            fullWidth
-            label={t("profileTab.organisationSubTab.fieldLabels.orgCountryLabel")}
-            margin='dense'
-            name='orgCountry'
-            onChange={handleChange}
-            type='text'
-            value={formState.values.orgCountry}
-            variant='outlined'
-          /> */}
-
           <CountrySelector countrySelectionHandler={handleCountrySelection} selectedCountry={selectedCountry} />
         </Grid>
       </Grid>
@@ -736,7 +724,9 @@ export const Organisation: React.FC = () => {
           onClick={org.name ? updateOrgDetails : createOrgDetails}
         >
           {t(
-            org.name ? "profileTab.organisationSubTab.buttonLabels.updateOrgButtonLabel" : "profileTab.organisationSubTab.buttonLabels.createOrgButtonLabel"
+            org.name
+              ? "profileTab.organisationSubTab.buttonLabels.updateOrg"
+              : "profileTab.organisationSubTab.buttonLabels.createOrg"
           )}
         </Button>
       </Box>
