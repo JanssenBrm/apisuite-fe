@@ -21,7 +21,6 @@ const CountrySelector: React.FC<CountrySelectorProps> = ({
   countries.registerLocale(require(`i18n-iso-countries/langs/${userLanguageCode}.json`));
 
   const countryCodesAndNames = countries.getNames(userLanguageCode);
-  console.log(countryCodesAndNames);
   const autoCompleteOptions = Object.entries(countryCodesAndNames).map((country) => ({
     countryCode: country[0],
     countryName: country[1],
