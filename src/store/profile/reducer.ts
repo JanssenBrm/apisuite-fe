@@ -61,6 +61,12 @@ const initialState: ProfileStore = {
     id: "",
   }],
   org: {
+    address: {
+      address: "",
+      postalCode: "",
+      city: "",
+      country: "",
+    },
     description: "",
     id: "",
     logo: "",

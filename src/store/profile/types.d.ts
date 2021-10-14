@@ -13,6 +13,12 @@ export type NewOrgInfo = {
   vat?: string | null,
   websiteUrl: string,
   youtubeUrl: string,
+  address: {
+    address?: string,
+    postalCode?: string,
+    city?: string,
+    country?: string,
+  },
 }
 
 export type ExistingOrgInfo = {
@@ -27,6 +33,12 @@ export type ExistingOrgInfo = {
   vat?: string | null,
   websiteUrl: string,
   youtubeUrl: string,
+  address: {
+    address?: string,
+    postalCode?: string,
+    city?: string,
+    country?: string,
+  },
 }
 
 export type ProfileStore = {
@@ -41,7 +53,8 @@ export type ProfileStore = {
   "tosUrl" |
   "vat" |
   "websiteUrl" |
-  "youtubeUrl"
+  "youtubeUrl" |
+  "address"
   >,
   profile: Profile,
   requestStatuses: {
