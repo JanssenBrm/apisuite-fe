@@ -50,6 +50,7 @@ export const Organisation: React.FC = () => {
 
   const [avatarInputIsInFocus, setAvatarInputIsInFocus] = React.useState(false);
   const [validImage, setValidImage] = React.useState<boolean>(true);
+  const [countryChanged, setCountryChanged] = React.useState<boolean>(false);
 
   const validateAvatar = (avatar: string) => {
     if (avatar !== "") {
@@ -78,10 +79,13 @@ export const Organisation: React.FC = () => {
 
   const handleCountrySelection = (countryName: string) => {
     setSelectedCountry(countryName);
+    if (countryName !== org.address?.country) {
+      setCountryChanged(true);
+    }
   };
 
   useEffect(() => {
-    if (org.address.country) setSelectedCountry(org.address.country);
+    if (org.address?.country) setSelectedCountry(org.address.country);
   }, [org]);
 
   const {
@@ -197,6 +201,7 @@ export const Organisation: React.FC = () => {
         },
       },
     }));
+    setCountryChanged(false);
   };
 
   const updateOrgDetails = (event: React.ChangeEvent<any>) => {
@@ -223,6 +228,7 @@ export const Organisation: React.FC = () => {
     };
 
     dispatch(updateOrg({ orgId, orgInfo }));
+    setCountryChanged(false);
   };
 
   /* URL selector */
@@ -719,7 +725,7 @@ export const Organisation: React.FC = () => {
               formState.isDirty &&
               (formState.isValid || !Object.keys(formState.errors).length) &&
               validImage
-            ) && selectedCountry === org.address.country
+            ) && !countryChanged
           }
           onClick={org.name ? updateOrgDetails : createOrgDetails}
         >
