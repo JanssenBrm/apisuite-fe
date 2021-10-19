@@ -17,9 +17,10 @@ import { Applications } from "pages/Applications";
 import { Dashboard } from "pages/Dashboard";
 import { Documentation } from "pages/Documentation";
 import { HomePageRedirect } from "pages/HomePageRedirect";
+import { MarkdownPages } from "pages/MarkdownPages";
+import { NewAPIDetails } from "pages/NewAPIDetails";
 import { Organisation } from "pages/Organisation";
 import { PasswordRecovery } from "pages/PasswordRecovery";
-import { MarkdownPages } from "pages/MarkdownPages";
 import { Profile } from "pages/Profile";
 import { RedirectPage } from "pages/RedirectPage";
 import { RequireAuth } from "components/RequireAuth";
@@ -59,6 +60,7 @@ export const routesConfig: AppRouteProps[] = [
   { path: "/home", exact: true, component: Sandbox, layoutProps: { contractibleMenu: true } },
   { path: "/api-products", exact: true, component: APIProducts, layoutProps: { contractibleMenu: true } },
   { path: "/api-products/details/:apiId/spec/:versionId", exact: true, component: APIDetails },
+  { path: "/api-products/new-details/:apiId/spec/:versionId", exact: true, component: NewAPIDetails },
   { path: "/auth/:view?/:email?", exact: true, component: SignInOrUp, layout: EssentialLayout },
   { path: "/confirmation/:name?", exact: true, component: SignUpConfirmation, layout: EssentialLayout },
   { path: "/dashboard", exact: true, auth: true, component: Dashboard, layoutProps: { contractibleMenu: true } },

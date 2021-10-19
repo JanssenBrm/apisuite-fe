@@ -1,0 +1,1 @@
+export { NewAPIDetails } from "./NewAPIDetails";

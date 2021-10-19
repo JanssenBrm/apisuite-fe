@@ -339,7 +339,7 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
                     to={{
                       pathname: `/dashboard/apps/${selectedClientApp.id}`,
                       state: {
-                        fromSubsModal: true,
+                        redirected: true,
                         appID: selectedClientApp.id,
                       },
                     }}

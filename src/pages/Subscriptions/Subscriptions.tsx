@@ -51,6 +51,8 @@ export const Subscriptions: React.FC = () => {
     }
   }, [history.location.state?.appID]);
 
+  console.log("history.location.state", history.location.state);
+
   return (
     <>
       <PageContainer>
@@ -138,8 +140,8 @@ export const Subscriptions: React.FC = () => {
       </PageContainer>
 
       <SubscriptionsModal
-        // 'appID' is passed along to the 'SubscriptionsModal' component if the user comes from the Applications modal
-        appID={history.location.state?.fromAppsView ? history.location.state?.appID : ""}
+        // 'appID' is passed along to the 'SubscriptionsModal' component if the user is redirected from someplace else
+        appID={history.location.state?.redirected ? history.location.state?.appID : ""}
         isModalOpen={isModalOpen}
         toggleModal={toggleModal}
       />
