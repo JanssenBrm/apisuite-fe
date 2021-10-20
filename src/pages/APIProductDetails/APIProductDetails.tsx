@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
+import Carousel from "react-spring-3d-carousel";
 import { Avatar, Box, Button, Chip, Grid, MenuItem, Paper, Select, Tab, Tabs, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 import ExpandMoreRoundedIcon from "@material-ui/icons/ExpandMoreRounded";
 import RadioButtonCheckedRoundedIcon from "@material-ui/icons/RadioButtonCheckedRounded";
@@ -10,8 +11,6 @@ import clsx from "clsx";
 import SwaggerUI from "swagger-ui-react";
 import "swagger-ui-react/swagger-ui.css";
 import { saveAs } from "file-saver";
-import { config } from "react-spring";
-import Carousel from "react-spring-3d-carousel";
 
 import Link from "components/Link";
 import { Markdown } from "components/Markdown";
@@ -26,15 +25,15 @@ import useStyles from "./styles";
 import { CurrentAPIDetails } from "./types";
 import noContracts from "assets/noAPIProducts.svg";
 
-export const NewAPIDetails: React.FC = () => {
+export const APIProductDetails: React.FC = () => {
   const classes = useStyles();
-  const { palette, spacing } = useTheme();
+  const { palette, shape, spacing } = useTheme();
 
   const [t] = useTranslation();
 
   const history = useHistory();
   const dispatch = useDispatch();
-  const { allUserApps, apiDetails, orgDetails, subscriptions, userDetails } = useSelector(apiDetailsSelector);
+  const { allUserApps, apiDetails, orgDetails, subscriptions } = useSelector(apiDetailsSelector);
 
   /* Retrieval of API Product details */
 
@@ -92,8 +91,6 @@ export const NewAPIDetails: React.FC = () => {
     }
   }, [apiDetails, allUserApps, subscriptions]);
 
-  console.log("currentAPIDetails", currentAPIDetails);
-
   // const hasSpec = (): boolean => {
   //   return !!(currentAPIDetails && currentAPIDetails.version && currentAPIDetails.version.spec);
   // };
@@ -109,6 +106,8 @@ export const NewAPIDetails: React.FC = () => {
             state: {
               redirected: true,
               appID: app.id,
+              apiID: currentAPIDetails.id,
+              apiVersionID: currentAPIDetails.version?.id,
             },
           }}
         >
@@ -125,13 +124,26 @@ export const NewAPIDetails: React.FC = () => {
       return (
         <MenuItem
           key={`selectorOption${index}`}
-          onClick={() => history.push(`/api-products/new-details/${currentAPIDetails.id}/spec/${version.id}`)}
+          onClick={() => history.push(`/api-products/details/${currentAPIDetails.id}/spec/${version.id}`)}
           value={version.id}
         >
           {`${version.title} (${version.version})`}
         </MenuItem>
       );
     });
+  };
+
+  const downloadContract = () => {
+    const fileName = "contract.json";
+
+    const fileToSave = new Blob(
+      [JSON.stringify(currentAPIDetails.version?.spec)],
+      {
+        type: "application/json",
+      }
+    );
+
+    saveAs(fileToSave, fileName);
   };
 
   const [selectedTab, setSelectedTab] = useState("apiInfo");
@@ -146,13 +158,13 @@ export const NewAPIDetails: React.FC = () => {
 
         {currentAPIDetails.version?.spec && (
           <Grid container>
-            <Grid item md={8}>
+            <Grid item md={9}>
               <Box mt={3} style={{ display: "flex" }}>
                 {
                   currentAPIDetails.version.spec?.info?.termsOfService && (
                     <Typography style={{ color: palette.info.main, marginRight: spacing(3) }} variant="body1">
                       <Link to={currentAPIDetails.version.spec?.info?.termsOfService}>
-                        Terms of Service
+                        {t("apiProductDetails.tosLinkLabel")}
                       </Link>
                     </Typography>
                   )
@@ -162,7 +174,7 @@ export const NewAPIDetails: React.FC = () => {
                   currentAPIDetails.version.spec?.info?.contact?.url && (
                     <Typography style={{ color: palette.info.main, marginRight: spacing(3) }} variant="body1">
                       <Link to={currentAPIDetails.version.spec.info.contact.url}>
-                        Contact
+                        {t("apiProductDetails.contactLinkLabel")}
                       </Link>
                     </Typography>
                   )
@@ -172,7 +184,7 @@ export const NewAPIDetails: React.FC = () => {
                   currentAPIDetails.version.spec?.info?.license?.url && (
                     <Typography style={{ color: palette.info.main, marginRight: spacing(3) }} variant="body1">
                       <Link to={currentAPIDetails.version.spec.info.license.url}>
-                        License
+                        {t("apiProductDetails.licenseLinkLabel")}
                       </Link>
                     </Typography>
                   )
@@ -182,7 +194,7 @@ export const NewAPIDetails: React.FC = () => {
                   currentAPIDetails.version.spec?.externalDocs?.url && (
                     <Typography style={{ color: palette.info.main, marginRight: spacing(3) }} variant="body1">
                       <Link to={currentAPIDetails.version.spec?.externalDocs?.url}>
-                        External Documentation
+                        {t("apiProductDetails.externalDocsLinkLabel")}
                       </Link>
                     </Typography>
                   )
@@ -190,7 +202,7 @@ export const NewAPIDetails: React.FC = () => {
               </Box>
             </Grid>
 
-            <Grid item md={4}>
+            <Grid item md={3}>
               <Box mt={3} style={{ display: "flex", height: 40, overflowX: "auto", textAlign: "right" }}>
                 {
                   currentAPIDetails.version.spec?.tags?.map((
@@ -229,6 +241,7 @@ export const NewAPIDetails: React.FC = () => {
       <>
         <Select
           className={classes.apiContractSelector}
+          disabled={!currentAPIDetails.otherVersions.length}
           disableUnderline
           displayEmpty
           IconComponent={ExpandMoreRoundedIcon}
@@ -253,8 +266,8 @@ export const NewAPIDetails: React.FC = () => {
               />
 
               <Chip
-                className={currentAPIDetails.version?.live ? classes.prodChip : classes.draftChip}
-                label={currentAPIDetails.version?.live ? "Live" : "Draft"}
+                className={currentAPIDetails.version?.live ? classes.prodChip : classes.deprecatedChip}
+                label={currentAPIDetails.version?.live ? "Live" : "Deprecated"}
                 size="small"
               />
             </Box>
@@ -264,10 +277,10 @@ export const NewAPIDetails: React.FC = () => {
             <Box mt={4} style={{ textAlign: "right" }}>
               <Button
                 style={{ borderColor: palette.secondary.main, color: palette.text.primary }}
-                //onClick={() => downloadContract()}
+                onClick={() => downloadContract()}
                 variant="outlined"
               >
-                Donwload contract
+                {t("apiProductDetails.downloadContractButtonLabel")}
               </Button>
             </Box>
           </Grid>
@@ -344,7 +357,7 @@ export const NewAPIDetails: React.FC = () => {
     );
   };
 
-  // TODO: Temporary until API is reworked to support carousel highlight cards
+  // TODO: Temporary placeholders until UI & API are reworked to support carousel highlight cards.
   const carouselHighlights = [
     {
       key: "1",
@@ -359,15 +372,95 @@ export const NewAPIDetails: React.FC = () => {
       content: carouselCardGenerator("Highlight title C", "API Product highlight card, composed by a title, description, and optional image."),
     },
   ];
-    
+
+  const useAPICardGenerator = (
+    title: string,
+    description: string,
+    image?: string,
+  ) => {
+    return (
+      <Grid item md={6}>
+        <Box mb={2}>
+          {
+            image
+              ? <img src={image} />
+              : <ViewCarouselRoundedIcon className={classes.highlightIcon} />
+          }
+        </Box>
+
+        <Box mb={3}>
+          <Typography display="block" style={{ color: palette.primary.main }} variant="h6">
+            {title}
+          </Typography>
+        </Box>
+
+        <Box>
+          <Typography display="block" style={{ color: palette.text.primary }} variant="body1">
+            {description}
+          </Typography>
+        </Box>
+      </Grid>
+    );
+  };
+
+  // TODO: Temporary placeholders until UI & API are reworked to support this section's cards.
+  const useAPICardsContent = [
+    useAPICardGenerator("Give insights", "We want to help you to create value-added services and applications. Therefore we give our customers the possibility to give access to their account information if so desired. Combining this data with other valuable data sources puts you in a unique position to give meaningful financial insights to our customers."),
+    useAPICardGenerator("Advise", "Giving our customers the possibility to give access to their account information will allow you to go beyond mere insights and give added value advice around spending and earnings decisions in accordance with our customers’ lifestyles."),
+    useAPICardGenerator("Do something else entirely", "A human being is a part of the whole that we call 'Universe', a part limited in time and space. He experiences himself, his thoughts and feeling as something separated from the rest, a kind of optical delusion of his consciousness. This delusion is a kind of prison for us, restricting us to our personal desires and to affection for a few persons nearest to us. Our task must be to free ourselves from this prison by widening our circle of compassion to embrace all living creatures and the whole of nature in its beauty."),
+  ];
+
+  const apiFeatureCardsGenerator = (
+    title: string,
+    description: string,
+    image?: string,
+  ) => {
+    return (
+      <Grid item md={3}>
+        <Box px={3} py={3} style={{ backgroundColor: palette.background.paper, borderRadius: shape.borderRadius }}>
+          <Box mb={2} className={classes.apiFeatureIcon}>
+            {
+              image
+                ? <img src={image} />
+                : <ViewCarouselRoundedIcon />
+            }
+          </Box>
+
+          <Box mb={1}>
+            <Typography display="block" style={{ color: palette.primary.main, fontWeight: 700 }} variant="body1">
+              {title}
+            </Typography>
+          </Box>
+
+          <Box>
+            <Typography display="block" style={{ color: palette.text.secondary }} variant="body2">
+              {description}
+            </Typography>
+          </Box>
+        </Box>
+      </Grid>
+    );
+  };
+
+  // TODO: Temporary placeholders until UI & API are reworked to support this section's cards.
+  const apiFeatureCardsContent = [
+    apiFeatureCardsGenerator("API Feature A", "This feature allows you to do X, Y, and Z. By doing X, Y, and Z, you'll be able to show your customers that this API product is amazing."),
+    apiFeatureCardsGenerator("API Feature B", "This feature allows you to do X, Y, and Z. By doing X, Y, and Z, you'll be able to show your customers that this API product is amazing."),
+    apiFeatureCardsGenerator("API Feature C", "This feature allows you to do X, Y, and Z. By doing X, Y, and Z, you'll be able to show your customers that this API product is amazing."),
+    apiFeatureCardsGenerator("API Feature D", "This feature allows you to do X, Y, and Z. By doing X, Y, and Z, you'll be able to show your customers that this API product is amazing."),
+    apiFeatureCardsGenerator("API Feature E", "This feature allows you to do X, Y, and Z. By doing X, Y, and Z, you'll be able to show your customers that this API product is amazing."),
+    apiFeatureCardsGenerator("API Feature F", "This feature allows you to do X, Y, and Z. By doing X, Y, and Z, you'll be able to show your customers that this API product is amazing."),
+    apiFeatureCardsGenerator("API Feature G", "This feature allows you to do X, Y, and Z. By doing X, Y, and Z, you'll be able to show your customers that this API product is amazing."),
+  ];
+
   return (
-    <>
+    <Box style={{ backgroundColor: palette.background.default }}>
       {/* Colored banner section */}
       <Box
         className={
           clsx(classes.backgroundBanner, {
             [classes.prodAccessibleAPIProductBanner]: apiDetails.version.live,
-            [classes.draftAPIProductBanner]: !apiDetails.version.live,
+            [classes.docsAccessibleAPIProductBanner]: !apiDetails.version.live,
           })
         }
       >
@@ -378,11 +471,15 @@ export const NewAPIDetails: React.FC = () => {
             </Typography>
           </Box>
 
-          <Box mb={1.25}>
-            <Typography display="block" style={{ color: palette.text.primary, fontWeight: 300 }} variant="h5">
-              {currentAPIDetails.version?.title}
-            </Typography>
-          </Box>
+          {
+            currentAPIDetails.version?.title && (
+              <Box mb={1.25}>
+                <Typography display="block" style={{ color: palette.text.primary, fontWeight: 300 }} variant="h5">
+                  {currentAPIDetails.version.title}
+                </Typography>
+              </Box>
+            )
+          }
 
           <Grid container>
             {
@@ -398,8 +495,12 @@ export const NewAPIDetails: React.FC = () => {
             <Grid item>
               <Box>
                 <Chip
-                  className={currentAPIDetails.version?.live ? classes.prodChip : classes.draftChip}
-                  label={currentAPIDetails.version?.live ? "Production access" : "Draft"}
+                  className={currentAPIDetails.version?.live ? classes.prodChip : classes.docsChip}
+                  label={
+                    currentAPIDetails.version?.live
+                      ? t("apiProductDetails.productionAccess")
+                      : t("apiProductDetails.documentationAccess")
+                  }
                   size="small"
                 />
               </Box>
@@ -408,13 +509,10 @@ export const NewAPIDetails: React.FC = () => {
 
           <Box mt={1.25}>
             {/* TODO: According to the design team, this is to be provided by an Admin
-            once a 'Description' field is made available in the 'Admin area'.
-            Leave this in. */}
-            {/*
-            <Typography display="block" style={{ fontStyle: "italic", fontWeight: 300 }} variant="body1">
-            Description support coming soon!
-            </Typography>
-            */}
+once a 'Description' field is made available in the 'Admin area'. */}
+            {/* <Typography display="block" style={{ fontWeight: 300 }} variant="body1">
+Description support coming soon!
+</Typography> */}
           </Box>
         </Box>
       </Box>
@@ -425,7 +523,7 @@ export const NewAPIDetails: React.FC = () => {
           <Grid item md={9}>
             <Box mt={3}>
               <Typography display="block" style={{ color: palette.text.primary, fontWeight: 300 }} variant="caption">
-                Applications subscribed to this product:
+                {t("apiProductDetails.appsSubbedTitle")}
               </Typography>
 
               {
@@ -436,7 +534,7 @@ export const NewAPIDetails: React.FC = () => {
                     </Box>
                   ) : (
                     <Typography display="block" style={{ color: palette.text.primary }} variant="body1">
-                      No applications are subscribed to this product yet.
+                      {t("apiProductDetails.noAppsSubbedText")}
                     </Typography>
                   )
               }
@@ -450,7 +548,7 @@ export const NewAPIDetails: React.FC = () => {
                 to="/dashboard/subscriptions"
               >
                 <Typography style={{ display: "inline", color: palette.common.white, fontWeight: 700 }}>
-                  Subscribe product
+                  {t("apiProductDetails.subscribeButtonLabel")}
                 </Typography>
               </Link>
             </Box>
@@ -464,7 +562,7 @@ export const NewAPIDetails: React.FC = () => {
           <Grid item md={!currentAPIDetails.version ? 9 : 12}>
             <Box mt={5} mb={3}>
               <Typography display="block" style={{ color: palette.text.primary }} variant="h4">
-                API Publications
+                {t("apiProductDetails.apiPublicationsTitle")}
               </Typography>
 
               <Box mt={3}>
@@ -478,7 +576,7 @@ export const NewAPIDetails: React.FC = () => {
                             style={{ color: palette.text.primary, fontWeight: 700 }}
                             variant="body1"
                           >
-                            This product doesn’t have a contract yet.
+                            {t("apiProductDetails.noContractText")}
                           </Typography>
                         </Box>
 
@@ -488,8 +586,7 @@ export const NewAPIDetails: React.FC = () => {
                             style={{ color: palette.text.primary }}
                             variant="body1"
                           >
-                            We have not added a contract entry to this API Product yet.
-                            Once we add a contract to this API Product, you will be able to subscribe to its APIs!
+                            {t("apiProductDetails.noContractSubtext")}
                           </Typography>
                         </Box>
                       </>
@@ -514,34 +611,73 @@ export const NewAPIDetails: React.FC = () => {
       </Box>
 
       {/* API Highlights section */}
-      <Box className={classes.highlightsBackgroundBanner}>
-        <Box mb={8}>
-          <Carousel
-            showNavigation
-            slides={carouselHighlights}
-            goToSlide={currentSlide}
-          />
-        </Box>
+      {
+        carouselHighlights.length && (
+          <Box className={classes.highlightsBackgroundBanner}>
+            <Box mb={8}>
+              <Carousel
+                showNavigation
+                slides={carouselHighlights}
+                goToSlide={currentSlide}
+              />
+            </Box>
 
-        {/* TODO: Temporary until API is reworked to support carousel highlight cards. */}
-        <Box>
-          {
-            carouselHighlights.map((_highlight, index) => {
-              return (
-                <button
-                  className={classes.carouselButton}
-                  key={`carouselButton${index}`}
-                  onClick={() => setCurrentSlide(index)}
-                >
-                  {
-                    currentSlide === index ? <RadioButtonCheckedRoundedIcon /> : <RadioButtonUncheckedRoundedIcon />
-                  }
-                </button>  
-              );
-            })
-          }
-        </Box>
-      </Box>
-    </>
+            {/* TODO: Temporary until UI & API are reworked to support carousel highlight cards. */}
+            <Box>
+              {
+                carouselHighlights.map((_highlight, index) => {
+                  return (
+                    <button
+                      className={classes.carouselButton}
+                      key={`carouselButton${index}`}
+                      onClick={() => setCurrentSlide(index)}
+                    >
+                      {
+                        currentSlide === index ? <RadioButtonCheckedRoundedIcon /> : <RadioButtonUncheckedRoundedIcon />
+                      }
+                    </button>
+                  );
+                })
+              }
+            </Box>
+          </Box>
+        )
+      }
+
+
+      {/* 'Use this API to...' section */}
+      {
+        useAPICardsContent.length && (
+          <Box className={classes.contentContainer} mx='auto' my={7.5}>
+            <Box mb={3}>
+              <Typography display="block" style={{ color: palette.text.primary }} variant="h4">
+                {t("apiProductDetails.useThisAPITitle")}
+              </Typography>
+            </Box>
+
+            <Grid container spacing={3}>
+              {useAPICardsContent}
+            </Grid>
+          </Box>
+        )
+      }
+
+      {/* API features section */}
+      {
+        apiFeatureCardsContent.length && (
+          <Box className={classes.contentContainer} mx='auto' my={0} pb={9.25}>
+            <Box mb={3}>
+              <Typography display="block" style={{ color: palette.text.primary }} variant="h4">
+                {t("apiProductDetails.apiFeaturesTitle")}
+              </Typography>
+            </Box>
+
+            <Grid container spacing={3}>
+              {apiFeatureCardsContent}
+            </Grid>
+          </Box>
+        )
+      }
+    </Box>
   );
 };

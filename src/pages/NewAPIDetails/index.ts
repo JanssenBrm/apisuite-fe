@@ -1,1 +1,0 @@
-export { NewAPIDetails } from "./NewAPIDetails";

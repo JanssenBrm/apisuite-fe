@@ -73,7 +73,6 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
 
   /* 'API product' selection */
 
-  // const [selectedAPIProducts, setSelectedAPIProducts] = React.useState([])
   const [isAPIProductSelected, setIsAPIProductSelected] = React.useState(
     new Array(apis.length).fill(true),
   );
@@ -84,7 +83,6 @@ export const SubscriptionsModal: React.FC<SubscriptionsModalProps> = ({ appID, i
     setSelectedClientApp(initialClientApp);
     setIsClientAppSelected(false);
 
-    // setSelectedAPIProducts([])
     setIsAPIProductSelected(new Array(apis.length).fill(true));
 
     toggleModal();

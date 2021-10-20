@@ -33,7 +33,7 @@ export const Subscriptions: React.FC = () => {
     have all the information it needs. */
     if (auth.user) {
       dispatch(getAPIs({}));
-      dispatch(getAllUserApps({orgID: profile.current_org.id}));
+      dispatch(getAllUserApps({ orgID: profile.current_org.id }));
     }
   }, [auth.user, dispatch, profile]);
 
@@ -42,6 +42,25 @@ export const Subscriptions: React.FC = () => {
   const [isModalOpen, setModalOpen] = useState(false);
 
   const toggleModal = () => {
+    /*
+    If the modal is open and the user's trying to close it, we:
+      1. Check if the user's been redirected from the 'API Product details' view
+      (something we can determine through the history's state).
+
+      2. Push the user back to that 'API Product details' view using the history's state.
+    */
+    if (
+      isModalOpen &&
+      history.location.state?.redirected &&
+      (history.location.state?.apiID && history.location.state?.apiVersionID)
+    ) {
+      history.push(
+        `/api-products/details/${history.location.state?.apiID}/spec/${history.location.state?.apiVersionID}`
+      );
+
+      return;
+    }
+
     setModalOpen(!isModalOpen);
   };
 
@@ -50,8 +69,6 @@ export const Subscriptions: React.FC = () => {
       toggleModal();
     }
   }, [history.location.state?.appID]);
-
-  console.log("history.location.state", history.location.state);
 
   return (
     <>
