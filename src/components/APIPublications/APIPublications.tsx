@@ -11,6 +11,7 @@ import Link from "components/Link";
 import { Markdown } from "components/Markdown";
 import { APIVersion } from "store/subscriptions/types";
 import { APIPublicationsProps } from "./types";
+import { CurrentAPIDetails } from "pages/APIProductDetails/types";
 import useStyles from "./styles";
 
 export const APIPublications: React.FC<APIPublicationsProps> = ({
@@ -27,7 +28,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
     const fileName = "contract.json";
 
     const fileToSave = new Blob(
-      [JSON.stringify(currentAPIDetails.version?.spec)],
+      [JSON.stringify(currentAPIDetails.version!.spec)],
       {
         type: "application/json",
       }
@@ -52,22 +53,24 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
 
   const [selectedTab, setSelectedTab] = useState("apiInfo");
 
-  const generateAPIInfo = () => {
+  const generateAPIInfo = (apiDetails: CurrentAPIDetails, selectedTab: string) => {
+    if (selectedTab !== "apiInfo") return;
+    
     return (
       <>
         <Markdown
-          defaultValue={currentAPIDetails.documentation?.info || "No description available."}
+          defaultValue={apiDetails.documentation?.info || t("fallbacks.noDescription")}
           page=""
         />
 
-        {currentAPIDetails.version?.spec && (
+        {apiDetails.version?.spec && (
           <Grid container>
             <Grid item md={9}>
               <Box mt={3} style={{ display: "flex" }}>
                 {
-                  currentAPIDetails.version.spec?.info?.termsOfService && (
+                  apiDetails.version.spec?.info?.termsOfService && (
                     <Typography style={{ color: palette.info.main, marginRight: spacing(3) }} variant="body1">
-                      <Link to={currentAPIDetails.version.spec?.info?.termsOfService}>
+                      <Link to={apiDetails.version.spec?.info?.termsOfService}>
                         {t("apiProductDetails.tosLinkLabel")}
                       </Link>
                     </Typography>
@@ -75,9 +78,9 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
                 }
 
                 {
-                  currentAPIDetails.version.spec?.info?.contact?.url && (
+                  apiDetails.version.spec?.info?.contact?.url && (
                     <Typography style={{ color: palette.info.main, marginRight: spacing(3) }} variant="body1">
-                      <Link to={currentAPIDetails.version.spec.info.contact.url}>
+                      <Link to={apiDetails.version.spec.info.contact.url}>
                         {t("apiProductDetails.contactLinkLabel")}
                       </Link>
                     </Typography>
@@ -85,9 +88,9 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
                 }
 
                 {
-                  currentAPIDetails.version.spec?.info?.license?.url && (
+                  apiDetails.version.spec?.info?.license?.url && (
                     <Typography style={{ color: palette.info.main, marginRight: spacing(3) }} variant="body1">
-                      <Link to={currentAPIDetails.version.spec.info.license.url}>
+                      <Link to={apiDetails.version.spec.info.license.url}>
                         {t("apiProductDetails.licenseLinkLabel")}
                       </Link>
                     </Typography>
@@ -95,9 +98,9 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
                 }
 
                 {
-                  currentAPIDetails.version.spec?.externalDocs?.url && (
+                  apiDetails.version.spec?.externalDocs?.url && (
                     <Typography style={{ color: palette.info.main, marginRight: spacing(3) }} variant="body1">
-                      <Link to={currentAPIDetails.version.spec?.externalDocs?.url}>
+                      <Link to={apiDetails.version.spec?.externalDocs?.url}>
                         {t("apiProductDetails.externalDocsLinkLabel")}
                       </Link>
                     </Typography>
@@ -109,7 +112,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
             <Grid item md={3}>
               <Box mt={3} style={{ display: "flex", height: 40, overflowX: "auto", textAlign: "right" }}>
                 {
-                  currentAPIDetails.version.spec?.tags?.map((
+                  apiDetails.version.spec?.tags?.map((
                     tag: {
                       name: string,
                       description: string,
@@ -136,42 +139,44 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
     );
   };
 
-  const generateAPIContract = () => {
-    return <SwaggerUI spec={currentAPIDetails.version?.spec || {}} />;
-  };
-
-  const generateAPIVersionDetails = () => {
+  const generateAPIVersionDetails = (
+    apiDetails: CurrentAPIDetails
+  ) => {
     return (
       <>
         <Select
           className={classes.apiContractSelector}
-          disabled={!currentAPIDetails.otherVersions.length}
+          disabled={!apiDetails.otherVersions.length}
           disableUnderline
           displayEmpty
           IconComponent={ExpandMoreRoundedIcon}
           label="Select OpenAPI Contract"
-          renderValue={() => `${currentAPIDetails.name} (${currentAPIDetails.version?.version})`}
+          renderValue={() => `${apiDetails.name} (${apiDetails.version!.version})`}
         >
-          {generateSelectorOptions(currentAPIDetails.otherVersions)}
+          {generateSelectorOptions(apiDetails.otherVersions)}
         </Select>
 
         <Grid container>
           <Grid item md={9}>
             <Box mt={5} style={{ display: "flex", alignItems: "center" }}>
               <Typography style={{ color: palette.text.primary, fontWeight: 700, marginRight: spacing(3) }} variant="h5">
-                {currentAPIDetails.version?.title}
+                {apiDetails.version!.title}
               </Typography>
 
               <Chip
                 color="secondary"
-                label={currentAPIDetails.version?.version}
+                label={apiDetails.version!.version}
                 size="small"
                 style={{ marginRight: spacing(1.5) }}
               />
 
               <Chip
-                className={currentAPIDetails.version?.live ? classes.prodChip : classes.deprecatedChip}
-                label={currentAPIDetails.version?.live ? "Live" : "Deprecated"}
+                className={apiDetails.version!.live ? classes.prodChip : classes.deprecatedChip}
+                label={
+                  apiDetails.version!.live
+                    ? t("apiProductDetails.liveAPIProductChip")
+                    : t("apiProductDetails.deprecatedAPIProductChip")
+                }
                 size="small"
               />
             </Box>
@@ -216,12 +221,10 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
           </Tabs>
 
           <Box pb={4} pt={3} px={3} style={{ overflow: "hidden", overflowX: "auto" }}>
-            {
-              selectedTab === "apiInfo" && generateAPIInfo()
-            }
+            {generateAPIInfo(currentAPIDetails, selectedTab)}
 
             {
-              selectedTab === "apiContract" && generateAPIContract()
+              selectedTab === "apiContract" && <SwaggerUI spec={apiDetails.version!.spec || {}} />
             }
           </Box>
         </Paper>
@@ -264,7 +267,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
                       </Box>
                     </>
                   ) : (
-                    generateAPIVersionDetails()
+                    generateAPIVersionDetails(currentAPIDetails)
                   )
               }
             </Box>

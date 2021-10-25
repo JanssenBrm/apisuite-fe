@@ -13,7 +13,7 @@ export default makeStyles((theme) => ({
 
     "& > .MuiSelect-select.MuiSelect-select": {
       alignSelf: "flex-end",
-      padding: "10px 50px 10px 10px",
+      padding: theme.spacing(1.25, 6.25, 1.25, 1.25),
     },
 
     "& > .MuiSelect-select:focus": {

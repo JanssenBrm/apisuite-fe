@@ -3,6 +3,7 @@ import { Avatar, Box, Grid, Typography, useTheme, useTranslation } from "@apisui
 
 import Link from "components/Link";
 import { AppData } from "store/applications/types";
+import { CurrentAPIDetails } from "pages/APIProductDetails/types";
 import { SubbedAppsBlockProps } from "./types";
 import useStyles from "./styles";
 
@@ -14,8 +15,8 @@ export const SubbedAppsBlock: React.FC<SubbedAppsBlockProps> = ({
 
   const [t] = useTranslation();
 
-  const generateSubbedAppBubbles = (subbedApps: AppData[]) => {
-    return subbedApps.map((app: AppData, index: number) => {
+  const generateSubbedAppBubbles = (apiDetails: CurrentAPIDetails) => {
+    return apiDetails.appsSubbed.map((app: AppData, index: number) => {
       return (
         <Link
           className={classes.appBubbles}
@@ -25,8 +26,8 @@ export const SubbedAppsBlock: React.FC<SubbedAppsBlockProps> = ({
             state: {
               redirected: true,
               appID: app.id,
-              apiID: currentAPIDetails.id,
-              apiVersionID: currentAPIDetails.version?.id,
+              apiID: apiDetails.id,
+              apiVersionID: apiDetails.version?.id,
             },
           }}
         >
@@ -38,6 +39,22 @@ export const SubbedAppsBlock: React.FC<SubbedAppsBlockProps> = ({
     });
   };
 
+  const hasSubbedApps = (apiDetails: CurrentAPIDetails) => {
+    if (!apiDetails.appsSubbed.length) {
+      return (
+        <Typography display="block" style={{ color: palette.text.primary }} variant="body1">
+          {t("apiProductDetails.noAppsSubbedText")}
+        </Typography>
+      );
+    }
+    
+    return (
+      <Box mt={1.25} className={classes.subbedAppBubblesContainer}>
+        {generateSubbedAppBubbles(apiDetails)}
+      </Box>
+    );
+  };
+
   return (
     <Box className={classes.contentContainer} mx='auto'>
       <Grid container>
@@ -47,18 +64,7 @@ export const SubbedAppsBlock: React.FC<SubbedAppsBlockProps> = ({
               {t("apiProductDetails.appsSubbedTitle")}
             </Typography>
 
-            {
-              currentAPIDetails.appsSubbed.length
-                ? (
-                  <Box mt={1.25} className={classes.subbedAppBubblesContainer}>
-                    {generateSubbedAppBubbles(currentAPIDetails.appsSubbed)}
-                  </Box>
-                ) : (
-                  <Typography display="block" style={{ color: palette.text.primary }} variant="body1">
-                    {t("apiProductDetails.noAppsSubbedText")}
-                  </Typography>
-                )
-            }
+            {hasSubbedApps(currentAPIDetails)}
           </Box>
         </Grid>
 
@@ -68,7 +74,7 @@ export const SubbedAppsBlock: React.FC<SubbedAppsBlockProps> = ({
               className={classes.linkToSubsModal}
               to="/dashboard/subscriptions"
             >
-              <Typography style={{ display: "inline", color: palette.common.white, fontWeight: 700 }}>
+              <Typography style={{ color: palette.common.white, display: "inline", fontWeight: 700 }}>
                 {t("apiProductDetails.subscribeButtonLabel")}
               </Typography>
             </Link>

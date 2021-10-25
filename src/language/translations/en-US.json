@@ -198,7 +198,9 @@
     "contactLinkLabel": "Contact",
     "licenseLinkLabel": "License",
     "externalDocsLinkLabel": "External Documentation",
-    "downloadContractButtonLabel": "Download contract"
+    "downloadContractButtonLabel": "Download contract",
+    "liveAPIProductChip": "Live",
+    "deprecatedAPIProductChip": "Deprecated"
   },
   "dashboardTab": {
     "landingPageSubTab": {

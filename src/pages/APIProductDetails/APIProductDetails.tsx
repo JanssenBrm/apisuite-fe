@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Box } from "@apisuite/fe-base";
+import { Box, useTheme } from "@apisuite/fe-base";
 
 import { APIFeatureCards } from "components/APIFeatureCards";
 import { APIHighlights } from "components/APIHighlights";
@@ -18,6 +18,8 @@ import { apiDetailsSelector } from "./selector";
 import { CurrentAPIDetails } from "./types";
 
 export const APIProductDetails: React.FC = () => {
+  const { palette } = useTheme();
+
   const dispatch = useDispatch();
   const { allUserApps, apiDetails, orgDetails, subscriptions } = useSelector(apiDetailsSelector);
 
@@ -27,6 +29,9 @@ export const APIProductDetails: React.FC = () => {
 
   useEffect(() => {
     dispatch(getAPIs({}));
+  }, [dispatch]);
+
+  useEffect(() => {
     dispatch(
       getAPIVersion({
         params: {
@@ -35,8 +40,11 @@ export const APIProductDetails: React.FC = () => {
         },
       })
     );
+  }, [apiId, dispatch, versionId]);
+
+  useEffect(() => {
     dispatch(getAllUserApps({ orgID: orgDetails.id }));
-  }, [apiId, dispatch, orgDetails, versionId]);
+  }, [dispatch, orgDetails]);
 
   const [currentAPIDetails, setCurrentAPIDetails] = useState<CurrentAPIDetails>({
     appsSubbed: [],
@@ -78,7 +86,7 @@ export const APIProductDetails: React.FC = () => {
   }, [apiDetails, allUserApps, subscriptions]);
 
   return (
-    <Box>
+    <Box style={{ backgroundColor: palette.background.default }}>
       {/* API banner */}
       <APIProductBanner currentAPIDetails={currentAPIDetails} />
 

@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import Carousel from "react-spring-3d-carousel";
-import { Box, Typography, useTheme } from "@apisuite/fe-base";
-import RadioButtonCheckedRoundedIcon from "@material-ui/icons/RadioButtonCheckedRounded";
-import RadioButtonUncheckedRoundedIcon from "@material-ui/icons/RadioButtonUncheckedRounded";
-import ViewCarouselRoundedIcon from "@material-ui/icons/ViewCarouselRounded";
+import { Box, Icon, Typography, useTheme } from "@apisuite/fe-base";
 
 import useStyles from "./styles";
 
@@ -24,7 +21,7 @@ export const APIHighlights: React.FC = () => {
           {
             image
               ? <img src={image} />
-              : <ViewCarouselRoundedIcon className={classes.highlightIcon} />
+              : <Icon className={classes.highlightIcon}>view_carousel</Icon>
           }
         </Box>
 
@@ -81,7 +78,9 @@ export const APIHighlights: React.FC = () => {
                   onClick={() => setCurrentSlide(index)}
                 >
                   {
-                    currentSlide === index ? <RadioButtonCheckedRoundedIcon /> : <RadioButtonUncheckedRoundedIcon />
+                    currentSlide === index
+                      ? <Icon>circle</Icon>
+                      : <Icon>radio_button_unchecked</Icon>
                   }
                 </button>
               );
