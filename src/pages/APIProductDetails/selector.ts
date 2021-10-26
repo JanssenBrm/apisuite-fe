@@ -11,6 +11,7 @@ export const apiDetailsSelector = createSelector(
       allUserApps: applications.userApps,
       apiDetails,
       orgDetails: profile.profile.current_org,
+      requested: apiDetails.requested,
       subscriptions,
     };
   },

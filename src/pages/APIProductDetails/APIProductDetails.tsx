@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { Box, useTheme } from "@apisuite/fe-base";
+import { Box, CircularProgress, useTheme } from "@apisuite/fe-base";
 
 import { APIFeatureCards } from "components/APIFeatureCards";
 import { APIHighlights } from "components/APIHighlights";
@@ -21,7 +21,7 @@ export const APIProductDetails: React.FC = () => {
   const { palette } = useTheme();
 
   const dispatch = useDispatch();
-  const { allUserApps, apiDetails, orgDetails, subscriptions } = useSelector(apiDetailsSelector);
+  const { allUserApps, apiDetails, orgDetails, requested, subscriptions } = useSelector(apiDetailsSelector);
 
   /* Retrieval of API Product details */
 
@@ -84,6 +84,14 @@ export const APIProductDetails: React.FC = () => {
       });
     }
   }, [apiDetails, allUserApps, subscriptions]);
+  
+  if (!requested) {
+    return (
+      <Box mt={-6.25} style={{ left: "50%", position: "absolute", top: "50%" }}>
+        <CircularProgress color="primary" style={{ height: 50, width: 50 }} />
+      </Box>
+    );
+  }
 
   return (
     <Box style={{ backgroundColor: palette.background.default }}>
