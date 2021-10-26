@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Grid, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
-import ViewCarouselRoundedIcon from "@material-ui/icons/ViewCarouselRounded";
+import { Box, Grid, Icon, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 
 import useStyles from "./styles";
 
@@ -21,7 +20,7 @@ export const APIUses: React.FC = () => {
           {
             image
               ? <img src={image} />
-              : <ViewCarouselRoundedIcon className={classes.highlightIcon} />
+              : <Icon>view_carousel</Icon>
           }
         </Box>
 

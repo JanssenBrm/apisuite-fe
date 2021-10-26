@@ -1,12 +1,11 @@
 import React from "react";
-import { Box, Card, CardContent, Grid, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
-import ViewCarouselRoundedIcon from "@material-ui/icons/ViewCarouselRounded";
+import { Box, Card, CardContent, Grid, Icon, Typography, useTheme, useTranslation } from "@apisuite/fe-base";
 
 import useStyles from "./styles";
 
 export const APIFeatureCards: React.FC = () => {
   const classes = useStyles();
-  const { palette, shape } = useTheme();
+  const { palette, spacing, shape } = useTheme();
 
   const [t] = useTranslation();
 
@@ -21,14 +20,14 @@ export const APIFeatureCards: React.FC = () => {
           backgroundColor: palette.background.paper,
           borderRadius: shape.borderRadius,
           boxShadow: "none",
-          padding: 24,
+          padding: spacing(3),
         }}>
           <CardContent>
             <Box mb={2} className={classes.apiFeatureIcon}>
               {
                 image
                   ? <img src={image} />
-                  : <ViewCarouselRoundedIcon />
+                  : <Icon>view_carousel</Icon>
               }
             </Box>
 
