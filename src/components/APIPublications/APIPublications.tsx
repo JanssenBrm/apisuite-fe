@@ -13,6 +13,7 @@ import { APIVersion } from "store/subscriptions/types";
 import { APIPublicationsProps } from "./types";
 import { CurrentAPIDetails } from "pages/APIProductDetails/types";
 import useStyles from "./styles";
+import { APIPublicationTabs } from "./constants";
 
 export const APIPublications: React.FC<APIPublicationsProps> = ({
   currentAPIDetails,
@@ -51,10 +52,10 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
     });
   };
 
-  const [selectedTab, setSelectedTab] = useState("apiInfo");
+  const [selectedTab, setSelectedTab] = useState<APIPublicationTabs>(APIPublicationTabs.apiInfo);
 
   const generateAPIInfo = (apiDetails: CurrentAPIDetails, selectedTab: string) => {
-    if (selectedTab !== "apiInfo") return;
+    if (selectedTab !== APIPublicationTabs.apiInfo) return;
     
     return (
       <>
@@ -150,7 +151,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
           disableUnderline
           displayEmpty
           IconComponent={ExpandMoreRoundedIcon}
-          label="Select OpenAPI Contract"
+          label={t("apiProductDetails.selectorLabel")}
           renderValue={() => `${apiDetails.name} (${apiDetails.version!.version})`}
         >
           {generateSelectorOptions(apiDetails.otherVersions)}
@@ -206,17 +207,17 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
             variant="fullWidth"
           >
             <Tab
-              label="API Info"
-              onClick={() => setSelectedTab("apiInfo")}
+              label={t("apiProductDetails.apiInfoTab")}
+              onClick={() => setSelectedTab(APIPublicationTabs.apiInfo)}
               style={{ borderRight: `1px solid ${palette.grey[300]}`, borderBottom: `1px solid ${palette.grey[300]}` }}
-              value="apiInfo"
+              value={APIPublicationTabs.apiInfo}
             />
 
             <Tab
-              label="API Contract"
-              onClick={() => setSelectedTab("apiContract")}
+              label={t("apiProductDetails.apiContractTab")}
+              onClick={() => setSelectedTab(APIPublicationTabs.apiContract)}
               style={{ borderBottom: `1px solid ${palette.grey[300]}` }}
-              value="apiContract"
+              value={APIPublicationTabs.apiContract}
             />
           </Tabs>
 
@@ -224,7 +225,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
             {generateAPIInfo(currentAPIDetails, selectedTab)}
 
             {
-              selectedTab === "apiContract" && <SwaggerUI spec={apiDetails.version!.spec || {}} />
+              selectedTab === APIPublicationTabs.apiContract && <SwaggerUI spec={apiDetails.version!.spec || {}} />
             }
           </Box>
         </Paper>

@@ -10,6 +10,7 @@ export const apiDetailsSelector = createSelector(
     return {
       allUserApps: applications.userApps,
       apiDetails,
+      error: apiDetails.error,
       orgDetails: profile.profile.current_org,
       requested: apiDetails.requested,
       subscriptions,

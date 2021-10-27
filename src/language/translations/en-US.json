@@ -200,7 +200,11 @@
     "externalDocsLinkLabel": "External Documentation",
     "downloadContractButtonLabel": "Download contract",
     "liveAPIProductChip": "Live",
-    "deprecatedAPIProductChip": "Deprecated"
+    "deprecatedAPIProductChip": "Deprecated",
+    "selectorLabel": "Select OpenAPI Contract",
+    "apiInfoTab": "API Info",
+    "apiContractTab": "API Contract",
+    "noAPIProductOrDetailsError": "The selected API Product either doesn't exist, or has any details."
   },
   "dashboardTab": {
     "landingPageSubTab": {
