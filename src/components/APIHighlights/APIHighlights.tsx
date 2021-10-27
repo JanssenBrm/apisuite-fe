@@ -56,38 +56,38 @@ export const APIHighlights: React.FC = () => {
     },
   ];
 
-  return carouselHighlights.length
-    ? (
-      <Box className={classes.highlightsBackgroundBanner}>
-        <Box mb={8}>
-          <Carousel
-            showNavigation
-            slides={carouselHighlights}
-            goToSlide={currentSlide}
-          />
-        </Box>
+  if (!carouselHighlights.length) return null;
 
-        {/* TODO: Temporary placeholders until UI & API are reworked to support carousel highlight cards. */}
-        <Box>
-          {
-            carouselHighlights.map((_highlight, index) => {
-              return (
-                <button
-                  className={classes.carouselButton}
-                  key={`carouselButton${index}`}
-                  onClick={() => setCurrentSlide(index)}
-                >
-                  {
-                    currentSlide === index
-                      ? <Icon>circle</Icon>
-                      : <Icon>radio_button_unchecked</Icon>
-                  }
-                </button>
-              );
-            })
-          }
-        </Box>
+  return (
+    <Box className={classes.highlightsBackgroundBanner}>
+      <Box mb={8}>
+        <Carousel
+          showNavigation
+          slides={carouselHighlights}
+          goToSlide={currentSlide}
+        />
       </Box>
-    )
-    : null;
+
+      {/* TODO: Temporary placeholders until UI & API are reworked to support carousel highlight cards. */}
+      <Box>
+        {
+          carouselHighlights.map((_highlight, index) => {
+            return (
+              <button
+                className={classes.carouselButton}
+                key={`carouselButton${index}`}
+                onClick={() => setCurrentSlide(index)}
+              >
+                {
+                  currentSlide === index
+                    ? <Icon>circle</Icon>
+                    : <Icon>radio_button_unchecked</Icon>
+                }
+              </button>
+            );
+          })
+        }
+      </Box>
+    </Box>
+  );
 };
