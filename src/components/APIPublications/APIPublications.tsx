@@ -8,7 +8,7 @@ import { saveAs } from "file-saver";
 
 import noContracts from "assets/noAPIProducts.svg";
 import Link from "components/Link";
-import { Markdown } from "components/Markdown";
+import { MarkdownDisplayer } from "components/MarkdownDisplayer";
 import { APIVersion } from "store/subscriptions/types";
 import { APIPublicationsProps } from "./types";
 import { CurrentAPIDetails } from "pages/APIProductDetails/types";
@@ -59,9 +59,8 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
     
     return (
       <>
-        <Markdown
-          defaultValue={apiDetails.documentation?.info || t("fallbacks.noDescription")}
-          page=""
+        <MarkdownDisplayer
+          content={apiDetails.documentation?.info || t("fallbacks.noDescription")}
         />
 
         {apiDetails.version?.spec && (
