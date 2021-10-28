@@ -54,8 +54,8 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
 
   const [selectedTab, setSelectedTab] = useState<APIPublicationTabs>(APIPublicationTabs.apiInfo);
 
-  const generateAPIInfo = (apiDetails: CurrentAPIDetails, selectedTab: string) => {
-    if (selectedTab !== APIPublicationTabs.apiInfo) return;
+  const generateAPIInfo = (apiDetails: CurrentAPIDetails, tab: string) => {
+    if (tab !== APIPublicationTabs.apiInfo) return;
     
     return (
       <>
