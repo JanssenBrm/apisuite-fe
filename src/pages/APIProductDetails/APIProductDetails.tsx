@@ -145,7 +145,7 @@ export const APIProductDetails: React.FC = () => {
 
   if ((requested && error) || (requested && !currentAPIDetails.id)) {
     return (
-      <Box mt={-6.25} style={{ left: "25%", position: "absolute", top: "50%" }}>
+      <Box mt={-6.25} style={{ position: "absolute", textAlign: "center", top: "50%", width: "100%" }}>
         <Typography display="block" style={{ color: palette.text.primary, fontWeight: 300 }} variant="h3">
           {t("apiProductDetails.noAPIProductOrDetailsError")}
         </Typography>
