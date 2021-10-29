@@ -145,9 +145,8 @@ export const APIProducts: React.FC = () => {
         <div className={classes.apiProductButtons}>
           <Button
             color="primary"
-            disabled={!(mostRecentAPI.id && mostRecentAPI.apiRoutingId)}
             disableElevation
-            href={`/api-products/details/${mostRecentAPI.id}/spec/${mostRecentAPI.apiRoutingId}`}
+            href={`/api-products/details/${mostRecentAPI.id}/spec/${mostRecentAPI.apiRoutingId || 0}`}
             size="large"
             variant="contained"
           >
@@ -155,7 +154,7 @@ export const APIProducts: React.FC = () => {
           </Button>
   
           {
-            auth.user && mostRecentAPI.apiContract && (
+            auth.user && (
               <Box clone ml={1}>
                 <Button
                   onClick={toggleModal}
@@ -242,7 +241,7 @@ export const APIProducts: React.FC = () => {
           />
 
           <Box
-            style={{ alignItems: "center", display: "flex" }}
+            style={{ alignItems: "center", display: "flex", cursor: "pointer" }}
             onClick={() => setShowFilters(!displayFilters)}
           >
             <Box mr={1}>

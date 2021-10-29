@@ -153,6 +153,13 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
           label={t("apiProductDetails.selectorLabel")}
           renderValue={() => `${apiDetails.name} (${apiDetails.version!.version})`}
         >
+          <MenuItem
+            disabled
+            value={apiDetails.version?.id}
+          >
+            {`${apiDetails.version?.title} (${apiDetails.version?.version})`}
+          </MenuItem>
+
           {generateSelectorOptions(apiDetails.otherVersions)}
         </Select>
 
@@ -170,15 +177,13 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
                 style={{ marginRight: spacing(1.5) }}
               />
 
-              <Chip
-                className={apiDetails.version!.live ? classes.prodChip : classes.deprecatedChip}
-                label={
-                  apiDetails.version!.live
-                    ? t("apiProductDetails.liveAPIProductChip")
-                    : t("apiProductDetails.deprecatedAPIProductChip")
-                }
-                size="small"
-              />
+              {apiDetails.version!.live &&
+                <Chip
+                  className={classes.prodChip}
+                  label={t("apiProductDetails.liveAPIProductChip")}
+                  size="small"
+                />
+              }
             </Box>
           </Grid>
 
@@ -235,7 +240,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
   return (
     <Box className={classes.contentContainer} mb={7.5} mx='auto'>
       <Grid container>
-        <Grid item md={!currentAPIDetails.version ? 9 : 12}>
+        <Grid item md={!currentAPIDetails.version?.id ? 9 : 12}>
           <Box mt={5} mb={3}>
             <Typography display="block" style={{ color: palette.text.primary }} variant="h4">
               {t("apiProductDetails.apiPublicationsTitle")}
@@ -243,7 +248,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
 
             <Box mt={3}>
               {
-                !currentAPIDetails.version
+                !currentAPIDetails.version?.id
                   ? (
                     <>
                       <Box>
@@ -275,7 +280,7 @@ export const APIPublications: React.FC<APIPublicationsProps> = ({
         </Grid>
 
         {
-          !currentAPIDetails.version && (
+          !currentAPIDetails.version?.id && (
             <Grid item md={3}>
               <Box mt={7}>
                 <img src={noContracts} />
