@@ -241,7 +241,7 @@ auth.user?.role.name === 'admin' &&
             <Typography
               variant="subtitle2"
               component="a"
-              href={t("footer.copyrights.website_url")}
+              href={t("footer.copyrights.websiteUrl")}
               rel='noopener noreferrer'
               target='_blank'
             >

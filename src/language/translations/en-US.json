@@ -561,7 +561,7 @@
     },
     "copyrights": {
       "website": "APISuite.io",
-      "website_url": "https://apisuite.io/",
+      "websiteUrl": "https://apisuite.io/",
       "allRightsReserved": "All rights reserved"
     }
   },
