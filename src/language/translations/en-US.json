@@ -562,6 +562,20 @@
     "copyrights": {
       "website": "APISuite.io",
       "allRightsReserved": "All rights reserved"
+    },
+    "policies": {
+      "termsOfUse": {
+        "text": "Terms of use",
+        "url": ""
+      },
+      "privacy": {
+        "text": "Privacy policy",
+        "url": ""
+      },
+      "cookie": {
+        "text": "Cookie policy",
+        "url": ""
+      }
     }
   },
   "listApps": {
