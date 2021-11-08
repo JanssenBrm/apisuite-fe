@@ -241,7 +241,7 @@ auth.user?.role.name === 'admin' &&
             <Typography
               variant="subtitle2"
               component="a"
-              href='https://apisuite.io/'
+              href={t("footer.copyrights.websiteUrl")}
               rel='noopener noreferrer'
               target='_blank'
             >
